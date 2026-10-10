@@ -104,6 +104,17 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .cpick{margin-top:6px}.cprow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cprow input{flex:1 1 220px}.cpres{display:flex;flex-direction:column;gap:4px;margin-top:6px}
 .cpitem{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 10px;cursor:pointer;font:14px/1.35 var(--f-ui);color:var(--ink)}.cpitem:hover{border-color:var(--accent)}.cpitem b{font-family:var(--f-num);color:var(--accent);margin-right:4px}
 .dictrow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0}
+.mybtns .chips{gap:8px}.mybtn .chip-in{color:var(--accent);font-weight:500}.myform{margin-bottom:8px}
+.paper{flex:1;overflow:auto;background:#d9dee3;border-radius:6px;padding:16px;min-height:340px}
+.paper .sheet{background:#fff;color:#000;max-width:794px;margin:0 auto;padding:40px 48px 48px;box-shadow:0 2px 10px rgba(0,0,0,.18);font:12pt/1.45 "Times New Roman",Times,serif;min-height:600px}
+.paper .pr-top,#print .pr-top{display:flex;justify-content:space-between;gap:20px;font-size:10.5pt;border-bottom:1px solid #000;padding-bottom:6px;margin-bottom:10px}
+.paper .pr-top .r{text-align:right}.pr-l{display:flex;gap:10px;align-items:flex-start}.pr-logo{max-width:64px;max-height:64px;object-fit:contain}
+.paper .pr-card{text-align:center;font-size:10.5pt;margin:0 0 8px}.paper .pr-pat{margin:0 0 12px;font-size:11.5pt}.paper .pr-body div{min-height:1.2em;text-align:justify}
+.pr-logo.bw,.zlogo-prev.bw{filter:grayscale(1) contrast(1.15)}.zlogo-prev.off{opacity:.35}
+.zlogo-prev{max-height:56px;max-width:120px;border:1px solid var(--line);border-radius:6px;padding:4px;background:#fff}
+@media (max-width:899px){.paper{padding:8px}.paper .sheet{padding:18px 16px;font-size:11pt}.paper .pr-top{flex-direction:column;gap:6px;font-size:9pt}.paper .pr-top .r{text-align:left}.pr-logo{max-width:44px;max-height:44px}
+  .oh .acts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.oh .acts #copy{grid-column:span 2}}
+.out.paperon .fmt{display:none}
 .helpsec{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 8px;background:var(--surface)}.helpsec summary{cursor:pointer;font-weight:600}.helplist{font-size:14px;color:var(--ink)}.helplist li{margin:6px 0;line-height:1.45}
 .vlist{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}.vlist li{margin:3px 0}.vlist b{color:var(--ink)}
 .micwrap{position:relative}.micwrap textarea{padding-right:44px}
@@ -380,6 +391,7 @@ details.box[open]{padding-bottom:12px}
       <h2>Текст огляду</h2>
       <button class="btn mob" id="closeSheet2" type="button" aria-label="Закрити">Закрити ✕</button>
       <div class="acts">
+        <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд «як на папері»: шапка закладу, логотип, форма МОЗ">Аркуш</button>
         <button class="btn" id="printBtn" type="button" title="Друк або «Зберегти як PDF» у вікні друку">Друк<span class="hide-m"> / PDF</span></button>
         <button class="btn" id="docxBtn" type="button" title="Зберегти документ у форматі Word (.docx) — відкривається і в LibreOffice">Word</button>
         <button class="btn" id="odtBtn" type="button" title="Зберегти документ у форматі LibreOffice Writer (.odt)">LibreOffice</button>
@@ -408,6 +420,7 @@ details.box[open]{padding-bottom:12px}
       <span class="sep" aria-hidden="true"></span>
       <button class="btn" type="button" data-cmd="removeFormat" title="Прибрати жирний, курсив, підкреслення й розмір" aria-label="Прибрати форматування">T<sub>✕</sub></button>
     </div>
+    <div id="paper" class="paper" hidden><div class="sheet"></div><p class="chips-hint">Перегляд «як на папері». Щоб правити текст вручну — вимкніть «Аркуш».</p></div>
     <div id="out" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Готовий текст" spellcheck="false"></div>
     <p class="note">Форматуйте наприкінці: оновлення тексту з форми скидає форматування. <button type="button" class="more" id="misBtn">Копіювати частинами для МІС</button></p>
   </section>
@@ -750,7 +763,8 @@ const SECTIONS = [
   {id:'hw', type:'num', label:'Зріст і вага', wide:true, parts:[{ph:'170',u:'см',ok:[1.2,230]},{ph:'75',u:'кг',ok:[25,300]}],
     hint:v=>{const h=cm(v[0]),w=num(v[1]); return h>0&&w>0?'ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²':'';},
     fmt:v=>{const p=[], h=cm(v[0]), w=num(v[1]); if(h>0)p.push(`Зріст ${dec(h)} см`); if(v[1])p.push(`вага ${v[1]} кг`);
-      if(h>0&&w>0)p.push('ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²'); return p.join(', ');}}
+      if(h>0&&w>0)p.push('ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²'); return p.join(', ');}},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'shk', title:'Шкіра, зів, лімфовузли', short:'Шкіра', head:'', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Шкірні покриви та видимі слизові без особливостей, периферичних набряків немає, лімфовузли не збільшені','Шкірні покриви та видимі слизові без патологічних змін']},
@@ -765,7 +779,8 @@ const SECTIONS = [
     'Болючість по ходу глибоких вен лівої гомілки, симптом Хоманса позитивний','Болючість по ходу глибоких вен правої гомілки, симптом Хоманса позитивний','Варикозне розширення підшкірних вен нижніх кінцівок','Болючість по ходу глибоких вен обох гомілок, симптом Хоманса позитивний з обох боків']},
   {id:'lv', type:'sel', label:'Лімфовузли', norm:0, tpl:'{v}', opts:['Периферичні лімфатичні вузли не збільшені','Збільшені підщелепні лімфатичні вузли, болючі при пальпації','Збільшені шийні лімфатичні вузли',
     'Збільшені пахвові лімфатичні вузли','Збільшені пахові лімфатичні вузли справа, болючі','Збільшені пахові лімфатичні вузли зліва, болючі','Генералізована лімфаденопатія','Збільшені пахові лімфатичні вузли з обох боків, болючі']},
-  {id:'shch', type:'sel', label:'Щитоподібна залоза', norm:0, tpl:'{v}', opts:['Щитоподібна залоза не збільшена','Щитоподібна залоза дифузно збільшена','Пальпуються вузлові утворення щитоподібної залози']}
+  {id:'shch', type:'sel', label:'Щитоподібна залоза', norm:0, tpl:'{v}', opts:['Щитоподібна залоза не збільшена','Щитоподібна залоза дифузно збільшена','Пальпуються вузлові утворення щитоподібної залози']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'dyh', title:'Органи дихання', short:'Дихання', head:'Органи дихання:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
@@ -774,7 +789,8 @@ const SECTIONS = [
   {id:'gk', type:'sel', label:'Грудна клітка', norm:0, tpl:'{v}', opts:['Грудна клітка правильної форми, симетрично бере участь в акті дихання','Грудна клітка емфізематозна','Відставання правої половини грудної клітки в акті дихання','Відставання лівої половини грудної клітки в акті дихання']},
   {id:'perk', type:'sel', label:'Перкусія', norm:0, tpl:'Перкуторно {v}', opts:['ясний легеневий звук','коробковий звук','притуплення звуку в нижніх відділах справа','притуплення звуку в нижніх відділах зліва','притуплення звуку в нижніх відділах з обох боків']},
   {id:'ausk', type:'sel', label:'Дихання', norm:0, tpl:'Аускультативно дихання {v}', opts:['везикулярне','жорстке','ослаблене везикулярне','ослаблене в нижніх відділах справа','ослаблене в нижніх відділах зліва','ослаблене в нижніх відділах з обох боків','жорстке, видих подовжений']},
-  {id:'hr', type:'sel', label:'Хрипи', norm:0, tpl:'{v}', cont:true, opts:['хрипи не вислуховуються','поодинокі сухі хрипи','сухі розсіяні свистячі хрипи','вологі дрібнопухирчасті хрипи в нижніх відділах справа','вологі дрібнопухирчасті хрипи в нижніх відділах зліва','вологі дрібнопухирчасті хрипи в нижніх відділах з обох боків','крепітація справа','крепітація зліва','крепітація в нижніх відділах з обох боків','сухі свистячі хрипи над усіма полями, дистанційні хрипи']}
+  {id:'hr', type:'sel', label:'Хрипи', norm:0, tpl:'{v}', cont:true, opts:['хрипи не вислуховуються','поодинокі сухі хрипи','сухі розсіяні свистячі хрипи','вологі дрібнопухирчасті хрипи в нижніх відділах справа','вологі дрібнопухирчасті хрипи в нижніх відділах зліва','вологі дрібнопухирчасті хрипи в нижніх відділах з обох боків','крепітація справа','крепітація зліва','крепітація в нижніх відділах з обох боків','сухі свистячі хрипи над усіма полями, дистанційні хрипи']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'ssc', title:'Серце, судини', short:'Серце', head:'Серцево-судинна система:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
@@ -785,7 +801,8 @@ const SECTIONS = [
   {id:'mezh', type:'sel', label:'Межі серця', norm:0, tpl:'{v}', opts:['Межі відносної серцевої тупості не розширені','Ліва межа відносної серцевої тупості розширена','Межі відносної серцевої тупості розширені в обидва боки']},
   {id:'tony', type:'sel', label:'Тони серця', norm:0, tpl:'Тони серця {v}', opts:['ясні','приглушені','глухі','приглушені, ослаблений I тон на верхівці','ясні, акцент II тону над аортою','ясні, акцент II тону над легеневою артерією']},
   {id:'rytm', type:'sel', label:'Ритм', norm:0, tpl:'{v}', cont:true, opts:['ритм правильний','ритм неправильний (фібриляція передсердь)','поодинокі екстрасистоли','тахікардія']},
-  {id:'shum', type:'sel', label:'Шуми', norm:0, tpl:'{v}', opts:['Патологічні шуми не вислуховуються','Систолічний шум на верхівці','Систолічний шум над аортою','Діастолічний шум над аортою']}
+  {id:'shum', type:'sel', label:'Шуми', norm:0, tpl:'{v}', opts:['Патологічні шуми не вислуховуються','Систолічний шум на верхівці','Систолічний шум над аортою','Діастолічний шум над аортою']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'trav', title:'Травлення', head:'Органи травлення:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
@@ -802,14 +819,16 @@ const SECTIONS = [
   {id:'hryzha', type:'sel', label:'Грижові ворота', norm:0, tpl:'{v}', opts:['Грижових випинань немає','У правій паховій ділянці болюче напружене невправиме грижове випинання','У лівій паховій ділянці болюче напружене невправиме грижове випинання','Вправима пупкова грижа']},
   {id:'vyp', type:'sel', label:'Випорожнення', norm:0, tpl:'{v}', opts:['Випорожнення регулярні, оформлені','Схильність до закрепів','Рідкі випорожнення','Випорожнення чорного кольору (мелена)','Затримка випорожнень і газів','Випорожнення знебарвлені']},
   {id:'rect', type:'sel', label:'Per rectum (якщо проводилось)', tpl:'{v}', opts:['Per rectum: ампула прямої кишки вільна, на рукавичці кал звичайного кольору','Per rectum: на рукавичці кал чорного кольору',
-    'Per rectum: ампула прямої кишки порожня, розширена','Per rectum: нависання та болючість передньої стінки прямої кишки']}
+    'Per rectum: ампула прямої кишки порожня, розширена','Per rectum: нависання та болючість передньої стінки прямої кишки']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'sech', title:'Сечовидільна система', short:'Сечова', head:'Сечовидільна система:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
   {id:'past', type:'sel', label:'Симптом Пастернацького', norm:0, tpl:'Симптом Пастернацького {v}', opts:['негативний з обох боків','позитивний справа','позитивний зліва','позитивний з обох боків']},
   {id:'sv', type:'sel', label:'Сечовипускання', norm:0, tpl:'Сечовипускання {v}', opts:['вільне, безболісне','утруднене','болісне','часте','часте, з ніктурією']},
   {id:'diur', type:'sel', label:'Діурез', norm:0, tpl:'{v}', opts:['Діурез адекватний','Діурез знижений','Олігурія','Поліурія','Ніктурія']},
-  {id:'secha', type:'sel', label:'Колір сечі', tpl:'{v}', opts:['Сеча солом’яно-жовта','Сеча темна («кольору пива»)','Сеча червоного кольору','Сеча каламутна']}
+  {id:'secha', type:'sel', label:'Колір сечі', tpl:'{v}', opts:['Сеча солом’яно-жовта','Сеча темна («кольору пива»)','Сеча червоного кольору','Сеча каламутна']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'nevr', title:'Неврологічний статус', short:'Неврологія', head:'Неврологічний статус:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено','Вогнищевої та менінгеальної симптоматики не виявлено']},
@@ -846,7 +865,8 @@ const SECTIONS = [
   {id:'koord', type:'sel', label:'Координація', norm:0, tpl:'{v}', opts:['У позі Ромберга стійкість збережена, координаторні проби виконує впевнено','Хиткість у позі Ромберга','Інтенційний тремор при пальценосовій пробі','Мимопопадання при пальценосовій пробі']},
   {id:'hreb', type:'sel', label:'Хребет', norm:0, tpl:'{v}', opts:['Рухи в хребті в повному обсязі, паравертебральні точки неболючі',
     'Обмеження рухів у поперековому відділі хребта, напруження паравертебральних м’язів','Обмеження рухів у шийному відділі хребта, напруження паравертебральних м’язів']},
-  {id:'nat', type:'sel', label:'Симптоми натягу', norm:0, tpl:'{v}', opts:['Симптоми натягу негативні','Симптом Ласега позитивний справа','Симптом Ласега позитивний зліва','Симптом Спурлінга позитивний справа','Симптом Спурлінга позитивний зліва','Симптом Ласега позитивний з обох боків']}
+  {id:'nat', type:'sel', label:'Симптоми натягу', norm:0, tpl:'{v}', opts:['Симптоми натягу негативні','Симптом Ласега позитивний справа','Симптом Ласега позитивний зліва','Симптом Спурлінга позитивний справа','Симптом Спурлінга позитивний зліва','Симптом Ласега позитивний з обох боків']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 /* ======== STATUS LOCALIS (травма): вкладка видима, коли в «Налаштуваннях» обрано травматологію, вибрано травму або вже є дані ======== */
 { id:'loc', locSec:true, docs:['ohl','kons'], title:'Status localis (травма)', short:'Травма', head:'Status localis:', fields:[
@@ -960,7 +980,8 @@ const SECTIONS = [
   {id:'fiz', type:'sel', norm:0, label:'Фізіологічні відправлення', tpl:'{v}', opts:['Діурез достатній, випорожнення регулярні','Діурез знижений','Затримка випорожнень','Рідкі випорожнення']},
   {id:'nevr', type:'sel', label:'Неврологічно (за потреби)', tpl:'{v}', opts:['Неврологічний статус без динаміки','Вогнищева симптоматика регресує','Наростання вогнищевої симптоматики']},
   {id:'loc', type:'multi', loc:true, when:()=>locOn(), sepv:', ', label:'Status localis (травма)', tpl:'Status localis: {v}', opts:['пов’язка суха, чиста','гіпсова іммобілізація адекватна, не тисне',
-    'набряк зменшився','набряк без динаміки','кровообіг і чутливість дистальніше збережені','рана без ознак запалення','шви спроможні','больовий синдром зменшився']}
+    'набряк зменшився','набряк без динаміки','кровообіг і чутливість дистальніше збережені','рана без ознак запалення','шви спроможні','больовий синдром зменшився']},
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'d_lik', docs:['shch'], title:'Лікування і план', short:'Лікування', head:'', objective:true, fields:[
   {id:'per', type:'sel', norm:0, label:'Переносимість', tpl:'{v}', opts:['Лікування переносить задовільно, побічних реакцій не відмічено','Відмічено побічну реакцію на лікування']},
@@ -970,6 +991,7 @@ const SECTIONS = [
 ]},
 /* ======== ВИПИСНИЙ ЕПІКРИЗ ======== */
 { id:'e_per', docs:['epi'], title:'Перебування в стаціонарі', short:'Перебування', head:'', fields:[
+  {id:'vyg', type:'sel', noOut:true, def:0, wide:true, label:'Вигляд документа', opts:['За формою № 027/о — пункти бланка «Виписка із медичної карти стаціонарного хворого» (наказ МОЗ № 110)','Довільний виписний епікриз']},
   {id:'per', type:'period', label:'Період лікування', tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
   {id:'nadh', type:'sel', label:'Госпіталізація (якщо не вибрано — береться з первинного огляду)', tpl:'{v}', cont:true,
     fallback:()=>{ const a = val(F('morbi.hosp'), true); if (!a) return ''; const b = val(F('morbi.hospd'), true); return a.replace(/^\[([^|]*)\|([^\]]*)\]/, (m,x,y)=>'[' + x.toLowerCase() + '|' + y.toLowerCase() + ']').replace(/^[А-ЯІЇЄҐ]/, c=>c.toLowerCase()) + (b ? ' ' + b : ''); },
@@ -1443,8 +1465,8 @@ const PRESETS = [
 
 
 /* ======== СВОЇ ШАБЛОНИ КОРИСТУВАЧА (зберігаються в цьому браузері) ======== */
-let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[], rxsets:[]};
-try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || []}; }catch(e){}
+let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[], rxsets:[], btns:[]};
+try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || [], btns:c.btns || []}; }catch(e){}
 for (const k in CUSTOM.opts){
   const [sid, fid] = k.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) continue;
   const arr = f.type === 'text' ? (f.quick = f.quick || []) : f.opts;
@@ -1989,7 +2011,7 @@ function generate(){
   ORD_IDS = ORD_IDS.filter(id=>{ const sc = SECTIONS.find(x=>x.id === id); return !sc || !sc.only || sc.only === MODE; });
   RXT.tab.classList.toggle('filled', RX.length > 0);
   SECTIONS.forEach(s=>{ if (!ORD_IDS.includes(s.id)) s.tab.classList.remove('filled'); });
-  const parts = ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
+  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
   LASTPARTS = parts;
   const M = metaLines();
   let plain = parts.map(p=>(p.head ? p.head + p.sep : '') + p.body).join('\n');
@@ -2094,8 +2116,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.10', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.11', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.11', '10.10.2026', 'виписка за формою № 027/о (пункти бланка, наказ МОЗ № 110), місце проживання й робота пацієнта; перегляд «Аркуш» — документ як на папері з шапкою закладу й логотипом; логотип закладу кольоровий, чорно-білий або без нього (і в друці); свої кнопки-фрази у вкладках («+ Своя кнопка»); поле «Додатково» в кожній системі огляду'],
   ['2.10', '10.10.2026', 'двобічні варіанти (пневмонія, пієлонефрит, радикулопатія, тромбоз, переломи ребер); пошук і підбір кодів МКХ-10 для основного й супутніх діагнозів; ICPC-2 для сімейного лікаря (причина звернення й діагноз); завантаження офіційних НК 025:2021 і НК 026:2021 з файлу, пошук послуг; профіль «Сімейний лікар»'],
   ['2.9', '10.10.2026', 'набори призначень за спеціальностями (терапія, неврологія, хірургія, інфекційні, травматологія) і свої набори; підказки до клінічного діагнозу (схема для кожної хвороби, загальні правила, перевірка формулювання й коду МКХ-10); телефон: кнопка «Розділи» з усіма вкладками, документ — одним списком'],
   ['2.8', '10.10.2026', 'вкладка «Довідка» з пошуком: як працювати з програмою; постійне сховище — браузер не видаляє дані програми сам'],
@@ -2485,7 +2508,9 @@ function buildMetaPanel(){
     inp('pib', 'ПІБ пацієнта', {autocomplete:'off'}),
     inp('dob', 'Дата народження', {type:'date'}),
     inp('age', 'Вік (рахується сам)', {readonly:'', tabindex:'-1'}),
-    inp('card', '№ медичної карти', {inputmode:'numeric', autocomplete:'off'}));
+    inp('card', '№ медичної карти', {inputmode:'numeric', autocomplete:'off'}),
+    inp('addr', 'Місце проживання (для виписки 027/о)', {autocomplete:'off', placeholder:'необов’язково', wide:true}),
+    inp('work', 'Місце роботи, рід занять', {autocomplete:'off', placeholder:'необов’язково', wide:true}));
   const dt = h('input', {id:'meta_dt', type:'datetime-local', oninput:()=>{ calcAge(); update(); }});
   const gR = h('div', {class:'grid'},
     sel('rec', 'Вид запису', RECS),
@@ -2512,6 +2537,7 @@ function buildMetaPanel(){
   const sw = h('div', {});
   sw.append(h('p', {class:'lead'}, 'Ці дані вносяться один раз: вони запам’ятовуються в цьому браузері, не залежать від пацієнта й ідуть у шапку та підписи всіх документів.'),
     h('h3', {class:'sub'}, 'Лікар і відділення'), gD, h('h3', {class:'sub'}, 'Заклад (для шапки документів)'), gZ,
+    h('div', {class:'f wide', style:'margin-top:8px'}, h('label', {}, 'Логотип закладу (для шапки й друку, PNG/JPG до 400 КБ)'), h('div', {class:'zlogobox acts2'})),
     h('h3', {class:'sub'}, 'Спеціальність'),
     h('div', {class:'grid'}, h('div', {class:'f wide'}, h('label', {for:'set_spec'}, 'Профіль роботи'),
       (()=>{ const e = h('select', {id:'set_spec'}, h('option', {value:'ter'}, 'Терапія, неврологія, хірургія, інфекційні (вкладка «Травма» — лише для травм)'), h('option', {value:'tr'}, 'Травматологія (вкладка «Травма» і поля травми завжди видимі)'), h('option', {value:'fam'}, 'Сімейний лікар (амбулаторний режим, коди ICPC-2)'));
@@ -2576,7 +2602,8 @@ function zgodaText(){
 function metaLines(){
   const foot = [];
   if (DOCTITLES[DOC]){
-    const head = [{t: DOCTITLES[DOC], b:true, c:true}];
+    const f027 = DOC === 'epi' && epi027();
+    const head = f027 ? [{t:'ВИПИСКА', b:true, c:true}, {t:'із медичної карти стаціонарного хворого № ' + (mv('card') || '______'), b:true, c:true}] : [{t: DOCTITLES[DOC], b:true, c:true}];
     const age = mv('age');
     if (DOC === 'zgoda' || DOC === 'dov'){
       const d = (mv('dt') || '').split('T')[0];
@@ -2587,7 +2614,7 @@ function metaLines(){
       if (DOC === 'dov') foot.push('М. П.');
       return {head, foot};
     }
-    if (mv('pib')) head.push({t:'[Пацієнт|Пацієнтка]: ' + mv('pib') + (mv('dob') ? `, ${fmtD(mv('dob'))} р. н.` : '') + (age ? ` (${age} р.)` : '') + '.', b:false});
+    if (mv('pib') && !f027) head.push({t:'[Пацієнт|Пацієнтка]: ' + mv('pib') + (mv('dob') ? `, ${fmtD(mv('dob'))} р. н.` : '') + (age ? ` (${age} р.)` : '') + '.', b:false});
     if (mv('vidd')) head.push({t:(DOC === 'kons' ? 'Підрозділ: ' : 'Відділення: ') + mv('vidd') + '.', b:false});
     if (DOC === 'rx'){ const o = val(F('dx.osn'), true); if (o) head.push({t:'Діагноз: ' + o + (val(F('dx.mkh'), true) ? ' (' + val(F('dx.mkh'), true) + ')' : '') + '.', b:false}); }
     if (DOC === 'konc'){
@@ -2657,7 +2684,7 @@ function formHeader(){
   const card = !code ? (mv('card') ? 'Медична карта № ' + mv('card') : '') : (['027/о','028/о','003-6/о'].includes(code) ? FORMS[code] + ' (мед. карта № ' + (mv('card') || '______') + ')' : FORMS[code] + ' № ' + (mv('card') || '________'))
     + (mv('vidd') && !['dov','zgoda'].includes(DOC) ? ' · ' + mv('vidd') : '');
   const pat = !['epi','kons','rx','etap','per','napr','dov','zgoda'].includes(DOC) ? 'Пацієнт: ' + (mv('pib') || '_______________________________') + (mv('dob') ? ', ' + fmtD(mv('dob')) + ' р. н.' : '') + (mv('age') ? ' (' + mv('age') + ' р.)' : '') : '';
-  return {left, right, card, pat};
+  return {left, right, card: (DOC === 'epi' && typeof epi027 === 'function' && epi027()) ? '' : card, pat};
 }
 
 function chkWarn(){ const n = renderCheck(); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
@@ -2667,13 +2694,7 @@ function doPrint(){
   if (!itext(out).trim()){ toast('Текст порожній'); return; }
   let framed = false; try{ framed = window.top !== window.self; }catch(e){ framed = true; }
   if (framed){ toast('В онлайн-версії друк заблоковано. Натисніть «Word», щоб зберегти документ, або відкрийте збережений файл pervynnyi-ohliad.html.', 6000); return; }
-  const P = $('#print'); P.innerHTML = '';
-  const H = formHeader();
-  P.append(
-    h('div', {class:'pr-top'}, h('div', {}, ...H.left.flatMap((l,k)=>k ? [h('br'), l] : [l])), h('div', {class:'r'}, ...H.right.flatMap((l,k)=>k ? [h('br'), l] : [l]))),
-    H.card ? h('p', {class:'pr-card'}, H.card) : '',
-    H.pat ? h('p', {class:'pr-pat'}, H.pat) : '');
-  const body = h('div', {class:'pr-body'}); body.innerHTML = out.innerHTML; P.append(body);
+  const P = $('#print'); fillSheet(P);
   toast('Щоб отримати PDF, у вікні друку виберіть «Зберегти як PDF»', 3500);
   window.print();
 }
@@ -2830,7 +2851,7 @@ function importFile(file){
    Chrome / Edge на комп’ютері (File System Access API). У вибраній папці створюється «Первинний огляд — дані»:
    Пацієнти/*.json — кожен пацієнт окремим файлом; Шаблони.json — свої шаблони, формулювання, заготовки; Налаштування.json — лікар, заклад, профіль.
    Браузер лишається основним сховищем, папка — постійна копія, що оновлюється сама. */
-const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick'];
+const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper'];
 const FS = {dir:null, ok:false, busy:false, timer:null, written:{}, err:''};
 const fsSupported = () => { let top = true; try{ top = window.top === window.self; }catch(e){ top = false; } return top && typeof window.showDirectoryPicker === 'function'; };
 function fsIdb(mode, fn){
@@ -2984,6 +3005,8 @@ const HELPS = [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
   '«Копіювати» — весь текст; «Копіювати частинами для МІС» — кожен розділ окремо для вставки в поля МІС.',
   '«Word», «LibreOffice», «Друк / PDF» — документ із шапкою закладу за формами МОЗ.',
+  'Виписка за замовчуванням — за формою № 027/о: пункти 1–8 бланка заповнюються самі (місце проживання й роботи — на вкладці «Запис»). Довільний епікриз — у вкладці «Перебування» → «Вигляд документа».',
+  '«Аркуш» над текстом — перегляд документа як на папері: шапка закладу, логотип (завантажується в «Налаштуваннях»), форма МОЗ. Щоб правити текст вручну, вимкніть «Аркуш».',
   'Текст справа можна правити вручну, але зміна у формі зліва перепише його заново — правте наприкінці.']],
  ['Пацієнти й збереження даних', [
   'Пацієнт зберігається автоматично, щойно вказано ПІБ. Список пацієнтів і «Сьогодні» (що зробити по кожному) — на вкладці «Запис».',
@@ -2993,7 +3016,8 @@ const HELPS = [
   'Перенести пацієнтів на інший пристрій: зберегти копію там → «Відкрити пацієнтів з файлу» тут.']],
  ['Свої шаблони й формулювання', [
   '«Мої шаблони»: зберегти поточний огляд як свою хворобу (з’явиться в групі «Мої»), додати свій варіант у будь-який список, змінити або сховати наявні формулювання.',
-  'Шаблонами можна обмінюватися з колегами файлом («Обмін з колегами»).']],
+  '«+ Своя кнопка» у заголовку вкладки: напис і текст — кнопка з’явиться у «Мої кнопки» і вставлятиме текст у поле «Додатково» (чи інше текстове поле вкладки). Для роду: [набряклий|набрякла].',
+  'Шаблонами можна обмінюватися з колегами файлом («Обмін з колегами») — разом зі своїми кнопками й наборами призначень.']],
  ['Встановлення й оновлення', [
   'Сайт програми: https://bezeza.github.io/pervynnyi-ohliad/',
   'Android (Chrome): меню ⋮ → «Додати на головний екран». iPhone (Safari): «Поділитися» → «На екран „Додому“». Комп’ютер: значок встановлення в адресному рядку.',
@@ -3889,6 +3913,91 @@ function icpcAuto(p){
   const fi = F('dx.icpc'), fr = F('dx.icpcr');
   if (fi && ICPCMAP[p.key]) fi.el.value = ICPCMAP[p.key];
   if (fr){ const c = (p.skarhy || []).map(x=>ICPC_C[x]).find(Boolean); fr.el.value = c || ''; }
+}
+
+/* ===== Свої кнопки-фрази (як у С.О.П.О.Р.): кнопка вставляє свій текст у текстове поле вкладки ===== */
+function myBtnTargets(s){ return s.fields.filter(f=>f.type === 'text' && !f.noOut); }
+function myBtnInsert(b){
+  const s = SECTIONS.find(x=>x.id === b.sec); if (!s) return; const f = s.fields.find(x=>x.id === b.field) || myBtnTargets(s).slice(-1)[0]; if (!f || !f.el) return;
+  const cur = f.el.value.trim(); f.el.value = (cur ? cur + (/[.!?]$/.test(cur) ? ' ' : (f.sep || ' ')) : '') + b.text; f.el.dispatchEvent(new Event('input')); update();
+}
+function renderMyBtns(){
+  SECTIONS.forEach(s=>{
+    if (!s.myBox) return; const list = (CUSTOM.btns || []).filter(b=>b.sec === s.id);
+    s.myBox.innerHTML = ''; s.myBox.hidden = !list.length && !s.myForm;
+    if (s.myForm) s.myBox.append(s.myForm);
+    if (!list.length) return;
+    const row = h('div', {class:'chips'});
+    list.forEach(b=>{
+      const x = h('button', {type:'button', class:'chip-x', title:'Видалити кнопку', 'aria-label':'Видалити кнопку ' + b.label}, '×');
+      x.addEventListener('click', ()=>{ if (!x.dataset.arm){ x.dataset.arm = '1'; x.textContent = 'точно?'; setTimeout(()=>{ delete x.dataset.arm; x.textContent = '×'; }, 3000); return; } CUSTOM.btns = CUSTOM.btns.filter(y=>y !== b); saveCustom(); renderMyBtns(); });
+      row.append(h('span', {class:'chip mytpl mybtn', title:b.text}, h('button', {type:'button', class:'chip-in', onclick:()=>myBtnInsert(b)}, '＋ ' + b.label), x));
+    });
+    s.myBox.append(h('div', {class:'lbl'}, 'Мої кнопки'), row);
+  });
+}
+function myBtnForm(s){
+  if (s.myForm){ s.myForm = null; renderMyBtns(); return; }
+  const T = myBtnTargets(s);
+  const lab = h('input', {placeholder:'напр., Набряк гомілок', 'aria-label':'Напис на кнопці'});
+  const txt = h('textarea', {rows:3, placeholder:'Текст, який вставить кнопка. Для роду: [набряклий|набрякла]', 'aria-label':'Текст для вставки'});
+  const fs = h('select', {'aria-label':'Куди вставляти'}); T.forEach(f=>fs.append(h('option', {value:f.id}, f.label.replace(/\s*\(.*$/, '')))); fs.value = T.slice(-1)[0].id;
+  const save = () => { const l = lab.value.trim(), t = txt.value.trim(); if (!l || !t){ toast('Впишіть напис і текст кнопки'); return; }
+    CUSTOM.btns = CUSTOM.btns || []; CUSTOM.btns.push({sec:s.id, field:fs.value, label:l, text:t}); saveCustom(); s.myForm = null; renderMyBtns(); toast('Кнопку «' + l + '» додано'); };
+  s.myForm = h('div', {class:'pt myform'}, h('h3', {}, 'Своя кнопка для вкладки «' + s.title + '»'),
+    h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {}, 'Напис на кнопці'), lab), h('div', {class:'f'}, h('label', {}, 'Куди вставляти'), fs), h('div', {class:'f wide'}, h('label', {}, 'Текст'), txt)),
+    h('div', {class:'acts2', style:'margin-top:8px'}, h('button', {type:'button', class:'btn primary', onclick:save}, 'Зберегти кнопку'), h('button', {type:'button', class:'more', onclick:()=>{ s.myForm = null; renderMyBtns(); }}, 'Скасувати')),
+    h('p', {class:'chips-hint', style:'margin-top:6px'}, 'Кнопки зберігаються у ваших шаблонах (і в папці даних), передаються колегам через «Мої шаблони» → «Зберегти шаблони у файл».'));
+  renderMyBtns(); lab.focus();
+}
+/* ===== Аркуш: перегляд «як на папері» ===== */
+let PAPER = false; try{ PAPER = localStorage.getItem('po.paper') === '1'; }catch(e){}
+function fillSheet(P){
+  const H = formHeader(), lm = (()=>{ try{ return localStorage.getItem('po.zlogomode') || 'color'; }catch(e){ return 'color'; } })(), logo = lm === 'none' ? '' : (()=>{ try{ return localStorage.getItem('po.zlogo') || ''; }catch(e){ return ''; } })();
+  P.innerHTML = '';
+  P.append(h('div', {class:'pr-top'}, h('div', {class:'pr-l'}, logo ? h('img', {class:'pr-logo' + (lm === 'bw' ? ' bw' : ''), src:logo, alt:''}) : '', h('div', {}, ...H.left.flatMap((l,k)=>k ? [h('br'), l] : [l]))), h('div', {class:'r'}, ...H.right.flatMap((l,k)=>k ? [h('br'), l] : [l]))),
+    H.card ? h('p', {class:'pr-card'}, H.card) : '', H.pat ? h('p', {class:'pr-pat'}, H.pat) : '');
+  const body = h('div', {class:'pr-body'}); body.innerHTML = $('#out').innerHTML; P.append(body);
+}
+function renderPaper(){
+  const pp = $('#paper'); if (!pp) return;
+  $('#out').hidden = PAPER; pp.hidden = !PAPER; $('#outBox').classList.toggle('paperon', PAPER);
+  const b = $('#paperBtn'); if (b) b.setAttribute('aria-pressed', PAPER ? 'true' : 'false');
+  if (!PAPER) return;
+  const sheet = pp.querySelector('.sheet'); fillSheet(sheet);
+  if (!itext($('#out')).trim()) sheet.querySelector('.pr-body').append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
+}
+function zlogoSet(file){
+  if (!file) return; if (file.size > 400000){ toast('Зображення завелике: до 400 КБ (PNG або JPG)', 4000); return; }
+  const rd = new FileReader(); rd.onload = () => { try{ localStorage.setItem('po.zlogo', rd.result); toast('Логотип закладу збережено'); }catch(e){ toast('Не вдалося зберегти логотип: браузер обмежив сховище', 5000); } zlogoRender(); renderPaper(); }; rd.readAsDataURL(file);
+}
+function zlogoRender(){ document.querySelectorAll('.zlogobox').forEach(b=>{ let l = ''; try{ l = localStorage.getItem('po.zlogo') || ''; }catch(e){}
+  b.innerHTML = ''; const fi = h('input', {type:'file', accept:'image/png,image/jpeg,image/svg+xml', hidden:'', onchange:e=>{ zlogoSet(e.target.files[0]); e.target.value = ''; }});
+  let lm = 'color'; try{ lm = localStorage.getItem('po.zlogomode') || 'color'; }catch(e){}
+  const ms = h('select', {'aria-label':'Логотип у документах', style:'width:auto', onchange:e=>{ try{ localStorage.setItem('po.zlogomode', e.target.value); }catch(x){} zlogoRender(); renderPaper(); }}, h('option', {value:'color'}, 'Кольоровий'), h('option', {value:'bw'}, 'Чорно-білий'), h('option', {value:'none'}, 'Без логотипа')); ms.value = lm;
+  b.append(l ? h('img', {src:l, alt:'Логотип закладу', class:'zlogo-prev' + (lm === 'bw' ? ' bw' : '') + (lm === 'none' ? ' off' : '')}) : h('span', {class:'chips-hint'}, 'Логотип не завантажено'), fi,
+    h('button', {type:'button', class:'btn', onclick:()=>fi.click()}, l ? 'Замінити' : 'Завантажити логотип'),
+    l ? ms : '', l ? h('button', {type:'button', class:'more', onclick:()=>{ try{ localStorage.removeItem('po.zlogo'); }catch(e){} zlogoRender(); renderPaper(); }}, 'Прибрати') : ''); }); }
+
+/* ===== Виписка за формою № 027/о: пункти бланка (наказ МОЗ від 14.02.2012 № 110) ===== */
+function epi027(){ const f = F('e_per.vyg'); return !!(f && f.el && f.el.value === '0'); }
+function epi027Parts(){
+  const sec = id => SECTIONS.find(x=>x.id === id), body = id => { const t = sectionText(sec(id)); return t ? t.body : ''; }, full = id => { const t = sectionText(sec(id)); return t ? (t.head ? t.head + t.sep : '') + t.body : ''; };
+  const P = F('e_per.per'), d1 = P.d1.value, d2 = P.d2.value, fd = v => v ? fmtD(v) : '__________';
+  const dob = mv('dob');
+  const elnT = val(F('e_lik.eln'), true), elnS = elnT ? end(cap(elnT).replace(/\.$/, '')).replace(/….$/, '…') : '';
+  let lik = body('e_lik'); if (elnS) lik = lik.replace(' ' + elnS, '').replace(elnS, '').trim();
+  const items = [
+    ['1. Прізвище, ім’я, по батькові:', mv('pib') || '______________________________'],
+    ['2. Дата народження:', dob ? fmtD(dob) : '__________'],
+    ['3. Місце проживання:', mv('addr') || '______________________________'],
+    ['4. Місце роботи та рід занять:', mv('work') || '______________________________'],
+    ['5. Дати:', `госпіталізації — ${fd(d1)}; виписки — ${fd(d2)}.`],
+    ['6. Повний діагноз (основне захворювання, супутні захворювання та ускладнення):', body('dx') || '______________________________', '\n'],
+    ['7. Короткий анамнез, діагностичні дослідження, перебіг хвороби, проведене лікування, стан при направленні, при виписці:', [body('e_per'), full('e_obs'), lik].filter(Boolean).join('\n') || '______________________________', '\n'],
+    ['8. Лікувальні та трудові рекомендації:', [body('e_rek'), elnS].filter(Boolean).join('\n') || '______________________________', '\n']
+  ];
+  return items.map(([head, b, sep])=>({head, body:b, sep: sep || ' ', title:head}));
 }
 
 /* ===== Підказки до клінічного діагнозу ===== */
@@ -4844,7 +4953,7 @@ function tplPanel(){
     h('h3', {}, 'Обмін з колегами'),
     h('p', {class:'chips-hint'}, 'Збережіть свої шаблони у файл і передайте колезі. Колега відкриває файл тут же — шаблони додаються до його власних, нічого не стирається. Дані пацієнтів у файл шаблонів не потрапляють.'),
     h('div', {class:'acts2'},
-      h('button', {type:'button', class:'btn', onclick:()=>{ if (!Object.keys(CUSTOM.opts).length && !CUSTOM.presets.length && !Object.keys(CUSTOM.ovr).length && !Object.keys(CUSTOM.hid).length && !CUSTOM.diary.length){ toast('Своїх шаблонів ще немає'); return; } downloadJSON({type:'po-templates', opts:CUSTOM.opts, presets:CUSTOM.presets, ovr:CUSTOM.ovr, hid:CUSTOM.hid, diary:CUSTOM.diary}, 'shablony.json'); }}, 'Зберегти шаблони у файл'),
+      h('button', {type:'button', class:'btn', onclick:()=>{ if (!Object.keys(CUSTOM.opts).length && !CUSTOM.presets.length && !Object.keys(CUSTOM.ovr).length && !Object.keys(CUSTOM.hid).length && !CUSTOM.diary.length && !(CUSTOM.btns || []).length && !(CUSTOM.rxsets || []).length){ toast('Своїх шаблонів ще немає'); return; } downloadJSON({type:'po-templates', opts:CUSTOM.opts, presets:CUSTOM.presets, ovr:CUSTOM.ovr, hid:CUSTOM.hid, diary:CUSTOM.diary, btns:CUSTOM.btns || [], rxsets:CUSTOM.rxsets || []}, 'shablony.json'); }}, 'Зберегти шаблони у файл'),
       h('button', {type:'button', class:'btn', onclick:()=>file.click()}, 'Відкрити шаблони з файлу'), file)));
   return wrap;
 }
@@ -4885,6 +4994,9 @@ function importTpl(file){
       for (const key in (o.ovr || {})){ const src = o.ovr[key]; if (!src || typeof src !== 'object') continue; CUSTOM.ovr[key] = Object.assign(CUSTOM.ovr[key] || {}, src); r++; }
       for (const key in (o.hid || {})){ if (Array.isArray(o.hid[key])) CUSTOM.hid[key] = [...new Set([...(CUSTOM.hid[key] || []), ...o.hid[key]])]; }
       (o.diary || []).forEach(t=>{ if (t && t.name && t.v && !CUSTOM.diary.some(x=>x.name === t.name)){ CUSTOM.diary.push(t); r++; } });
+      (o.btns || []).forEach(b=>{ if (b && b.sec && b.label && b.text && !(CUSTOM.btns = CUSTOM.btns || []).some(x=>x.sec === b.sec && x.label === b.label)){ CUSTOM.btns.push(b); r++; } });
+      (o.rxsets || []).forEach(b=>{ if (b && b.name && Array.isArray(b.rows) && !(CUSTOM.rxsets = CUSTOM.rxsets || []).some(x=>x.name === b.name)){ CUSTOM.rxsets.push(b); r++; } });
+      renderMyBtns();
       applyOvrAll(); renderDtpl();
       saveCustom(); renderTplLists(); toast(`Додано варіантів: ${n}, хвороб: ${m}, змін і шаблонів щоденника: ${r}`);
     }catch(e){ toast('Це не файл шаблонів цієї програми або він пошкоджений', 5000); }
@@ -5104,8 +5216,10 @@ TABS.forEach((s,i)=>{
           const b = s.fields.find(f=>f.bo); if (b.el.value === '') b.el.value = 0; mark(b.el, b); update(); toast('Записано коротко: ' + O(b.opts[+b.el.value]).t);
         }}, 'Б/о') : null,
         hasNorm ? h('button', {type:'button', class:'btn norm', title:'Детальний опис норми по кожному пункту', onclick:()=>{applyNorm(s); update();}}, '= Норма =') : null,
+        s.fields.some(f=>f.type === 'text') ? h('button', {type:'button', class:'more', title:'Створити свою кнопку з готовою фразою для цієї вкладки', onclick:()=>myBtnForm(s)}, '+ Своя кнопка') : null,
         h('button', {type:'button', class:'more', title:'Очистити поля цієї вкладки', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно?'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Очистити'; }, 3000); return; } delete b.dataset.arm; b.textContent = 'Очистити'; clearSection(s); update(); toast('Вкладку очищено'); }}, 'Очистити')));
     grid = h('div', {class:'grid'});
+    if (s.fields.some(f=>f.type === 'text')){ s.myBox = h('div', {class:'f wide mybtns', hidden:''}); grid.append(s.myBox); }
     if (s.id === 'd_main') grid.append(h('div', {class:'f wide'}, diaryBlock()));
     if (s.id === 'd_lik' || s.id === 'e_obs') grid.append(h('div', {class:'f wide'}, resBlock()));
     if (s.id === 'ctrl') grid.prepend(h('div', {class:'f wide'}, ctrlBlock()));
@@ -5177,6 +5291,7 @@ $('#regen').onclick = ()=>{ dirty = false; $('#banner').hidden = true; update();
 $('#allNorm').onclick = ()=>{ SECTIONS.filter(s=>s.objective && s.docs.includes(DOC)).forEach(applyNorm); update(); toast('Норму виставлено в усіх системах'); };
 $('#clearAll').onclick = newPatient;
 $('#printBtn').onclick = doPrint;
+$('#paperBtn').onclick = ()=>{ PAPER = !PAPER; try{ localStorage.setItem('po.paper', PAPER ? '1' : '0'); }catch(e){} renderPaper(); };
 $('#docxBtn').onclick = saveDocx;
 $('#odtBtn').onclick = saveOdt;
 $('#themeBtn').onclick = ()=>{ THEME = {auto:'day', day:'night', night:'auto'}[THEME]; try{ localStorage.setItem('po.theme', THEME); }catch(e){} applyTheme(); toast({auto:'Тема як у системі', day:'Денна тема', night:'Нічна тема'}[THEME]); };
@@ -5296,7 +5411,8 @@ $('#quickBtn').addEventListener('click', ()=>{ QUICK = !QUICK; try{ localStorage
   toast(QUICK ? 'Швидкий прийом: лише головне. Показники та стан систем — на вкладці «Показники»' : 'Повний огляд: усі вкладки', 3500); });
 applyOvrAll(); renderRes(); update();
 window.addEventListener('resize', renderPtBar);
-renderPatients(); renderDiaries(); fsInit(); storePersist(); dxCodeUI(); dictLoad();
+renderPatients(); renderDiaries(); fsInit(); storePersist(); dxCodeUI(); dictLoad(); renderMyBtns(); zlogoRender();
+new MutationObserver(()=>{ if (PAPER){ clearTimeout(renderPaper.t); renderPaper.t = setTimeout(renderPaper, 120); } }).observe($('#out'), {childList:true, subtree:true, characterData:true}); renderPaper();
 try{ const last = localStorage.getItem('po.last'); const st = loadStore(); if (last && st[last]){ PID = last; restore(st[last].snap); markSaved(true); toast('Відкрито останнього пацієнта: ' + st[last].name, 3000); } }catch(e){}
 setTimeout(()=>{ const b = backupInfo(); if (b.due) toast(`Нагадування: резервна копія пацієнтів ${b.t ? 'від ' + new Date(b.t).toLocaleDateString('uk-UA') : 'ще не робилась'}. Вкладка «Запис» → «Зберегти всіх у файл»`, 6000); }, 3500);
 let lastPID; setInterval(()=>{ if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
