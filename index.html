@@ -676,7 +676,7 @@ const SECTIONS = [
   {id:'cx', type:'text', label:'Додатково (своїми словами)', tpl:'{v}', cont:true},
   {id:'none', type:'sel', label:'Якщо скарг немає', tpl:'{v}', unless:'c', opts:['активно не пред’являє','скарг не пред’являє','скарг не пред’являє, почувається задовільно']}
 ]},
-{ id:'morbi', title:'Анамнез хвороби', short:'Анамнез хв.', head:'Анамнез захворювання:', fields:[
+{ id:'morbi', title:'Анамнез хвороби', short:'Анамнез хв.', head:'Анамнез захворювання:', head110:'Анамнез хвороби:', fields:[
   {id:'tdt', type:'line', loc:true, when:()=>locOn(), label:'Травма: коли (дата, час)', placeholder:'напр., 10.10.2026 близько 9:00', tpl:'Травму [отримав|отримала] {v}'},
   {id:'tmech', type:'sel', loc:true, when:()=>locOn(), label:'Травма: обставини', tpl:'{v}', cont:true, joiner:': ', opts:[
     '[впав|впала] на витягнуту руку','[впав|впала] з висоти власного зросту на бік','[впав|впала] з висоти власного зросту, [вдарився|вдарилася] головою',
@@ -753,7 +753,7 @@ const SECTIONS = [
     'Учасник бойових дій.',
     'Проживає ….']}
 ]},
-{ id:'zah', title:'Загальний стан', short:'Загальний', head:'Об’єктивно:', objective:true, fields:[
+{ id:'zah', title:'Загальний стан', short:'Загальний', head:'Об’єктивно:', head110:'Об’єктивний стан хворого:', objective:true, fields:[
   {id:'stan', type:'sel', label:'Загальний стан', norm:0, tpl:'Загальний стан {v}', opts:['задовільний','середньої тяжкості','тяжкий','вкрай тяжкий']},
   {id:'svid', type:'sel', label:'Свідомість', norm:0, tpl:'{v}', cont:true, opts:['свідомість ясна','оглушення','сопор','кома']},
   {id:'pol', type:'sel', label:'Положення', norm:0, tpl:'положення {v}', cont:true, opts:['активне','вимушене (ортопное)','вимушене','пасивне','вимушене: на боці з закинутою головою та приведеними до живота ногами']},
@@ -904,10 +904,10 @@ const SECTIONS = [
 ]},
 { id:'dx', docs:['ohl','epi','kons','zav','konc','etap','per','napr','gosp'], title:'Діагноз і план обстеження', short:'Діагноз', headBr:true, fields:[
   {id:'vyd', type:'sel', headOnly:true, docs:['ohl'], def:1, label:'Вид діагнозу', opts:['Попередній діагноз','Клінічний діагноз','Заключний клінічний діагноз']},
-  {id:'osn', type:'text', rows:2, wide:true, dz:true, label:'Основний', tpl:'Основний: {v}'},
+  {id:'osn', type:'text', rows:2, wide:true, dz:true, label:'Основний', tpl:'Основний: {v}', tpl110:'а) основний: {v}'},
   {id:'mkh', type:'line', dz:true, label:'Код МКХ-10', tpl:'({v})', cont:true, joiner:' '},
-  {id:'uskl', type:'text', rows:2, dz:true, label:'Ускладнення', tpl:'Ускладнення: {v}', br:true},
-  {id:'supd', type:'text', rows:2, dz:true, label:'Супутні', tpl:'Супутні: {v}', br:true, fromVitae:true},
+  {id:'uskl', type:'text', rows:2, dz:true, label:'Ускладнення', tpl:'Ускладнення: {v}', tpl110:'б) ускладнення основного: {v}', br:true},
+  {id:'supd', type:'text', rows:2, dz:true, label:'Супутні', tpl:'Супутні: {v}', tpl110:'в) супутній: {v}', br:true, fromVitae:true},
   {id:'icpcr', type:'line', only:'amb', noOut:true, label:'ICPC-2: причина звернення', placeholder:'напр., R05'},
   {id:'icpc', type:'line', only:'amb', noOut:true, label:'ICPC-2: діагноз (проблема)', placeholder:'напр., R81'},
   {id:'icpcx', type:'auto', only:'amb', label:'Коди ICPC-2 (піде в документ)', tpl:'{v}', br:true, fn:()=>{ const r = (F('dx.icpcr').el.value || '').trim(), d = (F('dx.icpc').el.value || '').trim(); return [r ? 'причина звернення — ' + r : '', d ? 'діагноз — ' + d : ''].filter(Boolean).length ? 'Коди ICPC-2: ' + [r ? 'причина звернення — ' + r : '', d ? 'діагноз — ' + d : ''].filter(Boolean).join('; ') : ''; }},
@@ -991,7 +991,11 @@ const SECTIONS = [
 ]},
 /* ======== ВИПИСНИЙ ЕПІКРИЗ ======== */
 { id:'e_per', docs:['epi'], title:'Перебування в стаціонарі', short:'Перебування', head:'', fields:[
-  {id:'vyg', type:'sel', noOut:true, def:0, wide:true, label:'Вигляд документа', opts:['За формою № 027/о — пункти бланка «Виписка із медичної карти стаціонарного хворого» (наказ МОЗ № 110)','Довільний виписний епікриз']},
+  {id:'vyg', type:'sel', noOut:true, def:0, wide:true, label:'Вигляд документа', opts:['За формою № 027/о — пункти бланка «Виписка із медичної карти амбулаторного (стаціонарного) хворого» (наказ МОЗ № 110)','Довільний виписний епікриз','Епікриз у медичну карту (форма № 003/о)']},
+  {id:'kudy', type:'line', noOut:true, wide:true, label:'Форма 027/о: куди направляється виписка («У …»)', placeholder:'напр., КНП «ЦПМСД № 1», сімейному лікарю за місцем проживання'},
+  {id:'dzah', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата захворювання (якщо порожньо — з анамнезу)'},
+  {id:'dnapr', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата направлення в стаціонар'},
+  {id:'vs', type:'sel', noOut:true, def:0, label:'027/о, п. 5б', opts:['виписки','смерті']},
   {id:'per', type:'period', label:'Період лікування', tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
   {id:'nadh', type:'sel', label:'Госпіталізація (якщо не вибрано — береться з первинного огляду)', tpl:'{v}', cont:true,
     fallback:()=>{ const a = val(F('morbi.hosp'), true); if (!a) return ''; const b = val(F('morbi.hospd'), true); return a.replace(/^\[([^|]*)\|([^\]]*)\]/, (m,x,y)=>'[' + x.toLowerCase() + '|' + y.toLowerCase() + ']').replace(/^[А-ЯІЇЄҐ]/, c=>c.toLowerCase()) + (b ? ' ' + b : ''); },
@@ -1583,7 +1587,7 @@ function buildField(s, f){
     wrap.append(row);
   } else {
     wrap.append(h('label', {for:id}, f.label));
-    const t = f.type === 'line' ? h('input', {id, oninput:update, placeholder:f.placeholder || '', list:f.list ? id + '_dl' : null}) : h('textarea', {id, rows:f.rows||2, oninput:update});
+    const t = f.type === 'line' ? h('input', {id, type:f.itype || 'text', oninput:update, placeholder:f.placeholder || '', list:f.list ? id + '_dl' : null}) : h('textarea', {id, rows:f.rows||2, oninput:update});
     if (f.list) wrap.append(h('datalist', {id:id + '_dl'}, ...f.list.map(o=>h('option', {value:o}))));
     f.el = t;
     const mb = f.type === 'text' ? micBtn(t) : null;
@@ -1865,6 +1869,7 @@ const TPLURG = {gh:KRIT.gh[0], ihd:KRIT.ihd[0], dm:DM[0], dpn:DM[0], gastr:VOMIT
 let HOSPDEF = 'preset'; try{ HOSPDEF = localStorage.getItem('po.hospdef') || 'preset'; }catch(e){}
 /* Спеціальність: 'tr' — травматологія (вкладка «Травма» і поля травми видимі завжди) */
 let SPEC = 'ter'; try{ SPEC = localStorage.getItem('po.spec') || 'ter'; }catch(e){}
+let F110 = true; try{ F110 = localStorage.getItem('po.f110') !== '0'; }catch(e){}   // документи за бланками наказу МОЗ № 110
 function locOn(){
   if (SPEC === 'tr') return true;
   const p = curKey && PRESETS.find(x=>x.key === curKey); if (p && p.group === 'tr') return true;
@@ -1957,10 +1962,10 @@ function sectionText(s){
     const v = val(f); if (!v){ prev = false; continue; }
     if (f.dz) needHead = true;
     const join = f.cont && prev && out.length;
-    const tp = !join && f.solo ? f.solo : f.tpl;
+    const tp = !join && f.solo ? f.solo : (F110 && f.tpl110) ? f.tpl110 : f.tpl;
     const t = f.type === 'num' ? v : tp.replace('{v}', v);
     if (join) out[out.length-1].t = out[out.length-1].t.replace(/\.$/,'') + (f.joiner || ', ') + t;
-    else out.push({t:(s.nocap && !out.length) ? t : cap(t), br:!!f.br});
+    else out.push({t:((s.nocap && !out.length) || /^[а-в]\) /.test(t)) ? t : cap(t), br:!!f.br});
     prev = true; if (f.type !== 'num') rich = true;
   }
   // «без особливостей» — лише коли в системі не описано жодної зміни (показники АТ, ЧСС тощо зберігаються)
@@ -1969,7 +1974,7 @@ function sectionText(s){
   if (!out.length) return null;
   let body = '';
   out.forEach((o,i)=>{ body += (i===0 ? '' : (o.br ? '\n' : ' ')) + end(o.t); });
-  let head = (MODE === 'amb' && s.headAmb) || s.head || '';
+  let head = (MODE === 'amb' && s.headAmb) || (F110 && MODE === 'hosp' && s.head110) || s.head || '';
   const hf = s.fields.find(f=>f.headOnly);
   if (hf) head = needHead ? (DOC === 'epi' ? 'Заключний клінічний діагноз' : DOC === 'kons' || DOC === 'napr' ? 'Діагноз' : DOC === 'ohl' ? val(hf) : 'Клінічний діагноз') + ':' : '';
   return {head, body, sep: s.headBr ? '\n' : ' '};
@@ -2002,7 +2007,7 @@ const TESTS = {
   'УЗД ОЧП':'УЗД ОЧП (…): ….',
   'ФГДС':'ФГДС (…): ….'
 };
-const SUBHEADS = /(^|\n)(Основний:|Ускладнення:|Супутні:|План обстеження:|Рекомендації:)/g;
+const SUBHEADS = /(^|\n)(Основний:|Ускладнення:|Супутні:|План обстеження:|Рекомендації:|а\) основний:|б\) ускладнення основного:|в\) супутній:)/g;
 function generate(){
   const ORDS = {epi:['e_per','dx','e_obs','e_lik','e_rek'], kons:['k_main','loc','ctrl','dx','e_obs','e_rek','eln'], shch:['d_main','d_obj','d_lik','ctrl','RX','eln'], gosp:['gs_main','dx','e_obs','hosp'], pam:['p_main'], rx:['RX'], zav:['z_main','dx','RX'], konc:['c_main','dx','e_obs','RX','c_end'], etap:['t_main','dx','e_obs','t_lik'], per:['t_main','dx','e_obs','t_lik'], napr:['n_main','dx','e_obs','n_end'], dov:['v_main'], zgoda:['g_main']};
   let ORD_IDS = ORDS[DOC] ? ORDS[DOC].slice() : SECTIONS.filter(s=>s.docs.includes(DOC)).map(s=>s.id);
@@ -2011,7 +2016,7 @@ function generate(){
   ORD_IDS = ORD_IDS.filter(id=>{ const sc = SECTIONS.find(x=>x.id === id); return !sc || !sc.only || sc.only === MODE; });
   RXT.tab.classList.toggle('filled', RX.length > 0);
   SECTIONS.forEach(s=>{ if (!ORD_IDS.includes(s.id)) s.tab.classList.remove('filled'); });
-  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
+  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
   LASTPARTS = parts;
   const M = metaLines();
   let plain = parts.map(p=>(p.head ? p.head + p.sep : '') + p.body).join('\n');
@@ -2116,9 +2121,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.11', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.12', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['2.11', '10.10.2026', 'виписка за формою № 027/о (пункти бланка, наказ МОЗ № 110), місце проживання й робота пацієнта; перегляд «Аркуш» — документ як на папері з шапкою закладу й логотипом; логотип закладу кольоровий, чорно-білий або без нього (і в друці); свої кнопки-фрази у вкладках («+ Своя кнопка»); поле «Додатково» в кожній системі огляду'],
+  ['2.12', '10.10.2026', 'документи за бланками наказу МОЗ № 110: виписка 027/о пункт у пункт (заклад «У…», дати захворювання й направлення, «виписки або смерті»), епікриз форми 003/о, консультаційний висновок 028/о (пункти 1–8, М. П., підписи), діагноз «а) основний, б) ускладнення основного, в) супутній»; логотип у Word і LibreOffice; перемикач «Оформлення документів» у «Налаштуваннях»'],
+  ['2.11', '10.10.2026', 'виписка за формою № 027/о (пункти бланка, наказ МОЗ № 110), місце проживання й робота пацієнта; перегляд «Аркуш» — документ як на папері з шапкою закладу й логотипом; логотип закладу кольоровий, чорно-білий або без нього — у друці, Word і LibreOffice; свої кнопки-фрази у вкладках («+ Своя кнопка»); поле «Додатково» в кожній системі огляду'],
   ['2.10', '10.10.2026', 'двобічні варіанти (пневмонія, пієлонефрит, радикулопатія, тромбоз, переломи ребер); пошук і підбір кодів МКХ-10 для основного й супутніх діагнозів; ICPC-2 для сімейного лікаря (причина звернення й діагноз); завантаження офіційних НК 025:2021 і НК 026:2021 з файлу, пошук послуг; профіль «Сімейний лікар»'],
   ['2.9', '10.10.2026', 'набори призначень за спеціальностями (терапія, неврологія, хірургія, інфекційні, травматологія) і свої набори; підказки до клінічного діагнозу (схема для кожної хвороби, загальні правила, перевірка формулювання й коду МКХ-10); телефон: кнопка «Розділи» з усіма вкладками, документ — одним списком'],
   ['2.8', '10.10.2026', 'вкладка «Довідка» з пошуком: як працювати з програмою; постійне сховище — браузер не видаляє дані програми сам'],
@@ -2543,6 +2549,11 @@ function buildMetaPanel(){
       (()=>{ const e = h('select', {id:'set_spec'}, h('option', {value:'ter'}, 'Терапія, неврологія, хірургія, інфекційні (вкладка «Травма» — лише для травм)'), h('option', {value:'tr'}, 'Травматологія (вкладка «Травма» і поля травми завжди видимі)'), h('option', {value:'fam'}, 'Сімейний лікар (амбулаторний режим, коди ICPC-2)'));
         e.value = SPEC; e.addEventListener('change', ()=>{ SPEC = e.value; try{ localStorage.setItem('po.spec', SPEC); }catch(x){} if (SPEC === 'tr' && HV.filter){ curGroup = 'tr'; HV.filter(); } if (SPEC === 'fam' && MODE !== 'amb'){ MODE = 'amb'; try{ localStorage.setItem('po.mode', MODE); }catch(x){} applyMode(); } syncLoc(true); update(); toast(SPEC === 'tr' ? 'Профіль: травматологія — вкладка «Травма» і заготовки травм' : SPEC === 'fam' ? 'Профіль: сімейний лікар — амбулаторний режим, коди ICPC-2' : 'Профіль: загальний'); }); return e; })(),
       h('p', {class:'chips-hint', style:'margin-top:6px'}, 'Для травматології вкладка «Травма» (Status localis), обставини травми, щеплення проти правця і місцевий статус у щоденнику показуються завжди, а у «При хворобі» першими відкриваються травматологічні заготовки.'))),
+    h('h3', {class:'sub'}, 'Оформлення документів'),
+    h('div', {class:'grid'}, h('div', {class:'f wide'}, h('label', {for:'set_f110'}, 'Документи'),
+      (()=>{ const e = h('select', {id:'set_f110'}, h('option', {value:'1'}, 'За бланками наказу МОЗ № 110: пункти форм 027/о, 028/о, 003/о'), h('option', {value:'0'}, 'Довільне оформлення'));
+        e.value = F110 ? '1' : '0'; e.addEventListener('change', ()=>{ F110 = e.value === '1'; try{ localStorage.setItem('po.f110', e.value); }catch(x){} update(); toast(F110 ? 'Документи — за бланками наказу МОЗ № 110' : 'Довільне оформлення документів'); }); return e; })(),
+      h('p', {class:'chips-hint', style:'margin-top:6px'}, 'За бланками: діагноз — «а) основний, б) ускладнення основного, в) супутній»; консультація — пункти 1–8 форми № 028/о; виписка — форма № 027/о або епікриз форми № 003/о (обирається у вкладці «Перебування»).'))),
     h('h3', {class:'sub'}, 'Довідники кодів'),
     h('p', {class:'chips-hint'}, 'Вбудовано: МКХ-10 (ВООЗ) — найуживаніші коди, і ICPC-2. Для кодування за національними класифікаторами завантажте офіційні таблиці НК 025:2021 і НК 026:2021, збережені як CSV (UTF-8): код в одному стовпці, назва — в іншому. Дані лишаються на цьому пристрої.'),
     h('div', {class:'dictbox'}),
@@ -2602,8 +2613,11 @@ function zgodaText(){
 function metaLines(){
   const foot = [];
   if (DOCTITLES[DOC]){
-    const f027 = DOC === 'epi' && epi027();
-    const head = f027 ? [{t:'ВИПИСКА', b:true, c:true}, {t:'із медичної карти стаціонарного хворого № ' + (mv('card') || '______'), b:true, c:true}] : [{t: DOCTITLES[DOC], b:true, c:true}];
+    const f027 = DOC === 'epi' && epi027(), f003 = DOC === 'epi' && epi003(), f028 = DOC === 'kons' && F110;
+    const MON = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'], ddate = v => { if (!v) return '«____» ______________ 20___ року'; const [y, m, d] = v.split('-'); return `«${d}» ${MON[+m - 1]} ${y} року`; };
+    const head = f027 ? [{t:'ВИПИСКА', b:true, c:true}, {t:'із медичної карти амбулаторного (стаціонарного) хворого', b:true, c:true}]
+      : f003 ? [{t:'Медична карта стаціонарного хворого № ' + (mv('card') || '______') + (mv('pib') ? ' — ' + mv('pib') : ''), b:false}, {t:'ЕПІКРИЗ (' + (F('e_per.vs').el.value === '1' ? 'посмертний' : 'виписний') + ')', b:true, c:true}]
+      : f028 ? [{t:'КОНСУЛЬТАЦІЙНИЙ ВИСНОВОК СПЕЦІАЛІСТА', b:true, c:true}] : [{t: DOCTITLES[DOC], b:true, c:true}];
     const age = mv('age');
     if (DOC === 'zgoda' || DOC === 'dov'){
       const d = (mv('dt') || '').split('T')[0];
@@ -2614,14 +2628,28 @@ function metaLines(){
       if (DOC === 'dov') foot.push('М. П.');
       return {head, foot};
     }
-    if (mv('pib') && !f027) head.push({t:'[Пацієнт|Пацієнтка]: ' + mv('pib') + (mv('dob') ? `, ${fmtD(mv('dob'))} р. н.` : '') + (age ? ` (${age} р.)` : '') + '.', b:false});
-    if (mv('vidd')) head.push({t:(DOC === 'kons' ? 'Підрозділ: ' : 'Відділення: ') + mv('vidd') + '.', b:false});
+    if (mv('pib') && !f027 && !f003 && !f028) head.push({t:'[Пацієнт|Пацієнтка]: ' + mv('pib') + (mv('dob') ? `, ${fmtD(mv('dob'))} р. н.` : '') + (age ? ` (${age} р.)` : '') + '.', b:false});
+    if (mv('vidd') && !f027 && !f003 && !f028) head.push({t:(DOC === 'kons' ? 'Підрозділ: ' : 'Відділення: ') + mv('vidd') + '.', b:false});
     if (DOC === 'rx'){ const o = val(F('dx.osn'), true); if (o) head.push({t:'Діагноз: ' + o + (val(F('dx.mkh'), true) ? ' (' + val(F('dx.mkh'), true) + ')' : '') + '.', b:false}); }
     if (DOC === 'konc'){
       const dt0 = fmtDT(mv('dt')); if (dt0) head.push({t:'Дата і час проведення: ' + dt0 + '.', b:false});
       const K = koncMembers(); const sig = m => `${m.pos} ______________ ${m.name}`;
       if (K.hol) foot.push('Голова консиліуму:', sig(K.hol));
       if (K.mem.length) foot.push('Члени консиліуму:', ...K.mem.map(sig));
+      return {head, foot};
+    }
+    if (f027){
+      foot.push(ddate(F('e_per.per').d2.value || (mv('dt') || '').split('T')[0]));
+      foot.push(`Лікуючий лікар ______________ ${mv('doc')}`);
+      if (mv('zav')) foot.push(`Завідувач відділення ______________ ${mv('zav')}`);
+      return {head, foot};
+    }
+    if (f003){
+      foot.push(`Підпис лікаря ______________ ${mv('doc')}`, `Завідувач відділення ______________ ${mv('zav')}`, ddate(F('e_per.per').d2.value || (mv('dt') || '').split('T')[0]));
+      return {head, foot};
+    }
+    if (f028){
+      foot.push(ddate((mv('dt') || '').split('T')[0]) + '          М. П.', `Лікар-консультант ______________ ${mv('doc')}`, `Завідувач поліклініки або стаціонарного відділення ______________ ${mv('zav')}`);
       return {head, foot};
     }
     const d2 = (DOC === 'epi' && F('e_per.per').d2.value) || (DOC === 'etap' && F('t_main.pe').d2.value) || (DOC === 'per' && F('t_main.pp').d2.value) || (mv('dt') || '').split('T')[0];
@@ -2684,7 +2712,7 @@ function formHeader(){
   const card = !code ? (mv('card') ? 'Медична карта № ' + mv('card') : '') : (['027/о','028/о','003-6/о'].includes(code) ? FORMS[code] + ' (мед. карта № ' + (mv('card') || '______') + ')' : FORMS[code] + ' № ' + (mv('card') || '________'))
     + (mv('vidd') && !['dov','zgoda'].includes(DOC) ? ' · ' + mv('vidd') : '');
   const pat = !['epi','kons','rx','etap','per','napr','dov','zgoda'].includes(DOC) ? 'Пацієнт: ' + (mv('pib') || '_______________________________') + (mv('dob') ? ', ' + fmtD(mv('dob')) + ' р. н.' : '') + (mv('age') ? ' (' + mv('age') + ' р.)' : '') : '';
-  return {left, right, card: (DOC === 'epi' && typeof epi027 === 'function' && epi027()) ? '' : card, pat};
+  return {left, right, card: ((DOC === 'epi' && typeof epi027 === 'function' && (epi027() || epi003())) || (DOC === 'kons' && F110)) ? '' : card, pat};
 }
 
 function chkWarn(){ const n = renderCheck(); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
@@ -2851,7 +2879,7 @@ function importFile(file){
    Chrome / Edge на комп’ютері (File System Access API). У вибраній папці створюється «Первинний огляд — дані»:
    Пацієнти/*.json — кожен пацієнт окремим файлом; Шаблони.json — свої шаблони, формулювання, заготовки; Налаштування.json — лікар, заклад, профіль.
    Браузер лишається основним сховищем, папка — постійна копія, що оновлюється сама. */
-const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper'];
+const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110'];
 const FS = {dir:null, ok:false, busy:false, timer:null, written:{}, err:''};
 const fsSupported = () => { let top = true; try{ top = window.top === window.self; }catch(e){ top = false; } return top && typeof window.showDirectoryPicker === 'function'; };
 function fsIdb(mode, fn){
@@ -3005,7 +3033,8 @@ const HELPS = [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
   '«Копіювати» — весь текст; «Копіювати частинами для МІС» — кожен розділ окремо для вставки в поля МІС.',
   '«Word», «LibreOffice», «Друк / PDF» — документ із шапкою закладу за формами МОЗ.',
-  'Виписка за замовчуванням — за формою № 027/о: пункти 1–8 бланка заповнюються самі (місце проживання й роботи — на вкладці «Запис»). Довільний епікриз — у вкладці «Перебування» → «Вигляд документа».',
+  'Документи за бланками наказу МОЗ № 110 («Налаштування» → «Оформлення документів»): консультація — пункти 1–8 форми № 028/о; діагноз — «а) основний, б) ускладнення основного, в) супутній»; у стаціонарі — «Анамнез хвороби», «Об’єктивний стан хворого», як у формі № 003/о.',
+  'Виписка за замовчуванням — за формою № 027/о: пункти 1–8 бланка заповнюються самі (місце проживання й роботи — на вкладці «Запис»). Епікриз у медичну карту (форма № 003/о) або довільний — у вкладці «Перебування» → «Вигляд документа».',
   '«Аркуш» над текстом — перегляд документа як на папері: шапка закладу, логотип (завантажується в «Налаштуваннях»), форма МОЗ. Щоб правити текст вручну, вимкніть «Аркуш».',
   'Текст справа можна правити вручну, але зміна у формі зліва перепише його заново — правте наприкінці.']],
  ['Пацієнти й збереження даних', [
@@ -3985,19 +4014,63 @@ function epi027Parts(){
   const sec = id => SECTIONS.find(x=>x.id === id), body = id => { const t = sectionText(sec(id)); return t ? t.body : ''; }, full = id => { const t = sectionText(sec(id)); return t ? (t.head ? t.head + t.sep : '') + t.body : ''; };
   const P = F('e_per.per'), d1 = P.d1.value, d2 = P.d2.value, fd = v => v ? fmtD(v) : '__________';
   const dob = mv('dob');
+  let dzah = F('e_per.dzah').el.value;
+  if (!dzah){ const md = F('morbi.dur'); const n = md && md.inp ? parseInt(md.inp.value, 10) : NaN, u = md && md.unit ? +md.unit.value : 0, base = d1 || (mv('dt') || '').split('T')[0];
+    if (n > 0 && base && (u === 0 || u === 1)){ const d = new Date(base + 'T12:00'); d.setDate(d.getDate() - n * (u === 1 ? 7 : 1)); dzah = d.toISOString().slice(0, 10); } }
   const elnT = val(F('e_lik.eln'), true), elnS = elnT ? end(cap(elnT).replace(/\.$/, '')).replace(/….$/, '…') : '';
   let lik = body('e_lik'); if (elnS) lik = lik.replace(' ' + elnS, '').replace(elnS, '').trim();
   const items = [
-    ['1. Прізвище, ім’я, по батькові:', mv('pib') || '______________________________'],
+    ['У', val(F('e_per.kudy'), true) || '______________________________ (найменування і місцезнаходження закладу охорони здоров’я, куди направляється виписка)'],
+    ['1. Прізвище, ім’я, по батькові хворого:', mv('pib') || '______________________________'],
     ['2. Дата народження:', dob ? fmtD(dob) : '__________'],
-    ['3. Місце проживання:', mv('addr') || '______________________________'],
-    ['4. Місце роботи та рід занять:', mv('work') || '______________________________'],
-    ['5. Дати:', `госпіталізації — ${fd(d1)}; виписки — ${fd(d2)}.`],
+    ['3. Місце проживання хворого:', mv('addr') || 'область ________, район ________, місто (село) ________, вулиця ________, будинок ____, кв. ____'],
+    ['4. Місце роботи (посада):', mv('work') || '______________________________'],
+    ['5. Дати:', `а) в амбулаторно-поліклінічному закладі: захворювання — ${fd(dzah)}; направлення в стаціонар — ${fd(F('e_per.dnapr').el.value)}; б) у стаціонарі: надходження — ${fd(d1)}; ${F('e_per.vs').el.value === '1' ? 'смерті' : 'виписки'} — ${fd(d2)}.`],
     ['6. Повний діагноз (основне захворювання, супутні захворювання та ускладнення):', body('dx') || '______________________________', '\n'],
     ['7. Короткий анамнез, діагностичні дослідження, перебіг хвороби, проведене лікування, стан при направленні, при виписці:', [body('e_per'), full('e_obs'), lik].filter(Boolean).join('\n') || '______________________________', '\n'],
-    ['8. Лікувальні та трудові рекомендації:', [body('e_rek'), elnS].filter(Boolean).join('\n') || '______________________________', '\n']
+    ['8. Лікувальні і трудові рекомендації:', [body('e_rek'), elnS].filter(Boolean).join('\n') || '______________________________', '\n']
   ];
   return items.map(([head, b, sep])=>({head, body:b, sep: sep || ' ', title:head}));
+}
+
+/* ===== Епікриз у медичну карту (форма № 003/о, с. 8–9) ===== */
+function epi003(){ const f = F('e_per.vyg'); return !!(f && f.el && f.el.value === '2'); }
+function epi003Parts(){
+  const sec = id => SECTIONS.find(x=>x.id === id), body = id => { const t = sectionText(sec(id)); return t ? t.body : ''; };
+  const V = k => val(F(k), true);
+  const lik = V('e_lik.lik') || rxSummary(), dyn = V('e_lik.dyn'), vyp = V('e_lik.vyp');
+  const intro = [body('e_per'), dyn ? end(cap(dyn)) : '', vyp ? 'При виписці: ' + end(vyp) : ''].filter(Boolean).join(' ');
+  const eln = V('e_lik.eln'), rezI = F('e_lik.rez').el.value, dead = F('e_per.vs') && F('e_per.vs').el.value === '1';
+  const eff = dead ? 'помер (5)' : rezI !== '' ? ['виписаний з одужанням (1)','виписаний з поліпшенням (2)','виписаний без змін (4)','виписаний з погіршенням (3)'][+rezI] : '';
+  return [
+    {head:'', body:intro || '______________________________', sep:''},
+    {head:'Дані обстеження:', body:body('e_obs') || '______________________________', sep:'\n'},
+    {head:'За результатами проведеного обстеження встановлено клінічний діагноз:', body:body('dx') || '______________________________', sep:'\n'},
+    {head:'Лікування:', body:lik ? end(lik) : '______________________________', sep:' '},
+    {head:'Лікувальні та трудові рекомендації:', body:[body('e_rek'), eln ? end(cap(eln)) : ''].filter(Boolean).join('\n') || '______________________________', sep:'\n'},
+    eff ? {head:'Ефективність лікування:', body:end(eff), sep:' '} : null
+  ].filter(Boolean);
+}
+/* ===== Консультаційний висновок спеціаліста (форма № 028/о) ===== */
+const LABRE = /^(ЗАК|ЗАС|Загальний аналіз|Біохімічн|Глюкоза|HbA1c|Ліпідограма|Амілаза|Коагулограма|D-димер|С-реактивн|СРБ|ТТГ|Аналіз|Бакпосів|Бактеріолог|Маркери|Група крові|Тропонін|Прокальцитонін|Сеча|Кал|Мазок|Експрес-тест)/i;
+function kons028Parts(){
+  const sec = id => SECTIONS.find(x=>x.id === id), body = id => { const t = sectionText(sec(id)); return t ? t.body : ''; };
+  const obs = body('e_obs').split('\n').map(x=>x.trim()).filter(Boolean);
+  const lab = obs.filter(l=>LABRE.test(l)), oth = obs.filter(l=>!LABRE.test(l));
+  const dob = mv('dob'), cons = [mv('pos') || 'Лікар', mv('doc')].filter(Boolean).join(' ');
+  const kv = (k, t) => { const v = val(F(k), true); return v ? end(cap(t.replace('{v}', v))) : ''; };
+  const exam = [kv('k_main.mety', 'Мета консультації: {v}'), kv('k_main.sk', 'Скарги {v}'), kv('k_main.anam', '{v}'), kv('k_main.obj', 'Об’єктивно: {v}')].filter(Boolean).join(' ');
+  const B = '______________________________';
+  return [
+    {head:'1. Найменування закладу охорони здоров’я, який направив пацієнта на консультацію:', body:val(F('k_main.napr'), true) || B, sep:' '},
+    {head:'2. Прізвище, ім’я, по батькові пацієнта:', body:mv('pib') || B, sep:' '},
+    {head:'3. Дата народження:', body:dob ? fmtD(dob) : '__________', sep:' '},
+    {head:'4. Спеціальність, прізвище, ім’я, по батькові лікаря-консультанта:', body:cons || B, sep:' '},
+    {head:'5. Результати лабораторного дослідження:', body:lab.join('\n') || B, sep:'\n'},
+    {head:'6. Результати функціонального, рентгенологічного та інших спеціальних досліджень:', body:oth.join('\n') || B, sep:'\n'},
+    {head:'7. Висновок спеціаліста (встановлений діагноз):', body:[exam, body('dx')].filter(Boolean).join('\n') || B, sep:'\n'},
+    {head:'8. Рекомендації:', body:[body('e_rek'), MODE === 'amb' ? body('eln') : ''].filter(Boolean).join('\n') || B, sep:'\n'}
+  ];
 }
 
 /* ===== Підказки до клінічного діагнозу ===== */
@@ -4272,29 +4345,48 @@ function docModel(){
 }
 function docTitle(){ return {gosp:'Направлення на госпіталізацію', pam:'Пам’ятка пацієнту', zav:'Огляд завідувача / спільний огляд', konc:'Протокол консиліуму', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка', zgoda:'Інформована згода', rx:'Лист призначень', ohl: MODE === 'amb' ? 'Первинний огляд (амбулаторно)' : 'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник', epi:'Виписний епікриз', kons:'Консультаційний висновок'}[DOC]; }
 
+/* Логотип закладу для Word / LibreOffice: PNG (з ч/б за потреби), висота 1,6 см */
+async function logoForDoc(){
+  let src = '', mode = 'color'; try{ src = localStorage.getItem('po.zlogo') || ''; mode = localStorage.getItem('po.zlogomode') || 'color'; }catch(e){}
+  if (!src || mode === 'none') return null;
+  try{
+    const img = await new Promise((res, rej)=>{ const i = new Image(); i.onload = ()=>res(i); i.onerror = rej; i.src = src; });
+    const w0 = img.naturalWidth || 200, h0 = img.naturalHeight || 200, k = Math.min(1, 400 / Math.max(w0, h0));
+    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w0 * k)); c.height = Math.max(1, Math.round(h0 * k));
+    const x = c.getContext('2d'); if (!x) return null;
+    x.drawImage(img, 0, 0, c.width, c.height);
+    if (mode === 'bw'){ const d = x.getImageData(0, 0, c.width, c.height), a = d.data; for (let i = 0; i < a.length; i += 4){ const g = Math.round(0.299 * a[i] + 0.587 * a[i+1] + 0.114 * a[i+2]); a[i] = a[i+1] = a[i+2] = g; } x.putImageData(d, 0, 0); }
+    const url = c.toDataURL('image/png'), bin = atob(url.split(',')[1]), bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const hcm = 1.6, wcm = Math.min(3.2, hcm * c.width / c.height);
+    return {bytes, wcm, hcm: wcm < hcm * c.width / c.height ? wcm * c.height / c.width : hcm};
+  }catch(e){ return null; }
+}
 /* ---- Word (.docx) ---- */
-function makeDocx(){
+function makeDocx(LOGO){
   const M = docModel(), enc = new TextEncoder();
   const run = r => r.br ? '<w:r><w:br/></w:r>' : (()=>{ const pr = (r.b ? '<w:b/>' : '') + (r.i ? '<w:i/>' : '') + (r.u ? '<w:u w:val="single"/>' : '') + (r.sz ? `<w:sz w:val="${Math.round(r.sz*2)}"/><w:szCs w:val="${Math.round(r.sz*2)}"/>` : '');
     return `<w:r>${pr ? '<w:rPr>' + pr + '</w:rPr>' : ''}<w:t xml:space="preserve">${xe(r.t)}</w:t></w:r>`; })();
   const jc = {center:'center', right:'right', justify:'both'};
   const H = M.head;
   const sp = (t, al) => `<w:p><w:pPr><w:jc w:val="${al}"/><w:spacing w:after="0" w:line="240" w:lineRule="auto"/></w:pPr><w:r><w:rPr><w:sz w:val="18"/><w:szCs w:val="18"/></w:rPr><w:t xml:space="preserve">${xe(t)}</w:t></w:r></w:p>`;
-  const cell = (lines, al) => `<w:tc><w:tcPr><w:tcW w:w="2500" w:type="pct"/></w:tcPr>${lines.map(l=>sp(l, al)).join('')}</w:tc>`;
-  let body = '<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblLayout w:type="fixed"/><w:tblCellMar><w:left w:w="0" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="4819"/><w:gridCol w:w="4819"/></w:tblGrid>'
-    + `<w:tr>${cell(H.left, 'left')}${cell(H.right, 'right')}</w:tr></w:tbl>`
+  const cell = (lines, al, pct) => `<w:tc><w:tcPr><w:tcW w:w="${pct || 2500}" w:type="pct"/></w:tcPr>${lines.map(l=>sp(l, al)).join('')}</w:tc>`;
+  const EMU = cm => Math.round(cm * 360000);
+  const pic = LOGO ? `<w:tc><w:tcPr><w:tcW w:w="700" w:type="pct"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${EMU(LOGO.wcm)}" cy="${EMU(LOGO.hcm)}"/><wp:docPr id="1" name="Логотип"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="1" name="logo.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rIdLogo"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${EMU(LOGO.wcm)}" cy="${EMU(LOGO.hcm)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p></w:tc>` : '';
+  let body = '<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblLayout w:type="fixed"/><w:tblCellMar><w:left w:w="0" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tblCellMar></w:tblPr>'
+    + (LOGO ? '<w:tblGrid><w:gridCol w:w="1350"/><w:gridCol w:w="4144"/><w:gridCol w:w="4144"/></w:tblGrid>' : '<w:tblGrid><w:gridCol w:w="4819"/><w:gridCol w:w="4819"/></w:tblGrid>')
+    + `<w:tr>${pic}${cell(H.left, 'left', LOGO ? 2150 : 2500)}${cell(H.right, 'right', LOGO ? 2150 : 2500)}</w:tr></w:tbl>`
     + (H.card ? `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="160" w:after="0"/></w:pPr><w:r><w:rPr><w:sz w:val="20"/></w:rPr><w:t xml:space="preserve">${xe(H.card)}</w:t></w:r></w:p>` : '')
     + (H.pat ? `<w:p><w:pPr><w:spacing w:before="80"/></w:pPr><w:r><w:t xml:space="preserve">${xe(H.pat)}</w:t></w:r></w:p>` : '')
     + '<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="000000"/></w:pBdr><w:spacing w:after="120"/></w:pPr></w:p>';
   body += M.paras.map(p=>`<w:p>${p.align ? `<w:pPr><w:jc w:val="${jc[p.align]}"/></w:pPr>` : ''}${p.runs.map(run).join('')}</w:p>`).join('');
-  const docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + body
+  const docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><w:body>' + body
     + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="850" w:bottom="1134" w:left="1418" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>';
   const styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
     + '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="uk-UA"/></w:rPr></w:rPrDefault>'
     + '<w:pPrDefault><w:pPr><w:spacing w:after="60" w:line="264" w:lineRule="auto"/><w:jc w:val="both"/></w:pPr></w:pPrDefault></w:docDefaults>'
     + '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
   const ct = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-    + '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'
+    + '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/>'
     + '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
     + '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
     + '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>';
@@ -4302,19 +4394,21 @@ function makeDocx(){
     + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
     + '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>';
   const drels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-    + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+    + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+    + (LOGO ? '<Relationship Id="rIdLogo" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/logo.png"/>' : '') + '</Relationships>';
   const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
   const core = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
     + `<dc:title>${xe(docTitle())}</dc:title><dc:creator>${xe(mv('doc') || '')}</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${now}</dcterms:created></cp:coreProperties>`;
   return zipStore([
     {name:'[Content_Types].xml', data:enc.encode(ct)}, {name:'_rels/.rels', data:enc.encode(rels)}, {name:'docProps/core.xml', data:enc.encode(core)},
-    {name:'word/document.xml', data:enc.encode(docXml)}, {name:'word/styles.xml', data:enc.encode(styles)}, {name:'word/_rels/document.xml.rels', data:enc.encode(drels)}]);
+    {name:'word/document.xml', data:enc.encode(docXml)}, {name:'word/styles.xml', data:enc.encode(styles)}, {name:'word/_rels/document.xml.rels', data:enc.encode(drels)},
+    ...(LOGO ? [{name:'word/media/logo.png', data:LOGO.bytes}] : [])]);
 }
 
 /* ---- LibreOffice (.odt) ---- */
-function makeOdt(){
+function makeOdt(LOGO){
   const M = docModel(), enc = new TextEncoder();
-  const NS = 'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" office:version="1.3"';
+  const NS = 'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" office:version="1.3"';
   const tstyles = {}; let tn = 0;
   const tstyle = r => { const k = (r.b ? 'b' : '') + (r.i ? 'i' : '') + (r.u ? 'u' : '') + (r.sz ? 's' + r.sz : ''); if (!k) return ''; if (!tstyles[k]) tstyles[k] = {name:'T' + (++tn), r}; return tstyles[k].name; };
   const sp = t => xe(t).replace(/ {2,}/g, m=>' <text:s text:c="' + (m.length - 1) + '"/>').replace(/\t/g, '<text:tab/>');
@@ -4322,7 +4416,8 @@ function makeOdt(){
   const pst = {center:'Pc', right:'Pr', justify:'Pj', '':'Standard'};
   const H = M.head;
   const cell = (lines, st) => `<table:table-cell office:value-type="string">${lines.map(l=>`<text:p text:style-name="${st}">${sp(l)}</text:p>`).join('')}</table:table-cell>`;
-  let body = `<table:table table:name="Шапка" table:style-name="Th"><table:table-column table:number-columns-repeated="2"/><table:table-row>${cell(H.left, 'Ps')}${cell(H.right, 'PsR')}</table:table-row></table:table>`
+  const lcell = LOGO ? `<table:table-cell office:value-type="string"><text:p text:style-name="Ps"><draw:frame draw:name="Логотип" text:anchor-type="as-char" svg:width="${LOGO.wcm.toFixed(2)}cm" svg:height="${LOGO.hcm.toFixed(2)}cm"><draw:image xlink:href="Pictures/logo.png" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/></draw:frame></text:p></table:table-cell>` : '';
+  let body = `<table:table table:name="Шапка" table:style-name="Th">${LOGO ? '<table:table-column table:style-name="Tc0"/><table:table-column table:style-name="Tc1" table:number-columns-repeated="2"/>' : '<table:table-column table:number-columns-repeated="2"/>'}<table:table-row>${lcell}${cell(H.left, 'Ps')}${cell(H.right, 'PsR')}</table:table-row></table:table>`
     + (H.card ? `<text:p text:style-name="Pcard">${sp(H.card)}</text:p>` : '') + (H.pat ? `<text:p text:style-name="Ppat">${sp(H.pat)}</text:p>` : '') + '<text:p text:style-name="Pline"/>';
   body += M.paras.map(p=>`<text:p text:style-name="${pst[p.align]}">${p.runs.map(run).join('')}</text:p>`).join('');
   const tdefs = Object.values(tstyles).map(({name, r})=>`<style:style style:name="${name}" style:family="text"><style:text-properties${r.b ? ' fo:font-weight="bold" style:font-weight-complex="bold"' : ''}${r.i ? ' fo:font-style="italic"' : ''}${r.u ? ' style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color"' : ''}${r.sz ? ` fo:font-size="${r.sz}pt"` : ''}/></style:style>`).join('');
@@ -4332,6 +4427,7 @@ function makeOdt(){
     + '<style:style style:name="Ps" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:text-align="start" fo:margin-bottom="0cm"/><style:text-properties fo:font-size="9pt"/></style:style>'
     + '<style:style style:name="PsR" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:text-align="end" fo:margin-bottom="0cm"/><style:text-properties fo:font-size="9pt"/></style:style>'
     + '<style:style style:name="Th" style:family="table"><style:table-properties style:width="17cm" table:align="margins"/></style:style>'
+    + '<style:style style:name="Tc0" style:family="table-column"><style:table-column-properties style:column-width="2.4cm"/></style:style><style:style style:name="Tc1" style:family="table-column"><style:table-column-properties style:column-width="7.3cm"/></style:style>'
     + '<style:style style:name="Pcard" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:text-align="center" fo:margin-top="0.25cm" fo:margin-bottom="0cm"/><style:text-properties fo:font-size="10pt"/></style:style>'
     + '<style:style style:name="Ppat" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:margin-top="0.2cm"/></style:style>'
     + '<style:style style:name="Pline" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:border-bottom="0.5pt solid #000000" fo:padding-bottom="0.05cm" fo:margin-bottom="0.2cm"/></style:style>';
@@ -4344,10 +4440,12 @@ function makeOdt(){
     + '<office:master-styles><style:master-page style:name="Standard" style:page-layout-name="pm1"/></office:master-styles></office:document-styles>';
   const manifest = '<?xml version="1.0" encoding="UTF-8"?><manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.3">'
     + '<manifest:file-entry manifest:full-path="/" manifest:version="1.3" manifest:media-type="application/vnd.oasis.opendocument.text"/>'
-    + '<manifest:file-entry manifest:full-path="content.xml" manifest:media-type="text/xml"/><manifest:file-entry manifest:full-path="styles.xml" manifest:media-type="text/xml"/></manifest:manifest>';
+    + '<manifest:file-entry manifest:full-path="content.xml" manifest:media-type="text/xml"/><manifest:file-entry manifest:full-path="styles.xml" manifest:media-type="text/xml"/>'
+    + (LOGO ? '<manifest:file-entry manifest:full-path="Pictures/logo.png" manifest:media-type="image/png"/>' : '') + '</manifest:manifest>';
   return zipStore([   // mimetype має бути першим і без стиснення
     {name:'mimetype', data:enc.encode('application/vnd.oasis.opendocument.text')},
-    {name:'META-INF/manifest.xml', data:enc.encode(manifest)}, {name:'content.xml', data:enc.encode(content)}, {name:'styles.xml', data:enc.encode(styles)}]);
+    {name:'META-INF/manifest.xml', data:enc.encode(manifest)}, {name:'content.xml', data:enc.encode(content)}, {name:'styles.xml', data:enc.encode(styles)},
+    ...(LOGO ? [{name:'Pictures/logo.png', data:LOGO.bytes}] : [])]);
 }
 
 function docFileName(ext){
@@ -4376,12 +4474,12 @@ async function saveFile(bytes, name, mime, label){
 async function saveDocx(){
   chkWarn();
   if (!itext($('#out')).trim()){ toast('Текст порожній'); return; }
-  await saveFile(makeDocx(), docFileName('docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Документ Word');
+  await saveFile(makeDocx(await logoForDoc()), docFileName('docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Документ Word');
 }
 async function saveOdt(){
   chkWarn();
   if (!itext($('#out')).trim()){ toast('Текст порожній'); return; }
-  await saveFile(makeOdt(), docFileName('odt'), 'application/vnd.oasis.opendocument.text', 'Документ LibreOffice');
+  await saveFile(makeOdt(await logoForDoc()), docFileName('odt'), 'application/vnd.oasis.opendocument.text', 'Документ LibreOffice');
 }
 
 /* ================= ТЕМА: авто / день / ніч ================= */
