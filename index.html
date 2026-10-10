@@ -96,6 +96,8 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .dxprev{background:var(--bg);border:1px dashed var(--line);border-radius:6px;padding:8px 10px;font-size:14px}
 #clearDocBtn{flex:0 0 auto;font:500 13.5px var(--f-head);padding:7px 11px}
 .about{margin-top:16px;font-size:13.5px}.about summary{cursor:pointer;color:var(--muted)}
+.rxsets .gtabs{margin:6px 0 10px}.rxsets .chips{gap:8px}
+.dxtip{margin:4px 0 8px;line-height:1.5}.dxw{margin:6px 0;padding-left:18px;color:var(--flag)}.dxw li{margin:4px 0}.dxok{color:var(--ok);margin:4px 0}
 .helpsec{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 8px;background:var(--surface)}.helpsec summary{cursor:pointer;font-weight:600}.helplist{font-size:14px;color:var(--ink)}.helplist li{margin:6px 0;line-height:1.45}
 .vlist{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}.vlist li{margin:3px 0}.vlist b{color:var(--ink)}
 .micwrap{position:relative}.micwrap textarea{padding-right:44px}
@@ -147,6 +149,22 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:6px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
 .mbar{display:none}
+.navsheet{position:fixed;inset:0;z-index:35;background:var(--bg);overflow:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.navsheet[hidden]{display:none}
+.nshead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.nshead b{font:600 19px var(--f-head)}
+.nsg{margin:12px 0 4px;font:600 12px var(--f-head);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.nsl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nsl button{display:flex;align-items:center;justify-content:space-between;gap:6px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:13px 12px;font:500 15px var(--f-ui);color:var(--ink);cursor:pointer;min-height:50px}
+.nsl button[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nsl .d{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:0 0 auto}
+@media (max-width:899px){
+  #docSeg{display:none!important}
+  .docbar{flex-wrap:nowrap!important}
+  .docbar #docMore{flex:1 1 0!important;min-width:0;font-weight:500}
+  .docbar #clearDocBtn{flex:0 0 auto}
+  .mbar .btn{padding:10px 8px}
+  #navBtn{flex:0 0 auto}
+}
 @media (max-width:899px){
   body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   .mbar{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
@@ -389,9 +407,11 @@ details.box[open]{padding-bottom:12px}
 </main>
 
 <div class="mbar">
+  <button class="btn" id="navBtn" type="button" aria-haspopup="dialog" aria-label="Усі розділи"><span aria-hidden="true">☰</span> Розділи</button>
   <button class="btn" id="toText" type="button">Текст огляду</button>
   <button class="btn primary" id="copy2" type="button">Копіювати</button>
 </div>
+<div class="navsheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Розділи" hidden><div class="nshead"><b>Розділи</b><button class="btn" type="button" id="navClose">Закрити ✕</button></div><div id="navList"></div></div>
 <div class="toast" id="toast" role="status"></div>
 <div id="print" aria-hidden="true"></div>
 
@@ -1405,8 +1425,8 @@ const PRESETS = [
 
 
 /* ======== СВОЇ ШАБЛОНИ КОРИСТУВАЧА (зберігаються в цьому браузері) ======== */
-let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[]};
-try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || []}; }catch(e){}
+let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[], rxsets:[]};
+try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || []}; }catch(e){}
 for (const k in CUSTOM.opts){
   const [sid, fid] = k.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) continue;
   const arr = f.type === 'text' ? (f.quick = f.quick || []) : f.opts;
@@ -2004,6 +2024,7 @@ function update(){
   runCalcs();
   applyAuto(); renderDHints(); renderRemain(); renderCtrl(); renderQV(); elnDefaults();
   if (dxPanel.key !== curKey) dxPanel();
+  renderDxHints();
   const r = generate();
   const H = SECTIONS.find(x=>x.id==='hosp');
   if (H && H.warnEl){
@@ -2055,8 +2076,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.8', VDATE = '10.10.2026';
+const VERSION = '2.9', VDATE = '10.10.2026';
 const CHANGELOG = [
+  ['2.9', '10.10.2026', 'набори призначень за спеціальностями (терапія, неврологія, хірургія, інфекційні, травматологія) і свої набори; підказки до клінічного діагнозу (схема для кожної хвороби, загальні правила, перевірка формулювання й коду МКХ-10); телефон: кнопка «Розділи» з усіма вкладками, документ — одним списком'],
   ['2.8', '10.10.2026', 'вкладка «Довідка» з пошуком: як працювати з програмою; постійне сховище — браузер не видаляє дані програми сам'],
   ['2.7', '10.10.2026', 'папка даних на комп’ютері (Chrome, Edge): пацієнти окремими файлами, шаблони й налаштування зберігаються туди автоматично і підтягуються після перевстановлення; версія для встановлення як застосунок (PWA)'],
   ['2.6', '10.10.2026', 'протокол консиліуму (голова, члени, мета, висновок, рішення, підписи всіх членів); спільний огляд з вибором учасників (головний лікар, заступник з медичної роботи, завідувач, лікуючий, черговий, інші) — назва запису й підписи складаються самі; заступник головного лікаря і головний лікар у «Налаштуваннях»'],
@@ -2161,6 +2183,7 @@ function applyPreset(p0, btn){
   curKey = p.key || null;
   if (!RX.length && rxFor(p0).length){ rxFor(p0).forEach(r=>addRx({drug:r[0], dose:r[1], route:r[2], freq:r[3], days:r[4] || '', note:r[5]})); }
   renderHvTips();
+  { RXG = null; const rb = document.getElementById('rxSets'); if (rb && rb.draw) rb.draw(); }
   if (MODE === 'hosp'){ const hv = F('hosp.vyd'); hv.el.value = p.hosp === 'p' && HOSPDEF !== 'e' ? 1 : 0; mark(hv.el, hv); }
   else { const va = F('hosp.vyda'); va.el.value = ''; va.autoSet = true; }
   { const sf = F('hosp.spec'); if (!sf.urgUser) sf.urg = false; }
@@ -2891,6 +2914,7 @@ const HELPS = [
   'Підправте те, що не збігається з вашим пацієнтом, перевірте текст справа і натисніть «Копіювати», «Word» або «Друк / PDF».']],
  ['Первинний огляд', [
   'Вкладки згруповані за етапами: Пацієнт → Анамнез → Огляд → Висновок. Зелена крапка на вкладці — там уже є дані.',
+  'На телефоні: кнопка «☰ Розділи» внизу показує всі вкладки одним списком; документ обирається в списку над вкладками.',
   'Скарги: натискайте в потрібному порядку; у важливих скарг з’являються уточнення (характер харкотиння, сила болю за ВАШ тощо). Пошук — у полі над скаргами.',
   '«Б/о» у вкладці системи — записати її одним рядком «без особливостей». «Норма всюди» — норма в усіх системах огляду.',
   '«Бік ураження: справа / зліва» — для інсульту, радикулопатії, пневмонії, тромбозу, переломів тощо: дзеркально міняє всі тексти заготовки.',
@@ -2898,6 +2922,7 @@ const HELPS = [
   'Значок мікрофона в текстовому полі — голосове введення (Chrome, потрібен інтернет).']],
  ['Діагноз і план', [
   'Вкладка «Діагноз»: основний, код МКХ-10, ускладнення, супутні. Конструктор діагнозу складає формулювання за класифікацією (стадія, ступінь, бік, ускладнення).',
+  'Під полями діагнозу — підказки: схема формулювання для обраної хвороби, загальні правила й перевірка (код МКХ-10, скорочення, ускладнення).',
   'План обстеження — кнопками; у виписці та консультаціях його можна вставити шаблонами результатів.']],
  ['Госпіталізація (наказ МОЗ № 1044)', [
   'Критерії відмічаються автоматично з огляду, показників (SpO2, ЧД, АТ, ЧСС, t°), шкал і листа призначень.',
@@ -2907,7 +2932,8 @@ const HELPS = [
  ['Призначення', [
   'Лист призначень заповнюється із заготовки або вручну; препарат обирається з довідника з типовою дозою.',
   'Програма попереджає про корекцію дози за кліренсом креатиніну, взаємодії ліків і алергію з анамнезу. Креатинін, вага й вік беруться з даних пацієнта.',
-  'Для антибіотиків додається обґрунтування за наказом МОЗ № 1328 (група AWaRe, дата перегляду).']],
+  'Для антибіотиків додається обґрунтування за наказом МОЗ № 1328 (група AWaRe, дата перегляду).',
+  '«Набори призначень»: типові набори за спеціальністю (режим і дієта, моніторинг, профілактика ВТЕ, знеболення тощо) і «Мої набори» — збережіть свій лист призначень одним натисканням.']],
  ['Щоденники та журнал обстежень', [
   'Документ «Щоденник»: день перебування рахується сам; «Стабільно» — типовий стабільний запис.',
   'Скарги, що зберігаються, — натисканням скарг з первинного огляду. Внизу — підказки, що внести за хворобою і днем лікування.',
@@ -3726,6 +3752,92 @@ function dxPanel(){
   }
 }
 
+/* ===== Підказки до клінічного діагнозу ===== */
+const DXH = {
+  pneu:'Негоспітальна / госпітальна пневмонія → локалізація (частка, бік) → клінічна група (I–IV). Ускладнення: ДН (ступінь), плеврит, сепсис.',
+  gh:'Гіпертонічна хвороба: стадія (I–III), ступінь АГ (1–3), ризик (низький / помірний / високий / дуже високий), ураження органів-мішеней. Ускладнення: гіпертензивний криз (неускладнений / ускладнений), СН.',
+  ihd:'ІХС: форма (стабільна стенокардія напруги, ФК I–IV за CCS тощо), кардіосклероз (дифузний / постінфарктний із датою ІМ). Ускладнення: порушення ритму, СН (стадія, ФК NYHA, ФВ).',
+  hf:'ХСН — ускладнення основної хвороби (ІХС, ГХ, кардіоміопатія): стадія (I, IIА, IIБ, III), ФК за NYHA, ФВ ЛШ (збережена / помірно знижена / знижена).',
+  gastr:'Хронічний гастрит: тип (неатрофічний / атрофічний), етіологія (H. pylori-асоційований), фаза (загострення / ремісії).',
+  copd:'ХОЗЛ: група за GOLD (A, B, E), спірометричний ступінь (GOLD 1–4), загострення з тяжкістю або стабільний стан. Ускладнення: ДН (ступінь), легеневе серце.',
+  dm:'Цукровий діабет 1 / 2 типу: тяжкість, стан компенсації (компенсація / субкомпенсація / декомпенсація). Ускладнення: ретинопатія, нефропатія (ХХН, стадія і категорія альбумінурії), нейропатія, діабетична стопа.',
+  af:'Фібриляція передсердь: форма (вперше виявлена, пароксизмальна, персистуюча, тривало персистуюча, постійна), варіант (тахі-, нормо-, брадисистолічний), EHRA. Основна хвороба (ГХ, ІХС) — окремо; CHA₂DS₂-VA і HAS-BLED — у тексті.',
+  asthma:'Бронхіальна астма: форма (алергічна / неалергічна / змішана), тяжкість, рівень контролю (контрольована / частково / неконтрольована), загострення з тяжкістю. Ускладнення: ДН.',
+  pyelo:'Пієлонефрит: гострий / хронічний (фаза), обструктивний чи необструктивний, бік. Ускладнення: сепсис, гостре пошкодження нирок.',
+  stroke:'Гострий ішемічний інсульт: басейн (судина), підтип за TOAST (атеротромботичний, кардіоемболічний, лакунарний, інший, невстановлений), провідні синдроми, NIHSS, дата початку. Фонові ГХ, ФП — окремо.',
+  tia:'ТІА: судинний басейн, симптоми з повним регресом, ABCD². Фонові хвороби — окремо.',
+  de:'Дисциркуляторна енцефалопатія: стадія (I–III), генез (атеросклеротичний, гіпертонічний), провідні синдроми (вестибуло-атактичний, когнітивні порушення).',
+  rad:'Дорсопатія: остеохондроз / грижа диска (рівень), радикулопатія (корінець, бік), вираженість больового синдрому, фаза (загострення / ремісії).',
+  dpn:'Основний — цукровий діабет (тип, компенсація); діабетична дистальна симетрична сенсомоторна полінейропатія — його ускладнення.',
+  migr:'Мігрень без аури / з аурою, епізодична чи хронічна; стан (напад, мігренозний статус).',
+  bell:'Нейропатія лицевого нерва (ідіопатична, Белла): бік, ступінь парезу за House–Brackmann, період.',
+  epi:'Епілепсія: форма (фокальна / генералізована / невідомого початку), етіологія, тип нападів за ILAE, стан (серія, статус). Якщо епілепсію ще не встановлено — «епілептичний напад» (вперше).',
+  cerv:'Дорсопатія шийного відділу: остеохондроз / грижа диска (рівень), радикулопатія (корінець, бік), вираженість болю, фаза.',
+  bppv:'ДППЗ: канал (задній / горизонтальний), бік, форма (каналолітіаз / купулолітіаз).',
+  app:'Гострий апендицит: форма (катаральний, флегмонозний, гангренозний, перфоративний) — уточнюється після операції. Ускладнення: перитоніт, апендикулярний інфільтрат.',
+  chol:'Гострий калькульозний / некалькульозний холецистит, тяжкість за Tokyo Guidelines. Ускладнення: холангіт, механічна жовтяниця, перитоніт.',
+  panc:'Гострий панкреатит: етіологія (біліарний, алкогольний), тяжкість за Атлантською класифікацією (легкий / помірно тяжкий / тяжкий). Ускладнення: некроз, скупчення рідини, органна недостатність.',
+  gib:'Джерело кровотечі (виразка — за Форрестом, варикоз, Меллорі–Вейс), ступінь крововтрати. Ускладнення: постгеморагічна анемія (ступінь), геморагічний шок.',
+  obstr:'Гостра кишкова непрохідність: механічна (обтураційна / странгуляційна) чи динамічна, рівень, причина. Ускладнення: перитоніт, некроз кишки.',
+  hern:'Пахова грижа: бік, пряма / коса, защемлена / невправима / вправима. Ускладнення: некроз кишки, флегмона грижового мішка.',
+  dvt:'Гострий ТГВ: бік, сегмент (дистальний / проксимальний), провокований чи ні. Ускладнення: ТЕЛА.',
+  perf:'Виразкова хвороба (шлунка / ДПК) з перфорацією (локалізація). Ускладнення: перитоніт (поширеність, фаза).',
+  colic:'Сечокам’яна хвороба: камінь (розташування, бік), ниркова коліка. Ускладнення: обструкція, гідронефроз, пієлонефрит.',
+  absc:'Абсцес м’яких тканин: локалізація, стадія. Ускладнення: флегмона, лімфангіт, сепсис.',
+  arvi:'ГРВІ (етіологія, якщо відома), провідний синдром (ринофарингіт, ларингіт), тяжкість.',
+  flu:'Грип (А / В; підтверджений чи клінічно), тяжкість. Ускладнення: пневмонія, бронхіт.',
+  covid:'COVID-19 (U07.1 — підтверджений, U07.2 — клінічно), тяжкість (легкий / середньої тяжкості / тяжкий / критичний). Ускладнення: пневмонія, ДН.',
+  food:'Харчова токсикоінфекція (етіологія, якщо встановлена), клінічний варіант, тяжкість. Ускладнення: зневоднення (ступінь).',
+  tons:'Гострий тонзиліт: етіологія (стрептококовий / вірусний), форма. Ускладнення: паратонзилярний абсцес.',
+  hep:'Гострий вірусний гепатит А: форма (жовтянична / безжовтянична), тяжкість. Ускладнення: печінкова недостатність.',
+  ery:'Бешиха: локалізація, форма (еритематозна, бульозна, геморагічна), кратність (первинна / повторна / рецидивна), тяжкість.',
+  mening:'Бактеріальний менінгіт: етіологія (менінгококовий, пневмококовий тощо), тяжкість. Ускладнення: набряк головного мозку, сепсис.',
+  mono:'Інфекційний мононуклеоз (ЕБВ), форма, тяжкість. Ускладнення: гепатит, спленомегалія.',
+  varic:'Вітряна віспа: форма (типова / атипова), тяжкість. Ускладнення: пневмонія, піодермія, енцефаліт.',
+  tdr:'%FR%', tclav:'%FR%',
+  thip:'Перелом шийки стегнової кістки: бік, рівень (субкапітальний, трансцервікальний, базальний), зміщення (класифікація Гардена). Ускладнення: шок, анемія.',
+  tank:'Перелом кісточок: бік, які (одно-, дво-, трикісточковий), зміщення, підвивих стопи; тип за Вебером (A / B / C).',
+  tsprain:'Розтягнення зв’язок: суглоб, бік, ступінь (I–II). Розрив зв’язки — окремий діагноз і код.',
+  trib:'Перелом ребер: номери, бік, зміщення; одного ребра — S22.3, множинні — S22.4. Ускладнення: пневмо-, гемоторакс, підшкірна емфізема, ДН.',
+  tcmt:'ЗЧМТ: струс (S06.0) або забій головного мозку (ступінь); переломи черепа, гематоми — окремо; рани й гематоми м’яких тканин голови — у діагнозі.',
+  tspine:'Компресійний перелом тіла хребця: рівень, ступінь компресії, ускладнений (з неврологічними порушеннями) чи неускладнений; травматичний чи остеопоротичний.',
+  twound:'Рана: вид (різана, колота, рвана), локалізація, бік. Ушкодження сухожилків, нервів, судин — окремо.',
+  tdisl:'Вивих: суглоб, бік, вид (передній / задній), первинний чи звичний. Відрив горбка, ушкодження пахвового нерва — ускладнення.'
+};
+for (const k in DXH) if (DXH[k] === '%FR%') DXH[k] = 'Перелом: закритий / відкритий, кістка й сегмент (третина, метаепіфіз), бік, зі зміщенням чи без. Ускладнення: травматичний шок, крововтрата, ушкодження нервів чи судин.';
+const DXRULES = [
+  'Основний діагноз — хвороба, з приводу якої лікують і на яку пішло найбільше ресурсів. Саме він кодується за МКХ-10 (у стаціонарі — за НК 025:2021; за потреби звірте зі статистиком).',
+  'Порядок: основний (з конкуруючим чи поєднаним, якщо обидва потребували лікування) → ускладнення основного → супутні.',
+  'Стадія, ступінь, фаза, тяжкість — за чинною класифікацією; без скорочень, крім загальновживаних (ІХС, ХОЗЛ, ГРВІ, ФП).',
+  'Попередній діагноз — при надходженні; клінічний — після обстеження; заключний — у виписці.'
+];
+function dxLint(){
+  const o = (F('dx.osn').el.value || '').trim(), m = (F('dx.mkh').el.value || '').trim(), u = (F('dx.uskl').el.value || '').trim(), w = [];
+  if (!o) return w;
+  if (!m) w.push('Додайте код МКХ-10 до основного діагнозу.');
+  else if (/[А-ЯІЇЄҐа-яіїєґ]/.test(m)) w.push('У коді МКХ-10 кирилична літера — замініть на латинську (напр., J18.1).');
+  else if (!/^[A-Z]\d{2}(\.\d{1,2})?[†*]?(\s*[,;]\s*[A-Z]\d{2}(\.\d{1,2})?[†*]?)*$/.test(m)) w.push('Код МКХ-10 має вигляд «літера + 2 цифри», за потреби крапка й підрубрика (напр., I11.9).');
+  const ab = (o.match(/(^|[^А-ЯІЇЄҐа-яіїєґ])(ГХ|ЦД|ГПМК|ДЕП|ГКС)(?=$|[^А-ЯІЇЄҐа-яіїєґ])/g) || []).map(x=>x.replace(/^[^А-ЯІЇЄҐ]/, ''));
+  if (ab.length) w.push('Розшифруйте скорочення в основному діагнозі: ' + [...new Set(ab)].join(', ') + '.');
+  if (/(^|[\s,.])(ДН|ЛН)\s+[IІ]/.test(o)) w.push('Ступінь дихальної недостатності — це ускладнення: краще перенести в «Ускладнення».');
+  if (/гіпертензивний криз/i.test(o)) w.push('Гіпертензивний криз — ускладнення гіпертонічної хвороби, а не основний діагноз.');
+  if (/\?/.test(o)) w.push('Знак питання в діагнозі: для неуточненого діагнозу оберіть «Попередній діагноз».');
+  if (curKey && DXB[curKey] && !u && DXB[curKey].u && ['pneu','copd','dm'].includes(curKey)) w.push('Перевірте ускладнення: для цієї хвороби їх зазвичай зазначають (кнопки в конструкторі).');
+  return w;
+}
+function renderDxHints(){
+  const box = document.getElementById('dxh'); if (!box) return;
+  if (!box.dataset.placed){ const sf = F('dx.supd'), anchor = sf && sf.el && sf.el.closest('.f'); if (anchor) anchor.after(box.parentElement); box.dataset.placed = '1'; }
+  const p = PRESETS.find(x=>x.key === curKey), tip = curKey && DXH[curKey], W = dxLint();
+  box.innerHTML = '';
+  box.append(h('h3', {}, 'Підказки до діагнозу' + (p && tip ? ': ' + p.name : '')));
+  if (tip) box.append(h('p', {class:'dxtip'}, h('b', {}, 'Схема: '), tip));
+  else box.append(h('p', {class:'chips-hint'}, 'Оберіть хворобу на вкладці «За хворобою» — тут з’явиться схема формулювання саме для неї.'));
+  if (W.length) box.append(h('ul', {class:'dxw'}, ...W.map(t=>h('li', {}, t))));
+  else if ((F('dx.osn').el.value || '').trim()) box.append(h('p', {class:'dxok'}, '✓ Явних зауважень до формулювання немає.'));
+  box.append(h('details', {class:'about'}, h('summary', {}, 'Загальні правила формулювання'), h('ul', {class:'vlist'}, ...DXRULES.map(t=>h('li', {}, t)))));
+}
+
 /* ===== Очищення ===== */
 function clearSection(sc){
   sc.fields.forEach(f=>{
@@ -4333,6 +4445,74 @@ function rxPart(){
   return {head: amb ? 'Рекомендовано:' : DOC === 'rx' ? '' : 'Призначено:', body, sep:'\n'};
 }
 
+
+/* ===== Набори призначень за спеціальністю: [препарат / призначення, доза, шлях, кратність, днів, примітка] ===== */
+const RX_REZ = [['Режим палатний','','','',0,''],['Основний варіант стандартної дієти','','','',0,'або інший варіант дієти за станом']];
+const RX_VTE = [['Еноксапарин','40 мг','п/ш','1 р/д',0,'профілактика ВТЕ за оцінкою ризику (Padua / Caprini); КК < 30 — 20 мг']];
+const RX_GAST = [['Пантопразол','40 мг','per os','1 р/д',0,'при НПЗП, ГКС чи антикоагулянтах з факторами ризику кровотечі']];
+const RX_PAIN = [['Парацетамол','1 г','per os','за потреби',0,'не більше 4 г/добу'],['Ібупрофен','400 мг','per os','3 р/д',5,'після їди; уникати при КК < 30']];
+const RX_INF = [['Натрію хлорид 0,9%','500 мл','в/в крапельно','1 р/д',3,'під контролем діурезу й гемодинаміки']];
+const RXSETS = {
+  ter:[['Режим і дієта', RX_REZ], ['Моніторинг', [['Контроль АТ і ЧСС','','','2 р/д',0,''],['Пульсоксиметрія','','','2 р/д',0,''],['Контроль діурезу','','','щодня',0,'']]],
+       ['Профілактика ВТЕ', RX_VTE], ['Гастропротекція', RX_GAST], ['Знеболення', RX_PAIN], ['Інфузійна терапія', RX_INF],
+       ['Оксигенотерапія', [['Оксигенотерапія','','інгаляційно','постійно',0,'цільова SpO2 94–98%, при ХОЗЛ — 88–92%']]]],
+  nevr:[['Режим і дієта', [['Режим ліжковий','','','',0,'у гострий період, далі — рання активізація'],...RX_REZ.slice(1)]],
+       ['Скринінг дисфагії', [['Скринінг ковтання перед першим годуванням','','','одноразово',1,'при порушенні — нічого per os, консультація логопеда']]],
+       ['Моніторинг', [['Контроль АТ і ЧСС','','','4 р/д',0,''],['Контроль глюкози крові','','','2 р/д',0,''],['Оцінка неврологічного статусу','','','2 р/д',0,'']]],
+       ['Профілактика пролежнів', [['Зміна положення тіла','','','кожні 2 год',0,'протипролежневий матрац']]],
+       ['Профілактика ВТЕ', RX_VTE], ['Знеболення', RX_PAIN]],
+  hir:[['Голод до огляду хірурга', [['Нічого per os','','','',1,'до огляду хірурга'],['Холод на живіт','','місцево','',0,'за призначенням хірурга']]],
+       ['Інфузійна терапія', [['Рінгера лактат','1000 мл','в/в крапельно','1 р/д',1,'під контролем діурезу']]],
+       ['Знеболення', [['Кеторолак','30 мг','в/м','2 р/д',3,'не довше 5 днів; після огляду хірурга'],['Парацетамол','1 г','в/в крапельно','за потреби',0,'не більше 4 г/добу']]],
+       ['Профілактика ВТЕ', RX_VTE],
+       ['Антибіотикопрофілактика', [['Цефазолін','2 г','в/в','одноразово',1,'за 30–60 хв до розрізу']]]],
+  inf:[['Режим і ізоляція', [['Режим палатний, ізоляція','','','',0,''],['Посилений питний режим','','per os','',0,'1,5–2 л/добу, якщо немає обмежень']]],
+       ['Регідратація', [['Пероральна регідратаційна суміш','200 мл','per os','після кожного рідкого випорожнення',0,'']]],
+       ['Жарознижувальні', [['Парацетамол','500 мг','per os','за потреби',0,'при t > 38,5 °C; не більше 4 г/добу']]],
+       ['Інфузійна терапія', RX_INF], ['Профілактика ВТЕ', RX_VTE]],
+  tr:[['Режим і догляд', [['Режим палатний','','','',0,''],['Підвищене положення кінцівки','','','',0,''],['Холод місцево','','місцево','по 15–20 хв',2,'перші 48 год']]],
+       ['Іммобілізація', [['Гіпсова лонгета','','','',0,'контроль кровообігу й чутливості дистальніше'],['Контроль кровообігу і чутливості пальців','','','2 р/д',0,'']]],
+       ['Знеболення', [['Кеторолак','30 мг','в/м','2 р/д',3,'не довше 5 днів'],['Парацетамол','1 г','per os','за потреби',0,'не більше 4 г/добу']]],
+       ['Профілактика правця', [['Анатоксин правцевий (АП)','0,5 мл','в/м','одноразово',1,'залежно від щеплень']]],
+       ['Профілактика ВТЕ', [['Еноксапарин','40 мг','п/ш','1 р/д',0,'при іммобілізації нижньої кінцівки чи переломі стегна — за оцінкою ризику']]],
+       ['Перев’язки', [['Перев’язка','','','через день',0,'огляд рани, при потребі частіше']]]]
+};
+const RXG_L = {ter:'Терапія', nevr:'Неврологія', hir:'Хірургія', inf:'Інфекційні', tr:'Травматологія', my:'Мої набори'};
+let RXG = null;
+function rxAddSet(rows){
+  const have = new Set(RX.map(it=>String(it.drug).toLowerCase())); let n = 0;
+  rows.forEach(r=>{ if (have.has(String(r[0]).toLowerCase())) return; addRx({drug:r[0], dose:r[1], route:r[2], freq:r[3], days:r[4] || '', note:r[5]}); n++; });
+  renderRx(); update(); toast(n ? `Додано: ${n}. Перевірте дози під пацієнта` : 'Ці призначення вже є в листі');
+}
+function rxSetsBox(){
+  const box = h('div', {class:'pt rxsets', id:'rxSets'});
+  const draw = () => {
+    box.innerHTML = '';
+    if (!RXG){ const p = PRESETS.find(x=>x.key === curKey); RXG = p && RXSETS[p.group] ? p.group : SPEC === 'tr' ? 'tr' : 'ter'; }
+    const tabs = h('div', {class:'gtabs', role:'group', 'aria-label':'Спеціальність'});
+    Object.keys(RXG_L).forEach(k=>tabs.append(h('button', {type:'button', class:'gtab', 'aria-pressed': k === RXG ? 'true' : 'false', onclick:()=>{ RXG = k; draw(); }}, RXG_L[k])));
+    const chips = h('div', {class:'chips'});
+    if (RXG === 'my'){
+      (CUSTOM.rxsets || []).forEach((st, i)=>{
+        const x = h('button', {type:'button', class:'chip-x', title:'Видалити набір', 'aria-label':'Видалити набір ' + st.name}, '×');
+        x.addEventListener('click', ()=>{ if (!x.dataset.arm){ x.dataset.arm = '1'; x.textContent = 'точно?'; setTimeout(()=>{ delete x.dataset.arm; x.textContent = '×'; }, 3000); return; } CUSTOM.rxsets.splice(i, 1); saveCustom(); draw(); });
+        chips.append(h('span', {class:'chip mytpl'}, h('button', {type:'button', class:'chip-in', onclick:()=>rxAddSet(st.rows)}, st.name + ' · ' + st.rows.length), x));
+      });
+      const nm = h('input', {placeholder:'Назва набору, напр., «Мій стандарт ГХ»', 'aria-label':'Назва набору', style:'flex:1 1 220px'});
+      const save = h('button', {type:'button', class:'btn', onclick:()=>{
+        if (!RX.length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
+        const name = nm.value.trim() || 'Набір ' + ((CUSTOM.rxsets || []).length + 1);
+        CUSTOM.rxsets = CUSTOM.rxsets || []; CUSTOM.rxsets.push({name, rows:RX.filter(it=>it.drug).map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || ''])});
+        saveCustom(); toast('Збережено набір «' + name + '»'); draw(); }}, 'Зберегти поточний лист як набір');
+      if (!(CUSTOM.rxsets || []).length) chips.append(h('p', {class:'chips-hint'}, 'Своїх наборів ще немає. Заповніть лист призначень і збережіть його як набір — він з’явиться тут.'));
+      box.append(h('h3', {}, 'Набори призначень'), tabs, chips, h('div', {class:'res-form', style:'margin-top:8px'}, nm, save));
+      return;
+    }
+    RXSETS[RXG].forEach(([name, rows])=>chips.append(h('button', {type:'button', class:'chip', title:rows.map(r=>[r[0], r[1]].filter(Boolean).join(' ')).join('; '), onclick:()=>rxAddSet(rows)}, '+ ' + name)));
+    box.append(h('h3', {}, 'Набори призначень'), tabs, chips, h('p', {class:'chips-hint', style:'margin-top:6px'}, 'Натисніть набір — призначення додадуться в лист (без дублів). Дози типові для дорослих: перевірте під пацієнта. Свої набори — «Мої набори».'));
+  };
+  box.draw = draw; draw(); return box;
+}
 /* Інтерфейс листа призначень */
 function rxPanel(){
   const wrap = h('div', {});
@@ -4341,6 +4521,7 @@ function rxPanel(){
     h('datalist', {id:'routeList'}, ...ROUTES.map(r=>h('option', {value:r}))),
     h('datalist', {id:'freqList'}, ...FREQS.map(r=>h('option', {value:r}))),
     h('div', {class:'pt', id:'rxInfo'}),
+    rxSetsBox(),
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
       h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
@@ -4787,7 +4968,7 @@ TABS.forEach((s,i)=>{
     if (s.id === 'd_main') grid.append(h('div', {class:'f wide'}, diaryBlock()));
     if (s.id === 'd_lik' || s.id === 'e_obs') grid.append(h('div', {class:'f wide'}, resBlock()));
     if (s.id === 'ctrl') grid.prepend(h('div', {class:'f wide'}, ctrlBlock()));
-    if (s.id === 'dx') grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt', id:'dxb', hidden:''})));
+    if (s.id === 'dx'){ grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt', id:'dxb', hidden:''}))); grid.append(h('div', {class:'f wide'}, h('div', {class:'pt dxhbox', id:'dxh'}))); }
     if (s.id === 'e_per') grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt'}, h('h3', {}, 'Виписка за хвилину', h('span', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:epiAuto}, 'Зібрати виписку'))),
       h('p', {class:'chips-hint'}, 'Заповнить порожні поля: дати, анамнез, динаміку й стан при виписці (з останнього щоденника), результати обстежень (з журналу), лікування (з листа призначень) і рекомендації — що продовжити приймати та поради за хворобою. Заповнене вами не змінюється.'))));
     s.hintsAfter = s.id === 'd_main' || s.id === 'd_obj' || s.id === 'd_lik';
@@ -4866,6 +5047,23 @@ document.querySelectorAll('#sexSeg button').forEach(b=>b.addEventListener('click
   refreshLabels(); update();
 }));
 $('#toText').onclick = ()=>$('#outBox').classList.add('open');
+function openNav(){
+  const L = $('#navList'); L.innerHTML = '';
+  $('#tabs').querySelectorAll('.tgrp').forEach(g=>{
+    const lab = g.querySelector('.tgl'); if (lab) L.append(h('div', {class:'nsg'}, lab.textContent));
+    const grid = h('div', {class:'nsl'});
+    g.querySelectorAll('.tab').forEach(t=>{
+      const i = TABS.findIndex(x=>x.tab === t); if (i < 0 || t.hidden) return;
+      grid.append(h('button', {type:'button', 'aria-current': i === active ? 'true' : 'false', onclick:()=>{ closeNav(); show(i); const f = $('.form'); if (f) window.scrollTo({top: f.getBoundingClientRect().top + window.scrollY - 4}); }},
+        h('span', {}, TABS[i].short || TABS[i].title), t.classList.contains('filled') ? h('span', {class:'d', 'aria-label':'заповнено'}) : ''));
+    });
+    L.append(grid);
+  });
+  $('#navSheet').hidden = false; document.body.style.overflow = 'hidden';
+}
+function closeNav(){ $('#navSheet').hidden = true; document.body.style.overflow = ''; }
+$('#navBtn').onclick = openNav; $('#navClose').onclick = closeNav;
+document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && !$('#navSheet').hidden) closeNav(); });
 $('#closeSheet2').onclick = ()=>$('#outBox').classList.remove('open');
 
 /* старт з порожньої форми: нічого не підставляється без дії лікаря */
@@ -4897,14 +5095,20 @@ function switchDoc(nd){
   toast({konc:'Консиліум: склад, мета, висновок і рішення; підписи всіх членів — внизу документа', gosp:'Направлення на госпіталізацію: критерії — на вкладці «Направлення» (рішення)', pam:'Пам’ятка пацієнту: ліки — з листа призначень, поради й тривожні ознаки — за хворобою', zav:'Огляд завідувача', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка: оберіть вид і період', zgoda:'Інформована згода: відмітьте втручання', rx:'Лист призначень', ohl:'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник спостереження', epi:'Виписний епікриз: діагноз і скарги беруться з первинного огляду', kons:'Консультаційний висновок: скарги, діагноз і огляд беруться з первинного огляду'}[DOC]);
 }
 function applyDoc(first){
-  if (!applyDoc.bound){ applyDoc.bound = true; $('#docMore').addEventListener('change', e=>{ if (e.target.value) switchDoc(e.target.value); }); }
+  if (!applyDoc.bound){ applyDoc.bound = true; $('#docMore').addEventListener('change', e=>{ if (e.target.value) switchDoc(e.target.value); }); if (window.matchMedia){ const mq = matchMedia('(max-width:899px)'); const f = ()=>applyDoc(true); if (mq.addEventListener) mq.addEventListener('change', f); } }
   if (![...DOCLIST[MODE], ...DOCMORE[MODE]].some(d=>d[0] === DOC)) DOC = 'ohl';
   const seg = $('#docSeg'); seg.innerHTML = '';
   DOCLIST[MODE].forEach(([k,l])=>{ const b = h('button', {type:'button', 'aria-pressed': k === DOC ? 'true' : 'false', onclick:()=>switchDoc(k)}, l); b.dataset.doc = k; seg.append(b); });
   const more = $('#docMore'); more.innerHTML = '';
-  more.append(h('option', {value:''}, 'Інші документи…'), ...DOCMORE[MODE].map(([k,l])=>h('option', {value:k}, l)));
-  more.value = DOCMORE[MODE].some(d=>d[0] === DOC) ? DOC : '';
-  more.classList.toggle('on', !!more.value);
+  if (window.matchMedia && matchMedia('(max-width:899px)').matches){
+    // телефон: один список усіх документів замість кнопок
+    more.append(h('optgroup', {label:'Основні'}, ...DOCLIST[MODE].map(([k,l])=>h('option', {value:k}, l))), h('optgroup', {label:'Інші документи'}, ...DOCMORE[MODE].map(([k,l])=>h('option', {value:k}, l))));
+    more.value = DOC; more.classList.remove('on');
+  } else {
+    more.append(h('option', {value:''}, 'Інші документи…'), ...DOCMORE[MODE].map(([k,l])=>h('option', {value:k}, l)));
+    more.value = DOCMORE[MODE].some(d=>d[0] === DOC) ? DOC : '';
+    more.classList.toggle('on', !!more.value);
+  }
   const qOn = quickOn();
   TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : qOn && !QT.includes(t.id)) || (t.locSec && !locOn()); });
   layoutTabs(); syncLoc(true);
@@ -4915,7 +5119,7 @@ function applyDoc(first){
   if (r){ const list = DOC === 'shch' ? (MODE === 'amb' ? RECS_DA : RECS_D) : DOC === 'zav' ? ['Огляд завідувача відділення','Спільний огляд з лікуючим лікарем'] : DOCTITLES[DOC] ? [docTitle()] : (MODE === 'amb' ? RECS_A : RECS);
     const keep = r.value; r.innerHTML = ''; list.forEach(o=>r.append(h('option', {}, o))); if (list.includes(keep)) r.value = keep; }
   $('#allNorm').hidden = !['ohl','shch'].includes(DOC);
-  $('#allNorm').textContent = DOC === 'shch' ? 'Стабільно' : 'Норма всюди';
+  $('#allNorm').textContent = DOC === 'shch' ? 'Стабільно' : (window.matchMedia && matchMedia('(max-width:899px)').matches ? 'Норма' : 'Норма всюди');
   $('#allNorm').title = DOC === 'shch' ? 'Типовий стабільний запис щоденника' : 'Виставити норму в усіх системах огляду';
   buildFeet();
   if (!first){
