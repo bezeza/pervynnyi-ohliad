@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Первинний огляд</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22#1D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22#fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22#E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22#8FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22#8FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22#B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22#1D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22#F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22#B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22#15212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -33,6 +33,9 @@ button,select,input,textarea{font:inherit;color:inherit}
 .top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;max-width:1400px;margin:0 auto 14px}
 .top h1{font:600 22px/1.2 var(--f-head);margin:0;letter-spacing:.01em;flex:1 1 auto}
 .top h1 small{display:block;font:400 13px var(--f-ui);color:var(--muted);letter-spacing:0}
+.brand{display:flex;align-items:center;gap:12px}.brand .logo{width:40px;height:40px;flex:0 0 auto;border-radius:10px}.brand .bt{display:flex;flex-direction:column;min-width:0}
+.vbadge{display:inline-block;vertical-align:middle;margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--flag-soft);color:var(--flag);font:600 12px/1.4 var(--f-ui);letter-spacing:.02em;border:1px solid currentColor}
+.top h1 small.author{font-size:12.5px}.author a{color:var(--accent);text-decoration:none;font-weight:500}.author a:hover{text-decoration:underline}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 13px;cursor:pointer;line-height:1.2}
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:500}
@@ -190,6 +193,7 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
   .mob{display:inline-flex}
   .mbar{z-index:20}
   .top h1{font-size:20px;flex-basis:100%}
+  .brand .logo{width:34px;height:34px}.vbadge{font-size:11px;padding:1px 7px}
   .top .btn{flex:1}
   .tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:10;background:var(--surface);border-radius:8px 8px 0 0}
   .tab{padding:13px 14px 12px;font-size:15px}
@@ -347,7 +351,7 @@ details.box[open]{padding-bottom:12px}
 
 
 <header class="top">
-  <h1>Первинний огляд <small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge">v2.9 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -2076,7 +2080,7 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.9', VDATE = '10.10.2026';
+const VERSION = '2.9', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
   ['2.9', '10.10.2026', 'набори призначень за спеціальностями (терапія, неврологія, хірургія, інфекційні, травматологія) і свої набори; підказки до клінічного діагнозу (схема для кожної хвороби, загальні правила, перевірка формулювання й коду МКХ-10); телефон: кнопка «Розділи» з усіма вкладками, документ — одним списком'],
   ['2.8', '10.10.2026', 'вкладка «Довідка» з пошуком: як працювати з програмою; постійне сховище — браузер не видаляє дані програми сам'],
@@ -2502,7 +2506,7 @@ function buildMetaPanel(){
       h('button', {type:'button', class:'btn', onclick:()=>{ const f = document.querySelector('#panels input[type=file][accept^=".json"]'); if (f) f.click(); }}, 'Відкрити пацієнтів з файлу')),
     h('p', {class:'chips-hint', style:'margin-top:6px'}, 'Пацієнти зберігаються лише в цьому браузері. Робіть копію щотижня; файл переносить пацієнтів на інший комп’ютер чи телефон.'));
   SETTINGS_EL = sw;
-  sw.append(h('details', {class:'about'}, h('summary', {}, `Про програму · версія ${VERSION} від ${VDATE}`),
+  sw.append(h('details', {class:'about'}, h('summary', {}, `Про програму · версія ${VERSION}${STAGE ? ' ' + STAGE : ''} від ${VDATE} · автор: ${AUTHOR}`),
     h('p', {class:'chips-hint'}, 'Ліцензія GNU AGPL-3.0 · код: github.com/bezeza/pervynnyi-ohliad'), h('p', {class:'chips-hint'}, 'Генератор медичної документації для стаціонару й амбулаторного прийому. Працює без інтернету; дані пацієнтів зберігаються лише в цьому браузері. Програма готує текст — остаточне рішення та підпис за лікарем.'),
     h('ul', {class:'vlist'}, ...CHANGELOG.map(([v, d, t])=>h('li', {}, h('b', {}, v), ' · ' + d + ' — ' + t)))));
   return wrap;
@@ -5137,7 +5141,8 @@ function applyMode(){
   H.tab.firstChild.textContent = MODE === 'amb' ? H.shortAmb : H.short;
   H.panel.querySelector('.ph h2').textContent = MODE === 'amb' ? H.titleAmb : H.title;
   const v = document.querySelector('label[for="meta_card"]'); if (v) v.textContent = MODE === 'amb' ? '№ амбулаторної карти' : '№ медичної карти';
-  $('#subT').textContent = 'v' + VERSION + ' · ' + (MODE === 'amb' ? 'Амбулаторно · генератор тексту огляду, шкали, рішення щодо госпіталізації' : 'Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації');
+  { const vb = $('#vBadge'); if (vb) vb.textContent = 'v' + VERSION + (STAGE ? ' ' + STAGE : ''); }
+  $('#subT').textContent =  (MODE === 'amb' ? 'Амбулаторно · генератор тексту огляду, шкали, рішення щодо госпіталізації' : 'Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації');
   F('hosp.vyda').autoSet = true;
   applyDoc(true);
 }
