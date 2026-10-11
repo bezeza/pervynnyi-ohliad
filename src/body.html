@@ -26,6 +26,7 @@
       <h2>Текст огляду</h2>
       <button class="btn mob" id="closeSheet2" type="button" aria-label="Закрити">Закрити ✕</button>
       <div class="acts">
+        <button class="btn" id="fmtBtn" type="button" aria-pressed="false" title="Показати панель форматування: жирний, курсив, розмір, вирівнювання">Aa</button>
         <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд «як на папері»: шапка закладу, логотип, форма МОЗ">Аркуш</button>
         <button class="btn" id="printBtn" type="button" title="Друк або «Зберегти як PDF» у вікні друку">Друк<span class="hide-m"> / PDF</span></button>
         <button class="btn" id="docxBtn" type="button" title="Зберегти документ у форматі Word (.docx) — відкривається і в LibreOffice">Word</button>
@@ -39,7 +40,7 @@
       <button class="btn" id="regen" type="button">Оновити з форми</button>
     </div>
     <details class="chkbox" id="chk" hidden><summary>Перевірка перед підписом: <span class="cnt"></span></summary><ul></ul></details>
-    <div class="fmt" role="toolbar" aria-label="Форматування">
+    <div class="fmt" role="toolbar" aria-label="Форматування" hidden>
       <button class="btn" type="button" data-cmd="bold" title="Жирний (Ctrl+B)"><b>Ж</b></button>
       <button class="btn" type="button" data-cmd="italic" title="Курсив (Ctrl+I)"><i>К</i></button>
       <button class="btn" type="button" data-cmd="underline" title="Підкреслений (Ctrl+U)"><u>Ч</u></button>

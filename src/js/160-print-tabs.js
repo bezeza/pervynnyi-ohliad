@@ -61,6 +61,13 @@ function addPrintBtns(){
     const b = h('button', {type:'button', class:'more prbtn', title:'Надрукувати цю вкладку (для розділів документа — весь поточний документ)', onclick:()=>(PRINT_TAB[s.id] || (()=>doPrint()))(s)}, '🖨 Друк');
     const box = ph.querySelector('.acts2') || ph; box.append(b);
     if (s.id === 'meta' || s.id === 'hv') box.append(h('button', {type:'button', class:'more', title:'Надрукувати кілька документів пацієнта одним завданням', onclick:packDialog}, '🖨 Кілька документів'));
+    // рідкісні дії (своя кнопка, очистити, друк) — у меню «⋯», щоб не займали рядок
+    const sec = [...box.children].filter(x=>x.tagName === 'BUTTON' && x.classList.contains('more'));
+    if (sec.length){ const menu = h('div', {class:'mmenu', role:'menu'}); sec.forEach(x=>{ x.setAttribute('role', 'menuitem'); menu.append(x); });
+      const dd = h('details', {class:'more-dd'}, h('summary', {class:'btn', title:'Інші дії', 'aria-label':'Інші дії'}, '⋯'), menu);
+      menu.addEventListener('click', e=>{ if (e.target.closest('button') && !e.target.closest('button').dataset.arm) setTimeout(()=>{ if (!menu.querySelector('[data-arm]')) dd.open = false; }, 0); });
+      box.append(dd); }
   });
+  document.addEventListener('click', e=>{ document.querySelectorAll('details.more-dd[open]').forEach(d=>{ if (!d.contains(e.target)) d.open = false; }); });
 }
 

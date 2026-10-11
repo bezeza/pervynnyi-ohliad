@@ -72,13 +72,14 @@ function rxPanel(){
     h('datalist', {id:'drugList'}, ...Object.values(rxLib()).map(d=>h('option', {value:d.n}))),
     h('datalist', {id:'routeList'}, ...ROUTES.map(r=>h('option', {value:r}))),
     h('datalist', {id:'freqList'}, ...FREQS.map(r=>h('option', {value:r}))),
-    h('div', {class:'pt', id:'rxInfo'}),
     h('div', {class:'pt rxvarbox', hidden:''}),
-    rxSetsBox(),
+    h('div', {id:'rxWarn'}),
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
       h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
-      h('button', {type:'button', class:'btn', id:'rxScheme', onclick:addScheme}, '+ Схема для обраної хвороби')),
+      h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби')),
+    h('div', {class:'pt', id:'rxInfo'}),
+    h('details', {class:'pt fold', id:'rxSetsFold'}, h('summary', {}, 'Набори за спеціальністю і мої набори'), rxSetsBox()),
     h('p', {class:'src'}, 'Дози — типові для дорослих, як орієнтир. Корекція за кліренсом креатиніну береться з калькулятора Кокрофта–Голта на вкладці «Шкали». Остаточне рішення — за інструкцією до препарату й клінічною ситуацією. Для антибіотиків програма формує обґрунтування за наказом МОЗ від 09.09.2026 № 1328.'));
   return wrap;
 }
@@ -94,7 +95,9 @@ function addScheme(){
 function renderRx(){
   const info = $('#rxInfo'), list = $('#rxList'); if (!list) return;
   const k = crclVal(), p = PRESETS.find(x=>x.key === curKey);
-  info.innerHTML = '';
+  info.innerHTML = ''; const infoOpen = info.dataset.open === '1' || (!isNaN(k) && k < 60);
+  const kk = h('details', {class:'fold', open:infoOpen ? '' : null, ontoggle:e=>{ info.dataset.open = e.target.open ? '1' : ''; }}, h('summary', {}, 'Нирки: кліренс креатиніну для корекції доз')); info.append(kk);
+  const infoAppend = info.append.bind(info); info.append = (...a)=>kk.append(...a);
   info.append(h('h3', {}, 'Пацієнт', h('span', {class:'badge ' + (isNaN(k) ? 'warn' : k >= 60 ? 'ok' : k >= 30 ? 'warn' : 'bad'), title:'Кліренс креатиніну за Кокрофтом–Голтом — для корекції доз'}, isNaN(k) ? 'Кліренс креатиніну не розраховано' : 'Кліренс креатиніну ' + k + ' мл/хв')));
   if (isNaN(k)){
     const miss = ['age','wt','cr'].filter(x=>!has(pv(x)));
@@ -109,10 +112,10 @@ function renderRx(){
     });
     if (miss.length) info.append(row);
   }
-  const RW = rxWarnings();
-  if (RW.length) info.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
-  if (p && p.tips) info.append(h('div', {class:'tips'}, h('b', {}, 'Підказки: ' + p.name), h('ul', {}, ...p.tips.map(t=>h('li', {}, t)))));
-  $('#rxScheme').hidden = !(p && rxFor(p).length);
+  info.append = infoAppend;
+  const RW = rxWarnings(), rw = $('#rxWarn'); rw.innerHTML = '';
+  if (RW.length) rw.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
+  if (p && p.tips) info.append(h('details', {class:'fold'}, h('summary', {}, 'Підказки: ' + p.name), h('div', {class:'tips'}, h('ul', {}, ...p.tips.map(t=>h('li', {}, t))))));
   list.innerHTML = '';
   if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Додайте препарат або схему для обраної хвороби.')); return; }
   RX.forEach(it=>{

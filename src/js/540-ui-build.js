@@ -153,6 +153,9 @@ $('#allNorm').onclick = ()=>{ SECTIONS.filter(s=>s.objective && s.docs.includes(
 $('#clearAll').onclick = newPatient;
 $('#printBtn').onclick = doPrint;
 addPrintBtns();
+{ const fb = $('#fmtBtn'), fm = document.querySelector('.fmt'); let on = false; try{ on = localStorage.getItem('po.fmt') === '1'; }catch(e){}
+  const ap = ()=>{ fm.hidden = !on; fb.setAttribute('aria-pressed', on ? 'true' : 'false'); }; ap();
+  fb.onclick = ()=>{ on = !on; try{ localStorage.setItem('po.fmt', on ? '1' : '0'); }catch(e){} ap(); }; }
 $('#paperBtn').onclick = ()=>{ PAPER = !PAPER; try{ localStorage.setItem('po.paper', PAPER ? '1' : '0'); }catch(e){} renderPaper(); };
 $('#docxBtn').onclick = saveDocx;
 $('#odtBtn').onclick = saveOdt;

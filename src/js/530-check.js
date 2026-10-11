@@ -101,7 +101,7 @@ function renderCheck(){
   const box = $('#chk'); if (!box) return;
   const L = checkDoc(), sum = box.querySelector('summary .cnt'), ul = box.querySelector('ul');
   box.hidden = !itext($('#out')).trim();
-  box.classList.toggle('ok', !L.length);
+  box.classList.toggle('ok', !L.length); if (!L.length) box.classList.remove('alert');
   sum.textContent = L.length ? `зауважень: ${L.length}` : 'усе заповнено';
   ul.innerHTML = '';
   L.forEach(x=>ul.append(h('li', {}, x.tab ? h('button', {type:'button', class:'more', onclick:()=>goTab(x.tab)}, x.m) : x.m)));

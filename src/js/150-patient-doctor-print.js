@@ -229,7 +229,7 @@ function formHeader(){
   return {left, right, card: ((DOC === 'epi' && typeof epi027 === 'function' && (epi027() || epi003())) || (DOC === 'kons' && F110)) ? '' : card, pat};
 }
 
-function chkWarn(){ const n = renderCheck(); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
+function chkWarn(){ const n = renderCheck(); const b = $('#chk'); if (b) b.classList.toggle('alert', !!n); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
 function doPrint(){
   chkWarn();
   const out = $('#out');

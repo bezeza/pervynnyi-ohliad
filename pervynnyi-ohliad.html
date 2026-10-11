@@ -89,6 +89,13 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .packsheet .pack{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px;margin:8px 0 12px}.packsheet .chk{display:flex;gap:6px;align-items:center;font-size:14px}
 .chip .lvl{display:inline-block;margin-left:6px;font:700 10.5px/1 var(--f-mono,monospace);padding:2px 4px;border-radius:4px;vertical-align:1px}.lvl-a{background:#dff1e4;color:#1e6b34}.lvl-b{background:#fdf0d5;color:#8a5a00}.lvl-c{background:#f3e1e1;color:#8b2c2c}
 .rxsrc{margin-top:8px;font-size:13px}.rxsrc summary{cursor:pointer;color:var(--accent,#1D5B8A)}.rxsrc p,.rxsrc ul{margin:6px 0}
+.show-m{display:none}
+@media (max-width:899px){.show-m{display:inline}.top h1{flex:1 1 0!important;min-width:0}.top #themeBtn{font-size:17px!important;padding:6px 10px!important;line-height:1}}
+.more-dd{position:relative;display:inline-block}.more-dd>summary{list-style:none;min-width:38px;padding:4px 10px;font-weight:700;letter-spacing:1px}.more-dd>summary::-webkit-details-marker{display:none}
+.more-dd .mmenu{position:absolute;right:0;top:calc(100% + 4px);z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:6px;display:flex;flex-direction:column;align-items:stretch;min-width:200px}
+.more-dd .mmenu .more{text-align:left;padding:9px 10px;border-radius:6px;text-decoration:none}.more-dd .mmenu .more:hover{background:var(--line)}
+details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[open]>summary{margin-bottom:6px}
+.chkbox:not(.ok):not(.alert){border-color:var(--line);background:var(--surface)}.chkbox:not(.ok):not(.alert) summary{color:var(--muted);font-weight:400}
 .crow.scr{grid-template-columns:1fr auto auto}.chip.rec{box-shadow:inset 0 0 0 2px var(--ok)}
 @media (max-width:720px){.crow{grid-template-columns:1fr 1fr}.crow .cn{grid-column:1/-1}.cst{grid-column:1/-1}.crow.scr .cn{grid-column:auto}.crow.scr .cst{grid-column:auto}}
 .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
@@ -392,6 +399,7 @@ details.box[open]{padding-bottom:12px}
       <h2>Текст огляду</h2>
       <button class="btn mob" id="closeSheet2" type="button" aria-label="Закрити">Закрити ✕</button>
       <div class="acts">
+        <button class="btn" id="fmtBtn" type="button" aria-pressed="false" title="Показати панель форматування: жирний, курсив, розмір, вирівнювання">Aa</button>
         <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд «як на папері»: шапка закладу, логотип, форма МОЗ">Аркуш</button>
         <button class="btn" id="printBtn" type="button" title="Друк або «Зберегти як PDF» у вікні друку">Друк<span class="hide-m"> / PDF</span></button>
         <button class="btn" id="docxBtn" type="button" title="Зберегти документ у форматі Word (.docx) — відкривається і в LibreOffice">Word</button>
@@ -405,7 +413,7 @@ details.box[open]{padding-bottom:12px}
       <button class="btn" id="regen" type="button">Оновити з форми</button>
     </div>
     <details class="chkbox" id="chk" hidden><summary>Перевірка перед підписом: <span class="cnt"></span></summary><ul></ul></details>
-    <div class="fmt" role="toolbar" aria-label="Форматування">
+    <div class="fmt" role="toolbar" aria-label="Форматування" hidden>
       <button class="btn" type="button" data-cmd="bold" title="Жирний (Ctrl+B)"><b>Ж</b></button>
       <button class="btn" type="button" data-cmd="italic" title="Курсив (Ctrl+I)"><i>К</i></button>
       <button class="btn" type="button" data-cmd="underline" title="Підкреслений (Ctrl+U)"><u>Ч</u></button>
@@ -2220,8 +2228,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.17', VDATE = '10.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.18', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.18', '11.10.2026', 'зручність: на телефоні шапка компактніша (тема — значком); рідкісні дії розділу («Своя кнопка», «Очистити», «Друк») — у меню «⋯»; панель форматування тексту — за кнопкою «Aa»; перевірка перед підписом не кричить, доки не натиснуто «Копіювати» чи «Друк»; лист призначень: спершу схеми й сам лист, а нирки, підказки й набори — згорнуті; попередження про взаємодії — над листом. Внутрішньо: код розкладено на блоки, автотести на GitHub'],
   ['2.17', '10.10.2026', 'лист призначень: при виборі препарату підставляються стандартна доза, шлях введення і кратність (при зміні препарату — завжди його власні, щоб не лишилася доза попереднього); у полях «Доза», «Шлях», «Кратність» — інші типові варіанти саме для цього препарату; у пошуку — усі препарати зі схем'],
   ['2.16', '10.10.2026', 'схеми призначень з джерелами: для кожної хвороби — міжнародні настанови (ESC, GOLD, GINA, ADA, NICE, IDSA, EAU, WSES та ін.) і чинні документи МОЗ, де їх знайдено (УКПМД з АГ, ЦД 2 типу, ХОЗЛ; стандарти з інсульту, болю в попереку, протимікробних засобів, периопераційної антибіотикопрофілактики); рівень доказовості A/B/C на кожній схемі; виправлено схеми, що розходилися з настановами (габапентиноїди при ішіалгії прибрано, помірна інфузія при панкреатиті, аспірин без первинної профілактики, лактулоза при гепатиті А, тривалість азитроміцину, синусит)'],
   ['2.15', '10.10.2026', 'схеми призначень під обрану хворобу: після вибору хвороби у вкладках «За хворобою» і «Призначення» — кілька схем на вибір (базова, при алергії, тяжкий перебіг, перед і після операції, ерадикація H. pylori, профілактика тощо), окремо для стаціонару й амбулаторно; натискання замінює лист призначень, «↶ Повернути попередній лист» — скасування; лист, заповнений заготовкою, при зміні хвороби оновлюється сам, а ваші правки зберігаються'],
@@ -2891,7 +2900,7 @@ function formHeader(){
   return {left, right, card: ((DOC === 'epi' && typeof epi027 === 'function' && (epi027() || epi003())) || (DOC === 'kons' && F110)) ? '' : card, pat};
 }
 
-function chkWarn(){ const n = renderCheck(); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
+function chkWarn(){ const n = renderCheck(); const b = $('#chk'); if (b) b.classList.toggle('alert', !!n); if (n) setTimeout(()=>toast(`Перевірка: зауважень ${n} — перелік над текстом`, 3500), 1700); }
 function doPrint(){
   chkWarn();
   const out = $('#out');
@@ -2967,7 +2976,14 @@ function addPrintBtns(){
     const b = h('button', {type:'button', class:'more prbtn', title:'Надрукувати цю вкладку (для розділів документа — весь поточний документ)', onclick:()=>(PRINT_TAB[s.id] || (()=>doPrint()))(s)}, '🖨 Друк');
     const box = ph.querySelector('.acts2') || ph; box.append(b);
     if (s.id === 'meta' || s.id === 'hv') box.append(h('button', {type:'button', class:'more', title:'Надрукувати кілька документів пацієнта одним завданням', onclick:packDialog}, '🖨 Кілька документів'));
+    // рідкісні дії (своя кнопка, очистити, друк) — у меню «⋯», щоб не займали рядок
+    const sec = [...box.children].filter(x=>x.tagName === 'BUTTON' && x.classList.contains('more'));
+    if (sec.length){ const menu = h('div', {class:'mmenu', role:'menu'}); sec.forEach(x=>{ x.setAttribute('role', 'menuitem'); menu.append(x); });
+      const dd = h('details', {class:'more-dd'}, h('summary', {class:'btn', title:'Інші дії', 'aria-label':'Інші дії'}, '⋯'), menu);
+      menu.addEventListener('click', e=>{ if (e.target.closest('button') && !e.target.closest('button').dataset.arm) setTimeout(()=>{ if (!menu.querySelector('[data-arm]')) dd.open = false; }, 0); });
+      box.append(dd); }
   });
+  document.addEventListener('click', e=>{ document.querySelectorAll('details.more-dd[open]').forEach(d=>{ if (!d.contains(e.target)) d.open = false; }); });
 }
 
 /* ================= БАЗА ПАЦІЄНТІВ (у цьому браузері) ================= */
@@ -4769,7 +4785,7 @@ let THEME = 'auto'; try{ THEME = localStorage.getItem('po.theme') || 'auto'; }ca
 function applyTheme(){
   const r = document.documentElement;
   if (THEME === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', THEME === 'night' ? 'dark' : 'light');
-  const b = $('#themeBtn'); if (b){ b.innerHTML = '<span class="hide-m">Тема: </span>' + {auto:'авто', day:'день', night:'ніч'}[THEME]; b.title = 'Тема оформлення: ' + {auto:'як у системі', day:'світла', night:'темна'}[THEME] + '. Натисніть, щоб змінити'; }
+  const b = $('#themeBtn'); if (b){ b.innerHTML = '<span class="hide-m">Тема: ' + {auto:'авто', day:'день', night:'ніч'}[THEME] + '</span><span class="show-m" aria-hidden="true">' + {auto:'◐', day:'☀', night:'☾'}[THEME] + '</span>'; b.title = 'Тема оформлення: ' + {auto:'як у системі', day:'світла', night:'темна'}[THEME] + '. Натисніть, щоб змінити'; }
 }
 
 
@@ -5398,13 +5414,14 @@ function rxPanel(){
     h('datalist', {id:'drugList'}, ...Object.values(rxLib()).map(d=>h('option', {value:d.n}))),
     h('datalist', {id:'routeList'}, ...ROUTES.map(r=>h('option', {value:r}))),
     h('datalist', {id:'freqList'}, ...FREQS.map(r=>h('option', {value:r}))),
-    h('div', {class:'pt', id:'rxInfo'}),
     h('div', {class:'pt rxvarbox', hidden:''}),
-    rxSetsBox(),
+    h('div', {id:'rxWarn'}),
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
       h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
-      h('button', {type:'button', class:'btn', id:'rxScheme', onclick:addScheme}, '+ Схема для обраної хвороби')),
+      h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби')),
+    h('div', {class:'pt', id:'rxInfo'}),
+    h('details', {class:'pt fold', id:'rxSetsFold'}, h('summary', {}, 'Набори за спеціальністю і мої набори'), rxSetsBox()),
     h('p', {class:'src'}, 'Дози — типові для дорослих, як орієнтир. Корекція за кліренсом креатиніну береться з калькулятора Кокрофта–Голта на вкладці «Шкали». Остаточне рішення — за інструкцією до препарату й клінічною ситуацією. Для антибіотиків програма формує обґрунтування за наказом МОЗ від 09.09.2026 № 1328.'));
   return wrap;
 }
@@ -5420,7 +5437,9 @@ function addScheme(){
 function renderRx(){
   const info = $('#rxInfo'), list = $('#rxList'); if (!list) return;
   const k = crclVal(), p = PRESETS.find(x=>x.key === curKey);
-  info.innerHTML = '';
+  info.innerHTML = ''; const infoOpen = info.dataset.open === '1' || (!isNaN(k) && k < 60);
+  const kk = h('details', {class:'fold', open:infoOpen ? '' : null, ontoggle:e=>{ info.dataset.open = e.target.open ? '1' : ''; }}, h('summary', {}, 'Нирки: кліренс креатиніну для корекції доз')); info.append(kk);
+  const infoAppend = info.append.bind(info); info.append = (...a)=>kk.append(...a);
   info.append(h('h3', {}, 'Пацієнт', h('span', {class:'badge ' + (isNaN(k) ? 'warn' : k >= 60 ? 'ok' : k >= 30 ? 'warn' : 'bad'), title:'Кліренс креатиніну за Кокрофтом–Голтом — для корекції доз'}, isNaN(k) ? 'Кліренс креатиніну не розраховано' : 'Кліренс креатиніну ' + k + ' мл/хв')));
   if (isNaN(k)){
     const miss = ['age','wt','cr'].filter(x=>!has(pv(x)));
@@ -5435,10 +5454,10 @@ function renderRx(){
     });
     if (miss.length) info.append(row);
   }
-  const RW = rxWarnings();
-  if (RW.length) info.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
-  if (p && p.tips) info.append(h('div', {class:'tips'}, h('b', {}, 'Підказки: ' + p.name), h('ul', {}, ...p.tips.map(t=>h('li', {}, t)))));
-  $('#rxScheme').hidden = !(p && rxFor(p).length);
+  info.append = infoAppend;
+  const RW = rxWarnings(), rw = $('#rxWarn'); rw.innerHTML = '';
+  if (RW.length) rw.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
+  if (p && p.tips) info.append(h('details', {class:'fold'}, h('summary', {}, 'Підказки: ' + p.name), h('div', {class:'tips'}, h('ul', {}, ...p.tips.map(t=>h('li', {}, t))))));
   list.innerHTML = '';
   if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Додайте препарат або схему для обраної хвороби.')); return; }
   RX.forEach(it=>{
@@ -5768,7 +5787,7 @@ function renderCheck(){
   const box = $('#chk'); if (!box) return;
   const L = checkDoc(), sum = box.querySelector('summary .cnt'), ul = box.querySelector('ul');
   box.hidden = !itext($('#out')).trim();
-  box.classList.toggle('ok', !L.length);
+  box.classList.toggle('ok', !L.length); if (!L.length) box.classList.remove('alert');
   sum.textContent = L.length ? `зауважень: ${L.length}` : 'усе заповнено';
   ul.innerHTML = '';
   L.forEach(x=>ul.append(h('li', {}, x.tab ? h('button', {type:'button', class:'more', onclick:()=>goTab(x.tab)}, x.m) : x.m)));
@@ -5930,6 +5949,9 @@ $('#allNorm').onclick = ()=>{ SECTIONS.filter(s=>s.objective && s.docs.includes(
 $('#clearAll').onclick = newPatient;
 $('#printBtn').onclick = doPrint;
 addPrintBtns();
+{ const fb = $('#fmtBtn'), fm = document.querySelector('.fmt'); let on = false; try{ on = localStorage.getItem('po.fmt') === '1'; }catch(e){}
+  const ap = ()=>{ fm.hidden = !on; fb.setAttribute('aria-pressed', on ? 'true' : 'false'); }; ap();
+  fb.onclick = ()=>{ on = !on; try{ localStorage.setItem('po.fmt', on ? '1' : '0'); }catch(e){} ap(); }; }
 $('#paperBtn').onclick = ()=>{ PAPER = !PAPER; try{ localStorage.setItem('po.paper', PAPER ? '1' : '0'); }catch(e){} renderPaper(); };
 $('#docxBtn').onclick = saveDocx;
 $('#odtBtn').onclick = saveOdt;
