@@ -77,7 +77,8 @@ function rxPanel(){
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
       h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
-      h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби')),
+      h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби'),
+      h('button', {type:'button', class:'btn', title:'Таблиця для медсестри, як паперовий бланк: дні, рядки «Лікар / Сестра»', onclick:f0034Preview}, '🖨 Листок призначень (ф. 003-4/о)')),
     h('div', {class:'pt', id:'rxInfo'}),
     h('details', {class:'pt fold', id:'rxSetsFold'}, h('summary', {}, 'Набори за спеціальністю і мої набори'), rxSetsBox()),
     h('p', {class:'src'}, 'Дози — типові для дорослих, як орієнтир. Корекція за кліренсом креатиніну береться з калькулятора Кокрофта–Голта на вкладці «Шкали». Остаточне рішення — за інструкцією до препарату й клінічною ситуацією. Для антибіотиків програма формує обґрунтування за наказом МОЗ від 09.09.2026 № 1328.'));

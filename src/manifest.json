@@ -51,6 +51,7 @@
   "490-data-rx-variants.js",
   "500-data-rx-sources.js",
   "510-rx-sets.js",
+  "515-rx-form.js",
   "520-my-templates.js",
   "530-check.js",
   "540-ui-build.js",
