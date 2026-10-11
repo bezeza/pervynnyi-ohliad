@@ -80,6 +80,16 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .chip .lvl{display:inline-block;margin-left:6px;font:700 10.5px/1 var(--f-mono,monospace);padding:2px 4px;border-radius:4px;vertical-align:1px}.lvl-a{background:#dff1e4;color:#1e6b34}.lvl-b{background:#fdf0d5;color:#8a5a00}.lvl-c{background:#f3e1e1;color:#8b2c2c}
 .rxsrc{margin-top:8px;font-size:13px}.rxsrc summary{cursor:pointer;color:var(--accent,#1D5B8A)}.rxsrc p,.rxsrc ul{margin:6px 0}
 .show-m{display:none}
+.cmdk .nvbox{max-width:640px}.cmdk input[type=search]{width:100%;font-size:16px;padding:10px 12px}.cmdl{display:flex;flex-direction:column;gap:2px;margin-top:8px;max-height:55vh;overflow:auto}
+.cmdi{display:flex;gap:10px;align-items:baseline;text-align:left;padding:8px 10px;border:0;border-radius:6px;background:transparent;color:var(--ink);font:inherit;cursor:pointer}.cmdi.on,.cmdi:hover{background:var(--accent-soft)}
+.cmdk-k{flex:0 0 110px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cmdk-s{margin-left:auto;font-size:12px;color:var(--muted)}
+.nsearch{width:100%;margin:0 0 10px;text-align:left}
+.switcher input[type=search]{width:100%;margin:6px 0 8px}.swlist{display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto}
+.swrow{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.swrow:hover{border-color:var(--accent)}.swrow.cur{border-color:var(--ok)}.swn{flex:1 1 100%}.swd{font-size:13px;color:var(--muted);flex:1 1 100%}.swf{display:flex;gap:4px;flex-wrap:wrap}
+#ptbar{cursor:pointer;padding-right:34px!important}#ptbar::after{content:'⇅';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px}
+.welcome .wgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:10px}.welcome .wl{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}.welcome .wl input,.welcome .wl select{font-size:15px;color:var(--ink)}.welcome .wseg button{flex:1}
+@media (max-width:620px){.welcome .wgrid{grid-template-columns:1fr}.welcome .nvbox{margin-top:2vh}}
 #clearDocBtn{display:none}
 .tabnav{display:none}
 @media (max-width:899px){

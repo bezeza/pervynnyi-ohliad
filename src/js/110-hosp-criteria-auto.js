@@ -111,7 +111,7 @@ function syncLoc(force){
   const on = locOn(); if (!force && syncLoc.on === on) return; syncLoc.on = on;
   SECTIONS.forEach(sc=>sc.fields.forEach(f=>{ if (f.loc && f.wrapEl) f.wrapEl.hidden = !on || (f.only && f.only !== MODE) || (f.docs && !f.docs.includes(DOC)); }));
   const L = SECTIONS.find(x=>x.id === 'loc');
-  if (L && L.tab){ const hid = !on || !L.docs.includes(DOC) || (quickOn() && !QT.includes('loc')); if (L.tab.hidden !== hid){ L.tab.hidden = hid; layoutTabs(); } }
+  if (L && L.tab){ const hid = !on || !L.docs.includes(DOC) || (quickHide() && !QT.includes('loc')); if (L.tab.hidden !== hid){ L.tab.hidden = hid; layoutTabs(); } }
 }
 const TPLKRIT = {pneu:1, covid:0, hf:0, copd:0, asthma:0, af:0, stroke:0, tia:0, rad:1, cerv:1, migr:1, bell:0, app:1, chol:0, panc:1, gib:1, obstr:1, hern:1, perf:1,
   dvt:1, colic:0, absc:0, mening:0, food:1, ery:0, tdr:0, thip:0, tank:0, tdisl:0};

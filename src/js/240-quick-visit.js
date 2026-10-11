@@ -1,7 +1,9 @@
-/* ===== Швидкий прийом (амбулаторно) ===== */
+/* ===== Швидкий прийом (амбулаторно) і швидкий огляд (стаціонар) =====
+   Амбулаторно: лише головні вкладки + «Показники». Стаціонар: «Показники і системи» на одному екрані, вкладки систем лишаються для детального опису. */
 let QUICK = false; try{ QUICK = localStorage.getItem('po.quick') === '1'; }catch(e){}
 const QT = ['meta','hv','skarhy','morbi','qv','loc','help','ctrl','scr','dx','rxt','hosp','eln','calc','tpl','set'];
-const quickOn = () => QUICK && MODE === 'amb' && DOC === 'ohl';
+const quickOn = () => QUICK && DOC === 'ohl';
+const quickHide = () => quickOn() && MODE === 'amb';   // ховати другорядні вкладки — лише на амбулаторному прийомі
 const QSYS = ['zah','shk','dyh','ssc','trav','sech','nevr'];
 function sysState(id){
   const sc = SECTIONS.find(x=>x.id === id);
@@ -16,7 +18,9 @@ function qvPanel(){
       h('span', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>{ let n = 0;
         QSYS.forEach(id=>{ if (sysState(id)) return; const sc = SECTIONS.find(x=>x.id === id), b = sc.fields.find(f=>f.bo);
           if (b){ b.el.value = 0; mark(b.el, b); n++; } else { applyNorm(sc); n++; } });
-        update(); toast(n ? 'Неописані системи записано коротко: «Без особливостей»' : 'Усі системи вже описано'); }}, 'Решта — Б/о'))),
+        update(); toast(n ? 'Неописані системи записано коротко: «Без особливостей»' : 'Усі системи вже описано'); }}, 'Решта — Б/о'),
+        h('button', {type:'button', class:'btn norm', onclick:undoable('«Решта — Норма»', ()=>{ let n = 0; QSYS.forEach(id=>{ if (sysState(id)) return; applyNorm(SECTIONS.find(x=>x.id === id)); n++; });
+          update(); toast(n ? 'Неописані системи заповнено детальною нормою' : 'Усі системи вже описано'); })}, 'Решта — Норма'))),
       h('p', {class:'chips-hint'}, 'Змінене — відкрийте систему й опишіть. Решту одним натисканням: «Б/о» (коротко) або «Норма» (детально).'),
       h('div', {id:'qvSys'})));
   return wrap;

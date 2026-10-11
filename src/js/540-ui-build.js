@@ -233,9 +233,10 @@ function applyDoc(first){
     more.classList.toggle('on', !!more.value);
   }
   const qOn = quickOn();
-  TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : qOn && !QT.includes(t.id)) || (t.locSec && !locOn()); });
+  TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : quickHide() && !QT.includes(t.id)) || (t.locSec && !locOn()); });
   layoutTabs(); syncLoc(true);
-  const qb = $('#quickBtn'); if (qb){ qb.hidden = !(MODE === 'amb' && DOC === 'ohl'); qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); }
+  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
+    qb.title = MODE === 'amb' ? 'Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням' : 'Показники й усі системи на одному екрані: «Норма», «Б/о» або «Відкрити» для детального опису'; }
   if (TABS[active] && TABS[active].tab.hidden && !first){ const t = TABS.find(x=>!x.tab.hidden && x !== META); if (t) show(TABS.indexOf(t)); }
   document.querySelectorAll('[data-docs]').forEach(e=>{ e.hidden = !e.dataset.docs.split(' ').includes(DOC) || (e.dataset.only && e.dataset.only !== MODE); });
   const r = document.getElementById('meta_rec');
@@ -271,12 +272,12 @@ document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('clic
   applyMode(); if (DOC === 'ohl') show(TABS.indexOf(HV)); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
 }));
 loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode();
-$('#ptbar').addEventListener('click', ()=>show(TABS.indexOf(META)));
+$('#ptbar').addEventListener('click', ()=>openSwitcher());
 $('#misBtn').addEventListener('click', misPanel);
 $('#clearDocBtn').addEventListener('click', e=>clearDoc(e.currentTarget));
 $('#quickBtn').addEventListener('click', ()=>{ QUICK = !QUICK; try{ localStorage.setItem('po.quick', QUICK ? '1' : '0'); }catch(e){}
-  applyDoc(false); if (QUICK) show(TABS.indexOf(HV)); update();
-  toast(QUICK ? 'Швидкий прийом: лише головне. Показники та стан систем — на вкладці «Показники»' : 'Повний огляд: усі вкладки', 3500); });
+  applyDoc(false); if (QUICK) show(MODE === 'amb' ? TABS.indexOf(HV) : TABS.indexOf(QV)); update();
+  toast(QUICK ? (MODE === 'amb' ? 'Швидкий прийом: лише головне. Показники та стан систем — на вкладці «Показники»' : 'Швидкий огляд: показники й системи на одному екрані; змінене — «Відкрити»') : 'Повний огляд: усі вкладки', 3500); });
 applyOvrAll(); renderRes(); update();
 window.addEventListener('resize', renderPtBar);
 renderPatients(); renderDiaries(); fsInit(); storePersist(); dxCodeUI(); dictLoad(); renderMyBtns(); zlogoRender();

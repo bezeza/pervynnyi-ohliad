@@ -90,6 +90,16 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .chip .lvl{display:inline-block;margin-left:6px;font:700 10.5px/1 var(--f-mono,monospace);padding:2px 4px;border-radius:4px;vertical-align:1px}.lvl-a{background:#dff1e4;color:#1e6b34}.lvl-b{background:#fdf0d5;color:#8a5a00}.lvl-c{background:#f3e1e1;color:#8b2c2c}
 .rxsrc{margin-top:8px;font-size:13px}.rxsrc summary{cursor:pointer;color:var(--accent,#1D5B8A)}.rxsrc p,.rxsrc ul{margin:6px 0}
 .show-m{display:none}
+.cmdk .nvbox{max-width:640px}.cmdk input[type=search]{width:100%;font-size:16px;padding:10px 12px}.cmdl{display:flex;flex-direction:column;gap:2px;margin-top:8px;max-height:55vh;overflow:auto}
+.cmdi{display:flex;gap:10px;align-items:baseline;text-align:left;padding:8px 10px;border:0;border-radius:6px;background:transparent;color:var(--ink);font:inherit;cursor:pointer}.cmdi.on,.cmdi:hover{background:var(--accent-soft)}
+.cmdk-k{flex:0 0 110px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cmdk-s{margin-left:auto;font-size:12px;color:var(--muted)}
+.nsearch{width:100%;margin:0 0 10px;text-align:left}
+.switcher input[type=search]{width:100%;margin:6px 0 8px}.swlist{display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto}
+.swrow{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.swrow:hover{border-color:var(--accent)}.swrow.cur{border-color:var(--ok)}.swn{flex:1 1 100%}.swd{font-size:13px;color:var(--muted);flex:1 1 100%}.swf{display:flex;gap:4px;flex-wrap:wrap}
+#ptbar{cursor:pointer;padding-right:34px!important}#ptbar::after{content:'⇅';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px}
+.welcome .wgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:10px}.welcome .wl{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}.welcome .wl input,.welcome .wl select{font-size:15px;color:var(--ink)}.welcome .wseg button{flex:1}
+@media (max-width:620px){.welcome .wgrid{grid-template-columns:1fr}.welcome .nvbox{margin-top:2vh}}
 #clearDocBtn{display:none}
 .tabnav{display:none}
 @media (max-width:899px){
@@ -408,7 +418,7 @@ details.box[open]{padding-bottom:12px}
 
 <main class="wrap">
   <section class="form" aria-label="Форма огляду">
-    <button type="button" id="ptbar" hidden title="Дані пацієнта — натисніть, щоб відкрити «Запис»"><span class="pt1"></span><span class="pt2"></span></button>
+    <button type="button" id="ptbar" hidden title="Пацієнти: перемкнути, знайти, новий"><span class="pt1"></span><span class="pt2"></span></button>
     <div class="docbar"><div class="seg" id="docSeg" role="group" aria-label="Документ"></div><select id="docMore" aria-label="Інші документи"></select><button type="button" class="btn" id="clearDocBtn" title="Очистити всі поля поточного документа (дані пацієнта, призначення й журнали лишаються)">Очистити все</button><button type="button" class="btn" id="quickBtn" aria-pressed="false" hidden title="Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням">Швидкий прийом</button></div>
     <div class="tabnav" id="tabnav"></div>
     <div class="tabs" role="tablist" id="tabs"></div>
@@ -2005,7 +2015,7 @@ function syncLoc(force){
   const on = locOn(); if (!force && syncLoc.on === on) return; syncLoc.on = on;
   SECTIONS.forEach(sc=>sc.fields.forEach(f=>{ if (f.loc && f.wrapEl) f.wrapEl.hidden = !on || (f.only && f.only !== MODE) || (f.docs && !f.docs.includes(DOC)); }));
   const L = SECTIONS.find(x=>x.id === 'loc');
-  if (L && L.tab){ const hid = !on || !L.docs.includes(DOC) || (quickOn() && !QT.includes('loc')); if (L.tab.hidden !== hid){ L.tab.hidden = hid; layoutTabs(); } }
+  if (L && L.tab){ const hid = !on || !L.docs.includes(DOC) || (quickHide() && !QT.includes('loc')); if (L.tab.hidden !== hid){ L.tab.hidden = hid; layoutTabs(); } }
 }
 const TPLKRIT = {pneu:1, covid:0, hf:0, copd:0, asthma:0, af:0, stroke:0, tia:0, rad:1, cerv:1, migr:1, bell:0, app:1, chol:0, panc:1, gib:1, obstr:1, hern:1, perf:1,
   dvt:1, colic:0, absc:0, mening:0, food:1, ery:0, tdr:0, thip:0, tank:0, tdisl:0};
@@ -2248,8 +2258,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.19', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.20', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.20', '11.10.2026', 'скасування: «↶ Скасувати» біля документа і Ctrl+Z повертають стан до вибору хвороби, «Норми», очищення чи заміни схеми (до 10 кроків); «Швидкий огляд» і в стаціонарі — показники й усі системи на одному екрані («Решта — Б/о» / «Решта — Норма», змінене — «Відкрити»); знайомство при першому запуску (ПІБ, посада, відділення, заклад, профіль, режим); смужка з ПІБ угорі відкриває список пацієнтів — перемикання одним дотиком, пошук, «Новий пацієнт»; пошук будь-чого (Ctrl+K або «☰ Розділи» → «Пошук»): розділ, поле, хвороба, дія; Ctrl+Enter — копіювати, Ctrl+P — друк; розмір тексту програми в «Налаштуваннях»'],
   ['2.19', '11.10.2026', 'навігація: на телефоні замість рядка вкладок — назва розділу з ‹ › і номером (натисніть назву — усі розділи); внизу кожного розділу — «Далі: …» і «‹ назад», в останньому — «Готово — до тексту документа»; «Очистити все» прибрано з-під документа, тепер «⋯» → «Очистити весь документ» (поруч — «Очистити вкладку»); у «За хворобою» одразу видно групи свого профілю (терапевт — терапія, неврологія, інфекційні; травматолог — травма, хірургія; сімейний — сімейна медицина, терапія), решта — «Інші профілі ▾»'],
   ['2.18', '11.10.2026', 'зручність: на телефоні шапка компактніша (тема — значком); рідкісні дії розділу («Своя кнопка», «Очистити», «Друк») — у меню «⋯»; панель форматування тексту — за кнопкою «Aa»; перевірка перед підписом не кричить, доки не натиснуто «Копіювати» чи «Друк»; лист призначень: спершу схеми й сам лист, а нирки, підказки й набори — згорнуті; попередження про взаємодії — над листом. Внутрішньо: код розкладено на блоки, автотести на GitHub'],
   ['2.17', '10.10.2026', 'лист призначень: при виборі препарату підставляються стандартна доза, шлях введення і кратність (при зміні препарату — завжди його власні, щоб не лишилася доза попереднього); у полях «Доза», «Шлях», «Кратність» — інші типові варіанти саме для цього препарату; у пошуку — усі препарати зі схем'],
@@ -3316,6 +3327,13 @@ const HELPS = [
   'Коди: під полем «Код МКХ-10» — пошук за назвою чи кодом і «Підібрати за діагнозом»; під «Супутні» — «Додати коди до наявних». Вбудовано МКХ-10 (ВООЗ); офіційні НК 025:2021 (МКХ-10-АМ) і НК 026:2021 (послуги АКМІ) завантажуються файлом у «Налаштування» → «Довідники кодів».',
   'Амбулаторно — коди ICPC-2 (причина звернення й діагноз) підставляються за хворобою; профіль «Сімейний лікар» у «Налаштуваннях» відкриває програму одразу в амбулаторному режимі.',
   'План обстеження — кнопками; у виписці та консультаціях його можна вставити шаблонами результатів.']],
+ ['Швидка робота', [
+  '«↶ Скасувати» (поруч із вибором документа) або Ctrl+Z — повернути стан до останнього вибору хвороби, «Норми», очищення чи заміни схеми призначень (до 10 кроків).',
+  'Смужка з ПІБ пацієнта вгорі — список пацієнтів: перемкнутися одним дотиком, знайти, створити нового.',
+  'Пошук будь-чого: Ctrl+K на комп’ютері або «☰ Розділи» → «Пошук» на телефоні. Наберіть «сатур», «пневм», «word» — і перейдіть до поля, хвороби чи дії.',
+  'Ctrl+Enter — копіювати текст, Ctrl+P — друк. Внизу кожного розділу — «Далі: …».',
+  '«Швидкий огляд» (стаціонар) / «Швидкий прийом» (амбулаторно): показники й стан усіх систем на одному екрані; неописане — «Решта — Б/о» або «Решта — Норма».',
+  'Розмір тексту програми — у «Налаштуваннях».']],
  ['Друк', [
   '«Друк / PDF» над текстом — поточний документ із шапкою закладу. Щоб отримати PDF, у вікні друку виберіть «Зберегти як PDF».',
   'На кожній вкладці є «🖨 Друк»: у розділах документа — весь документ; у калькуляторах, довідці, списку пацієнтів, профілактиці, контролі — вміст вкладки.',
@@ -3780,10 +3798,12 @@ function renderCtrl(){
   ldlTarget.cache = null;
 }
 
-/* ===== Швидкий прийом (амбулаторно) ===== */
+/* ===== Швидкий прийом (амбулаторно) і швидкий огляд (стаціонар) =====
+   Амбулаторно: лише головні вкладки + «Показники». Стаціонар: «Показники і системи» на одному екрані, вкладки систем лишаються для детального опису. */
 let QUICK = false; try{ QUICK = localStorage.getItem('po.quick') === '1'; }catch(e){}
 const QT = ['meta','hv','skarhy','morbi','qv','loc','help','ctrl','scr','dx','rxt','hosp','eln','calc','tpl','set'];
-const quickOn = () => QUICK && MODE === 'amb' && DOC === 'ohl';
+const quickOn = () => QUICK && DOC === 'ohl';
+const quickHide = () => quickOn() && MODE === 'amb';   // ховати другорядні вкладки — лише на амбулаторному прийомі
 const QSYS = ['zah','shk','dyh','ssc','trav','sech','nevr'];
 function sysState(id){
   const sc = SECTIONS.find(x=>x.id === id);
@@ -3798,7 +3818,9 @@ function qvPanel(){
       h('span', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>{ let n = 0;
         QSYS.forEach(id=>{ if (sysState(id)) return; const sc = SECTIONS.find(x=>x.id === id), b = sc.fields.find(f=>f.bo);
           if (b){ b.el.value = 0; mark(b.el, b); n++; } else { applyNorm(sc); n++; } });
-        update(); toast(n ? 'Неописані системи записано коротко: «Без особливостей»' : 'Усі системи вже описано'); }}, 'Решта — Б/о'))),
+        update(); toast(n ? 'Неописані системи записано коротко: «Без особливостей»' : 'Усі системи вже описано'); }}, 'Решта — Б/о'),
+        h('button', {type:'button', class:'btn norm', onclick:undoable('«Решта — Норма»', ()=>{ let n = 0; QSYS.forEach(id=>{ if (sysState(id)) return; applyNorm(SECTIONS.find(x=>x.id === id)); n++; });
+          update(); toast(n ? 'Неописані системи заповнено детальною нормою' : 'Усі системи вже описано'); })}, 'Решта — Норма'))),
       h('p', {class:'chips-hint'}, 'Змінене — відкрийте систему й опишіть. Решту одним натисканням: «Б/о» (коротко) або «Норма» (детально).'),
       h('div', {id:'qvSys'})));
   return wrap;
@@ -6081,9 +6103,10 @@ function applyDoc(first){
     more.classList.toggle('on', !!more.value);
   }
   const qOn = quickOn();
-  TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : qOn && !QT.includes(t.id)) || (t.locSec && !locOn()); });
+  TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : quickHide() && !QT.includes(t.id)) || (t.locSec && !locOn()); });
   layoutTabs(); syncLoc(true);
-  const qb = $('#quickBtn'); if (qb){ qb.hidden = !(MODE === 'amb' && DOC === 'ohl'); qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); }
+  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
+    qb.title = MODE === 'amb' ? 'Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням' : 'Показники й усі системи на одному екрані: «Норма», «Б/о» або «Відкрити» для детального опису'; }
   if (TABS[active] && TABS[active].tab.hidden && !first){ const t = TABS.find(x=>!x.tab.hidden && x !== META); if (t) show(TABS.indexOf(t)); }
   document.querySelectorAll('[data-docs]').forEach(e=>{ e.hidden = !e.dataset.docs.split(' ').includes(DOC) || (e.dataset.only && e.dataset.only !== MODE); });
   const r = document.getElementById('meta_rec');
@@ -6119,12 +6142,12 @@ document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('clic
   applyMode(); if (DOC === 'ohl') show(TABS.indexOf(HV)); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
 }));
 loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode();
-$('#ptbar').addEventListener('click', ()=>show(TABS.indexOf(META)));
+$('#ptbar').addEventListener('click', ()=>openSwitcher());
 $('#misBtn').addEventListener('click', misPanel);
 $('#clearDocBtn').addEventListener('click', e=>clearDoc(e.currentTarget));
 $('#quickBtn').addEventListener('click', ()=>{ QUICK = !QUICK; try{ localStorage.setItem('po.quick', QUICK ? '1' : '0'); }catch(e){}
-  applyDoc(false); if (QUICK) show(TABS.indexOf(HV)); update();
-  toast(QUICK ? 'Швидкий прийом: лише головне. Показники та стан систем — на вкладці «Показники»' : 'Повний огляд: усі вкладки', 3500); });
+  applyDoc(false); if (QUICK) show(MODE === 'amb' ? TABS.indexOf(HV) : TABS.indexOf(QV)); update();
+  toast(QUICK ? (MODE === 'amb' ? 'Швидкий прийом: лише головне. Показники та стан систем — на вкладці «Показники»' : 'Швидкий огляд: показники й системи на одному екрані; змінене — «Відкрити»') : 'Повний огляд: усі вкладки', 3500); });
 applyOvrAll(); renderRes(); update();
 window.addEventListener('resize', renderPtBar);
 renderPatients(); renderDiaries(); fsInit(); storePersist(); dxCodeUI(); dictLoad(); renderMyBtns(); zlogoRender();
@@ -6132,6 +6155,158 @@ new MutationObserver(()=>{ if (PAPER){ clearTimeout(renderPaper.t); renderPaper.
 try{ const last = localStorage.getItem('po.last'); const st = loadStore(); if (last && st[last]){ PID = last; restore(st[last].snap); markSaved(true); toast('Відкрито останнього пацієнта: ' + st[last].name, 3000); } }catch(e){}
 setTimeout(()=>{ const b = backupInfo(); if (b.due) toast(`Нагадування: резервна копія пацієнтів ${b.t ? 'від ' + new Date(b.t).toLocaleDateString('uk-UA') : 'ще не робилась'}. Вкладка «Запис» → «Зберегти всіх у файл»`, 6000); }, 3500);
 let lastPID; setInterval(()=>{ if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
+/* ===== Скасування дій: ↶ і Ctrl+Z (до 10 кроків) =====
+   Перед діями, що переписують багато полів (вибір хвороби, «Норма», очищення, заміна схеми), зберігається знімок форми. */
+const UNDO = [], UNDO_MAX = 10; let UNDO_DEPTH = 0;
+function undoPush(label){
+  try{ UNDO.push({label, s:JSON.parse(JSON.stringify(snap())), rxAuto:RX_AUTO, rxVar:RX_VAR, pid:PID}); }catch(e){ return; }
+  if (UNDO.length > UNDO_MAX) UNDO.shift();
+  undoBtn();
+}
+function undoable(label, fn){
+  return function(...a){
+    if (UNDO_DEPTH === 0 && !RESTORING) undoPush(typeof label === 'function' ? label(...a) : label);
+    UNDO_DEPTH++; try{ return fn.apply(this, a); } finally { UNDO_DEPTH--; }
+  };
+}
+function undoLast(){
+  const u = UNDO.pop(); if (!u){ toast('Немає дій для скасування'); return; }
+  if (u.pid !== PID){ toast('Скасування недоступне: відкрито іншого пацієнта'); UNDO.length = 0; undoBtn(); return; }
+  restore(u.s); RX_AUTO = u.rxAuto; RX_VAR = u.rxVar; rxVarRedraw(); undoBtn();
+  toast('Скасовано: ' + u.label, 2500);
+}
+function undoBtn(){
+  const b = document.getElementById('undoBtn'); if (!b) return;
+  const u = UNDO[UNDO.length - 1];
+  b.disabled = !u; b.title = u ? 'Скасувати: ' + u.label + ' (Ctrl+Z)' : 'Немає дій для скасування';
+}
+applyPreset = undoable(p=>'вибір хвороби «' + (p && p.name || '') + '»', applyPreset);
+applyNorm = undoable(s=>'«Норма» у розділі «' + (s && (s.short || s.title) || '') + '»', applyNorm);
+clearSection = undoable(s=>'очищення розділу «' + (s && (s.short || s.title) || '') + '»', clearSection);
+clearDoc = undoable(btn=>'очищення документа', clearDoc);
+rxReplace = undoable((rows, name)=>'схема призначень «' + name + '»', rxReplace);
+rxAddSet = undoable('додавання набору призначень', rxAddSet);
+{ const n = $('#allNorm'), o = n.onclick; n.onclick = undoable(()=>DOC === 'shch' ? '«Стабільно»' : '«Норма всюди»', o); }
+{ const db = document.querySelector('.docbar');
+  if (db){ db.append(h('button', {type:'button', class:'btn', id:'undoBtn', disabled:'', 'aria-label':'Скасувати останню дію', onclick:undoLast}, '↶', h('span', {class:'hide-m'}, ' Скасувати'))); undoBtn(); } }
+// новий пацієнт або відкриття іншого — історія скасувань не переноситься
+['newPatient','openPatient'].forEach(nm=>{ const f = window[nm]; if (typeof f === 'function') window[nm] = function(...a){ const r = f.apply(this, a); UNDO.length = 0; undoBtn(); return r; }; });
+$('#clearAll').onclick = newPatient;
+document.addEventListener('keydown', e=>{
+  if ((e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'z' || e.key === 'я' || e.code === 'KeyZ')){
+    const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;   // у полі — звичайне скасування браузера
+    if (UNDO.length){ e.preventDefault(); undoLast(); }
+  }
+});
+/* ===== Перший запуск: коротке знайомство (лікар, заклад, профіль, режим) ===== */
+function welcomeDialog(force){
+  let seen = false; try{ seen = localStorage.getItem('po.welcome') === '1' || !!mv('doc'); }catch(e){}
+  if (seen && !force) return;
+  const fld = (id, label, ph, extra) => { const src = document.getElementById('meta_' + id);
+    const e = h('input', Object.assign({value:src ? src.value : '', placeholder:ph, 'aria-label':label}, extra || {})); return [h('label', {class:'wl'}, label, e), e]; };
+  const [lDoc, iDoc] = fld('doc', 'Ваше ПІБ (для підпису)', 'Прізвище І. Б.');
+  const [lPos, iPos] = fld('pos', 'Посада', 'Лікар-терапевт', {list:'posList'});
+  const [lVid, iVid] = fld('vidd', 'Відділення', 'Терапевтичне відділення № 2');
+  const [lZoz, iZoz] = fld('zoz', 'Заклад охорони здоров’я', 'КНП «…»');
+  const spec = h('select', {'aria-label':'Профіль'}, h('option', {value:'ter'}, 'Терапія та суміжні (неврологія, інфекційні, хірургія)'), h('option', {value:'tr'}, 'Травматологія'), h('option', {value:'fam'}, 'Сімейна медицина'));
+  spec.value = SPEC;
+  const mode = h('div', {class:'seg wseg'}); let md = MODE;
+  [['hosp','Стаціонар'],['amb','Амбулаторно']].forEach(([k,l])=>{ const b = h('button', {type:'button', 'aria-pressed':k === md ? 'true' : 'false', onclick:()=>{ md = k; mode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); }}, l); mode.append(b); });
+  spec.addEventListener('change', ()=>{ if (spec.value === 'fam'){ md = 'amb'; mode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x.textContent === 'Амбулаторно' ? 'true' : 'false')); } });
+  const close = () => { dlg.remove(); try{ localStorage.setItem('po.welcome', '1'); }catch(e){} };
+  const done = () => {
+    [['doc', iDoc], ['pos', iPos], ['vidd', iVid], ['zoz', iZoz]].forEach(([k, e])=>{ const t = document.getElementById('meta_' + k); if (t && e.value.trim()){ t.value = e.value.trim(); t.dispatchEvent(new Event('input')); } });
+    const ss = document.getElementById('set_spec'); if (ss && ss.value !== spec.value){ ss.value = spec.value; ss.dispatchEvent(new Event('change')); }
+    if (md !== MODE){ const mb = document.querySelector(`#modeSeg [data-mode="${md}"]`); if (mb) mb.click(); }
+    close(); show(TABS.indexOf(HV)); toast('Збережено. Змінити й додати решту (завідувач, адреса, ЄДРПОУ, логотип) — у «Налаштуваннях»', 4500);
+  };
+  const dlg = h('div', {class:'navsheet packsheet welcome', role:'dialog', 'aria-modal':'true', 'aria-label':'Знайомство'},
+    h('div', {class:'nvbox'},
+      h('h3', {}, 'Вітаю! Кілька даних — один раз'),
+      h('p', {class:'chips-hint'}, 'Вони підставлятимуться в шапку й підписи всіх документів і зберігаються лише в цьому браузері. Усе можна змінити пізніше в «Налаштуваннях».'),
+      h('div', {class:'wgrid'}, lDoc, lPos, lVid, lZoz, h('label', {class:'wl'}, 'Профіль роботи', spec), h('div', {class:'wl'}, h('span', {}, 'Працюю переважно'), mode)),
+      h('div', {class:'acts2', style:'margin-top:14px'}, h('button', {type:'button', class:'btn primary', onclick:done}, 'Готово'),
+        h('button', {type:'button', class:'more', onclick:close}, 'Пропустити — заповню пізніше'))));
+  document.body.append(dlg); setTimeout(()=>iDoc.focus(), 50);
+}
+setTimeout(()=>welcomeDialog(false), 300);
+/* ===== Швидке перемикання пацієнтів: натисніть смужку з ПІБ угорі ===== */
+function openSwitcher(){
+  const st = loadStore(), ids = Object.keys(st).sort((a,b)=>st[b].updated - st[a].updated);
+  const q = h('input', {type:'search', placeholder:'Пошук за ПІБ або № карти', 'aria-label':'Пошук пацієнта'});
+  const list = h('div', {class:'swlist'});
+  const draw = () => { list.innerHTML = ''; const s = q.value.trim().toLowerCase();
+    const L = ids.filter(id=>!s || (st[id].name + ' ' + (st[id].card || '')).toLowerCase().includes(s)).slice(0, 30);
+    if (!L.length) list.append(h('p', {class:'chips-hint'}, ids.length ? 'Нікого не знайдено' : 'Збережених пацієнтів ще немає'));
+    L.forEach(id=>{ const p = st[id], fl = (typeof todayFlags === 'function' ? todayFlags(p) : null) || [], dx = p.snap && p.snap.f ? (p.snap.f.dx_osn || '') : '';
+      list.append(h('button', {type:'button', class:'swrow' + (id === PID ? ' cur' : ''), onclick:()=>{ dlg.remove(); if (id !== PID) openPatient(id); }},
+        h('span', {class:'swn'}, h('b', {}, p.name), p.card ? h('span', {class:'chips-hint'}, ' № ' + p.card) : ''),
+        dx ? h('span', {class:'swd'}, dx.split('\n')[0].slice(0, 90)) : '',
+        fl.length ? h('span', {class:'swf'}, ...fl.slice(0, 3).map(f=>h('span', {class:'badge ' + (f.c || '')}, f.t))) : '',
+        id === PID ? h('span', {class:'badge ok'}, 'відкрито') : '')); }); };
+  q.addEventListener('input', draw);
+  const dlg = h('div', {class:'navsheet packsheet switcher', role:'dialog', 'aria-modal':'true', 'aria-label':'Пацієнти'},
+    h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Пацієнти'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
+      q, list,
+      h('div', {class:'acts2', style:'margin-top:10px'},
+        h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); newPatient(); }}, '+ Новий пацієнт'),
+        h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); show(TABS.indexOf(META)); }}, 'Дані цього пацієнта («Запис»)'))));
+  dlg.addEventListener('click', e=>{ if (e.target === dlg) dlg.remove(); });
+  document.addEventListener('keydown', function esc(e){ if (e.key === 'Escape'){ dlg.remove(); document.removeEventListener('keydown', esc); } });
+  draw(); document.body.append(dlg); if (!window.matchMedia || !matchMedia('(max-width:899px)').matches) q.focus();
+}
+/* ===== Пошук будь-чого (Ctrl+K), гарячі клавіші, розмір тексту ===== */
+function searchItems(){
+  const L = [], tabVis = t => t.tab && !t.tab.hidden;
+  TABS.forEach((t,i)=>{ if (tabVis(t)) L.push({k:'Розділ', t:t.title, s:t.short || '', go:()=>show(i)}); });
+  SECTIONS.forEach(sc=>{ const i = TABS.indexOf(sc); if (i < 0 || !tabVis(sc)) return;
+    sc.fields.forEach(f=>{ if (!f.label || f.type === 'hdr' || f.type === 'auto') return;
+      L.push({k:sc.short || sc.title, t:f.label.replace(/\s*\(.*?\)\s*$/, ''), go:()=>{ show(i); setTimeout(()=>{ const el = f.el || (f.inputs && f.inputs[0]) || f.inp || (f.chips && f.chips[0]) || f.d1; if (el){ el.scrollIntoView({block:'center'}); try{ el.focus({preventScroll:true}); }catch(e){} } }, 30); }}); }); });
+  PRESETS.forEach((p,k)=>{ if (p.name) L.push({k:'Хвороба', t:p.name, s:p.mkh || '', go:()=>applyPreset(p, HV.cards[k])}); });
+  const act = (t, fn, s) => L.push({k:'Дія', t, s:s || '', go:fn});
+  act('Копіювати текст', copy, 'Ctrl+Enter'); act('Друк / PDF', doPrint, 'Ctrl+P'); act('Зберегти у Word', ()=>$('#docxBtn').click());
+  act('Пацієнти: перемкнути або знайти', openSwitcher); act('Новий пацієнт', newPatient); act('Скасувати останню дію', undoLast, 'Ctrl+Z');
+  act('Норма у всіх системах', ()=>$('#allNorm').click()); act('Друк кількох документів', packDialog); act('Знайомство: дані лікаря', ()=>welcomeDialog(true));
+  [...DOCLIST[MODE], ...DOCMORE[MODE]].forEach(([k,l])=>act('Документ: ' + l, ()=>switchDoc(k)));
+  return L;
+}
+function openSearch(){
+  if (document.querySelector('.cmdk')) return;
+  const items = searchItems(), q = h('input', {type:'search', placeholder:'Що знайти? Розділ, поле, хворобу, дію…', 'aria-label':'Пошук'}), list = h('div', {class:'cmdl', role:'listbox'});
+  let sel = 0, shown = [];
+  const norm = t => String(t).toLowerCase().replace(/[’ʼ']/g, '');
+  const draw = () => { const s = norm(q.value.trim()), words = s.split(/\s+/).filter(Boolean);
+    shown = (words.length ? items.filter(it=>{ const x = norm(it.t + ' ' + (it.s || '') + ' ' + it.k); return words.every(w=>x.includes(w)); }) : items.filter(it=>it.k === 'Дія' || it.k === 'Розділ')).slice(0, 40);
+    sel = Math.min(sel, Math.max(0, shown.length - 1)); list.innerHTML = '';
+    if (!shown.length) list.append(h('p', {class:'chips-hint'}, 'Нічого не знайдено'));
+    shown.forEach((it, i)=>list.append(h('button', {type:'button', class:'cmdi' + (i === sel ? ' on' : ''), role:'option', onclick:()=>run(it)}, h('span', {class:'cmdk-k'}, it.k), h('span', {}, it.t), it.s ? h('span', {class:'cmdk-s'}, it.s) : ''))); };
+  const close = () => dlg.remove();
+  const run = it => { close(); it.go(); };
+  q.addEventListener('input', ()=>{ sel = 0; draw(); });
+  q.addEventListener('keydown', e=>{ if (e.key === 'ArrowDown'){ sel = Math.min(sel + 1, shown.length - 1); draw(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp'){ sel = Math.max(sel - 1, 0); draw(); e.preventDefault(); }
+    else if (e.key === 'Enter' && shown[sel]){ e.preventDefault(); run(shown[sel]); } else if (e.key === 'Escape') close(); });
+  const dlg = h('div', {class:'navsheet packsheet cmdk', role:'dialog', 'aria-modal':'true', 'aria-label':'Пошук'}, h('div', {class:'nvbox'}, q, list,
+    h('p', {class:'chips-hint', style:'margin-top:8px'}, '↑↓ — вибір, Enter — відкрити, Esc — закрити. Ctrl+Enter — копіювати текст, Ctrl+P — друк, Ctrl+Z — скасувати.')));
+  dlg.addEventListener('click', e=>{ if (e.target === dlg) close(); });
+  document.body.append(dlg); draw(); setTimeout(()=>q.focus(), 20);
+}
+document.addEventListener('keydown', e=>{
+  const mod = e.ctrlKey || e.metaKey;
+  if (mod && (e.code === 'KeyK' || e.key === 'k' || e.key === 'л')){ e.preventDefault(); openSearch(); }
+  else if (mod && e.key === 'Enter'){ e.preventDefault(); copy(); }
+  else if (mod && !e.shiftKey && (e.code === 'KeyP' || e.key === 'p' || e.key === 'з')){ e.preventDefault(); doPrint(); }
+});
+{ const nl = document.querySelector('#navSheet .nshead'); if (nl) nl.after(h('button', {type:'button', class:'btn nsearch', onclick:()=>{ closeNav(); openSearch(); }}, '🔍 Пошук: розділ, поле, хвороба, дія')); }
+/* розмір тексту */
+let ZOOM = '1'; try{ ZOOM = localStorage.getItem('po.zoom') || '1'; }catch(e){}
+function applyZoom(){ document.documentElement.style.zoom = ZOOM === '1' ? '' : ZOOM; }
+applyZoom();
+if (SETTINGS_EL){ const z = h('select', {id:'set_zoom'}, h('option', {value:'1'}, 'Звичайний'), h('option', {value:'1.1'}, 'Більший'), h('option', {value:'1.2'}, 'Великий'));
+  z.value = ZOOM; z.addEventListener('change', ()=>{ ZOOM = z.value; try{ localStorage.setItem('po.zoom', ZOOM); }catch(x){} applyZoom(); });
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Розмір тексту програми'), h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {for:'set_zoom'}, 'Розмір'), z)),
+    h('div', {class:'acts2', style:'margin:6px 0 4px'}, h('button', {type:'button', class:'more', onclick:()=>welcomeDialog(true)}, 'Показати знайомство ще раз')));
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
