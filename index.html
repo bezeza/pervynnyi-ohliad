@@ -90,6 +90,20 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .chip .lvl{display:inline-block;margin-left:6px;font:700 10.5px/1 var(--f-mono,monospace);padding:2px 4px;border-radius:4px;vertical-align:1px}.lvl-a{background:#dff1e4;color:#1e6b34}.lvl-b{background:#fdf0d5;color:#8a5a00}.lvl-c{background:#f3e1e1;color:#8b2c2c}
 .rxsrc{margin-top:8px;font-size:13px}.rxsrc summary{cursor:pointer;color:var(--accent,#1D5B8A)}.rxsrc p,.rxsrc ul{margin:6px 0}
 .show-m{display:none}
+#clearDocBtn{display:none}
+.tabnav{display:none}
+@media (max-width:899px){
+  .tabnav{display:flex;gap:6px;align-items:stretch;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:11;background:var(--surface);padding:6px 0;border-bottom:1px solid var(--line)}
+  .tabs{display:none!important}
+  .tn-arr{flex:0 0 46px;font-size:22px;line-height:1;padding:6px 0}.tn-arr[disabled]{opacity:.35}
+  .tn-cur{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;justify-content:center;padding:6px 10px}
+  .tn-cur b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tn-g{font:600 10.5px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tn-n{font-size:12px;color:var(--muted)}.tn-dd{color:var(--muted)}
+}
+.nextbar{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.nextbar .nb-next{margin-left:auto}
+@media (max-width:899px){.nextbar .btn{padding:12px 14px}.nextbar .nb-prev{max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.gtab.gmore{border-style:dashed;color:var(--muted)}
 @media (max-width:899px){.show-m{display:inline}.top h1{flex:1 1 0!important;min-width:0}.top #themeBtn{font-size:17px!important;padding:6px 10px!important;line-height:1}}
 .more-dd{position:relative;display:inline-block}.more-dd>summary{list-style:none;min-width:38px;padding:4px 10px;font-weight:700;letter-spacing:1px}.more-dd>summary::-webkit-details-marker{display:none}
 .more-dd .mmenu{position:absolute;right:0;top:calc(100% + 4px);z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:6px;display:flex;flex-direction:column;align-items:stretch;min-width:200px}
@@ -396,6 +410,7 @@ details.box[open]{padding-bottom:12px}
   <section class="form" aria-label="Форма огляду">
     <button type="button" id="ptbar" hidden title="Дані пацієнта — натисніть, щоб відкрити «Запис»"><span class="pt1"></span><span class="pt2"></span></button>
     <div class="docbar"><div class="seg" id="docSeg" role="group" aria-label="Документ"></div><select id="docMore" aria-label="Інші документи"></select><button type="button" class="btn" id="clearDocBtn" title="Очистити всі поля поточного документа (дані пацієнта, призначення й журнали лишаються)">Очистити все</button><button type="button" class="btn" id="quickBtn" aria-pressed="false" hidden title="Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням">Швидкий прийом</button></div>
+    <div class="tabnav" id="tabnav"></div>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div id="panels"></div>
   </section>
@@ -2233,8 +2248,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.18', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.19', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.19', '11.10.2026', 'навігація: на телефоні замість рядка вкладок — назва розділу з ‹ › і номером (натисніть назву — усі розділи); внизу кожного розділу — «Далі: …» і «‹ назад», в останньому — «Готово — до тексту документа»; «Очистити все» прибрано з-під документа, тепер «⋯» → «Очистити весь документ» (поруч — «Очистити вкладку»); у «За хворобою» одразу видно групи свого профілю (терапевт — терапія, неврологія, інфекційні; травматолог — травма, хірургія; сімейний — сімейна медицина, терапія), решта — «Інші профілі ▾»'],
   ['2.18', '11.10.2026', 'зручність: на телефоні шапка компактніша (тема — значком); рідкісні дії розділу («Своя кнопка», «Очистити», «Друк») — у меню «⋯»; панель форматування тексту — за кнопкою «Aa»; перевірка перед підписом не кричить, доки не натиснуто «Копіювати» чи «Друк»; лист призначень: спершу схеми й сам лист, а нирки, підказки й набори — згорнуті; попередження про взаємодії — над листом. Внутрішньо: код розкладено на блоки, автотести на GitHub'],
   ['2.17', '10.10.2026', 'лист призначень: при виборі препарату підставляються стандартна доза, шлях введення і кратність (при зміні препарату — завжди його власні, щоб не лишилася доза попереднього); у полях «Доза», «Шлях», «Кратність» — інші типові варіанти саме для цього препарату; у пошуку — усі препарати зі схем'],
   ['2.16', '10.10.2026', 'схеми призначень з джерелами: для кожної хвороби — міжнародні настанови (ESC, GOLD, GINA, ADA, NICE, IDSA, EAU, WSES та ін.) і чинні документи МОЗ, де їх знайдено (УКПМД з АГ, ЦД 2 типу, ХОЗЛ; стандарти з інсульту, болю в попереку, протимікробних засобів, периопераційної антибіотикопрофілактики); рівень доказовості A/B/C на кожній схемі; виправлено схеми, що розходилися з настановами (габапентиноїди при ішіалгії прибрано, помірна інфузія при панкреатиті, аспірин без первинної профілактики, лактулоза при гепатиті А, тривалість азитроміцину, синусит)'],
@@ -2280,6 +2296,7 @@ const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
 function show(i){
+  try{ setTimeout(renderTabNav, 0); }catch(e){}
   active = i;
   if (TABS[i] && TABS[i].id === 'dx') dxPanel();
   TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
@@ -2291,6 +2308,34 @@ function show(i){
   if (top < 0) window.scrollBy({top: top - 8});
 }
 
+/* ===== Навігація по розділах: ‹ назва › на телефоні і «Далі →» внизу розділу ===== */
+const TOOL_TABS = ['calc','tpl','set','help'];
+function tabOrder(){ return [...document.querySelectorAll('#tabs .tab')].filter(t=>!t.hidden).map(t=>TABS.findIndex(x=>x.tab === t)).filter(i=>i >= 0); }
+function tabGroupLabel(i){ const g = TABS[i].tab.closest('.tgrp'); const l = g && g.querySelector('.tgl'); return l ? l.textContent : ''; }
+function goDone(){
+  if (window.matchMedia && matchMedia('(max-width:899px)').matches){ $('#outBox').classList.add('open'); return; }
+  $('#outBox').scrollIntoView({block:'start', behavior:'smooth'}); toast('Перевірте текст справа й натисніть «Копіювати» або «Друк»', 2500);
+}
+function renderTabNav(){
+  const all = tabOrder(), cur = TABS[active]; if (!cur || !cur.panel) return;
+  const isTool = TOOL_TABS.includes(cur.id), seq = isTool ? all : all.filter(i=>!TOOL_TABS.includes(TABS[i].id));
+  const k = seq.indexOf(active), prev = k > 0 ? seq[k - 1] : -1, next = k >= 0 && k < seq.length - 1 ? seq[k + 1] : -1;
+  const nm = i => TABS[i].short || TABS[i].title;
+  const tn = $('#tabnav');
+  if (tn){ tn.innerHTML = '';
+    tn.append(h('button', {type:'button', class:'btn tn-arr', disabled:prev < 0 ? '' : null, 'aria-label':'Попередній розділ', onclick:()=>prev >= 0 && show(prev)}, '‹'),
+      h('button', {type:'button', class:'btn tn-cur', 'aria-haspopup':'dialog', title:'Усі розділи', onclick:openNav},
+        h('span', {class:'tn-g'}, tabGroupLabel(active)), h('b', {}, nm(active)), h('span', {class:'tn-n'}, k >= 0 ? `${k + 1}/${seq.length}` : ''), h('span', {class:'tn-dd', 'aria-hidden':'true'}, '▾')),
+      h('button', {type:'button', class:'btn tn-arr', disabled:next < 0 ? '' : null, 'aria-label':'Наступний розділ', onclick:()=>next >= 0 && show(next)}, '›'));
+  }
+  let bar = cur.foot || cur.panel.querySelector(':scope > .nextbar');
+  if (!bar){ bar = h('div', {class:'nextbar'}); cur.panel.append(bar); }
+  TABS.forEach(t=>{ if (t.foot && t !== cur) t.foot.innerHTML = ''; }); bar.classList.add('nextbar'); bar.innerHTML = '';
+  if (isTool) return;
+  if (prev >= 0) bar.append(h('button', {type:'button', class:'btn nb-prev', onclick:()=>show(prev)}, '‹ ' + nm(prev)));
+  bar.append(next >= 0 ? h('button', {type:'button', class:'btn primary nb-next', onclick:()=>show(next)}, 'Далі: ' + nm(next) + ' ›')
+    : h('button', {type:'button', class:'btn primary nb-next', onclick:goDone}, 'Готово — до тексту документа ›'));
+}
 const F = key => { const [s,f] = key.split('.'); return SECTIONS.find(x=>x.id===s).fields.find(x=>x.id===f); };
 const pick = (f, texts) => {
   f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; }); detReset(f);
@@ -2982,6 +3027,7 @@ function addPrintBtns(){
     const box = ph.querySelector('.acts2') || ph; box.append(b);
     if (s.id === 'meta' || s.id === 'hv') box.append(h('button', {type:'button', class:'more', title:'Надрукувати кілька документів пацієнта одним завданням', onclick:packDialog}, '🖨 Кілька документів'));
     // рідкісні дії (своя кнопка, очистити, друк) — у меню «⋯», щоб не займали рядок
+    if (!['calc','tpl','set','help','meta'].includes(s.id)) box.append(h('button', {type:'button', class:'more', title:'Очистити поля всього поточного документа (дані пацієнта, призначення й журнали лишаються)', onclick:e=>clearDoc(e.currentTarget)}, 'Очистити весь документ'));
     const sec = [...box.children].filter(x=>x.tagName === 'BUTTON' && x.classList.contains('more'));
     if (sec.length){ const menu = h('div', {class:'mmenu', role:'menu'}); sec.forEach(x=>{ x.setAttribute('role', 'menuitem'); menu.append(x); });
       const dd = h('details', {class:'more-dd'}, h('summary', {class:'btn', title:'Інші дії', 'aria-label':'Інші дії'}, '⋯'), menu);
@@ -4475,8 +4521,9 @@ function clearSection(sc){
   if (sc.id === 'ctrl') document.querySelectorAll('[id^="ctrl_"]').forEach(e=>{ if (e.tagName === 'INPUT') e.value = ''; });
 }
 function clearDoc(btn){
-  if (!btn.dataset.arm){ btn.dataset.arm = '1'; const t = btn.textContent; btn.textContent = 'Точно очистити?'; setTimeout(()=>{ delete btn.dataset.arm; btn.textContent = t; }, 3500); return; }
-  delete btn.dataset.arm; btn.textContent = 'Очистити все';
+  if (!btn.dataset.lbl) btn.dataset.lbl = btn.textContent;
+  if (!btn.dataset.arm){ btn.dataset.arm = '1'; btn.textContent = 'Точно очистити весь документ?'; setTimeout(()=>{ delete btn.dataset.arm; btn.textContent = btn.dataset.lbl; }, 3500); return; }
+  delete btn.dataset.arm; btn.textContent = btn.dataset.lbl;
   SECTIONS.filter(sc=>sc.docs.includes(DOC) && !(sc.only && sc.only !== MODE)).forEach(clearSection);
   if (DOC === 'ohl'){ curKey = null; if (HV.cards) HV.cards.forEach(c=>c.setAttribute('aria-pressed','false')); renderHvTips(); dxPanel.sel = null; }
   CACHE[DOC] = null; dirty = false; $('#banner').hidden = true; setNow(); update();
@@ -5801,6 +5848,7 @@ function renderCheck(){
 
 /* ================= ПОБУДОВА ІНТЕРФЕЙСУ ================= */
 let curGroup = SPEC === 'tr' ? 'tr' : SPEC === 'fam' ? 'fam' : 'ter';
+const SPEC_GROUPS = {ter:['ter','nevr','inf'], tr:['tr','hir'], fam:['fam','ter']};   // які групи хвороб видно одразу; решта — «Інші профілі»
 /* вкладки згруповані за етапами роботи — так легше орієнтуватися і на ПК, і на телефоні */
 const TGRP = {meta:'Пацієнт', hv:'Пацієнт', skarhy:'Анамнез', morbi:'Анамнез', vitae:'Анамнез',
   zah:'Огляд', loc:'Огляд', shk:'Огляд', dyh:'Огляд', ssc:'Огляд', trav:'Огляд', sech:'Огляд', nevr:'Огляд',
@@ -5817,6 +5865,7 @@ function layoutTabs(){
     if (!gr || gr.l !== l){ gr = {l, el:h('div', {class:'tgrp', role:'presentation'}, h('span', {class:'tgl', 'aria-hidden':'true'}, l))}; box.append(gr.el); }
     gr.el.append(t.tab);
   });
+  if (typeof renderTabNav === 'function') setTimeout(renderTabNav, 0);
 }
 TABS.forEach((s,i)=>{
   s.tab = h('button', {type:'button', class:'tab', role:'tab', id:`tab_${s.id}`, onclick:()=>show(i)}, s.short || s.title, h('span',{class:'dot','aria-hidden':'true'}));
@@ -5834,11 +5883,18 @@ TABS.forEach((s,i)=>{
     const filter = ()=>{
       gt.querySelectorAll('.gtab').forEach(b=>b.setAttribute('aria-pressed', b.dataset.g === curGroup ? 'true' : 'false'));
       s.cards.forEach(c=>{ c.hidden = c.dataset.g !== curGroup; });
-      const any = s.cards.some(c=>!c.hidden); s.emptyMy.hidden = any;
+      const any = s.cards.some(c=>!c.hidden); s.emptyMy.hidden = any; if (s.groupVis) s.groupVis();
     };
     s.filter = filter;
     s.emptyMy = h('p', {class:'chips-hint', hidden:''}, 'Тут ще немає хвороб. Збережіть свою на вкладці «Мої шаблони».');
     GROUPS.forEach(([k,l])=>{ const b = h('button', {type:'button', class:'gtab', 'aria-pressed':'false', onclick:()=>{ curGroup = k; filter(); }}, l); b.dataset.g = k; gt.append(b); });
+    { let all = false; try{ all = localStorage.getItem('po.gall') === '1'; }catch(e){}
+      const tg = h('button', {type:'button', class:'gtab gmore', 'aria-expanded':'false'});
+      const own = () => (SPEC_GROUPS[SPEC] || SPEC_GROUPS.ter);
+      s.groupVis = () => { const o = own(); gt.querySelectorAll('.gtab[data-g]').forEach(b=>{ b.hidden = !all && !o.includes(b.dataset.g) && b.dataset.g !== 'my' && b.dataset.g !== curGroup; });
+        tg.textContent = all ? 'Менше ▴' : 'Інші профілі ▾'; tg.setAttribute('aria-expanded', all ? 'true' : 'false'); };
+      tg.onclick = () => { all = !all; try{ localStorage.setItem('po.gall', all ? '1' : '0'); }catch(e){} s.groupVis(); };
+      gt.append(tg); s.groupVis(); }
     s.cardBox = cards;
     s.cards = PRESETS.map(p=>makeCard(p));
     const sideSeg = h('div', {class:'sideseg'}, h('span', {class:'chips-hint'}, 'Бік ураження:'));
@@ -5878,7 +5934,7 @@ TABS.forEach((s,i)=>{
         }}, 'Б/о') : null,
         hasNorm ? h('button', {type:'button', class:'btn norm', title:'Детальний опис норми по кожному пункту', onclick:()=>{applyNorm(s); update();}}, '= Норма =') : null,
         s.fields.some(f=>f.type === 'text') ? h('button', {type:'button', class:'more', title:'Створити свою кнопку з готовою фразою для цієї вкладки', onclick:()=>myBtnForm(s)}, '+ Своя кнопка') : null,
-        h('button', {type:'button', class:'more', title:'Очистити поля цієї вкладки', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно?'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Очистити'; }, 3000); return; } delete b.dataset.arm; b.textContent = 'Очистити'; clearSection(s); update(); toast('Вкладку очищено'); }}, 'Очистити')));
+        h('button', {type:'button', class:'more', title:'Очистити поля цієї вкладки', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно?'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Очистити вкладку'; }, 3000); return; } delete b.dataset.arm; b.textContent = 'Очистити вкладку'; clearSection(s); update(); toast('Вкладку очищено'); }}, 'Очистити вкладку')));
     grid = h('div', {class:'grid'});
     if (s.fields.some(f=>f.type === 'text')){ s.myBox = h('div', {class:'f wide mybtns', hidden:''}); grid.append(s.myBox); }
     if (s.id === 'd_main') grid.append(h('div', {class:'f wide'}, diaryBlock()));
@@ -5993,15 +6049,8 @@ window.addEventListener('beforeunload', e=>{ if (PID || patientName()){ savePati
 
 
 const RECS_D = ['Щоденник спостереження','Огляд чергового лікаря','Спільний огляд із завідувачем відділення','Спільний огляд із заступником головного лікаря з медичної роботи','Спільний огляд із завідувачем відділення та заступником головного лікаря з медичної роботи'];
-function buildFeet(){
-  const vis = TABS.filter(t=>!t.tab.hidden);
-  vis.forEach((s,k)=>{
-    s.foot.innerHTML = '';
-    const pv = vis[k-1], nx = vis[k+1];
-    s.foot.append(
-      pv ? h('button', {type:'button', class:'btn', onclick:()=>show(TABS.indexOf(pv))}, '← ' + (pv.short || pv.title)) : h('span'),
-      nx ? h('button', {type:'button', class:'btn primary', onclick:()=>show(TABS.indexOf(nx))}, (nx.short || nx.title) + ' →') : h('span'));
-  });
+function buildFeet(){   // кнопки «‹ назад / Далі ›» внизу розділу — тепер у renderTabNav (порядок як у вкладках, без «Інструментів»)
+  TABS.forEach(s=>{ if (s.foot) s.foot.innerHTML = ''; }); if (typeof renderTabNav === 'function') renderTabNav();
 }
 const DOCLIST = {hosp:[['ohl','Первинний огляд'],['shch','Щоденник'],['rx','Призначення'],['epi','Виписний епікриз']], amb:[['ohl','Первинний огляд'],['shch','Повторний огляд'],['rx','Призначення'],['kons','Консультаційний висновок']]};
 const DOCMORE = {hosp:[['pam','Пам’ятка пацієнту'],['zav','Огляд завідувача / спільний огляд'],['konc','Консиліум'],['etap','Етапний епікриз'],['per','Переказний епікриз'],['napr','Направлення на консультацію'],['dov','Довідка'],['zgoda','Інформована згода']],

@@ -34,7 +34,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  ok('4. Вік рахується з дати народження', $('meta_age').value==='68');
  // 5 профілі хвороб
  const vis=()=>[...doc.querySelectorAll('.dcard')].filter(c=>!c.hidden).length;
- let prof=[]; [...doc.querySelectorAll('.gtab')].filter(g=>!g.closest('.rxsets')).forEach(g=>{g.click(); prof.push(vis());});
+ let prof=[]; [...doc.querySelectorAll('.gtab[data-g]')].filter(g=>!g.closest('.rxsets')).forEach(g=>{g.click(); prof.push(vis());});
  ok('5. Кожен профіль показує свої хвороби (сімейна — 14) (Мої — порожньо)', prof.join()==='10,10,10,10,14,10,0', prof.join());
  doc.querySelectorAll('.gtab')[0].click();
  let bad=[]; [...doc.querySelectorAll('.dcard')].forEach(c=>{const n0=d.errs.length; c.click(); if(d.errs.length>n0) bad.push(c.querySelector('b').textContent);});

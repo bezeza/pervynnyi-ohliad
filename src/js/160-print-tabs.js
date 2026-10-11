@@ -62,6 +62,7 @@ function addPrintBtns(){
     const box = ph.querySelector('.acts2') || ph; box.append(b);
     if (s.id === 'meta' || s.id === 'hv') box.append(h('button', {type:'button', class:'more', title:'Надрукувати кілька документів пацієнта одним завданням', onclick:packDialog}, '🖨 Кілька документів'));
     // рідкісні дії (своя кнопка, очистити, друк) — у меню «⋯», щоб не займали рядок
+    if (!['calc','tpl','set','help','meta'].includes(s.id)) box.append(h('button', {type:'button', class:'more', title:'Очистити поля всього поточного документа (дані пацієнта, призначення й журнали лишаються)', onclick:e=>clearDoc(e.currentTarget)}, 'Очистити весь документ'));
     const sec = [...box.children].filter(x=>x.tagName === 'BUTTON' && x.classList.contains('more'));
     if (sec.length){ const menu = h('div', {class:'mmenu', role:'menu'}); sec.forEach(x=>{ x.setAttribute('role', 'menuitem'); menu.append(x); });
       const dd = h('details', {class:'more-dd'}, h('summary', {class:'btn', title:'Інші дії', 'aria-label':'Інші дії'}, '⋯'), menu);

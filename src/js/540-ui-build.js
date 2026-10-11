@@ -1,5 +1,6 @@
 /* ================= ПОБУДОВА ІНТЕРФЕЙСУ ================= */
 let curGroup = SPEC === 'tr' ? 'tr' : SPEC === 'fam' ? 'fam' : 'ter';
+const SPEC_GROUPS = {ter:['ter','nevr','inf'], tr:['tr','hir'], fam:['fam','ter']};   // які групи хвороб видно одразу; решта — «Інші профілі»
 /* вкладки згруповані за етапами роботи — так легше орієнтуватися і на ПК, і на телефоні */
 const TGRP = {meta:'Пацієнт', hv:'Пацієнт', skarhy:'Анамнез', morbi:'Анамнез', vitae:'Анамнез',
   zah:'Огляд', loc:'Огляд', shk:'Огляд', dyh:'Огляд', ssc:'Огляд', trav:'Огляд', sech:'Огляд', nevr:'Огляд',
@@ -16,6 +17,7 @@ function layoutTabs(){
     if (!gr || gr.l !== l){ gr = {l, el:h('div', {class:'tgrp', role:'presentation'}, h('span', {class:'tgl', 'aria-hidden':'true'}, l))}; box.append(gr.el); }
     gr.el.append(t.tab);
   });
+  if (typeof renderTabNav === 'function') setTimeout(renderTabNav, 0);
 }
 TABS.forEach((s,i)=>{
   s.tab = h('button', {type:'button', class:'tab', role:'tab', id:`tab_${s.id}`, onclick:()=>show(i)}, s.short || s.title, h('span',{class:'dot','aria-hidden':'true'}));
@@ -33,11 +35,18 @@ TABS.forEach((s,i)=>{
     const filter = ()=>{
       gt.querySelectorAll('.gtab').forEach(b=>b.setAttribute('aria-pressed', b.dataset.g === curGroup ? 'true' : 'false'));
       s.cards.forEach(c=>{ c.hidden = c.dataset.g !== curGroup; });
-      const any = s.cards.some(c=>!c.hidden); s.emptyMy.hidden = any;
+      const any = s.cards.some(c=>!c.hidden); s.emptyMy.hidden = any; if (s.groupVis) s.groupVis();
     };
     s.filter = filter;
     s.emptyMy = h('p', {class:'chips-hint', hidden:''}, 'Тут ще немає хвороб. Збережіть свою на вкладці «Мої шаблони».');
     GROUPS.forEach(([k,l])=>{ const b = h('button', {type:'button', class:'gtab', 'aria-pressed':'false', onclick:()=>{ curGroup = k; filter(); }}, l); b.dataset.g = k; gt.append(b); });
+    { let all = false; try{ all = localStorage.getItem('po.gall') === '1'; }catch(e){}
+      const tg = h('button', {type:'button', class:'gtab gmore', 'aria-expanded':'false'});
+      const own = () => (SPEC_GROUPS[SPEC] || SPEC_GROUPS.ter);
+      s.groupVis = () => { const o = own(); gt.querySelectorAll('.gtab[data-g]').forEach(b=>{ b.hidden = !all && !o.includes(b.dataset.g) && b.dataset.g !== 'my' && b.dataset.g !== curGroup; });
+        tg.textContent = all ? 'Менше ▴' : 'Інші профілі ▾'; tg.setAttribute('aria-expanded', all ? 'true' : 'false'); };
+      tg.onclick = () => { all = !all; try{ localStorage.setItem('po.gall', all ? '1' : '0'); }catch(e){} s.groupVis(); };
+      gt.append(tg); s.groupVis(); }
     s.cardBox = cards;
     s.cards = PRESETS.map(p=>makeCard(p));
     const sideSeg = h('div', {class:'sideseg'}, h('span', {class:'chips-hint'}, 'Бік ураження:'));
@@ -77,7 +86,7 @@ TABS.forEach((s,i)=>{
         }}, 'Б/о') : null,
         hasNorm ? h('button', {type:'button', class:'btn norm', title:'Детальний опис норми по кожному пункту', onclick:()=>{applyNorm(s); update();}}, '= Норма =') : null,
         s.fields.some(f=>f.type === 'text') ? h('button', {type:'button', class:'more', title:'Створити свою кнопку з готовою фразою для цієї вкладки', onclick:()=>myBtnForm(s)}, '+ Своя кнопка') : null,
-        h('button', {type:'button', class:'more', title:'Очистити поля цієї вкладки', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно?'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Очистити'; }, 3000); return; } delete b.dataset.arm; b.textContent = 'Очистити'; clearSection(s); update(); toast('Вкладку очищено'); }}, 'Очистити')));
+        h('button', {type:'button', class:'more', title:'Очистити поля цієї вкладки', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно?'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Очистити вкладку'; }, 3000); return; } delete b.dataset.arm; b.textContent = 'Очистити вкладку'; clearSection(s); update(); toast('Вкладку очищено'); }}, 'Очистити вкладку')));
     grid = h('div', {class:'grid'});
     if (s.fields.some(f=>f.type === 'text')){ s.myBox = h('div', {class:'f wide mybtns', hidden:''}); grid.append(s.myBox); }
     if (s.id === 'd_main') grid.append(h('div', {class:'f wide'}, diaryBlock()));
@@ -192,15 +201,8 @@ window.addEventListener('beforeunload', e=>{ if (PID || patientName()){ savePati
 
 
 const RECS_D = ['Щоденник спостереження','Огляд чергового лікаря','Спільний огляд із завідувачем відділення','Спільний огляд із заступником головного лікаря з медичної роботи','Спільний огляд із завідувачем відділення та заступником головного лікаря з медичної роботи'];
-function buildFeet(){
-  const vis = TABS.filter(t=>!t.tab.hidden);
-  vis.forEach((s,k)=>{
-    s.foot.innerHTML = '';
-    const pv = vis[k-1], nx = vis[k+1];
-    s.foot.append(
-      pv ? h('button', {type:'button', class:'btn', onclick:()=>show(TABS.indexOf(pv))}, '← ' + (pv.short || pv.title)) : h('span'),
-      nx ? h('button', {type:'button', class:'btn primary', onclick:()=>show(TABS.indexOf(nx))}, (nx.short || nx.title) + ' →') : h('span'));
-  });
+function buildFeet(){   // кнопки «‹ назад / Далі ›» внизу розділу — тепер у renderTabNav (порядок як у вкладках, без «Інструментів»)
+  TABS.forEach(s=>{ if (s.foot) s.foot.innerHTML = ''; }); if (typeof renderTabNav === 'function') renderTabNav();
 }
 const DOCLIST = {hosp:[['ohl','Первинний огляд'],['shch','Щоденник'],['rx','Призначення'],['epi','Виписний епікриз']], amb:[['ohl','Первинний огляд'],['shch','Повторний огляд'],['rx','Призначення'],['kons','Консультаційний висновок']]};
 const DOCMORE = {hosp:[['pam','Пам’ятка пацієнту'],['zav','Огляд завідувача / спільний огляд'],['konc','Консиліум'],['etap','Етапний епікриз'],['per','Переказний епікриз'],['napr','Направлення на консультацію'],['dov','Довідка'],['zgoda','Інформована згода']],

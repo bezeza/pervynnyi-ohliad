@@ -11,8 +11,9 @@ function clearSection(sc){
   if (sc.id === 'ctrl') document.querySelectorAll('[id^="ctrl_"]').forEach(e=>{ if (e.tagName === 'INPUT') e.value = ''; });
 }
 function clearDoc(btn){
-  if (!btn.dataset.arm){ btn.dataset.arm = '1'; const t = btn.textContent; btn.textContent = 'Точно очистити?'; setTimeout(()=>{ delete btn.dataset.arm; btn.textContent = t; }, 3500); return; }
-  delete btn.dataset.arm; btn.textContent = 'Очистити все';
+  if (!btn.dataset.lbl) btn.dataset.lbl = btn.textContent;
+  if (!btn.dataset.arm){ btn.dataset.arm = '1'; btn.textContent = 'Точно очистити весь документ?'; setTimeout(()=>{ delete btn.dataset.arm; btn.textContent = btn.dataset.lbl; }, 3500); return; }
+  delete btn.dataset.arm; btn.textContent = btn.dataset.lbl;
   SECTIONS.filter(sc=>sc.docs.includes(DOC) && !(sc.only && sc.only !== MODE)).forEach(clearSection);
   if (DOC === 'ohl'){ curKey = null; if (HV.cards) HV.cards.forEach(c=>c.setAttribute('aria-pressed','false')); renderHvTips(); dxPanel.sel = null; }
   CACHE[DOC] = null; dirty = false; $('#banner').hidden = true; setNow(); update();

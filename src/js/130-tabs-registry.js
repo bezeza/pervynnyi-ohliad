@@ -13,6 +13,7 @@ const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
 function show(i){
+  try{ setTimeout(renderTabNav, 0); }catch(e){}
   active = i;
   if (TABS[i] && TABS[i].id === 'dx') dxPanel();
   TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
@@ -24,6 +25,34 @@ function show(i){
   if (top < 0) window.scrollBy({top: top - 8});
 }
 
+/* ===== Навігація по розділах: ‹ назва › на телефоні і «Далі →» внизу розділу ===== */
+const TOOL_TABS = ['calc','tpl','set','help'];
+function tabOrder(){ return [...document.querySelectorAll('#tabs .tab')].filter(t=>!t.hidden).map(t=>TABS.findIndex(x=>x.tab === t)).filter(i=>i >= 0); }
+function tabGroupLabel(i){ const g = TABS[i].tab.closest('.tgrp'); const l = g && g.querySelector('.tgl'); return l ? l.textContent : ''; }
+function goDone(){
+  if (window.matchMedia && matchMedia('(max-width:899px)').matches){ $('#outBox').classList.add('open'); return; }
+  $('#outBox').scrollIntoView({block:'start', behavior:'smooth'}); toast('Перевірте текст справа й натисніть «Копіювати» або «Друк»', 2500);
+}
+function renderTabNav(){
+  const all = tabOrder(), cur = TABS[active]; if (!cur || !cur.panel) return;
+  const isTool = TOOL_TABS.includes(cur.id), seq = isTool ? all : all.filter(i=>!TOOL_TABS.includes(TABS[i].id));
+  const k = seq.indexOf(active), prev = k > 0 ? seq[k - 1] : -1, next = k >= 0 && k < seq.length - 1 ? seq[k + 1] : -1;
+  const nm = i => TABS[i].short || TABS[i].title;
+  const tn = $('#tabnav');
+  if (tn){ tn.innerHTML = '';
+    tn.append(h('button', {type:'button', class:'btn tn-arr', disabled:prev < 0 ? '' : null, 'aria-label':'Попередній розділ', onclick:()=>prev >= 0 && show(prev)}, '‹'),
+      h('button', {type:'button', class:'btn tn-cur', 'aria-haspopup':'dialog', title:'Усі розділи', onclick:openNav},
+        h('span', {class:'tn-g'}, tabGroupLabel(active)), h('b', {}, nm(active)), h('span', {class:'tn-n'}, k >= 0 ? `${k + 1}/${seq.length}` : ''), h('span', {class:'tn-dd', 'aria-hidden':'true'}, '▾')),
+      h('button', {type:'button', class:'btn tn-arr', disabled:next < 0 ? '' : null, 'aria-label':'Наступний розділ', onclick:()=>next >= 0 && show(next)}, '›'));
+  }
+  let bar = cur.foot || cur.panel.querySelector(':scope > .nextbar');
+  if (!bar){ bar = h('div', {class:'nextbar'}); cur.panel.append(bar); }
+  TABS.forEach(t=>{ if (t.foot && t !== cur) t.foot.innerHTML = ''; }); bar.classList.add('nextbar'); bar.innerHTML = '';
+  if (isTool) return;
+  if (prev >= 0) bar.append(h('button', {type:'button', class:'btn nb-prev', onclick:()=>show(prev)}, '‹ ' + nm(prev)));
+  bar.append(next >= 0 ? h('button', {type:'button', class:'btn primary nb-next', onclick:()=>show(next)}, 'Далі: ' + nm(next) + ' ›')
+    : h('button', {type:'button', class:'btn primary nb-next', onclick:goDone}, 'Готово — до тексту документа ›'));
+}
 const F = key => { const [s,f] = key.split('.'); return SECTIONS.find(x=>x.id===s).fields.find(x=>x.id===f); };
 const pick = (f, texts) => {
   f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; }); detReset(f);
