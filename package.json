@@ -1,0 +1,14 @@
+{
+  "name": "pervynnyi-ohliad",
+  "private": true,
+  "description": "Первинний огляд — офлайн-генератор медичної документації (один HTML-файл)",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/run.mjs",
+    "test:quick": "node tests/run.mjs --quick"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}

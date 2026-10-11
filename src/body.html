@@ -1,0 +1,72 @@
+
+<header class="top">
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge">v2.9 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
+    <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
+    <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
+  </div>
+  <div class="seg" id="sexSeg" role="group" aria-label="Стать пацієнта">
+    <button type="button" data-sex="m" aria-pressed="false">Чоловік</button>
+    <button type="button" data-sex="f" aria-pressed="false">Жінка</button>
+  </div>
+  <button class="btn" id="themeBtn" type="button" aria-label="Тема оформлення">Авто</button>
+  <button class="btn norm" id="allNorm" type="button">Норма у всіх системах</button>
+  <button class="btn" id="clearAll" type="button">Новий<span class="hide-m"> пацієнт</span></button>
+</header>
+
+<main class="wrap">
+  <section class="form" aria-label="Форма огляду">
+    <button type="button" id="ptbar" hidden title="Дані пацієнта — натисніть, щоб відкрити «Запис»"><span class="pt1"></span><span class="pt2"></span></button>
+    <div class="docbar"><div class="seg" id="docSeg" role="group" aria-label="Документ"></div><select id="docMore" aria-label="Інші документи"></select><button type="button" class="btn" id="clearDocBtn" title="Очистити всі поля поточного документа (дані пацієнта, призначення й журнали лишаються)">Очистити все</button><button type="button" class="btn" id="quickBtn" aria-pressed="false" hidden title="Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням">Швидкий прийом</button></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="panels"></div>
+  </section>
+  <section class="out" id="outBox" aria-label="Текст огляду">
+    <div class="oh">
+      <h2>Текст огляду</h2>
+      <button class="btn mob" id="closeSheet2" type="button" aria-label="Закрити">Закрити ✕</button>
+      <div class="acts">
+        <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд «як на папері»: шапка закладу, логотип, форма МОЗ">Аркуш</button>
+        <button class="btn" id="printBtn" type="button" title="Друк або «Зберегти як PDF» у вікні друку">Друк<span class="hide-m"> / PDF</span></button>
+        <button class="btn" id="docxBtn" type="button" title="Зберегти документ у форматі Word (.docx) — відкривається і в LibreOffice">Word</button>
+        <button class="btn" id="odtBtn" type="button" title="Зберегти документ у форматі LibreOffice Writer (.odt)">LibreOffice</button>
+        <button class="btn primary" id="copy" type="button">Копіювати</button>
+
+      </div>
+    </div>
+    <div class="banner" id="banner" hidden>
+      <span>Ви редагували текст вручну. Нові зміни у формі ще не додані.</span>
+      <button class="btn" id="regen" type="button">Оновити з форми</button>
+    </div>
+    <details class="chkbox" id="chk" hidden><summary>Перевірка перед підписом: <span class="cnt"></span></summary><ul></ul></details>
+    <div class="fmt" role="toolbar" aria-label="Форматування">
+      <button class="btn" type="button" data-cmd="bold" title="Жирний (Ctrl+B)"><b>Ж</b></button>
+      <button class="btn" type="button" data-cmd="italic" title="Курсив (Ctrl+I)"><i>К</i></button>
+      <button class="btn" type="button" data-cmd="underline" title="Підкреслений (Ctrl+U)"><u>Ч</u></button>
+      <span class="sep" aria-hidden="true"></span>
+      <select id="fsize" aria-label="Розмір шрифту" title="Розмір шрифту виділеного тексту">
+        <option value="">Розмір</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>16</option><option>18</option>
+      </select>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" type="button" data-cmd="justifyLeft" title="По лівому краю" aria-label="По лівому краю"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="1.8" rx=".9"/><rect x="1" y="6" width="9" height="1.8" rx=".9"/><rect x="1" y="10" width="14" height="1.8" rx=".9"/><rect x="1" y="14" width="9" height="1.8" rx=".9"/></svg></button>
+      <button class="btn" type="button" data-cmd="justifyCenter" title="По центру" aria-label="По центру"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="1.8" rx=".9"/><rect x="3.5" y="6" width="9" height="1.8" rx=".9"/><rect x="1" y="10" width="14" height="1.8" rx=".9"/><rect x="3.5" y="14" width="9" height="1.8" rx=".9"/></svg></button>
+      <button class="btn" type="button" data-cmd="justifyRight" title="По правому краю" aria-label="По правому краю"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="1.8" rx=".9"/><rect x="6" y="6" width="9" height="1.8" rx=".9"/><rect x="1" y="10" width="14" height="1.8" rx=".9"/><rect x="6" y="14" width="9" height="1.8" rx=".9"/></svg></button>
+      <button class="btn" type="button" data-cmd="justifyFull" title="По ширині" aria-label="По ширині"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="2" width="14" height="1.8" rx=".9"/><rect x="1" y="6" width="14" height="1.8" rx=".9"/><rect x="1" y="10" width="14" height="1.8" rx=".9"/><rect x="1" y="14" width="14" height="1.8" rx=".9"/></svg></button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" type="button" data-cmd="removeFormat" title="Прибрати жирний, курсив, підкреслення й розмір" aria-label="Прибрати форматування">T<sub>✕</sub></button>
+    </div>
+    <div id="paper" class="paper" hidden><div class="sheet"></div><p class="chips-hint">Перегляд «як на папері». Щоб правити текст вручну — вимкніть «Аркуш».</p></div>
+    <div id="out" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Готовий текст" spellcheck="false"></div>
+    <p class="note">Форматуйте наприкінці: оновлення тексту з форми скидає форматування. <button type="button" class="more" id="misBtn">Копіювати частинами для МІС</button></p>
+  </section>
+</main>
+
+<div class="mbar">
+  <button class="btn" id="navBtn" type="button" aria-haspopup="dialog" aria-label="Усі розділи"><span aria-hidden="true">☰</span> Розділи</button>
+  <button class="btn" id="toText" type="button">Текст огляду</button>
+  <button class="btn primary" id="copy2" type="button">Копіювати</button>
+</div>
+<div class="navsheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Розділи" hidden><div class="nshead"><b>Розділи</b><button class="btn" type="button" id="navClose">Закрити ✕</button></div><div id="navList"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div id="print" aria-hidden="true"></div>
+
