@@ -235,7 +235,7 @@ function applyDoc(first){
   const qOn = quickOn();
   TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : quickHide() && !QT.includes(t.id)) || (t.locSec && !locOn()); });
   layoutTabs(); syncLoc(true);
-  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
+  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = (window.matchMedia && matchMedia('(max-width:899px)').matches) ? 'Швидко' : MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
     qb.title = MODE === 'amb' ? 'Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням' : 'Показники й усі системи на одному екрані: «Норма», «Б/о» або «Відкрити» для детального опису'; }
   if (TABS[active] && TABS[active].tab.hidden && !first){ const t = TABS.find(x=>!x.tab.hidden && x !== META); if (t) show(TABS.indexOf(t)); }
   document.querySelectorAll('[data-docs]').forEach(e=>{ e.hidden = !e.dataset.docs.split(' ').includes(DOC) || (e.dataset.only && e.dataset.only !== MODE); });

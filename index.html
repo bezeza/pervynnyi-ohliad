@@ -103,7 +103,7 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 #clearDocBtn{display:none}
 .tabnav{display:none}
 @media (max-width:899px){
-  .tabnav{display:flex;gap:6px;align-items:stretch;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:11;background:var(--surface);padding:6px 0;border-bottom:1px solid var(--line)}
+  .tabnav{display:flex;gap:6px;align-items:stretch;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:11;background:var(--surface);padding:8px 16px;border-bottom:1px solid var(--line)}
   .tabs{display:none!important}
   .tn-arr{flex:0 0 46px;font-size:22px;line-height:1;padding:6px 0}.tn-arr[disabled]{opacity:.35}
   .tn-cur{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;justify-content:center;padding:6px 10px}
@@ -180,6 +180,8 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .det{margin-top:10px;padding:8px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
 .det>.lbl{margin-bottom:2px}
 .drow{padding:7px 0}
+.drow.inl{grid-column:2;margin:2px 0 4px;padding:8px 10px;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:var(--accent-soft)}.drow.inl .dn{font-weight:600;font-size:13px}
+@media (max-width:720px){.drow.inl{grid-column:1/-1}}
 .drow+.drow{border-top:1px solid var(--line)}
 .dn{font-size:13.5px;font-weight:600;margin-bottom:4px}
 .dg{display:flex;flex-wrap:wrap;gap:4px 5px;align-items:center;margin:3px 0}
@@ -215,6 +217,7 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
   .docbar{flex-wrap:nowrap!important}
   .docbar #docMore{flex:1 1 0!important;min-width:0;font-weight:500}
   .docbar #clearDocBtn{flex:0 0 auto}
+  .docbar #docMore{flex:3 1 0!important}.docbar #quickBtn{flex:0 1 auto;white-space:nowrap;padding:8px 10px}.docbar #undoBtn{flex:0 0 44px;padding:8px 0}
   .mbar .btn{padding:10px 8px}
   #navBtn{flex:0 0 auto}
 }
@@ -1823,8 +1826,15 @@ function groupChips(f, box){
   f.cbox = f.gEls[f.gEls.length - 1].cb;   // нові власні варіанти — у «Інші та мої»
 }
 function refreshDet(f){
+  // уточнення показуються одразу під групою, де відмічено скаргу (не внизу сторінки)
   if (!f.detBox) return; let any = false;
-  for (const i in f.detRows){ const on = f.chips[i].getAttribute('aria-pressed') === 'true'; f.detRows[i].hidden = !on; if (on) any = true; }
+  for (const i in f.detRows){
+    const row = f.detRows[i], c = f.chips[i], on = c.getAttribute('aria-pressed') === 'true';
+    const host = on ? (c.closest('.cg') || (c.parentElement && c.parentElement.parentElement)) : null;
+    if (on && host && host !== f.detBox && !host.contains(f.detBox)){ if (row.parentElement !== host) host.append(row); row.classList.add('inl'); }
+    else { if (row.parentElement !== f.detBox) f.detBox.append(row); row.classList.remove('inl'); if (on) any = true; }
+    row.hidden = !on;
+  }
   f.detBox.hidden = !any;
 }
 function detText(f, i, t){
@@ -2258,8 +2268,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '2.20', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.21', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.21', '11.10.2026', 'скарги: уточнення до відміченої скарги (характер харкотиння, температура, ВАШ тощо) з’являються одразу під її групою, а не внизу сторінки — на телефоні не треба гортати вниз і назад; на телефоні рядок документа не стискається («Швидко», «↶»)'],
   ['2.20', '11.10.2026', 'скасування: «↶ Скасувати» біля документа і Ctrl+Z повертають стан до вибору хвороби, «Норми», очищення чи заміни схеми (до 10 кроків); «Швидкий огляд» і в стаціонарі — показники й усі системи на одному екрані («Решта — Б/о» / «Решта — Норма», змінене — «Відкрити»); знайомство при першому запуску (ПІБ, посада, відділення, заклад, профіль, режим); смужка з ПІБ угорі відкриває список пацієнтів — перемикання одним дотиком, пошук, «Новий пацієнт»; пошук будь-чого (Ctrl+K або «☰ Розділи» → «Пошук»): розділ, поле, хвороба, дія; Ctrl+Enter — копіювати, Ctrl+P — друк; розмір тексту програми в «Налаштуваннях»'],
   ['2.19', '11.10.2026', 'навігація: на телефоні замість рядка вкладок — назва розділу з ‹ › і номером (натисніть назву — усі розділи); внизу кожного розділу — «Далі: …» і «‹ назад», в останньому — «Готово — до тексту документа»; «Очистити все» прибрано з-під документа, тепер «⋯» → «Очистити весь документ» (поруч — «Очистити вкладку»); у «За хворобою» одразу видно групи свого профілю (терапевт — терапія, неврологія, інфекційні; травматолог — травма, хірургія; сімейний — сімейна медицина, терапія), решта — «Інші профілі ▾»'],
   ['2.18', '11.10.2026', 'зручність: на телефоні шапка компактніша (тема — значком); рідкісні дії розділу («Своя кнопка», «Очистити», «Друк») — у меню «⋯»; панель форматування тексту — за кнопкою «Aa»; перевірка перед підписом не кричить, доки не натиснуто «Копіювати» чи «Друк»; лист призначень: спершу схеми й сам лист, а нирки, підказки й набори — згорнуті; попередження про взаємодії — над листом. Внутрішньо: код розкладено на блоки, автотести на GitHub'],
@@ -6105,7 +6116,7 @@ function applyDoc(first){
   const qOn = quickOn();
   TABS.forEach(t=>{ t.tab.hidden = !t.docs.includes(DOC) || (t.only && t.only !== MODE) || (t === QV ? !qOn : quickHide() && !QT.includes(t.id)) || (t.locSec && !locOn()); });
   layoutTabs(); syncLoc(true);
-  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
+  const qb = $('#quickBtn'); if (qb){ qb.hidden = DOC !== 'ohl'; qb.setAttribute('aria-pressed', QUICK ? 'true' : 'false'); qb.textContent = (window.matchMedia && matchMedia('(max-width:899px)').matches) ? 'Швидко' : MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд';
     qb.title = MODE === 'amb' ? 'Лише головне: скарги, показники, діагноз, призначення, рішення. Решта систем — «Б/о» одним натисканням' : 'Показники й усі системи на одному екрані: «Норма», «Б/о» або «Відкрити» для детального опису'; }
   if (TABS[active] && TABS[active].tab.hidden && !first){ const t = TABS.find(x=>!x.tab.hidden && x !== META); if (t) show(TABS.indexOf(t)); }
   document.querySelectorAll('[data-docs]').forEach(e=>{ e.hidden = !e.dataset.docs.split(' ').includes(DOC) || (e.dataset.only && e.dataset.only !== MODE); });

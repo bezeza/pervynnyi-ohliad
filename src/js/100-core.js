@@ -207,8 +207,15 @@ function groupChips(f, box){
   f.cbox = f.gEls[f.gEls.length - 1].cb;   // нові власні варіанти — у «Інші та мої»
 }
 function refreshDet(f){
+  // уточнення показуються одразу під групою, де відмічено скаргу (не внизу сторінки)
   if (!f.detBox) return; let any = false;
-  for (const i in f.detRows){ const on = f.chips[i].getAttribute('aria-pressed') === 'true'; f.detRows[i].hidden = !on; if (on) any = true; }
+  for (const i in f.detRows){
+    const row = f.detRows[i], c = f.chips[i], on = c.getAttribute('aria-pressed') === 'true';
+    const host = on ? (c.closest('.cg') || (c.parentElement && c.parentElement.parentElement)) : null;
+    if (on && host && host !== f.detBox && !host.contains(f.detBox)){ if (row.parentElement !== host) host.append(row); row.classList.add('inl'); }
+    else { if (row.parentElement !== f.detBox) f.detBox.append(row); row.classList.remove('inl'); if (on) any = true; }
+    row.hidden = !on;
+  }
   f.detBox.hidden = !any;
 }
 function detText(f, i, t){

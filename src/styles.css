@@ -93,7 +93,7 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 #clearDocBtn{display:none}
 .tabnav{display:none}
 @media (max-width:899px){
-  .tabnav{display:flex;gap:6px;align-items:stretch;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:11;background:var(--surface);padding:6px 0;border-bottom:1px solid var(--line)}
+  .tabnav{display:flex;gap:6px;align-items:stretch;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--pth,0px));z-index:11;background:var(--surface);padding:8px 16px;border-bottom:1px solid var(--line)}
   .tabs{display:none!important}
   .tn-arr{flex:0 0 46px;font-size:22px;line-height:1;padding:6px 0}.tn-arr[disabled]{opacity:.35}
   .tn-cur{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;justify-content:center;padding:6px 10px}
@@ -170,6 +170,8 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .det{margin-top:10px;padding:8px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
 .det>.lbl{margin-bottom:2px}
 .drow{padding:7px 0}
+.drow.inl{grid-column:2;margin:2px 0 4px;padding:8px 10px;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:var(--accent-soft)}.drow.inl .dn{font-weight:600;font-size:13px}
+@media (max-width:720px){.drow.inl{grid-column:1/-1}}
 .drow+.drow{border-top:1px solid var(--line)}
 .dn{font-size:13.5px;font-weight:600;margin-bottom:4px}
 .dg{display:flex;flex-wrap:wrap;gap:4px 5px;align-items:center;margin:3px 0}
@@ -205,6 +207,7 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
   .docbar{flex-wrap:nowrap!important}
   .docbar #docMore{flex:1 1 0!important;min-width:0;font-weight:500}
   .docbar #clearDocBtn{flex:0 0 auto}
+  .docbar #docMore{flex:3 1 0!important}.docbar #quickBtn{flex:0 1 auto;white-space:nowrap;padding:8px 10px}.docbar #undoBtn{flex:0 0 44px;padding:8px 0}
   .mbar .btn{padding:10px 8px}
   #navBtn{flex:0 0 auto}
 }
