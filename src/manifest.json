@@ -40,6 +40,7 @@
   "380-dx-hints.js",
   "390-clear.js",
   "400-results-journal.js",
+  "405-plan-dates.js",
   "410-export-docx-odt.js",
   "420-theme.js",
   "430-rx-core.js",
@@ -50,6 +51,7 @@
   "480-rx-state.js",
   "490-data-rx-variants.js",
   "500-data-rx-sources.js",
+  "505-rx-kinds.js",
   "510-rx-sets.js",
   "515-rx-form.js",
   "520-my-templates.js",
@@ -58,6 +60,7 @@
   "545-undo.js",
   "546-welcome.js",
   "547-switch.js",
-  "548-search-keys-zoom.js"
+  "548-search-keys-zoom.js",
+  "549-ergonomics.js"
  ]
 }

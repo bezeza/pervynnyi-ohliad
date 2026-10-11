@@ -84,7 +84,8 @@ const isAB = it => { const d = drugInfo(it.drug); return !!(d && d.ab); };
 function addRx(o){
   o = o || {};
   const d = drugInfo(o.drug), it = {id:++RXN, drug:o.drug || '', dose:o.dose != null && o.dose !== '' ? o.dose : (d ? d.d : ''), route:o.route || (d ? d.r : ''), freq:o.freq || (d ? d.f : ''),
-    start:o.start || todayISO(), days:o.days ? String(o.days) : '', stop:'', note:o.note != null ? o.note : (d && d.note) || '', ind:o.ind || '', cult:o.cult || '', rev:o.rev || ''};
+    start:o.start || todayISO(), days:o.days ? String(o.days) : '', stop:'', note:o.note != null ? o.note : (d && d.note) || '', ind:o.ind || '', cult:o.cult || '', rev:o.rev || '',
+    kind:o.kind || '', hours:o.hours || '', src:o.src || ''};
   if (isAB(it) && !it.rev) it.rev = addDays(it.start, 2);
   RX.push(it); return it;
 }
@@ -92,6 +93,7 @@ function rxLine(it, dates){
   const s = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
   let t = s;
   if (it.days) t += `, ${it.days} ${plural(+it.days, ['день','дні','днів'])}`;
+  if (it.hours) t += ` о ${it.hours}`;
   if (it.note) t += ` (${it.note})`;
   if (dates){ const e = rxEnd(it); t += ` — з ${fmtS(it.start)}` + (e ? ` по ${fmtS(e)}` : ''); }
   return t;
@@ -119,7 +121,15 @@ function rxPart(){
     return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;
   }
   const amb = MODE === 'amb' && DOC === 'ohl';
-  let body = RXF().filter(it=>!it.stop || it.stop >= date || DOC === 'rx').map((it,k)=>`${k+1}. ${rxLine(it, DOC === 'rx')}${DOC === 'rx' && it.stop ? ' — відмінено ' + fmtS(it.stop) : ''}.`).join('\n');
+  // режим і дієта — першим рядком, далі препарати з номерами, потім процедури
+  const shown = RXF().filter(it=>!it.stop || it.stop >= date || DOC === 'rx'), kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug';
+  const one = it => rxLine(it, DOC === 'rx') + (DOC === 'rx' && it.stop ? ' — відмінено ' + fmtS(it.stop) : '');
+  const regs = shown.filter(it=>['reg','diet'].includes(kd(it))), drugs = shown.filter(it=>kd(it) === 'drug'), procs = shown.filter(it=>['man','phys','loc'].includes(kd(it)));
+  const lines = [];
+  if (regs.length) lines.push('Режим, дієта: ' + regs.map(one).join('; ') + '.');
+  drugs.forEach((it,k)=>lines.push(`${k+1}. ${one(it)}.`));
+  if (procs.length) lines.push('Процедури: ' + procs.map(one).join('; ') + '.');
+  let body = lines.join('\n');
   const ab = abLines(); if (ab) body += '\n' + AB_HEAD + '\n' + ab;
   if (DOC === 'rx'){ const k = crclVal(); if (!isNaN(k)) body += '\nКліренс креатиніну (Кокрофт–Голт): ' + k + ' мл/хв.'; }
   return {head: amb ? 'Рекомендовано:' : DOC === 'rx' ? '' : 'Призначено:', body, sep:'\n'};

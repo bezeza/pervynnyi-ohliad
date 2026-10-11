@@ -90,17 +90,52 @@ select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .chip .lvl{display:inline-block;margin-left:6px;font:700 10.5px/1 var(--f-mono,monospace);padding:2px 4px;border-radius:4px;vertical-align:1px}.lvl-a{background:#dff1e4;color:#1e6b34}.lvl-b{background:#fdf0d5;color:#8a5a00}.lvl-c{background:#f3e1e1;color:#8b2c2c}
 .rxsrc{margin-top:8px;font-size:13px}.rxsrc summary{cursor:pointer;color:var(--accent,#1D5B8A)}.rxsrc p,.rxsrc ul{margin:6px 0}
 .show-m{display:none}
+.livebar{display:none}
+@media (max-width:899px){
+  body.live-on .livebar{display:flex;position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:30;gap:8px;align-items:flex-end;padding:8px 14px;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);cursor:pointer}
+  .livebar .lv-t{flex:1 1 auto;font-size:13.5px;line-height:1.35;max-height:4.1em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;color:var(--ink)}
+  .livebar .lv-o{flex:0 0 auto;font-size:12px;color:var(--accent);white-space:nowrap}
+  body.live-on .wrap{padding-bottom:84px}
+  body.live-on .toast{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+}
+.seg-hidden{display:none!important}.segbtns{display:flex;flex-wrap:wrap;gap:6px}.segbtns .chip.sg[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.durq{margin-top:6px}
+.chip[data-n]::before{content:attr(data-n);display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-right:6px;border-radius:9px;background:var(--accent);color:var(--surface);font-size:11px;font-weight:700}
+.qadd{margin:6px 0 0}
+.pt-saved{position:absolute;right:34px;top:8px;font-size:11.5px;color:var(--ok)}.pt-saved.bad{color:var(--bad)}
+@media (max-width:899px){.det .chip.s,.drow .chip.s{padding:8px 12px;font-size:14px}}
+.pdrow{padding:5px 0;border-top:1px solid var(--line)}.pd-n{margin-right:4px;font-weight:600}.pd-add,.pd-more{display:inline-flex;gap:4px;flex-wrap:wrap}.pd-more[hidden]{display:none}.pd-d{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.pd-d .chip.on{background:var(--accent-soft);border-color:var(--accent)}.pd-x{border:0;background:none;color:var(--muted);cursor:pointer;padding:0 0 0 4px;font-size:14px}.pd-d .chip.ok{color:var(--ok)}.pd-res{margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.rx.rxc{padding:0;gap:0}.rx.rxc.open{border-color:var(--accent)}
+.rxsum{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;padding:9px 12px;color:var(--ink);font:inherit;cursor:pointer;flex-wrap:wrap}
+.rxsum .rxk{flex:0 0 auto;font-size:15px;width:22px;text-align:center}.rxsum .rxt{flex:1 1 260px;min-width:0}.rxsum .rxm{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.rxsum .rxdd{color:var(--muted);margin-left:auto}
+.rx.off .rxsum .rxt{text-decoration:line-through}
+.rxbody{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line)}.rxbody .rx-g{margin-top:10px}
+.units{display:flex;gap:4px;flex-wrap:wrap}.units .chip{min-width:40px}
+.rxstrip{padding:10px 12px;border-radius:8px;background:var(--accent-soft);font-size:14px;line-height:1.45;margin-bottom:10px}.rxs-g{color:var(--muted)}
+.rxadd{display:flex;gap:8px;margin:10px 0}.rxadd .btn{white-space:nowrap;flex:0 0 auto}
+@media (max-width:420px){.tn-g{display:none}}.rxadd input{flex:1 1 auto;min-width:0;font-size:15px}
+.rxsug{margin:0 0 8px;align-items:center}
+.rxlist{display:flex;flex-direction:column;gap:6px}
+
 .f0034{font:10pt/1.25 "Times New Roman",Times,serif;color:#000;background:#fff}
 .f0034 .f-top{display:flex;justify-content:space-between;gap:16px;font-size:9pt}.f0034 .f-form{border:1px solid #000;padding:3px 8px;text-align:center}
 .f0034 .f-title{text-align:center;font-weight:700;font-size:12pt;margin:6px 0 4px}.f0034 .f-pat{margin:0 0 4px}.f0034 .f-alerg{font-weight:700;margin:0 0 4px}
 .f0034 .f-t{border-collapse:collapse;width:100%;table-layout:fixed}.f0034 .f-t th,.f0034 .f-t td{border:1px solid #000;padding:1px 3px;vertical-align:middle}
 .f0034 .f-t th{font-weight:400;font-size:9pt}.f0034 .f-name{width:68mm;text-align:left}.f0034 .f-who{width:13mm;font-size:8.5pt;text-align:left}
-.f0034 .f-d{text-align:center;font-size:10pt}.f0034 th.f-d{font-size:8pt;padding:1px 0}.f0034 tr.f-l td,.f0034 tr.f-s td{height:6mm}.f0034 tr.f-reg td{height:6mm}.f0034 tr.f-sig td{height:6mm}
+.f0034 .f-d{text-align:center;font-size:10pt}.f0034 th.f-d{font-size:8pt;padding:1px 0}.f0034 tr.f-l td,.f0034 tr.f-s td{height:5.4mm}.f0034 tr.f-reg td{height:6mm}.f0034 tr.f-sig td{height:6mm}
 .f0034 .f-note{font-size:8pt;font-style:italic}
+.f0034 .f-src{float:left;font-size:8pt;margin:0 4px 0 -1px;padding:0 2px;border:1px solid #000;border-radius:2px;line-height:1.2}
+.f0034b{font-size:8.5pt}.f0034b .b-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:3mm}.f0034b .b-h{border:1.5px solid #000;text-align:center;font-weight:700;padding:1px}
+.f0034b .b-cols{display:grid;grid-template-columns:1fr 1fr}.f0034b .b-t{border-collapse:collapse;width:100%;table-layout:fixed}
+.f0034b .b-t th,.f0034b .b-t td{border:1px solid #000;padding:0 2px;font-weight:400;font-size:8pt;line-height:1.15;vertical-align:top}
+.f0034b .b-t th{text-align:center;vertical-align:middle}.f0034b .b-g{font-weight:700!important;text-align:center}.f0034b .b-d{width:9mm;text-align:center;vertical-align:middle;font-size:7.5pt}
+.f0034b .b-r .b-t{margin-top:-1px}.f0034b .b-r .b-t+.b-t{margin-top:2mm}.f0034b td{height:5.3mm}.f0034b .b-wrap{grid-template-columns:132mm 1fr}
 .f0034-prev{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:6px;padding:10px;background:#fff}.f0034-prev .f0034{min-width:980px}.f0034-prev .f0034+.f0034{margin-top:24px;border-top:2px dashed #999;padding-top:16px}
 .f0034-dlg .nvbox{max-width:1100px}
 @page f0034{size:A4 landscape;margin:8mm}
 @media print{#print .f0034{page:f0034}#print .f0034+.f0034{break-before:page}}
+.f0034-prev .f0034b{min-width:980px}
 
 .cmdk .nvbox{max-width:640px}.cmdk input[type=search]{width:100%;font-size:16px;padding:10px 12px}.cmdl{display:flex;flex-direction:column;gap:2px;margin-top:8px;max-height:55vh;overflow:auto}
 .cmdi{display:flex;gap:10px;align-items:baseline;text-align:left;padding:8px 10px;border:0;border-radius:6px;background:transparent;color:var(--ink);font:inherit;cursor:pointer}.cmdi.on,.cmdi:hover{background:var(--accent-soft)}
@@ -1442,7 +1477,7 @@ const PRESETS = [
   skarhy:['підвищення температури тіла','нежить','біль у горлі','сухий кашель','загальну слабкість'],
   set:{'shk.zev':'Гіперемія задньої стінки глотки','dyh.ausk':'жорстке'},
   osn:'Гостра респіраторна вірусна інфекція, середньої тяжкості', mkh:'J06.9', uskl:'',
-  plan:['ЗАК','ЗАС','експрес-тест на SARS-CoV-2 і грип','рентгенографія ОГК']},
+  plan:['ЗАК','ЗАС','рентгенографія ОГК']},
 { group:'inf', name:'Грип', key:'flu', hosp:'e',
   skarhy:['підвищення температури тіла','озноб','головний біль','біль у м’язах і суглобах','сухий кашель','загальну слабкість'],
   set:{'zah.stan':'середньої тяжкості','shk.zev':'Гіперемія задньої стінки глотки','dyh.ausk':'жорстке','ssc.tony':'приглушені'},
@@ -2220,7 +2255,7 @@ function update(){
   { const of = F('e_obs.obs'); if (of && of.planHint){ const n = F('dx.plan').chips.filter(c=>c.getAttribute('aria-pressed')==='true').length;
     of.planHint.textContent = n ? `За планом первинного огляду відмічено обстежень: ${n}. Кнопка «шаблони за планом» вставить їх усі.` : 'У первинному огляді план обстеження не заповнено. Додайте шаблони окремих обстежень нижче або перейдіть до плану.'; } }
   runCalcs();
-  applyAuto(); renderDHints(); renderRemain(); renderCtrl(); renderScr(); renderQV(); elnDefaults();
+  applyAuto(); renderDHints(); renderRemain(); renderCtrl(); renderScr(); renderPlanD(); renderQV(); try{ renderLive(); renderOrderMarks(); }catch(e){} elnDefaults();
   if (dxPanel.key !== curKey) dxPanel();
   renderDxHints();
   const r = generate();
@@ -2270,13 +2305,15 @@ function clearAll(forRestore){
   document.querySelectorAll('.pt input, .calc input, .calc select').forEach(x=>{ if (x.type === 'checkbox') x.checked = false; else x.value = ''; });
   sex = ''; document.querySelectorAll('#sexSeg button').forEach(x=>x.setAttribute('aria-pressed','false')); refreshLabels();
   CACHE = {};
+  { const pd = document.getElementById('dx_pland'); if (pd) pd.value = '{}'; }
   if (!forRestore){ DIARIES = []; RX = []; RES = []; renderRx(); renderRes(); renderHvTips(); }
   dirty = false; $('#banner').hidden = true;
   if (!forRestore) update();
 }
 
-const VERSION = '2.22', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '2.23', VDATE = '11.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['2.23', '11.10.2026', 'призначення: стрічка «Призначено» згори, компактні рядки (натисніть — відкриється), поле «+ Додати препарат, процедуру або дієту», кнопки одиниць дози (мг, г, мл, %, ОД, мкг, крап.), необов’язкові години, «звідки» (з відділення / ліки пацієнта), «Змінити дозу з сьогодні»; процедури (маніпуляції, фізіотерапія, місцеве лікування) і дієта з підказками за хворобою; набори — спершу профіль хвороби, решта «Інші ▾»; листок 003-4/о з двох боків: на полі — «звідки», години під назвою, маніпуляції, режим і дієта; зворот як на бланку — обстеження з датами, дієта, фізіотерапія, місцеве лікування; план обстеження «на коли» (+ дата: сьогодні, завтра, через 3 дні, перед випискою) і «✓» — результат одразу в журнал; на телефоні — стрічка з текстом поточного розділу внизу (або кнопка — у «Налаштуваннях»); короткі списки огляду — кнопками; «Хворіє протягом» — кнопками; номери черговості скарг і «+ Додати» з пошуку; «✓ збережено» біля ПІБ; тест на SARS-CoV-2 прибрано з плану ГРВІ'],
   ['2.22', '11.10.2026', 'листок лікарських призначень за формою № 003-4/о: кнопка «🖨 Листок призначень» у вкладці «Призначення» — альбомний аркуш як паперовий бланк: «Режим», для кожного препарату рядки «Лікар / Сестра», стовпці-дні з датами; у рядку «Лікар» — «+» у дні призначення і «—» у день відміни, рядок «Сестра» і порожні рядки — для відміток від руки; при алергії — попередження в шапці; довге лікування — на кількох аркушах'],
   ['2.21', '11.10.2026', 'скарги: уточнення до відміченої скарги (характер харкотиння, температура, ВАШ тощо) з’являються одразу під її групою, а не внизу сторінки — на телефоні не треба гортати вниз і назад; на телефоні рядок документа не стискається («Швидко», «↶»)'],
   ['2.20', '11.10.2026', 'скасування: «↶ Скасувати» біля документа і Ctrl+Z повертають стан до вибору хвороби, «Норми», очищення чи заміни схеми (до 10 кроків); «Швидкий огляд» і в стаціонарі — показники й усі системи на одному екрані («Решта — Б/о» / «Решта — Норма», змінене — «Відкрити»); знайомство при першому запуску (ПІБ, посада, відділення, заклад, профіль, режим); смужка з ПІБ угорі відкриває список пацієнтів — перемикання одним дотиком, пошук, «Новий пацієнт»; пошук будь-чого (Ctrl+K або «☰ Розділи» → «Пошук»): розділ, поле, хвороба, дія; Ctrl+Enter — копіювати, Ctrl+P — друк; розмір тексту програми в «Налаштуваннях»'],
@@ -3353,6 +3390,12 @@ const HELPS = [
   'Ctrl+Enter — копіювати текст, Ctrl+P — друк. Внизу кожного розділу — «Далі: …».',
   '«Швидкий огляд» (стаціонар) / «Швидкий прийом» (амбулаторно): показники й стан усіх систем на одному екрані; неописане — «Решта — Б/о» або «Решта — Норма».',
   'Розмір тексту програми — у «Налаштуваннях».']],
+ ['Лист і листок призначень', [
+  'Угорі — стрічка «Призначено», під нею рядки. Натисніть рядок, щоб змінити дозу, шлях, кратність, години, «звідки» (з відділення / ліки пацієнта), дати.',
+  'Поле «+ Додати…»: наберіть препарат, процедуру або дієту — стандартна доза підставиться. Кнопки «мг · г · мл · % · ОД» міняють одиницю дози.',
+  '«Змінити дозу з сьогодні» закриває старий рядок і відкриває новий; «Відмінити з …» ставить дату відміни (у листку — «—»).',
+  '«🖨 Листок призначень (ф. 003-4/о)» — лицьовий бік і зворот, як паперовий бланк. Скорочення «звідки» для поля листка — у «Налаштуваннях».',
+  'Дати обстежень («на коли») — у вкладці «Діагноз» під планом обстеження; «✓» — внести результат у журнал обстежень.']],
  ['Друк', [
   '«Друк / PDF» над текстом — поточний документ із шапкою закладу. Щоб отримати PDF, у вікні друку виберіть «Зберегти як PDF».',
   'На кожній вкладці є «🖨 Друк»: у розділах документа — весь документ; у калькуляторах, довідці, списку пацієнтів, профілактиці, контролі — вміст вкладки.',
@@ -4551,6 +4594,7 @@ function renderDxHints(){
 
 /* ===== Очищення ===== */
 function clearSection(sc){
+  if (sc && sc.id === 'dx'){ const pd = document.getElementById('dx_pland'); if (pd) pd.value = '{}'; }
   sc.fields.forEach(f=>{
     if (f.type === 'sel'){ f.el.value = f.def !== undefined ? f.def : ''; mark(f.el, f); f.autoSet = false; }
     else if (f.type === 'multi'){ f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; delete c.dataset.tpl; }); detReset(f); refreshChips(f); }
@@ -4673,6 +4717,48 @@ function diaryBlock(){
 }
 
 
+/* ===== План обстеження: на коли (дати, повтори) і «виконано» з результатом =====
+   Дати зберігаються в прихованому полі #dx_pland (JSON {назва: [дати | 'вип']}) — так вони йдуть у збереження пацієнта. */
+const admDate = () => { try{ return (F('e_per.per').d1.value) || (mv('dt') || '').split('T')[0] || todayISO(); }catch(e){ return todayISO(); } };
+function planDGet(){ const e = document.getElementById('dx_pland'); try{ return JSON.parse(e && e.value || '{}') || {}; }catch(x){ return {}; } }
+function planDSet(o){ const e = document.getElementById('dx_pland'); if (e){ e.value = JSON.stringify(o); } }
+function planSel(){ try{ const f = F('dx.plan'); return f.chips.map((c,i)=>c.getAttribute('aria-pressed') === 'true' ? {i, t:O(f.opts[i]).t, o:+(c.dataset.ord || 0)} : null).filter(Boolean).sort((a,b)=>a.o - b.o).map(x=>x.t); }catch(e){ return []; } }
+function planDates(name){ const o = planDGet(); return (o[name] && o[name].length) ? o[name] : [admDate()]; }
+const planDLabel = d => d === 'вип' ? 'перед вип.' : fmtS(d);
+function planDone(name){ return RES.filter(r=>r.t === name).map(r=>r.d); }
+function planDBlock(){
+  return h('div', {class:'pt plandbox'}, h('h3', {}, 'Обстеження: на коли і виконання'),
+    h('p', {class:'chips-hint'}, 'Перша дата — день надходження. Додайте контроль кнопками; «✓» — внести результат (піде в журнал обстежень, щоденник і виписку). Дати друкуються на звороті листка призначень.'),
+    h('input', {type:'hidden', id:'dx_pland', value:'{}'}), h('div', {id:'planDList'}));
+}
+function renderPlanD(){
+  const box = document.getElementById('planDList'); if (!box) return;
+  { const pb = box.closest('.f') || box.closest('.plandbox'), pf = F('dx.plan'), host = pf && pf.chips && pf.chips[0] && pf.chips[0].closest('.f');
+    if (pb && host && host.nextElementSibling !== pb) host.after(pb); }   // одразу під «Планом обстеження»
+  const sel = planSel(); box.innerHTML = '';
+  box.closest('.plandbox').hidden = !sel.length;
+  const o = planDGet();
+  sel.forEach(name=>{
+    const ds = planDates(name), done = planDone(name);
+    const setDs = arr => { const x = planDGet(); x[name] = arr; planDSet(x); renderPlanD(); update(); };
+    const add = d => { const arr = ds.slice(); if (!arr.includes(d)) arr.push(d); arr.sort((a,b)=>a === 'вип' ? 1 : b === 'вип' ? -1 : a < b ? -1 : 1); setDs(arr); };
+    const res = h('div', {class:'pd-res', hidden:''});
+    const row = h('div', {class:'pdrow'},
+      h('div', {class:'pd-d'}, h('b', {class:'pd-n'}, name), done.length ? h('span', {class:'badge ok'}, '✓ ' + done.map(fmtS).join(', ')) : '', ...ds.map(d=>h('span', {class:'chip s on'}, planDLabel(d), ds.length > 1 ? h('button', {type:'button', class:'pd-x', 'aria-label':'Прибрати дату', onclick:()=>setDs(ds.filter(x=>x !== d))}, '×') : '')),
+        (()=>{ const more = h('span', {class:'pd-more', hidden:''},
+            h('button', {type:'button', class:'chip s', onclick:()=>add(todayISO())}, 'сьогодні'),
+            h('button', {type:'button', class:'chip s', onclick:()=>add(addDays(todayISO(), 1))}, 'завтра'),
+            h('button', {type:'button', class:'chip s', onclick:()=>add(addDays(ds.filter(x=>x !== 'вип').slice(-1)[0] || todayISO(), 3))}, 'через 3 дні'),
+            h('button', {type:'button', class:'chip s', onclick:()=>add('вип')}, 'перед випискою'));
+          return h('span', {class:'pd-add'}, h('button', {type:'button', class:'chip s', title:'Додати дату (контроль)', onclick:()=>{ more.hidden = !more.hidden; }}, '+ дата'), more); })(),
+        h('button', {type:'button', class:'chip s ok', title:'Внести результат', onclick:()=>{ res.hidden = !res.hidden; if (!res.hidden && !res.childElementCount){
+          const dd = h('input', {type:'date', value:todayISO(), 'aria-label':'Дата'}), tx = h('textarea', {rows:2, 'aria-label':'Результат'}); tx.value = typeof resTpl === 'function' ? resTpl(name) : '';
+          res.append(h('div', {class:'res-form'}, dd), tx, h('button', {type:'button', class:'btn primary', onclick:()=>{ const v = tx.value.trim(); if (!v){ toast('Впишіть результат'); return; }
+            RES.push({id:++RESN, d:dd.value || todayISO(), t:name, v}); RES.sort((a,b)=>a.d < b.d ? -1 : a.d > b.d ? 1 : a.id - b.id); renderRes(); renderPlanD(); update(); try{ savePatient(true); }catch(e){} toast('Результат додано в журнал обстежень'); }}, 'Зберегти результат')); tx.focus(); } }}, '✓')),
+      res);
+    box.append(row);
+  });
+}
 /* ================= ЗБЕРЕЖЕННЯ ДОКУМЕНТА У WORD (.docx) — без інтернету ================= */
 const CRC_T = (()=>{ const t = new Uint32Array(256); for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
 function crc32(b){ let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC_T[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
@@ -5391,7 +5477,8 @@ const isAB = it => { const d = drugInfo(it.drug); return !!(d && d.ab); };
 function addRx(o){
   o = o || {};
   const d = drugInfo(o.drug), it = {id:++RXN, drug:o.drug || '', dose:o.dose != null && o.dose !== '' ? o.dose : (d ? d.d : ''), route:o.route || (d ? d.r : ''), freq:o.freq || (d ? d.f : ''),
-    start:o.start || todayISO(), days:o.days ? String(o.days) : '', stop:'', note:o.note != null ? o.note : (d && d.note) || '', ind:o.ind || '', cult:o.cult || '', rev:o.rev || ''};
+    start:o.start || todayISO(), days:o.days ? String(o.days) : '', stop:'', note:o.note != null ? o.note : (d && d.note) || '', ind:o.ind || '', cult:o.cult || '', rev:o.rev || '',
+    kind:o.kind || '', hours:o.hours || '', src:o.src || ''};
   if (isAB(it) && !it.rev) it.rev = addDays(it.start, 2);
   RX.push(it); return it;
 }
@@ -5399,6 +5486,7 @@ function rxLine(it, dates){
   const s = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
   let t = s;
   if (it.days) t += `, ${it.days} ${plural(+it.days, ['день','дні','днів'])}`;
+  if (it.hours) t += ` о ${it.hours}`;
   if (it.note) t += ` (${it.note})`;
   if (dates){ const e = rxEnd(it); t += ` — з ${fmtS(it.start)}` + (e ? ` по ${fmtS(e)}` : ''); }
   return t;
@@ -5426,13 +5514,79 @@ function rxPart(){
     return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;
   }
   const amb = MODE === 'amb' && DOC === 'ohl';
-  let body = RXF().filter(it=>!it.stop || it.stop >= date || DOC === 'rx').map((it,k)=>`${k+1}. ${rxLine(it, DOC === 'rx')}${DOC === 'rx' && it.stop ? ' — відмінено ' + fmtS(it.stop) : ''}.`).join('\n');
+  // режим і дієта — першим рядком, далі препарати з номерами, потім процедури
+  const shown = RXF().filter(it=>!it.stop || it.stop >= date || DOC === 'rx'), kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug';
+  const one = it => rxLine(it, DOC === 'rx') + (DOC === 'rx' && it.stop ? ' — відмінено ' + fmtS(it.stop) : '');
+  const regs = shown.filter(it=>['reg','diet'].includes(kd(it))), drugs = shown.filter(it=>kd(it) === 'drug'), procs = shown.filter(it=>['man','phys','loc'].includes(kd(it)));
+  const lines = [];
+  if (regs.length) lines.push('Режим, дієта: ' + regs.map(one).join('; ') + '.');
+  drugs.forEach((it,k)=>lines.push(`${k+1}. ${one(it)}.`));
+  if (procs.length) lines.push('Процедури: ' + procs.map(one).join('; ') + '.');
+  let body = lines.join('\n');
   const ab = abLines(); if (ab) body += '\n' + AB_HEAD + '\n' + ab;
   if (DOC === 'rx'){ const k = crclVal(); if (!isNaN(k)) body += '\nКліренс креатиніну (Кокрофт–Голт): ' + k + ' мл/хв.'; }
   return {head: amb ? 'Рекомендовано:' : DOC === 'rx' ? '' : 'Призначено:', body, sep:'\n'};
 }
 
 
+/* ===== Типи рядків листа призначень: препарат, маніпуляція, фізіотерапія, місцеве лікування, режим, дієта ===== */
+const RXKINDS = {drug:'Препарат', man:'Маніпуляція', phys:'Фізіотерапія', loc:'Місцеве лікування', reg:'Режим', diet:'Дієта'};
+const RXK_ICON = {drug:'💊', man:'🩺', phys:'〰', loc:'🩹', reg:'🛏', diet:'🍽'};
+const PROCS = [
+  ['Оксигенотерапія через концентратор','man','постійно','цільова SpO2 94–98%, при ХОЗЛ — 88–92%'],['Оксигенотерапія через назальні канюлі','man','постійно','цільова SpO2 94–98%'],
+  ['Оксигенотерапія через маску','man','постійно',''],['Периферичний венозний катетер','man','',''],['Система для інфузій','man','',''],
+  ['Катетеризація сечового міхура','man','',''],['Назогастральний зонд','man','','облік виділень'],['Очисна клізма','man','одноразово',''],['Промивання шлунка','man','одноразово',''],
+  ['Контроль діурезу','man','щодоби',''],['Щоденне зважування','man','вранці',''],['Контроль АТ і ЧСС','man','2 р/д',''],['Пульсоксиметрія','man','2 р/д',''],
+  ['Контроль глюкози крові','man','4 р/д',''],['Пікфлоуметрія','man','2 р/д',''],['Зміна положення тіла','man','кожні 2 год','профілактика пролежнів'],
+  ['Інгаляції через небулайзер','phys','2 р/д',''],['ЛФК','phys','1 р/д',''],['Дихальна гімнастика','phys','3 р/д',''],['Масаж','phys','1 р/д',''],
+  ['Магнітотерапія','phys','1 р/д',''],['УВЧ','phys','1 р/д',''],['Електрофорез','phys','1 р/д',''],['Рання мобілізація, вертикалізація','phys','2 р/д',''],
+  ['Перев’язка','loc','1 р/д',''],['Обробка рани антисептиком','loc','2 р/д',''],['Обробка пролежнів','loc','2 р/д',''],['Напівспиртовий компрес','loc','на ніч',''],
+  ['Холод місцево','loc','',''],['Гіпсова лонгета','loc','','контроль кровообігу й чутливості дистальніше'],['Зняття швів','loc','одноразово','']];
+const DIETS = ['Основний варіант стандартної дієти (ОВД)','Щадна дієта (ЩД)','Дієта з підвищеною кількістю білка (ВБД)','Дієта зі зниженою кількістю білка (НБД)','Низькокалорійна дієта (НКД)',
+  'Стіл № 1','Стіл № 5','Стіл № 7','Стіл № 9','Стіл № 10','Стіл № 15','Голод (нічого per os)'];
+const PROC_FOR = {pneu:['Пульсоксиметрія','Оксигенотерапія через концентратор','Дихальна гімнастика'], copd:['Пульсоксиметрія','Оксигенотерапія через концентратор','Інгаляції через небулайзер'],
+  asthma:['Пульсоксиметрія','Інгаляції через небулайзер','Пікфлоуметрія'], hf:['Контроль діурезу','Щоденне зважування','Контроль АТ і ЧСС'], gh:['Контроль АТ і ЧСС'], ihd:['Контроль АТ і ЧСС'],
+  af:['Контроль АТ і ЧСС'], dm:['Контроль глюкози крові'], stroke:['Контроль АТ і ЧСС','Зміна положення тіла','Рання мобілізація, вертикалізація'], tia:['Контроль АТ і ЧСС'],
+  app:['Периферичний венозний катетер','Холод місцево'], chol:['Периферичний венозний катетер','Холод місцево'], panc:['Периферичний венозний катетер','Назогастральний зонд','Контроль діурезу'],
+  gib:['Периферичний венозний катетер','Контроль АТ і ЧСС'], obstr:['Назогастральний зонд','Периферичний венозний катетер','Очисна клізма'], perf:['Периферичний венозний катетер','Назогастральний зонд'],
+  hern:['Периферичний венозний катетер'], absc:['Перев’язка'], ery:['Обробка рани антисептиком'], flu:['Пульсоксиметрія'], covid:['Пульсоксиметрія','Оксигенотерапія через назальні канюлі'],
+  food:['Контроль діурезу'], mening:['Контроль діурезу','Периферичний венозний катетер'], tdr:['Гіпсова лонгета','Холод місцево'], tank:['Гіпсова лонгета','Холод місцево'],
+  tsprain:['Холод місцево'], twound:['Перев’язка','Зняття швів'], thip:['Периферичний венозний катетер','Зміна положення тіла'], trib:['Дихальна гімнастика'], tclav:['Холод місцево']};
+const DIET_FOR = {gh:'Стіл № 10', ihd:'Стіл № 10', hf:'Стіл № 10', af:'Стіл № 10', dm:'Стіл № 9', gastr:'Щадна дієта (ЩД)', gerd:'Щадна дієта (ЩД)', panc:'Голод (нічого per os)',
+  chol:'Голод (нічого per os)', app:'Голод (нічого per os)', perf:'Голод (нічого per os)', obstr:'Голод (нічого per os)', gib:'Голод (нічого per os)', hern:'Голод (нічого per os)', hep:'Стіл № 5',
+  pyelo:'Стіл № 7', ckd:'Дієта зі зниженою кількістю білка (НБД)', dyslip:'Стіл № 10', gout:'Стіл № 15'};
+const PROC_MAP = Object.fromEntries(PROCS.map(p=>[p[0].toLowerCase(), p]));
+function rxKind(it){
+  if (it.kind) return it.kind;
+  const n = String(it.drug || '').trim().toLowerCase(), p = PROC_MAP[n];
+  if (p) return p[1];
+  if (/^(дієта|основний варіант стандартної дієти|щадна дієта|стіл|голод|нічого per os)/.test(n) || DIETS.some(d=>d.toLowerCase() === n)) return 'diet';
+  if (/^(режим|посилений питний режим|підвищене положення)/.test(n)) return 'reg';
+  if (/^(оксигенотерапія|контроль|пульсоксиметрія|скринінг|оцінка|зміна положення|назогастральн|катетер|система)/.test(n)) return 'man';
+  if (/^(перев’язка|перев'язка|холод|гіпсова|обробка|компрес|зняття швів)/.test(n)) return 'loc';
+  if (/^(інгаляції|лфк|масаж|дихальна гімнастика|магніто|увч|електрофорез|маневр)/.test(n)) return 'phys';
+  return 'drug';
+}
+/* Скорочення «звідки препарат» — налаштовуються */
+let SRCAB = {dep:'від.', pat:'пац.'}; try{ Object.assign(SRCAB, JSON.parse(localStorage.getItem('po.srcab') || '{}')); }catch(e){}
+const SRC_L = {'':'—', dep:'з відділення', pat:'ліки пацієнта'};
+function addItemByName(name){
+  const n = String(name || '').trim(); if (!n) return null;
+  const p = PROC_MAP[n.toLowerCase()];
+  let it;
+  if (p) it = addRx({drug:p[0], freq:p[2], note:p[3], kind:p[1]});
+  else if (DIETS.some(d=>d === n)) it = addRx({drug:n, kind:'diet'});
+  else { it = addRx({drug:n}); drugDefaults(it, n); }
+  it._open = true; return it;
+}
+/* Змінити дозу з сьогодні: старий рядок закривається, новий — копія з сьогоднішньої дати */
+function rxChangeDose(it){
+  const t = todayISO();
+  if (it.start === t){ it._open = true; return it; }   // призначено сьогодні — просто правимо
+  it.stop = t;
+  const n = Object.assign({}, it, {id:++RXN, start:t, stop:'', days:'', _open:true, auto:null, rev:isAB(it) ? '' : it.rev});
+  RX.splice(RX.indexOf(it) + 1, 0, n); return n;
+}
 /* ===== Набори призначень за спеціальністю: [препарат / призначення, доза, шлях, кратність, днів, примітка] ===== */
 const RX_REZ = [['Режим палатний','','','',0,''],['Основний варіант стандартної дієти','','','',0,'або інший варіант дієти за станом']];
 const RX_VTE = [['Еноксапарин','40 мг','п/ш','1 р/д',0,'профілактика ВТЕ за оцінкою ризику (Padua / Caprini); КК < 30 — 20 мг']];
@@ -5477,7 +5631,10 @@ function rxSetsBox(){
     box.innerHTML = '';
     if (!RXG){ const p = PRESETS.find(x=>x.key === curKey); RXG = p && RXSETS[p.group] ? p.group : SPEC === 'tr' ? 'tr' : 'ter'; }
     const tabs = h('div', {class:'gtabs', role:'group', 'aria-label':'Спеціальність'});
-    Object.keys(RXG_L).forEach(k=>tabs.append(h('button', {type:'button', class:'gtab', 'aria-pressed': k === RXG ? 'true' : 'false', onclick:()=>{ RXG = k; draw(); }}, RXG_L[k])));
+    { const p = PRESETS.find(x=>x.key === curKey), own = p && RXSETS[p.group] ? [p.group] : (SPEC_GROUPS[SPEC] || ['ter']).filter(k=>RXSETS[k]);
+      Object.keys(RXG_L).forEach(k=>{ const vis = box.dataset.all === '1' || own.includes(k) || k === 'my' || k === RXG;
+        if (vis) tabs.append(h('button', {type:'button', class:'gtab', 'aria-pressed': k === RXG ? 'true' : 'false', onclick:()=>{ RXG = k; draw(); }}, RXG_L[k])); });
+      tabs.append(h('button', {type:'button', class:'gtab gmore', onclick:()=>{ box.dataset.all = box.dataset.all === '1' ? '' : '1'; draw(); }}, box.dataset.all === '1' ? 'Менше ▴' : 'Інші ▾')); }
     const chips = h('div', {class:'chips'});
     if (RXG === 'my'){
       (CUSTOM.rxsets || []).forEach((st, i)=>{
@@ -5500,6 +5657,29 @@ function rxSetsBox(){
   };
   box.draw = draw; draw(); return box;
 }
+/* Стрічка «Призначено» і підказки процедур / дієти за хворобою */
+function renderRxStrip(){
+  const b = $('#rxStrip'); if (!b) return; const t = todayISO();
+  const act = RXF().filter(it=>!(it.stop && it.stop <= t) && !(rxEnd(it) && rxEnd(it) < t));
+  b.hidden = !act.length; if (!act.length) return;
+  const one = it => [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
+  const g = k => act.filter(it=>k.includes(rxKind(it)));
+  b.innerHTML = '';
+  b.append(h('b', {}, `Призначено (${act.length}): `), g(['drug']).map(one).join('; ') || '—',
+    g(['reg','diet']).length ? h('span', {class:'rxs-g'}, ' · Режим, дієта: ' + g(['reg','diet']).map(it=>it.drug).join('; ')) : '',
+    g(['man','phys','loc']).length ? h('span', {class:'rxs-g'}, ' · Процедури: ' + g(['man','phys','loc']).map(it=>it.drug).join('; ')) : '');
+}
+function renderRxSuggest(){
+  const b = $('#rxSuggest'); if (!b) return; b.innerHTML = '';
+  const dl = $('#rxAddList'); if (dl && !dl.childElementCount) dl.append(...Object.values(rxLib()).map(d=>h('option', {value:d.n})), ...PROCS.map(p=>h('option', {value:p[0]}, RXKINDS[p[1]])), ...DIETS.map(x=>h('option', {value:x}, 'Дієта')));
+  if (!curKey) return;
+  const have = new Set(RX.map(it=>String(it.drug).toLowerCase()));
+  const pr = (PROC_FOR[curKey] || []).filter(n=>!have.has(n.toLowerCase())), dt = DIET_FOR[curKey], hasDiet = RX.some(it=>rxKind(it) === 'diet');
+  if (!pr.length && (!dt || hasDiet)) return;
+  b.append(h('div', {class:'chips rxsug'}, h('span', {class:'chips-hint'}, 'Часто при цій хворобі:'),
+    ...pr.map(n=>h('button', {type:'button', class:'chip', onclick:()=>{ const it = addItemByName(n); it._open = false; renderRx(); update(); }}, '+ ' + n)),
+    dt && !hasDiet ? h('button', {type:'button', class:'chip', onclick:()=>{ const it = addItemByName(dt); it._open = false; renderRx(); update(); }}, '+ ' + dt) : ''));
+}
 /* Інтерфейс листа призначень */
 function rxPanel(){
   const wrap = h('div', {});
@@ -5507,11 +5687,20 @@ function rxPanel(){
     h('datalist', {id:'drugList'}, ...Object.values(rxLib()).map(d=>h('option', {value:d.n}))),
     h('datalist', {id:'routeList'}, ...ROUTES.map(r=>h('option', {value:r}))),
     h('datalist', {id:'freqList'}, ...FREQS.map(r=>h('option', {value:r}))),
+    h('div', {class:'rxstrip', id:'rxStrip', hidden:''}),
     h('div', {class:'pt rxvarbox', hidden:''}),
     h('div', {id:'rxWarn'}),
+    h('datalist', {id:'rxAddList'}),
+    h('div', {class:'rxadd'}, (()=>{ const a = h('input', {id:'rxAdd', list:'rxAddList', placeholder:'+ Додати препарат, процедуру або дієту…', 'aria-label':'Додати призначення', autocomplete:'off'});
+        const go = () => { const v = a.value.trim(); if (!v) return; addItemByName(v); a.value = ''; renderRx(); update(); };
+        a.addEventListener('input', e=>{ if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && document.querySelector(`#rxAddList option[value="${CSS.escape(a.value)}"]`)) go(); });
+        a.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+        return a; })(),
+      h('button', {type:'button', class:'btn', onclick:()=>{ const a = $('#rxAdd'); if (a.value.trim()){ addItemByName(a.value); a.value = ''; } else { const it = addRx({}); it._open = true; } renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '＋ Додати')),
+    h('div', {id:'rxSuggest'}),
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
-      h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
+      h('button', {type:'button', class:'btn', onclick:()=>{ const it = addRx({}); it._open = true; renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Порожній рядок'),
       h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби'),
       h('button', {type:'button', class:'btn', title:'Таблиця для медсестри, як паперовий бланк: дні, рядки «Лікар / Сестра»', onclick:f0034Preview}, '🖨 Листок призначень (ф. 003-4/о)')),
     h('div', {class:'pt', id:'rxInfo'}),
@@ -5552,32 +5741,53 @@ function renderRx(){
   const RW = rxWarnings(), rw = $('#rxWarn'); rw.innerHTML = '';
   if (RW.length) rw.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
   if (p && p.tips) info.append(h('details', {class:'fold'}, h('summary', {}, 'Підказки: ' + p.name), h('div', {class:'tips'}, h('ul', {}, ...p.tips.map(t=>h('li', {}, t))))));
+  renderRxStrip(); renderRxSuggest();
   list.innerHTML = '';
-  if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Додайте препарат або схему для обраної хвороби.')); return; }
+  if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Оберіть схему вище, наберіть назву в полі «+ Додати…» або візьміть набір за спеціальністю внизу.')); return; }
+  const today = todayISO();
   RX.forEach(it=>{
-    const set = (key, ev) => e => { it[key] = e.target.value; if (key === 'start' && isAB(it) && !it.revTouched) it.rev = addDays(it.start, 2); if (key === 'rev') it.revTouched = true; if (ev) renderRx(); update(); };
+    const kind = rxKind(it), isDrug = kind === 'drug', simple = kind === 'reg' || kind === 'diet';
+    const set = (key, ev) => e => { it[key] = e.target.value; if (key === 'start' && isAB(it) && !it.revTouched) it.rev = addDays(it.start, 2); if (key === 'rev') it.revTouched = true; if (ev) renderRx(); update(); renderRxStrip(); };
     const inp = (key, attrs, label, ev, cls) => h('div', {class:'f' + (cls ? ' ' + cls : '')}, h('label', {}, label), h('input', Object.assign({value:it[key] || '', oninput:set(key, false), onchange:ev ? set(key, true) : null}, attrs)));
-    const pickDrug = v => { it.drug = v; it.lastPick = v; const ok = drugDefaults(it, v); renderRx(); update();
-      if (ok){ const c = [...document.querySelectorAll('#rxList .rx')][RX.indexOf(it)]; const di = c && c.querySelector('.rx-dose'); if (di) di.focus(); toast('Підставлено стандартну дозу — змініть за потреби', 2000); } };
-    const drug = h('input', {class:'rx-drug', list:'drugList', value:it.drug, placeholder:'Почніть вводити назву',
-      oninput:e=>{ it.drug = e.target.value; if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && libInfo(e.target.value)) pickDrug(e.target.value); else update(); },
+    const pickDrug = v => { it.drug = v; it.lastPick = v; const p = PROC_MAP[String(v).trim().toLowerCase()];
+      if (p){ it.kind = p[1]; if (!it.freq) it.freq = p[2]; if (!it.note) it.note = p[3]; it.dose = ''; it.route = ''; renderRx(); update(); return; }
+      if (DIETS.includes(String(v).trim())){ it.kind = 'diet'; renderRx(); update(); return; }
+      const ok = drugDefaults(it, v); renderRx(); update();
+      if (ok){ const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); toast('Підставлено стандартну дозу — змініть за потреби', 2000); } };
+    const drug = h('input', {class:'rx-drug', list:'rxAddList', value:it.drug, placeholder:'Почніть вводити назву',
+      oninput:e=>{ it.drug = e.target.value; if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && (libInfo(e.target.value) || PROC_MAP[e.target.value.trim().toLowerCase()])) pickDrug(e.target.value); else { update(); renderRxStrip(); } },
       onchange:e=>{ if (e.target.value !== it.lastPick){ it.lastPick = e.target.value; pickDrug(e.target.value); } }});
     const rm = h('button', {type:'button', class:'more'}, 'Видалити');
     rm.addEventListener('click', ()=>{ if (!rm.dataset.arm){ rm.dataset.arm = '1'; rm.textContent = 'Точно?'; setTimeout(()=>{ delete rm.dataset.arm; rm.textContent = 'Видалити'; }, 3000); return; } RX = RX.filter(x=>x !== it); renderRx(); update(); });
-    const stop = h('button', {type:'button', class:'more', onclick:()=>{ it.stop = it.stop ? '' : todayISO(); renderRx(); update(); }}, it.stop ? 'Відновити' : 'Відмінити з ' + fmtS(todayISO()));
+    const stop = h('button', {type:'button', class:'btn', onclick:()=>{ it.stop = it.stop ? '' : today; it._open = false; renderRx(); update(); toast(it.stop ? 'Відмінено з ' + fmtS(today) : 'Відновлено', 1600); }}, it.stop ? 'Відновити' : 'Відмінити з ' + fmtS(today));
+    const chg = isDrug && !it.stop ? h('button', {type:'button', class:'btn', title:'Стара доза закривається сьогоднішньою датою, нова починається з сьогодні', onclick:()=>{ const n = rxChangeDose(it); renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${n.id}"] .rx-dose`); if (c){ c.focus(); c.select(); } toast('Нова доза — з ' + fmtS(today) + '. Вкажіть її', 2500); }}, 'Змінити дозу з ' + fmtS(today)) : '';
     const d = drugInfo(it.drug), warn = renalMsg(it), L = libInfo(it.drug);
-    const card = h('div', {class:'rx' + (it.stop ? ' off' : '')},
+    // одиниці дози: кнопка замінює одиницю після числа
+    const units = isDrug ? h('div', {class:'units'}, ...['мг','г','мл','%','ОД','мкг','крап.'].map(u=>h('button', {type:'button', class:'chip s', onclick:()=>{ const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }}, u))) : '';
+    const srcSel = h('select', {onchange:set('src', false)}, ...Object.entries(SRC_L).map(([k,l])=>h('option', {value:k}, l))); srcSel.value = it.src || '';
+    const kindSel = h('select', {onchange:e=>{ it.kind = e.target.value; renderRx(); update(); }}, ...Object.entries(RXKINDS).map(([k,l])=>h('option', {value:k}, l))); kindSel.value = kind;
+    const end = rxEnd(it), status = it.stop ? 'відмінено ' + fmtS(it.stop) : end ? 'до ' + fmtS(end) : '';
+    const sum = h('button', {type:'button', class:'rxsum', 'aria-expanded':it._open ? 'true' : 'false', onclick:()=>{ it._open = !it._open; renderRx(); }},
+      h('span', {class:'rxk', title:RXKINDS[kind]}, RXK_ICON[kind]),
+      h('span', {class:'rxt'}, h('b', {}, it.drug || 'Новий рядок'), [it.dose, it.route, it.freq].filter(Boolean).length ? ' ' + [it.dose, it.route, it.freq].filter(Boolean).join(' ') : '', it.hours ? ' · о ' + it.hours : ''),
+      h('span', {class:'rxm'}, it.days ? it.days + ' дн. · ' : '', 'з ' + fmtS(it.start), status ? ' · ' + status : '', it.src ? h('span', {class:'badge'}, it.src === 'pat' ? SRCAB.pat : SRCAB.dep) : '', warn ? h('span', {class:'badge bad', title:warn}, 'нирки') : ''),
+      h('span', {class:'rxdd', 'aria-hidden':'true'}, it._open ? '▴' : '▾'));
+    const body = h('div', {class:'rxbody', hidden:it._open ? null : ''},
       h('div', {class:'rx-g'},
-        h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, 'Препарат'), drug),
-        inp('dose', {placeholder:'доза', class:'rx-dose', list:'dl_d_' + it.id}, 'Доза'),
-        inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
-        inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
+        h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, isDrug ? 'Препарат' : RXKINDS[kind]), drug),
+        simple ? '' : h('div', {class:'f'}, h('label', {}, 'Доза'), h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)})),
+        simple || !isDrug ? '' : inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
+        simple ? '' : inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
+        simple ? '' : inp('hours', {placeholder:'напр., 8:00, 20:00'}, 'Години (необов’язково)'),
         h('datalist', {id:'dl_d_' + it.id}, ...(L ? L.doses : []).map(v=>h('option', {value:v}))),
         h('datalist', {id:'dl_r_' + it.id}, ...(L ? [...L.routes, ...ROUTES.filter(r=>!L.routes.includes(r))] : []).map(v=>h('option', {value:v}))),
         h('datalist', {id:'dl_f_' + it.id}, ...(L ? [...L.freqs, ...FREQS.filter(r=>!L.freqs.includes(r))] : []).map(v=>h('option', {value:v}))),
         inp('start', {type:'date'}, 'З дати', true, 'rx-w'),
         inp('days', {type:'number', min:'0', inputmode:'numeric', placeholder:'—'}, 'Днів', true),
+        isDrug ? h('div', {class:'f'}, h('label', {}, 'Звідки'), srcSel) : '',
+        h('div', {class:'f'}, h('label', {}, 'Тип'), kindSel),
         h('div', {class:'f rx-w4'}, h('label', {}, 'Примітка'), h('input', {value:it.note || '', oninput:set('note', false), placeholder:'напр., після їди'}))),
+      units,
       warn ? h('p', {class:'rx-warn'}, '⚠ ' + warn) : '',
       d && d.ab ? h('div', {class:'rx-ab'},
         h('span', {class:'badge ' + (d.ab === 'A' ? 'ok' : d.ab === 'W' ? 'warn' : 'bad')}, 'AWaRe: ' + AWARE[d.ab]),
@@ -5585,8 +5795,8 @@ function renderRx(){
           h('div', {class:'f rx-w3'}, h('label', {}, 'Показання (діагноз або підозра)'), h('input', {value:it.ind || '', placeholder:val(F('dx.osn'), true) || 'напр., негоспітальна пневмонія', oninput:set('ind', false)})),
           h('div', {class:'f rx-w'}, h('label', {}, 'Бакпосів до початку'), (()=>{ const s = h('select', {onchange:set('cult', false)}, h('option', {value:''}, '— не вказано —'), ...['взято','не взято','не показаний'].map(o=>h('option', {}, o))); s.value = it.cult || ''; return s; })()),
           (()=>{ const x = inp('rev', {type:'date'}, 'Перегляд (48–72 год)'); x.classList.add('rx-w'); return x; })())) : '',
-      h('div', {class:'acts2'}, stop, rm, rxEnd(it) ? h('span', {class:'chips-hint'}, 'до ' + fmtD(rxEnd(it))) : ''));
-    list.append(card);
+      h('div', {class:'acts2'}, chg, stop, rm));
+    list.append(h('div', {class:'rx rxc' + (it.stop ? ' off' : '') + (it._open ? ' open' : ''), 'data-id':String(it.id), 'data-kind':kind}, sum, body));
   });
 }
 
@@ -5603,10 +5813,12 @@ function rxDayMark(it, d){
   const stop = it.stop, end = it.days && +it.days > 0 ? addDays(it.start, +it.days - 1) : '';
   if (stop) return d < stop ? '+' : d === stop ? '—' : '';
   if (end) return d <= end ? '+' : d === addDays(end, 1) ? '—' : '';
-  return d <= todayISO() ? '+' : '';
+  const now = new Date(), real = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  return d <= (real > todayISO() ? real : todayISO()) ? '+' : '';   // без тривалості — «+» до сьогодні, далі лікар відмічає щодня
 }
 function f0034Sheets(start, n){
-  const items = RXF().filter(it=>!isRegimen(it)), reg = RXF().filter(isRegimen).map(it=>[it.drug, it.note].filter(Boolean).join(', ')).join('; ');
+  const K = it => rxKind(it), items = [...RXF().filter(it=>K(it) === 'drug'), ...RXF().filter(it=>K(it) === 'man')],
+    reg = RXF().filter(it=>['reg','diet'].includes(K(it))).map(it=>[it.drug, it.note].filter(Boolean).join(', ')).join('; ');
   const first = start || [...RXF().map(it=>it.start).filter(Boolean)].sort()[0] || todayISO();
   const last = RXF().reduce((m, it)=>{ const e = it.stop || rxEnd(it) || todayISO(); return e > m ? e : m; }, first);
   const total = Math.max(1, Math.round((new Date(last + 'T00:00') - new Date(first + 'T00:00')) / 864e5) + 2);
@@ -5625,7 +5837,8 @@ function f0034Sheets(start, n){
     tb.append(h('tr', {class:'f-reg'}, h('td', {class:'f-name'}, h('b', {}, 'Режим '), reg), td('', {class:'f-who'}), ...days.map(()=>td('', {class:'f-d'}))));
     items.forEach(it=>{
       const main = [it.drug, it.dose].filter(Boolean).join(' '), sub = [it.route, it.freq].filter(Boolean).join(' ');
-      row2([h('b', {}, main), sub ? h('span', {}, ' ' + sub) : '', it.note ? h('div', {class:'f-note'}, it.note) : ''], d=>rxDayMark(it, d));
+      row2([it.src ? h('span', {class:'f-src'}, it.src === 'pat' ? SRCAB.pat : SRCAB.dep) : '', h('b', {}, main), sub ? h('span', {}, ' ' + sub) : '',
+        it.hours ? h('div', {class:'f-note'}, it.hours) : '', it.note ? h('div', {class:'f-note'}, it.note) : ''], d=>rxDayMark(it, d));
     });
     for (let k = 0; k < Math.max(F0034_BLANK, 11 - items.length); k++) row2([''], null, 'f-blank');   // аркуш заповнений, як паперовий бланк
     tb.append(h('tr', {class:'f-sig'}, h('td', {class:'f-name'}, 'Підписи'), td('Лікар', {class:'f-who'}), ...days.map(()=>td('', {class:'f-d'}))),
@@ -5646,18 +5859,59 @@ function f0034Sheets(start, n){
 function f0034Print(){
   if (!RXF().length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
   if (printBlocked()) return;
-  const P = $('#print'); P.innerHTML = ''; f0034Sheets(null, F0034_DAYS).forEach(s=>P.append(s));
-  toast('Друк: альбомна орієнтація, форма № 003-4/о', 2500); window.print();
+  const P = $('#print'); P.innerHTML = ''; f0034Sheets(null, F0034_DAYS).forEach(s=>P.append(s)); P.append(f0034Back());
+  toast('Друк: лицьовий бік і зворот (альбомна орієнтація). На двосторонньому принтері — один аркуш', 3500); window.print();
 }
 function f0034Preview(){
   if (!RXF().length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
-  const box = h('div', {class:'f0034-prev'}); f0034Sheets(null, F0034_DAYS).forEach(s=>box.append(s));
+  const box = h('div', {class:'f0034-prev'}); f0034Sheets(null, F0034_DAYS).forEach(s=>box.append(s)); box.append(f0034Back());
   const dlg = h('div', {class:'navsheet packsheet f0034-dlg', role:'dialog', 'aria-label':'Листок лікарських призначень'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Листок лікарських призначень (ф. 003-4/о)'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
       h('p', {class:'chips-hint'}, '«+» у рядку «Лікар» — дні призначення, «—» — день відміни. Рядок «Сестра» медсестра заповнює від руки. Порожні рядки — для призначень від руки.'),
       box, h('div', {class:'acts2', style:'margin-top:10px'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); f0034Print(); }}, '🖨 Друкувати'))));
   dlg.addEventListener('click', e=>{ if (e.target === dlg) dlg.remove(); });
   document.body.append(dlg);
+}
+
+/* Зворот бланка: обстеження (перелік як на бланку + дати з плану), дієта, фізіотерапія, психотерапія, місцеве лікування */
+const F0034_OBS = [
+  ['Загальноклінічні та біохімічні', 3, [['Загальний аналіз крові',['ЗАК']],['Аналіз крові (ШЗЕ, лейкоцити, гемоглобін)',[]],['Аналіз крові на глюкозу',['глюкоза крові']],['Аналіз сечі на діастазу',[]],
+    ['Коагулограма, тривалість кровотечі, згортання крові',['коагулограма']],['Електроліти крові',['біохімічний аналіз крові']],['Печінкові проби',['біохімічний аналіз крові']],['Аналіз крові на білкові фракції',[]],
+    ['Аналіз крові на сечовину, залишковий азот, креатинін',['біохімічний аналіз крові']],['Група крові, резус-фактор',['група крові та резус-фактор']],['Загальний аналіз сечі',['ЗАС']],
+    ['Сеча на глюкозу (з добової кількості)',[]],['Аналіз сечі на жовчні пігменти',[]],['Проби сечі за Зимницьким',[]],['Проби сечі за Нечипоренко',[]],['Копрограма',[]],
+    ['Об’єм добової крововтрати з калом',[]],['Аналіз калу на приховану кров',['аналіз калу на приховану кров']],['Кал на яйця глистів, найпростіших',[]]]],
+  ['Зондові', 3, [['Шлункова секреція з гістаміном, пентагастрином, алкоголем',[]],['Дуоденальне зондування (БДЗ)',[]],['Дослідження панкреатичної секреції',[]]]],
+  ['Ендоскопічні', 2, [['Езофагогастродуоденоскопія',['ФГДС']],['Колоноскопія',['колоноскопія']],['Сигмоскопія',[]],['Ректороманоскопія',[]],['Р Х П Г',[]]]],
+  ['Рентгенологічні', 2, [['Рентгенографія органів грудної клітини, флюорографія',['рентгенографія ОГК','флюорографія ОГК','флюорографія']],['Рентгеноскопія шлунка та 12-палої кишки',[]],['Іригоскопія',[]],
+    ['Холецистографія (інфузійно, перорально)',[]],['Оглядовий знімок черевної порожнини',['оглядова рентгенографія ОЧП']]]],
+  ['Ультразвукові', 2, [['Печінки, селезінки, жовчного міхура',['УЗД ОЧП']],['та протоків, підшлункової залози,',[]],['кишечника, нирок, сечевого міхура,',['УЗД нирок']],['матки і придатків, лімфовузлів черевної порожнини',[]]]],
+  ['Мікробіологічні', 2, [['Аналіз крові на реакції Відаля та Провачека',[]],['Зскрібання з язика, зіву',['мазок із зіву на флору та BL']],['Мікрофлора калу',['бактеріологічне дослідження калу']],['Аналіз калу на дизентерійну групу',[]]]],
+  ['Функціональні', 2, [['Електрокардіограма',['ЕКГ']],['Реоенцефалограма',[]]]],
+  ['Імунологічні', 2, [['Серологічні реакції на сифіліс',[]],['Аналіз крові на австралійський антиген',['маркери вірусних гепатитів']],['Аналіз крові на ВІЛ-інфекцію',['тест на ВІЛ і гепатит С']],['Інші TORCH-інфекції',[]]]]];
+function f0034Back(){
+  const cg = n => h('colgroup', {}, h('col', {}), ...Array.from({length:n}, ()=>h('col', {style:'width:9mm'})));
+  const plan = planSel(), used = new Set();
+  const datesFor = names => { const L = []; names.forEach(n=>{ if (plan.includes(n)){ used.add(n); planDates(n).forEach(d=>{ const t = planDLabel(d); if (!L.includes(t)) L.push(t); }); } }); return L; };
+  const cells = (n, ds) => Array.from({length:n}, (_, k)=>h('td', {class:'b-d'}, ds[k] || ''));
+  const col = groups => { const tb = h('tbody'); groups.forEach(([g, n, rows])=>{ tb.append(h('tr', {}, h('th', {colspan:String(n + 1), class:'b-g'}, g)));
+    rows.forEach(([name, keys])=>tb.append(h('tr', {}, h('td', {class:'b-n'}, name), ...cells(n, datesFor(keys))))); }); return tb; };
+  const left = col(F0034_OBS.slice(0, 2)), right = col(F0034_OBS.slice(2));
+  const extra = plan.filter(n=>!used.has(n));   // чого немає на бланку — у порожні рядки
+  for (let k = 0; k < Math.max(4, extra.length); k++){ const n = extra[k]; left.append(h('tr', {}, h('td', {class:'b-n'}, n || ''), ...cells(3, n ? planDates(n).map(planDLabel) : []))); }
+  const K = it => rxKind(it), diets = RXF().filter(it=>K(it) === 'diet'), phys = RXF().filter(it=>K(it) === 'phys'), loc = RXF().filter(it=>K(it) === 'loc');
+  const dd = x => x ? fmtS(x) : '';
+  const dietT = h('table', {class:'b-t'}, h('colgroup', {}, ...[0,1].flatMap(()=>[h('col', {}), h('col', {style:'width:13mm'}), h('col', {style:'width:13mm'})])), h('thead', {}, h('tr', {}, ...['Дієта, схема додаткового харчування','Дата призначення','Дата відміни','Дієта, схема додаткового харчування','Дата призначення','Дата відміни'].map(t=>h('th', {}, t)))),
+    h('tbody', {}, ...Array.from({length:6}, (_, r)=>h('tr', {}, ...[diets[r], diets[r + 6]].flatMap(it=>[h('td', {class:'b-n'}, it ? it.drug : ''), h('td', {class:'b-d'}, it ? dd(it.start) : ''), h('td', {class:'b-d'}, it ? dd(it.stop || rxEnd(it)) : '')])))));
+  const procT = (title, L, n) => h('table', {class:'b-t'}, h('colgroup', {}, h('col', {}), h('col', {style:'width:16mm'}), h('col', {style:'width:18mm'})), h('thead', {}, h('tr', {}, h('th', {colspan:'3', class:'b-g'}, title)), h('tr', {}, h('th', {}, 'Найменування процедури'), h('th', {}, 'Дата призначення'), h('th', {}, 'Підпис'))),
+    h('tbody', {}, ...Array.from({length:Math.max(n, L.length)}, (_, r)=>{ const it = L[r]; return h('tr', {}, h('td', {class:'b-n'}, it ? [it.drug, it.freq, it.days ? it.days + ' дн.' : ''].filter(Boolean).join(', ') : ''), h('td', {class:'b-d'}, it ? dd(it.start) : ''), h('td', {class:'b-d'}, '')); })));
+  const locT = h('table', {class:'b-t'}, h('colgroup', {}, h('col', {style:'width:14mm'}), h('col', {}), h('col', {style:'width:24mm'}), h('col', {style:'width:24mm'})), h('thead', {}, h('tr', {}, h('th', {colspan:'4', class:'b-g'}, 'Місцеве лікування')), h('tr', {}, ...['Код процедури','Найменування процедури','Дата призначення і підпис','Дата відміни і підпис'].map(t=>h('th', {}, t)))),
+    h('tbody', {}, ...Array.from({length:Math.max(4, loc.length)}, (_, r)=>{ const it = loc[r]; return h('tr', {}, h('td', {class:'b-d'}, ''), h('td', {class:'b-n'}, it ? [it.drug, it.freq].filter(Boolean).join(', ') : ''), h('td', {class:'b-d'}, it ? dd(it.start) : ''), h('td', {class:'b-d'}, it ? dd(it.stop) : '')); })));
+  return h('div', {class:'f0034 f0034b'},
+    h('div', {class:'b-wrap'},
+      h('div', {class:'b-l'}, h('div', {class:'b-h'}, 'ОБСТЕЖЕННЯ'), h('div', {class:'b-cols'},
+        h('table', {class:'b-t'}, cg(3), h('thead', {}, h('tr', {}, h('th', {}, 'Найменування'), h('th', {colspan:'3'}, 'Дата призначення'))), left),
+        h('table', {class:'b-t'}, cg(2), h('thead', {}, h('tr', {}, h('th', {}, 'Найменування'), h('th', {colspan:'2'}, 'Дата призначення'))), right))),
+      h('div', {class:'b-r'}, h('div', {class:'b-h'}, 'ДІЄТИЧНЕ ХАРЧУВАННЯ'), dietT, procT('Фізіотерапевтичні процедури', phys, 6), procT('Психотерапевтичні процедури', [], 4), locT)));
 }
 /* ================= МОЇ ШАБЛОНИ ================= */
 function saveCustom(){ try{ localStorage.setItem('po.custom', JSON.stringify(CUSTOM)); return true; }catch(e){ toast('Не вдалося зберегти шаблон: браузер заборонив сховище', 5000); return false; } }
@@ -6049,6 +6303,7 @@ TABS.forEach((s,i)=>{
     if (s.id === 'd_lik' || s.id === 'e_obs') grid.append(h('div', {class:'f wide'}, resBlock()));
     if (s.id === 'ctrl') grid.prepend(h('div', {class:'f wide'}, ctrlBlock()));
     if (s.id === 'scr') grid.prepend(h('div', {class:'f wide'}, scrBlock()));
+    if (s.id === 'dx') grid.append(h('div', {class:'f wide'}, planDBlock()));
     if (s.id === 'dx'){ grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt', id:'dxb', hidden:''}))); grid.append(h('div', {class:'f wide'}, h('div', {class:'pt dxhbox', id:'dxh'}))); }
     if (s.id === 'e_per') grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt'}, h('h3', {}, 'Виписка за хвилину', h('span', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:epiAuto}, 'Зібрати виписку'))),
       h('p', {class:'chips-hint'}, 'Заповнить порожні поля: дати, анамнез, динаміку й стан при виписці (з останнього щоденника), результати обстежень (з журналу), лікування (з листа призначень) і рекомендації — що продовжити приймати та поради за хворобою. Заповнене вами не змінюється.'))));
@@ -6392,7 +6647,74 @@ if (SETTINGS_EL){ const z = h('select', {id:'set_zoom'}, h('option', {value:'1'}
   z.value = ZOOM; z.addEventListener('change', ()=>{ ZOOM = z.value; try{ localStorage.setItem('po.zoom', ZOOM); }catch(x){} applyZoom(); });
   SETTINGS_EL.append(h('h3', {class:'sub'}, 'Розмір тексту програми'), h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {for:'set_zoom'}, 'Розмір'), z)),
     h('div', {class:'acts2', style:'margin:6px 0 4px'}, h('button', {type:'button', class:'more', onclick:()=>welcomeDialog(true)}, 'Показати знайомство ще раз')));
+  const ab = (k, l) => { const e = h('input', {value:SRCAB[k], style:'max-width:120px', 'aria-label':l}); e.addEventListener('input', ()=>{ SRCAB[k] = e.value.trim() || (k === 'dep' ? 'від.' : 'пац.'); try{ localStorage.setItem('po.srcab', JSON.stringify(SRCAB)); }catch(x){} }); return h('div', {class:'f'}, h('label', {}, l), e); };
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Листок призначень (ф. 003-4/о)'), h('p', {class:'chips-hint'}, 'Позначка на полі листка «звідки препарат». Впишіть скорочення, як заведено у вашому відділенні.'),
+    h('div', {class:'grid'}, ab('dep', 'З відділення'), ab('pat', 'Ліки пацієнта')));
 }
+/* ===== Зручність введення: живий текст унизу, кнопки замість коротких списків, «хворіє протягом», скарги ===== */
+/* 1. Стрічка з текстом поточного розділу (телефон). Налаштування: стрічка / кнопка «Текст огляду» */
+let LIVE = 'bar'; try{ LIVE = localStorage.getItem('po.live') || 'bar'; }catch(e){}
+const liveBar = h('div', {class:'livebar', id:'liveBar', role:'button', tabindex:'0', 'aria-label':'Текст поточного розділу — натисніть, щоб відкрити весь документ'});
+document.body.append(liveBar);
+liveBar.addEventListener('click', e=>{ if (e.target.closest('.lv-x')) return; $('#outBox').classList.add('open'); });
+function liveText(){
+  const t = TABS[active]; if (!t) return '';
+  try{
+    if (SECTIONS.includes(t)){ const p = sectionText(t); if (!p || !p.body) return ''; return g((p.head ? p.head + ' ' : '') + p.body); }
+    if (t === RXT){ const p = rxPart(); return p ? g((p.head ? p.head + ' ' : '') + p.body.replace(/\n/g, ' ')) : ''; }
+  }catch(e){}
+  return '';
+}
+function renderLive(){
+  const mob = window.matchMedia && matchMedia('(max-width:899px)').matches, on = mob && LIVE === 'bar';
+  document.body.classList.toggle('live-on', on); const tb = $('#toText'); if (tb) tb.hidden = on;
+  liveBar.hidden = !on; if (!on) return;
+  const txt = liveText(), all = itext($('#out')).trim();
+  liveBar.innerHTML = '';
+  liveBar.append(h('span', {class:'lv-t'}, txt || (all ? 'У цьому розділі ще нічого не відмічено. Натисніть, щоб побачити весь документ.' : 'Тут з’явиться текст розділу, щойно почнете відмічати.')),
+    h('span', {class:'lv-o', 'aria-hidden':'true'}, '▴ весь текст'));
+}
+/* 2. Короткі списки (до 5 варіантів) — кнопками; список лишається прихованим, тож усе інше працює як раніше */
+function segFor(f){
+  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.opts.length > 5 || f.opts.length < 2) return;
+  if (f.opts.some(o=>String(O(o).l).length > 34)) return;
+  const box = h('div', {class:'segbtns', role:'group', 'aria-label':f.label || ''});
+  const sync = () => { [...box.children].forEach((b,i)=>{ b.setAttribute('aria-pressed', f.el.value === String(i) ? 'true' : 'false'); b.textContent = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)].textContent; }); };
+  f.opts.forEach((o,i)=>box.append(h('button', {type:'button', class:'chip sg', onclick:()=>{ f.el.value = f.el.value === String(i) ? '' : String(i); f.el.dispatchEvent(new Event('change', {bubbles:true})); sync(); }})));
+  f.el.classList.add('seg-hidden'); f.el.after(box); f.seg = sync; f.el.addEventListener('change', sync); sync();
+}
+SECTIONS.forEach(s=>s.fields.forEach(segFor));
+{ const m0 = mark; mark = function(sel, f){ m0(sel, f); if (f && f.seg) f.seg(); }; }
+/* 3. «Хворіє протягом» — кнопками */
+{ const f = F('morbi.dur'); if (f && f.inp){
+  const set = (n, u) => { f.inp.value = n; f.unit.value = u; f.inp.dispatchEvent(new Event('input', {bubbles:true})); update(); };
+  f.inp.closest('.f').append(h('div', {class:'chips durq'}, ...[['1 день',1,0],['2 дні',2,0],['3 дні',3,0],['5 днів',5,0],['тиждень',1,1],['2 тижні',2,1],['місяць',1,2],['рік',1,3]].map(([l,n,u])=>h('button', {type:'button', class:'chip s', onclick:()=>set(n, u)}, l))));
+} }
+/* 4. Скарги: номер черговості на відмічених і «+ Додати» з пошуку */
+function renderOrderMarks(){
+  SECTIONS.forEach(s=>s.fields.forEach(f=>{ if (f.type !== 'multi' || !f.search || !f.chips) return;
+    const on = f.chips.map((c,i)=>c.getAttribute('aria-pressed') === 'true' ? {c, o:+(c.dataset.ord || 0)} : null).filter(Boolean).sort((a,b)=>a.o - b.o);
+    f.chips.forEach(c=>c.removeAttribute('data-n')); if (on.length > 1) on.forEach((x,k)=>x.c.setAttribute('data-n', String(k + 1)));
+    if (f.q){ const q = f.q.value.trim(); let b = f.q.nextElementSibling && f.q.nextElementSibling.classList.contains('qadd') ? f.q.nextElementSibling : null;
+      const exact = q && f.opts.some(o=>O(o).t.toLowerCase() === q.toLowerCase());
+      if (q.length >= 3 && !exact){ if (!b){ b = h('button', {type:'button', class:'btn qadd'}); f.q.after(b); }
+        b.textContent = '+ Додати «' + q + '»'; b.onclick = ()=>{ const key = s.id + '.' + f.id; addOptionLive(key, q); try{ CUSTOM.opts = CUSTOM.opts || {}; (CUSTOM.opts[key] = CUSTOM.opts[key] || []).includes(q) || CUSTOM.opts[key].push(q); saveCustom(); }catch(e){}
+          const i = f.opts.findIndex(o=>O(o).t === q); if (i >= 0 && f.chips[i].getAttribute('aria-pressed') !== 'true') f.chips[i].click(); f.q.value = ''; refreshChips(f); b.remove(); update(); toast('Додано і відмічено. Варіант збережено в «Моїх шаблонах»', 2500); }; }
+      else if (b) b.remove(); }
+  }));
+}
+SECTIONS.forEach(s=>s.fields.forEach(f=>{ if (f.q) f.q.addEventListener('input', renderOrderMarks); }));
+/* 5. «Збережено ✓ hh:mm» у смужці пацієнта */
+{ const ms0 = markSaved; markSaved = function(ok){ ms0(ok); const b = $('#ptbar .pt1'); if (!b) return; let s = b.parentElement.querySelector('.pt-saved'); if (!s){ s = h('span', {class:'pt-saved'}); b.parentElement.append(s); }
+  s.textContent = ok ? '✓ ' + new Date().toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'}) : '⚠ не збережено'; s.classList.toggle('bad', !ok); }; }
+/* підключення до оновлення форми */
+window.addEventListener('resize', renderLive);
+{ const s0 = show; show = function(i){ const r = s0(i); try{ renderLive(); }catch(e){} return r; }; }
+renderLive();
+/* налаштування */
+if (SETTINGS_EL){ const sl = h('select', {id:'set_live'}, h('option', {value:'bar'}, 'Стрічка внизу з текстом поточного розділу'), h('option', {value:'btn'}, 'Окрема кнопка «Текст огляду»'));
+  sl.value = LIVE; sl.addEventListener('change', ()=>{ LIVE = sl.value; try{ localStorage.setItem('po.live', LIVE); }catch(e){} renderLive(); });
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Текст документа на телефоні'), h('div', {class:'grid'}, h('div', {class:'f wide'}, h('label', {for:'set_live'}, 'Як показувати'), sl))); }
 </script>
 
 </body>

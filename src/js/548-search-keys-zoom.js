@@ -49,4 +49,7 @@ if (SETTINGS_EL){ const z = h('select', {id:'set_zoom'}, h('option', {value:'1'}
   z.value = ZOOM; z.addEventListener('change', ()=>{ ZOOM = z.value; try{ localStorage.setItem('po.zoom', ZOOM); }catch(x){} applyZoom(); });
   SETTINGS_EL.append(h('h3', {class:'sub'}, 'Розмір тексту програми'), h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {for:'set_zoom'}, 'Розмір'), z)),
     h('div', {class:'acts2', style:'margin:6px 0 4px'}, h('button', {type:'button', class:'more', onclick:()=>welcomeDialog(true)}, 'Показати знайомство ще раз')));
+  const ab = (k, l) => { const e = h('input', {value:SRCAB[k], style:'max-width:120px', 'aria-label':l}); e.addEventListener('input', ()=>{ SRCAB[k] = e.value.trim() || (k === 'dep' ? 'від.' : 'пац.'); try{ localStorage.setItem('po.srcab', JSON.stringify(SRCAB)); }catch(x){} }); return h('div', {class:'f'}, h('label', {}, l), e); };
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Листок призначень (ф. 003-4/о)'), h('p', {class:'chips-hint'}, 'Позначка на полі листка «звідки препарат». Впишіть скорочення, як заведено у вашому відділенні.'),
+    h('div', {class:'grid'}, ab('dep', 'З відділення'), ab('pat', 'Ліки пацієнта')));
 }

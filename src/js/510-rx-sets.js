@@ -42,7 +42,10 @@ function rxSetsBox(){
     box.innerHTML = '';
     if (!RXG){ const p = PRESETS.find(x=>x.key === curKey); RXG = p && RXSETS[p.group] ? p.group : SPEC === 'tr' ? 'tr' : 'ter'; }
     const tabs = h('div', {class:'gtabs', role:'group', 'aria-label':'Спеціальність'});
-    Object.keys(RXG_L).forEach(k=>tabs.append(h('button', {type:'button', class:'gtab', 'aria-pressed': k === RXG ? 'true' : 'false', onclick:()=>{ RXG = k; draw(); }}, RXG_L[k])));
+    { const p = PRESETS.find(x=>x.key === curKey), own = p && RXSETS[p.group] ? [p.group] : (SPEC_GROUPS[SPEC] || ['ter']).filter(k=>RXSETS[k]);
+      Object.keys(RXG_L).forEach(k=>{ const vis = box.dataset.all === '1' || own.includes(k) || k === 'my' || k === RXG;
+        if (vis) tabs.append(h('button', {type:'button', class:'gtab', 'aria-pressed': k === RXG ? 'true' : 'false', onclick:()=>{ RXG = k; draw(); }}, RXG_L[k])); });
+      tabs.append(h('button', {type:'button', class:'gtab gmore', onclick:()=>{ box.dataset.all = box.dataset.all === '1' ? '' : '1'; draw(); }}, box.dataset.all === '1' ? 'Менше ▴' : 'Інші ▾')); }
     const chips = h('div', {class:'chips'});
     if (RXG === 'my'){
       (CUSTOM.rxsets || []).forEach((st, i)=>{
@@ -65,6 +68,29 @@ function rxSetsBox(){
   };
   box.draw = draw; draw(); return box;
 }
+/* Стрічка «Призначено» і підказки процедур / дієти за хворобою */
+function renderRxStrip(){
+  const b = $('#rxStrip'); if (!b) return; const t = todayISO();
+  const act = RXF().filter(it=>!(it.stop && it.stop <= t) && !(rxEnd(it) && rxEnd(it) < t));
+  b.hidden = !act.length; if (!act.length) return;
+  const one = it => [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
+  const g = k => act.filter(it=>k.includes(rxKind(it)));
+  b.innerHTML = '';
+  b.append(h('b', {}, `Призначено (${act.length}): `), g(['drug']).map(one).join('; ') || '—',
+    g(['reg','diet']).length ? h('span', {class:'rxs-g'}, ' · Режим, дієта: ' + g(['reg','diet']).map(it=>it.drug).join('; ')) : '',
+    g(['man','phys','loc']).length ? h('span', {class:'rxs-g'}, ' · Процедури: ' + g(['man','phys','loc']).map(it=>it.drug).join('; ')) : '');
+}
+function renderRxSuggest(){
+  const b = $('#rxSuggest'); if (!b) return; b.innerHTML = '';
+  const dl = $('#rxAddList'); if (dl && !dl.childElementCount) dl.append(...Object.values(rxLib()).map(d=>h('option', {value:d.n})), ...PROCS.map(p=>h('option', {value:p[0]}, RXKINDS[p[1]])), ...DIETS.map(x=>h('option', {value:x}, 'Дієта')));
+  if (!curKey) return;
+  const have = new Set(RX.map(it=>String(it.drug).toLowerCase()));
+  const pr = (PROC_FOR[curKey] || []).filter(n=>!have.has(n.toLowerCase())), dt = DIET_FOR[curKey], hasDiet = RX.some(it=>rxKind(it) === 'diet');
+  if (!pr.length && (!dt || hasDiet)) return;
+  b.append(h('div', {class:'chips rxsug'}, h('span', {class:'chips-hint'}, 'Часто при цій хворобі:'),
+    ...pr.map(n=>h('button', {type:'button', class:'chip', onclick:()=>{ const it = addItemByName(n); it._open = false; renderRx(); update(); }}, '+ ' + n)),
+    dt && !hasDiet ? h('button', {type:'button', class:'chip', onclick:()=>{ const it = addItemByName(dt); it._open = false; renderRx(); update(); }}, '+ ' + dt) : ''));
+}
 /* Інтерфейс листа призначень */
 function rxPanel(){
   const wrap = h('div', {});
@@ -72,11 +98,20 @@ function rxPanel(){
     h('datalist', {id:'drugList'}, ...Object.values(rxLib()).map(d=>h('option', {value:d.n}))),
     h('datalist', {id:'routeList'}, ...ROUTES.map(r=>h('option', {value:r}))),
     h('datalist', {id:'freqList'}, ...FREQS.map(r=>h('option', {value:r}))),
+    h('div', {class:'rxstrip', id:'rxStrip', hidden:''}),
     h('div', {class:'pt rxvarbox', hidden:''}),
     h('div', {id:'rxWarn'}),
+    h('datalist', {id:'rxAddList'}),
+    h('div', {class:'rxadd'}, (()=>{ const a = h('input', {id:'rxAdd', list:'rxAddList', placeholder:'+ Додати препарат, процедуру або дієту…', 'aria-label':'Додати призначення', autocomplete:'off'});
+        const go = () => { const v = a.value.trim(); if (!v) return; addItemByName(v); a.value = ''; renderRx(); update(); };
+        a.addEventListener('input', e=>{ if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && document.querySelector(`#rxAddList option[value="${CSS.escape(a.value)}"]`)) go(); });
+        a.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+        return a; })(),
+      h('button', {type:'button', class:'btn', onclick:()=>{ const a = $('#rxAdd'); if (a.value.trim()){ addItemByName(a.value); a.value = ''; } else { const it = addRx({}); it._open = true; } renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '＋ Додати')),
+    h('div', {id:'rxSuggest'}),
     h('div', {id:'rxList', class:'rxlist'}),
     h('div', {class:'acts2', style:'margin-top:10px'},
-      h('button', {type:'button', class:'btn primary', onclick:()=>{ addRx({}); renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Додати препарат'),
+      h('button', {type:'button', class:'btn', onclick:()=>{ const it = addRx({}); it._open = true; renderRx(); update(); const ins = $('#rxList').querySelectorAll('.rx-drug'); if (ins.length) ins[ins.length-1].focus(); }}, '+ Порожній рядок'),
       h('button', {type:'button', class:'btn', id:'rxScheme', hidden:'', onclick:addScheme}, '+ Схема для обраної хвороби'),
       h('button', {type:'button', class:'btn', title:'Таблиця для медсестри, як паперовий бланк: дні, рядки «Лікар / Сестра»', onclick:f0034Preview}, '🖨 Листок призначень (ф. 003-4/о)')),
     h('div', {class:'pt', id:'rxInfo'}),
@@ -117,32 +152,53 @@ function renderRx(){
   const RW = rxWarnings(), rw = $('#rxWarn'); rw.innerHTML = '';
   if (RW.length) rw.append(h('div', {class:'warnbox rxw'}, h('b', {}, 'Перевірте поєднання та алергію'), h('ul', {}, ...RW.map(w=>h('li', {class:w.c}, w.t)))));
   if (p && p.tips) info.append(h('details', {class:'fold'}, h('summary', {}, 'Підказки: ' + p.name), h('div', {class:'tips'}, h('ul', {}, ...p.tips.map(t=>h('li', {}, t))))));
+  renderRxStrip(); renderRxSuggest();
   list.innerHTML = '';
-  if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Додайте препарат або схему для обраної хвороби.')); return; }
+  if (!RX.length){ list.append(h('p', {class:'chips-hint'}, 'Призначень ще немає. Оберіть схему вище, наберіть назву в полі «+ Додати…» або візьміть набір за спеціальністю внизу.')); return; }
+  const today = todayISO();
   RX.forEach(it=>{
-    const set = (key, ev) => e => { it[key] = e.target.value; if (key === 'start' && isAB(it) && !it.revTouched) it.rev = addDays(it.start, 2); if (key === 'rev') it.revTouched = true; if (ev) renderRx(); update(); };
+    const kind = rxKind(it), isDrug = kind === 'drug', simple = kind === 'reg' || kind === 'diet';
+    const set = (key, ev) => e => { it[key] = e.target.value; if (key === 'start' && isAB(it) && !it.revTouched) it.rev = addDays(it.start, 2); if (key === 'rev') it.revTouched = true; if (ev) renderRx(); update(); renderRxStrip(); };
     const inp = (key, attrs, label, ev, cls) => h('div', {class:'f' + (cls ? ' ' + cls : '')}, h('label', {}, label), h('input', Object.assign({value:it[key] || '', oninput:set(key, false), onchange:ev ? set(key, true) : null}, attrs)));
-    const pickDrug = v => { it.drug = v; it.lastPick = v; const ok = drugDefaults(it, v); renderRx(); update();
-      if (ok){ const c = [...document.querySelectorAll('#rxList .rx')][RX.indexOf(it)]; const di = c && c.querySelector('.rx-dose'); if (di) di.focus(); toast('Підставлено стандартну дозу — змініть за потреби', 2000); } };
-    const drug = h('input', {class:'rx-drug', list:'drugList', value:it.drug, placeholder:'Почніть вводити назву',
-      oninput:e=>{ it.drug = e.target.value; if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && libInfo(e.target.value)) pickDrug(e.target.value); else update(); },
+    const pickDrug = v => { it.drug = v; it.lastPick = v; const p = PROC_MAP[String(v).trim().toLowerCase()];
+      if (p){ it.kind = p[1]; if (!it.freq) it.freq = p[2]; if (!it.note) it.note = p[3]; it.dose = ''; it.route = ''; renderRx(); update(); return; }
+      if (DIETS.includes(String(v).trim())){ it.kind = 'diet'; renderRx(); update(); return; }
+      const ok = drugDefaults(it, v); renderRx(); update();
+      if (ok){ const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); toast('Підставлено стандартну дозу — змініть за потреби', 2000); } };
+    const drug = h('input', {class:'rx-drug', list:'rxAddList', value:it.drug, placeholder:'Почніть вводити назву',
+      oninput:e=>{ it.drug = e.target.value; if ((e.inputType === 'insertReplacementText' || e.inputType === undefined) && (libInfo(e.target.value) || PROC_MAP[e.target.value.trim().toLowerCase()])) pickDrug(e.target.value); else { update(); renderRxStrip(); } },
       onchange:e=>{ if (e.target.value !== it.lastPick){ it.lastPick = e.target.value; pickDrug(e.target.value); } }});
     const rm = h('button', {type:'button', class:'more'}, 'Видалити');
     rm.addEventListener('click', ()=>{ if (!rm.dataset.arm){ rm.dataset.arm = '1'; rm.textContent = 'Точно?'; setTimeout(()=>{ delete rm.dataset.arm; rm.textContent = 'Видалити'; }, 3000); return; } RX = RX.filter(x=>x !== it); renderRx(); update(); });
-    const stop = h('button', {type:'button', class:'more', onclick:()=>{ it.stop = it.stop ? '' : todayISO(); renderRx(); update(); }}, it.stop ? 'Відновити' : 'Відмінити з ' + fmtS(todayISO()));
+    const stop = h('button', {type:'button', class:'btn', onclick:()=>{ it.stop = it.stop ? '' : today; it._open = false; renderRx(); update(); toast(it.stop ? 'Відмінено з ' + fmtS(today) : 'Відновлено', 1600); }}, it.stop ? 'Відновити' : 'Відмінити з ' + fmtS(today));
+    const chg = isDrug && !it.stop ? h('button', {type:'button', class:'btn', title:'Стара доза закривається сьогоднішньою датою, нова починається з сьогодні', onclick:()=>{ const n = rxChangeDose(it); renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${n.id}"] .rx-dose`); if (c){ c.focus(); c.select(); } toast('Нова доза — з ' + fmtS(today) + '. Вкажіть її', 2500); }}, 'Змінити дозу з ' + fmtS(today)) : '';
     const d = drugInfo(it.drug), warn = renalMsg(it), L = libInfo(it.drug);
-    const card = h('div', {class:'rx' + (it.stop ? ' off' : '')},
+    // одиниці дози: кнопка замінює одиницю після числа
+    const units = isDrug ? h('div', {class:'units'}, ...['мг','г','мл','%','ОД','мкг','крап.'].map(u=>h('button', {type:'button', class:'chip s', onclick:()=>{ const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }}, u))) : '';
+    const srcSel = h('select', {onchange:set('src', false)}, ...Object.entries(SRC_L).map(([k,l])=>h('option', {value:k}, l))); srcSel.value = it.src || '';
+    const kindSel = h('select', {onchange:e=>{ it.kind = e.target.value; renderRx(); update(); }}, ...Object.entries(RXKINDS).map(([k,l])=>h('option', {value:k}, l))); kindSel.value = kind;
+    const end = rxEnd(it), status = it.stop ? 'відмінено ' + fmtS(it.stop) : end ? 'до ' + fmtS(end) : '';
+    const sum = h('button', {type:'button', class:'rxsum', 'aria-expanded':it._open ? 'true' : 'false', onclick:()=>{ it._open = !it._open; renderRx(); }},
+      h('span', {class:'rxk', title:RXKINDS[kind]}, RXK_ICON[kind]),
+      h('span', {class:'rxt'}, h('b', {}, it.drug || 'Новий рядок'), [it.dose, it.route, it.freq].filter(Boolean).length ? ' ' + [it.dose, it.route, it.freq].filter(Boolean).join(' ') : '', it.hours ? ' · о ' + it.hours : ''),
+      h('span', {class:'rxm'}, it.days ? it.days + ' дн. · ' : '', 'з ' + fmtS(it.start), status ? ' · ' + status : '', it.src ? h('span', {class:'badge'}, it.src === 'pat' ? SRCAB.pat : SRCAB.dep) : '', warn ? h('span', {class:'badge bad', title:warn}, 'нирки') : ''),
+      h('span', {class:'rxdd', 'aria-hidden':'true'}, it._open ? '▴' : '▾'));
+    const body = h('div', {class:'rxbody', hidden:it._open ? null : ''},
       h('div', {class:'rx-g'},
-        h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, 'Препарат'), drug),
-        inp('dose', {placeholder:'доза', class:'rx-dose', list:'dl_d_' + it.id}, 'Доза'),
-        inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
-        inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
+        h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, isDrug ? 'Препарат' : RXKINDS[kind]), drug),
+        simple ? '' : h('div', {class:'f'}, h('label', {}, 'Доза'), h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)})),
+        simple || !isDrug ? '' : inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
+        simple ? '' : inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
+        simple ? '' : inp('hours', {placeholder:'напр., 8:00, 20:00'}, 'Години (необов’язково)'),
         h('datalist', {id:'dl_d_' + it.id}, ...(L ? L.doses : []).map(v=>h('option', {value:v}))),
         h('datalist', {id:'dl_r_' + it.id}, ...(L ? [...L.routes, ...ROUTES.filter(r=>!L.routes.includes(r))] : []).map(v=>h('option', {value:v}))),
         h('datalist', {id:'dl_f_' + it.id}, ...(L ? [...L.freqs, ...FREQS.filter(r=>!L.freqs.includes(r))] : []).map(v=>h('option', {value:v}))),
         inp('start', {type:'date'}, 'З дати', true, 'rx-w'),
         inp('days', {type:'number', min:'0', inputmode:'numeric', placeholder:'—'}, 'Днів', true),
+        isDrug ? h('div', {class:'f'}, h('label', {}, 'Звідки'), srcSel) : '',
+        h('div', {class:'f'}, h('label', {}, 'Тип'), kindSel),
         h('div', {class:'f rx-w4'}, h('label', {}, 'Примітка'), h('input', {value:it.note || '', oninput:set('note', false), placeholder:'напр., після їди'}))),
+      units,
       warn ? h('p', {class:'rx-warn'}, '⚠ ' + warn) : '',
       d && d.ab ? h('div', {class:'rx-ab'},
         h('span', {class:'badge ' + (d.ab === 'A' ? 'ok' : d.ab === 'W' ? 'warn' : 'bad')}, 'AWaRe: ' + AWARE[d.ab]),
@@ -150,8 +206,8 @@ function renderRx(){
           h('div', {class:'f rx-w3'}, h('label', {}, 'Показання (діагноз або підозра)'), h('input', {value:it.ind || '', placeholder:val(F('dx.osn'), true) || 'напр., негоспітальна пневмонія', oninput:set('ind', false)})),
           h('div', {class:'f rx-w'}, h('label', {}, 'Бакпосів до початку'), (()=>{ const s = h('select', {onchange:set('cult', false)}, h('option', {value:''}, '— не вказано —'), ...['взято','не взято','не показаний'].map(o=>h('option', {}, o))); s.value = it.cult || ''; return s; })()),
           (()=>{ const x = inp('rev', {type:'date'}, 'Перегляд (48–72 год)'); x.classList.add('rx-w'); return x; })())) : '',
-      h('div', {class:'acts2'}, stop, rm, rxEnd(it) ? h('span', {class:'chips-hint'}, 'до ' + fmtD(rxEnd(it))) : ''));
-    list.append(card);
+      h('div', {class:'acts2'}, chg, stop, rm));
+    list.append(h('div', {class:'rx rxc' + (it.stop ? ' off' : '') + (it._open ? ' open' : ''), 'data-id':String(it.id), 'data-kind':kind}, sum, body));
   });
 }
 

@@ -93,6 +93,7 @@ TABS.forEach((s,i)=>{
     if (s.id === 'd_lik' || s.id === 'e_obs') grid.append(h('div', {class:'f wide'}, resBlock()));
     if (s.id === 'ctrl') grid.prepend(h('div', {class:'f wide'}, ctrlBlock()));
     if (s.id === 'scr') grid.prepend(h('div', {class:'f wide'}, scrBlock()));
+    if (s.id === 'dx') grid.append(h('div', {class:'f wide'}, planDBlock()));
     if (s.id === 'dx'){ grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt', id:'dxb', hidden:''}))); grid.append(h('div', {class:'f wide'}, h('div', {class:'pt dxhbox', id:'dxh'}))); }
     if (s.id === 'e_per') grid.prepend(h('div', {class:'f wide'}, h('div', {class:'pt'}, h('h3', {}, 'Виписка за хвилину', h('span', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:epiAuto}, 'Зібрати виписку'))),
       h('p', {class:'chips-hint'}, 'Заповнить порожні поля: дати, анамнез, динаміку й стан при виписці (з останнього щоденника), результати обстежень (з журналу), лікування (з листа призначень) і рекомендації — що продовжити приймати та поради за хворобою. Заповнене вами не змінюється.'))));

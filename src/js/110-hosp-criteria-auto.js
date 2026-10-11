@@ -299,7 +299,7 @@ function update(){
   { const of = F('e_obs.obs'); if (of && of.planHint){ const n = F('dx.plan').chips.filter(c=>c.getAttribute('aria-pressed')==='true').length;
     of.planHint.textContent = n ? `За планом первинного огляду відмічено обстежень: ${n}. Кнопка «шаблони за планом» вставить їх усі.` : 'У первинному огляді план обстеження не заповнено. Додайте шаблони окремих обстежень нижче або перейдіть до плану.'; } }
   runCalcs();
-  applyAuto(); renderDHints(); renderRemain(); renderCtrl(); renderScr(); renderQV(); elnDefaults();
+  applyAuto(); renderDHints(); renderRemain(); renderCtrl(); renderScr(); renderPlanD(); renderQV(); try{ renderLive(); renderOrderMarks(); }catch(e){} elnDefaults();
   if (dxPanel.key !== curKey) dxPanel();
   renderDxHints();
   const r = generate();
@@ -349,6 +349,7 @@ function clearAll(forRestore){
   document.querySelectorAll('.pt input, .calc input, .calc select').forEach(x=>{ if (x.type === 'checkbox') x.checked = false; else x.value = ''; });
   sex = ''; document.querySelectorAll('#sexSeg button').forEach(x=>x.setAttribute('aria-pressed','false')); refreshLabels();
   CACHE = {};
+  { const pd = document.getElementById('dx_pland'); if (pd) pd.value = '{}'; }
   if (!forRestore){ DIARIES = []; RX = []; RES = []; renderRx(); renderRes(); renderHvTips(); }
   dirty = false; $('#banner').hidden = true;
   if (!forRestore) update();

@@ -1,5 +1,6 @@
 /* ===== Очищення ===== */
 function clearSection(sc){
+  if (sc && sc.id === 'dx'){ const pd = document.getElementById('dx_pland'); if (pd) pd.value = '{}'; }
   sc.fields.forEach(f=>{
     if (f.type === 'sel'){ f.el.value = f.def !== undefined ? f.def : ''; mark(f.el, f); f.autoSet = false; }
     else if (f.type === 'multi'){ f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; delete c.dataset.tpl; }); detReset(f); refreshChips(f); }
