@@ -68,6 +68,7 @@
   "591-view.js",
   "592-profiles.js",
   "593-renal.js",
-  "594-qr-timer.js"
+  "594-qr-timer.js",
+  "595-ai.js"
  ]
 }

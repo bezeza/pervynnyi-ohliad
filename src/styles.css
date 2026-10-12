@@ -614,3 +614,6 @@ body:has(#outBox.open) .livebar{display:none!important}
 .tmbox{display:flex;flex-wrap:wrap;gap:4px;align-items:baseline;margin:6px 0 10px;font-size:13px}
 .tmbox .more{margin-left:6px}
 .tmt{border-collapse:collapse;width:100%;font-size:14px}.tmt th,.tmt td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line)}.tmt th{color:var(--muted);font-weight:500}
+.aidlg .nvbox{max-width:860px}.aidlg textarea{width:100%;font:13px/1.45 var(--f-ui)}.aidlg .aiprev{font:12.5px/1.45 var(--f-num);min-height:260px}
+.aiwarn{background:var(--flag-soft);border-left:3px solid var(--flag);padding:8px 10px;border-radius:0 6px 6px 0;font-size:13px;margin:8px 0}.aiwarn[hidden]{display:none}
+.aidlg .aireq{margin:8px 0}.aidlg .chips{margin-bottom:6px}
