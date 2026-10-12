@@ -498,16 +498,15 @@ details.setsec>:nth-child(2){margin-top:12px}
 .abbr input{flex:1 1 auto;min-width:0}
 .abbr.add input:first-child{flex:0 0 90px}
 body:has(#outBox.open) .livebar{display:none!important}
-@media (min-width:1440px){
-  body.sidepanel .wrap{max-width:1680px;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
-  body.sidepanel .form{display:grid;grid-template-columns:178px minmax(0,1fr);align-items:start}
-  body.sidepanel .form>*{grid-column:2}
-  body.sidepanel .form>#tabs{grid-column:1;grid-row:1 / span 6;flex-direction:column;flex-wrap:nowrap;border-bottom:0;border-right:1px solid var(--line);position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto;padding:6px 0}
-  body.sidepanel .tgrp{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
-  body.sidepanel .tgrp+.tgrp{border-left:0;border-top:1px solid var(--line);margin-top:4px;padding-top:4px}
-  body.sidepanel .tgl{padding:6px 14px 2px}
-  body.sidepanel .tab{text-align:left;border-bottom:0;border-left:3px solid transparent;padding:7px 12px}
-  body.sidepanel .tab[aria-selected="true"]{border-left-color:var(--accent);background:var(--accent-soft)}
+@media (min-width:900px){
+  body.lay-B .form{display:grid;grid-template-columns:178px minmax(0,1fr);grid-template-rows:auto auto auto auto 1fr;align-items:start}
+  body.lay-B .form>*{grid-column:2}
+  body.lay-B .form>#tabs{grid-column:1;grid-row:1 / span 5;flex-direction:column;flex-wrap:nowrap;border-bottom:0;border-right:1px solid var(--line);position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto;padding:6px 0}
+  body.lay-B .tgrp{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
+  body.lay-B .tgrp+.tgrp{border-left:0;border-top:1px solid var(--line);margin-top:4px;padding-top:4px}
+  body.lay-B .tgl{padding:6px 14px 2px}
+  body.lay-B .tab{text-align:left;border-bottom:0;border-left:3px solid transparent;padding:7px 12px}
+  body.lay-B .tab[aria-selected="true"]{border-left-color:var(--accent);background:var(--accent-soft)}
 }
 @media print{
   #print .memo{font:10.5pt/1.4 "Times New Roman",Times,serif}
@@ -519,6 +518,76 @@ body:has(#outBox.open) .livebar{display:none!important}
 }
 @media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.qhelp{min-width:34px;height:34px}}
 @media (min-width:900px) and (max-width:1365px){#subT{display:none}}
+
+/* ===== Вигляд (0.9.2): екран, розташування, межа, згортання тексту ===== */
+.vgrip{display:none}
+.ofold,.ofbtn{display:none}
+@media (min-width:900px){
+  .wrap{grid-template-columns:minmax(0,var(--sf,1.25fr)) 16px minmax(0,1fr);column-gap:0}
+  .vgrip{display:block;align-self:stretch;cursor:col-resize;position:relative;touch-action:none;outline:none}
+  .vgrip::after{content:'';position:absolute;top:0;bottom:0;left:7px;width:2px;border-radius:2px;background:transparent;transition:background .15s}
+  .vgrip:hover::after,.vgrip:focus-visible::after,body.resizing .vgrip::after{background:var(--accent)}
+  body.resizing{cursor:col-resize;user-select:none}
+  .ofbtn{display:inline-flex}
+  body.lay-B .wrap,body.lay-B .top{max-width:1680px}
+  body.lay-C .wrap{grid-template-columns:minmax(0,1fr) 16px minmax(0,var(--sf,1.25fr))}
+  body.lay-C .out{order:1}body.lay-C .vgrip{order:2}body.lay-C .form{order:3}
+  body.outfold .wrap{grid-template-columns:minmax(0,1fr) 16px 46px}
+  body.lay-C.outfold .wrap{grid-template-columns:46px 16px minmax(0,1fr)}
+  body.outfold .vgrip{cursor:default;pointer-events:none}
+  body.outfold .out{padding:0;overflow:hidden}
+  body.outfold .out>:not(.ofold){display:none!important}
+  body.outfold .ofold{display:flex;align-items:center;justify-content:center;width:100%;min-height:calc(100vh - 32px);border:0;background:none;color:var(--accent);cursor:pointer;font:600 14px var(--f-head);padding:12px 0}
+  body.outfold .ofold span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+  body.outfold .ofold:hover{background:var(--accent-soft)}
+  /* Г · один стовпчик: текст — панеллю справа поверх форми, стрічка знизу */
+  body.lay-D .wrap{max-width:1100px}
+  body.lay-D .wrap{grid-template-columns:minmax(0,1fr)}
+  body.lay-D .vgrip,body.lay-D .ofbtn{display:none}
+  body.lay-D .out{position:fixed;top:0;right:0;bottom:0;width:min(760px,94vw);max-height:none;z-index:30;border-radius:0;border-width:0 0 0 1px;box-shadow:-10px 0 30px rgba(0,0,0,.15);transform:translateX(100%);visibility:hidden;transition:transform .22s,visibility .22s}
+  body.lay-D .out.open{transform:none;visibility:visible}
+  body.lay-D .out .mob{display:inline-flex}
+  body.lay-D.live-on .livebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;gap:12px;align-items:flex-end;padding:10px max(16px,calc((100vw - 1100px)/2));background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);cursor:pointer}
+  body.lay-D .livebar .lv-t{flex:1 1 auto;font-size:14px;line-height:1.4;max-height:2.9em;overflow:hidden;color:var(--ink)}
+  body.lay-D .livebar .lv-o{flex:0 0 auto;font-size:13px;color:var(--accent);white-space:nowrap}
+  body.lay-D.live-on .wrap{padding-bottom:70px}
+  /* ноутбук — компактно */
+  .scr-laptop .top{margin-bottom:8px;gap:8px 10px}
+  .scr-laptop .top h1{font-size:19px}.scr-laptop #subT{display:none}.scr-laptop .brand .logo{width:32px;height:32px}
+  .scr-laptop .top .btn{padding:6px 11px}
+  .scr-laptop .panel{padding:12px 14px}
+  .scr-laptop .tab{padding:8px 9px 7px}
+  .scr-laptop body.lay-B .tab{padding:6px 12px}
+  .scr-laptop #out{font-size:14.5px}
+  .scr-laptop #viewBtn .vbt{display:none}
+  /* монітор — просторо */
+  .scr-monitor .wrap,.scr-monitor .top{max-width:1840px}
+  .scr-monitor body.lay-D .wrap{max-width:1200px}
+  .scr-monitor .panel{padding:18px 22px}
+  .scr-monitor #out{font-size:16.5px;line-height:1.6}
+}
+.viewpop{position:fixed;z-index:45;width:min(440px,calc(100vw - 16px));max-height:calc(100vh - 80px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:12px 14px}
+.viewpop[hidden]{display:none}
+.vph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.vph b{font:600 16px var(--f-head)}
+.vctl{display:flex;flex-direction:column;gap:10px}
+.vrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.vrow.col{flex-direction:column;align-items:stretch}
+.vrow.col .vl{flex:none}
+.vl{flex:0 0 120px;font-size:13px;color:var(--muted);font-weight:500}
+.vseg{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.vseg button{border:0;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;padding:6px 11px;cursor:pointer}
+.vseg button+button,.vseg .vz+button,.vseg button+.vz{border-left:1px solid var(--line)}
+.vseg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.vseg .vz{padding:6px 12px;font:600 13px var(--f-num);min-width:64px;text-align:center}
+.vlays{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}
+.vlays button{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;padding:7px 9px;cursor:pointer}
+.vlays button:hover{border-color:var(--accent)}
+.vlays button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.vlays .vic{grid-row:1 / span 2}.vlays svg{width:36px;height:25px;fill:none;stroke:currentColor;stroke-width:1.4;color:var(--muted)}
+.vlays button[aria-pressed="true"] svg{color:var(--accent)}
+.vlays b{font-size:13.5px;font-weight:600}.vlays small{font-size:11.5px;color:var(--muted);line-height:1.3}
+.vnote{margin:0}
+.viewset{margin-top:10px}
+@media (max-width:899px){#viewBtn{display:none}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2395,8 +2464,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.1', VDATE = '12.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.2', VDATE = '12.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.2', '12.10.2026', 'вигляд під екран (кнопка «Вигляд» у шапці й у Налаштуваннях): режим «Ноутбук» (компактно) / «Монітор» (просторо, ширша робоча область, більший текст) / «Авто» — за шириною екрана; чотири розташування: Класичне, Робоче місце (розділи збоку), Дзеркальне (текст зліва), Один стовпчик (текст — стрічкою знизу й панеллю справа); межу між формою і текстом можна перетягнути мишкою (подвійне клацання — як було); текст документа згортається у вузьку смужку; масштаб — у тому ж меню'],
   ['0.9.1', '12.10.2026', 'зручність (як у Skiagrama): скорочення «.взд» + пробіл → фраза у будь-якому полі й у тексті документа (свої — у Налаштуваннях), пропуски «__» з переходом по Tab, подвійне клацання по «справа / зліва» міняє бік, стрілки по кнопках, Alt+1…9 — розділи; пошук хвороби над картками і вигляд списком; «Word» і «LibreOffice» → одна кнопка «Зберегти ▾»; число зауважень перевірки на «Копіювати» і помаранчеві позначки на розділах, де чогось бракує; щойно змінений фрагмент тексту коротко підсвічується; видалений пацієнт 30 днів у кошику, «Скасувати» одразу після видалення; «?» біля назви розділу; налаштування згорнуті блоками з пошуком; масштаб 90–150 %; розділи бічною панеллю на широкому екрані (за бажанням); пам’ятка на 1 сторінку; на телефоні — текст документа закривається свайпом вниз, стрічка тексту не перекриває документ, кнопки тексту у два ряди'],
   ['0.9', '12.10.2026', 'надійність: пацієнти зберігаються в базі браузера IndexedDB замість localStorage — без ліміту ~5 МБ (перевірено 600 пацієнтів, 24 МБ); наявні пацієнти переносяться автоматично при першому відкритті; шрифти вбудовані у файл — програма більше не звертається до жодних сторонніх серверів'],
   ['0.8', '11.10.2026', 'перенесення пацієнтів між телефоном і комп’ютером: «⇄ Перенесення» (у «Записі» і в списку пацієнтів) — усі / змінені за 7 днів / лише відкритий, разом із шаблонами; файл шифрується паролем (AES-256); «Поділитися…» — Telegram, Viber, пошта або «Зберегти файл»; на іншому пристрої «Прийняти файл» показує, скільки нових і оновлених, і нічого не затирає старішою версією; звичайні файли резервних копій тепер теж приймаються так само — без дублів'],
@@ -6796,7 +6866,7 @@ function liveText(){
   return '';
 }
 function renderLive(){
-  const mob = window.matchMedia && matchMedia('(max-width:899px)').matches, t0 = TABS[active], on = mob && LIVE === 'bar' && !!t0 && (SECTIONS.includes(t0) || t0 === RXT || t0 === HV || t0 === QV);
+  const mob = (window.matchMedia && matchMedia('(max-width:899px)').matches) || document.body.classList.contains('lay-D'), t0 = TABS[active], on = mob && LIVE === 'bar' && !!t0 && (SECTIONS.includes(t0) || t0 === RXT || t0 === HV || t0 === QV);
   document.body.classList.toggle('live-on', on); const tb = $('#toText'); if (tb) tb.hidden = on;
   liveBar.hidden = !on; if (!on) return;
   const txt = liveText(), all = itext($('#out')).trim();
@@ -7211,15 +7281,9 @@ TABS.forEach(t=>{
     z.value = ZOOM; if (z.value !== ZOOM){ z.value = '1'; }
     const lab = z.closest('.f') && z.closest('.f').querySelector('label'); if (lab) lab.textContent = 'Масштаб усієї програми';
     const hd = [...SETTINGS_EL.querySelectorAll('h3.sub')].find(x=>x.textContent.startsWith('Розмір тексту')); if (hd) hd.textContent = 'Масштаб і розташування'; } }
-let SIDEP = lsGet('po.side', '0') === '1';
-const applySide = () => document.body.classList.toggle('sidepanel', SIDEP);
-applySide();
 if (SETTINGS_EL){
   const zb = $('#set_zoom'), grid = zb && zb.closest('.grid');
-  const cb = h('input', {type:'checkbox', id:'set_side'}); cb.checked = SIDEP;
-  cb.addEventListener('change', ()=>{ SIDEP = cb.checked; lsSet('po.side', SIDEP ? '1' : '0'); applySide(); });
-  const row = h('label', {class:'chk', for:'set_side', style:'display:flex;gap:8px;align-items:center;margin-top:8px'}, cb, 'Розділи — бічною панеллю зліва (лише на широкому екрані, від 1440 px)');
-  if (grid) grid.after(row); else SETTINGS_EL.append(row);
+  const vs = h('div', {class:'viewset', id:'viewSet'}); if (grid) grid.after(vs); else SETTINGS_EL.append(vs);
   // мої скорочення
   const ab = h('div', {class:'abbrlist'});
   const k0 = h('input', {placeholder:'кт', 'aria-label':'Скорочення', style:'max-width:110px'}), v0 = h('input', {placeholder:'Фраза; «__» — місце для значення, перехід по Tab', 'aria-label':'Фраза'});
@@ -7274,6 +7338,96 @@ function memoPrint(){
 { const hp = HELP.panel && HELP.panel.querySelector('.ph');
   if (hp){ const b = h('button', {type:'button', class:'btn sm', onclick:memoPrint, title:'Надрукувати пам’ятку для себе чи колег'}, 'Пам’ятка на 1 сторінку'); const m = hp.querySelector('.qhelp') || hp.querySelector('h2'); if (m) m.after(b); else hp.append(b); } }
 { const si0 = searchItems; searchItems = function(){ const L = si0(); L.push({k:'Дія', t:'Пам’ятка на 1 сторінку (друк)', s:'', go:memoPrint}, {k:'Дія', t:'Кошик пацієнтів', s:'', go:trashDialog}, {k:'Дія', t:'Мої скорочення', s:'', go:()=>{ show(TABS.indexOf(SET)); const d = [...document.querySelectorAll('details.setsec')].find(x=>x.querySelector('summary').textContent === 'Мої скорочення'); if (d){ d.open = true; d.scrollIntoView({block:'start'}); } }}); return L; }; }
+/* ===== Вигляд (0.9.2): режим екрана (ноутбук / монітор), розташування А–Г, межа форма | текст, згортання тексту ===== */
+const VIEW = Object.assign({screen:'auto', layout:'auto', split:null, fold:false}, (()=>{ try{ return JSON.parse(lsGet('po.view', '{}')) || {}; }catch(e){ return {}; } })());
+if (lsGet('po.side', '0') === '1' && !lsGet('po.view', '')) VIEW.layout = 'B';   // 0.9.1: «бічна панель» → «Робоче місце»
+const saveView = () => lsSet('po.view', JSON.stringify(VIEW));
+const LAYS = {A:'Класичне', B:'Робоче місце', C:'Дзеркальне', D:'Один стовпчик'};
+const LAY_HINT = {A:'вкладки згори, форма зліва, текст справа', B:'розділи збоку, форма посередині, текст справа', C:'текст зліва, форма справа', D:'форма на всю ширину, текст — стрічкою знизу і панеллю збоку'};
+const LAY_ICON = {
+  A:'<rect x="1" y="1" width="30" height="20" rx="2"/><path d="M3 4h14M3 7h14"/><rect x="19" y="4" width="10" height="15" rx="1"/>',
+  B:'<rect x="1" y="1" width="30" height="20" rx="2"/><path d="M3 4v15M7 4h9M7 7h9"/><rect x="19" y="4" width="10" height="15" rx="1"/>',
+  C:'<rect x="1" y="1" width="30" height="20" rx="2"/><rect x="3" y="4" width="10" height="15" rx="1"/><path d="M15 4h14M15 7h14"/>',
+  D:'<rect x="1" y="1" width="30" height="20" rx="2"/><path d="M5 4h22M5 7h22M5 10h22"/><rect x="3" y="15" width="26" height="4" rx="1"/>'};
+const isPhoneW = () => window.matchMedia && matchMedia('(max-width:899px)').matches;
+const effW = () => window.innerWidth / (parseFloat(ZOOM) || 1);
+const screenNow = () => VIEW.screen === 'auto' ? (effW() < 1500 ? 'laptop' : 'monitor') : VIEW.screen;
+const layoutNow = () => isPhoneW() ? 'P' : LAYS[VIEW.layout] ? VIEW.layout : (screenNow() === 'monitor' ? 'B' : 'A');
+
+/* межа між формою і текстом */
+const wrapEl = $('main.wrap'), grip = h('div', {class:'vgrip', role:'separator', 'aria-orientation':'vertical', tabindex:'0', title:'Перетягніть, щоб змінити ширину. Подвійне клацання — як було', 'aria-label':'Межа між формою і текстом'});
+$('#outBox').before(grip);
+const foldStrip = h('button', {type:'button', class:'ofold', title:'Показати текст документа', onclick:()=>setFold(false)}, h('span', {}, 'Текст документа ◂'));
+$('#outBox').append(foldStrip);
+{ const oh = $('#outBox .oh .acts'); if (oh) oh.prepend(h('button', {type:'button', class:'btn ofbtn', title:'Згорнути текст документа в смужку — більше місця для форми', 'aria-label':'Згорнути текст', onclick:()=>setFold(true)}, '⇥')); }
+function setFold(v){ VIEW.fold = !!v; saveView(); applyView(); }
+function applySplit(){ wrapEl.style.setProperty('--sf', (VIEW.split || (layoutNow() === 'B' ? 1.4 : 1.25)) + 'fr'); }
+(()=>{ let d = null;
+  grip.addEventListener('pointerdown', e=>{ const L = layoutNow(); if (L === 'P' || L === 'D' || VIEW.fold) return; e.preventDefault(); grip.setPointerCapture(e.pointerId); d = {r:wrapEl.getBoundingClientRect(), mir:L === 'C'}; document.body.classList.add('resizing'); });
+  grip.addEventListener('pointermove', e=>{ if (!d) return; const tot = d.r.width - 16, x = d.mir ? d.r.right - e.clientX : e.clientX - d.r.left; const fw = Math.max(320, Math.min(tot - 300, x - 8));
+    VIEW.split = +(fw / (tot - fw)).toFixed(3); applySplit(); });
+  const end = () => { if (!d) return; d = null; document.body.classList.remove('resizing'); saveView(); };
+  grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end);
+  grip.addEventListener('dblclick', ()=>{ VIEW.split = null; saveView(); applySplit(); toast('Межа — як було'); });
+  grip.addEventListener('keydown', e=>{ if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); const cur = VIEW.split || 1.25, dir = (e.key === 'ArrowRight' ? 1 : -1) * (layoutNow() === 'C' ? -1 : 1);
+    VIEW.split = +Math.max(.5, Math.min(3, cur + dir * .1)).toFixed(2); applySplit(); saveView(); });
+})();
+
+function applyView(){
+  const L = layoutNow(), S = screenNow(), ph = L === 'P', b = document.body, r = document.documentElement;
+  ['A','B','C','D'].forEach(k=>b.classList.toggle('lay-' + k, L === k));
+  r.classList.toggle('scr-laptop', !ph && S === 'laptop'); r.classList.toggle('scr-monitor', !ph && S === 'monitor');
+  b.classList.toggle('outfold', !ph && L !== 'D' && !!VIEW.fold);
+  if (L !== 'D' && !ph) $('#outBox').classList.remove('open');
+  applySplit(); try{ renderLive(); }catch(e){} renderViewCtl();
+}
+/* керування: однаково в меню «Вигляд» і в Налаштуваннях */
+function viewCtl(){
+  const box = h('div', {class:'vctl'});
+  const seg = (name, cur, items, fn) => h('div', {class:'vrow'}, h('span', {class:'vl'}, name), h('div', {class:'vseg', role:'group', 'aria-label':name},
+    ...items.map(([k, l, t])=>h('button', {type:'button', 'aria-pressed':cur === k ? 'true' : 'false', title:t || '', onclick:()=>fn(k)}, l))));
+  const sNow = screenNow();
+  box.append(seg('Екран', VIEW.screen, [['auto', 'Авто', 'Визначається за шириною екрана: до 1500 px — ноутбук'], ['laptop', 'Ноутбук', 'Компактно: менші відступи, шапка в один рядок'], ['monitor', 'Монітор', 'Просторо: ширша робоча область, більший текст документа']],
+    k=>{ VIEW.screen = k; saveView(); applyView(); toast(k === 'auto' ? `Екран визначається сам: зараз ${screenNow() === 'laptop' ? 'ноутбук' : 'монітор'}` : k === 'laptop' ? 'Екран: ноутбук — компактно' : 'Екран: монітор — просторо'); }));
+  if (VIEW.screen === 'auto') box.append(h('p', {class:'chips-hint vnote'}, `Зараз: ${sNow === 'laptop' ? 'ноутбук' : 'монітор'} (${Math.round(effW())} px).`));
+  const lay = h('div', {class:'vlays', role:'group', 'aria-label':'Розташування'});
+  [['auto', 'Авто', 'на ноутбуці — Класичне, на моніторі — Робоче місце']].concat(Object.keys(LAYS).map(k=>[k, LAYS[k], LAY_HINT[k]])).forEach(([k, l, t])=>{
+    const ic = h('span', {class:'vic', 'aria-hidden':'true'}); ic.innerHTML = k === 'auto' ? '<svg viewBox="0 0 32 22"><rect x="1" y="1" width="30" height="20" rx="2"/><path d="M9 15l7-8 7 8"/></svg>' : `<svg viewBox="0 0 32 22">${LAY_ICON[k]}</svg>`;
+    lay.append(h('button', {type:'button', 'aria-pressed':VIEW.layout === k ? 'true' : 'false', title:t, onclick:()=>{ VIEW.layout = k; saveView(); applyView(); toast('Розташування: ' + (k === 'auto' ? 'авто — ' + LAYS[layoutNow()] : LAYS[k])); }}, ic, h('b', {}, l), h('small', {}, t))); });
+  box.append(h('div', {class:'vrow col'}, h('span', {class:'vl'}, 'Розташування'), lay));
+  const zl = h('b', {class:'vz'}, Math.round((parseFloat(ZOOM) || 1) * 100) + ' %');
+  const zs = d => { const L = [0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5]; let i = L.indexOf(parseFloat(ZOOM) || 1); if (i < 0) i = 1; i = Math.max(0, Math.min(L.length - 1, i + d)); ZOOM = String(L[i]);
+    lsSet('po.zoom', ZOOM); applyZoom(); const z = $('#set_zoom'); if (z) z.value = ZOOM; applyView(); };
+  box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Масштаб'), h('div', {class:'vseg'}, h('button', {type:'button', 'aria-label':'Менше', onclick:()=>zs(-1)}, '−'), zl, h('button', {type:'button', 'aria-label':'Більше', onclick:()=>zs(1)}, '+'))));
+  box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Текст документа'), h('div', {class:'vseg'},
+    h('button', {type:'button', 'aria-pressed':VIEW.fold ? 'true' : 'false', onclick:()=>setFold(!VIEW.fold), title:'Згорнути текст у вузьку смужку (не в «Одному стовпчику»)'}, VIEW.fold ? 'Згорнуто' : 'Згорнути'),
+    h('button', {type:'button', onclick:()=>{ VIEW.split = null; saveView(); applySplit(); toast('Межа — як було'); }, title:'Повернути ширину форми й тексту'}, 'Межа — як було'))));
+  box.append(h('p', {class:'chips-hint vnote'}, 'Межу між формою і текстом можна перетягнути мишкою. На телефоні вигляд завжди один.'));
+  return box;
+}
+const viewBtn = h('button', {type:'button', class:'btn', id:'viewBtn', 'aria-haspopup':'dialog', 'aria-expanded':'false', title:'Вигляд: ноутбук / монітор, розташування, масштаб'}, h('span', {'aria-hidden':'true'}, '▦'), h('span', {class:'vbt'}, ' Вигляд'));
+const viewPop = h('div', {class:'viewpop', role:'dialog', 'aria-label':'Вигляд', hidden:''});
+{ const tb = $('#themeBtn'); tb.after(viewBtn); document.body.append(viewPop); }
+function renderViewCtl(){
+  if (!viewPop.hidden){ viewPop.innerHTML = ''; viewPop.append(h('div', {class:'vph'}, h('b', {}, 'Вигляд'), h('button', {type:'button', class:'btn sm', onclick:closeViewPop}, '✕')), viewCtl()); }
+  const vs = $('#viewSet'); if (vs){ vs.innerHTML = ''; vs.append(viewCtl()); }
+}
+function placeViewPop(){ const r = viewBtn.getBoundingClientRect(); viewPop.style.top = Math.round(r.bottom + 6) + 'px'; viewPop.style.right = Math.max(8, Math.round(window.innerWidth - r.right)) + 'px'; }
+function openViewPop(){ viewPop.hidden = false; viewBtn.setAttribute('aria-expanded', 'true'); renderViewCtl(); placeViewPop(); }
+function closeViewPop(){ viewPop.hidden = true; viewBtn.setAttribute('aria-expanded', 'false'); }
+viewBtn.onclick = e => { e.stopPropagation(); viewPop.hidden ? openViewPop() : closeViewPop(); };
+document.addEventListener('click', e=>{ if (!viewPop.hidden && !viewPop.contains(e.target) && e.target !== viewBtn && !viewBtn.contains(e.target)) closeViewPop(); });
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Escape') return;
+  if (!viewPop.hidden){ closeViewPop(); viewBtn.focus(); return; }
+  if (layoutNow() === 'D' && $('#outBox').classList.contains('open')) $('#outBox').classList.remove('open');
+});
+let vT = 0; window.addEventListener('resize', ()=>{ clearTimeout(vT); vT = setTimeout(()=>{ applyView(); if (!viewPop.hidden) placeViewPop(); }, 120); });
+{ const az = applyZoom; applyZoom = function(){ const r = az.apply(this, arguments); try{ applyView(); }catch(e){} return r; }; }
+{ const z = $('#set_zoom'); if (z) z.addEventListener('change', ()=>setTimeout(applyView, 0)); }
+{ const si1 = searchItems; searchItems = function(){ const L = si1(); L.push({k:'Дія', t:'Вигляд: ноутбук / монітор, розташування, масштаб', s:'', go:openViewPop});
+    Object.keys(LAYS).forEach(k=>L.push({k:'Вигляд', t:'Розташування: ' + LAYS[k], s:LAY_HINT[k], go:()=>{ VIEW.layout = k; saveView(); applyView(); }})); return L; }; }
+applyView();
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

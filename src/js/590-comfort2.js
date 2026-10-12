@@ -246,15 +246,9 @@ TABS.forEach(t=>{
     z.value = ZOOM; if (z.value !== ZOOM){ z.value = '1'; }
     const lab = z.closest('.f') && z.closest('.f').querySelector('label'); if (lab) lab.textContent = 'Масштаб усієї програми';
     const hd = [...SETTINGS_EL.querySelectorAll('h3.sub')].find(x=>x.textContent.startsWith('Розмір тексту')); if (hd) hd.textContent = 'Масштаб і розташування'; } }
-let SIDEP = lsGet('po.side', '0') === '1';
-const applySide = () => document.body.classList.toggle('sidepanel', SIDEP);
-applySide();
 if (SETTINGS_EL){
   const zb = $('#set_zoom'), grid = zb && zb.closest('.grid');
-  const cb = h('input', {type:'checkbox', id:'set_side'}); cb.checked = SIDEP;
-  cb.addEventListener('change', ()=>{ SIDEP = cb.checked; lsSet('po.side', SIDEP ? '1' : '0'); applySide(); });
-  const row = h('label', {class:'chk', for:'set_side', style:'display:flex;gap:8px;align-items:center;margin-top:8px'}, cb, 'Розділи — бічною панеллю зліва (лише на широкому екрані, від 1440 px)');
-  if (grid) grid.after(row); else SETTINGS_EL.append(row);
+  const vs = h('div', {class:'viewset', id:'viewSet'}); if (grid) grid.after(vs); else SETTINGS_EL.append(vs);
   // мої скорочення
   const ab = h('div', {class:'abbrlist'});
   const k0 = h('input', {placeholder:'кт', 'aria-label':'Скорочення', style:'max-width:110px'}), v0 = h('input', {placeholder:'Фраза; «__» — місце для значення, перехід по Tab', 'aria-label':'Фраза'});
