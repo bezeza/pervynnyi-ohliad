@@ -617,3 +617,19 @@ body:has(#outBox.open) .livebar{display:none!important}
 .aidlg .nvbox{max-width:860px}.aidlg textarea{width:100%;font:13px/1.45 var(--f-ui)}.aidlg .aiprev{font:12.5px/1.45 var(--f-num);min-height:260px}
 .aiwarn{background:var(--flag-soft);border-left:3px solid var(--flag);padding:8px 10px;border-radius:0 6px 6px 0;font-size:13px;margin:8px 0}.aiwarn[hidden]{display:none}
 .aidlg .aireq{margin:8px 0}.aidlg .chips{margin-bottom:6px}
+/* ===== Рядок пацієнта (0.9.3.2) ===== */
+#ptline{position:sticky;top:0;z-index:12;display:flex;align-items:center;gap:8px;background:var(--accent-soft);border-radius:8px;padding:4px 8px 4px 0;margin:0 0 10px}
+#ptline #ptbar{position:relative;flex:1 1 auto;min-width:0;margin:0;background:none;border:0;border-radius:8px}
+#ptline #sexSeg{flex:0 0 auto}#ptline #sexSeg button{padding:5px 11px;font-size:13.5px}
+#ptline #clearAll{flex:0 0 auto;padding:5px 11px}
+.docbar #allNorm{white-space:nowrap}
+#themeBtn .hide-m{display:none!important}#themeBtn .show-m{display:inline!important}#themeBtn{min-width:38px;padding-left:9px;padding-right:9px}
+@media (max-width:899px){
+  #ptline{top:env(safe-area-inset-top,0px);border-radius:0;margin:-2px -2px 8px;width:calc(100% + 4px);padding:2px 8px 2px 0}
+  #ptline #ptbar{padding:7px 30px 7px 12px}
+  #ptline #clearAll .nwl{display:none}
+  #ptline #sexSeg button{padding:8px 11px}
+  .docbar #allNorm{flex:0 0 auto}
+}
+@media (max-width:1199px) and (min-width:900px){#undoBtn .hide-m{display:none!important}}
+@media (max-width:899px){#ptline .pt-saved{display:none}#ptline #sexSeg button{min-width:40px}}
