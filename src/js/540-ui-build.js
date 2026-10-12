@@ -184,6 +184,7 @@ function openNav(){
     const lab = g.querySelector('.tgl'); if (lab) L.append(h('div', {class:'nsg'}, lab.textContent));
     const grid = h('div', {class:'nsl'});
     g.querySelectorAll('.tab').forEach(t=>{
+      if (t.classList.contains('tfold')){ grid.append(h('button', {type:'button', class:'nsfold', onclick:()=>{ t.click(); openNav(); }}, t.textContent)); return; }
       const i = TABS.findIndex(x=>x.tab === t); if (i < 0 || t.hidden) return;
       grid.append(h('button', {type:'button', 'aria-current': i === active ? 'true' : 'false', onclick:()=>{ closeNav(); show(i); const f = $('.form'); if (f) window.scrollTo({top: f.getBoundingClientRect().top + window.scrollY - 4}); }},
         h('span', {}, TABS[i].short || TABS[i].title), t.classList.contains('filled') ? h('span', {class:'d', 'aria-label':'заповнено'}) : ''));

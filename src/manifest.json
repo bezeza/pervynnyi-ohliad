@@ -63,7 +63,11 @@
   "548-search-keys-zoom.js",
   "549-ergonomics.js",
   "550-transfer.js",
+  "585-lib-qrcode.js",
   "590-comfort2.js",
-  "591-view.js"
+  "591-view.js",
+  "592-profiles.js",
+  "593-renal.js",
+  "594-qr-timer.js"
  ]
 }

@@ -588,6 +588,50 @@ body:has(#outBox.open) .livebar{display:none!important}
 .vnote{margin:0}
 .viewset{margin-top:10px}
 @media (max-width:899px){#viewBtn{display:none}}
+
+/* ===== Профілі (0.9.3) ===== */
+.tab.tfold{font-style:italic;color:var(--muted);font-weight:400}
+.tab.tfold:hover{color:var(--accent)}
+.nsfold{grid-column:1/-1;font-style:italic;color:var(--muted)!important}
+.profbtn{white-space:nowrap}.profbtn .pw{color:var(--muted);font-weight:400}
+.scr-laptop .profbtn .pw{display:none}
+@media (max-width:899px){.profbtn .pl,.profbtn .pw{display:none}.top .profbtn{flex:0 0 auto!important;order:1;padding:6px 10px}}
+.profdlg .pbox{max-width:1120px;width:calc(100vw - 32px);display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:0;padding:0;overflow:hidden}
+.profdlg .pmain{padding:22px 26px;overflow:auto;max-height:calc(100vh - 60px)}
+.profdlg h3{font:600 21px var(--f-head);margin:0 0 4px}
+.pstep{font:600 12px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pwork{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pcard{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.pcard:hover{border-color:var(--accent)}
+.pcard b{font:600 15px var(--f-head)}.pcard span{font-size:12px;color:var(--muted);line-height:1.3}
+.pcard .pic{font-size:20px;line-height:1;margin-bottom:4px;color:inherit}
+.pcard .ptag{font-size:10.5px;font-weight:500;color:var(--flag);background:var(--flag-soft);border-radius:4px;padding:0 5px;margin-top:3px}
+.pcard[aria-pressed="true"]{border:2px solid var(--accent);background:var(--accent-soft);padding:10px 11px}
+.pcard[aria-pressed="true"] b{color:var(--accent)}
+.pcard[aria-pressed="true"]::after{content:'✓';position:absolute;top:8px;right:10px;color:var(--on-accent);background:var(--accent);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.pfoot{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}
+.pprev{background:var(--bg);border-left:1px solid var(--line);padding:22px 20px;overflow:auto;max-height:calc(100vh - 60px)}
+.pprev h4{font:600 15px var(--f-head);margin:0 0 8px}
+.pprev .pk{font:600 11.5px var(--f-ui);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 4px}
+.pprev ul{list-style:none;margin:0;padding:0}.pprev li{display:flex;gap:8px;padding:2px 0;font-size:13.5px;line-height:1.4}
+.pm{flex:0 0 14px;font-weight:600}.pm.y{color:var(--ok)}.pm.f{color:var(--accent)}.pm.n{color:var(--muted)}
+.pnote{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;margin:14px 0 0}
+@media (max-width:899px){
+  .profdlg .pbox{grid-template-columns:minmax(0,1fr);width:100%;max-height:none}
+  .profdlg .pmain{padding:16px;max-height:none}
+  .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pwork{grid-template-columns:minmax(0,1fr)}
+  .pprev{border-left:0;border-top:1px solid var(--line);max-height:none}
+}
+.profdlg .pmain{background:var(--surface)}
+.rxs-renal{color:var(--bad);font-weight:500}
+.prqr{display:flex;gap:12px;align-items:center;margin-top:8mm;break-inside:avoid;page-break-inside:avoid}
+.prqr-c{flex:0 0 auto}.prqr-c svg{width:100%;height:100%;display:block}
+.prqr-t{display:flex;flex-direction:column;gap:2px;font-size:10pt;line-height:1.35;max-width:90mm}
+.paper .prqr-c{background:#fff}
+.tmbox{display:flex;flex-wrap:wrap;gap:4px;align-items:baseline;margin:6px 0 10px;font-size:13px}
+.tmbox .more{margin-left:6px}
+.tmt{border-collapse:collapse;width:100%;font-size:14px}.tmt th,.tmt td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line)}.tmt th{color:var(--muted);font-weight:500}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2464,8 +2508,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.2', VDATE = '12.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3', VDATE = '12.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3', '12.10.2026', 'профілі: спеціальність (терапевт, хірург, травматолог, невролог, інфекціоніст, сімейний, пульмонолог, анестезіолог) і місце роботи (стаціонар / поліклініка / обидва) — свої хвороби першими, свої системи розгорнуті, решта — рядком «Інші системи · б/о», свої документи на видному місці; кнопка профілю в шапці; нирки: корекція доз і без ваги — за ШКФ, ще 17 препаратів, підсумок у стрічці «Призначено», нагадування, якщо немає креатиніну; QR-код на пам’ятці, виписці й консультації — пацієнт забирає текст у телефон без інтернету; секундомір: активний час на документ і медіана за тиждень (для пілоту — збереження у файл); Ctrl+Y — повторити скасовану дію'],
   ['0.9.2', '12.10.2026', 'вигляд під екран (кнопка «Вигляд» у шапці й у Налаштуваннях): режим «Ноутбук» (компактно) / «Монітор» (просторо, ширша робоча область, більший текст) / «Авто» — за шириною екрана; чотири розташування: Класичне, Робоче місце (розділи збоку), Дзеркальне (текст зліва), Один стовпчик (текст — стрічкою знизу й панеллю справа); межу між формою і текстом можна перетягнути мишкою (подвійне клацання — як було); текст документа згортається у вузьку смужку; масштаб — у тому ж меню'],
   ['0.9.1', '12.10.2026', 'зручність (як у Skiagrama): скорочення «.взд» + пробіл → фраза у будь-якому полі й у тексті документа (свої — у Налаштуваннях), пропуски «__» з переходом по Tab, подвійне клацання по «справа / зліва» міняє бік, стрілки по кнопках, Alt+1…9 — розділи; пошук хвороби над картками і вигляд списком; «Word» і «LibreOffice» → одна кнопка «Зберегти ▾»; число зауважень перевірки на «Копіювати» і помаранчеві позначки на розділах, де чогось бракує; щойно змінений фрагмент тексту коротко підсвічується; видалений пацієнт 30 днів у кошику, «Скасувати» одразу після видалення; «?» біля назви розділу; налаштування згорнуті блоками з пошуком; масштаб 90–150 %; розділи бічною панеллю на широкому екрані (за бажанням); пам’ятка на 1 сторінку; на телефоні — текст документа закривається свайпом вниз, стрічка тексту не перекриває документ, кнопки тексту у два ряди'],
   ['0.9', '12.10.2026', 'надійність: пацієнти зберігаються в базі браузера IndexedDB замість localStorage — без ліміту ~5 МБ (перевірено 600 пацієнтів, 24 МБ); наявні пацієнти переносяться автоматично при першому відкритті; шрифти вбудовані у файл — програма більше не звертається до жодних сторонніх серверів'],
@@ -6592,6 +6637,7 @@ function openNav(){
     const lab = g.querySelector('.tgl'); if (lab) L.append(h('div', {class:'nsg'}, lab.textContent));
     const grid = h('div', {class:'nsl'});
     g.querySelectorAll('.tab').forEach(t=>{
+      if (t.classList.contains('tfold')){ grid.append(h('button', {type:'button', class:'nsfold', onclick:()=>{ t.click(); openNav(); }}, t.textContent)); return; }
       const i = TABS.findIndex(x=>x.tab === t); if (i < 0 || t.hidden) return;
       grid.append(h('button', {type:'button', 'aria-current': i === active ? 'true' : 'false', onclick:()=>{ closeNav(); show(i); const f = $('.form'); if (f) window.scrollTo({top: f.getBoundingClientRect().top + window.scrollY - 4}); }},
         h('span', {}, TABS[i].short || TABS[i].title), t.classList.contains('filled') ? h('span', {class:'d', 'aria-label':'заповнено'}) : ''));
@@ -6698,8 +6744,10 @@ setTimeout(()=>{ const b = backupInfo(); if (b.due) toast(`Нагадуванн�
 let lastPID; setInterval(()=>{ if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
 /* ===== Скасування дій: ↶ і Ctrl+Z (до 10 кроків) =====
    Перед діями, що переписують багато полів (вибір хвороби, «Норма», очищення, заміна схеми), зберігається знімок форми. */
-const UNDO = [], UNDO_MAX = 10; let UNDO_DEPTH = 0;
+const UNDO = [], UNDO_MAX = 10, REDO = []; let UNDO_DEPTH = 0;
+const undoSnap = label => ({label, s:JSON.parse(JSON.stringify(snap())), rxAuto:RX_AUTO, rxVar:RX_VAR, pid:PID});
 function undoPush(label){
+  REDO.length = 0;
   try{ UNDO.push({label, s:JSON.parse(JSON.stringify(snap())), rxAuto:RX_AUTO, rxVar:RX_VAR, pid:PID}); }catch(e){ return; }
   if (UNDO.length > UNDO_MAX) UNDO.shift();
   undoBtn();
@@ -6712,9 +6760,18 @@ function undoable(label, fn){
 }
 function undoLast(){
   const u = UNDO.pop(); if (!u){ toast('Немає дій для скасування'); return; }
-  if (u.pid !== PID){ toast('Скасування недоступне: відкрито іншого пацієнта'); UNDO.length = 0; undoBtn(); return; }
+  if (u.pid !== PID){ toast('Скасування недоступне: відкрито іншого пацієнта'); UNDO.length = 0; REDO.length = 0; undoBtn(); return; }
+  try{ REDO.push(undoSnap(u.label)); if (REDO.length > UNDO_MAX) REDO.shift(); }catch(e){}
   restore(u.s); RX_AUTO = u.rxAuto; RX_VAR = u.rxVar; rxVarRedraw(); undoBtn();
   toast('Скасовано: ' + u.label, 2500);
+}
+/* повтор скасованої дії: Ctrl+Y або Ctrl+Shift+Z */
+function redoLast(){
+  const r = REDO.pop(); if (!r){ toast('Немає дій для повтору'); return; }
+  if (r.pid !== PID){ REDO.length = 0; toast('Повтор недоступний: відкрито іншого пацієнта'); return; }
+  try{ UNDO.push(undoSnap(r.label)); }catch(e){}
+  restore(r.s); RX_AUTO = r.rxAuto; RX_VAR = r.rxVar; rxVarRedraw(); undoBtn();
+  toast('Повторено: ' + r.label, 2500);
 }
 function undoBtn(){
   const b = document.getElementById('undoBtn'); if (!b) return;
@@ -6731,12 +6788,16 @@ rxAddSet = undoable('додавання набору призначень', rxAd
 { const db = document.querySelector('.docbar');
   if (db){ db.append(h('button', {type:'button', class:'btn', id:'undoBtn', disabled:'', 'aria-label':'Скасувати останню дію', onclick:undoLast}, '↶', h('span', {class:'hide-m'}, ' Скасувати'))); undoBtn(); } }
 // новий пацієнт або відкриття іншого — історія скасувань не переноситься
-['newPatient','openPatient'].forEach(nm=>{ const f = window[nm]; if (typeof f === 'function') window[nm] = function(...a){ const r = f.apply(this, a); UNDO.length = 0; undoBtn(); return r; }; });
+['newPatient','openPatient'].forEach(nm=>{ const f = window[nm]; if (typeof f === 'function') window[nm] = function(...a){ const r = f.apply(this, a); UNDO.length = 0; REDO.length = 0; undoBtn(); return r; }; });
 $('#clearAll').onclick = newPatient;
 document.addEventListener('keydown', e=>{
   if ((e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'z' || e.key === 'я' || e.code === 'KeyZ')){
     const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;   // у полі — звичайне скасування браузера
     if (UNDO.length){ e.preventDefault(); undoLast(); }
+  }
+  if ((e.ctrlKey || e.metaKey) && (e.code === 'KeyY' || ((e.code === 'KeyZ') && e.shiftKey))){
+    const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (REDO.length){ e.preventDefault(); redoLast(); }
   }
 });
 /* ===== Перший запуск: коротке знайомство (лікар, заклад, профіль, режим) ===== */
@@ -7033,6 +7094,2304 @@ function transferDialog(){
 /* кнопки: у «Записі» (список пацієнтів) і у вікні пацієнтів */
 { const pl = document.getElementById('plist'); if (pl) pl.before(h('div', {class:'acts2', style:'margin:6px 0'}, h('button', {type:'button', class:'btn', onclick:transferDialog}, '⇄ Перенесення телефон ⇄ комп’ютер'))); }
 { const o0 = openSwitcher; openSwitcher = function(){ o0(); const a = document.querySelector('.switcher .acts2'); if (a) a.append(h('button', {type:'button', class:'more', onclick:()=>{ document.querySelector('.switcher').remove(); transferDialog(); }}, '⇄ Перенесення')); }; }
+/* Бібліотека QR-кодів qrcode-generator 1.4.4 (Kazuhiko Arase, MIT) — вбудована без змін, працює офлайн */
+//---------------------------------------------------------------------
+//
+// QR Code Generator for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//  http://www.opensource.org/licenses/mit-license.php
+//
+// The word 'QR Code' is registered trademark of
+// DENSO WAVE INCORPORATED
+//  http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+
+var qrcode = function() {
+
+  //---------------------------------------------------------------------
+  // qrcode
+  //---------------------------------------------------------------------
+
+  /**
+   * qrcode
+   * @param typeNumber 1 to 40
+   * @param errorCorrectionLevel 'L','M','Q','H'
+   */
+  var qrcode = function(typeNumber, errorCorrectionLevel) {
+
+    var PAD0 = 0xEC;
+    var PAD1 = 0x11;
+
+    var _typeNumber = typeNumber;
+    var _errorCorrectionLevel = QRErrorCorrectionLevel[errorCorrectionLevel];
+    var _modules = null;
+    var _moduleCount = 0;
+    var _dataCache = null;
+    var _dataList = [];
+
+    var _this = {};
+
+    var makeImpl = function(test, maskPattern) {
+
+      _moduleCount = _typeNumber * 4 + 17;
+      _modules = function(moduleCount) {
+        var modules = new Array(moduleCount);
+        for (var row = 0; row < moduleCount; row += 1) {
+          modules[row] = new Array(moduleCount);
+          for (var col = 0; col < moduleCount; col += 1) {
+            modules[row][col] = null;
+          }
+        }
+        return modules;
+      }(_moduleCount);
+
+      setupPositionProbePattern(0, 0);
+      setupPositionProbePattern(_moduleCount - 7, 0);
+      setupPositionProbePattern(0, _moduleCount - 7);
+      setupPositionAdjustPattern();
+      setupTimingPattern();
+      setupTypeInfo(test, maskPattern);
+
+      if (_typeNumber >= 7) {
+        setupTypeNumber(test);
+      }
+
+      if (_dataCache == null) {
+        _dataCache = createData(_typeNumber, _errorCorrectionLevel, _dataList);
+      }
+
+      mapData(_dataCache, maskPattern);
+    };
+
+    var setupPositionProbePattern = function(row, col) {
+
+      for (var r = -1; r <= 7; r += 1) {
+
+        if (row + r <= -1 || _moduleCount <= row + r) continue;
+
+        for (var c = -1; c <= 7; c += 1) {
+
+          if (col + c <= -1 || _moduleCount <= col + c) continue;
+
+          if ( (0 <= r && r <= 6 && (c == 0 || c == 6) )
+              || (0 <= c && c <= 6 && (r == 0 || r == 6) )
+              || (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+            _modules[row + r][col + c] = true;
+          } else {
+            _modules[row + r][col + c] = false;
+          }
+        }
+      }
+    };
+
+    var getBestMaskPattern = function() {
+
+      var minLostPoint = 0;
+      var pattern = 0;
+
+      for (var i = 0; i < 8; i += 1) {
+
+        makeImpl(true, i);
+
+        var lostPoint = QRUtil.getLostPoint(_this);
+
+        if (i == 0 || minLostPoint > lostPoint) {
+          minLostPoint = lostPoint;
+          pattern = i;
+        }
+      }
+
+      return pattern;
+    };
+
+    var setupTimingPattern = function() {
+
+      for (var r = 8; r < _moduleCount - 8; r += 1) {
+        if (_modules[r][6] != null) {
+          continue;
+        }
+        _modules[r][6] = (r % 2 == 0);
+      }
+
+      for (var c = 8; c < _moduleCount - 8; c += 1) {
+        if (_modules[6][c] != null) {
+          continue;
+        }
+        _modules[6][c] = (c % 2 == 0);
+      }
+    };
+
+    var setupPositionAdjustPattern = function() {
+
+      var pos = QRUtil.getPatternPosition(_typeNumber);
+
+      for (var i = 0; i < pos.length; i += 1) {
+
+        for (var j = 0; j < pos.length; j += 1) {
+
+          var row = pos[i];
+          var col = pos[j];
+
+          if (_modules[row][col] != null) {
+            continue;
+          }
+
+          for (var r = -2; r <= 2; r += 1) {
+
+            for (var c = -2; c <= 2; c += 1) {
+
+              if (r == -2 || r == 2 || c == -2 || c == 2
+                  || (r == 0 && c == 0) ) {
+                _modules[row + r][col + c] = true;
+              } else {
+                _modules[row + r][col + c] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+
+    var setupTypeNumber = function(test) {
+
+      var bits = QRUtil.getBCHTypeNumber(_typeNumber);
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[Math.floor(i / 3)][i % 3 + _moduleCount - 8 - 3] = mod;
+      }
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[i % 3 + _moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+      }
+    };
+
+    var setupTypeInfo = function(test, maskPattern) {
+
+      var data = (_errorCorrectionLevel << 3) | maskPattern;
+      var bits = QRUtil.getBCHTypeInfo(data);
+
+      // vertical
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 6) {
+          _modules[i][8] = mod;
+        } else if (i < 8) {
+          _modules[i + 1][8] = mod;
+        } else {
+          _modules[_moduleCount - 15 + i][8] = mod;
+        }
+      }
+
+      // horizontal
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 8) {
+          _modules[8][_moduleCount - i - 1] = mod;
+        } else if (i < 9) {
+          _modules[8][15 - i - 1 + 1] = mod;
+        } else {
+          _modules[8][15 - i - 1] = mod;
+        }
+      }
+
+      // fixed module
+      _modules[_moduleCount - 8][8] = (!test);
+    };
+
+    var mapData = function(data, maskPattern) {
+
+      var inc = -1;
+      var row = _moduleCount - 1;
+      var bitIndex = 7;
+      var byteIndex = 0;
+      var maskFunc = QRUtil.getMaskFunction(maskPattern);
+
+      for (var col = _moduleCount - 1; col > 0; col -= 2) {
+
+        if (col == 6) col -= 1;
+
+        while (true) {
+
+          for (var c = 0; c < 2; c += 1) {
+
+            if (_modules[row][col - c] == null) {
+
+              var dark = false;
+
+              if (byteIndex < data.length) {
+                dark = ( ( (data[byteIndex] >>> bitIndex) & 1) == 1);
+              }
+
+              var mask = maskFunc(row, col - c);
+
+              if (mask) {
+                dark = !dark;
+              }
+
+              _modules[row][col - c] = dark;
+              bitIndex -= 1;
+
+              if (bitIndex == -1) {
+                byteIndex += 1;
+                bitIndex = 7;
+              }
+            }
+          }
+
+          row += inc;
+
+          if (row < 0 || _moduleCount <= row) {
+            row -= inc;
+            inc = -inc;
+            break;
+          }
+        }
+      }
+    };
+
+    var createBytes = function(buffer, rsBlocks) {
+
+      var offset = 0;
+
+      var maxDcCount = 0;
+      var maxEcCount = 0;
+
+      var dcdata = new Array(rsBlocks.length);
+      var ecdata = new Array(rsBlocks.length);
+
+      for (var r = 0; r < rsBlocks.length; r += 1) {
+
+        var dcCount = rsBlocks[r].dataCount;
+        var ecCount = rsBlocks[r].totalCount - dcCount;
+
+        maxDcCount = Math.max(maxDcCount, dcCount);
+        maxEcCount = Math.max(maxEcCount, ecCount);
+
+        dcdata[r] = new Array(dcCount);
+
+        for (var i = 0; i < dcdata[r].length; i += 1) {
+          dcdata[r][i] = 0xff & buffer.getBuffer()[i + offset];
+        }
+        offset += dcCount;
+
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = qrPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
+        for (var i = 0; i < ecdata[r].length; i += 1) {
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = (modIndex >= 0)? modPoly.getAt(modIndex) : 0;
+        }
+      }
+
+      var totalCodeCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalCodeCount += rsBlocks[i].totalCount;
+      }
+
+      var data = new Array(totalCodeCount);
+      var index = 0;
+
+      for (var i = 0; i < maxDcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < dcdata[r].length) {
+            data[index] = dcdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      for (var i = 0; i < maxEcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < ecdata[r].length) {
+            data[index] = ecdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      return data;
+    };
+
+    var createData = function(typeNumber, errorCorrectionLevel, dataList) {
+
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectionLevel);
+
+      var buffer = qrBitBuffer();
+
+      for (var i = 0; i < dataList.length; i += 1) {
+        var data = dataList[i];
+        buffer.put(data.getMode(), 4);
+        buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+        data.write(buffer);
+      }
+
+      // calc num max data.
+      var totalDataCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalDataCount += rsBlocks[i].dataCount;
+      }
+
+      if (buffer.getLengthInBits() > totalDataCount * 8) {
+        throw 'code length overflow. ('
+          + buffer.getLengthInBits()
+          + '>'
+          + totalDataCount * 8
+          + ')';
+      }
+
+      // end code
+      if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+        buffer.put(0, 4);
+      }
+
+      // padding
+      while (buffer.getLengthInBits() % 8 != 0) {
+        buffer.putBit(false);
+      }
+
+      // padding
+      while (true) {
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD0, 8);
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD1, 8);
+      }
+
+      return createBytes(buffer, rsBlocks);
+    };
+
+    _this.addData = function(data, mode) {
+
+      mode = mode || 'Byte';
+
+      var newData = null;
+
+      switch(mode) {
+      case 'Numeric' :
+        newData = qrNumber(data);
+        break;
+      case 'Alphanumeric' :
+        newData = qrAlphaNum(data);
+        break;
+      case 'Byte' :
+        newData = qr8BitByte(data);
+        break;
+      case 'Kanji' :
+        newData = qrKanji(data);
+        break;
+      default :
+        throw 'mode:' + mode;
+      }
+
+      _dataList.push(newData);
+      _dataCache = null;
+    };
+
+    _this.isDark = function(row, col) {
+      if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) {
+        throw row + ',' + col;
+      }
+      return _modules[row][col];
+    };
+
+    _this.getModuleCount = function() {
+      return _moduleCount;
+    };
+
+    _this.make = function() {
+      if (_typeNumber < 1) {
+        var typeNumber = 1;
+
+        for (; typeNumber < 40; typeNumber++) {
+          var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, _errorCorrectionLevel);
+          var buffer = qrBitBuffer();
+
+          for (var i = 0; i < _dataList.length; i++) {
+            var data = _dataList[i];
+            buffer.put(data.getMode(), 4);
+            buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+            data.write(buffer);
+          }
+
+          var totalDataCount = 0;
+          for (var i = 0; i < rsBlocks.length; i++) {
+            totalDataCount += rsBlocks[i].dataCount;
+          }
+
+          if (buffer.getLengthInBits() <= totalDataCount * 8) {
+            break;
+          }
+        }
+
+        _typeNumber = typeNumber;
+      }
+
+      makeImpl(false, getBestMaskPattern() );
+    };
+
+    _this.createTableTag = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var qrHtml = '';
+
+      qrHtml += '<table style="';
+      qrHtml += ' border-width: 0px; border-style: none;';
+      qrHtml += ' border-collapse: collapse;';
+      qrHtml += ' padding: 0px; margin: ' + margin + 'px;';
+      qrHtml += '">';
+      qrHtml += '<tbody>';
+
+      for (var r = 0; r < _this.getModuleCount(); r += 1) {
+
+        qrHtml += '<tr>';
+
+        for (var c = 0; c < _this.getModuleCount(); c += 1) {
+          qrHtml += '<td style="';
+          qrHtml += ' border-width: 0px; border-style: none;';
+          qrHtml += ' border-collapse: collapse;';
+          qrHtml += ' padding: 0px; margin: 0px;';
+          qrHtml += ' width: ' + cellSize + 'px;';
+          qrHtml += ' height: ' + cellSize + 'px;';
+          qrHtml += ' background-color: ';
+          qrHtml += _this.isDark(r, c)? '#000000' : '#ffffff';
+          qrHtml += ';';
+          qrHtml += '"/>';
+        }
+
+        qrHtml += '</tr>';
+      }
+
+      qrHtml += '</tbody>';
+      qrHtml += '</table>';
+
+      return qrHtml;
+    };
+
+    _this.createSvgTag = function(cellSize, margin, alt, title) {
+
+      var opts = {};
+      if (typeof arguments[0] == 'object') {
+        // Called by options.
+        opts = arguments[0];
+        // overwrite cellSize and margin.
+        cellSize = opts.cellSize;
+        margin = opts.margin;
+        alt = opts.alt;
+        title = opts.title;
+      }
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      // Compose alt property surrogate
+      alt = (typeof alt === 'string') ? {text: alt} : alt || {};
+      alt.text = alt.text || null;
+      alt.id = (alt.text) ? alt.id || 'qrcode-description' : null;
+
+      // Compose title property surrogate
+      title = (typeof title === 'string') ? {text: title} : title || {};
+      title.text = title.text || null;
+      title.id = (title.text) ? title.id || 'qrcode-title' : null;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var c, mc, r, mr, qrSvg='', rect;
+
+      rect = 'l' + cellSize + ',0 0,' + cellSize +
+        ' -' + cellSize + ',0 0,-' + cellSize + 'z ';
+
+      qrSvg += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"';
+      qrSvg += !opts.scalable ? ' width="' + size + 'px" height="' + size + 'px"' : '';
+      qrSvg += ' viewBox="0 0 ' + size + ' ' + size + '" ';
+      qrSvg += ' preserveAspectRatio="xMinYMin meet"';
+      qrSvg += (title.text || alt.text) ? ' role="img" aria-labelledby="' +
+          escapeXml([title.id, alt.id].join(' ').trim() ) + '"' : '';
+      qrSvg += '>';
+      qrSvg += (title.text) ? '<title id="' + escapeXml(title.id) + '">' +
+          escapeXml(title.text) + '</title>' : '';
+      qrSvg += (alt.text) ? '<description id="' + escapeXml(alt.id) + '">' +
+          escapeXml(alt.text) + '</description>' : '';
+      qrSvg += '<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>';
+      qrSvg += '<path d="';
+
+      for (r = 0; r < _this.getModuleCount(); r += 1) {
+        mr = r * cellSize + margin;
+        for (c = 0; c < _this.getModuleCount(); c += 1) {
+          if (_this.isDark(r, c) ) {
+            mc = c*cellSize+margin;
+            qrSvg += 'M' + mc + ',' + mr + rect;
+          }
+        }
+      }
+
+      qrSvg += '" stroke="transparent" fill="black"/>';
+      qrSvg += '</svg>';
+
+      return qrSvg;
+    };
+
+    _this.createDataURL = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      return createDataURL(size, size, function(x, y) {
+        if (min <= x && x < max && min <= y && y < max) {
+          var c = Math.floor( (x - min) / cellSize);
+          var r = Math.floor( (y - min) / cellSize);
+          return _this.isDark(r, c)? 0 : 1;
+        } else {
+          return 1;
+        }
+      } );
+    };
+
+    _this.createImgTag = function(cellSize, margin, alt) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+
+      var img = '';
+      img += '<img';
+      img += '\u0020src="';
+      img += _this.createDataURL(cellSize, margin);
+      img += '"';
+      img += '\u0020width="';
+      img += size;
+      img += '"';
+      img += '\u0020height="';
+      img += size;
+      img += '"';
+      if (alt) {
+        img += '\u0020alt="';
+        img += escapeXml(alt);
+        img += '"';
+      }
+      img += '/>';
+
+      return img;
+    };
+
+    var escapeXml = function(s) {
+      var escaped = '';
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charAt(i);
+        switch(c) {
+        case '<': escaped += '&lt;'; break;
+        case '>': escaped += '&gt;'; break;
+        case '&': escaped += '&amp;'; break;
+        case '"': escaped += '&quot;'; break;
+        default : escaped += c; break;
+        }
+      }
+      return escaped;
+    };
+
+    var _createHalfASCII = function(margin) {
+      var cellSize = 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r1, r2, p;
+
+      var blocks = {
+        '██': '█',
+        '█ ': '▀',
+        ' █': '▄',
+        '  ': ' '
+      };
+
+      var blocksLastLineNoMargin = {
+        '██': '▀',
+        '█ ': '▀',
+        ' █': ' ',
+        '  ': ' '
+      };
+
+      var ascii = '';
+      for (y = 0; y < size; y += 2) {
+        r1 = Math.floor((y - min) / cellSize);
+        r2 = Math.floor((y + 1 - min) / cellSize);
+        for (x = 0; x < size; x += 1) {
+          p = '█';
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r1, Math.floor((x - min) / cellSize))) {
+            p = ' ';
+          }
+
+          if (min <= x && x < max && min <= y+1 && y+1 < max && _this.isDark(r2, Math.floor((x - min) / cellSize))) {
+            p += ' ';
+          }
+          else {
+            p += '█';
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          ascii += (margin < 1 && y+1 >= max) ? blocksLastLineNoMargin[p] : blocks[p];
+        }
+
+        ascii += '\n';
+      }
+
+      if (size % 2 && margin > 0) {
+        return ascii.substring(0, ascii.length - size - 1) + Array(size+1).join('▀');
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.createASCII = function(cellSize, margin) {
+      cellSize = cellSize || 1;
+
+      if (cellSize < 2) {
+        return _createHalfASCII(margin);
+      }
+
+      cellSize -= 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r, p;
+
+      var white = Array(cellSize+1).join('██');
+      var black = Array(cellSize+1).join('  ');
+
+      var ascii = '';
+      var line = '';
+      for (y = 0; y < size; y += 1) {
+        r = Math.floor( (y - min) / cellSize);
+        line = '';
+        for (x = 0; x < size; x += 1) {
+          p = 1;
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r, Math.floor((x - min) / cellSize))) {
+            p = 0;
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          line += p ? white : black;
+        }
+
+        for (r = 0; r < cellSize; r += 1) {
+          ascii += line + '\n';
+        }
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.renderTo2dContext = function(context, cellSize) {
+      cellSize = cellSize || 2;
+      var length = _this.getModuleCount();
+      for (var row = 0; row < length; row++) {
+        for (var col = 0; col < length; col++) {
+          context.fillStyle = _this.isDark(row, col) ? 'black' : 'white';
+          context.fillRect(row * cellSize, col * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrcode.stringToBytes
+  //---------------------------------------------------------------------
+
+  qrcode.stringToBytesFuncs = {
+    'default' : function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        bytes.push(c & 0xff);
+      }
+      return bytes;
+    }
+  };
+
+  qrcode.stringToBytes = qrcode.stringToBytesFuncs['default'];
+
+  //---------------------------------------------------------------------
+  // qrcode.createStringToBytes
+  //---------------------------------------------------------------------
+
+  /**
+   * @param unicodeData base64 string of byte array.
+   * [16bit Unicode],[16bit Bytes], ...
+   * @param numChars
+   */
+  qrcode.createStringToBytes = function(unicodeData, numChars) {
+
+    // create conversion map.
+
+    var unicodeMap = function() {
+
+      var bin = base64DecodeInputStream(unicodeData);
+      var read = function() {
+        var b = bin.read();
+        if (b == -1) throw 'eof';
+        return b;
+      };
+
+      var count = 0;
+      var unicodeMap = {};
+      while (true) {
+        var b0 = bin.read();
+        if (b0 == -1) break;
+        var b1 = read();
+        var b2 = read();
+        var b3 = read();
+        var k = String.fromCharCode( (b0 << 8) | b1);
+        var v = (b2 << 8) | b3;
+        unicodeMap[k] = v;
+        count += 1;
+      }
+      if (count != numChars) {
+        throw count + ' != ' + numChars;
+      }
+
+      return unicodeMap;
+    }();
+
+    var unknownChar = '?'.charCodeAt(0);
+
+    return function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        if (c < 128) {
+          bytes.push(c);
+        } else {
+          var b = unicodeMap[s.charAt(i)];
+          if (typeof b == 'number') {
+            if ( (b & 0xff) == b) {
+              // 1byte
+              bytes.push(b);
+            } else {
+              // 2bytes
+              bytes.push(b >>> 8);
+              bytes.push(b & 0xff);
+            }
+          } else {
+            bytes.push(unknownChar);
+          }
+        }
+      }
+      return bytes;
+    };
+  };
+
+  //---------------------------------------------------------------------
+  // QRMode
+  //---------------------------------------------------------------------
+
+  var QRMode = {
+    MODE_NUMBER :    1 << 0,
+    MODE_ALPHA_NUM : 1 << 1,
+    MODE_8BIT_BYTE : 1 << 2,
+    MODE_KANJI :     1 << 3
+  };
+
+  //---------------------------------------------------------------------
+  // QRErrorCorrectionLevel
+  //---------------------------------------------------------------------
+
+  var QRErrorCorrectionLevel = {
+    L : 1,
+    M : 0,
+    Q : 3,
+    H : 2
+  };
+
+  //---------------------------------------------------------------------
+  // QRMaskPattern
+  //---------------------------------------------------------------------
+
+  var QRMaskPattern = {
+    PATTERN000 : 0,
+    PATTERN001 : 1,
+    PATTERN010 : 2,
+    PATTERN011 : 3,
+    PATTERN100 : 4,
+    PATTERN101 : 5,
+    PATTERN110 : 6,
+    PATTERN111 : 7
+  };
+
+  //---------------------------------------------------------------------
+  // QRUtil
+  //---------------------------------------------------------------------
+
+  var QRUtil = function() {
+
+    var PATTERN_POSITION_TABLE = [
+      [],
+      [6, 18],
+      [6, 22],
+      [6, 26],
+      [6, 30],
+      [6, 34],
+      [6, 22, 38],
+      [6, 24, 42],
+      [6, 26, 46],
+      [6, 28, 50],
+      [6, 30, 54],
+      [6, 32, 58],
+      [6, 34, 62],
+      [6, 26, 46, 66],
+      [6, 26, 48, 70],
+      [6, 26, 50, 74],
+      [6, 30, 54, 78],
+      [6, 30, 56, 82],
+      [6, 30, 58, 86],
+      [6, 34, 62, 90],
+      [6, 28, 50, 72, 94],
+      [6, 26, 50, 74, 98],
+      [6, 30, 54, 78, 102],
+      [6, 28, 54, 80, 106],
+      [6, 32, 58, 84, 110],
+      [6, 30, 58, 86, 114],
+      [6, 34, 62, 90, 118],
+      [6, 26, 50, 74, 98, 122],
+      [6, 30, 54, 78, 102, 126],
+      [6, 26, 52, 78, 104, 130],
+      [6, 30, 56, 82, 108, 134],
+      [6, 34, 60, 86, 112, 138],
+      [6, 30, 58, 86, 114, 142],
+      [6, 34, 62, 90, 118, 146],
+      [6, 30, 54, 78, 102, 126, 150],
+      [6, 24, 50, 76, 102, 128, 154],
+      [6, 28, 54, 80, 106, 132, 158],
+      [6, 32, 58, 84, 110, 136, 162],
+      [6, 26, 54, 82, 110, 138, 166],
+      [6, 30, 58, 86, 114, 142, 170]
+    ];
+    var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
+    var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
+    var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
+
+    var _this = {};
+
+    var getBCHDigit = function(data) {
+      var digit = 0;
+      while (data != 0) {
+        digit += 1;
+        data >>>= 1;
+      }
+      return digit;
+    };
+
+    _this.getBCHTypeInfo = function(data) {
+      var d = data << 10;
+      while (getBCHDigit(d) - getBCHDigit(G15) >= 0) {
+        d ^= (G15 << (getBCHDigit(d) - getBCHDigit(G15) ) );
+      }
+      return ( (data << 10) | d) ^ G15_MASK;
+    };
+
+    _this.getBCHTypeNumber = function(data) {
+      var d = data << 12;
+      while (getBCHDigit(d) - getBCHDigit(G18) >= 0) {
+        d ^= (G18 << (getBCHDigit(d) - getBCHDigit(G18) ) );
+      }
+      return (data << 12) | d;
+    };
+
+    _this.getPatternPosition = function(typeNumber) {
+      return PATTERN_POSITION_TABLE[typeNumber - 1];
+    };
+
+    _this.getMaskFunction = function(maskPattern) {
+
+      switch (maskPattern) {
+
+      case QRMaskPattern.PATTERN000 :
+        return function(i, j) { return (i + j) % 2 == 0; };
+      case QRMaskPattern.PATTERN001 :
+        return function(i, j) { return i % 2 == 0; };
+      case QRMaskPattern.PATTERN010 :
+        return function(i, j) { return j % 3 == 0; };
+      case QRMaskPattern.PATTERN011 :
+        return function(i, j) { return (i + j) % 3 == 0; };
+      case QRMaskPattern.PATTERN100 :
+        return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 == 0; };
+      case QRMaskPattern.PATTERN101 :
+        return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+      case QRMaskPattern.PATTERN110 :
+        return function(i, j) { return ( (i * j) % 2 + (i * j) % 3) % 2 == 0; };
+      case QRMaskPattern.PATTERN111 :
+        return function(i, j) { return ( (i * j) % 3 + (i + j) % 2) % 2 == 0; };
+
+      default :
+        throw 'bad maskPattern:' + maskPattern;
+      }
+    };
+
+    _this.getErrorCorrectPolynomial = function(errorCorrectLength) {
+      var a = qrPolynomial([1], 0);
+      for (var i = 0; i < errorCorrectLength; i += 1) {
+        a = a.multiply(qrPolynomial([1, QRMath.gexp(i)], 0) );
+      }
+      return a;
+    };
+
+    _this.getLengthInBits = function(mode, type) {
+
+      if (1 <= type && type < 10) {
+
+        // 1 - 9
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 10;
+        case QRMode.MODE_ALPHA_NUM : return 9;
+        case QRMode.MODE_8BIT_BYTE : return 8;
+        case QRMode.MODE_KANJI     : return 8;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 27) {
+
+        // 10 - 26
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 12;
+        case QRMode.MODE_ALPHA_NUM : return 11;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 10;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 41) {
+
+        // 27 - 40
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 14;
+        case QRMode.MODE_ALPHA_NUM : return 13;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 12;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else {
+        throw 'type:' + type;
+      }
+    };
+
+    _this.getLostPoint = function(qrcode) {
+
+      var moduleCount = qrcode.getModuleCount();
+
+      var lostPoint = 0;
+
+      // LEVEL1
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount; col += 1) {
+
+          var sameCount = 0;
+          var dark = qrcode.isDark(row, col);
+
+          for (var r = -1; r <= 1; r += 1) {
+
+            if (row + r < 0 || moduleCount <= row + r) {
+              continue;
+            }
+
+            for (var c = -1; c <= 1; c += 1) {
+
+              if (col + c < 0 || moduleCount <= col + c) {
+                continue;
+              }
+
+              if (r == 0 && c == 0) {
+                continue;
+              }
+
+              if (dark == qrcode.isDark(row + r, col + c) ) {
+                sameCount += 1;
+              }
+            }
+          }
+
+          if (sameCount > 5) {
+            lostPoint += (3 + sameCount - 5);
+          }
+        }
+      };
+
+      // LEVEL2
+
+      for (var row = 0; row < moduleCount - 1; row += 1) {
+        for (var col = 0; col < moduleCount - 1; col += 1) {
+          var count = 0;
+          if (qrcode.isDark(row, col) ) count += 1;
+          if (qrcode.isDark(row + 1, col) ) count += 1;
+          if (qrcode.isDark(row, col + 1) ) count += 1;
+          if (qrcode.isDark(row + 1, col + 1) ) count += 1;
+          if (count == 0 || count == 4) {
+            lostPoint += 3;
+          }
+        }
+      }
+
+      // LEVEL3
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount - 6; col += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row, col + 1)
+              &&  qrcode.isDark(row, col + 2)
+              &&  qrcode.isDark(row, col + 3)
+              &&  qrcode.isDark(row, col + 4)
+              && !qrcode.isDark(row, col + 5)
+              &&  qrcode.isDark(row, col + 6) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount - 6; row += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row + 1, col)
+              &&  qrcode.isDark(row + 2, col)
+              &&  qrcode.isDark(row + 3, col)
+              &&  qrcode.isDark(row + 4, col)
+              && !qrcode.isDark(row + 5, col)
+              &&  qrcode.isDark(row + 6, col) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      // LEVEL4
+
+      var darkCount = 0;
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount; row += 1) {
+          if (qrcode.isDark(row, col) ) {
+            darkCount += 1;
+          }
+        }
+      }
+
+      var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+      lostPoint += ratio * 10;
+
+      return lostPoint;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // QRMath
+  //---------------------------------------------------------------------
+
+  var QRMath = function() {
+
+    var EXP_TABLE = new Array(256);
+    var LOG_TABLE = new Array(256);
+
+    // initialize tables
+    for (var i = 0; i < 8; i += 1) {
+      EXP_TABLE[i] = 1 << i;
+    }
+    for (var i = 8; i < 256; i += 1) {
+      EXP_TABLE[i] = EXP_TABLE[i - 4]
+        ^ EXP_TABLE[i - 5]
+        ^ EXP_TABLE[i - 6]
+        ^ EXP_TABLE[i - 8];
+    }
+    for (var i = 0; i < 255; i += 1) {
+      LOG_TABLE[EXP_TABLE[i] ] = i;
+    }
+
+    var _this = {};
+
+    _this.glog = function(n) {
+
+      if (n < 1) {
+        throw 'glog(' + n + ')';
+      }
+
+      return LOG_TABLE[n];
+    };
+
+    _this.gexp = function(n) {
+
+      while (n < 0) {
+        n += 255;
+      }
+
+      while (n >= 256) {
+        n -= 255;
+      }
+
+      return EXP_TABLE[n];
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrPolynomial
+  //---------------------------------------------------------------------
+
+  function qrPolynomial(num, shift) {
+
+    if (typeof num.length == 'undefined') {
+      throw num.length + '/' + shift;
+    }
+
+    var _num = function() {
+      var offset = 0;
+      while (offset < num.length && num[offset] == 0) {
+        offset += 1;
+      }
+      var _num = new Array(num.length - offset + shift);
+      for (var i = 0; i < num.length - offset; i += 1) {
+        _num[i] = num[i + offset];
+      }
+      return _num;
+    }();
+
+    var _this = {};
+
+    _this.getAt = function(index) {
+      return _num[index];
+    };
+
+    _this.getLength = function() {
+      return _num.length;
+    };
+
+    _this.multiply = function(e) {
+
+      var num = new Array(_this.getLength() + e.getLength() - 1);
+
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        for (var j = 0; j < e.getLength(); j += 1) {
+          num[i + j] ^= QRMath.gexp(QRMath.glog(_this.getAt(i) ) + QRMath.glog(e.getAt(j) ) );
+        }
+      }
+
+      return qrPolynomial(num, 0);
+    };
+
+    _this.mod = function(e) {
+
+      if (_this.getLength() - e.getLength() < 0) {
+        return _this;
+      }
+
+      var ratio = QRMath.glog(_this.getAt(0) ) - QRMath.glog(e.getAt(0) );
+
+      var num = new Array(_this.getLength() );
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        num[i] = _this.getAt(i);
+      }
+
+      for (var i = 0; i < e.getLength(); i += 1) {
+        num[i] ^= QRMath.gexp(QRMath.glog(e.getAt(i) ) + ratio);
+      }
+
+      // recursive call
+      return qrPolynomial(num, 0).mod(e);
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // QRRSBlock
+  //---------------------------------------------------------------------
+
+  var QRRSBlock = function() {
+
+    var RS_BLOCK_TABLE = [
+
+      // L
+      // M
+      // Q
+      // H
+
+      // 1
+      [1, 26, 19],
+      [1, 26, 16],
+      [1, 26, 13],
+      [1, 26, 9],
+
+      // 2
+      [1, 44, 34],
+      [1, 44, 28],
+      [1, 44, 22],
+      [1, 44, 16],
+
+      // 3
+      [1, 70, 55],
+      [1, 70, 44],
+      [2, 35, 17],
+      [2, 35, 13],
+
+      // 4
+      [1, 100, 80],
+      [2, 50, 32],
+      [2, 50, 24],
+      [4, 25, 9],
+
+      // 5
+      [1, 134, 108],
+      [2, 67, 43],
+      [2, 33, 15, 2, 34, 16],
+      [2, 33, 11, 2, 34, 12],
+
+      // 6
+      [2, 86, 68],
+      [4, 43, 27],
+      [4, 43, 19],
+      [4, 43, 15],
+
+      // 7
+      [2, 98, 78],
+      [4, 49, 31],
+      [2, 32, 14, 4, 33, 15],
+      [4, 39, 13, 1, 40, 14],
+
+      // 8
+      [2, 121, 97],
+      [2, 60, 38, 2, 61, 39],
+      [4, 40, 18, 2, 41, 19],
+      [4, 40, 14, 2, 41, 15],
+
+      // 9
+      [2, 146, 116],
+      [3, 58, 36, 2, 59, 37],
+      [4, 36, 16, 4, 37, 17],
+      [4, 36, 12, 4, 37, 13],
+
+      // 10
+      [2, 86, 68, 2, 87, 69],
+      [4, 69, 43, 1, 70, 44],
+      [6, 43, 19, 2, 44, 20],
+      [6, 43, 15, 2, 44, 16],
+
+      // 11
+      [4, 101, 81],
+      [1, 80, 50, 4, 81, 51],
+      [4, 50, 22, 4, 51, 23],
+      [3, 36, 12, 8, 37, 13],
+
+      // 12
+      [2, 116, 92, 2, 117, 93],
+      [6, 58, 36, 2, 59, 37],
+      [4, 46, 20, 6, 47, 21],
+      [7, 42, 14, 4, 43, 15],
+
+      // 13
+      [4, 133, 107],
+      [8, 59, 37, 1, 60, 38],
+      [8, 44, 20, 4, 45, 21],
+      [12, 33, 11, 4, 34, 12],
+
+      // 14
+      [3, 145, 115, 1, 146, 116],
+      [4, 64, 40, 5, 65, 41],
+      [11, 36, 16, 5, 37, 17],
+      [11, 36, 12, 5, 37, 13],
+
+      // 15
+      [5, 109, 87, 1, 110, 88],
+      [5, 65, 41, 5, 66, 42],
+      [5, 54, 24, 7, 55, 25],
+      [11, 36, 12, 7, 37, 13],
+
+      // 16
+      [5, 122, 98, 1, 123, 99],
+      [7, 73, 45, 3, 74, 46],
+      [15, 43, 19, 2, 44, 20],
+      [3, 45, 15, 13, 46, 16],
+
+      // 17
+      [1, 135, 107, 5, 136, 108],
+      [10, 74, 46, 1, 75, 47],
+      [1, 50, 22, 15, 51, 23],
+      [2, 42, 14, 17, 43, 15],
+
+      // 18
+      [5, 150, 120, 1, 151, 121],
+      [9, 69, 43, 4, 70, 44],
+      [17, 50, 22, 1, 51, 23],
+      [2, 42, 14, 19, 43, 15],
+
+      // 19
+      [3, 141, 113, 4, 142, 114],
+      [3, 70, 44, 11, 71, 45],
+      [17, 47, 21, 4, 48, 22],
+      [9, 39, 13, 16, 40, 14],
+
+      // 20
+      [3, 135, 107, 5, 136, 108],
+      [3, 67, 41, 13, 68, 42],
+      [15, 54, 24, 5, 55, 25],
+      [15, 43, 15, 10, 44, 16],
+
+      // 21
+      [4, 144, 116, 4, 145, 117],
+      [17, 68, 42],
+      [17, 50, 22, 6, 51, 23],
+      [19, 46, 16, 6, 47, 17],
+
+      // 22
+      [2, 139, 111, 7, 140, 112],
+      [17, 74, 46],
+      [7, 54, 24, 16, 55, 25],
+      [34, 37, 13],
+
+      // 23
+      [4, 151, 121, 5, 152, 122],
+      [4, 75, 47, 14, 76, 48],
+      [11, 54, 24, 14, 55, 25],
+      [16, 45, 15, 14, 46, 16],
+
+      // 24
+      [6, 147, 117, 4, 148, 118],
+      [6, 73, 45, 14, 74, 46],
+      [11, 54, 24, 16, 55, 25],
+      [30, 46, 16, 2, 47, 17],
+
+      // 25
+      [8, 132, 106, 4, 133, 107],
+      [8, 75, 47, 13, 76, 48],
+      [7, 54, 24, 22, 55, 25],
+      [22, 45, 15, 13, 46, 16],
+
+      // 26
+      [10, 142, 114, 2, 143, 115],
+      [19, 74, 46, 4, 75, 47],
+      [28, 50, 22, 6, 51, 23],
+      [33, 46, 16, 4, 47, 17],
+
+      // 27
+      [8, 152, 122, 4, 153, 123],
+      [22, 73, 45, 3, 74, 46],
+      [8, 53, 23, 26, 54, 24],
+      [12, 45, 15, 28, 46, 16],
+
+      // 28
+      [3, 147, 117, 10, 148, 118],
+      [3, 73, 45, 23, 74, 46],
+      [4, 54, 24, 31, 55, 25],
+      [11, 45, 15, 31, 46, 16],
+
+      // 29
+      [7, 146, 116, 7, 147, 117],
+      [21, 73, 45, 7, 74, 46],
+      [1, 53, 23, 37, 54, 24],
+      [19, 45, 15, 26, 46, 16],
+
+      // 30
+      [5, 145, 115, 10, 146, 116],
+      [19, 75, 47, 10, 76, 48],
+      [15, 54, 24, 25, 55, 25],
+      [23, 45, 15, 25, 46, 16],
+
+      // 31
+      [13, 145, 115, 3, 146, 116],
+      [2, 74, 46, 29, 75, 47],
+      [42, 54, 24, 1, 55, 25],
+      [23, 45, 15, 28, 46, 16],
+
+      // 32
+      [17, 145, 115],
+      [10, 74, 46, 23, 75, 47],
+      [10, 54, 24, 35, 55, 25],
+      [19, 45, 15, 35, 46, 16],
+
+      // 33
+      [17, 145, 115, 1, 146, 116],
+      [14, 74, 46, 21, 75, 47],
+      [29, 54, 24, 19, 55, 25],
+      [11, 45, 15, 46, 46, 16],
+
+      // 34
+      [13, 145, 115, 6, 146, 116],
+      [14, 74, 46, 23, 75, 47],
+      [44, 54, 24, 7, 55, 25],
+      [59, 46, 16, 1, 47, 17],
+
+      // 35
+      [12, 151, 121, 7, 152, 122],
+      [12, 75, 47, 26, 76, 48],
+      [39, 54, 24, 14, 55, 25],
+      [22, 45, 15, 41, 46, 16],
+
+      // 36
+      [6, 151, 121, 14, 152, 122],
+      [6, 75, 47, 34, 76, 48],
+      [46, 54, 24, 10, 55, 25],
+      [2, 45, 15, 64, 46, 16],
+
+      // 37
+      [17, 152, 122, 4, 153, 123],
+      [29, 74, 46, 14, 75, 47],
+      [49, 54, 24, 10, 55, 25],
+      [24, 45, 15, 46, 46, 16],
+
+      // 38
+      [4, 152, 122, 18, 153, 123],
+      [13, 74, 46, 32, 75, 47],
+      [48, 54, 24, 14, 55, 25],
+      [42, 45, 15, 32, 46, 16],
+
+      // 39
+      [20, 147, 117, 4, 148, 118],
+      [40, 75, 47, 7, 76, 48],
+      [43, 54, 24, 22, 55, 25],
+      [10, 45, 15, 67, 46, 16],
+
+      // 40
+      [19, 148, 118, 6, 149, 119],
+      [18, 75, 47, 31, 76, 48],
+      [34, 54, 24, 34, 55, 25],
+      [20, 45, 15, 61, 46, 16]
+    ];
+
+    var qrRSBlock = function(totalCount, dataCount) {
+      var _this = {};
+      _this.totalCount = totalCount;
+      _this.dataCount = dataCount;
+      return _this;
+    };
+
+    var _this = {};
+
+    var getRsBlockTable = function(typeNumber, errorCorrectionLevel) {
+
+      switch(errorCorrectionLevel) {
+      case QRErrorCorrectionLevel.L :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+      case QRErrorCorrectionLevel.M :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+      case QRErrorCorrectionLevel.Q :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+      case QRErrorCorrectionLevel.H :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+      default :
+        return undefined;
+      }
+    };
+
+    _this.getRSBlocks = function(typeNumber, errorCorrectionLevel) {
+
+      var rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
+
+      if (typeof rsBlock == 'undefined') {
+        throw 'bad rs block @ typeNumber:' + typeNumber +
+            '/errorCorrectionLevel:' + errorCorrectionLevel;
+      }
+
+      var length = rsBlock.length / 3;
+
+      var list = [];
+
+      for (var i = 0; i < length; i += 1) {
+
+        var count = rsBlock[i * 3 + 0];
+        var totalCount = rsBlock[i * 3 + 1];
+        var dataCount = rsBlock[i * 3 + 2];
+
+        for (var j = 0; j < count; j += 1) {
+          list.push(qrRSBlock(totalCount, dataCount) );
+        }
+      }
+
+      return list;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrBitBuffer
+  //---------------------------------------------------------------------
+
+  var qrBitBuffer = function() {
+
+    var _buffer = [];
+    var _length = 0;
+
+    var _this = {};
+
+    _this.getBuffer = function() {
+      return _buffer;
+    };
+
+    _this.getAt = function(index) {
+      var bufIndex = Math.floor(index / 8);
+      return ( (_buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+    };
+
+    _this.put = function(num, length) {
+      for (var i = 0; i < length; i += 1) {
+        _this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+      }
+    };
+
+    _this.getLengthInBits = function() {
+      return _length;
+    };
+
+    _this.putBit = function(bit) {
+
+      var bufIndex = Math.floor(_length / 8);
+      if (_buffer.length <= bufIndex) {
+        _buffer.push(0);
+      }
+
+      if (bit) {
+        _buffer[bufIndex] |= (0x80 >>> (_length % 8) );
+      }
+
+      _length += 1;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrNumber
+  //---------------------------------------------------------------------
+
+  var qrNumber = function(data) {
+
+    var _mode = QRMode.MODE_NUMBER;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _data;
+
+      var i = 0;
+
+      while (i + 2 < data.length) {
+        buffer.put(strToNum(data.substring(i, i + 3) ), 10);
+        i += 3;
+      }
+
+      if (i < data.length) {
+        if (data.length - i == 1) {
+          buffer.put(strToNum(data.substring(i, i + 1) ), 4);
+        } else if (data.length - i == 2) {
+          buffer.put(strToNum(data.substring(i, i + 2) ), 7);
+        }
+      }
+    };
+
+    var strToNum = function(s) {
+      var num = 0;
+      for (var i = 0; i < s.length; i += 1) {
+        num = num * 10 + chatToNum(s.charAt(i) );
+      }
+      return num;
+    };
+
+    var chatToNum = function(c) {
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      }
+      throw 'illegal char :' + c;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrAlphaNum
+  //---------------------------------------------------------------------
+
+  var qrAlphaNum = function(data) {
+
+    var _mode = QRMode.MODE_ALPHA_NUM;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var s = _data;
+
+      var i = 0;
+
+      while (i + 1 < s.length) {
+        buffer.put(
+          getCode(s.charAt(i) ) * 45 +
+          getCode(s.charAt(i + 1) ), 11);
+        i += 2;
+      }
+
+      if (i < s.length) {
+        buffer.put(getCode(s.charAt(i) ), 6);
+      }
+    };
+
+    var getCode = function(c) {
+
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      } else if ('A' <= c && c <= 'Z') {
+        return c.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+      } else {
+        switch (c) {
+        case ' ' : return 36;
+        case '$' : return 37;
+        case '%' : return 38;
+        case '*' : return 39;
+        case '+' : return 40;
+        case '-' : return 41;
+        case '.' : return 42;
+        case '/' : return 43;
+        case ':' : return 44;
+        default :
+          throw 'illegal char :' + c;
+        }
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qr8BitByte
+  //---------------------------------------------------------------------
+
+  var qr8BitByte = function(data) {
+
+    var _mode = QRMode.MODE_8BIT_BYTE;
+    var _data = data;
+    var _bytes = qrcode.stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _bytes.length;
+    };
+
+    _this.write = function(buffer) {
+      for (var i = 0; i < _bytes.length; i += 1) {
+        buffer.put(_bytes[i], 8);
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrKanji
+  //---------------------------------------------------------------------
+
+  var qrKanji = function(data) {
+
+    var _mode = QRMode.MODE_KANJI;
+    var _data = data;
+
+    var stringToBytes = qrcode.stringToBytesFuncs['SJIS'];
+    if (!stringToBytes) {
+      throw 'sjis not supported.';
+    }
+    !function(c, code) {
+      // self test for sjis support.
+      var test = stringToBytes(c);
+      if (test.length != 2 || ( (test[0] << 8) | test[1]) != code) {
+        throw 'sjis not supported.';
+      }
+    }('\u53cb', 0x9746);
+
+    var _bytes = stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return ~~(_bytes.length / 2);
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _bytes;
+
+      var i = 0;
+
+      while (i + 1 < data.length) {
+
+        var c = ( (0xff & data[i]) << 8) | (0xff & data[i + 1]);
+
+        if (0x8140 <= c && c <= 0x9FFC) {
+          c -= 0x8140;
+        } else if (0xE040 <= c && c <= 0xEBBF) {
+          c -= 0xC140;
+        } else {
+          throw 'illegal char at ' + (i + 1) + '/' + c;
+        }
+
+        c = ( (c >>> 8) & 0xff) * 0xC0 + (c & 0xff);
+
+        buffer.put(c, 13);
+
+        i += 2;
+      }
+
+      if (i < data.length) {
+        throw 'illegal char at ' + (i + 1);
+      }
+    };
+
+    return _this;
+  };
+
+  //=====================================================================
+  // GIF Support etc.
+  //
+
+  //---------------------------------------------------------------------
+  // byteArrayOutputStream
+  //---------------------------------------------------------------------
+
+  var byteArrayOutputStream = function() {
+
+    var _bytes = [];
+
+    var _this = {};
+
+    _this.writeByte = function(b) {
+      _bytes.push(b & 0xff);
+    };
+
+    _this.writeShort = function(i) {
+      _this.writeByte(i);
+      _this.writeByte(i >>> 8);
+    };
+
+    _this.writeBytes = function(b, off, len) {
+      off = off || 0;
+      len = len || b.length;
+      for (var i = 0; i < len; i += 1) {
+        _this.writeByte(b[i + off]);
+      }
+    };
+
+    _this.writeString = function(s) {
+      for (var i = 0; i < s.length; i += 1) {
+        _this.writeByte(s.charCodeAt(i) );
+      }
+    };
+
+    _this.toByteArray = function() {
+      return _bytes;
+    };
+
+    _this.toString = function() {
+      var s = '';
+      s += '[';
+      for (var i = 0; i < _bytes.length; i += 1) {
+        if (i > 0) {
+          s += ',';
+        }
+        s += _bytes[i];
+      }
+      s += ']';
+      return s;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64EncodeOutputStream
+  //---------------------------------------------------------------------
+
+  var base64EncodeOutputStream = function() {
+
+    var _buffer = 0;
+    var _buflen = 0;
+    var _length = 0;
+    var _base64 = '';
+
+    var _this = {};
+
+    var writeEncoded = function(b) {
+      _base64 += String.fromCharCode(encode(b & 0x3f) );
+    };
+
+    var encode = function(n) {
+      if (n < 0) {
+        // error.
+      } else if (n < 26) {
+        return 0x41 + n;
+      } else if (n < 52) {
+        return 0x61 + (n - 26);
+      } else if (n < 62) {
+        return 0x30 + (n - 52);
+      } else if (n == 62) {
+        return 0x2b;
+      } else if (n == 63) {
+        return 0x2f;
+      }
+      throw 'n:' + n;
+    };
+
+    _this.writeByte = function(n) {
+
+      _buffer = (_buffer << 8) | (n & 0xff);
+      _buflen += 8;
+      _length += 1;
+
+      while (_buflen >= 6) {
+        writeEncoded(_buffer >>> (_buflen - 6) );
+        _buflen -= 6;
+      }
+    };
+
+    _this.flush = function() {
+
+      if (_buflen > 0) {
+        writeEncoded(_buffer << (6 - _buflen) );
+        _buffer = 0;
+        _buflen = 0;
+      }
+
+      if (_length % 3 != 0) {
+        // padding
+        var padlen = 3 - _length % 3;
+        for (var i = 0; i < padlen; i += 1) {
+          _base64 += '=';
+        }
+      }
+    };
+
+    _this.toString = function() {
+      return _base64;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64DecodeInputStream
+  //---------------------------------------------------------------------
+
+  var base64DecodeInputStream = function(str) {
+
+    var _str = str;
+    var _pos = 0;
+    var _buffer = 0;
+    var _buflen = 0;
+
+    var _this = {};
+
+    _this.read = function() {
+
+      while (_buflen < 8) {
+
+        if (_pos >= _str.length) {
+          if (_buflen == 0) {
+            return -1;
+          }
+          throw 'unexpected end of file./' + _buflen;
+        }
+
+        var c = _str.charAt(_pos);
+        _pos += 1;
+
+        if (c == '=') {
+          _buflen = 0;
+          return -1;
+        } else if (c.match(/^\s$/) ) {
+          // ignore if whitespace.
+          continue;
+        }
+
+        _buffer = (_buffer << 6) | decode(c.charCodeAt(0) );
+        _buflen += 6;
+      }
+
+      var n = (_buffer >>> (_buflen - 8) ) & 0xff;
+      _buflen -= 8;
+      return n;
+    };
+
+    var decode = function(c) {
+      if (0x41 <= c && c <= 0x5a) {
+        return c - 0x41;
+      } else if (0x61 <= c && c <= 0x7a) {
+        return c - 0x61 + 26;
+      } else if (0x30 <= c && c <= 0x39) {
+        return c - 0x30 + 52;
+      } else if (c == 0x2b) {
+        return 62;
+      } else if (c == 0x2f) {
+        return 63;
+      } else {
+        throw 'c:' + c;
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // gifImage (B/W)
+  //---------------------------------------------------------------------
+
+  var gifImage = function(width, height) {
+
+    var _width = width;
+    var _height = height;
+    var _data = new Array(width * height);
+
+    var _this = {};
+
+    _this.setPixel = function(x, y, pixel) {
+      _data[y * _width + x] = pixel;
+    };
+
+    _this.write = function(out) {
+
+      //---------------------------------
+      // GIF Signature
+
+      out.writeString('GIF87a');
+
+      //---------------------------------
+      // Screen Descriptor
+
+      out.writeShort(_width);
+      out.writeShort(_height);
+
+      out.writeByte(0x80); // 2bit
+      out.writeByte(0);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Global Color Map
+
+      // black
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+
+      // white
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+
+      //---------------------------------
+      // Image Descriptor
+
+      out.writeString(',');
+      out.writeShort(0);
+      out.writeShort(0);
+      out.writeShort(_width);
+      out.writeShort(_height);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Local Color Map
+
+      //---------------------------------
+      // Raster Data
+
+      var lzwMinCodeSize = 2;
+      var raster = getLZWRaster(lzwMinCodeSize);
+
+      out.writeByte(lzwMinCodeSize);
+
+      var offset = 0;
+
+      while (raster.length - offset > 255) {
+        out.writeByte(255);
+        out.writeBytes(raster, offset, 255);
+        offset += 255;
+      }
+
+      out.writeByte(raster.length - offset);
+      out.writeBytes(raster, offset, raster.length - offset);
+      out.writeByte(0x00);
+
+      //---------------------------------
+      // GIF Terminator
+      out.writeString(';');
+    };
+
+    var bitOutputStream = function(out) {
+
+      var _out = out;
+      var _bitLength = 0;
+      var _bitBuffer = 0;
+
+      var _this = {};
+
+      _this.write = function(data, length) {
+
+        if ( (data >>> length) != 0) {
+          throw 'length over';
+        }
+
+        while (_bitLength + length >= 8) {
+          _out.writeByte(0xff & ( (data << _bitLength) | _bitBuffer) );
+          length -= (8 - _bitLength);
+          data >>>= (8 - _bitLength);
+          _bitBuffer = 0;
+          _bitLength = 0;
+        }
+
+        _bitBuffer = (data << _bitLength) | _bitBuffer;
+        _bitLength = _bitLength + length;
+      };
+
+      _this.flush = function() {
+        if (_bitLength > 0) {
+          _out.writeByte(_bitBuffer);
+        }
+      };
+
+      return _this;
+    };
+
+    var getLZWRaster = function(lzwMinCodeSize) {
+
+      var clearCode = 1 << lzwMinCodeSize;
+      var endCode = (1 << lzwMinCodeSize) + 1;
+      var bitLength = lzwMinCodeSize + 1;
+
+      // Setup LZWTable
+      var table = lzwTable();
+
+      for (var i = 0; i < clearCode; i += 1) {
+        table.add(String.fromCharCode(i) );
+      }
+      table.add(String.fromCharCode(clearCode) );
+      table.add(String.fromCharCode(endCode) );
+
+      var byteOut = byteArrayOutputStream();
+      var bitOut = bitOutputStream(byteOut);
+
+      // clear code
+      bitOut.write(clearCode, bitLength);
+
+      var dataIndex = 0;
+
+      var s = String.fromCharCode(_data[dataIndex]);
+      dataIndex += 1;
+
+      while (dataIndex < _data.length) {
+
+        var c = String.fromCharCode(_data[dataIndex]);
+        dataIndex += 1;
+
+        if (table.contains(s + c) ) {
+
+          s = s + c;
+
+        } else {
+
+          bitOut.write(table.indexOf(s), bitLength);
+
+          if (table.size() < 0xfff) {
+
+            if (table.size() == (1 << bitLength) ) {
+              bitLength += 1;
+            }
+
+            table.add(s + c);
+          }
+
+          s = c;
+        }
+      }
+
+      bitOut.write(table.indexOf(s), bitLength);
+
+      // end code
+      bitOut.write(endCode, bitLength);
+
+      bitOut.flush();
+
+      return byteOut.toByteArray();
+    };
+
+    var lzwTable = function() {
+
+      var _map = {};
+      var _size = 0;
+
+      var _this = {};
+
+      _this.add = function(key) {
+        if (_this.contains(key) ) {
+          throw 'dup key:' + key;
+        }
+        _map[key] = _size;
+        _size += 1;
+      };
+
+      _this.size = function() {
+        return _size;
+      };
+
+      _this.indexOf = function(key) {
+        return _map[key];
+      };
+
+      _this.contains = function(key) {
+        return typeof _map[key] != 'undefined';
+      };
+
+      return _this;
+    };
+
+    return _this;
+  };
+
+  var createDataURL = function(width, height, getPixel) {
+    var gif = gifImage(width, height);
+    for (var y = 0; y < height; y += 1) {
+      for (var x = 0; x < width; x += 1) {
+        gif.setPixel(x, y, getPixel(x, y) );
+      }
+    }
+
+    var b = byteArrayOutputStream();
+    gif.write(b);
+
+    var base64 = base64EncodeOutputStream();
+    var bytes = b.toByteArray();
+    for (var i = 0; i < bytes.length; i += 1) {
+      base64.writeByte(bytes[i]);
+    }
+    base64.flush();
+
+    return 'data:image/gif;base64,' + base64;
+  };
+
+  //---------------------------------------------------------------------
+  // returns qrcode function.
+
+  return qrcode;
+}();
+
+// multibyte support
+!function() {
+
+  qrcode.stringToBytesFuncs['UTF-8'] = function(s) {
+    // http://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
+    function toUTF8Array(str) {
+      var utf8 = [];
+      for (var i=0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80) utf8.push(charcode);
+        else if (charcode < 0x800) {
+          utf8.push(0xc0 | (charcode >> 6),
+              0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+          utf8.push(0xe0 | (charcode >> 12),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+        // surrogate pair
+        else {
+          i++;
+          // UTF-16 encodes 0x10000-0x10FFFF by
+          // subtracting 0x10000 and splitting the
+          // 20 bits of 0x0-0xFFFFF into two halves
+          charcode = 0x10000 + (((charcode & 0x3ff)<<10)
+            | (str.charCodeAt(i) & 0x3ff));
+          utf8.push(0xf0 | (charcode >>18),
+              0x80 | ((charcode>>12) & 0x3f),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+      }
+      return utf8;
+    }
+    return toUTF8Array(s);
+  };
+
+}();
+
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+      define([], factory);
+  } else if (typeof exports === 'object') {
+      module.exports = factory();
+  }
+}(function () {
+    return qrcode;
+}));
 /* ===== Зручність 2 (0.9.1): швидкість як у Skiagrama, пункти рецензії інтерфейсу, налаштування блоками, «?» біля розділу ===== */
 const lsGet = (k, d) => { try{ const v = localStorage.getItem(k); return v == null ? d : v; }catch(e){ return d; } };
 const lsSet = (k, v) => { try{ localStorage.setItem(k, v); }catch(e){} };
@@ -7428,6 +9787,279 @@ let vT = 0; window.addEventListener('resize', ()=>{ clearTimeout(vT); vT = setTi
 { const si1 = searchItems; searchItems = function(){ const L = si1(); L.push({k:'Дія', t:'Вигляд: ноутбук / монітор, розташування, масштаб', s:'', go:openViewPop});
     Object.keys(LAYS).forEach(k=>L.push({k:'Вигляд', t:'Розташування: ' + LAYS[k], s:LAY_HINT[k], go:()=>{ VIEW.layout = k; saveView(); applyView(); }})); return L; }; }
 applyView();
+/* ===== Профілі (0.9.3): спеціальність × місце роботи → свої хвороби першими, свої системи розгорнуті, решта — рядком «б/о» ===== */
+const PROFS = {
+  ter:  {n:'Терапевт', ic:'🩺', d:'терапія, кардіологія, гастро', spec:'ter', g:['ter'], open:['zah','dyh','ssc','trav','sech']},
+  hir:  {n:'Хірург', ic:'🔪', d:'гостра й планова хірургія, амбулаторні операції', spec:'ter', g:['hir','tr'], open:['zah','trav'], loc:true, docs:['zgoda']},
+  tr:   {n:'Травматолог', ic:'🦴', d:'травми, Status localis, гіпс', spec:'tr', g:['tr','hir'], open:['zah']},
+  nevr: {n:'Невролог', ic:'🧠', d:'інсульт, радикулопатії, шкали', spec:'ter', g:['nevr'], open:['zah','nevr']},
+  inf:  {n:'Інфекціоніст', ic:'🦠', d:'ГРВІ, кишкові, епіданамнез', spec:'ter', g:['inf'], open:['zah','shk','dyh','trav']},
+  fam:  {n:'Сімейний лікар', ic:'🏠', d:'ICPC-2, скринінги, ЕЛН', spec:'fam', g:['fam','ter','inf'], open:['zah','shk','dyh','ssc','trav','sech','nevr'], work:'amb'},
+  pulm: {n:'Пульмонолог', ic:'🫁', d:'ХОЗЛ, астма, пневмонія', spec:'ter', g:['ter'], open:['zah','dyh','ssc'], first:['pneu','copd','asthma','bronch'], tag:'частина — у плані'},
+  anest:{n:'Анестезіолог', ic:'💉', d:'передопераційний огляд', spec:'ter', g:['ter'], open:['zah','dyh','ssc'], tag:'у плані'}
+};
+const WORKS = {hosp:['Стаціонар','огляд при надходженні, щоденники, епікризи, критерії госпіталізації'], amb:['Поліклініка / кабінет','прийом, ЕЛН, направлення, амбулаторні маніпуляції'], both:['І там, і там','перемикач «Стаціонар / Амбулаторно» лишається в шапці']};
+const SYS_IDS = ['zah','shk','dyh','ssc','trav','sech','nevr'];
+const SYS_NAMES = {zah:'загальний стан', shk:'шкіра, зів, лімфовузли', dyh:'дихання', ssc:'серце', trav:'травлення', sech:'сечова', nevr:'неврологія'};
+let PROF = null; try{ PROF = JSON.parse(lsGet('po.prof', 'null')); if (PROF && !PROFS[PROF.p]) PROF = null; }catch(e){ PROF = null; }
+let SYSOPEN = lsGet('po.sysopen', '0') === '1';   // «Інші системи» розгорнуто
+const DOC0 = {hosp:DOCLIST.hosp.slice(), amb:DOCLIST.amb.slice()}, MORE0 = {hosp:DOCMORE.hosp.slice(), amb:DOCMORE.amb.slice()}, SG0 = Object.assign({}, SPEC_GROUPS);
+const profNow = () => PROF && PROFS[PROF.p];
+
+/* вкладки: згорнути «чужі» системи в один рядок, сховати непотрібне */
+const sysFoldBtn = h('button', {type:'button', class:'tab tfold', title:'Системи, яких немає у вашому профілі. У тексті — як заповнено («Норма всюди» ставить норму)'});
+sysFoldBtn.onclick = () => { SYSOPEN = !SYSOPEN; lsSet('po.sysopen', SYSOPEN ? '1' : '0'); layoutTabs(); renderTabNav(); };
+{ const lt0 = layoutTabs;
+  layoutTabs = function(){
+    const P = profNow(); let folded = 0;
+    TABS.forEach(t=>{ if (t._pf){ t.tab.hidden = false; t._pf = false; } });   // повернути сховане профілем; далі — заново
+    if (P){
+      const L = SECTIONS.find(x=>x.id === 'loc');
+      if (L && L.tab){ if (P.loc && L.docs.includes(DOC) && !(quickHide() && !QT.includes('loc'))){ if (L.tab.hidden){ L.tab.hidden = false; L._pl = true; } } L.tab.firstChild.textContent = P.loc ? 'St. localis' : (L.short || 'Травма'); }
+      TABS.forEach(t=>{
+        if (!t.tab || t.tab.hidden) return;
+        if (SYS_IDS.includes(t.id) && !P.open.includes(t.id)){ folded++; if (!SYSOPEN){ t.tab.hidden = true; t._pf = true; } }
+        if ((t.id === 'scr' || t.id === 'ctrl') && PROF.p !== 'fam'){ t.tab.hidden = true; t._pf = true; }
+      });
+    }
+    const r = lt0.apply(this, arguments);
+    sysFoldBtn.remove();
+    if (P && folded){
+      sysFoldBtn.textContent = SYSOPEN ? 'Згорнути інші ▴' : `Інші системи · б/о ▸`;
+      sysFoldBtn.setAttribute('aria-expanded', SYSOPEN ? 'true' : 'false');
+      const z = TABS.find(t=>t.id === 'zah'); const grp = z && z.tab.closest('.tgrp');
+      const lastExam = grp ? [...grp.querySelectorAll('.tab')].filter(x=>!x.hidden).pop() : null;
+      if (lastExam) lastExam.after(sysFoldBtn);
+    }
+    return r;
+  }; }
+
+function applyProfile(quiet){
+  const P = profNow();
+  // група хвороб і базова «спеціальність» програми
+  Object.keys(SG0).forEach(k=>{ SPEC_GROUPS[k] = SG0[k].slice(); });
+  if (P){
+    if (SPEC !== P.spec){ SPEC = P.spec; lsSet('po.spec', SPEC); const ss = $('#set_spec'); if (ss) ss.value = SPEC; }
+    SPEC_GROUPS[SPEC] = P.g.slice(); curGroup = P.g[0];
+    const w = PROF.w || P.work || 'both';
+    if (w !== 'both' && MODE !== w){ MODE = w; lsSet('po.mode', MODE); applyMode(); }
+    $('#modeSeg').hidden = w !== 'both';
+  } else $('#modeSeg').hidden = false;
+  // документи на видному місці
+  ['hosp','amb'].forEach(m=>{ DOCLIST[m] = DOC0[m].slice(); DOCMORE[m] = MORE0[m].slice();
+    ((P && P.docs) || []).forEach(k=>{ const i = DOCMORE[m].findIndex(d=>d[0] === k); if (i >= 0){ DOCLIST[m].push([k, k === 'zgoda' ? 'Згода' : DOCMORE[m][i][1]]); DOCMORE[m].splice(i, 1); } }); });
+  // порядок карток: «свої» першими
+  if (HV.cardBox && HV.cards){ const first = (P && P.first) || []; const idx = c => { const k = PRESETS[HV.cards.indexOf(c)].key, f = first.indexOf(k); return f >= 0 ? f - 1000 : HV.cards.indexOf(c); };
+    [...HV.cards].sort((a,b)=>idx(a) - idx(b)).forEach(c=>HV.cardBox.append(c)); }
+  if (HV.filter) HV.filter();
+  applyDoc(true); syncLoc(true);
+  renderProfBtn();
+  if (!quiet && P) toast(`Профіль: ${P.n.toLowerCase()} · ${WORKS[PROF.w || 'both'][0].toLowerCase()}`, 2200);
+}
+
+/* кнопка профілю в шапці */
+const profBtn = h('button', {type:'button', class:'btn profbtn', id:'profBtn', title:'Профіль: спеціальність і місце роботи', onclick:()=>profileDialog(false)});
+$('#modeSeg').before(profBtn);
+function renderProfBtn(){
+  const P = profNow(); profBtn.innerHTML = '';
+  if (!P){ profBtn.append(h('span', {'aria-hidden':'true'}, '👤'), h('span', {class:'pl'}, ' Профіль ▾')); return; }
+  const w = PROF.w || P.work || 'both';
+  profBtn.append(h('span', {'aria-hidden':'true'}, P.ic), h('span', {class:'pl'}, ' ' + P.n), h('span', {class:'pw'}, ' · ' + {hosp:'стаціонар', amb:'поліклініка', both:'стаціонар + поліклініка'}[w]), h('span', {class:'pl'}, ' ▾'));
+}
+
+/* майстер профілю */
+function profileDialog(first){
+  if (document.querySelector('.profdlg')) return;
+  let p = PROF ? PROF.p : null, w = PROF ? (PROF.w || 'both') : 'both';
+  const cards = h('div', {class:'pgrid'}), works = h('div', {class:'pwork'}), prev = h('div', {class:'pprev'});
+  const draw = () => {
+    cards.innerHTML = ''; works.innerHTML = '';
+    Object.keys(PROFS).forEach(k=>{ const P = PROFS[k];
+      cards.append(h('button', {type:'button', class:'pcard', 'aria-pressed':p === k ? 'true' : 'false', onclick:()=>{ p = k; if (P.work) w = P.work; draw(); }},
+        h('span', {class:'pic', 'aria-hidden':'true'}, P.ic), h('b', {}, P.n), h('span', {}, P.d), P.tag ? h('span', {class:'ptag'}, P.tag) : '')); });
+    Object.keys(WORKS).forEach(k=>works.append(h('button', {type:'button', class:'pcard', 'aria-pressed':w === k ? 'true' : 'false', onclick:()=>{ w = k; draw(); }}, h('b', {}, WORKS[k][0]), h('span', {}, WORKS[k][1]))));
+    prev.innerHTML = '';
+    const P = p && PROFS[p];
+    if (!P){ prev.append(h('h4', {}, 'Що зміниться'), h('p', {class:'chips-hint'}, 'Оберіть спеціальність — тут з’явиться, що буде на видному місці, а що згорнеться.')); return; }
+    const gname = k => (GROUPS.find(x=>x[0] === k) || [k, k])[1];
+    const fold = SYS_IDS.filter(s=>!P.open.includes(s)).map(s=>SYS_NAMES[s]);
+    const li = (c, t) => h('li', {}, h('span', {class:'pm ' + c}, c === 'y' ? '✓' : c === 'f' ? '≡' : '—'), h('span', {}, t));
+    prev.append(h('h4', {}, 'Що ви побачите — ' + P.n.toLowerCase()),
+      h('div', {class:'pk'}, 'Хвороби першими'), h('ul', {}, li('y', P.g.map(gname).join(', ') + (P.first ? ' (ХОЗЛ, астма, пневмонія — на початку)' : '')), li('n', 'решта — в «Інші профілі»')),
+      h('div', {class:'pk'}, 'Огляд'), h('ul', {}, li('y', 'розгорнуто: ' + P.open.map(s=>SYS_NAMES[s]).join(', ') + (P.loc ? ', Status localis' : '')), fold.length ? li('f', 'одним рядком «Інші системи · б/о»: ' + fold.join(', ')) : li('y', 'усі системи розгорнуті')),
+      h('div', {class:'pk'}, 'Документи'), h('ul', {}, li('y', 'огляд · щоденник · призначення · ' + (w === 'amb' ? 'консультація' : 'епікриз') + (P.docs ? ' · згода' : '')), li('n', 'решта — в «Інші документи»')),
+      p !== 'fam' ? h('div', {}, h('div', {class:'pk'}, 'Сховано'), h('ul', {}, li('n', 'профілактика і скринінги, контроль хронічних хвороб'))) : '',
+      h('p', {class:'pnote'}, 'Нічого не видаляється: сховане відкривається одним клацанням, пошук Ctrl+K знаходить усе.'));
+  };
+  const close = () => { dlg.remove(); lsSet('po.profask', '1'); };
+  const done = () => { if (!p){ toast('Оберіть спеціальність'); return; } PROF = {p, w}; lsSet('po.prof', JSON.stringify(PROF)); close(); applyProfile(false); if (first) show(TABS.indexOf(HV)); };
+  const skip = () => { PROF = null; try{ localStorage.removeItem('po.prof'); }catch(e){} close(); applyProfile(true); toast('Показується все — профіль можна обрати кнопкою в шапці', 3000); };
+  const dlg = h('div', {class:'navsheet packsheet profdlg', role:'dialog', 'aria-modal':'true', 'aria-label':'Профіль'},
+    h('div', {class:'nvbox pbox'},
+      h('div', {class:'pmain'},
+        h('h3', {}, first ? 'Налаштуймо програму під вашу роботу' : 'Профіль'),
+        h('p', {class:'chips-hint'}, 'Два питання — і зайве сховається. Змінити можна будь-коли: кнопка профілю в шапці або «Налаштування».'),
+        h('div', {class:'pstep'}, '1 · Ваша спеціальність'), cards,
+        h('div', {class:'pstep'}, '2 · Де працюєте'), works,
+        h('div', {class:'pfoot'}, h('button', {type:'button', class:'btn', onclick:skip}, PROF ? 'Без профілю — показувати все' : 'Пропустити — показувати все'), h('button', {type:'button', class:'btn primary', onclick:done}, 'Готово →'))),
+      prev));
+  dlg.addEventListener('click', e=>{ if (e.target === dlg && !first) close(); });
+  document.addEventListener('keydown', function k(e){ if (e.key === 'Escape' && document.body.contains(dlg)){ close(); document.removeEventListener('keydown', k); } });
+  document.body.append(dlg); draw();
+}
+/* Налаштування: профіль замість старого списку */
+{ const ss = $('#set_spec'), f = ss && ss.closest('.f');
+  if (f){ f.hidden = true; const hint = f.parentElement && f.parentElement.nextElementSibling; if (hint && hint.matches('p.chips-hint')){}
+    f.after(h('div', {class:'f wide'}, h('label', {}, 'Профіль'), h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>profileDialog(false)}, 'Змінити профіль…')),
+      h('p', {class:'chips-hint', style:'margin-top:6px'}, 'Спеціальність і місце роботи: свої хвороби першими, свої системи розгорнуті, решта — одним рядком «б/о».'))); } }
+/* перший запуск: після знайомства; наявним користувачам — один раз */
+{ const w0 = welcomeDialog; welcomeDialog = function(force){ const r = w0.apply(this, arguments);
+    const dl = document.querySelector('.welcome');
+    if (dl) dl.querySelectorAll('.wgrid > .wl').forEach(x=>{ if (/Профіль роботи|Працюю переважно/.test(x.textContent)) x.remove(); });
+    if (dl && !force){ const ob = new MutationObserver(()=>{ if (!document.body.contains(dl)){ ob.disconnect(); if (!PROF && lsGet('po.profask', '') !== '1') setTimeout(()=>profileDialog(true), 250); } }); ob.observe(document.body, {childList:true}); }
+    return r; }; }
+setTimeout(()=>{ if (!PROF && lsGet('po.profask', '') !== '1' && !document.querySelector('.welcome') && lsGet('po.welcome', '') === '1') profileDialog(true); }, 700);
+/* пошук Ctrl+K знаходить і згорнуті системи */
+{ const si2 = searchItems; searchItems = function(){ const L = si2();
+    if (profNow()) TABS.filter(t=>t._pf && SYS_IDS.includes(t.id)).forEach(t=>L.push({k:'Розділ', t:t.title, s:'згорнуто', go:()=>{ SYSOPEN = true; lsSet('po.sysopen', '1'); layoutTabs(); show(TABS.indexOf(t)); }}));
+    L.push({k:'Дія', t:'Профіль: спеціальність і місце роботи', s:'', go:()=>profileDialog(false)}); return L; }; }
+applyProfile(true);
+/* ===== Нирки (0.9.3): корекція доз — ширший перелік, ШКФ коли немає ваги, нагадування про креатинін ===== */
+/* Пороги — за інструкціями (SmPC) і довідниками з корекції доз; у програмі — як нагадування, остаточно — за інструкцією препарату. */
+const RENAL_EXTRA = {
+  'валацикловір':[{lt:10, m:'500 мг кожні 24 год (оперізувальний герпес)'}, {lt:30, m:'1 г кожні 24 год'}, {lt:50, m:'1 г кожні 12 год'}],
+  'ампіцилін':[{lt:10, m:'кожні 12–24 год'}, {lt:50, m:'кожні 6–12 год'}],
+  'цефалексин':[{lt:15, m:'250 мг кожні 24 год'}, {lt:30, m:'250 мг кожні 8–12 год'}],
+  'цефіксим':[{lt:20, m:'200 мг 1 р/д'}],
+  'фосфоміцин':[{lt:10, m:'протипоказаний'}],
+  'тетрациклін':[{lt:50, m:'уникати — доксициклін не потребує корекції дози'}],
+  'тизанідин':[{lt:25, m:'почати з 2 мг 1 р/д, нарощувати повільно'}],
+  'морфін':[{lt:30, m:'зменшити дозу й подовжити інтервал — накопичуються активні метаболіти'}],
+  'дулоксетин':[{lt:30, m:'протипоказаний'}],
+  'зопіклон':[{lt:30, m:'почати з 3,75 мг'}],
+  'сакубітрил/валсартан':[{lt:30, m:'почати з 24/26 мг 2 р/д'}],
+  'семаглутид':[{lt:15, m:'не рекомендований'}],
+  'магнію сульфат':[{lt:30, m:'ризик гіпермагніємії — зменшити дозу, контроль магнію'}],
+  'алопуринол':[{lt:30, m:'почати з 50 мг/добу, нарощувати повільно під контролем'}],
+  'бісопролол':[{lt:20, m:'не більше 10 мг/добу'}],
+  'інсулін гларгін':[{lt:30, m:'потреба в інсуліні зменшується — ризик гіпоглікемії, частіший контроль глюкози'}],
+  'інсулін короткої дії':[{lt:30, m:'потреба в інсуліні зменшується — ризик гіпоглікемії, частіший контроль глюкози'}]
+};
+function egfrVal(){ const c = CALCS.find(x=>x.id === 'ckd'); return c && c.last && !c.last.msg ? parseInt(c.last.score) : NaN; }
+/* функція нирок: кліренс (Кокрофт–Голт), а якщо немає ваги — ШКФ (CKD-EPI) */
+function renalNow(){ const k = crclVal(); if (!isNaN(k)) return {v:k, l:'КК'}; const e = egfrVal(); if (!isNaN(e)) return {v:e, l:'ШКФ'}; return null; }
+const renalRules = name => { const d = drugInfo(name); if (d && d.renal) return d.renal; return RENAL_EXTRA[String(name || '').trim().toLowerCase()] || null; };
+renalMsg = function(it){
+  const R = renalRules(it.drug), k = renalNow(); if (!R || !k) return '';
+  const r = R.slice().sort((a,b)=>a.lt - b.lt).find(x=>k.v < x.lt);
+  return r ? `${k.l} ${k.v} мл/хв: ${r.m} (перевірте за інструкцією)` : '';
+};
+/* перевірка перед підписом: є препарати з нирковою корекцією, а креатиніну немає */
+{ const c0 = checkDoc;
+  checkDoc = function(){
+    const L = c0.apply(this, arguments);
+    if (!itext($('#out')).trim() || !['ohl','shch','rx','epi'].includes(DOC)) return L;
+    const d = todayISO(), need = RX.filter(it=>!it.stop || it.stop > d).filter(it=>renalRules(it.drug)).map(it=>it.drug);
+    if (need.length && !renalNow()) L.push({m:`Немає креатиніну — дози за функцією нирок не перевірено (${need.slice(0, 3).join(', ')}${need.length > 3 ? '…' : ''})`, tab:'rxt'});
+    return L;
+  }; }
+/* стрічка «Призначено»: короткий підсумок по нирках */
+{ const rs0 = renderRxStrip;
+  renderRxStrip = function(){
+    const r = rs0.apply(this, arguments), s = $('#rxStrip'); if (!s || s.hidden) return r;
+    const k = renalNow(), hits = RX.filter(it=>!it.stop && renalMsg(it)).map(it=>it.drug);
+    if (hits.length) s.append(h('span', {class:'rxs-g rxs-renal'}, ` · ⚠ Нирки (${k.l} ${k.v}): перевірте дозу — ${hits.join(', ')}`));
+    return r;
+  }; }
+/* ===== QR-код на документах для пацієнта і секундомір документа (0.9.3) ===== */
+
+/* ---------- QR: пацієнт сканує телефоном і забирає текст собі (без інтернету: текст — у самому коді) ---------- */
+let QRON = lsGet('po.qr', '1') !== '0';
+const QR_DOCS = {pam:'пам’ятки', epi:'рекомендацій', kons:'рекомендацій'};
+const QR_MAX = 700;
+function qrText(){
+  const t = itext($('#out')).replace(/[ \t]+/g, ' ').replace(/\n{2,}/g, '\n').trim(); if (!t) return '';
+  if (t.length <= QR_MAX) return t;
+  // довгий документ — беремо головне для пацієнта: рекомендації / лікування / ліки
+  const re = /(Рекомендації|Рекомендовано|Рекомендації пацієнту|Призначення|Лікування|Ліки|Як приймати ліки)[^\n]*:/g; let m, at = -1;
+  while ((m = re.exec(t))) at = m.index;
+  const part = at >= 0 ? t.slice(at) : t;
+  return part.length <= QR_MAX ? part : part.slice(0, QR_MAX - 40).replace(/\s+\S*$/, '') + '… (повністю — у паперовому документі)';
+}
+function qrSvg(text){
+  try{
+    qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+    const q = qrcode(0, 'L'); q.addData(text, 'Byte'); q.make();
+    const n = q.getModuleCount(), mm = Math.max(26, Math.min(55, Math.round(n * 0.4)));
+    const box = h('div', {class:'prqr-c', style:`width:${mm}mm;height:${mm}mm`}); box.innerHTML = q.createSvgTag({cellSize:2, margin:0, scalable:true});
+    return box;
+  }catch(e){ return null; }
+}
+{ const fs0 = fillSheet;
+  fillSheet = function(P){
+    const r = fs0.apply(this, arguments);
+    if (QRON && QR_DOCS[DOC]){ const t = qrText(), q = t && qrSvg(t);
+      if (q) P.append(h('div', {class:'prqr'}, q, h('div', {class:'prqr-t'}, h('b', {}, 'Текст ' + QR_DOCS[DOC] + ' — у ваш телефон'), h('span', {}, 'Наведіть камеру телефону на код і збережіть або скопіюйте текст. Інтернет не потрібен.')))); }
+    return r;
+  }; }
+
+/* ---------- Секундомір: скільки активного часу пішло на документ ---------- */
+/* Рахується лише час, коли лікар щось робить у програмі (паузи довші за 2 хв не враховуються). Зберігається лише в цьому браузері. */
+const TM = {act:0, last:0};
+const TM_GAP = 120e3;
+['input','click','keydown','change'].forEach(ev=>document.addEventListener(ev, e=>{
+  if (!e.isTrusted) return; const now = Date.now();
+  if (TM.last && now - TM.last <= TM_GAP) TM.act += now - TM.last; TM.last = now;
+}, true));
+function tmLoad(){ try{ return JSON.parse(lsGet('po.times', '[]')) || []; }catch(e){ return []; } }
+function tmRecord(how){
+  const sec = Math.round(TM.act / 1000); if (sec < 20 || !itext($('#out')).trim()) return;
+  const L = tmLoad(); L.push({t:Date.now(), doc:DOC, sec, how, p:PROF ? PROF.p : ''}); while (L.length > 1000) L.shift();
+  lsSet('po.times', JSON.stringify(L)); TM.act = 0; renderTimes();
+}
+function tmReset(){ TM.act = 0; TM.last = 0; }
+['#copy', '#copy2', '#printBtn', '#docxBtn', '#odtBtn'].forEach(s=>{ const b = $(s); if (b) b.addEventListener('click', ()=>tmRecord(s === '#printBtn' ? 'друк' : s.includes('copy') ? 'копіювання' : 'файл')); });
+{ const c0 = copy; copy = function(){ const r = c0.apply(this, arguments); tmRecord('копіювання'); return r; }; }
+{ const p0 = doPrint; doPrint = function(){ const r = p0.apply(this, arguments); tmRecord('друк'); return r; }; }
+['newPatient', 'openPatient'].forEach(nm=>{ const f = window[nm]; if (typeof f === 'function') window[nm] = function(...a){ const r = f.apply(this, a); tmReset(); return r; }; });
+{ const sd0 = switchDoc; switchDoc = function(){ const r = sd0.apply(this, arguments); tmReset(); return r; }; }
+const DOCNAME = {ohl:'первинний огляд', shch:'щоденник', rx:'призначення', epi:'виписний епікриз', kons:'консультація', pam:'пам’ятка', zav:'огляд завідувача', konc:'консиліум', etap:'етапний епікриз', per:'переказний епікриз', napr:'направлення', gosp:'направлення на госпіталізацію', dov:'довідка', zgoda:'згода'};
+const fmtMin = s => s < 60 ? s + ' с' : Math.floor(s / 60) + ' хв' + (s % 60 >= 30 ? ' 30 с' : '');
+function tmStats(days){
+  const from = Date.now() - days * 864e5, L = tmLoad().filter(x=>x.t >= from), by = {};
+  L.forEach(x=>{ (by[x.doc] = by[x.doc] || []).push(x.sec); });
+  const med = a => { const s = a.slice().sort((x,y)=>x - y), m = s.length >> 1; return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2); };
+  return Object.keys(by).map(k=>({doc:k, n:by[k].length, med:med(by[k])})).sort((a,b)=>b.n - a.n);
+}
+function renderTimes(){
+  const box = $('#tmBox'); if (!box) return; box.innerHTML = '';
+  const S = tmStats(7); if (!S.length){ box.hidden = true; return; } box.hidden = false;
+  box.append(h('span', {class:'chips-hint'}, '⏱ За тиждень (медіана): '), ...S.slice(0, 3).map((x,i)=>h('span', {class:'tmi'}, (i ? ' · ' : '') + DOCNAME[x.doc] + ' — ' + fmtMin(x.med) + ` (${x.n})`)),
+    h('button', {type:'button', class:'more', onclick:timesDialog}, 'Докладніше'));
+}
+function timesDialog(){
+  const close = () => dlg.remove();
+  const tbl = days => { const S = tmStats(days); if (!S.length) return h('p', {class:'chips-hint'}, 'Ще немає даних.');
+    return h('table', {class:'tmt'}, h('tr', {}, h('th', {}, 'Документ'), h('th', {}, 'Скільки'), h('th', {}, 'Медіана часу')), ...S.map(x=>h('tr', {}, h('td', {}, DOCNAME[x.doc] || x.doc), h('td', {}, String(x.n)), h('td', {}, fmtMin(x.med))))); };
+  const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Час на документи'}, h('div', {class:'nvbox'},
+    h('div', {class:'nshead'}, h('b', {}, '⏱ Час на документи'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+    h('p', {class:'chips-hint'}, 'Рахується лише активний час роботи в програмі — від відкриття пацієнта чи документа до «Копіювати», друку або збереження у файл. Паузи довші за 2 хв не враховуються. Дані лише в цьому браузері; для пілоту їх можна зберегти у файл.'),
+    h('h3', {class:'sub'}, 'Останні 7 днів'), tbl(7), h('h3', {class:'sub'}, 'Останні 30 днів'), tbl(30),
+    h('div', {class:'acts2', style:'margin-top:12px'},
+      h('button', {type:'button', class:'btn', onclick:()=>{ const L = tmLoad(); downloadJSON({type:'po-times', note:'Активний час на документи (секунди), без даних пацієнтів', items:L}, 'chas-na-dokumenty.json'); }}, 'Зберегти у файл (для пілоту)'),
+      h('button', {type:'button', class:'more', onclick:e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно очистити?'; return; } lsSet('po.times', '[]'); renderTimes(); close(); toast('Статистику часу очищено'); }}, 'Очистити'))));
+  dlg.addEventListener('click', e=>{ if (e.target === dlg) close(); }); document.body.append(dlg);
+}
+{ const pl = $('#plist'); if (pl){ const b = h('div', {class:'tmbox', id:'tmBox', hidden:''}); const today = $('#today'); (today ? today.parentElement : pl.parentElement).after(b); renderTimes(); } }
+
+/* налаштування */
+if (SETTINGS_EL){
+  const sec = [...SETTINGS_EL.querySelectorAll('details.setsec')].find(d=>d.querySelector('summary').textContent === 'Оформлення документів');
+  const cb = h('input', {type:'checkbox', id:'set_qr'}); cb.checked = QRON; cb.addEventListener('change', ()=>{ QRON = cb.checked; lsSet('po.qr', QRON ? '1' : '0'); toast(QRON ? 'QR-код друкуватиметься на пам’ятці, виписці й консультації' : 'QR-код вимкнено'); });
+  const row = h('label', {class:'chk', for:'set_qr', style:'display:flex;gap:8px;align-items:flex-start;margin-top:8px'}, cb, 'QR-код на пам’ятці, виписному епікризі й консультації — пацієнт забирає текст собі в телефон (без інтернету)');
+  (sec || SETTINGS_EL).append(row);
+}
+{ const si3 = searchItems; searchItems = function(){ const L = si3(); L.push({k:'Дія', t:'Час на документи (секундомір)', s:'', go:timesDialog}, {k:'Дія', t:'Повторити скасовану дію', s:'Ctrl+Y', go:redoLast}); return L; }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
