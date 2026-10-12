@@ -1,8 +1,48 @@
 /* ================= БАЗА ПАЦІЄНТІВ (у цьому браузері) ================= */
 const PKEY = 'po.patients';
 let PID = null, DIARIES = [], RESTORING = false, saveTimer = null;
-function loadStore(){ try{ return JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){ return {}; } }
-function saveStore(st){ try{ localStorage.setItem(PKEY, JSON.stringify(st)); return true; }catch(e){ return false; } }
+/* Сховище пацієнтів: IndexedDB (без ліміту ~5 МБ, десятки тисяч пацієнтів); якщо браузер його не дає — localStorage, як раніше.
+   Робота синхронна через кеш у пам’яті; запис у базу — у фоні, лише змінених пацієнтів (за полем updated). */
+const IDB = {db:null, ok:false, cache:null, w:{}};
+function loadStore(){
+  if (IDB.ok && IDB.cache) return Object.assign({}, IDB.cache);
+  try{ return JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){ return {}; }
+}
+function saveStore(st){
+  if (!IDB.ok){ try{ localStorage.setItem(PKEY, JSON.stringify(st)); return true; }catch(e){ return false; } }
+  IDB.cache = Object.assign({}, st);
+  try{
+    const tx = IDB.db.transaction('patients', 'readwrite'), os = tx.objectStore('patients');
+    for (const id in st){ const u = st[id] && st[id].updated; if (IDB.w[id] !== u || u === undefined){ os.put(st[id], id); IDB.w[id] = u; } }
+    for (const id in IDB.w){ if (!(id in st)){ os.delete(id); delete IDB.w[id]; } }
+    tx.onerror = () => toast('Не вдалося зберегти пацієнта в сховище браузера: ' + (tx.error && tx.error.message || ''), 6000);
+  }catch(e){ toast('Помилка сховища: ' + (e && e.message || e), 6000); return false; }
+  if (typeof fsSchedule === 'function') fsSchedule(false);   // папка даних на комп’ютері
+  return true;
+}
+function idbInit(){
+  if (!window.indexedDB) return Promise.resolve(false);
+  return new Promise(res=>{
+    let r; try{ r = indexedDB.open('po-db', 1); }catch(e){ res(false); return; }
+    r.onupgradeneeded = () => { r.result.createObjectStore('patients'); };
+    r.onerror = () => res(false);
+    r.onsuccess = () => {
+      const db = r.result, all = {}, tx = db.transaction('patients', 'readonly'), cur = tx.objectStore('patients').openCursor();
+      cur.onsuccess = e => { const c = e.target.result; if (c){ all[c.key] = c.value; c.continue(); } };
+      tx.oncomplete = () => {
+        IDB.db = db; IDB.cache = all; Object.keys(all).forEach(id=>{ IDB.w[id] = all[id].updated; }); IDB.ok = true;
+        // перенесення зі старого сховища (і все, що встигли зберегти до готовності бази) — новіша версія перемагає
+        let old = {}; try{ old = JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){}
+        const ids = Object.keys(old);
+        if (ids.length){ const st = loadStore(); ids.forEach(id=>{ if (!st[id] || (old[id].updated || 0) > (st[id].updated || 0)) st[id] = old[id]; }); saveStore(st);
+          const tx2 = db.transaction('patients', 'readonly'), cnt = tx2.objectStore('patients').count();
+          tx2.oncomplete = () => { if (cnt.result >= Object.keys(IDB.cache).length){ try{ localStorage.removeItem(PKEY); }catch(e){} } }; }
+        res(true);
+      };
+      tx.onerror = () => res(false);
+    };
+  });
+}
 
 function snap(){
   const f = {}, c = {};

@@ -9,7 +9,9 @@ const read = p => fs.readFileSync(S(p), 'utf8');
 const man = JSON.parse(read('manifest.json'));
 const js = man.js.map(f => read('js/' + f)).join('');
 // джерело в тому ж вигляді, що й раніше (без doctype): голова, стилі, розмітка, скрипт, хвіст
-const app = read('head.html') + '<style>\n' + read('styles.css') + '</style>\n' + read('body.html') + '<script>\n' + js + '</script>\n' + read('tail.html');
+// шрифти вбудовуються у файл (жодних звернень до сторонніх серверів): src/fonts/fonts.json + *.woff2
+const fontCss = JSON.parse(read('fonts/fonts.json')).map(f=>`@font-face{font-family:"${f.family}";font-style:normal;font-weight:${f.weight};font-display:swap;src:url(data:font/woff2;base64,${fs.readFileSync(S('fonts/' + f.file)).toString('base64')}) format("woff2");unicode-range:${f.range}}`).join('\n') + '\n';
+const app = read('head.html') + '<style>\n' + fontCss + read('styles.css') + '</style>\n' + read('body.html') + '<script>\n' + js + '</script>\n' + read('tail.html');
 try { new vm.Script(js, {filename: 'app.js'}); } catch (e) { console.error('Помилка синтаксису в src/js:', e.message); process.exit(1); }
 const ver = (js.match(/const VERSION = '([^']+)'/) || [])[1];
 if (!ver) { console.error('Не знайдено VERSION'); process.exit(1); }

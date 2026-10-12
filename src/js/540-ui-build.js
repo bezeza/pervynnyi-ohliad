@@ -283,6 +283,8 @@ applyOvrAll(); renderRes(); update();
 window.addEventListener('resize', renderPtBar);
 renderPatients(); renderDiaries(); fsInit(); storePersist(); dxCodeUI(); dictLoad(); renderMyBtns(); zlogoRender();
 new MutationObserver(()=>{ if (PAPER){ clearTimeout(renderPaper.t); renderPaper.t = setTimeout(renderPaper, 120); } }).observe($('#out'), {childList:true, subtree:true, characterData:true}); renderPaper();
-try{ const last = localStorage.getItem('po.last'); const st = loadStore(); if (last && st[last]){ PID = last; restore(st[last].snap); markSaved(true); toast('Відкрито останнього пацієнта: ' + st[last].name, 3000); } }catch(e){}
+function restoreLast(){ try{ if (PID || patientName()) return; const last = localStorage.getItem('po.last'); const st = loadStore(); if (last && st[last]){ PID = last; restore(st[last].snap); markSaved(true); toast('Відкрито останнього пацієнта: ' + st[last].name, 3000); } }catch(e){} }
+restoreLast();
+idbInit().then(ok=>{ if (!ok) return; renderPatients(); restoreLast(); try{ renderToday(); }catch(e){} });
 setTimeout(()=>{ const b = backupInfo(); if (b.due) toast(`Нагадування: резервна копія пацієнтів ${b.t ? 'від ' + new Date(b.t).toLocaleDateString('uk-UA') : 'ще не робилась'}. Вкладка «Запис» → «Зберегти всіх у файл»`, 6000); }, 3500);
 let lastPID; setInterval(()=>{ if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
