@@ -4,6 +4,7 @@ let PID = null, DIARIES = [], RESTORING = false, saveTimer = null;
 /* Сховище пацієнтів: IndexedDB (без ліміту ~5 МБ, десятки тисяч пацієнтів); якщо браузер його не дає — localStorage, як раніше.
    Робота синхронна через кеш у пам’яті; запис у базу — у фоні, лише змінених пацієнтів (за полем updated). */
 const IDB = {db:null, ok:false, cache:null, w:{}};
+let TRASH = {};   // кошик: видалені пацієнти (30 днів), у базі з ключем 'trash:<id>'
 function loadStore(){
   if (IDB.ok && IDB.cache) return Object.assign({}, IDB.cache);
   try{ return JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){ return {}; }
@@ -28,7 +29,7 @@ function idbInit(){
     r.onerror = () => res(false);
     r.onsuccess = () => {
       const db = r.result, all = {}, tx = db.transaction('patients', 'readonly'), cur = tx.objectStore('patients').openCursor();
-      cur.onsuccess = e => { const c = e.target.result; if (c){ all[c.key] = c.value; c.continue(); } };
+      cur.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) TRASH[String(c.key).slice(6)] = c.value; else all[c.key] = c.value; c.continue(); } };
       tx.oncomplete = () => {
         IDB.db = db; IDB.cache = all; Object.keys(all).forEach(id=>{ IDB.w[id] = all[id].updated; }); IDB.ok = true;
         // перенесення зі старого сховища (і все, що встигли зберегти до готовності бази) — новіша версія перемагає

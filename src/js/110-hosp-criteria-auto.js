@@ -321,7 +321,9 @@ function update(){
     H.warnEl.textContent = w; H.warnEl.hidden = !w;
   }
   if (dirty){ $('#banner').hidden = false; renderCheck(); return; }
+  const prevT = [...$('#out').children].map(e=>e.textContent);
   $('#out').innerHTML = r.html;
+  try{ flashChanged(prevT); }catch(e){}
   renderCheck();
 }
 

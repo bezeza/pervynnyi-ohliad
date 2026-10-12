@@ -13,7 +13,7 @@ function liveText(){
   return '';
 }
 function renderLive(){
-  const mob = window.matchMedia && matchMedia('(max-width:899px)').matches, on = mob && LIVE === 'bar';
+  const mob = window.matchMedia && matchMedia('(max-width:899px)').matches, t0 = TABS[active], on = mob && LIVE === 'bar' && !!t0 && (SECTIONS.includes(t0) || t0 === RXT || t0 === HV || t0 === QV);
   document.body.classList.toggle('live-on', on); const tb = $('#toText'); if (tb) tb.hidden = on;
   liveBar.hidden = !on; if (!on) return;
   const txt = liveText(), all = itext($('#out')).trim();
