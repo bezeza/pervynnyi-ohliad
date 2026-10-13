@@ -58,6 +58,7 @@
   "530-check.js",
   "540-ui-build.js",
   "545-undo.js",
+  "546-profile-wizard.js",
   "546-welcome.js",
   "547-switch.js",
   "548-search-keys-zoom.js",
