@@ -4,7 +4,19 @@ const O = o => Array.isArray(o) ? {l:o[0], t:o[1]} : {l:o, t:o};
 /* власні зміни формулювань (вкладка «Мої шаблони»): заготовки шукають варіант за початковим текстом, а в документ іде змінений */
 const OT = (f, o) => { const t = O(o).t; return (f.ovr && f.ovr[t]) || t; };
 const OTM = (f, i) => { const b = O(f.opts[i]).t, t = f.detBox ? detText(f, i, b) : b; return t === b && f.ovr && f.ovr[b] ? f.ovr[b] : t; };
-const itext = el => (el.innerText !== undefined ? el.innerText : el.textContent);
+const itext = el => {
+  if (!el) return '';
+  const text = el.innerText;
+  if (text !== undefined && (text.trim() || el.id !== 'out' || !el.textContent.trim())) return text;
+  if (el.id !== 'out' || !document.body) return text !== undefined ? text : el.textContent;
+  const clone = el.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.style.cssText = 'position:fixed;left:-10000px;top:0;visibility:visible!important;display:block!important';
+  document.body.append(clone);
+  const rendered = clone.innerText;
+  clone.remove();
+  return rendered !== undefined ? rendered : el.textContent;
+};
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 let dirty = false, active = 0, ORD = 0, rawTokens = false, sex = '';
 let DOC = 'ohl';
@@ -292,4 +304,3 @@ function autoKrit(){
   const gbs = cl('gbs'); if (gbs && parseInt(gbs.score) >= 7) r.push(`шкала Глазго–Блетчфорд ${gbs.score} (високий ризик)`);
   return r.join('; ');
 }
-

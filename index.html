@@ -204,7 +204,7 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .pr-logo.bw,.zlogo-prev.bw{filter:grayscale(1) contrast(1.15)}.zlogo-prev.off{opacity:.35}
 .zlogo-prev{max-height:56px;max-width:120px;border:1px solid var(--line);border-radius:6px;padding:4px;background:#fff}
 @media (max-width:899px){.paper{padding:8px}.paper .sheet{padding:18px 16px;font-size:11pt}.paper .pr-top{flex-direction:column;gap:6px;font-size:9pt}.paper .pr-top .r{text-align:left}.pr-logo{max-width:44px;max-height:44px}
-  .oh .acts{grid-template-columns:repeat(4,minmax(0,1fr))!important}.oh .acts #copy{grid-column:1/-1}.oh .acts .savewrap{display:flex}.oh .acts .savewrap>.btn{flex:1}}
+  .oh .acts{grid-template-columns:repeat(4,minmax(0,1fr))!important}.oh .acts #paperBtn{grid-column:span 2}.oh .acts #copy{grid-column:1/-1}.oh .acts .savewrap{display:flex}.oh .acts .savewrap>.btn{flex:1}}
 .out.paperon .fmt{display:none}
 .helpsec{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 8px;background:var(--surface)}.helpsec summary{cursor:pointer;font-weight:600}.helplist{font-size:14px;color:var(--ink)}.helplist li{margin:6px 0;line-height:1.45}
 .vlist{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}.vlist li{margin:3px 0}.vlist b{color:var(--ink)}
@@ -689,7 +689,7 @@ body:has(#outBox.open) .livebar{display:none!important}
       <button class="btn mob" id="closeSheet2" type="button" aria-label="Закрити">Закрити ✕</button>
       <div class="acts">
         <button class="btn" id="fmtBtn" type="button" aria-pressed="false" title="Показати панель форматування: жирний, курсив, розмір, вирівнювання">Aa</button>
-        <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд «як на папері»: шапка закладу, логотип, форма МОЗ">Аркуш</button>
+        <button class="btn" id="paperBtn" type="button" aria-pressed="false" title="Перегляд документа перед друком: шапка закладу, логотип, форма МОЗ">Перегляд перед друком</button>
         <button class="btn" id="printBtn" type="button" title="Друк або «Зберегти як PDF» у вікні друку">Друк<span class="hide-m"> / PDF</span></button>
         <button class="btn" id="docxBtn" type="button" title="Зберегти документ у форматі Word (.docx) — відкривається і в LibreOffice">Word</button>
         <button class="btn" id="odtBtn" type="button" title="Зберегти документ у форматі LibreOffice Writer (.odt)">LibreOffice</button>
@@ -718,7 +718,7 @@ body:has(#outBox.open) .livebar{display:none!important}
       <span class="sep" aria-hidden="true"></span>
       <button class="btn" type="button" data-cmd="removeFormat" title="Прибрати жирний, курсив, підкреслення й розмір" aria-label="Прибрати форматування">T<sub>✕</sub></button>
     </div>
-    <div id="paper" class="paper" hidden><div class="sheet"></div><p class="chips-hint">Перегляд «як на папері». Щоб правити текст вручну — вимкніть «Аркуш».</p></div>
+    <div id="paper" class="paper" hidden><div class="sheet"></div><p class="chips-hint">Щоб правити текст вручну, вимкніть «Перегляд перед друком».</p></div>
     <div id="out" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Готовий текст" spellcheck="false"></div>
     <p class="note">Форматуйте наприкінці: оновлення тексту з форми скидає форматування. <button type="button" class="more" id="misBtn">Копіювати частинами для МІС</button></p>
   </section>
@@ -732,7 +732,6 @@ body:has(#outBox.open) .livebar{display:none!important}
 <div class="navsheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Розділи" hidden><div class="nshead"><b>Розділи</b><button class="btn" type="button" id="navClose">Закрити ✕</button></div><div id="navList"></div></div>
 <div class="toast" id="toast" role="status"></div>
 <div id="print" aria-hidden="true"></div>
-
 <script>
 /* ================= НАЛАШТУВАННЯ =================
    Щоб змінити варіанти, відредагуйте списки нижче.
@@ -1879,7 +1878,19 @@ const O = o => Array.isArray(o) ? {l:o[0], t:o[1]} : {l:o, t:o};
 /* власні зміни формулювань (вкладка «Мої шаблони»): заготовки шукають варіант за початковим текстом, а в документ іде змінений */
 const OT = (f, o) => { const t = O(o).t; return (f.ovr && f.ovr[t]) || t; };
 const OTM = (f, i) => { const b = O(f.opts[i]).t, t = f.detBox ? detText(f, i, b) : b; return t === b && f.ovr && f.ovr[b] ? f.ovr[b] : t; };
-const itext = el => (el.innerText !== undefined ? el.innerText : el.textContent);
+const itext = el => {
+  if (!el) return '';
+  const text = el.innerText;
+  if (text !== undefined && (text.trim() || el.id !== 'out' || !el.textContent.trim())) return text;
+  if (el.id !== 'out' || !document.body) return text !== undefined ? text : el.textContent;
+  const clone = el.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.style.cssText = 'position:fixed;left:-10000px;top:0;visibility:visible!important;display:block!important';
+  document.body.append(clone);
+  const rendered = clone.innerText;
+  clone.remove();
+  return rendered !== undefined ? rendered : el.textContent;
+};
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 let dirty = false, active = 0, ORD = 0, rawTokens = false, sex = '';
 let DOC = 'ohl';
@@ -2167,7 +2178,6 @@ function autoKrit(){
   const gbs = cl('gbs'); if (gbs && parseInt(gbs.score) >= 7) r.push(`шкала Глазго–Блетчфорд ${gbs.score} (високий ризик)`);
   return r.join('; ');
 }
-
 /* ===== Автоматичне визначення критеріїв госпіталізації за введеними даними ===== */
 function autoRules(){
   const spec = new Set(), gen = new Set();
@@ -2527,8 +2537,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.2', VDATE = '12.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.3', VDATE = '13.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.3', '13.10.2026', 'зручність: «Аркуш» перейменовано на «Перегляд перед друком» із поясненням у довідці; виправлено копіювання тексту документа на мобільному, коли панель прихована; додано наскрізний UI-тест потоку пацієнта для 8 профілів'],
   ['0.9.3.2', '12.10.2026', 'рядок пацієнта видно завжди: стать (Чоловік / Жінка, на телефоні — Ч / Ж) і «＋ Новий» — поруч із ПІБ; «Норма всюди» — над вкладками, біля «Швидкий огляд»; шапка вміщується в один рядок навіть на ноутбуці з масштабом 125 %, тема — малою кнопкою-значком'],
   ['0.9.3.1', '12.10.2026', 'кнопка «🤖 Для ШІ» на панелі тексту: знеособлений запит (без ПІБ, дати народження, № карти, адрес, телефонів, імен лікарів і закладу; дати — «N дн. тому») з вашими постійними вимогами на початку й нагадуванням у кінці; завдання: що я міг пропустити, перевірити призначення, чернетка епікризу, пам’ятка простою мовою, своє питання; перевірка на прізвища й адреси перед копіюванням. Програма нічого не надсилає — лише копіює'],
   ['0.9.3', '12.10.2026', 'профілі: спеціальність (терапевт, хірург, травматолог, невролог, інфекціоніст, сімейний, пульмонолог, анестезіолог) і місце роботи (стаціонар / поліклініка / обидва) — свої хвороби першими, свої системи розгорнуті, решта — рядком «Інші системи · б/о», свої документи на видному місці; кнопка профілю в шапці; нирки: корекція доз і без ваги — за ШКФ, ще 17 препаратів, підсумок у стрічці «Призначено», нагадування, якщо немає креатиніну; QR-код на пам’ятці, виписці й консультації — пацієнт забирає текст у телефон без інтернету; секундомір: активний час на документ і медіана за тиждень (для пілоту — збереження у файл); Ctrl+Y — повторити скасовану дію'],
@@ -2787,10 +2798,15 @@ function copy(){
   if (!sex && rawTokens && !dirty) warn.push('не вибрано стать');
   const done = ok => toast((ok ? 'Скопійовано' : 'Виділено, натисніть Ctrl+C') + (warn.length ? '. Увага: ' + warn.join(', ') : ''), warn.length ? 4000 : 1600);
   const fallback = ()=>{
-    const r = document.createRange(); r.selectNodeContents(el);
-    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    const ta = h('textarea', {readonly:'', style:'position:fixed;left:-9999px;top:0'});
+    ta.value = text; document.body.append(ta); ta.focus(); ta.select();
     let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
-    if (ok) sel.removeAllRanges();
+    ta.remove();
+    if (!ok){
+      $('#outBox').classList.add('open');
+      const r = document.createRange(); r.selectNodeContents(el);
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
     done(ok);
   };
   try{
@@ -2805,7 +2821,6 @@ function copy(){
   }catch(e){}
   fallback();
 }
-
 /* ================= КАЛЬКУЛЯТОРИ ================= */
 const PT = [ // спільні дані пацієнта
   {k:'age', l:'Вік, років', ok:[16,110], from:['meta_age']},
@@ -3698,7 +3713,7 @@ const HELPS = [
   '«Word», «LibreOffice», «Друк / PDF» — документ із шапкою закладу за формами МОЗ.',
   'Документи за бланками наказу МОЗ № 110 («Налаштування» → «Оформлення документів»): консультація — пункти 1–8 форми № 028/о; діагноз — «а) основний, б) ускладнення основного, в) супутній»; у стаціонарі — «Анамнез хвороби», «Об’єктивний стан хворого», як у формі № 003/о.',
   'Виписка за замовчуванням — за формою № 027/о: пункти 1–8 бланка заповнюються самі (місце проживання й роботи — на вкладці «Запис»). Епікриз у медичну карту (форма № 003/о) або довільний — у вкладці «Перебування» → «Вигляд документа».',
-  '«Аркуш» над текстом — перегляд документа як на папері: шапка закладу, логотип (завантажується в «Налаштуваннях»), форма МОЗ. Щоб правити текст вручну, вимкніть «Аркуш».',
+  '«Перегляд перед друком» над текстом показує документ із шапкою закладу, логотипом (завантажується в «Налаштуваннях») і формою МОЗ. Щоб правити текст вручну, вимкніть перегляд.',
   'Текст справа можна правити вручну, але зміна у формі зліва перепише його заново — правте наприкінці.']],
  ['Пацієнти й збереження даних', [
   'Пацієнт зберігається автоматично, щойно вказано ПІБ. Список пацієнтів і «Сьогодні» (що зробити по кожному) — на вкладці «Запис».',
@@ -3775,7 +3790,6 @@ function patientsBlock(){
       h('button', {type:'button', class:'more', onclick:()=>file.click()}, 'Відкрити з файлу'), file),
     h('p', {class:'note', style:'margin-top:8px'}, 'Пацієнти зберігаються автоматично лише в цьому браузері на цьому комп’ютері. Щоб перенести на інший комп’ютер або зробити резервну копію — «Експорт усіх у файл».')));
 }
-
 /* ================= ЖУРНАЛ ЩОДЕННИКІВ ================= */
 const DSEC = ['d_main','d_obj','d_lik'];
 function diaryFields(){

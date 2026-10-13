@@ -15,6 +15,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  ok('Перший запуск: знайомство з даними лікаря', !!doc.querySelector('.welcome'));
  { const ins=doc.querySelectorAll('.welcome input'); ins[0].value='Петренко О. В.'; [...doc.querySelectorAll('.welcome button')].find(b=>b.textContent==='Готово').click(); }
  ok('Знайомство зберігає ПІБ лікаря', $('meta_doc').value==='Петренко О. В.' && !doc.querySelector('.welcome'));
+ $('paperBtn').click();
+ ok('«Перегляд перед друком» вмикає макет документа', $('paperBtn').textContent==='Перегляд перед друком' && $('paperBtn').getAttribute('aria-pressed')==='true' && !$('paper').hidden);
+ $('paperBtn').click();
+ ok('«Перегляд перед друком» повертає режим редагування', $('paperBtn').getAttribute('aria-pressed')==='false' && $('paper').hidden);
  // ПІБ: автоперехід
  doc.querySelector('[data-mode="hosp"]').click(); doc.querySelector('#sexSeg [data-sex="f"]').click();
  set('meta_dob','1998-03-15'); ap('app');
