@@ -214,10 +214,15 @@ function copy(){
   if (!sex && rawTokens && !dirty) warn.push('не вибрано стать');
   const done = ok => toast((ok ? 'Скопійовано' : 'Виділено, натисніть Ctrl+C') + (warn.length ? '. Увага: ' + warn.join(', ') : ''), warn.length ? 4000 : 1600);
   const fallback = ()=>{
-    const r = document.createRange(); r.selectNodeContents(el);
-    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    const ta = h('textarea', {readonly:'', style:'position:fixed;left:-9999px;top:0'});
+    ta.value = text; document.body.append(ta); ta.focus(); ta.select();
     let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
-    if (ok) sel.removeAllRanges();
+    ta.remove();
+    if (!ok){
+      $('#outBox').classList.add('open');
+      const r = document.createRange(); r.selectNodeContents(el);
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
     done(ok);
   };
   try{
@@ -232,4 +237,3 @@ function copy(){
   }catch(e){}
   fallback();
 }
-
