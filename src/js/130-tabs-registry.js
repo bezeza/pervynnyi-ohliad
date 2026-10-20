@@ -167,7 +167,7 @@ function nevrShort(p){
 }
 function applyPreset(p0, btn){
   const p = sidePreset(p0); dxPanel.sel = null; dxPanel.key = undefined;
-  SECTIONS.filter(s=>s.objective).forEach(applyNorm);
+  SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id)).forEach(applyNorm);   // щоденник не чіпаємо: перший запис заповниться з огляду
   { const L = SECTIONS.find(x=>x.id === 'loc'); if (L) clearSection(L); }
   nevrShort(p0);
   pick(F('skarhy.c'), p.skarhy); detPick(F('skarhy.c'), p.det);
