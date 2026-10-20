@@ -248,7 +248,7 @@ function generate(){
   ORD_IDS = ORD_IDS.filter(id=>{ const sc = SECTIONS.find(x=>x.id === id); return !sc || !sc.only || sc.only === MODE; });
   RXT.tab.classList.toggle('filled', RX.length > 0);
   SECTIONS.forEach(s=>{ if (!ORD_IDS.includes(s.id)) s.tab.classList.remove('filled'); });
-  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
+  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX'){ const r = rxPart(); if (r) r.sid = 'rxt'; return r; } const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p){ p.title = s.title; p.sid = id; } return p; }).filter(Boolean);
   LASTPARTS = parts;
   const M = metaLines();
   let plain = parts.map(p=>(p.head ? p.head + p.sep : '') + p.body).join('\n');
@@ -259,7 +259,8 @@ function generate(){
     const body = esc(p.body).replace(SUBHEADS, '$1<b>$2</b>').split('\n');
     const hd = p.head ? '<b>' + esc(p.head) + '</b>' : '';
     const lines = p.sep === '\n' && hd ? [hd, ...body] : [(hd ? hd + ' ' : '') + body[0], ...body.slice(1)];
-    return lines.map(l=>'<div>' + l + '</div>').join('');
+    const da = p.sid ? '<div data-sec="' + p.sid + '">' : '<div>';
+    return lines.map(l=>da + l + '</div>').join('');
   }).join('');
   if (html && M.head.length) html = M.head.map(x=>(x.c ? '<div style="text-align:center">' : '<div>') + (x.b ? '<b>' + esc(x.t) + '</b>' : esc(x.t)) + '</div>').join('') + html;
   if (html && M.foot.length) html += '<div><br></div>' + M.foot.map(l=>'<div>' + esc(l) + '</div>').join('');
