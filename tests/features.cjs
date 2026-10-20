@@ -426,6 +426,33 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("switchDoc('epi'); F('e_per.per').d1.value='2026-10-21'; F('e_per.per').d2.value='2026-10-20'; update()");
    ok('Перевірка: дата виписки раніше за надходження', w.eval("checkDoc().some(x=>/раніше за дату надходження/.test(x.m))"));
    w.eval("F('e_per.per').d1.value=''; F('e_per.per').d2.value=''; switchDoc('ohl')"); }
+ { // 0.9.3.19: SCORE2 / SCORE2-OP і PESI / sPESI
+   const C=id=>w.eval(`(()=>{ const c=CALCS.find(x=>x.id==='${id}'); return JSON.stringify(c.run(c)); })()`), J=id=>JSON.parse(C(id));
+   const pt=(k,v)=>{ const e=$('pt_'+k); e.value=v; ev(e,'input'); };
+   w.eval("document.querySelector('#sexSeg button[data-sex=\"m\"]').click()");
+   ['age','sbp','chol','hdl','hr','rr','t','spo'].forEach(k=>pt(k,''));
+   pt('age','60'); pt('sbp','120'); pt('chol','6'); pt('hdl','1,3');
+   let r=J('score2'); ok('SCORE2: чоловік 60, САТ 120, ХС 6, ЛПВЩ 1,3, не курить → 11,7% (дуже високий регіон)', r.score==='11,7%' && /дуже високий/.test(r.text), C('score2'));
+   w.eval("document.getElementById('c_score2_smk').checked=true"); r=J('score2'); ok('SCORE2: куріння підвищує ризик', parseFloat(r.score.replace(',','.'))>11.7, r.score);
+   w.eval("document.getElementById('c_score2_smk').checked=false");
+   pt('age','75'); pt('sbp','150'); pt('hdl','1,4'); r=J('score2'); ok('SCORE2-OP для віку ≥ 70', /SCORE2-OP/.test(r.text) && /%$/.test(r.score), C('score2'));
+   pt('age','35'); ok('SCORE2: поза віком 40–89 — пояснення', /40–69/.test(J('score2').msg||''));
+   pt('age','60'); w.eval("document.getElementById('c_score2_dm').checked=true"); ok('SCORE2: при ЦД — відсилає до SCORE2-Diabetes', /SCORE2-Diabetes/.test(J('score2').msg||''));
+   w.eval("document.getElementById('c_score2_dm').checked=false");
+   pt('sbp','120'); pt('chol',''); pt('hdl',''); ok('SCORE2: без ліпідограми — просить холестерин', /холестерин/i.test(J('score2').msg||''), C('score2'));
+   w.eval("RES.push({id:9901, d:'2026-10-19', t:'ліпідограма', v:'', vals:['6,0','3,1','1,3','1,5']})");
+   ok('SCORE2: холестерин і ЛПВЩ беруться з журналу обстежень', J('score2').score==='11,7%', C('score2'));
+   w.eval("RES=RES.filter(x=>x.id!==9901)");
+   pt('age','70'); pt('hr','115'); pt('sbp','95'); pt('rr','22'); pt('t','36,6'); pt('spo','88');
+   w.eval("document.getElementById('c_pesi_ca').checked=true");
+   r=J('pesi'); ok('PESI: 70 р., чол., рак, ЧСС 115, САТ 95, SpO2 88 → 180 б., клас V; sPESI 4', r.score==='180 б. · V' && /sPESI 4/.test(r.text), C('pesi'));
+   ok('PESI без шоку й маркерів ПШ — проміжний-низький', /проміжний-низький/.test(r.text));
+   w.eval("document.getElementById('c_pesi_rv').checked=true; document.getElementById('c_pesi_trop').checked=true"); ok('PESI + дисфункція ПШ і тропонін — проміжний-високий', /проміжний-високий/.test(J('pesi').text));
+   w.eval("document.getElementById('c_pesi_shock').checked=true"); ok('PESI + гемодинамічна нестабільність — високий', /— високий/.test(J('pesi').text));
+   w.eval("['ca','rv','trop','shock'].forEach(k=>document.getElementById('c_pesi_'+k).checked=false)");
+   pt('age','45'); w.eval("document.querySelector('#sexSeg button[data-sex=\"f\"]').click()"); pt('hr','80'); pt('sbp','125'); pt('spo','97');
+   r=J('pesi'); ok('PESI: жінка 45 р. без ознак → клас I, sPESI 0, низький ризик', r.score==='45 б. · I' && /sPESI 0/.test(r.text) && /низький/.test(r.text), C('pesi'));
+   ['age','sbp','chol','hdl','hr','rr','t','spo'].forEach(k=>pt(k,'')); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
