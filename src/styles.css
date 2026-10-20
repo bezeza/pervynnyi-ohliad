@@ -894,3 +894,6 @@ body.shell .top .seg button:not([aria-pressed="true"]):hover{background:rgba(255
 .ddt-row{align-items:center}.ddt-row .ddt{width:auto;flex:0 1 210px}.ddt-row .btn{padding:6px 10px}
 .bqe .bqg.one{grid-template-columns:1fr}.bqe:has(.bqg.one){width:420px}
 .paper .bepi [data-fld]{cursor:pointer}.paper .bepi [data-fld]:hover{outline:2px solid var(--accent);outline-offset:1px}
+/* аркуш: пункти клікабельні — відкривають поле у формі */
+.paper .b003 .brow,.paper .b003 .bt2,.paper .b003 .blines,.paper .b003 .bdl,.paper [data-sec]{cursor:pointer;border-radius:2px}
+.paper .b003 .brow:hover,.paper .b003 .bt2:hover,.paper .b003 .blines:hover,.paper .b003 .bdi.bcur .bdl:hover,.paper .pr-body [data-sec]:hover{background-color:rgba(47,123,184,.09);box-shadow:0 0 0 2px rgba(47,123,184,.18)}

@@ -282,6 +282,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    if (q){ q.value='19.10.2026: білок 0,033 г/л'; q.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter'})); }
    ok('Вписане на бланку — у формі і в тексті', $('e_obs_z47').value==='19.10.2026: білок 0,033 г/л');
    set('e_obs_z46',''); set('e_obs_z47',''); w.eval("BLANK=false; PAPER=false; renderPaper(); switchDoc('ohl')"); }
+ { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval("BLANK=true; BLP.exam=true; PAPER=true; renderPaper()");
+   const rows=[...doc.querySelectorAll('#paper .b003 .brow')];
+   rows.find(x=>/^Хрипи/.test(x.textContent.trim())).click(); ok('Клік по пункту бланка «Хрипи» відкриває «Дихання»', w.eval("TABS[active].id")==='dyh');
+   rows.find(x=>/^33\. Скарги/.test(x.textContent.trim())).nextElementSibling.click(); ok('Клік по тексту під «33. Скарги» відкриває «Скарги»', w.eval("TABS[active].id")==='skarhy');
+   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває «Серце, судини»', w.eval("TABS[active].id")==='ssc');
+   w.eval("BLANK=false; renderPaper()"); const sec=doc.querySelector('#paper [data-sec="dyh"]'); if (sec){ sec.click(); }
+   ok('«Текст документа» на аркуші: клік по розділу відкриває його', !sec || w.eval("TABS[active].id")==='dyh');
+   w.eval("PAPER=false; renderPaper()"); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));

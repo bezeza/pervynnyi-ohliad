@@ -137,3 +137,66 @@ let DDPIN = false;
   }
 }
 { const u1 = update; update = function(){ const r = u1.apply(this, arguments); try{ if (DOC === 'shch' && SHELL.syncDDT) SHELL.syncDDT(); }catch(e){} return r; }; }
+/* ===== Клік по пункту на аркуші «Перед друком» → відкрити розділ і поле у формі, курсор — на початок, поле блимає ===== */
+const BMAP = [
+  [/^Хворий/, 'meta_pib'], [/^1\. Дата госпіталізації/, 'meta_dt'], [/^3\. Прізвище/, 'meta_pib'], [/^4\. Дата народження/, 'meta_dob'], [/^7\. Постійне місце/, 'meta_addr'],
+  [/^8\. Місце роботи/, 'meta_work'], [/^9\. Ким направлений/, 'morbi.hosp'], [/^10\. Діагноз при госпіталізації/, 'dx.osn'], [/^13\. Госпіталізація: ургентна/, 'hosp.vyd'],
+  [/^18\. Алергічні/, 'vitae.alerg'], [/^20\. Дата виписки/, 'e_per.per'],
+  [/^33\. Скарги/, 'skarhy.c'], [/^34\. Anamnesis morbi/, 'morbi'], [/^35\. Anamnesis vitae/, 'vitae'], [/^Алергічні реакції/, 'vitae.alerg'], [/^Перенесені захворювання/, 'vitae'],
+  [/^36\. Об’єктивні дані|^Загальний стан/, 'zah.stan'], [/^Свідомість/, 'zah'], [/^Шкіра|^Видимі слизові|^Варикозне/, 'shk'], [/^Харчування/, 'zah'], [/^Зріст/, 'zah_hw_0'],
+  [/^Периф\. л\/в|^Щитоподібна/, 'shk'], [/^Система органів дихання|^Перкуторно над легенями/, 'dyh'], [/^Аускультативно:/, 'dyh'], [/^Хрипи/, 'dyh.hr'],
+  [/^Температура тіла:/, 'zah'], [/^Серцево-судинна система|^А\/Т|^Межі серця|^Тони серця/, 'ssc'], [/^Система травлення|^Живіт:/, 'trav'],
+  [/^С-м подразнення очеревини/, 'trav'], [/^С-м Пастернацького|^Сечовипускання/, 'sech'], [/^Випорожнення/, 'trav'], [/^Неврологічний статус/, 'nevr'],
+  [/^DIAGNOS|^Діагноз|^На підставі/, 'dx.osn'], [/^ОБСТЕЖЕННЯ/, 'dx.plan'], [/^ЛІКУВАННЯ|^РЕЖИМ/, 'rxt'], [/^КОНСУЛЬТАЦІЯ/, 'dx'],
+  [/^45\. ЕПІКРИЗ/, 'e_per'], [/^Медична карта стаціонарного хворого №/, 'meta_card'], [/^Дані обстеження/, 'e_obs'], [/^54\. Діагноз|^Додаткові діагнози/, 'dx.osn'],
+  [/^55\. Медичне лікування/, 'e_lik.lik'], [/^56\. Лікувальні рекомендації/, 'e_rek'], [/^57\. Результат/, 'e_lik.rez'],
+  /* щоденник (поточний запис) */
+  [/^Скарги/, 'd_main.sk'], [/^Об’єктивно/, 'd_obj'], [/^Набряки/, 'd_obj.nab'], [/^Аускультативно в легенях|^Дихання/, 'd_obj.dyh'], [/^Діяльність серця|^Тони/, 'd_obj.serce'],
+  [/^Живіт/, 'd_obj.zhyv'], [/^Випорожнення|^Сечовипускання/, 'd_obj.fiz'], [/^Лікування|^Призначено/, 'd_lik.kor'], [/^Дата\b/, 'meta_dt']
+];
+function bGo(fld){
+  if (fld === 'rxt'){ goTab('rxt'); return; }
+  if (fld === 'meta_dt' && DOC === 'shch'){ goTab('d_main'); setTimeout(()=>{ const i = document.querySelector('.ddt'); if (!i) return; const w = i.closest('.res-form') || i; w.scrollIntoView({block:'center', behavior:'smooth'}); i.focus({preventScroll:true}); w.classList.remove('fieldflash'); void w.offsetWidth; w.classList.add('fieldflash'); setTimeout(()=>w.classList.remove('fieldflash'), 2600); }, 80); return; }
+  const sec = /^meta_/.test(fld) ? 'meta' : fld.split(/[._]/)[0] === 'e' || fld.split(/[._]/)[0] === 'd' ? fld.split('.')[0].split('_').slice(0, 2).join('_') : fld.split(/[._]/)[0];
+  const S = SECTIONS.find(x=>x.id === sec);
+  const target = /\./.test(fld) || /_\d$/.test(fld) || /^meta_/.test(fld) ? fld : null;
+  /* розділ без поля — перше поле розділу */
+  const first = !target && S ? (S.fields.find(f=>!f.noOut && f.type !== 'hdr' && (!f.docs || f.docs.includes(DOC)) && !(f.when && !f.when()) && f.wrapEl && !f.wrapEl.hidden) || {}) : null;
+  goTab(sec, target || (first && first.id ? sec + '.' + first.id : null));
+}
+document.addEventListener('click', e=>{
+  const t = e.target; if (!t.closest || !t.closest('#paper')) return;
+  if (t.closest('[data-fld], .gap, .gapbar, .gaplist, .blankbar, button, a, input, label')) return;
+  /* «Текст документа»: блок розділу */
+  const ds = t.closest('#paper [data-sec]');
+  if (ds && !t.closest('.b003')){ const sid = ds.dataset.sec; bGo(sid === 'rxt' ? 'rxt' : sid); return; }
+  const pg = t.closest('.b003'); if (!pg) return;
+  const di = t.closest('.bdi'); if (di && !di.classList.contains('bcur')){ toast('Це запис із журналу — відкрийте його в журналі щоденника', 2500); return; }
+  let row = t.closest('.brow, .bt2, .bt, .blines, .bdx, .bdl'); if (!row) return;
+  if (row.classList.contains('bdl')){ bGo('d_obj.t'); return; }
+  let txt = row.textContent.trim(), n = row;
+  /* лінійки під заголовком — шукаємо заголовок вище */
+  for (let k = 0; k < 4 && !BMAP.some(([re])=>re.test(txt)) && n.previousElementSibling; k++){ n = n.previousElementSibling; txt = n.textContent.trim(); }
+  const hit = BMAP.find(([re])=>re.test(txt)); if (!hit) return;
+  let fld = hit[1];
+  if (di) fld = fld.replace(/^dyh$/, 'd_obj.dyh');
+  if (DOC === 'shch' && /^(dx|zah|shk|dyh|ssc|trav|sech|nevr|skarhy|morbi|vitae)/.test(fld)){ toast('Це поле — у первинному огляді', 2000); return; }
+  bGo(fld);
+});
+/* курсор — на початок поля; якщо список показано кнопками — фокус на вибрану кнопку */
+function bFocusIn(wrap, el){
+  const vis = x => x && x.offsetParent !== null && !x.closest('[hidden]');
+  let t = vis(el) ? el : null;
+  if (!t) t = [...wrap.querySelectorAll('.chip[aria-pressed="true"], input:not([type=hidden]), textarea, select, .chip, button')].find(vis) || null;
+  if (!t) return;
+  try{ t.focus({preventScroll:true}); }catch(e){}
+  if (t.setSelectionRange && /^(text|search|)$/.test(t.type || '')){ try{ t.setSelectionRange(0, 0); t.scrollTop = 0; }catch(e){} }
+}
+{ const gf0 = goField; goField = function(fld){
+    { const f0 = /\./.test(fld) ? F(fld) : null; if (f0 && f0.dHide){ DSHOWALL = true; applyDProfile.sig = null; update(); } }
+    const r = gf0.apply(this, arguments);
+    let el = null; if (/\./.test(fld)){ const f = F(fld); if (f) el = f.el || (f.inputs && f.inputs[0]) || f.d1 || (f.chips && f.chips[0]) || f.abox || (f.wrapEl && f.wrapEl.querySelector('input,select,textarea,button')) || null; if (!el && f && f.wrapEl) el = f.wrapEl; } else el = document.getElementById(fld);
+    if (el){ const wrap = el.closest('.f') || el.closest('.res-form') || el;
+      if (!wrap.classList.contains('fieldflash')){ try{ wrap.scrollIntoView({block:'center', behavior:'smooth'}); }catch(e){} wrap.classList.add('fieldflash'); setTimeout(()=>wrap.classList.remove('fieldflash'), 2600); }
+      bFocusIn(wrap, el); }
+    return r; }; }
