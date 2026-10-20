@@ -235,6 +235,8 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 @media print{@page b003{size:A4;margin:10mm 10mm 10mm 15mm}#print .b003{page:b003;box-shadow:none;margin:0;padding:0;max-width:none;font-size:10pt;line-height:1.28}#print .b003 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}#print .b003+.b003{break-before:page}#print .b003 .bgap{background:none}#print .blankbar{display:none}
   #print .b003 .bf,#print .b003 .blines,#print .b003 .bc,#print .b003 .bbox{color:#000}#print .b003 .bu{text-decoration-color:#000}#print .b003 .bnum.on{border-color:#000}}
 /* пропуски на аркуші — лише на екрані */
+.fieldflash{animation:fieldflash 2.6s ease-out;border-radius:8px}@keyframes fieldflash{0%,35%{box-shadow:0 0 0 3px #E0A800;background:#FFF3C4}100%{box-shadow:0 0 0 0 transparent;background:transparent}}
+.paper .sheet.blankmode>.gaplist{max-width:794px;margin:0 auto 12px;padding:6px 8px;border-left:3px solid #E0A800;background:#FFFBEA;font:10pt/1.6 system-ui,"IBM Plex Sans",sans-serif}
 .paper .gap{display:inline;background:#FFE58A;color:#5A3F00;border:0;border-radius:3px;padding:0 4px;font:inherit;font-size:.86em;font-family:system-ui,"IBM Plex Sans",sans-serif;cursor:pointer;line-height:1.35;text-align:left}
 .paper .gap.dots{padding:0 2px;font-size:1em;cursor:default}
 .paper button.gap:hover,.paper button.gap:focus-visible{background:#FFD23F;outline:2px solid #B07D00;outline-offset:1px}
@@ -2587,7 +2589,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.6', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.6', '20.10.2026', 'бланк закладу 003/о у «Перегляді перед друком» (перемикач «Текст документа / Бланк 003/о»): первинний огляд — сторінки «Первинний огляд лікаря» (п. 33–40) з підкресленими варіантами (стан, свідомість, шкіра, перкусія, хрипи, пульс, тони, живіт, симптоми) і обведеними номерами обстежень за планом, лікування, консультації; за бажанням — титульний лист (п. 1–21); щоденник — «43. Щоденник» (T, Ps, АТ, ЧДР ліворуч; поточний запис або весь журнал); виписний епікриз — «45. Епікриз» з даними обстеження (п. 46–53) і п. 54–57 (заключний діагноз із кодами МКХ-10, лікування, рекомендації, результат); порожні обов’язкові місця — жовті на екрані; друк і PDF — як на бланку, без позначок і QR; ІМТ: на бланку окремий рядок «Зріст, маса тіла, ІМТ» з класом за ВООЗ (якого в паперовому бланку немає), «Харчування» підкреслюється за ІМТ, а без зросту й маси — зауваження перевірки перед підписом'],
+  ['0.9.3.6', '20.10.2026', 'бланк закладу 003/о у «Перегляді перед друком» (перемикач «Текст документа / Бланк 003/о»): первинний огляд — сторінки «Первинний огляд лікаря» (п. 33–40) з підкресленими варіантами (стан, свідомість, шкіра, перкусія, хрипи, пульс, тони, живіт, симптоми) і обведеними номерами обстежень за планом, лікування, консультації; за бажанням — титульний лист (п. 1–21); щоденник — «43. Щоденник» (T, Ps, АТ, ЧДР ліворуч; поточний запис або весь журнал); виписний епікриз — «45. Епікриз» з даними обстеження (п. 46–53) і п. 54–57 (заключний діагноз із кодами МКХ-10, лікування, рекомендації, результат); порожні обов’язкові місця — жовті на екрані; друк і PDF — як на бланку, без позначок і QR; ІМТ: на бланку окремий рядок «Зріст, маса тіла, ІМТ» з класом за ВООЗ (якого в паперовому бланку немає), «Харчування» підкреслюється за ІМТ, а без зросту й маси — зауваження перевірки перед підписом; натискання на зауваження (на аркуші, на бланку й у «Перевірці перед підписом») тепер прокручує саме до потрібного поля, ставить у нього курсор і коротко підсвічує його'],
   ['0.9.3.5', '20.10.2026', '«Перегляд перед друком» показує пропуски: кожне зауваження перевірки перед підписом — жовтою позначкою у своєму розділі аркуша (не вказано t°, АТ, ЧСС, бакпосів до антибіотика, обґрунтування за № 1044…), незаповнені «…» підсвічено, решта — списком угорі; натискання на позначку веде до поля; «сховати / показати»; у друк, PDF, копіювання й файли позначки не потрапляють'],
   ['0.9.3.4', '20.10.2026', 'щоденник за наказом МОЗ № 1044: рядок «Обґрунтованість перебування» формується сам — з SpO2, ЧД, САТ, кисню, динаміки й листа призначень (в/в антибіотик, парентеральна терапія, небулайзер + ГКС), з пунктами Стандарту; якщо підстав немає — підказка «плануйте виписку» і зауваження перевірки перед підписом; нове поле «Кисень, л/хв» поруч із SpO2; у вихідні — нагадування про короткий запис чергового; пневмонія — підказка про критерії клінічної стабільності для переходу на пероральний антибіотик; ХОЗЛ — попередження, якщо SpO2 на кисні вище 92%'],
   ['0.9.3.3', '13.10.2026', 'зручність: «Аркуш» перейменовано на «Перегляд перед друком» із поясненням у довідці; виправлено копіювання тексту документа на мобільному, коли панель прихована; додано наскрізний UI-тест потоку пацієнта для 8 профілів'],
@@ -4815,8 +4817,8 @@ function fillSheet(P, gaps){
 /* ===== Пропуски на аркуші: те саме, що «Перевірка перед підписом», — жовтим на своєму місці; натискання веде до поля.
    Лише на екрані: у друк, копіювання й файли не потрапляє. ===== */
 let GAPS = true; try{ GAPS = localStorage.getItem('po.gaps') !== '0'; }catch(e){}
-function gapMark(t, tab){
-  const m = h(tab ? 'button' : 'span', tab ? {type:'button', class:'gap', title:'Перейти до поля', onclick:()=>goTab(tab)} : {class:'gap'}, t);
+function gapMark(t, tab, fld){
+  const m = h(tab ? 'button' : 'span', tab ? {type:'button', class:'gap', title:'Перейти до поля', onclick:()=>goTab(tab, fld)} : {class:'gap'}, t);
   return m;
 }
 function markGaps(P, body){
@@ -4825,19 +4827,24 @@ function markGaps(P, body){
   const tog = h('button', {type:'button', class:'more gaptog', onclick:()=>{ GAPS = !GAPS; try{ localStorage.setItem('po.gaps', GAPS ? '1' : '0'); }catch(e){} renderPaper(); }},
     GAPS ? 'сховати' : 'показати');
   P.insertBefore(h('p', {class:'gapbar' + (L.length ? '' : ' ok')}, L.length ? `Пропусків і зауважень: ${L.length} · ` : 'Пропусків немає', L.length ? tog : ''), P.firstChild);
-  if (!GAPS || !L.length || !body) return;
+  if (!GAPS || !L.length) return;
+  if (!body){   // бланк: перелік пропусків над сторінками, кожен веде до свого поля
+    const first = P.querySelector('.b003');
+    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])), first);
+    return;
+  }
   L.forEach(x=>{
     if (/^Залишилось незаповнених «…»/.test(x.m)) return;   // «…» підсвічуються на своєму місці нижче
-    if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta')); return; } }
+    if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta', 'meta_pib')); return; } }
     const sec = x.tab && [...body.querySelectorAll('[data-sec="' + x.tab + '"]')].pop();
-    if (sec) sec.append(h('div', {class:'gaprow'}, gapMark(x.m, x.tab))); else rest.push(x);
+    if (sec) sec.append(h('div', {class:'gaprow'}, gapMark(x.m, x.tab, x.f))); else rest.push(x);
   });
   const tw = document.createTreeWalker(body, NodeFilter.SHOW_TEXT), nodes = [];
   while (tw.nextNode()) if (tw.currentNode.nodeValue.includes('…')) nodes.push(tw.currentNode);
   nodes.forEach(n=>{ const frag = document.createDocumentFragment();
     n.nodeValue.split('…').forEach((s,i,a)=>{ if (s) frag.append(s); if (i < a.length - 1) frag.append(h('span', {class:'gap dots', title:'Не заповнено'}, '…')); });
     n.replaceWith(frag); });
-  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab)])));
+  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])));
 }
 function renderPaper(){
   const pp = $('#paper'); if (!pp) return;
@@ -6791,14 +6798,14 @@ function renderTplLists(){
 
 /* ================= ПЕРЕВІРКА ПОВНОТИ ПЕРЕД ПІДПИСОМ ================= */
 function checkDoc(){
-  const L = [], add = (m, tab) => L.push({m, tab});
+  const L = [], add = (m, tab, f) => L.push({m, tab, f});
   const v = k => val(F(k), true), sel = k => F(k).el.value !== '';
   const txt = itext($('#out'));
   if (!txt.trim()) return L;
-  if (!mv('pib')) add('Не вказано ПІБ пацієнта', 'meta');
-  if (!mv('doc')) add('Не вказано лікаря (ПІБ для підпису) — «Налаштування»', 'set');
-  if (!mv('zoz')) add('Не вказано назву закладу для шапки — «Налаштування»', 'set');
-  if (!sex && rawTokens) add('Не вибрано стать — у тексті є «хворим/хворою»', 'meta');
+  if (!mv('pib')) add('Не вказано ПІБ пацієнта', 'meta', 'meta_pib');
+  if (!mv('doc')) add('Не вказано лікаря (ПІБ для підпису) — «Налаштування»', 'set', 'meta_doc');
+  if (!mv('zoz')) add('Не вказано назву закладу для шапки — «Налаштування»', 'set', 'meta_zoz');
+  if (!sex && rawTokens) add('Не вибрано стать — у тексті є «хворим/хворою»', 'meta', 'sexSeg');
   const dots = (txt.match(/…/g) || []).length; if (dots) add(`Залишилось незаповнених «…»: ${dots}`, null);
   const abCheck = () => RX.filter(isAB).forEach(it=>{
     const miss = [!it.cult && 'бакпосів до початку', !it.rev && 'дату перегляду'].filter(Boolean);
@@ -6807,24 +6814,24 @@ function checkDoc(){
   });
   const renal = () => RX.filter(it=>!it.stop && renalMsg(it)).forEach(it=>add(`Перевірте дозу «${it.drug}» за кліренсом креатиніну`, 'rxt'));
   const rxIncomplete = () => RX.filter(it=>!it.stop && it.drug && (!it.dose && it.drug !== 'Оксигенотерапія' || !it.route || !it.freq)).forEach(it=>add(`«${it.drug}»: не вказано дозу, шлях або кратність`, 'rxt'));
-  const dx = () => { if (!v('dx.osn')) add('Не вказано основний діагноз', 'dx'); else if (!v('dx.mkh')) add('Не вказано код МКХ-10', 'dx'); };
+  const dx = () => { if (!v('dx.osn')) add('Не вказано основний діагноз', 'dx', 'dx.osn'); else if (!v('dx.mkh')) add('Не вказано код МКХ-10', 'dx', 'dx.mkh'); };
   if (DOC === 'ohl'){
-    if (!v('skarhy.c') && !v('skarhy.cx') && !v('skarhy.none')) add('Не вказано скарги (або оберіть «Якщо скарг немає»)', 'skarhy');
-    if (!['dur','onset','hron','ax'].some(k=>v('morbi.' + k))) add('Не заповнено анамнез захворювання', 'morbi');
-    if (MODE === 'hosp' && !sel('morbi.hosp')) add('Не вказано, як госпіталізовано (направлення, самозвернення, ЕМД)', 'morbi');
-    if (!sel('vitae.alerg')) add('Не вказано алергологічний анамнез', 'vitae');
-    if (!sel('vitae.strah')) add('Не вказано працездатність / ЕЛН', 'vitae');
+    if (!v('skarhy.c') && !v('skarhy.cx') && !v('skarhy.none')) add('Не вказано скарги (або оберіть «Якщо скарг немає»)', 'skarhy', 'skarhy.c');
+    if (!['dur','onset','hron','ax'].some(k=>v('morbi.' + k))) add('Не заповнено анамнез захворювання', 'morbi', 'morbi.dur');
+    if (MODE === 'hosp' && !sel('morbi.hosp')) add('Не вказано, як госпіталізовано (направлення, самозвернення, ЕМД)', 'morbi', 'morbi.hosp');
+    if (!sel('vitae.alerg')) add('Не вказано алергологічний анамнез', 'vitae', 'vitae.alerg');
+    if (!sel('vitae.strah')) add('Не вказано працездатність / ЕЛН', 'vitae', 'vitae.strah');
     const vit = [['zah_temp_0','t°','zah'],['ssc_ad_0','АТ','ssc'],['ssc_chss_0','ЧСС','ssc'],['dyh_chd_0','ЧД','dyh'],['dyh_chd_1','SpO2','dyh']].filter(([id])=>!document.getElementById(id).value.trim());
-    if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), vit[0][2]);
-    if (MODE === 'hosp' && !(document.getElementById('zah_hw_0').value.trim() && document.getElementById('zah_hw_1').value.trim())) add('Не вказано зріст і масу тіла — ІМТ не розраховано', 'zah');
+    if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), vit[0][2], vit[0][0]);
+    if (MODE === 'hosp' && !(document.getElementById('zah_hw_0').value.trim() && document.getElementById('zah_hw_1').value.trim())) add('Не вказано зріст і масу тіла — ІМТ не розраховано', 'zah', 'zah_hw_0');
     const empty = ['zah','shk','dyh','ssc','trav','sech','nevr'].map(id=>SECTIONS.find(x=>x.id===id)).filter(sc=>!sc.fields.some(f=>f.type !== 'num' && val(f)));
     if (empty.length) add('Не описано: ' + empty.map(x=>x.short || x.title).join(', ') + ' — заповніть, натисніть «= Норма =» або оберіть «Якщо змін немає — одним рядком»', empty[0].id);
     dx();
-    if (MODE === 'hosp' && !v('dx.plan')) add('Не складено план обстеження', 'dx');
+    if (MODE === 'hosp' && !v('dx.plan')) add('Не складено план обстеження', 'dx', 'dx.plan');
     if (MODE === 'hosp'){
-      if (!sel('hosp.vyd')) add('Не вказано вид госпіталізації', 'hosp');
-      else if (!['spec','gen','auto','vid'].some(k=>v('hosp.' + k))) add('Немає обґрунтування госпіталізації (наказ МОЗ № 1044)', 'hosp');
-    } else if (!sel('hosp.vyda')) add('Не вказано рішення щодо госпіталізації', 'hosp');
+      if (!sel('hosp.vyd')) add('Не вказано вид госпіталізації', 'hosp', 'hosp.vyd');
+      else if (!['spec','gen','auto','vid'].some(k=>v('hosp.' + k))) add('Немає обґрунтування госпіталізації (наказ МОЗ № 1044)', 'hosp', 'hosp.spec');
+    } else if (!sel('hosp.vyda')) add('Не вказано рішення щодо госпіталізації', 'hosp', 'hosp.vyda');
     abCheck(); renal(); rxIncomplete();
     rxWarnings().filter(w=>w.c === 'bad').forEach(w=>add(w.t, 'rxt'));
   }
@@ -6833,10 +6840,10 @@ function checkDoc(){
     if (sm && sm.sim > 0.9) add('Запис майже такий самий, як попередній — оновіть показники й динаміку', 'd_obj');
     else if (sm && sm.sameVit) add('Показники (t°, АТ, ЧСС) такі самі, як у попередньому записі — перевірте', 'd_obj');
     rxWarnings().filter(w=>w.c === 'bad').forEach(w=>add(w.t, 'rxt'));
-    if (!sel('d_main.sk') && !v('d_main.skx')) add('Не вказано скарги', 'd_main');
+    if (!sel('d_main.sk') && !v('d_main.skx')) add('Не вказано скарги', 'd_main', 'd_main.sk');
     const vit = [['d_obj_t_0','t°'],['d_obj_ad_0','АТ'],['d_obj_chss_0','ЧСС']].filter(([id])=>!document.getElementById(id).value.trim());
-    if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), 'd_obj');
-    if (MODE === 'hosp' && !v('d_lik.osn')) add('Немає оцінки обґрунтованості перебування в стаціонарі (наказ МОЗ № 1044)', 'd_lik');
+    if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), 'd_obj', vit[0][0]);
+    if (MODE === 'hosp' && !v('d_lik.osn')) add('Немає оцінки обґрунтованості перебування в стаціонарі (наказ МОЗ № 1044)', 'd_lik', 'd_lik.osn');
     abCheck(); renal();
   }
   if (DOC === 'rx'){
@@ -6845,16 +6852,16 @@ function checkDoc(){
     abCheck(); renal(); rxIncomplete();
   }
   if (DOC === 'epi'){
-    if (!F('e_per.per').d1.value || !F('e_per.per').d2.value) add('Не вказано період лікування', 'e_per');
+    if (!F('e_per.per').d1.value || !F('e_per.per').d2.value) add('Не вказано період лікування', 'e_per', 'e_per_per_1');
     dx();
-    if (!v('e_obs.obs')) add('Не внесено результати обстежень', 'e_obs');
-    if (!v('e_lik.lik')) add('Не вказано проведене лікування', 'e_lik');
-    if (!sel('e_lik.rez')) add('Не вказано результат лікування (з покращенням, без змін…)', 'e_lik');
-    if (!sel('e_lik.eln')) add('Не вказано працездатність / ЕЛН', 'e_lik');
-    if (!v('e_rek.rek')) add('Немає рекомендацій', 'e_rek');
-    if (!mv('zav')) add('Не вказано завідувача відділення для підпису', 'meta');
+    if (!v('e_obs.obs')) add('Не внесено результати обстежень', 'e_obs', 'e_obs.obs');
+    if (!v('e_lik.lik')) add('Не вказано проведене лікування', 'e_lik', 'e_lik.lik');
+    if (!sel('e_lik.rez')) add('Не вказано результат лікування (з покращенням, без змін…)', 'e_lik', 'e_lik.rez');
+    if (!sel('e_lik.eln')) add('Не вказано працездатність / ЕЛН', 'e_lik', 'e_lik.eln');
+    if (!v('e_rek.rek')) add('Немає рекомендацій', 'e_rek', 'e_rek.rek');
+    if (!mv('zav')) add('Не вказано завідувача відділення для підпису', 'meta', 'meta_zav');
   }
-  if (DOC === 'kons'){ if (!v('k_main.obj')) add('Не заповнено об’єктивний статус', 'k_main'); dx(); if (!v('e_rek.rek')) add('Немає рекомендацій', 'e_rek'); }
+  if (DOC === 'kons'){ if (!v('k_main.obj')) add('Не заповнено об’єктивний статус', 'k_main'); dx(); if (!v('e_rek.rek')) add('Немає рекомендацій', 'e_rek', 'e_rek.rek'); }
   if (DOC === 'konc'){
     const K = koncMembers();
     if (!K.hol) add('Не обрано голову консиліуму', 'c_main');
@@ -6885,10 +6892,23 @@ function checkDoc(){
   if (DOC === 'zgoda'){ if (!v('g_main.vtr') && !mv2('g_main_vx')) add('Не відмічено медичних втручань', 'g_main'); }
   return L;
 }
-function goTab(id){
+function goTab(id, fld){
   const t = id === 'meta' ? META : id === 'rxt' ? RXT : TABS.find(x=>x.id === id);
-  if (t && t.docs.includes(DOC)) show(TABS.indexOf(t));
+  if (t && t.docs.includes(DOC)){ show(TABS.indexOf(t)); if (fld) setTimeout(()=>goField(fld), 60); }
   else if (t){ toast('Це поле — у первинному огляді'); }
+}
+/* показати саме поле: прокрутити до нього, поставити курсор і коротко підсвітити */
+function goField(fld){
+  let el = null;
+  if (/\./.test(fld)){ const f = F(fld); if (f) el = f.el || (f.inputs && f.inputs[0]) || f.d1 || (f.chips && f.chips[0]) || f.abox || null; }
+  else el = document.getElementById(fld);
+  if (!el) return;
+  const wrap = el.closest('.f') || el.closest('.seg') || el;
+  if (wrap.closest('[hidden]')) return;
+  try{ wrap.scrollIntoView({block:'center', behavior:'smooth'}); }catch(e){ wrap.scrollIntoView(); }
+  try{ el.focus({preventScroll:true}); }catch(e){}
+  wrap.classList.remove('fieldflash'); void wrap.offsetWidth; wrap.classList.add('fieldflash');
+  setTimeout(()=>wrap.classList.remove('fieldflash'), 2600);
 }
 function renderCheck(){
   const box = $('#chk'); if (!box) return;
@@ -6897,7 +6917,7 @@ function renderCheck(){
   box.classList.toggle('ok', !L.length); if (!L.length) box.classList.remove('alert');
   sum.textContent = L.length ? `зауважень: ${L.length}` : 'усе заповнено';
   ul.innerHTML = '';
-  L.forEach(x=>ul.append(h('li', {}, x.tab ? h('button', {type:'button', class:'more', onclick:()=>goTab(x.tab)}, x.m) : x.m)));
+  L.forEach(x=>ul.append(h('li', {}, x.tab ? h('button', {type:'button', class:'more', onclick:()=>goTab(x.tab, x.f)}, x.m) : x.m)));
   return L.length;
 }
 

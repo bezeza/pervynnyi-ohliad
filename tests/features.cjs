@@ -205,6 +205,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Аркуш: натискання на пропуск веде до поля', g && w.eval('TABS[active].id')==='zah', g ? w.eval('TABS[active].id') : 'немає');
    ok('Пропуски не потрапляють у текст для копіювання', !/Не вказано: t°/.test(out()));
    w.__printed=0; $('printBtn').click(); ok('Пропуски не потрапляють у друк', !$('print').querySelector('.gap, .gapbar, .gaplist'));
+   { const e=[...sh.querySelectorAll('button.gap')].find(b=>/працездатність/.test(b.textContent)); e && e.click(); await sleep(120);
+     ok('Аркуш: натискання на «працездатність / ЕЛН» ставить курсор у саме поле і підсвічує його', e && doc.activeElement && doc.activeElement.id==='vitae_strah' && doc.activeElement.closest('.f').classList.contains('fieldflash'), doc.activeElement && doc.activeElement.id); }
    sh.querySelector('.gaptog').click(); ok('Пропуски можна сховати', !doc.querySelector('#paper .sheet .gap') && /Пропусків і зауважень/.test(doc.querySelector('#paper .gapbar').textContent));
    doc.querySelector('#paper .gaptog').click(); $('paperBtn').click(); }
  // 0.9.3.6 бланк закладу 003/о

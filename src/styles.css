@@ -217,6 +217,8 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 @media print{@page b003{size:A4;margin:10mm 10mm 10mm 15mm}#print .b003{page:b003;box-shadow:none;margin:0;padding:0;max-width:none;font-size:10pt;line-height:1.28}#print .b003 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}#print .b003+.b003{break-before:page}#print .b003 .bgap{background:none}#print .blankbar{display:none}
   #print .b003 .bf,#print .b003 .blines,#print .b003 .bc,#print .b003 .bbox{color:#000}#print .b003 .bu{text-decoration-color:#000}#print .b003 .bnum.on{border-color:#000}}
 /* пропуски на аркуші — лише на екрані */
+.fieldflash{animation:fieldflash 2.6s ease-out;border-radius:8px}@keyframes fieldflash{0%,35%{box-shadow:0 0 0 3px #E0A800;background:#FFF3C4}100%{box-shadow:0 0 0 0 transparent;background:transparent}}
+.paper .sheet.blankmode>.gaplist{max-width:794px;margin:0 auto 12px;padding:6px 8px;border-left:3px solid #E0A800;background:#FFFBEA;font:10pt/1.6 system-ui,"IBM Plex Sans",sans-serif}
 .paper .gap{display:inline;background:#FFE58A;color:#5A3F00;border:0;border-radius:3px;padding:0 4px;font:inherit;font-size:.86em;font-family:system-ui,"IBM Plex Sans",sans-serif;cursor:pointer;line-height:1.35;text-align:left}
 .paper .gap.dots{padding:0 2px;font-size:1em;cursor:default}
 .paper button.gap:hover,.paper button.gap:focus-visible{background:#FFD23F;outline:2px solid #B07D00;outline-offset:1px}
