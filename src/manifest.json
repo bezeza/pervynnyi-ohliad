@@ -83,6 +83,10 @@
   "603-autoreview.js",
   "604-restore.js",
   "605-pin.js",
-  "606-audit-fixes.js"
+  "606-audit-fixes.js",
+  "607-phone.js",
+  "608-folder-banner.js",
+  "609-verify.js",
+  "610-customize.js"
  ]
 }

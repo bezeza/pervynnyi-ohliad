@@ -1004,6 +1004,101 @@ body.pinlocked>*:not(.pinscr):not(.navsheet):not(.toast){visibility:hidden}
 body.shell #ptbar .pt-saved{position:static;margin-left:8px;white-space:nowrap}
 @media (max-width:899px){body.doc-shch .mbar #mbLabs{font-size:0}body.doc-shch .mbar #mbLabs::before{content:'🧪';font-size:16px}body.doc-shch .mbar #copy2{background:var(--surface);color:var(--ink,inherit);border-color:var(--line)}.mbar #mbDSave[hidden]{display:none}}
 .nums input#meta_dt,.nums input[type="datetime-local"],.nums input[type="date"]{width:auto;min-width:13.5em;flex:1 1 13.5em;text-align:left}
+
+/* 0.9.3.20 — телефон: менше на екрані */
+.tn-doc{display:none}
+.actsheet .as-h{font:600 13px/1.2 var(--f-head);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.actsheet .as-docs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actsheet .as-docs .btn{min-height:48px;text-align:left;justify-content:flex-start}
+.actsheet .as-docs .btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.actsheet .as-more{margin-top:8px}.actsheet .as-more summary{padding:10px 2px;color:var(--accent);cursor:pointer}
+.actsheet .as-list{display:grid;gap:8px}
+.actsheet .as-list .btn{min-height:48px;text-align:left;justify-content:flex-start;width:100%}
+@media (max-width:899px){
+  body.shell header.top{display:none}
+  .docbar{display:none!important}
+  #sidecol{display:none!important}
+  .tn-doc{display:flex;align-items:center;flex:0 0 auto;padding:0 10px;font-weight:600;color:var(--accent);white-space:nowrap}
+  .tabnav{padding:6px 12px;gap:6px}
+  .tabnav .btn{min-height:42px}
+  .tabnav .tn-arr{flex:0 0 42px;padding:0}
+  .tabnav .tn-cur{min-width:0}
+  .tabnav .tn-cur b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* шапка пацієнта ховається при гортанні вниз */
+  #ptline{transition:transform .2s ease}
+  body.pt-hide #ptline{transform:translateY(-110%)}
+  body.pt-hide .tabnav{top:env(safe-area-inset-top,0px)}
+  /* заголовок розділу і кнопки — в один рядок */
+  .panel>.ph{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-top:12px}
+  .panel>.ph h2{font-size:21px;margin:0}
+  .panel>.ph .acts2{margin-left:auto;display:flex;gap:6px}
+  .panel>.ph .acts2 .btn,.panel>.ph .qhelp{min-height:36px;padding:4px 10px;font-size:14px}
+  /* «Заповнено автоматично» — коротко */
+  .autobar{display:flex;align-items:center;gap:10px;padding:8px 12px}
+  .autobar .ab-t{flex:1 1 auto;font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .autobar .ab-ok{flex:0 0 auto;min-height:38px;padding:4px 10px}
+  /* текст розділу внизу — один рядок */
+  body.live-on .livebar{padding:6px 14px;align-items:center}
+  .livebar .lv-t{-webkit-line-clamp:1;max-height:1.4em;font-size:13px}
+  body.live-on .toast{bottom:calc(118px + env(safe-area-inset-bottom,0px))}
+  .toast{max-width:min(92vw,420px);font-size:13.5px;line-height:1.35}
+  .mbar{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}
+  .mbar .btn{min-height:44px}
+}
+@media (max-width:899px){.panel .autobar{flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important}}
+@media (max-width:899px){
+  .tabnav .tn-cur{font-size:15px;gap:6px;padding:0 8px}
+  .tabnav .tn-cur b{font-size:16px}
+  .tabnav .tn-cur .tn-dd,.tabnav .tn-cur .tn-g{display:none}
+  .tn-doc{max-width:36%;font-size:15px;padding:0 8px}
+  .tn-doc .tn-dn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .mbar{gap:6px}
+  .mbar .btn{display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;font-size:15px;padding:8px 10px;min-width:0}
+  .mbar .btn .badge,.mbar .btn .cnt{margin:0}
+  body.doc-shch .mbar #navBtn{font-size:0;flex:0 0 48px}
+  body.doc-shch .mbar #navBtn span{font-size:20px}
+  body.doc-shch .mbar #mbLabs{flex:0 0 48px}
+}
+@media (max-width:899px){.ddt-row{flex-wrap:wrap;gap:6px}.ddt-row .lbl{flex:1 1 100%}.ddt-row .ddt{flex:1 1 0;min-width:0}.ddt-row .btn{min-height:42px}.ddt-row .ddt-n{flex:1 1 100%}}
+
+.fsbanner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 16px 0;padding:10px 14px;border:1px solid color-mix(in srgb,var(--flag) 45%,var(--line));background:var(--flag-soft);border-radius:9px;font-size:14px}
+.fsbanner[hidden]{display:none}
+.fsbanner .fsb-t{flex:1 1 320px}
+@media print{.fsbanner{display:none!important}}
+
+/* 0.9.3.20 — перевірка клінічного вмісту */
+.vdlg{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.vdlg .vwho{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.vdlg .vwho input{flex:1 1 260px}
+.vdlg .vbar{display:flex;gap:8px;flex-wrap:wrap}
+.vdlg .vtabs{display:flex;gap:6px;flex-wrap:wrap}.vdlg .vtabs .btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vdlg .vcnt{font-family:var(--f-num);font-size:.85em;opacity:.8}
+.vdlg .vflt{display:flex;gap:8px}.vdlg .vflt input{flex:1 1 auto;min-width:0}
+.vlist{display:grid;gap:8px}
+.vitem{border:1px solid var(--line);border-left:4px solid var(--muted);border-radius:8px;background:var(--surface);padding:0 12px}
+.vitem.v-ok{border-left-color:var(--ok)}.vitem.v-changed{border-left-color:var(--flag)}
+.vitem>summary{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;padding:10px 0;cursor:pointer}
+.vitem .vt{font-weight:600}.vitem .vs{font-size:13px;color:var(--muted)}
+.vitem .vpill{margin-left:auto;font-size:12px;padding:2px 8px;border-radius:10px;background:var(--line);color:var(--ink)}
+.vitem.v-ok .vpill{background:var(--ok-soft,#E5F4EC);color:var(--ok)}.vitem.v-changed .vpill{background:var(--flag-soft);color:var(--flag)}
+.vitem .vbody{white-space:pre-wrap;font:13.5px/1.45 var(--f-body);margin:0 0 8px;padding:8px 10px;background:var(--bg);border-radius:6px;max-height:50vh;overflow:auto}
+.vitem .vacts{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 10px}.vitem .vnote{flex:1 1 260px;min-width:0}
+.vmark{display:block;width:100%;margin-top:6px;border:0;background:none;padding:2px 0;text-align:left;font-size:12px;cursor:pointer;color:var(--muted)}
+.vmark.v-ok{color:var(--ok)}.vmark.v-changed{color:var(--flag)}.vmark.v-draft{color:var(--flag)}
+.vmark:hover{text-decoration:underline}
+.dcard{position:relative}.dcard .vdot{position:absolute;top:8px;right:10px;color:var(--ok);font-weight:700}
+summary .vdot{color:var(--ok);font-weight:700}
+
+/* 0.9.3.20 — налаштувати під себе */
+.vdlg,.cusdlg{padding-left:max(16px,calc((100vw - 1000px)/2));padding-right:max(16px,calc((100vw - 1000px)/2))}
+.vdlg{max-width:none}
+.cusgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:12px 0}
+.cuscard{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.cuscard p{margin:0;font-size:14px}
+.cus-h{display:flex;gap:8px;align-items:center}.cus-i{font-size:18px}.cus-n{margin-left:auto;font-size:12px;color:var(--muted)}
+.cus-f{margin-top:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-top:4px}
+.cusfoot{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}.cusfoot h3{margin:0}.cusfoot p{margin:0}
+.cusentry{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+@media (max-width:899px){.fsbanner{margin:8px 12px 0;padding:8px 10px;font-size:13px;gap:6px 8px}.fsbanner .fsb-t{flex:1 1 100%}.fsbanner .btn{min-height:38px;padding:4px 12px}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1014,7 +1109,7 @@ body.shell #ptbar .pt-saved{position:static;margin-left:8px;white-space:nowrap}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.19 від 20.10.2026">v0.9.3.19 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.20 від 20.10.2026">v0.9.3.20 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -2233,7 +2328,7 @@ const PRESETS = [
 
 /* ======== СВОЇ ШАБЛОНИ КОРИСТУВАЧА (зберігаються в цьому браузері) ======== */
 let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[], rxsets:[], btns:[]};
-try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || [], btns:c.btns || []}; }catch(e){}
+try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = Object.assign({}, c, {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || [], btns:c.btns || [], labs:c.labs || []}); /* інші ключі (свої аналізи тощо) не губляться */ }catch(e){}
 for (const k in CUSTOM.opts){
   const [sid, fid] = k.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) continue;
   const arr = f.type === 'text' ? (f.quick = f.quick || []) : f.opts;
@@ -2919,8 +3014,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.19', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.20', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.20', '20.10.2026', 'телефон — менше на екрані: без темної шапки й рядка «Норма · Швидко · ↶ · Документ з огляду» — замість них кнопка з назвою документа поруч із розділами («Огляд ⋯»), що відкриває «Документ і дії»; смужка пацієнта ховається при гортанні вниз; «Заповнено автоматично» і текст розділу внизу — в один-два рядки; у щоденнику нижня панель «☰ · 🧪 · 📓 Записати · Копіювати». Папка даних — як у Skiagrama: смужка «Папка даних не підключена…» з «Підключити папку» / «Пізніше», після перезапуску — «Дозволити». У папці — зрозумілі файли: «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json». «⚙ Налаштувати під себе» — усе, що можна змінити, на одній сторінці; «Мої налаштування» у файл і з файлу (без пацієнтів). Перевірка клінічного вмісту: шаблони хвороб, схеми лікування, критерії № 1044, норми аналізів, препарати й шкали — «чернетка» / «перевірено (хто, коли)» / «змінено після перевірки»; позначки й зауваження, документ для звірки з підписами, обмін позначками файлом; статус шаблону видно в картці шаблону. Виправлено: свої аналізи (журнал обстежень) зникали після перезапуску. Блоки налаштувань — усі згорнуті й по порядку'],
   ['0.9.3.19', '20.10.2026', 'у «Шкалах» — SCORE2 / SCORE2-OP (ESC 2021, 10-річний ризик серцево-судинних подій, регіон дуже високого ризику — Україна; 40–69 і 70–89 років): вік і САТ — з огляду, загальний холестерин і ЛПВЩ — з журналу обстежень (ліпідограма), куріння — з анамнезу; при ЦД, атеросклеротичному ССЗ чи ХХН шкала не рахує й пояснює чому. PESI / sPESI (ТЕЛА, ESC 2019): клас I–V з 30-денною летальністю, sPESI і ризик ранньої смерті (низький, проміжний-низький, проміжний-високий, високий) з урахуванням шоку, дисфункції ПШ і тропоніну. Обидві — «Додати в текст». У дані пацієнта шкал додано загальний холестерин і ХС ЛПВЩ'],
   ['0.9.3.18', '20.10.2026', 'виправлено: у 0.9.3.17 після перезавантаження сторінки список пацієнтів виглядав порожнім (без PIN) — дані лишались у браузері й тепер знову відкриваються; останній пацієнт відкривається, як раніше. Додано автоматичну перевірку «зберегти → перезапустити → пацієнт на місці» (без PIN і з PIN). За наскрізним аудитом сценарію лікаря (ПК і телефон): дата й час первинного огляду (та інших документів) більше не замінюються на «зараз» після перемикання документів чи повторного відкриття пацієнта — кожен документ пам’ятає свою дату; «📓 Записати в журнал» щоденника — на панелі тексту й у нижній панелі телефона, а не лише у вкладці «Запис»; «Зібрати виписку» бере дату надходження з дати первинного огляду; перевірка попереджає, якщо дата виписки раніше за надходження або щоденник поза періодом; список «Ще не заповнено» — пунктами без зайвих «;»; час збереження в смужці пацієнта не налазить на № карти; після відкриття пацієнта не лишається вкладка іншого документа. Файл попередньої версії — 0.9.3.16'],
   ['0.9.3.17', '20.10.2026', 'PIN-код і шифрування (Налаштування → «PIN-код і шифрування»): дані пацієнтів, кошик, копії в браузері й файли в папці даних шифруються AES-256 (ключ — з PIN, PBKDF2 310 000 ітерацій); PIN — при відкритті програми й після простою, 5 помилок — пауза 30 с; файл копії шифрується тим самим PIN і відкривається на іншому пристрої з PIN; у папці даних — без ПІБ у назвах файлів; змінити PIN, вимкнути шифрування; «Забули PIN?» — пояснення й стирання даних на пристрої (PIN не відновлюється — лише з незашифрованої копії, яку програма пропонує зберегти перед увімкненням)'],
@@ -3994,9 +4090,9 @@ function importFile(file){
 
 /* ================= ПАПКА ДАНИХ НА КОМП’ЮТЕРІ =================
    Chrome / Edge на комп’ютері (File System Access API). У вибраній папці створюється «Первинний огляд — дані»:
-   Пацієнти/*.json — кожен пацієнт окремим файлом; Шаблони.json — свої шаблони, формулювання, заготовки; Налаштування.json — лікар, заклад, профіль.
+   Пацієнти/*.json — кожен пацієнт окремим файлом; «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json» (FS_FILES).
    Браузер лишається основним сховищем, папка — постійна копія, що оновлюється сама. */
-const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110'];
+const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110','po.prof','po.paperset','po.blank','po.blankp','po.fmt','po.zoom','po.view','po.live','po.lock','po.autogate','po.qr','po.side','po.hvlist','po.srcab'];
 const FS = {dir:null, ok:false, busy:false, timer:null, written:{}, err:''};
 const fsSupported = () => { let top = true; try{ top = window.top === window.self; }catch(e){ top = false; } return top && typeof window.showDirectoryPicker === 'function'; };
 function fsIdb(mode, fn){
@@ -4006,6 +4102,14 @@ function fsIdb(mode, fn){
 const fsName = (id, p) => String((p && p.name) || 'Без імені').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, '_').slice(0, 60) + '_' + id + '.json';
 async function fsWriteFile(dir, name, data){ const fh = await dir.getFileHandle(name, {create:true}); const w = await fh.createWritable(); await w.write(data); await w.close(); }
 async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(name); return JSON.parse(await (await fh.getFile()).text()); }catch(e){ return null; } }
+/* які файли пишуться в папку даних — зрозумілими назвами */
+const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
+const FS_FILES = (tpl, btn) => [
+  ['Мої шаблони.json', 'po-my-templates', 'Свої шаблони хвороб, щоденників, схем лікування й аналізів', tpl, []],
+  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ', btn, ['po.packs', 'po.abbr', 'po.aireq']],
+  ['Налаштування.json', 'po-settings', 'Лікар, відділення, заклад, профіль, папір і бланк, вигляд', null, FS_SET_KEYS],
+  ['Перевірка вмісту.json', 'po-verify', 'Позначки «перевірено» для шаблонів, схем, критеріїв, норм і шкал', null, ['po.verify', 'po.vwho']]];
+function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
 function fsLocal(keys){ const o = {}; keys.forEach(k=>{ try{ const v = localStorage.getItem(k); if (v !== null) o[k] = v; }catch(e){} }); return o; }
 async function fsSync(all){
   if (!FS.dir || !FS.ok || FS.busy) return; FS.busy = true;
@@ -4020,8 +4124,10 @@ async function fsSync(all){
       if (files[id] && files[id] !== nm){ try{ await pd.removeEntry(files[id]); }catch(e){} }
       FS.written[id] = st[id].updated;
     }
-    await fsWriteFile(FS.dir, 'Шаблони.json', JSON.stringify({type:'po-templates', saved:new Date().toISOString(), data:fsLocal(['po.custom'])}, null, 1));
-    await fsWriteFile(FS.dir, 'Налаштування.json', JSON.stringify({type:'po-settings', saved:new Date().toISOString(), data:fsLocal(FS_SET_KEYS)}, null, 1));
+    { const sv = new Date().toISOString(), cu = fsCustom(), pick = ks => Object.fromEntries(Object.keys(cu).filter(k=>ks.includes(k)).map(k=>[k, cu[k]]));
+      const rest = Object.fromEntries(Object.keys(cu).filter(k=>!FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]]));
+      for (const [nm, type, help, custom, keys] of FS_FILES(rest, pick(FS_BTN_KEYS)))
+        await fsWriteFile(FS.dir, nm, JSON.stringify({type, saved:sv, app:typeof VERSION !== 'undefined' ? VERSION : '', help, custom, data:fsLocal(keys)}, null, 1)); }
     FS.err = ''; FS.last = Date.now();
     try{ ORIG_SET.call(localStorage, 'po.backup', String(Date.now())); }catch(e){}
   }catch(e){ FS.err = 'Не вдалося записати в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; }
@@ -4045,11 +4151,18 @@ async function fsLoad(how){
   }
   if (n) saveStore(st);
   let changed = false;
-  for (const f of ['Шаблони.json', 'Налаштування.json']){
-    const o = await fsReadJSON(FS.dir, f); if (!o || !o.data) continue;
-    for (const k in o.data){ let cur = null; try{ cur = localStorage.getItem(k); }catch(e){}
-      if (how === 'replace' ? cur !== o.data[k] : cur === null){ try{ ORIG_SET.call(localStorage, k, o.data[k]); changed = true; }catch(e){} } }
-  }
+  /* свої шаблони й кнопки: нові файли «Мої шаблони.json», «Мої кнопки і фрази.json»; старий «Шаблони.json» — якщо нових немає */
+  let cu = null;
+  const old = await fsReadJSON(FS.dir, 'Шаблони.json'); if (old && old.data && old.data['po.custom']){ try{ cu = JSON.parse(old.data['po.custom']); }catch(e){} }
+  const incoming = {};
+  for (const [nm] of FS_FILES({}, {})){ const o = await fsReadJSON(FS.dir, nm); if (!o) continue;
+    if (o.custom && typeof o.custom === 'object'){ cu = Object.assign(cu || {}, o.custom); }
+    if (o.data) Object.assign(incoming, o.data); }
+  const st0 = await fsReadJSON(FS.dir, 'Налаштування.json'); if (st0 && st0.data) for (const k in st0.data) if (!(k in incoming)) incoming[k] = st0.data[k];
+  if (cu) incoming['po.custom'] = JSON.stringify(Object.assign(fsCustom(), cu));
+  for (const k in incoming){ let cur = null; try{ cur = localStorage.getItem(k); }catch(e){}
+    if (k === 'po.custom' && how !== 'replace' && cur !== null) continue;
+    if (how === 'replace' ? cur !== incoming[k] : cur === null){ try{ ORIG_SET.call(localStorage, k, incoming[k]); changed = true; }catch(e){} } }
   return {n, changed};
 }
 async function fsPick(){
@@ -4093,7 +4206,7 @@ function fsRender(){
     if (!FS.ok){
       box.append(h('div', {class:'warnbox'}, h('span', {}, `Папка «${FS.dir.name}»: браузер просить підтвердити доступ після перезапуску.`), h('button', {type:'button', class:'btn primary', onclick:fsReconnect}, 'Підключити папку'))); return; }
     if (compact){ box.append(h('p', {class:'chips-hint'}, `Папка даних: «${FS.dir.name}» — зберігається автоматично` + (FS.last ? ', ' + new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'}) : ''))); return; }
-    box.append(h('p', {class:'chips-hint'}, `Підключено: «${FS.dir.name}». Пацієнти (папка «Пацієнти»), «Шаблони.json» і «Налаштування.json» оновлюються автоматично` + (FS.last ? ` · останнє збереження ${new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'})}` : '') + '.'),
+    box.append(h('p', {class:'chips-hint'}, `Підключено: «${FS.dir.name}». Пацієнти (папка «Пацієнти»), «Мої шаблони.json», «Мої кнопки і фрази.json» і «Налаштування.json» оновлюються автоматично` + (FS.last ? ` · останнє збереження ${new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'})}` : '') + '.'),
       FS.err ? h('p', {class:'warn', style:'display:block'}, FS.err) : '',
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>fsSync(true).then(()=>toast('Усе записано в папку'))}, 'Записати зараз'),
         h('button', {type:'button', class:'btn', onclick:e=>fsLoadAll(e.currentTarget)}, 'Завантажити з папки'),
@@ -4180,7 +4293,9 @@ const HELPS = [
  ['Пацієнти й збереження даних', [
   'Пацієнт зберігається автоматично, щойно вказано ПІБ. Список пацієнтів і «Сьогодні» (що зробити по кожному) — на вкладці «Запис».',
   'Дані зберігаються лише на вашому пристрої і нікуди не передаються.',
-  'Комп’ютер (Chrome, Edge): «Налаштування» → «Створити / обрати папку даних» — пацієнти, шаблони й налаштування самі зберігаються у звичайну папку. Після перевстановлення оберіть ту саму папку — усе повернеться.',
+  'Комп’ютер (Chrome, Edge): смужка «Папка даних не підключена» → «Підключити папку» (або «Налаштування» → «Папка даних на комп’ютері»). У папці: «Пацієнти» (кожен окремим файлом), «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json» — оновлюються самі. Після перевстановлення чи на іншому комп’ютері оберіть ту саму папку — усе повернеться.',
+  'Налаштувати під себе: «Налаштування» → «⚙ Налаштувати під себе» — лікар і заклад, профіль, мої шаблони, мої кнопки, свої формулювання (✎), скорочення, пакети фраз, папір. «Зберегти «Мої налаштування» у файл» — перенести на інший пристрій або передати колезі (без даних пацієнтів).',
+  'Перевірка клінічного вмісту: «Налаштування» → «Перевірка клінічного вмісту» — шаблони, схеми й дози, критерії № 1044, норми аналізів і шкали мають статус «чернетка» / «перевірено (хто, коли)». Документ для звірки друкується з місцем для підпису. Якщо вміст змінився з оновленням — позначка знімається сама.',
   'Телефон: дані — всередині програми. Не очищайте дані браузера й не видаляйте програму без копії. Регулярно: «Налаштування» → «Резервна копія: зберегти всіх у файл».',
   'Перенести пацієнтів між телефоном і комп’ютером: «Запис» → «⇄ Перенесення» → пароль → «Поділитися…» (Telegram «Збережене», Viber, пошта) або «Зберегти файл». На іншому пристрої: «⇄ Перенесення» → «Прийняти файл». Нові пацієнти додаються, наявні оновлюються лише новішою версією.']],
  ['Свої шаблони й формулювання', [
@@ -12844,6 +12959,322 @@ let DOCDT = {}, DTKEEP = null;
 examDateISO = function(){ const v = DOC === 'ohl' ? (document.getElementById('meta_dt') || {}).value : DOCDT.ohl; return String(v || '').split('T')[0]; };
 /* після відкриття пацієнта на іншому документі (епікриз, щоденник) — не лишати відкритою вкладку, якої в цьому документі немає */
 { const rl = restoreLast; restoreLast = function(){ const r = rl.apply(this, arguments); try{ if (TABS[active] && TABS[active].tab.hidden){ const k = TABS.findIndex(t=>!t.tab.hidden); if (k >= 0) show(k); } }catch(e){} return r; }; }
+/* ===== Телефон: менше всього на екрані (0.9.3.20) =====
+   Замість темної шапки, рядка «Документ · Норма · Швидко · ↶ · Документ з огляду» і картки шаблону —
+   одна кнопка з назвою документа поруч із розділами. Вона відкриває аркуш «Документ і дії». */
+const isPhone = () => !!(window.matchMedia && matchMedia('(max-width:899px)').matches);
+const docName = k => { const d = [...DOCLIST[MODE], ...DOCMORE[MODE]].find(x=>x[0] === k); return d ? d[1] : k; };
+const docShort = k => ({ohl:'Огляд', shch:'Щоденник', epi:'Епікриз', rx:'Призначення'}[k] || docName(k).split(/[\s(]/)[0]);
+function openActs(){
+  const sh = h('div', {class:'navsheet actsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Документ і дії'});
+  const close = () => { sh.remove(); document.body.style.overflow = ''; };
+  const act = (label, fn, cls) => h('button', {type:'button', class:'btn ' + (cls || ''), onclick:()=>{ close(); fn(); }}, label);
+  const click = id => () => { const b = document.getElementById(id); if (b) b.click(); };
+  const main = DOCLIST[MODE], more = DOCMORE[MODE];
+  const dbtn = ([k, l]) => h('button', {type:'button', class:'btn' + (k === DOC ? ' on' : ''), 'aria-pressed':k === DOC ? 'true' : 'false', onclick:()=>{ close(); switchDoc(k); }}, l);
+  const tplName = curKey && typeof PRESETS !== 'undefined' ? ((PRESETS.find(p=>p.key === curKey) || {}).name || '') : '';
+  sh.append(
+    h('div', {class:'nshead'}, h('b', {}, 'Документ і дії'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+    h('h3', {class:'as-h'}, 'Документ'),
+    h('div', {class:'as-docs'}, ...main.map(dbtn)),
+    more.length ? h('details', {class:'as-more'}, h('summary', {}, 'Інші документи · ' + more.length), h('div', {class:'as-docs'}, ...more.map(dbtn))) : '',
+    h('h3', {class:'as-h'}, 'Заповнення'),
+    h('div', {class:'as-list'},
+      act('= Норма в усіх системах', click('allNorm'), 'norm'),
+      act('⚡ Швидкий режим (лише головне)', click('quickBtn')),
+      act('↶ Скасувати останню дію', click('undoBtn')),
+      act('＋ Документ з огляду…', click('mkDocBtn')),
+      act(tplName ? 'Змінити шаблон («' + tplName + '»)…' : 'Обрати хворобу (шаблон)…', ()=>goTab('hv'))),
+    h('h3', {class:'as-h'}, 'Програма'),
+    h('div', {class:'as-list'},
+      act('👥 Пацієнти', click('ptbar')),
+      act('🩺 Профіль (спеціальність, де працюєте)', click('profBtn')),
+      act('◐ Тема оформлення', click('themeBtn')),
+      act('⚙ Налаштувати під себе', ()=>customizeOpen()),
+      act('Усі налаштування', ()=>goTab('set'))));
+  document.body.append(sh); document.body.style.overflow = 'hidden';
+  sh.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
+  const f = sh.querySelector('.as-docs .on'); if (f) f.focus();
+}
+{ const rt = renderTabNav; renderTabNav = function(){ const r = rt.apply(this, arguments);
+    const tn = $('#tabnav'); if (tn && !tn.querySelector('.tn-doc')) tn.append(h('button', {type:'button', class:'btn tn-doc', 'aria-haspopup':'dialog', title:'Документ і дії', onclick:openActs}, h('span', {class:'tn-dn'}, docShort(DOC)), h('span', {'aria-hidden':'true'}, ' ⋯')));
+    return r; };
+  const sd = switchDoc; switchDoc = function(){ const r = sd.apply(this, arguments); try{ renderTabNav(); }catch(e){} return r; };
+}
+/* на телефоні шапка пацієнта ховається, коли гортаєте вниз, і повертається, коли вгору */
+{ let y0 = 0;
+  addEventListener('scroll', ()=>{ if (!isPhone()) { document.body.classList.remove('pt-hide'); return; }
+    const y = scrollY; if (Math.abs(y - y0) < 12) return;
+    document.body.classList.toggle('pt-hide', y > y0 && y > 160); y0 = y; }, {passive:true}); }
+/* ===== Нагадування про папку даних — як у Skiagrama (0.9.3.20) =====
+   Поки папку не підключено, пацієнти живуть лише в цьому браузері. Смужка на головному екрані:
+   «Підключити папку» або «Пізніше» (нагадає завтра). Після перезапуску браузера — «Дозволити» одним натисканням. */
+const fsToday = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+function fsBanner(){
+  let b = document.getElementById('fsBanner');
+  const welcomed = lsGet('po.welcome', '') !== '';
+  const need = fsSupported() && welcomed && (!FS.dir || !FS.ok);
+  const perm = !!FS.dir && !FS.ok;
+  if (!need || (!perm && lsGet('po.fslater', '') === fsToday())){ if (b) b.hidden = true; return; }
+  if (!b){
+    b = h('div', {id:'fsBanner', class:'fsbanner', role:'status'});
+    const pl = document.getElementById('ptline'); if (pl) pl.after(b); else document.body.prepend(b);
+  }
+  b.innerHTML = '';
+  b.append(h('span', {class:'fsb-t'}, perm ? `Папка даних «${FS.dir.name}» потребує дозволу браузера — без нього нові записи не потрапляють у папку.`
+      : 'Папка даних не підключена. Пацієнти живуть лише в цьому браузері — підключіть папку, щоб не втратити записи.'),
+    h('button', {type:'button', class:'btn primary', onclick:()=>perm ? fsReconnect() : fsPick()}, perm ? 'Дозволити' : 'Підключити папку'),
+    perm ? '' : h('button', {type:'button', class:'btn', onclick:()=>{ lsSet('po.fslater', fsToday()); b.hidden = true; toast('Нагадаю завтра. Підключити можна в «Налаштуваннях» → «Папка даних на комп’ютері»', 4000); }}, 'Пізніше'));
+  b.hidden = false;
+}
+{ const fr = fsRender; fsRender = function(){ const r = fr.apply(this, arguments); try{ fsBanner(); }catch(e){} return r; }; }
+/* ===== Перевірка клінічного вмісту (0.9.3.20) =====
+   Кожен шаблон хвороби, схема лікування, критерії госпіталізації (№ 1044), норми аналізів, препарат довідника й шкала
+   має статус: «чернетка» (не перевірено), «перевірено» (хто, коли) або «змінено після перевірки» — якщо вміст
+   змінився з оновленням програми, позначка сама знімається. Документ для звірки — друк або файл, з місцем для підпису.
+   Статуси зберігаються в po.verify (переносяться разом із налаштуваннями й у папку даних). */
+const VKEY = 'po.verify';
+const vLoad = () => { try{ return JSON.parse(lsGet(VKEY, '{}')) || {}; }catch(e){ return {}; } };
+const vSave = o => lsSet(VKEY, JSON.stringify(o));
+const vHash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
+const vRxLine = r => [r[0], r[1], r[2], r[3], r[4] ? r[4] + ' дн.' : '', r[5]].filter(x=>x !== '' && x != null).join(' · ');
+const vNormTxt = p => p.txt ? (p.ph ? 'текст: ' + p.ph : 'текст') : (p.m ? `${dec(p.m[0])}–${dec(p.m[1])}` + (p.f && (p.f[0] !== p.m[0] || p.f[1] !== p.m[1]) ? ` (ч), ${dec(p.f[0])}–${dec(p.f[1])} (ж)` : '') : 'норму не задано');
+const VCATS = [['tpl','Шаблони хвороб'],['rx','Схеми лікування'],['krit','Критерії госпіталізації (№ 1044)'],['norm','Норми аналізів'],['drug','Довідник препаратів'],['calc','Шкали']];
+/* усі пункти для перевірки: {k, cat, title, sub, lines[]} */
+function vItems(){
+  const L = [], add = (cat, id, title, sub, lines) => L.push({k:cat + ':' + id, cat, title, sub, lines});
+  PRESETS.forEach(p=>{
+    add('tpl', p.key, p.name, (p.mkh || '') + (p.group ? ' · ' + p.group : ''), [
+      'Діагноз: ' + (p.osn || '—') + (p.mkh ? ' (' + p.mkh + ')' : ''), p.uskl ? 'Ускладнення: ' + p.uskl : '',
+      'Скарги: ' + (p.skarhy || []).join(', '),
+      ...Object.entries(p.det || {}).map(([k, v])=>'  ' + k + ': ' + v.join(', ')),
+      ...Object.entries(p.set || {}).map(([k, v])=>'Огляд, ' + k + ': ' + v),
+      p.both && p.both.osn ? 'З обох боків: ' + p.both.osn : '',
+      'План обстеження: ' + (p.plan || []).join(', ')].filter(Boolean));
+    const rx = RXS[p.key] || p.rx || [], ra = RXA[p.key], rv = (typeof RXV !== 'undefined' && RXV[p.key]) || [], src = (typeof RXSRC !== 'undefined' && RXSRC[p.key]) || null;
+    if (rx.length || (ra && ra.length) || rv.length) add('rx', p.key, p.name, src ? 'джерело: ' + src[0] + (src[2] ? '; ' + src[2] : '') : 'джерело не вказано', [
+      ...(rx.length ? ['Стаціонар:', ...rx.map(r=>'  ' + vRxLine(r))] : []),
+      ...(ra && ra.length ? ['Амбулаторно:', ...ra.map(r=>'  ' + vRxLine(r))] : ra ? ['Амбулаторно: схеми немає — лікування в стаціонарі'] : []),
+      ...rv.flatMap(v=>['Варіант «' + v[0] + '»:', ...v[1].map(r=>'  ' + vRxLine(r))])]);
+    const kr = KRIT[p.key]; if (kr && kr.length) add('krit', p.key, p.name, 'наказ МОЗ № 1044', kr.slice());
+  });
+  LABCAT.forEach(t=>add('norm', t.t, t.t, (LGROUPS.find(g=>g[0] === t.g) || [, ''])[1], t.p.map(p=>p.n + (p.u ? ', ' + p.u : '') + ': ' + vNormTxt(p))));
+  DRUGS.forEach(d=>add('drug', d.n, d.n, d.ab ? 'AWaRe: ' + (AWARE[d.ab] || d.ab) : '', [
+    'Типова доза: ' + [d.d, d.r, d.f].filter(Boolean).join(' · '), ...(d.renal || []).map(r=>`КК < ${r.lt} мл/хв: ${r.m}`), d.max ? 'Максимум: ' + d.max : '', d.note || ''].filter(Boolean)));
+  CALCS.forEach(c=>add('calc', c.id, c.title, '', [c.desc, ...(c.items || []).map(i=>'□ ' + i[1] + (i[2] ? ` (${i[2] > 0 ? '+' : ''}${i[2]})` : '')), ...(c.sel || []).map(s=>s[1] + ': ' + s[2].map(o=>o[0] + ' (' + o[1] + ')').join('; '))]));
+  L.forEach(it=>{ const extra = it.cat === 'calc' ? String((CALCS.find(c=>c.id === it.k.slice(5)) || {}).run || '') : ''; it.h = vHash(JSON.stringify(it.lines) + extra); });
+  return L;
+}
+function vStatus(it, V){ const r = (V || vLoad())[it.k]; if (!r) return {s:'draft'}; return r.h === it.h ? {s:'ok', r} : {s:'changed', r}; }
+const V_L = {draft:'чернетка', ok:'перевірено', changed:'змінено після перевірки'};
+const vWho = () => lsGet('po.vwho', '') || (document.getElementById('meta_doc') || {}).value || '';
+const fmtTs = t => new Date(t).toLocaleDateString('uk-UA');
+/* статус одного пункту — для позначок у програмі */
+function vOf(k){ const it = vItems().find(x=>x.k === k); return it ? vStatus(it) : null; }
+
+/* ---------- діалог перевірки ---------- */
+function verifyOpen(cat0, key0){
+  const items = vItems(); let cat = cat0 || 'tpl', flt = 'all', q = '';
+  const dlg = h('div', {class:'navsheet vdlg', role:'dialog', 'aria-modal':'true', 'aria-label':'Перевірка клінічного вмісту'});
+  const close = () => { dlg.remove(); document.body.style.overflow = ''; try{ renderTabNav(); vMarks(); }catch(e){} };
+  const who = h('input', {type:'text', id:'vWho', value:vWho(), placeholder:'ПІБ, посада того, хто перевіряє', oninput:()=>lsSet('po.vwho', who.value.trim())});
+  const tabs = h('div', {class:'vtabs', role:'tablist'}), sum = h('p', {class:'chips-hint vsum'}), list = h('div', {class:'vlist'});
+  const fsel = h('select', {'aria-label':'Показати', onchange:()=>{ flt = fsel.value; draw(); }},
+    h('option', {value:'all'}, 'Усі'), h('option', {value:'draft'}, 'Не перевірені'), h('option', {value:'changed'}, 'Змінені після перевірки'), h('option', {value:'ok'}, 'Перевірені'));
+  const srch = h('input', {type:'search', placeholder:'Пошук…', 'aria-label':'Пошук', oninput:()=>{ q = srch.value.trim().toLowerCase(); draw(); }});
+  const mark = (it, on, note) => { const V = vLoad(); if (on){ const w = who.value.trim(); if (!w){ toast('Впишіть, хто перевіряє (ПІБ, посада)'); who.focus(); return false; } V[it.k] = {h:it.h, by:w, at:Date.now(), note:note || ''}; } else delete V[it.k]; vSave(V); typeof logAct === 'function' && logAct((on ? 'Перевірено: ' : 'Знято позначку: ') + VCATS.find(c=>c[0] === it.cat)[1] + ' — ' + it.title); return true; };
+  function draw(){
+    const V = vLoad();
+    tabs.innerHTML = '';
+    VCATS.forEach(([c, l])=>{ const its = items.filter(x=>x.cat === c), ok = its.filter(x=>vStatus(x, V).s === 'ok').length;
+      tabs.append(h('button', {type:'button', role:'tab', class:'btn' + (c === cat ? ' on' : ''), 'aria-selected':c === cat ? 'true' : 'false', onclick:()=>{ cat = c; draw(); }}, l, h('span', {class:'vcnt'}, ` ${ok}/${its.length}`))); });
+    const all = items.length, okAll = items.filter(x=>vStatus(x, V).s === 'ok').length, chAll = items.filter(x=>vStatus(x, V).s === 'changed').length;
+    sum.textContent = `Перевірено ${okAll} з ${all}` + (chAll ? ` · змінено після перевірки: ${chAll}` : '') + '. Позначка знімається сама, якщо з оновленням програми вміст змінився.';
+    list.innerHTML = '';
+    const its = items.filter(x=>x.cat === cat && (flt === 'all' || vStatus(x, V).s === flt) && (!q || (x.title + ' ' + x.lines.join(' ')).toLowerCase().includes(q)));
+    if (!its.length) list.append(h('p', {class:'chips-hint'}, 'Нічого не знайдено.'));
+    its.forEach(it=>{
+      const st = vStatus(it, V), note = h('input', {type:'text', class:'vnote', placeholder:'Зауваження (що виправити) — необов’язково', value:st.r && st.r.note || ''});
+      const det = h('details', {class:'vitem v-' + st.s, id:'v_' + it.k.replace(/[^\wа-яіїєґ]/gi, '_')},
+        h('summary', {}, h('span', {class:'vt'}, it.title), it.sub ? h('span', {class:'vs'}, it.sub) : '', h('span', {class:'vpill'}, V_L[st.s] + (st.r ? ' · ' + st.r.by + ', ' + fmtTs(st.r.at) : ''))),
+        h('pre', {class:'vbody'}, it.lines.join('\n')),
+        h('div', {class:'vacts'}, note,
+          st.s === 'ok' ? h('button', {type:'button', class:'btn', onclick:()=>{ mark(it, false); draw(); }}, 'Зняти позначку')
+            : h('button', {type:'button', class:'btn primary', onclick:()=>{ if (mark(it, true, note.value.trim())){ toast('Позначено: перевірено'); draw(); } }}, '✓ Перевірено'),
+          st.s === 'ok' ? h('button', {type:'button', class:'btn', onclick:()=>{ const V2 = vLoad(); if (V2[it.k]){ V2[it.k].note = note.value.trim(); vSave(V2); toast('Зауваження збережено'); } }}, 'Зберегти зауваження') : ''));
+      if (key0 && it.k === cat + ':' + key0) det.open = true;
+      list.append(det);
+    });
+  }
+  dlg.append(
+    h('div', {class:'nshead'}, h('b', {}, 'Перевірка клінічного вмісту'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+    h('p', {class:'chips-hint'}, 'Шаблони, схеми, дози, критерії й норми — чернетка, доки їх не перевірить профільний фахівець. Відкрийте пункт, звірте з чинними наказами й настановами, натисніть «✓ Перевірено» або запишіть зауваження.'),
+    h('div', {class:'res-form vwho'}, h('label', {for:'vWho', class:'lbl', style:'margin:0'}, 'Хто перевіряє'), who),
+    h('div', {class:'vbar'},
+      h('button', {type:'button', class:'btn', onclick:()=>vDocPrint(cat)}, '🖨 Документ для звірки (цей розділ)'),
+      h('button', {type:'button', class:'btn', onclick:()=>vDocPrint(null)}, 'Документ: усе'),
+      h('button', {type:'button', class:'btn', onclick:vExport}, 'Зберегти позначки у файл'),
+      h('button', {type:'button', class:'btn', onclick:()=>vImport(draw)}, 'Додати позначки з файлу')),
+    tabs, h('div', {class:'vflt'}, srch, fsel), sum, list);
+  document.body.append(dlg); document.body.style.overflow = 'hidden';
+  dlg.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
+  draw();
+  if (key0) setTimeout(()=>{ const o = dlg.querySelector('details[open]'); if (o) o.scrollIntoView({block:'center'}); }, 50);
+}
+/* ---------- документ для звірки ---------- */
+function vDocHTML(cat){
+  const V = vLoad(), items = vItems().filter(x=>!cat || x.cat === cat), esc = s => String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const zoz = (document.getElementById('meta_zoz') || {}).value || '', vidd = (document.getElementById('meta_vidd') || {}).value || '';
+  const parts = VCATS.filter(c=>!cat || c[0] === cat).map(([c, l])=>{ const its = items.filter(x=>x.cat === c); if (!its.length) return '';
+    return `<h2>${esc(l)} <small>(${its.filter(x=>vStatus(x, V).s === 'ok').length} з ${its.length} перевірено)</small></h2>` + its.map(it=>{ const st = vStatus(it, V);
+      return `<div class="it"><div class="hd"><b>${esc(it.title)}</b>${it.sub ? ' <span class="sub">' + esc(it.sub) + '</span>' : ''}<span class="st ${st.s}">${V_L[st.s]}${st.r ? ': ' + esc(st.r.by) + ', ' + fmtTs(st.r.at) : ''}</span></div><pre>${esc(it.lines.join('\n'))}</pre>${st.r && st.r.note ? '<p class="nt">Зауваження: ' + esc(st.r.note) + '</p>' : ''}<p class="sg">☐ Відповідає &nbsp; ☐ Потребує змін: ________________________________________________</p></div>`; }).join(''); }).join('');
+  return `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Звірка клінічного вмісту — Первинний огляд ${VERSION}</title><style>
+body{font:10.5pt/1.4 "Times New Roman",serif;margin:16mm 14mm;color:#000}h1{font-size:14pt;margin:0 0 4px}h2{font-size:12pt;margin:18px 0 6px;border-bottom:1px solid #000;break-after:avoid}h2 small{font-weight:400}
+.it{break-inside:avoid;margin:0 0 10px;padding:0 0 6px;border-bottom:1px dotted #888}.hd{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}.sub{color:#444;font-size:9.5pt}.st{margin-left:auto;font-size:9pt;border:1px solid #000;padding:0 4px}
+.st.ok{background:#e8f4ec}.st.changed{background:#fff2cc}pre{font:9.5pt/1.35 "Times New Roman",serif;white-space:pre-wrap;margin:4px 0}.nt{font-style:italic;margin:2px 0}.sg{font-size:9.5pt;margin:2px 0}.meta{font-size:10pt}.sign{margin-top:24px;break-inside:avoid}
+@page{size:A4;margin:0}</style></head><body>
+<h1>Звірка клінічного вмісту програми «Первинний огляд»</h1>
+<p class="meta">Версія ${VERSION} · сформовано ${new Date().toLocaleDateString('uk-UA')}${zoz ? ' · ' + esc(zoz) : ''}${vidd ? ' · ' + esc(vidd) : ''}<br>
+Формулювання в програмі скорочені. Звіряйте з чинними наказами МОЗ, стандартами й настановами. Позначте кожен пункт; зауваження внесіть у програму або передайте розробнику.</p>
+${parts}
+<div class="sign"><p>Перевірив(ла): _______________________________ (ПІБ, посада) &nbsp; Підпис: ____________ &nbsp; Дата: ____________</p>
+<p>Затверджую: _______________________________ (заступник головного лікаря з медичної роботи) &nbsp; Підпис: ____________ &nbsp; Дата: ____________</p></div>
+</body></html>`;
+}
+function vDocPrint(cat){
+  const html = vDocHTML(cat);
+  const fr = h('iframe', {style:'position:fixed;right:0;bottom:0;width:0;height:0;border:0', 'aria-hidden':'true'}); document.body.append(fr);
+  const d = fr.contentDocument; d.open(); d.write(html); d.close();
+  setTimeout(()=>{ try{ fr.contentWindow.focus(); fr.contentWindow.print(); }catch(e){ vDocSave(html); } setTimeout(()=>fr.remove(), 60000); }, 300);
+  toast('Друк документа для звірки. Щоб надіслати файлом — «Зберегти як PDF» у вікні друку', 4000);
+}
+function vDocSave(html){ const a = h('a', {href:URL.createObjectURL(new Blob([html], {type:'text/html'})), download:'zvirka_klinichnoho_vmistu_' + VERSION + '.html'}); document.body.append(a); a.click(); a.remove(); }
+function vExport(){ const a = h('a', {href:URL.createObjectURL(new Blob([JSON.stringify({type:'po-verify', app:VERSION, at:new Date().toISOString(), data:vLoad()}, null, 1)], {type:'application/json'})), download:'perevirka_vmistu_' + todayISO() + '.json'}); document.body.append(a); a.click(); a.remove(); toast('Позначки збережено у файл — його можна передати колезі або завідувачу'); }
+function vImport(after){
+  const inp = h('input', {type:'file', accept:'.json,application/json', style:'display:none'});
+  inp.onchange = async () => { const f = inp.files[0]; inp.remove(); if (!f) return;
+    try{ const o = JSON.parse(await f.text()); if (!o || o.type !== 'po-verify' || !o.data) throw new Error('це не файл позначок перевірки');
+      const V = vLoad(); let n = 0; for (const k in o.data){ const r = o.data[k]; if (r && r.h && (!V[k] || (r.at || 0) > (V[k].at || 0))){ V[k] = r; n++; } }
+      vSave(V); toast(`Додано позначок: ${n}`); if (after) after(); }catch(e){ toast('Не вдалося прочитати файл: ' + e.message, 5000); } };
+  document.body.append(inp); inp.click();
+}
+/* ---------- позначки в програмі ---------- */
+function vMarks(){
+  const V = vLoad();
+  /* картка шаблону в боковій панелі */
+  const tp = document.querySelector('#sidecard .stpl');
+  if (tp){ let b = tp.querySelector('.vmark'); if (!b){ b = h('button', {type:'button', class:'vmark', onclick:e=>{ e.stopPropagation(); verifyOpen('tpl', curKey); }}); tp.append(b); }
+    const it = curKey && vItems().find(x=>x.k === 'tpl:' + curKey); if (!it){ b.hidden = true; } else { const st = vStatus(it, V); b.hidden = false; b.className = 'vmark v-' + st.s; b.textContent = st.s === 'ok' ? '✓ перевірено' + (st.r ? ': ' + st.r.by.split(/[ ,]/)[0] + ', ' + fmtTs(st.r.at) : '') : st.s === 'changed' ? '⚠ змінено після перевірки' : 'чернетка — не перевірено фахівцем'; b.title = 'Відкрити перевірку шаблону'; } }
+  /* картки хвороб */
+  document.querySelectorAll('.dcard').forEach(c=>{ const nm = (c.querySelector('b') || {}).textContent, p = PRESETS.find(x=>x.name === nm); if (!p) return;
+    const r = V['tpl:' + p.key]; let m = c.querySelector('.vdot'); if (!m){ m = h('span', {class:'vdot', 'aria-hidden':'true'}); c.append(m); }
+    m.textContent = r ? '✓' : ''; m.title = r ? 'Шаблон перевірено: ' + r.by : ''; });
+  /* шкали */
+  CALCS.forEach(c=>{ const s = document.querySelector('#calc_' + c.id + ' > summary'); if (!s) return; let m = s.querySelector('.vdot'); if (!m){ m = h('span', {class:'vdot'}); s.firstChild.after(m); }
+    const r = V['calc:' + c.id]; m.textContent = r ? ' ✓' : ''; m.title = r ? 'Шкалу перевірено: ' + r.by : 'Шкалу ще не перевірено фахівцем'; });
+}
+{ const up = update; update = function(){ const r = up.apply(this, arguments); clearTimeout(vMarks.t); vMarks.t = setTimeout(()=>{ try{ vMarks(); }catch(e){} }, 120); return r; }; }
+/* Налаштування: блок перевірки */
+{ const box = h('div', {class:'vset'},
+    h('p', {class:'chips-hint'}, 'Шаблони хвороб, схеми лікування й дози, критерії госпіталізації (№ 1044), норми аналізів і шкали — чернетка, доки їх не перевірить профільний фахівець. Тут їх можна переглянути, позначити перевіреними й надрукувати документ для звірки з підписом.'),
+    h('p', {class:'chips-hint vset-n'}),
+    h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:()=>verifyOpen()}, 'Відкрити перевірку'), h('button', {type:'button', class:'btn', onclick:()=>vDocPrint(null)}, '🖨 Документ для звірки')));
+  if (SETTINGS_EL) SETTINGS_EL.append(h('h3', {class:'sub'}, 'Перевірка клінічного вмісту'), box);
+  const n = () => { const its = vItems(), V = vLoad(); box.querySelector('.vset-n').textContent = `Перевірено ${its.filter(x=>vStatus(x, V).s === 'ok').length} з ${its.length}.`; };
+  try{ n(); }catch(e){}
+  const sh = show; show = function(i){ const r = sh.apply(this, arguments); if (TABS[i] === SET) try{ n(); }catch(e){} return r; };
+}
+{ const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'Перевірка клінічного вмісту (шаблони, дози, норми, № 1044)', s:'', go:()=>verifyOpen()}); return L; }; }
+/* ===== «Налаштувати під себе» (0.9.3.20): усе, що можна змінити, на одній сторінці простими словами.
+   Зберігається в папці даних зрозумілими файлами: «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json».
+   Без папки (телефон, Firefox) — один файл «Мої налаштування» для перенесення. ===== */
+function goSet(title){
+  goTab('set');
+  setTimeout(()=>{
+    const w = title.toLowerCase();
+    const d = [...document.querySelectorAll('details.setsec')].find(x=>x.querySelector('summary').textContent.toLowerCase().includes(w));
+    if (d){ d.open = true; d.scrollIntoView({block:'start', behavior:'smooth'}); return; }
+    const hh = [...document.querySelectorAll('h3.sub, h3')].find(x=>x.textContent.toLowerCase().includes(w));
+    if (hh) hh.scrollIntoView({block:'start', behavior:'smooth'});
+  }, 80);
+}
+function mySetupExport(){
+  const cu = fsCustom(), o = {type:'po-my-setup', app:VERSION, saved:new Date().toISOString(), files:{}};
+  const rest = Object.fromEntries(Object.keys(cu).filter(k=>!FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]])), btn = Object.fromEntries(Object.keys(cu).filter(k=>FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]]));
+  FS_FILES(rest, btn).forEach(([nm, type, help, custom, keys])=>{ o.files[nm] = {type, help, custom, data:fsLocal(keys)}; });
+  const a = h('a', {href:URL.createObjectURL(new Blob([JSON.stringify(o, null, 1)], {type:'application/json'})), download:'Мої_налаштування_' + todayISO() + '.json'});
+  document.body.append(a); a.click(); a.remove();
+  toast('Збережено «Мої налаштування»: шаблони, кнопки, фрази й налаштування. Пацієнтів у файлі немає', 4500);
+}
+function mySetupImport(){
+  const inp = h('input', {type:'file', accept:'.json,application/json', style:'display:none'});
+  inp.onchange = async () => { const f = inp.files[0]; inp.remove(); if (!f) return;
+    try{ const o = JSON.parse(await f.text()); if (!o || o.type !== 'po-my-setup' || !o.files) throw new Error('це не файл «Мої налаштування»');
+      let cu = fsCustom(), n = 0;
+      for (const nm in o.files){ const x = o.files[nm] || {};
+        if (x.custom) { cu = Object.assign(cu, x.custom); n++; }
+        for (const k in (x.data || {})){ try{ localStorage.setItem(k, x.data[k]); n++; }catch(e){} } }
+      localStorage.setItem('po.custom', JSON.stringify(cu));
+      toast(`Завантажено (${n}). Програма перезапуститься, щоб застосувати`, 3000); setTimeout(()=>location.reload(), 1600);
+    }catch(e){ toast('Не вдалося прочитати файл: ' + e.message, 5000); } };
+  document.body.append(inp); inp.click();
+}
+function customizeOpen(){
+  const dlg = h('div', {class:'navsheet cusdlg', role:'dialog', 'aria-modal':'true', 'aria-label':'Налаштувати під себе'});
+  const close = () => { dlg.remove(); document.body.style.overflow = ''; };
+  const go = fn => () => { close(); fn(); };
+  const sec = id => SECTIONS.find(s=>s.id === id);
+  const cu = fsCustom(), cnt = {tpl:(cu.presets || []).length + (cu.diary || []).length + (cu.rxsets || []).length, btn:(cu.btns || []).length, ovr:Object.keys(cu.ovr || {}).length + Object.keys(cu.opts || {}).length};
+  const card = (icon, title, what, how, btnLabel, fn, file, n) => h('div', {class:'cuscard'},
+    h('div', {class:'cus-h'}, h('span', {class:'cus-i', 'aria-hidden':'true'}, icon), h('b', {}, title), n ? h('span', {class:'cus-n'}, n) : ''),
+    h('p', {}, what), how ? h('p', {class:'chips-hint'}, how) : '',
+    h('div', {class:'cus-f'}, h('button', {type:'button', class:'btn', onclick:go(fn)}, btnLabel), h('span', {class:'chips-hint'}, '→ ' + file)));
+  const fsOk = FS.dir && FS.ok;
+  dlg.append(
+    h('div', {class:'nshead'}, h('b', {}, 'Налаштувати під себе'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+    h('p', {class:'chips-hint'}, 'Усе, що можна змінити під свою роботу. Зміни зберігаються одразу; у папці даних — окремими файлами, які легко скопіювати на інший комп’ютер.'),
+    h('div', {class:'cusgrid'},
+      card('👤', 'Лікар, відділення, заклад', 'ПІБ і посада для підпису, завідувач, заступник з медичної роботи, назва й реквізити закладу для шапки.', '', 'Відкрити', ()=>goSet('Лікар'), 'Налаштування.json'),
+      card('🩺', 'Профіль', 'Ваша спеціальність і де працюєте (стаціонар, поліклініка). Від цього залежать хвороби, документи й кнопки, які видно.', '', 'Змінити профіль', ()=>{ const b = document.getElementById('profBtn'); if (b) b.click(); }, 'Налаштування.json'),
+      card('📋', 'Мої шаблони', 'Свій шаблон хвороби, щоденника чи схеми лікування: заповніть огляд як завжди і збережіть як шаблон.', 'Вкладка «Мої шаблони» → «Зберегти поточний огляд як шаблон».', 'Відкрити «Мої шаблони»', ()=>goTab('tpl'), 'Мої шаблони.json', cnt.tpl ? 'є ' + cnt.tpl : ''),
+      card('➕', 'Мої кнопки', 'Кнопка, що одним натисканням вставляє вашу фразу в потрібне поле розділу.', 'У будь-якому розділі: «⋯» → «Своя кнопка». Видалити — × на кнопці.', 'Додати кнопку в «Скарги»', ()=>{ goTab('skarhy'); setTimeout(()=>{ try{ myBtnForm(sec('skarhy')); }catch(e){} }, 120); }, 'Мої кнопки і фрази.json', cnt.btn ? 'є ' + cnt.btn : ''),
+      card('✎', 'Свої формулювання', 'Змінити текст будь-якого варіанта під свій стиль, додати свій варіант або сховати непотрібний.', 'Натисніть ✎ біля назви розділу, потім — на варіант.', 'Спробувати в «Загальний стан»', ()=>goTab('zah'), 'Мої кнопки і фрази.json', cnt.ovr ? 'змін ' + cnt.ovr : ''),
+      card('⌨', 'Мої скорочення', 'Наберіть «.слово» і пробіл — з’явиться ціла фраза.', '', 'Відкрити скорочення', ()=>goSet('скорочення'), 'Мої кнопки і фрази.json'),
+      card('📦', 'Пакети фраз', 'Поділитися своїми шаблонами й кнопками з колегою або встановити його пакет.', '', 'Відкрити пакети', ()=>{ const t = [...document.querySelectorAll('#panels .pt h3')].find(x=>/Обмін з колегами/.test(x.textContent)); const tab = t && TABS.find(x=>x.panel && x.panel.contains(t)); if (tab) goTab(tab.id); setTimeout(()=>{ if (t) t.scrollIntoView({block:'start', behavior:'smooth'}); }, 120); }, 'Мої кнопки і фрази.json'),
+      card('🖨', 'Папір і бланк', 'Відступ для підшивки, зсув під ваш принтер, скільки записів щоденника на аркуші.', '', 'Відкрити папір і принтер', ()=>goSet('Папір'), 'Налаштування.json'),
+      card('🔤', 'Вигляд', 'Розмір тексту програми, тема, як показувати текст документа на телефоні.', '', 'Відкрити', ()=>goSet('Розмір тексту'), 'Налаштування.json')),
+    h('div', {class:'cusfoot'},
+      h('h3', {}, 'Де це зберігається'),
+      fsOk ? h('p', {}, `Папка даних «${FS.dir.name}»: «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json» — оновлюються самі. Щоб перенести на інший комп’ютер — скопіюйте папку (наприклад, на флешку) і підключіть її там.`)
+        : h('p', {}, fsSupported() ? 'Поки що — лише в цьому браузері. Підключіть папку даних, і все збережеться файлами на комп’ютері.' : 'На цьому пристрої папка даних недоступна — збережіть «Мої налаштування» у файл і відкрийте його на іншому пристрої.'),
+      h('div', {class:'acts2'},
+        !fsOk && fsSupported() ? h('button', {type:'button', class:'btn primary', onclick:go(()=>FS.dir ? fsReconnect() : fsPick())}, FS.dir ? 'Дозволити доступ до папки' : 'Підключити папку даних') : '',
+        h('button', {type:'button', class:'btn', onclick:mySetupExport}, 'Зберегти «Мої налаштування» у файл'),
+        h('button', {type:'button', class:'btn', onclick:mySetupImport}, 'Завантажити з файлу')),
+      h('p', {class:'chips-hint'}, 'У файлі «Мої налаштування» немає даних пацієнтів — його можна передати колезі.')));
+  document.body.append(dlg); document.body.style.overflow = 'hidden';
+  dlg.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
+}
+if (SETTINGS_EL){ const b = h('div', {class:'cusentry'}, h('button', {type:'button', class:'btn primary', onclick:customizeOpen}, '⚙ Налаштувати під себе'), h('span', {class:'chips-hint'}, 'шаблони, кнопки, формулювання, папір — усе в одному місці')); SETTINGS_EL.prepend(b); }
+{ const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'Налаштувати під себе (шаблони, кнопки, формулювання, файли)', s:'', go:customizeOpen}); return L; }; }
+/* блоки налаштувань, додані після згортання (захист екрана, папір, резервні копії, PIN, перевірка…), — теж згорнутими блоками; «Про програму» — у кінці */
+function setRegroup(){
+  if (!SETTINGS_EL) return;
+  const opened = new Set(JSON.parse(lsGet('po.setopen', '[]') || '[]'));
+  let cur = null;
+  [...SETTINGS_EL.children].forEach(k=>{
+    if (k.matches('h3.sub, h3:not([class])') && !k.closest('details')){
+      const t = k.textContent.trim(); cur = h('details', {class:'setsec'}); const s = h('summary', {}, t); cur.append(s); k.replaceWith(cur);
+      if (opened.has(t)) cur.open = true;
+      cur.addEventListener('toggle', ()=>{ const o = new Set(JSON.parse(lsGet('po.setopen', '[]') || '[]')); if (cur.open) o.add(t); else o.delete(t); lsSet('po.setopen', JSON.stringify([...o])); });
+      return;
+    }
+    if (k.matches('details, .cusentry, input.setq, p.lead')) { cur = null; return; }
+    if (cur) cur.append(k);
+  });
+  const about = SETTINGS_EL.querySelector(':scope > details.about'); if (about) SETTINGS_EL.append(about);
+}
+setRegroup();
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

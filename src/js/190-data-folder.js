@@ -1,8 +1,8 @@
 /* ================= ПАПКА ДАНИХ НА КОМП’ЮТЕРІ =================
    Chrome / Edge на комп’ютері (File System Access API). У вибраній папці створюється «Первинний огляд — дані»:
-   Пацієнти/*.json — кожен пацієнт окремим файлом; Шаблони.json — свої шаблони, формулювання, заготовки; Налаштування.json — лікар, заклад, профіль.
+   Пацієнти/*.json — кожен пацієнт окремим файлом; «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json» (FS_FILES).
    Браузер лишається основним сховищем, папка — постійна копія, що оновлюється сама. */
-const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110'];
+const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110','po.prof','po.paperset','po.blank','po.blankp','po.fmt','po.zoom','po.view','po.live','po.lock','po.autogate','po.qr','po.side','po.hvlist','po.srcab'];
 const FS = {dir:null, ok:false, busy:false, timer:null, written:{}, err:''};
 const fsSupported = () => { let top = true; try{ top = window.top === window.self; }catch(e){ top = false; } return top && typeof window.showDirectoryPicker === 'function'; };
 function fsIdb(mode, fn){
@@ -12,6 +12,14 @@ function fsIdb(mode, fn){
 const fsName = (id, p) => String((p && p.name) || 'Без імені').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, '_').slice(0, 60) + '_' + id + '.json';
 async function fsWriteFile(dir, name, data){ const fh = await dir.getFileHandle(name, {create:true}); const w = await fh.createWritable(); await w.write(data); await w.close(); }
 async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(name); return JSON.parse(await (await fh.getFile()).text()); }catch(e){ return null; } }
+/* які файли пишуться в папку даних — зрозумілими назвами */
+const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
+const FS_FILES = (tpl, btn) => [
+  ['Мої шаблони.json', 'po-my-templates', 'Свої шаблони хвороб, щоденників, схем лікування й аналізів', tpl, []],
+  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ', btn, ['po.packs', 'po.abbr', 'po.aireq']],
+  ['Налаштування.json', 'po-settings', 'Лікар, відділення, заклад, профіль, папір і бланк, вигляд', null, FS_SET_KEYS],
+  ['Перевірка вмісту.json', 'po-verify', 'Позначки «перевірено» для шаблонів, схем, критеріїв, норм і шкал', null, ['po.verify', 'po.vwho']]];
+function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
 function fsLocal(keys){ const o = {}; keys.forEach(k=>{ try{ const v = localStorage.getItem(k); if (v !== null) o[k] = v; }catch(e){} }); return o; }
 async function fsSync(all){
   if (!FS.dir || !FS.ok || FS.busy) return; FS.busy = true;
@@ -26,8 +34,10 @@ async function fsSync(all){
       if (files[id] && files[id] !== nm){ try{ await pd.removeEntry(files[id]); }catch(e){} }
       FS.written[id] = st[id].updated;
     }
-    await fsWriteFile(FS.dir, 'Шаблони.json', JSON.stringify({type:'po-templates', saved:new Date().toISOString(), data:fsLocal(['po.custom'])}, null, 1));
-    await fsWriteFile(FS.dir, 'Налаштування.json', JSON.stringify({type:'po-settings', saved:new Date().toISOString(), data:fsLocal(FS_SET_KEYS)}, null, 1));
+    { const sv = new Date().toISOString(), cu = fsCustom(), pick = ks => Object.fromEntries(Object.keys(cu).filter(k=>ks.includes(k)).map(k=>[k, cu[k]]));
+      const rest = Object.fromEntries(Object.keys(cu).filter(k=>!FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]]));
+      for (const [nm, type, help, custom, keys] of FS_FILES(rest, pick(FS_BTN_KEYS)))
+        await fsWriteFile(FS.dir, nm, JSON.stringify({type, saved:sv, app:typeof VERSION !== 'undefined' ? VERSION : '', help, custom, data:fsLocal(keys)}, null, 1)); }
     FS.err = ''; FS.last = Date.now();
     try{ ORIG_SET.call(localStorage, 'po.backup', String(Date.now())); }catch(e){}
   }catch(e){ FS.err = 'Не вдалося записати в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; }
@@ -51,11 +61,18 @@ async function fsLoad(how){
   }
   if (n) saveStore(st);
   let changed = false;
-  for (const f of ['Шаблони.json', 'Налаштування.json']){
-    const o = await fsReadJSON(FS.dir, f); if (!o || !o.data) continue;
-    for (const k in o.data){ let cur = null; try{ cur = localStorage.getItem(k); }catch(e){}
-      if (how === 'replace' ? cur !== o.data[k] : cur === null){ try{ ORIG_SET.call(localStorage, k, o.data[k]); changed = true; }catch(e){} } }
-  }
+  /* свої шаблони й кнопки: нові файли «Мої шаблони.json», «Мої кнопки і фрази.json»; старий «Шаблони.json» — якщо нових немає */
+  let cu = null;
+  const old = await fsReadJSON(FS.dir, 'Шаблони.json'); if (old && old.data && old.data['po.custom']){ try{ cu = JSON.parse(old.data['po.custom']); }catch(e){} }
+  const incoming = {};
+  for (const [nm] of FS_FILES({}, {})){ const o = await fsReadJSON(FS.dir, nm); if (!o) continue;
+    if (o.custom && typeof o.custom === 'object'){ cu = Object.assign(cu || {}, o.custom); }
+    if (o.data) Object.assign(incoming, o.data); }
+  const st0 = await fsReadJSON(FS.dir, 'Налаштування.json'); if (st0 && st0.data) for (const k in st0.data) if (!(k in incoming)) incoming[k] = st0.data[k];
+  if (cu) incoming['po.custom'] = JSON.stringify(Object.assign(fsCustom(), cu));
+  for (const k in incoming){ let cur = null; try{ cur = localStorage.getItem(k); }catch(e){}
+    if (k === 'po.custom' && how !== 'replace' && cur !== null) continue;
+    if (how === 'replace' ? cur !== incoming[k] : cur === null){ try{ ORIG_SET.call(localStorage, k, incoming[k]); changed = true; }catch(e){} } }
   return {n, changed};
 }
 async function fsPick(){
@@ -99,7 +116,7 @@ function fsRender(){
     if (!FS.ok){
       box.append(h('div', {class:'warnbox'}, h('span', {}, `Папка «${FS.dir.name}»: браузер просить підтвердити доступ після перезапуску.`), h('button', {type:'button', class:'btn primary', onclick:fsReconnect}, 'Підключити папку'))); return; }
     if (compact){ box.append(h('p', {class:'chips-hint'}, `Папка даних: «${FS.dir.name}» — зберігається автоматично` + (FS.last ? ', ' + new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'}) : ''))); return; }
-    box.append(h('p', {class:'chips-hint'}, `Підключено: «${FS.dir.name}». Пацієнти (папка «Пацієнти»), «Шаблони.json» і «Налаштування.json» оновлюються автоматично` + (FS.last ? ` · останнє збереження ${new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'})}` : '') + '.'),
+    box.append(h('p', {class:'chips-hint'}, `Підключено: «${FS.dir.name}». Пацієнти (папка «Пацієнти»), «Мої шаблони.json», «Мої кнопки і фрази.json» і «Налаштування.json» оновлюються автоматично` + (FS.last ? ` · останнє збереження ${new Date(FS.last).toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'})}` : '') + '.'),
       FS.err ? h('p', {class:'warn', style:'display:block'}, FS.err) : '',
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>fsSync(true).then(()=>toast('Усе записано в папку'))}, 'Записати зараз'),
         h('button', {type:'button', class:'btn', onclick:e=>fsLoadAll(e.currentTarget)}, 'Завантажити з папки'),
