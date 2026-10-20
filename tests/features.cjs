@@ -366,6 +366,31 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    [...doc.querySelectorAll('.agate button')].find(b=>/лише порожні/.test(b.textContent)).click();
    ok('«Заповнити лише порожні» — ваші дані лишились', w.eval("F('dyh.perk').el.value")==='2');
    w.eval("AGATE=false; newPatient()"); }
+ // 0.9.3.16 перевірене відновлення
+ { w.eval('newPatient()'); set('meta_pib','Копія Тестовий Пацієнт'); ap('pneu'); w.eval('savePatient(true)');
+   const t=w.eval('bakSelfTest()'); ok('Самоперевірка: усі пацієнти зберігаються й відновлюються без втрат', t.n>0 && t.bad.length===0 && t.rep.ok, JSON.stringify({n:t.n,bad:t.bad.length}));
+   let dump=null; { const B=w.Blob, cu=w.URL.createObjectURL, rv=w.URL.revokeObjectURL, ck=w.HTMLAnchorElement.prototype.click;
+     w.Blob=function(parts){ w.__dump=parts[0]; }; w.URL.createObjectURL=()=>'blob:x'; w.URL.revokeObjectURL=()=>{}; w.HTMLAnchorElement.prototype.click=function(){};
+     try{ w.eval('exportAll()'); } finally { w.Blob=B; w.URL.createObjectURL=cu; w.URL.revokeObjectURL=rv; w.HTMLAnchorElement.prototype.click=ck; }
+     try{ dump=JSON.parse(w.__dump); }catch(e){} }
+   ok('Файл копії: версія програми й час', dump && dump.app===w.eval('VERSION') && dump.at>0);
+   const R=w.eval('bakReport')(dump); ok('Перевірка копії: кількість пацієнтів і записів', R.ok && R.n===Object.keys(dump.items).length, JSON.stringify(R).slice(0,200));
+   const bad=w.eval('bakReport')({type:'щось інше'}); ok('Перевірка копії: чужий файл — помилка, без змін', !bad.ok && bad.err.length>0);
+   const id=w.eval('PID'); w.eval(`(()=>{ const st=loadStore(); delete st['${id}']; saveStore(st); })()`);
+   w.eval('restoreFromObj')(dump, 'тест'); const b=[...doc.querySelectorAll('.navsheet button')].find(x=>/Додати нових/.test(x.textContent));
+   ok('Відновлення: попередній перегляд «Нових пацієнтів: 1»', !!b && /Нових пацієнтів: 1\./.test(doc.querySelector('.navsheet:last-of-type').textContent));
+   b.click(); await sleep(50); ok('Відновлення: пацієнта повернуто', !!w.eval(`loadStore()['${id}']`)); }
+ // 0.9.3.17 PIN і шифрування
+ { if (!w.TextEncoder){ w.TextEncoder=require('util').TextEncoder; w.TextDecoder=require('util').TextDecoder; } if (!w.crypto.subtle){ try{ Object.defineProperty(w.crypto, 'subtle', {value:require('crypto').webcrypto.subtle, configurable:true}); }catch(e){} }
+   if (w.crypto.subtle){
+     const r=await w.eval(`(async()=>{ const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('1234', raw); const k=await pinUnwrap('1234', cfg);
+       const e=await encObj({name:'Секретний Пацієнт', x:[1,2]}, k); const d=await decObj(e, k); let bad=false; try{ await pinUnwrap('0000', cfg); }catch(x){ bad=true; }
+       return {plain:JSON.stringify(e).includes('Секретний'), ok:d.name==='Секретний Пацієнт', bad, iter:cfg.iter}; })()`);
+     ok('Шифрування: AES-GCM — у зашифрованому немає ПІБ, розшифровується ключем', !r.plain && r.ok, JSON.stringify(r));
+     ok('Шифрування: неправильний PIN не відкриває ключ; PBKDF2 ≥ 300 000 ітерацій', r.bad && r.iter>=300000);
+   }
+   ok('PIN: блок у Налаштуваннях', !!doc.querySelector('.pinbox'));
+   ok('PIN: поки не введено — запис відкритим текстом заборонено', w.eval("(()=>{ const c=PINC.cfg; PINC.cfg={v:1}; const b=pinBlocked(); PINC.cfg=c; return b; })()")); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));

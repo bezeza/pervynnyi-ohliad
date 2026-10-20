@@ -970,3 +970,12 @@ body.lay-B #sidecard .ljside{width:100%;justify-content:flex-start;padding:8px 1
 body.shell.lay-B .tab.autof .dot{background:var(--surface)!important;border:2px dashed var(--flag)!important;box-shadow:none!important}
 .tab.autof .dot{visibility:visible;background:var(--flag)}
 .agate .aglist{margin:6px 0 0;padding-left:18px;line-height:1.7}
+/* ===== Перевірене відновлення (0.9.3.16) ===== */
+.bakbox h4{font:600 13px var(--f-head);margin:14px 0 6px;color:var(--muted)}
+.bakrep{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:10px 0;display:flex;flex-direction:column;gap:3px}
+.bakrep.ok{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:color-mix(in srgb,var(--ok) 8%,var(--surface))}
+.bakrep.bad{border-color:var(--flag);background:var(--flag-soft)}.bakrep ul{margin:4px 0 0;padding-left:18px}
+/* ===== PIN і шифрування (0.9.3.17) ===== */
+.pinscr{z-index:150}.pinscr input{max-width:220px;text-align:center;font-size:20px;letter-spacing:.3em}
+body.pinlocked>*:not(.pinscr):not(.navsheet):not(.toast){visibility:hidden}
+.pinmsg{min-height:1.4em;color:var(--flag)}

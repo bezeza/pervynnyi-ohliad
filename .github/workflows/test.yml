@@ -15,4 +15,4 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: npm test
       - name: Зібраний файл збігається з репозиторієм
-        run: git diff --exit-code -- index.html pervynnyi-ohliad.html sw.js README.md
+        run: git diff --exit-code -- index.html pervynnyi-ohliad.html pervynnyi-ohliad-prev.html sw.js README.md

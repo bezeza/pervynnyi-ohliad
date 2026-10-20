@@ -29,6 +29,8 @@ const swreg = "<script>if ('serviceWorker' in navigator && (location.protocol ==
 const index = offline.replace('</style>\n</head>', '</style>\n' + pwa + '</head>').replace('\n</body>\n</html>', '\n' + swreg + '</body>\n</html>');
 fs.mkdirSync(path.join(ROOT, 'build'), {recursive: true});
 fs.writeFileSync(path.join(ROOT, 'build', 'app.html'), app);          // для тестів і порівняння
+{ const offP = path.join(ROOT, 'pervynnyi-ohliad.html');   // попередня версія лишається поруч — щоб можна було повернутися
+  if (fs.existsSync(offP)){ const old = fs.readFileSync(offP, 'utf8'), ov = (old.match(/const VERSION = '([^']+)'/) || [])[1]; if (ov && ov !== ver) fs.writeFileSync(path.join(ROOT, 'pervynnyi-ohliad-prev.html'), old); } }
 fs.writeFileSync(path.join(ROOT, 'pervynnyi-ohliad.html'), offline);  // офлайн-файл (також доступний на сайті)
 fs.writeFileSync(path.join(ROOT, 'index.html'), index);               // сайт
 const sw = path.join(ROOT, 'sw.js');
