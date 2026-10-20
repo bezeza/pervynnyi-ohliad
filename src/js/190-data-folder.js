@@ -2,7 +2,7 @@
    Chrome / Edge на комп’ютері (File System Access API). У вибраній папці створюється «Первинний огляд — дані»:
    Пацієнти/*.json — кожен пацієнт окремим файлом; «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json» (FS_FILES).
    Браузер лишається основним сховищем, папка — постійна копія, що оновлюється сама. */
-const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110','po.prof','po.paperset','po.blank','po.blankp','po.fmt','po.zoom','po.view','po.live','po.lock','po.autogate','po.qr','po.side','po.hvlist','po.srcab'];
+const FS_DIR = 'Первинний огляд — дані', FS_SET_KEYS = ['po.doc','po.spec','po.hospdef','po.theme','po.mode','po.quick','po.zlogo','po.zlogomode','po.paper','po.f110','po.prof','po.paperset','po.blank','po.blankp','po.fmt','po.zoom','po.view','po.live','po.lock','po.autogate','po.qr','po.side','po.hvlist','po.srcab','po.f066ed','po.prof066'];
 const FS = {dir:null, ok:false, busy:false, timer:null, written:{}, err:''};
 const fsSupported = () => { let top = true; try{ top = window.top === window.self; }catch(e){ top = false; } return top && typeof window.showDirectoryPicker === 'function'; };
 function fsIdb(mode, fn){
