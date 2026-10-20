@@ -34,10 +34,11 @@ function bHead(){
   const H = formHeader(), left = H.left.filter(x=>!/^Код за ЄДРПОУ/.test(x));
   return h('div', {class:'bhead'},
     h('div', {class:'bhl'}, h('div', {class:'bs'}, 'Найменування міністерства, іншого органу виконавчої влади, підприємства, установи, організації, до сфери управління якого (якої) належить заклад охорони здоров’я'),
-      h('div', {class:'bc2'}, mv('pidp') || 'Міністерство охорони здоров’я України'),
+      mv('pidp') ? h('div', {class:'bc2'}, mv('pidp')) : h('div', {class:'bline'}),
       h('div', {class:'bs'}, 'Найменування та місцезнаходження (повна поштова адреса) закладу охорони здоров’я, де заповнюється форма'),
-      h('div', {class:'bc2 bb'}, left.filter(x=>x !== mv('pidp')).join(', ')),
-      h('div', {}, 'Код за ЄДРПОУ ', bCells(mv('edrpou'), 8))),
+      mv('zoz') ? h('div', {class:'bzoz'}, mv('zoz')) : h('div', {class:'bc2 bb'}, left.filter(x=>x !== mv('pidp')).join(', ')),
+      mv('zoz') && mv('adr') ? h('div', {class:'badr'}, mv('adr')) : null,
+      h('div', {class:'bedr'}, 'Код за ЄДРПОУ ', bCells(mv('edrpou'), 8))),
     h('div', {class:'bhr'}, h('b', {}, 'МЕДИЧНА ДОКУМЕНТАЦІЯ'), h('div', {}, 'Форма первинної облікової документації'), h('b', {}, '№ 003/о'), h('b', {}, 'ЗАТВЕРДЖЕНО'),
       h('div', {}, 'Наказ МОЗ України'), h('div', {}, bCells('14022012', 8), ' № ', bCells('110', 3)),
       bSmall('(у редакції наказу Міністерства охорони здоров’я України від 21.01.2016 року № 29)')));

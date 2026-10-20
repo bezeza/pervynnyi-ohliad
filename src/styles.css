@@ -841,3 +841,8 @@ body.shell .oh{flex-wrap:nowrap}
   body.shell .oh .acts{grid-column:auto!important;order:1}
   body.shell .oh #closeSheet2{order:2}
 }
+/* бланк 003/о: шапка закладу як на друкованому бланку (назва великими жирними, адреса окремим рядком) */
+.b003 .bline{border-bottom:1px solid #000;height:1.3em;margin:2px 0 4px}
+.b003 .bzoz{font-weight:700;text-transform:uppercase;text-align:center;font-size:1.08em;line-height:1.2;margin:4px 0 2px}
+.b003 .badr{text-align:left;margin:2px 0 4px}
+.b003 .bedr{font-size:1.1em;margin-top:4px}
