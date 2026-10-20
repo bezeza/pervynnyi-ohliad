@@ -78,6 +78,7 @@ button,select,input,textarea{font:inherit;color:inherit}
 select,input,textarea{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 9px;min-width:0}
 textarea{resize:vertical;min-height:64px}
 .nums input::placeholder{color:var(--muted);opacity:.42;font-style:italic}
+.seg-hidden+.selfull{display:none}
 .selfull{font-size:12.5px;line-height:1.35;color:var(--muted);margin-top:3px}
 select.abn,.nums input.abn{border-color:var(--flag);background:var(--flag-soft)}
 #meta_edrpou.bad,#meta_email.bad,.nums input.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
@@ -499,9 +500,12 @@ details.box[open]{padding-bottom:12px}
 @media (prefers-reduced-motion:reduce){.toast,.out{transition:none}}
 
 /* ===== Зручність 2 (0.9.1) ===== */
-#out .flash{animation:po-flash 1.6s ease-out}
-@keyframes po-flash{0%{background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}100%{background:transparent;box-shadow:0 0 0 3px transparent}}
-@media (prefers-reduced-motion:reduce){#out .flash{animation:none}}
+#out .flash,.paper .flash{animation:po-flash 2.6s ease-out}
+mark.chg{background:#FFE58A;color:inherit;border-radius:3px;padding:0 1px;box-shadow:0 0 0 2px #FFE58A;animation:po-chg 2.8s ease-out forwards}
+@keyframes po-chg{0%,55%{background:#FFE58A;box-shadow:0 0 0 2px #FFE58A}100%{background:transparent;box-shadow:0 0 0 2px transparent}}
+@media print{mark.chg{background:none!important;box-shadow:none!important}}
+@keyframes po-flash{0%,45%{background:#FFF3C4;box-shadow:0 0 0 3px #FFF3C4}100%{background:transparent;box-shadow:0 0 0 3px transparent}}
+@media (prefers-reduced-motion:reduce){#out .flash{animation:none}mark.chg{animation:none;background:transparent;box-shadow:none;text-decoration:underline 2px #E0A800}}
 .cbadge{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;margin-left:7px;border-radius:9px;background:var(--flag);color:#fff;font:600 11px/1 var(--f-ui)}
 .cbadge[hidden]{display:none}
 .tab.cw .dot{visibility:visible;background:var(--flag)}
@@ -2603,7 +2607,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.7', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.7', '20.10.2026', 'ергономіка: перший щоденник заповнюється з первинного огляду («Без динаміки» — хрипи, тони, набряки, живіт як в огляді), а не «нормою»; вибір хвороби більше не ставить норму в щоденник; сірі підказки в полях показників (36,6, 130/80, 76, 16, 97) — бліді й курсивом, щоб не плутати з внесеними значеннями; довгий вибраний варіант у списку, що не вміщується, показується повністю рядком під списком; коротша назва поля «Кисень»'],
+  ['0.9.3.7', '20.10.2026', 'ергономіка: перший щоденник заповнюється з первинного огляду («Без динаміки» — хрипи, тони, набряки, живіт як в огляді), а не «нормою»; вибір хвороби більше не ставить норму в щоденник; сірі підказки в полях показників (36,6, 130/80, 76, 16, 97) — бліді й курсивом, щоб не плутати з внесеними значеннями; довгий вибраний варіант у списку, що не вміщується, показується повністю рядком під списком; коротша назва поля «Кисень»; після натискання кнопки чи вибору варіанта в тексті справа жовтим підсвічуються саме змінені слова (на 3 с), а панель тексту й «Перегляд перед друком» самі прокручуються до них'],
   ['0.9.3.6', '20.10.2026', 'бланк закладу 003/о у «Перегляді перед друком» (перемикач «Текст документа / Бланк 003/о»): первинний огляд — сторінки «Первинний огляд лікаря» (п. 33–40) з підкресленими варіантами (стан, свідомість, шкіра, перкусія, хрипи, пульс, тони, живіт, симптоми) і обведеними номерами обстежень за планом, лікування, консультації; за бажанням — титульний лист (п. 1–21); щоденник — «43. Щоденник» (T, Ps, АТ, ЧДР ліворуч; поточний запис або весь журнал); виписний епікриз — «45. Епікриз» з даними обстеження (п. 46–53) і п. 54–57 (заключний діагноз із кодами МКХ-10, лікування, рекомендації, результат); порожні обов’язкові місця — жовті на екрані; друк і PDF — як на бланку, без позначок і QR; ІМТ: на бланку окремий рядок «Зріст, маса тіла, ІМТ» з класом за ВООЗ (якого в паперовому бланку немає), «Харчування» підкреслюється за ІМТ, а без зросту й маси — зауваження перевірки перед підписом; натискання на зауваження (на аркуші, на бланку й у «Перевірці перед підписом») тепер прокручує саме до потрібного поля, ставить у нього курсор і коротко підсвічує його'],
   ['0.9.3.5', '20.10.2026', '«Перегляд перед друком» показує пропуски: кожне зауваження перевірки перед підписом — жовтою позначкою у своєму розділі аркуша (не вказано t°, АТ, ЧСС, бакпосів до антибіотика, обґрунтування за № 1044…), незаповнені «…» підсвічено, решта — списком угорі; натискання на позначку веде до поля; «сховати / показати»; у друк, PDF, копіювання й файли позначки не потрапляють'],
   ['0.9.3.4', '20.10.2026', 'щоденник за наказом МОЗ № 1044: рядок «Обґрунтованість перебування» формується сам — з SpO2, ЧД, САТ, кисню, динаміки й листа призначень (в/в антибіотик, парентеральна терапія, небулайзер + ГКС), з пунктами Стандарту; якщо підстав немає — підказка «плануйте виписку» і зауваження перевірки перед підписом; нове поле «Кисень, л/хв» поруч із SpO2; у вихідні — нагадування про короткий запис чергового; пневмонія — підказка про критерії клінічної стабільності для переходу на пероральний антибіотик; ХОЗЛ — попередження, якщо SpO2 на кисні вище 92%'],
@@ -4875,6 +4879,7 @@ function renderPaper(){
   const sheet = pp.querySelector('.sheet'); fillSheet(sheet, true);
   sheet.classList.toggle('blankmode', typeof blankOn === 'function' && blankOn());
   { const old = pp.querySelector('.blankbar'); if (old) old.remove(); if (typeof blankBar === 'function' && blankOK()) pp.insertBefore(blankBar(), sheet); }
+  { const m = sheet.querySelector('mark.chg, .flash'); if (m && typeof scrollInto === 'function') scrollInto(pp, m); }
   const pb = sheet.querySelector('.pr-body');
   if (pb && !itext($('#out')).trim()) pb.append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
 }
@@ -9976,9 +9981,56 @@ document.addEventListener('keydown', e=>{
 /* ---------- 5. Підсвічування щойно зміненого фрагмента в тексті документа ---------- */
 function flashChanged(prev){
   if (RESTORING || !prev || !prev.length) return;
-  const seen = new Set(prev), ch = [...$('#out').children].filter(e=>e.textContent.trim() && !seen.has(e.textContent));
+  const out = $('#out'), seen = new Set(prev), old = prev.filter(t=>t.trim());
+  const ch = [...out.children].filter(e=>e.textContent.trim() && !seen.has(e.textContent));
   if (!ch.length || ch.length > 3) return;
-  ch.forEach(e=>{ e.classList.add('flash'); setTimeout(()=>e.classList.remove('flash'), 1600); });
+  const left = old.filter(t=>![...out.children].some(e=>e.textContent === t));   // рядки, яких більше немає, — кандидати на «було»
+  let first = null;
+  ch.forEach(e=>{
+    const now = e.textContent, was = bestPrev(now, left), seg = was ? wordDiff(was, now) : null;
+    let m = null;
+    if (seg && seg[1] > seg[0]) m = markRange(e, seg[0], seg[1]);
+    if (m) first = first || m;
+    else { e.classList.add('flash'); setTimeout(()=>e.classList.remove('flash'), 2600); first = first || e; }
+  });
+  if (first) scrollInto(out, first);
+}
+/* найсхожіший попередній рядок: найдовший спільний початок або кінець */
+function bestPrev(now, cand){
+  let best = null, sc = 0;
+  cand.forEach(t=>{ let a = 0; while (a < t.length && a < now.length && t[a] === now[a]) a++;
+    let b = 0; while (b < t.length - a && b < now.length - a && t[t.length - 1 - b] === now[now.length - 1 - b]) b++;
+    if (a + b > sc){ sc = a + b; best = t; } });
+  return sc >= 6 ? best : null;
+}
+/* межі нового фрагмента в символах «тепер», вирівняні до цілих слів */
+function wordDiff(was, now){
+  let a = 0; while (a < was.length && a < now.length && was[a] === now[a]) a++;
+  let b = 0; while (b < was.length - a && b < now.length - a && was[was.length - 1 - b] === now[now.length - 1 - b]) b++;
+  let s = a, e = now.length - b;
+  while (s > 0 && /\S/.test(now[s - 1])) s--;
+  while (e < now.length && /\S/.test(now[e])) e++;
+  return [s, e];
+}
+/* обгорнути символи [s, e) рядка в тимчасову позначку */
+function markRange(el, s, e){
+  try{
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let pos = 0, r = document.createRange(), st = false;
+    while (tw.nextNode()){ const n = tw.currentNode, l = n.nodeValue.length;
+      if (!st && s <= pos + l){ r.setStart(n, s - pos); st = true; }
+      if (st && e <= pos + l){ r.setEnd(n, e - pos); break; }
+      pos += l; }
+    if (!st) return null;
+    const m = document.createElement('mark'); m.className = 'chg'; m.append(r.extractContents()); r.insertNode(m);
+    setTimeout(()=>{ if (m.parentNode){ m.replaceWith(...m.childNodes); el.normalize(); } }, 2800);
+    return m;
+  }catch(x){ return null; }
+}
+/* прокрутити лише панель тексту (не всю сторінку), щоб змінене було видно */
+function scrollInto(box, el){
+  if (!box || !el || box.hidden || box.scrollHeight <= box.clientHeight) return;
+  const br = box.getBoundingClientRect(), er = el.getBoundingClientRect();
+  if (er.top < br.top + 8 || er.bottom > br.bottom - 8) box.scrollTop += er.top - br.top - box.clientHeight / 3;
 }
 
 /* ---------- 6. Перевірка: лічильник на «Копіювати» і позначки на розділах ---------- */

@@ -54,6 +54,7 @@ function renderPaper(){
   const sheet = pp.querySelector('.sheet'); fillSheet(sheet, true);
   sheet.classList.toggle('blankmode', typeof blankOn === 'function' && blankOn());
   { const old = pp.querySelector('.blankbar'); if (old) old.remove(); if (typeof blankBar === 'function' && blankOK()) pp.insertBefore(blankBar(), sheet); }
+  { const m = sheet.querySelector('mark.chg, .flash'); if (m && typeof scrollInto === 'function') scrollInto(pp, m); }
   const pb = sheet.querySelector('.pr-body');
   if (pb && !itext($('#out')).trim()) pb.append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
 }

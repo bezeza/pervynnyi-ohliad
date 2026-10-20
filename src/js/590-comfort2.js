@@ -90,9 +90,56 @@ document.addEventListener('keydown', e=>{
 /* ---------- 5. Підсвічування щойно зміненого фрагмента в тексті документа ---------- */
 function flashChanged(prev){
   if (RESTORING || !prev || !prev.length) return;
-  const seen = new Set(prev), ch = [...$('#out').children].filter(e=>e.textContent.trim() && !seen.has(e.textContent));
+  const out = $('#out'), seen = new Set(prev), old = prev.filter(t=>t.trim());
+  const ch = [...out.children].filter(e=>e.textContent.trim() && !seen.has(e.textContent));
   if (!ch.length || ch.length > 3) return;
-  ch.forEach(e=>{ e.classList.add('flash'); setTimeout(()=>e.classList.remove('flash'), 1600); });
+  const left = old.filter(t=>![...out.children].some(e=>e.textContent === t));   // рядки, яких більше немає, — кандидати на «було»
+  let first = null;
+  ch.forEach(e=>{
+    const now = e.textContent, was = bestPrev(now, left), seg = was ? wordDiff(was, now) : null;
+    let m = null;
+    if (seg && seg[1] > seg[0]) m = markRange(e, seg[0], seg[1]);
+    if (m) first = first || m;
+    else { e.classList.add('flash'); setTimeout(()=>e.classList.remove('flash'), 2600); first = first || e; }
+  });
+  if (first) scrollInto(out, first);
+}
+/* найсхожіший попередній рядок: найдовший спільний початок або кінець */
+function bestPrev(now, cand){
+  let best = null, sc = 0;
+  cand.forEach(t=>{ let a = 0; while (a < t.length && a < now.length && t[a] === now[a]) a++;
+    let b = 0; while (b < t.length - a && b < now.length - a && t[t.length - 1 - b] === now[now.length - 1 - b]) b++;
+    if (a + b > sc){ sc = a + b; best = t; } });
+  return sc >= 6 ? best : null;
+}
+/* межі нового фрагмента в символах «тепер», вирівняні до цілих слів */
+function wordDiff(was, now){
+  let a = 0; while (a < was.length && a < now.length && was[a] === now[a]) a++;
+  let b = 0; while (b < was.length - a && b < now.length - a && was[was.length - 1 - b] === now[now.length - 1 - b]) b++;
+  let s = a, e = now.length - b;
+  while (s > 0 && /\S/.test(now[s - 1])) s--;
+  while (e < now.length && /\S/.test(now[e])) e++;
+  return [s, e];
+}
+/* обгорнути символи [s, e) рядка в тимчасову позначку */
+function markRange(el, s, e){
+  try{
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let pos = 0, r = document.createRange(), st = false;
+    while (tw.nextNode()){ const n = tw.currentNode, l = n.nodeValue.length;
+      if (!st && s <= pos + l){ r.setStart(n, s - pos); st = true; }
+      if (st && e <= pos + l){ r.setEnd(n, e - pos); break; }
+      pos += l; }
+    if (!st) return null;
+    const m = document.createElement('mark'); m.className = 'chg'; m.append(r.extractContents()); r.insertNode(m);
+    setTimeout(()=>{ if (m.parentNode){ m.replaceWith(...m.childNodes); el.normalize(); } }, 2800);
+    return m;
+  }catch(x){ return null; }
+}
+/* прокрутити лише панель тексту (не всю сторінку), щоб змінене було видно */
+function scrollInto(box, el){
+  if (!box || !el || box.hidden || box.scrollHeight <= box.clientHeight) return;
+  const br = box.getBoundingClientRect(), er = el.getBoundingClientRect();
+  if (er.top < br.top + 8 || er.bottom > br.bottom - 8) box.scrollTop += er.top - br.top - box.clientHeight / 3;
 }
 
 /* ---------- 6. Перевірка: лічильник на «Копіювати» і позначки на розділах ---------- */
