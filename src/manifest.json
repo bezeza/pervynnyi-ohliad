@@ -72,6 +72,8 @@
   "593-renal.js",
   "594-qr-timer.js",
   "595-ai.js",
-  "596-ptline.js"
+  "596-ptline.js",
+  "597-shell.js",
+  "598-diary-quick.js"
  ]
 }

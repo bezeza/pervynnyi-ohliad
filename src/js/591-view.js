@@ -12,7 +12,7 @@ const LAY_ICON = {
 const isPhoneW = () => window.matchMedia && matchMedia('(max-width:899px)').matches;
 const effW = () => window.innerWidth / (parseFloat(ZOOM) || 1);
 const screenNow = () => VIEW.screen === 'auto' ? (effW() < 1500 ? 'laptop' : 'monitor') : VIEW.screen;
-const layoutNow = () => isPhoneW() ? 'P' : LAYS[VIEW.layout] ? VIEW.layout : (screenNow() === 'monitor' ? 'B' : 'A');
+const layoutNow = () => isPhoneW() ? 'P' : LAYS[VIEW.layout] ? VIEW.layout : (screenNow() === 'monitor' || effW() >= 1200 ? 'B' : 'A');
 
 /* межа між формою і текстом */
 const wrapEl = $('main.wrap'), grip = h('div', {class:'vgrip', role:'separator', 'aria-orientation':'vertical', tabindex:'0', title:'Перетягніть, щоб змінити ширину. Подвійне клацання — як було', 'aria-label':'Межа між формою і текстом'});
@@ -51,7 +51,7 @@ function viewCtl(){
     k=>{ VIEW.screen = k; saveView(); applyView(); toast(k === 'auto' ? `Екран визначається сам: зараз ${screenNow() === 'laptop' ? 'ноутбук' : 'монітор'}` : k === 'laptop' ? 'Екран: ноутбук — компактно' : 'Екран: монітор — просторо'); }));
   if (VIEW.screen === 'auto') box.append(h('p', {class:'chips-hint vnote'}, `Зараз: ${sNow === 'laptop' ? 'ноутбук' : 'монітор'} (${Math.round(effW())} px).`));
   const lay = h('div', {class:'vlays', role:'group', 'aria-label':'Розташування'});
-  [['auto', 'Авто', 'на ноутбуці — Класичне, на моніторі — Робоче місце']].concat(Object.keys(LAYS).map(k=>[k, LAYS[k], LAY_HINT[k]])).forEach(([k, l, t])=>{
+  [['auto', 'Авто', 'на вузькому екрані (до 1200 px) — Класичне, ширше — Робоче місце']].concat(Object.keys(LAYS).map(k=>[k, LAYS[k], LAY_HINT[k]])).forEach(([k, l, t])=>{
     const ic = h('span', {class:'vic', 'aria-hidden':'true'}); ic.innerHTML = k === 'auto' ? '<svg viewBox="0 0 32 22"><rect x="1" y="1" width="30" height="20" rx="2"/><path d="M9 15l7-8 7 8"/></svg>' : `<svg viewBox="0 0 32 22">${LAY_ICON[k]}</svg>`;
     lay.append(h('button', {type:'button', 'aria-pressed':VIEW.layout === k ? 'true' : 'false', title:t, onclick:()=>{ VIEW.layout = k; saveView(); applyView(); toast('Розташування: ' + (k === 'auto' ? 'авто — ' + LAYS[layoutNow()] : LAYS[k])); }}, ic, h('b', {}, l), h('small', {}, t))); });
   box.append(h('div', {class:'vrow col'}, h('span', {class:'vl'}, 'Розташування'), lay));
