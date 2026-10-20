@@ -25,7 +25,7 @@ function qrSvg(text){
 { const fs0 = fillSheet;
   fillSheet = function(P){
     const r = fs0.apply(this, arguments);
-    if (QRON && QR_DOCS[DOC]){ const t = qrText(), q = t && qrSvg(t);
+    if (QRON && QR_DOCS[DOC] && !(typeof blankOn === 'function' && blankOn())){ const t = qrText(), q = t && qrSvg(t);
       if (q) P.append(h('div', {class:'prqr'}, q, h('div', {class:'prqr-t'}, h('b', {}, 'Текст ' + QR_DOCS[DOC] + ' — у ваш телефон'), h('span', {}, 'Наведіть камеру телефону на код і збережіть або скопіюйте текст. Інтернет не потрібен.')))); }
     return r;
   }; }

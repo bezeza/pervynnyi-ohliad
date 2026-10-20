@@ -1,6 +1,12 @@
 /* ===== Аркуш: перегляд «як на папері» ===== */
 let PAPER = false; try{ PAPER = localStorage.getItem('po.paper') === '1'; }catch(e){}
 function fillSheet(P, gaps){
+  if (typeof blankOn === 'function' && blankOn()){   // бланк закладу 003/о замість тексту
+    P.innerHTML = ''; BGAP = !!gaps && GAPS;
+    try{ blankPages().forEach(pg=>P.append(pg)); } finally { BGAP = false; }
+    if (gaps) markGaps(P, null);
+    return;
+  }
   const H = formHeader(), lm = (()=>{ try{ return localStorage.getItem('po.zlogomode') || 'color'; }catch(e){ return 'color'; } })(), logo = lm === 'none' ? '' : (()=>{ try{ return localStorage.getItem('po.zlogo') || ''; }catch(e){ return ''; } })();
   P.innerHTML = '';
   P.append(h('div', {class:'pr-top'}, h('div', {class:'pr-l'}, logo ? h('img', {class:'pr-logo' + (lm === 'bw' ? ' bw' : ''), src:logo, alt:''}) : '', h('div', {}, ...H.left.flatMap((l,k)=>k ? [h('br'), l] : [l]))), h('div', {class:'r'}, ...H.right.flatMap((l,k)=>k ? [h('br'), l] : [l]))),
@@ -11,8 +17,8 @@ function fillSheet(P, gaps){
 /* ===== Пропуски на аркуші: те саме, що «Перевірка перед підписом», — жовтим на своєму місці; натискання веде до поля.
    Лише на екрані: у друк, копіювання й файли не потрапляє. ===== */
 let GAPS = true; try{ GAPS = localStorage.getItem('po.gaps') !== '0'; }catch(e){}
-function gapMark(t, tab){
-  const m = h(tab ? 'button' : 'span', tab ? {type:'button', class:'gap', title:'Перейти до поля', onclick:()=>goTab(tab)} : {class:'gap'}, t);
+function gapMark(t, tab, fld){
+  const m = h(tab ? 'button' : 'span', tab ? {type:'button', class:'gap', title:'Перейти до поля', onclick:()=>goTab(tab, fld)} : {class:'gap'}, t);
   return m;
 }
 function markGaps(P, body){
@@ -22,18 +28,23 @@ function markGaps(P, body){
     GAPS ? 'сховати' : 'показати');
   P.insertBefore(h('p', {class:'gapbar' + (L.length ? '' : ' ok')}, L.length ? `Пропусків і зауважень: ${L.length} · ` : 'Пропусків немає', L.length ? tog : ''), P.firstChild);
   if (!GAPS || !L.length) return;
+  if (!body){   // бланк: перелік пропусків над сторінками, кожен веде до свого поля
+    const first = P.querySelector('.b003');
+    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])), first);
+    return;
+  }
   L.forEach(x=>{
     if (/^Залишилось незаповнених «…»/.test(x.m)) return;   // «…» підсвічуються на своєму місці нижче
-    if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta')); return; } }
+    if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta', 'meta_pib')); return; } }
     const sec = x.tab && [...body.querySelectorAll('[data-sec="' + x.tab + '"]')].pop();
-    if (sec) sec.append(h('div', {class:'gaprow'}, gapMark(x.m, x.tab))); else rest.push(x);
+    if (sec) sec.append(h('div', {class:'gaprow'}, gapMark(x.m, x.tab, x.f))); else rest.push(x);
   });
   const tw = document.createTreeWalker(body, NodeFilter.SHOW_TEXT), nodes = [];
   while (tw.nextNode()) if (tw.currentNode.nodeValue.includes('…')) nodes.push(tw.currentNode);
   nodes.forEach(n=>{ const frag = document.createDocumentFragment();
     n.nodeValue.split('…').forEach((s,i,a)=>{ if (s) frag.append(s); if (i < a.length - 1) frag.append(h('span', {class:'gap dots', title:'Не заповнено'}, '…')); });
     n.replaceWith(frag); });
-  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab)])));
+  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])));
 }
 function renderPaper(){
   const pp = $('#paper'); if (!pp) return;
@@ -41,7 +52,10 @@ function renderPaper(){
   const b = $('#paperBtn'); if (b) b.setAttribute('aria-pressed', PAPER ? 'true' : 'false');
   if (!PAPER) return;
   const sheet = pp.querySelector('.sheet'); fillSheet(sheet, true);
-  if (!itext($('#out')).trim()) sheet.querySelector('.pr-body').append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
+  sheet.classList.toggle('blankmode', typeof blankOn === 'function' && blankOn());
+  { const old = pp.querySelector('.blankbar'); if (old) old.remove(); if (typeof blankBar === 'function' && blankOK()) pp.insertBefore(blankBar(), sheet); }
+  const pb = sheet.querySelector('.pr-body');
+  if (pb && !itext($('#out')).trim()) pb.append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
 }
 function zlogoSet(file){
   if (!file) return; if (file.size > 400000){ toast('Зображення завелике: до 400 КБ (PNG або JPG)', 4000); return; }
