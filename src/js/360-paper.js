@@ -1,6 +1,12 @@
 /* ===== Аркуш: перегляд «як на папері» ===== */
 let PAPER = false; try{ PAPER = localStorage.getItem('po.paper') === '1'; }catch(e){}
 function fillSheet(P, gaps){
+  if (typeof blankOn === 'function' && blankOn()){   // бланк закладу 003/о замість тексту
+    P.innerHTML = ''; BGAP = !!gaps && GAPS;
+    try{ blankPages().forEach(pg=>P.append(pg)); } finally { BGAP = false; }
+    if (gaps) markGaps(P, null);
+    return;
+  }
   const H = formHeader(), lm = (()=>{ try{ return localStorage.getItem('po.zlogomode') || 'color'; }catch(e){ return 'color'; } })(), logo = lm === 'none' ? '' : (()=>{ try{ return localStorage.getItem('po.zlogo') || ''; }catch(e){ return ''; } })();
   P.innerHTML = '';
   P.append(h('div', {class:'pr-top'}, h('div', {class:'pr-l'}, logo ? h('img', {class:'pr-logo' + (lm === 'bw' ? ' bw' : ''), src:logo, alt:''}) : '', h('div', {}, ...H.left.flatMap((l,k)=>k ? [h('br'), l] : [l]))), h('div', {class:'r'}, ...H.right.flatMap((l,k)=>k ? [h('br'), l] : [l]))),
@@ -21,7 +27,7 @@ function markGaps(P, body){
   const tog = h('button', {type:'button', class:'more gaptog', onclick:()=>{ GAPS = !GAPS; try{ localStorage.setItem('po.gaps', GAPS ? '1' : '0'); }catch(e){} renderPaper(); }},
     GAPS ? 'сховати' : 'показати');
   P.insertBefore(h('p', {class:'gapbar' + (L.length ? '' : ' ok')}, L.length ? `Пропусків і зауважень: ${L.length} · ` : 'Пропусків немає', L.length ? tog : ''), P.firstChild);
-  if (!GAPS || !L.length) return;
+  if (!GAPS || !L.length || !body) return;
   L.forEach(x=>{
     if (/^Залишилось незаповнених «…»/.test(x.m)) return;   // «…» підсвічуються на своєму місці нижче
     if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta')); return; } }
@@ -41,7 +47,10 @@ function renderPaper(){
   const b = $('#paperBtn'); if (b) b.setAttribute('aria-pressed', PAPER ? 'true' : 'false');
   if (!PAPER) return;
   const sheet = pp.querySelector('.sheet'); fillSheet(sheet, true);
-  if (!itext($('#out')).trim()) sheet.querySelector('.pr-body').append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
+  sheet.classList.toggle('blankmode', typeof blankOn === 'function' && blankOn());
+  { const old = pp.querySelector('.blankbar'); if (old) old.remove(); if (typeof blankBar === 'function' && blankOK()) pp.insertBefore(blankBar(), sheet); }
+  const pb = sheet.querySelector('.pr-body');
+  if (pb && !itext($('#out')).trim()) pb.append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
 }
 function zlogoSet(file){
   if (!file) return; if (file.size > 400000){ toast('Зображення завелике: до 400 КБ (PNG або JPG)', 4000); return; }

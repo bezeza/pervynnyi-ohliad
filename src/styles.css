@@ -182,6 +182,40 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .paper .sheet{background:#fff;color:#000;max-width:794px;margin:0 auto;padding:40px 48px 48px;box-shadow:0 2px 10px rgba(0,0,0,.18);font:12pt/1.45 "Times New Roman",Times,serif;min-height:600px}
 .paper .pr-top,#print .pr-top{display:flex;justify-content:space-between;gap:20px;font-size:10.5pt;border-bottom:1px solid #000;padding-bottom:6px;margin-bottom:10px}
 .paper .pr-top .r{text-align:right}.pr-l{display:flex;gap:10px;align-items:flex-start}.pr-logo{max-width:64px;max-height:64px;object-fit:contain}
+/* бланк закладу 003/о — сторінки як у друкованій карті */
+.paper .sheet.blankmode{background:none;box-shadow:none;padding:0;max-width:820px;min-height:0}
+.paper .sheet.blankmode>.gapbar{max-width:794px;margin:0 auto 12px}
+.blankbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;max-width:794px;margin:0 auto 10px;font:13px/1.4 var(--f-ui,system-ui)}
+.blankbar .seg{display:inline-flex;border:1px solid var(--line,#bbb);border-radius:8px;overflow:hidden;background:var(--surface,#fff)}
+.blankbar .seg button{border:0;background:none;padding:6px 12px;font:inherit;color:var(--ink,#111);cursor:pointer}
+.blankbar .seg button[aria-pressed="true"]{background:var(--accent,#1D5B8A);color:#fff}
+.blankbar .blk{display:inline-flex;gap:4px;align-items:center;color:var(--ink,#111);cursor:pointer}
+.b003{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff;color:#000;font:10.5pt/1.42 "Times New Roman",Times,serif;max-width:794px;margin:0 auto 16px;padding:28px 30px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.b003 .bframe{border:1.5px solid #000;padding:10px 14px 12px}
+.b003 .bt{text-align:center;font-weight:700;font-size:11.5pt;margin:2px 0 8px;letter-spacing:.2px}
+.b003 .bt2{font-weight:700;margin:6px 0 3px}.b003 .bt2.r{text-align:right}.b003 .c{text-align:center}.b003 .r{text-align:right}
+.b003 .brow{margin:0 0 1px;text-align:left}
+.b003 .bl{white-space:normal}
+.b003 .bf{border-bottom:1px solid #000;padding:0 3px;color:#123a8f;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.b003 .bf.empty{display:inline-block;min-width:6em;font-family:inherit}.b003 .bf.empty.wide{min-width:55%}
+.b003 .bu{text-decoration:underline;text-decoration-color:#123a8f;text-decoration-thickness:1.6px;text-underline-offset:2px}
+.b003 .blines{line-height:1.55em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.55em - 1px),#000 calc(1.55em - 1px),#000 1.55em);white-space:pre-wrap;padding:0 3px;margin:0 0 4px;color:#123a8f}
+.b003 .bcells{display:inline-flex;vertical-align:middle}.b003 .bc{display:inline-block;width:1.25em;height:1.35em;line-height:1.35em;border:1px solid #000;margin-left:-1px;text-align:center;font-size:.92em;color:#123a8f}
+.b003 .bbox{display:inline-block;min-width:1.5em;height:1.4em;line-height:1.4em;border:1px solid #000;text-align:center;vertical-align:middle;color:#123a8f;padding:0 2px}
+.b003 .bs{font-size:7.5pt;line-height:1.25}
+.b003 .bhead{display:grid;grid-template-columns:1.25fr 1fr;border-bottom:1.5px solid #000;margin:-10px -14px 10px;font-size:9pt}
+.b003 .bhl{padding:6px 10px;border-right:1.5px solid #000}.b003 .bhr{padding:6px 10px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center}
+.b003 .bc2{font-weight:700;text-align:center;margin:2px 0}.b003 .bb{font-weight:600}
+.b003 .bcols{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;margin:6px 0}
+.b003 .bob{margin:0 0 1px}.b003 .bnum{display:inline-block;min-width:1.3em;text-align:center}.b003 .bnum.on{border:1.5px solid #123a8f;border-radius:50%}
+.b003 .bdi{display:grid;grid-template-columns:118px 1fr;border-top:1.5px solid #000;margin:0 -14px;padding:0}
+.b003 .bdi:last-child{border-bottom:0}.b003 .bdl{border-right:1.5px solid #000;padding:6px 8px;display:flex;flex-direction:column;gap:12px}.b003 .bdr{padding:6px 10px}
+.b003 table.bdx{width:100%;border-collapse:collapse;margin:0 0 6px}.b003 .bdx th,.b003 .bdx td{border:1px solid #000;padding:2px 5px;text-align:left;vertical-align:middle}.b003 .bdx th{text-align:center;font-weight:400}
+.b003 .bdx td:first-child{width:62px}.b003 .bdx td:last-child{width:9.2em}
+.paper .b003 .bgap,.paper .b003 .bf.bgap{background:#FFE58A}
+@media screen and (max-width:899px){.b003{padding:10px 8px;font-size:9.5pt}.b003 .bframe{padding:6px 8px}.b003 .bhead{grid-template-columns:1fr;margin:-6px -8px 8px}.b003 .bhl{border-right:0;border-bottom:1px solid #000}.b003 .bcols{grid-template-columns:1fr}.b003 .bdi{grid-template-columns:1fr;margin:0 -8px}.b003 .bdl{border-right:0;border-bottom:1px solid #000;flex-direction:row;flex-wrap:wrap;gap:4px 12px}}
+@media print{@page b003{size:A4;margin:10mm 10mm 10mm 15mm}#print .b003{page:b003;box-shadow:none;margin:0;padding:0;max-width:none;font-size:10pt;line-height:1.28}#print .b003 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}#print .b003+.b003{break-before:page}#print .b003 .bgap{background:none}#print .blankbar{display:none}
+  #print .b003 .bf,#print .b003 .blines,#print .b003 .bc,#print .b003 .bbox{color:#000}#print .b003 .bu{text-decoration-color:#000}#print .b003 .bnum.on{border-color:#000}}
 /* пропуски на аркуші — лише на екрані */
 .paper .gap{display:inline;background:#FFE58A;color:#5A3F00;border:0;border-radius:3px;padding:0 4px;font:inherit;font-size:.86em;font-family:system-ui,"IBM Plex Sans",sans-serif;cursor:pointer;line-height:1.35;text-align:left}
 .paper .gap.dots{padding:0 2px;font-size:1em;cursor:default}

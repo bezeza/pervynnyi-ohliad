@@ -207,6 +207,29 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.__printed=0; $('printBtn').click(); ok('Пропуски не потрапляють у друк', !$('print').querySelector('.gap, .gapbar, .gaplist'));
    sh.querySelector('.gaptog').click(); ok('Пропуски можна сховати', !doc.querySelector('#paper .sheet .gap') && /Пропусків і зауважень/.test(doc.querySelector('#paper .gapbar').textContent));
    doc.querySelector('#paper .gaptog').click(); $('paperBtn').click(); }
+ // 0.9.3.6 бланк закладу 003/о
+ { doc.querySelector('[data-mode="hosp"]').click(); ap('pneu'); w.eval("switchDoc('ohl')"); set('meta_pib','');
+   if (!w.eval('PAPER')) $('paperBtn').click();
+   const bb=()=>doc.querySelector('#paper .blankbar');
+   ok('Бланк: перемикач «Текст / Бланк 003/о» над аркушем', !!bb() && /Бланк 003\/о/.test(bb().textContent));
+   [...bb().querySelectorAll('button')].find(b=>/Бланк/.test(b.textContent)).click();
+   const pages=()=>[...doc.querySelectorAll('#paper .b003')];
+   ok('Бланк: первинний огляд — 2 сторінки (п. 33–40)', pages().length===2 && /ПЕРВИННИЙ ОГЛЯД ЛІКАРЯ/.test(pages()[0].textContent) && /40\. П\.І\.Б\. лікаря/.test(pages()[1].textContent), pages().length);
+   const und=[...pages()[0].querySelectorAll('.bu')].map(e=>e.textContent);
+   ok('Бланк: варіанти підкреслено за даними огляду (стан, хрипи, перкусія)', und.includes('середньої тяжкості') && und.includes('вологі') && und.includes('вкорочений'), und.join('|'));
+   ok('Бланк: обстеження за планом обведено (ЗАК, Ro-гр. ОГК)', [...pages()[1].querySelectorAll('.bnum.on')].map(e=>e.textContent).join(',').includes('21') && pages()[1].querySelector('.bnum.on').textContent==='1');
+   ok('Бланк: порожній ПІБ підсвічено на екрані', !!pages()[0].querySelector('.bgap'));
+   ok('ІМТ: без зросту й маси — зауваження перевірки', w.eval("checkDoc().some(x=>/ІМТ не розраховано/.test(x.m))"));
+   set('zah_hw_0','1,72'); set('zah_hw_1','95'); w.eval('renderPaper()');
+   ok('Бланк: зріст, маса тіла й ІМТ з класом за ВООЗ', /Зріст 172 см, маса тіла 95 кг, ІМТ 32,1 кг\/м² ожиріння I ступеня/.test(pages()[0].textContent.replace(/\s+/g,' ')) && !w.eval("checkDoc().some(x=>/ІМТ/.test(x.m))"), pages()[0].textContent.match(/Зріст.{0,90}/)?.[0]);
+   [...bb().querySelectorAll('label')].find(l=>/титульний/.test(l.textContent)).querySelector('input').click();
+   ok('Бланк: титульний лист 003/о (п. 1–21)', pages().length===3 && /МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО/.test(pages()[0].textContent) && /21\. Проведено ліжко-днів/.test(pages()[0].textContent));
+   w.eval("BLP.title=false"); w.__printed=0; $('printBtn').click();
+   ok('Бланк: друк — сторінки бланка без жовтих позначок і без QR', $('print').querySelectorAll('.b003').length===2 && !$('print').querySelector('.bgap, .prqr'));
+   w.eval("switchDoc('shch'); renderPaper()"); ok('Бланк: «43. Щоденник» із показниками ліворуч', /43\. ЩОДЕННИК/.test(pages()[0].textContent) && /ЧДР –/.test(pages()[0].textContent));
+   w.eval("switchDoc('epi'); renderPaper()"); ok('Бланк: «45. Епікриз» і п. 54–57', pages().length===2 && /45\. ЕПІКРИЗ/.test(pages()[0].textContent) && /57\. Результат медичного лікування/.test(pages()[1].textContent));
+   w.eval("switchDoc('rx'); renderPaper()"); ok('Бланк: для інших документів — звичайний аркуш', !doc.querySelector('#paper .b003') && !bb());
+   w.eval("switchDoc('ohl'); renderPaper()"); [...bb().querySelectorAll('button')].find(b=>/Текст документа/.test(b.textContent)).click(); $('paperBtn').click(); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

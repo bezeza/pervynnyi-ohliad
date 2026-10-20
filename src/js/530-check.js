@@ -25,6 +25,7 @@ function checkDoc(){
     if (!sel('vitae.strah')) add('Не вказано працездатність / ЕЛН', 'vitae');
     const vit = [['zah_temp_0','t°','zah'],['ssc_ad_0','АТ','ssc'],['ssc_chss_0','ЧСС','ssc'],['dyh_chd_0','ЧД','dyh'],['dyh_chd_1','SpO2','dyh']].filter(([id])=>!document.getElementById(id).value.trim());
     if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), vit[0][2]);
+    if (MODE === 'hosp' && !(document.getElementById('zah_hw_0').value.trim() && document.getElementById('zah_hw_1').value.trim())) add('Не вказано зріст і масу тіла — ІМТ не розраховано', 'zah');
     const empty = ['zah','shk','dyh','ssc','trav','sech','nevr'].map(id=>SECTIONS.find(x=>x.id===id)).filter(sc=>!sc.fields.some(f=>f.type !== 'num' && val(f)));
     if (empty.length) add('Не описано: ' + empty.map(x=>x.short || x.title).join(', ') + ' — заповніть, натисніть «= Норма =» або оберіть «Якщо змін немає — одним рядком»', empty[0].id);
     dx();
