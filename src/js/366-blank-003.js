@@ -17,7 +17,10 @@ const bJoin = (...a) => a.flat().map(x=>String(x || '').trim().replace(/\.$/, ''
 const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
-function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k) : k)); }
+function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
+/* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
+function bDate(iso, req){ const d = bD6(iso); return h('span', {class:'bnw'}, bCells(d.slice(0,2), 2, req), h('span', {class:'bdot'}, '.'), bCells(d.slice(2,4), 2, req), h('span', {class:'bdot'}, '.'), bCells(d.slice(4,6), 2, req)); }
+function bTime(tm){ tm = tm || ''; return h('span', {class:'bnw'}, h('span', {class:'bl bsep'}, 'час\u00a0'), bCells(tm.slice(0,2), 2), h('span', {class:'bl'}, '\u00a0год\u00a0'), bCells(tm.slice(3,5), 2), h('span', {class:'bl'}, '\u00a0хв')); }
 function bLines(v, n, req){ v = String(v || '').trim(); return h('div', {class:'blines' + (!v && req && BGAP ? ' bgap' : ''), style:`min-height:${(n || 1) * 1.55}em`}, v); }
 function bOpts(label, tpl, on, extra, req){
   const row = h('div', {class:'brow'}); if (label) row.append(h('span', {class:'bl'}, label + ' '));
@@ -52,11 +55,12 @@ function bTitle(){
   const napr = BV('morbi.hospd') || (BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : '');
   return bPage('btitle', bHead(),
     h('div', {class:'bt'}, 'МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО № ', bFill(mv('card'), true)),
-    bRow('1. Дата госпіталізації ', bCells(bD6(d1), 6, true), ' ', bCells(tm.slice(0,2), 2), ' ', bCells(tm.slice(3,5), 2), '  2. Стать: чоловіча – 1; жіноча – 2 ', bBox(sex === 'm' ? 1 : sex === 'f' ? 2 : '', true)),
-    bRow('3. Прізвище, ім’я, по батькові хворого ', bFill(mv('pib'), true, true)),
-    bRow('4. Дата народження ', bCells(bD6(mv('dob')), 6, true), '  5. Вік ', bFill(mv('age') ? mv('age') + ' р.' : '', true)),
+    bRow('1. Дата госпіталізації ', bDate(d1, true), bTime(tm)),
+    bRow('2. Стать: ', h('span', {class:'bl' + (sex === 'm' ? ' bsel' : '')}, 'чоловіча – 1'), '; ', h('span', {class:'bl' + (sex === 'f' ? ' bsel' : '')}, 'жіноча – 2'), ' ', bBox(sex === 'm' ? 1 : sex === 'f' ? 2 : '', true)),
+    bRow('3. Прізвище, ім’я, по батькові хворого ', (()=>{ const f = bFill(mv('pib'), true, true); f.classList.add('bpib'); return f; })()),
+    bRow('4. Дата народження ', bDate(mv('dob'), true), '  5. Вік ', bFill(mv('age') ? mv('age') + ' р.' : '', true)),
     bRow('6. Документ, що посвідчує особу ', bFill(''), '  6.1. Номер документа ', bFill('')), bRow('6.2. Громадянство ', bFill(''), bSmall(' (код країни)')),
-    bRow('7. Постійне місце проживання/перебування: місто – 1; село – 2 ', bBox(''), ' ', bFill(mv('addr'), false, true)), bRow('7.1. Поштовий індекс ', bFill('')),
+    bRow('7. Постійне місце проживання/перебування: ', h('span', {class:'bl' + (mv('addr_np_t') === 'м.' ? ' bsel' : '')}, 'місто – 1'), '; ', h('span', {class:'bl' + (mv('addr_np_t') === 'с.' ? ' bsel' : '')}, 'село – 2'), ' ', bBox(({'м.':1, 'с.':2})[mv('addr_np_t')] || ''), ' ', bFill(mv('addr'), false, true)), bRow('7.1. Поштовий індекс ', bFill(mv('addr_zip'))),
     bRow('8. Місце роботи, посада ', bFill(mv('work'), false, true)),
     bRow('9. Ким направлений хворий ', bFill(napr, false, true), ' ', bCells('', 8)),
     bRow('10. Діагноз при госпіталізації ', bFill(BV('dx.osn'), true, true), ' ', bCells(BV('dx.mkh').split(/[,;\s]+/)[0], 6, true)),
@@ -66,7 +70,7 @@ function bTitle(){
     bRow('18. Алергічні реакції, гіперчутливість чи непереносимість лікарського засобу ', bFill(alg, true, true)),
     bRow('19. Госпіталізація з приводу цього захворювання в цьому році: вперше – 1; повторно – 2 ', bBox('')),
     bRow('19.1. Повторна госпіталізація з приводу цього захворювання до 30 днів: так – 1; ні – 2 ', bBox('')),
-    bRow('20. Дата виписки/смерті ', bCells(bD6(d2), 6), ' ', bCells('', 2), '  21. Проведено ліжко-днів ', bFill(days === '' ? '' : String(days))));
+    bRow('20. Дата виписки/смерті ', bDate(d2), bTime(''), '  21. Проведено ліжко-днів ', bFill(days === '' ? '' : String(days))));
 }
 
 /* ---------- первинний огляд лікаря (п. 33–40) ---------- */
@@ -237,7 +241,7 @@ function bEpi(){
       bLines('', 2),
       bRow('57.1. П.І.Б. лікаря ', bFill(mv('doc'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')),
       bRow('57.2. П.І.Б. завідувача відділення ', bFill(mv('zav'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')),
-      bRow('Дата заповнення ', bCells(bD6(P.d2.value || todayISO()), 6, true), bSmall(' (число, місяць, рік)'))));
+      bRow('Дата заповнення ', bDate(P.d2.value || todayISO(), true), bSmall(' (число, місяць, рік)'))));
   }
   return pages;
 }

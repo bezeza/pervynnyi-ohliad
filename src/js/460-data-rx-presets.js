@@ -90,5 +90,5 @@ const RXA = {
   ery:[['Амоксицилін','1000 мг','per os','3 р/д',7],['Парацетамол','500 мг','per os','за потреби']],
   af:[['Бісопролол','5 мг','per os','1 р/д',0,'контроль частоти: ЧСС у спокої < 110/хв'],['Апіксабан','5 мг','per os','2 р/д',0,'при CHA₂DS₂-VA ≥ 2 (≥ 1 — розглянути)']]
 };
-const rxFor = p => MODE === 'amb' && p && RXA[p.key] !== undefined ? RXA[p.key] : (p && p.rx) || [];
+function rxFor(p){ return MODE === 'amb' && p && RXA[p.key] !== undefined ? RXA[p.key] : (p && p.rx) || []; }   /* 501-rx-evidence.js доповнює: режим, дієта, моніторинг */
 

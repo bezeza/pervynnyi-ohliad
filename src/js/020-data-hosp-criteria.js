@@ -51,7 +51,8 @@ const KRIT = {
   varic:['негоспітальна пневмонія з дихальною недостатністю або ускладненнями (п. IV.2.3)', RESP[0], RESP[2]],
   // травми: окремих пунктів Стандарту для травм у програмі немає — використано загальні ургентні критерії (звірте з текстом наказу)
   tdr:[ABD[1]], thip:[ABD[1]], tank:[ABD[1]], tclav:[ABD[1]], tdisl:[ABD[1]], twound:[ABD[1]],
-  trib:[RESP[0], RESP[1], ABD[1]], tcmt:[...NEURO], tspine:[...NEURO, ABD[1]]
+  trib:[RESP[0], RESP[1], ABD[1]], tcmt:[...NEURO], tspine:[...NEURO, ABD[1]],
+  bronx:[...RESP], pe:[...RESP]   /* 0.9.3.22 — лише в кінці: порядок критеріїв зберігається в записах пацієнтів */
 };
 const KRIT_ALL = [...new Set(Object.values(KRIT).flat())];
 const URGK = new Set([...KRIT_ALL.filter(t=>/розд\. III/.test(t)), RESP[2]]);   // загальні ургентні ознаки (розд. III) + сепсис
