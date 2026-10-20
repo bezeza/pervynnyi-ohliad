@@ -453,6 +453,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    pt('age','45'); w.eval("document.querySelector('#sexSeg button[data-sex=\"f\"]').click()"); pt('hr','80'); pt('sbp','125'); pt('spo','97');
    r=J('pesi'); ok('PESI: жінка 45 р. без ознак → клас I, sPESI 0, низький ризик', r.score==='45 б. · I' && /sPESI 0/.test(r.text) && /низький/.test(r.text), C('pesi'));
    ['age','sbp','chol','hdl','hr','rr','t','spo'].forEach(k=>pt(k,'')); }
+ { // 0.9.3.20: перевірка клінічного вмісту, налаштувати під себе, телефон
+   const cats=JSON.parse(w.eval("JSON.stringify(vItems().reduce((a,x)=>(a[x.cat]=(a[x.cat]||0)+1,a),{}))"));
+   ok('Перевірка: є шаблони, схеми, критерії 1044, норми, препарати, шкали', ['tpl','rx','krit','norm','drug','calc'].every(k=>cats[k]>0), JSON.stringify(cats));
+   w.eval("localStorage.removeItem('po.verify')");
+   ok('Перевірка: без позначки — чернетка', w.eval("vOf('tpl:pneu').s")==='draft');
+   w.eval("(()=>{ const it=vItems().find(x=>x.k==='tpl:pneu'); const V={}; V[it.k]={h:it.h,by:'Тест Т. Т.',at:Date.now()}; vSave(V); })()");
+   ok('Перевірка: позначка «перевірено»', w.eval("vOf('tpl:pneu').s")==='ok');
+   w.eval("PRESETS.find(x=>x.key==='pneu').plan.push('__тест__')");
+   ok('Перевірка: вміст змінився — «змінено після перевірки»', w.eval("vOf('tpl:pneu').s")==='changed');
+   w.eval("PRESETS.find(x=>x.key==='pneu').plan.pop()");
+   const doc=w.eval("vDocHTML('krit')");
+   ok('Документ для звірки: критерії, підписи', /Критерії госпіталізації/.test(doc) && /Перевірив\(ла\)/.test(doc) && /Затверджую/.test(doc) && /Негоспітальна пневмонія/.test(doc));
+   w.eval("localStorage.removeItem('po.verify')");
+   ok('Налаштувати під себе: сторінка відкривається, 9 карток', w.eval("(()=>{ customizeOpen(); const n=document.querySelectorAll('.cusdlg .cuscard').length; document.querySelector('.cusdlg .nshead .btn').click(); return n; })()")===9);
+   ok('Файли папки даних: зрозумілі назви', w.eval("FS_FILES({},{}).map(x=>x[0]).join('|')")==='Мої шаблони.json|Мої кнопки і фрази.json|Налаштування.json|Перевірка вмісту.json');
+   ok('Свої аналізи не губляться при збереженні шаблонів', w.eval("(()=>{ CUSTOM.labs=[{t:'Тест-аналіз',g:'other',p:[{n:'x'}]}]; saveCustom(); const c=JSON.parse(localStorage.getItem('po.custom')); CUSTOM.labs=[]; saveCustom(); return !!(c.labs&&c.labs.length); })()"));
+   ok('Телефон: кнопка документа в навігації розділів', w.eval("(()=>{ renderTabNav(); const b=document.querySelector('#tabnav .tn-doc'); return !!b && /Огляд/.test(b.textContent); })()"));
+   ok('Налаштування: усі блоки згорнуті, «Про програму» в кінці', w.eval("(()=>{ const k=[...SETTINGS_EL.children]; return !k.some(x=>x.matches('h3.sub')) && k[k.length-1].matches('details.about'); })()")); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

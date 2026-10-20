@@ -1,6 +1,6 @@
 /* ======== СВОЇ ШАБЛОНИ КОРИСТУВАЧА (зберігаються в цьому браузері) ======== */
 let CUSTOM = {opts:{}, presets:[], ovr:{}, hid:{}, diary:[], rxsets:[], btns:[]};
-try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || [], btns:c.btns || []}; }catch(e){}
+try{ const c = JSON.parse(localStorage.getItem('po.custom') || '{}'); if (c && typeof c === 'object') CUSTOM = Object.assign({}, c, {opts:c.opts || {}, presets:c.presets || [], ovr:c.ovr || {}, hid:c.hid || {}, diary:c.diary || [], rxsets:c.rxsets || [], btns:c.btns || [], labs:c.labs || []}); /* інші ключі (свої аналізи тощо) не губляться */ }catch(e){}
 for (const k in CUSTOM.opts){
   const [sid, fid] = k.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) continue;
   const arr = f.type === 'text' ? (f.quick = f.quick || []) : f.opts;

@@ -68,6 +68,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   ok(w.eval('Object.keys(loadStore()).length') === 1, 'пацієнт не збережений у першому запуску');
   ok([...(DBS.get('po-db') || new Map()).get('patients') || []].length === 1, 'пацієнта немає в базі');
   await until(() => w.localStorage.getItem('po.last'), 3000);
+  w.eval("CUSTOM.labs=[{t:'Свій аналіз тест', g:'other', p:[{n:'показник', u:'', m:[1,2], f:[1,2]}]}]; saveCustom();");
   keepLS(w); w.close();
   ({d, w, errs} = boot());
   ok(await until(() => w.eval('IDB.ok')), 'база не відкрилась після перезапуску');
@@ -75,6 +76,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   ok(w.eval('Object.keys(loadStore()).length') === 1, 'після перезапуску (без PIN) пацієнтів: ' + w.eval('Object.keys(loadStore()).length') + ' замість 1');
   await until(() => w.eval("document.getElementById('meta_pib').value"), 2000);
   ok(w.eval("document.getElementById('meta_pib').value") === 'Тест Перший', 'після перезапуску не відкрився останній пацієнт: «' + w.eval("document.getElementById('meta_pib').value") + '»');
+  ok(w.eval("(CUSTOM.labs||[]).length") === 1, 'свій аналіз зник після перезапуску');
   // 2. увімкнути PIN → дані шифруються → перезапуск → PIN → пацієнт на місці
   if (w.eval("typeof pinRewriteAll === 'function' && typeof pinWrap === 'function'")){
     const on = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('4826', raw), key = await pinUnwrap('4826', cfg);
