@@ -209,7 +209,7 @@ const TRASH_DAYS = 30;
 if (!IDB.ok){ try{ TRASH = JSON.parse(lsGet('po.trash', '{}')) || {}; }catch(e){ TRASH = {}; } }
 function trashPut(id, p){
   TRASH[id] = p;
-  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) tx.objectStore('patients').put(p, 'trash:' + id); else tx.objectStore('patients').delete('trash:' + id); }catch(e){} }
+  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) idbPutVal(tx.objectStore('patients'), 'trash:' + id, p); else tx.objectStore('patients').delete('trash:' + id); }catch(e){} }
   else { if (!p) delete TRASH[id]; try{ localStorage.setItem('po.trash', JSON.stringify(TRASH)); }catch(e){} }
   if (!p) delete TRASH[id];
 }

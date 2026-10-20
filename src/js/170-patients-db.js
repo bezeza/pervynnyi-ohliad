@@ -9,12 +9,15 @@ function loadStore(){
   if (IDB.ok && IDB.cache) return Object.assign({}, IDB.cache);
   try{ return JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){ return {}; }
 }
+/* запис у базу: з увімкненим PIN значення шифрується (605-pin.js підміняє цю функцію) */
+function idbPutVal(os, id, v){ os.put(v, id); }
 function saveStore(st){
+  if (typeof pinBlocked === 'function' && pinBlocked()) return false;   // PIN не введено — нічого не пишемо відкритим текстом
   if (!IDB.ok){ try{ localStorage.setItem(PKEY, JSON.stringify(st)); return true; }catch(e){ return false; } }
   IDB.cache = Object.assign({}, st);
   try{
     const tx = IDB.db.transaction('patients', 'readwrite'), os = tx.objectStore('patients');
-    for (const id in st){ const u = st[id] && st[id].updated; if (IDB.w[id] !== u || u === undefined){ os.put(st[id], id); IDB.w[id] = u; } }
+    for (const id in st){ const u = st[id] && st[id].updated; if (IDB.w[id] !== u || u === undefined){ IDB.w[id] = u; idbPutVal(os, id, st[id]); } }
     for (const id in IDB.w){ if (!(id in st)){ os.delete(id); delete IDB.w[id]; } }
     tx.onerror = () => toast('Не вдалося зберегти пацієнта в сховище браузера: ' + (tx.error && tx.error.message || ''), 6000);
   }catch(e){ toast('Помилка сховища: ' + (e && e.message || e), 6000); return false; }
@@ -29,8 +32,10 @@ function idbInit(){
     r.onerror = () => res(false);
     r.onsuccess = () => {
       const db = r.result, all = {}, tx = db.transaction('patients', 'readonly'), cur = tx.objectStore('patients').openCursor();
-      cur.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) TRASH[String(c.key).slice(6)] = c.value; else all[c.key] = c.value; c.continue(); } };
-      tx.oncomplete = () => {
+      const trashRaw = {};
+      cur.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) trashRaw[String(c.key).slice(6)] = c.value; else all[c.key] = c.value; c.continue(); } };
+      tx.oncomplete = () => (typeof pinUnlockAll === 'function' ? pinUnlockAll(all, trashRaw) : Promise.resolve({A:all, T:trashRaw})).then(({A, T}) => { for (const k in all) delete all[k]; Object.assign(all, A); Object.assign(TRASH, T); go(); });
+      const go = () => {
         IDB.db = db; IDB.cache = all; Object.keys(all).forEach(id=>{ IDB.w[id] = all[id].updated; }); IDB.ok = true;
         // перенесення зі старого сховища (і все, що встигли зберегти до готовності бази) — новіша версія перемагає
         let old = {}; try{ old = JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; }catch(e){}

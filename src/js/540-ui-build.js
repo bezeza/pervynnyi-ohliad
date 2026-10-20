@@ -289,4 +289,4 @@ function restoreLast(){ try{ if (PID || patientName()) return; const last = loca
 restoreLast();
 idbInit().then(ok=>{ if (!ok) return; renderPatients(); restoreLast(); try{ renderToday(); }catch(e){} });
 setTimeout(()=>{ const b = backupInfo(); if (b.due) toast(`Нагадування: резервна копія пацієнтів ${b.t ? 'від ' + new Date(b.t).toLocaleDateString('uk-UA') : 'ще не робилась'}. Вкладка «Запис» → «Зберегти всіх у файл»`, 6000); }, 3500);
-let lastPID; setInterval(()=>{ if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
+let lastPID; setInterval(()=>{ if (!IDB.ok && window.indexedDB) return; if (PID === lastPID) return; lastPID = PID; try{ if (PID) localStorage.setItem('po.last', PID); else localStorage.removeItem('po.last'); }catch(e){} }, 2000);   // пише лише коли пацієнт змінився
