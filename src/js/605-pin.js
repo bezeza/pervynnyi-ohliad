@@ -81,7 +81,25 @@ function pinForgot(){
   document.body.append(dlg);
 }
 /* переписати всю базу (кошик теж): зашифрувати новим ключем або розшифрувати (key = null) */
-async function pinRewriteAll(key){
+/* увімкнути / вимкнути шифрування: спершу стан, потім перезапис — щоб автозбереження під час перезапису
+   не записало відкритий текст (або, при вимкненні, зашифрований запис без PIN) */
+/* після перезапису — ще раз записати найсвіжіший стан (якщо пацієнта змінили під час перезапису) */
+function pinResave(){ try{ Object.keys(IDB.w).forEach(k=>{ IDB.w[k] = null; }); saveStore(loadStore()); }catch(e){} }
+async function pinEnable(key, cfg){
+  if (!IDB.ok || !IDB.db) return false;
+  PINC.key = key; PINC.cfg = cfg; try{ localStorage.setItem('po.pin', JSON.stringify(cfg)); }catch(e){}
+  if (await pinRewriteAll(key)){ pinResave(); return true; }
+  PINC.key = null; PINC.cfg = null; try{ localStorage.removeItem('po.pin'); }catch(e){} return false;
+}
+async function pinDisable(){
+  if (!IDB.ok || !IDB.db) return false;
+  const k0 = PINC.key, c0 = PINC.cfg;
+  PINC.key = null; PINC.cfg = null; try{ localStorage.removeItem('po.pin'); }catch(e){}
+  for (const id in PIN_Q) PIN_Q[id]++;   // відкласти зашифровані записи, що ще в черзі
+  if (await pinRewriteAll(null, k0)){ pinResave(); return true; }
+  PINC.key = k0; PINC.cfg = c0; try{ localStorage.setItem('po.pin', JSON.stringify(c0)); }catch(e){} return false;
+}
+async function pinRewriteAll(key, oldKey){
   if (!IDB.ok || !IDB.db) return false;
   const st = loadStore(), out = {};
   for (const id in st) out[id] = key ? await encObj(st[id], key) : st[id];
@@ -91,7 +109,7 @@ async function pinRewriteAll(key){
   try{ localStorage.removeItem(PKEY); localStorage.removeItem('po.trash'); }catch(e){}
   /* копії в браузері — теж */
   try{ const db = await bakOpen(); if (db){ const all = await bakTx(db, 'readonly', os=>os.getAll()), keys = await bakTx(db, 'readonly', os=>os.getAllKeys());
-    const conv = []; for (let i = 0; i < (all || []).length; i++){ const r = all[i]; let data = r.data; if (r.encData){ try{ data = JSON.stringify(await decObj(r.encData, PINC.key)); }catch(e){ continue; } }
+    const conv = []; for (let i = 0; i < (all || []).length; i++){ const r = all[i]; let data = r.data; if (r.encData){ try{ data = JSON.stringify(await decObj(r.encData, oldKey || PINC.key)); }catch(e){ continue; } }
       const nr = Object.assign({}, r); delete nr.data; delete nr.encData; if (key) nr.encData = await encObj(JSON.parse(data), key); else nr.data = data; conv.push([keys[i], nr]); }
     await bakTx(db, 'readwrite', os=>{ conv.forEach(([k, v])=>os.put(v, k)); }); } }catch(e){}
   if (typeof fsSchedule === 'function') fsSchedule(true);
@@ -168,11 +186,10 @@ function pinSetDialog(mode){
       msg.textContent = 'Зачекайте…';
       if (mode === 'on'){ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap(p1.value, raw);
         const key = await crypto.subtle.importKey('raw', raw, {name:'AES-GCM'}, false, ['encrypt', 'decrypt']);
-        if (!await pinRewriteAll(key)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; }
-        PINC.key = key; PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
+        if (!await pinEnable(key, cfg)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; } toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
       if (mode === 'change'){ const raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(PINC.cfg.salt), PINC.cfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(PINC.cfg.iv)}, kek, pub64(PINC.cfg.w)); })();
         const cfg = await pinWrap(p1.value, raw); PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('PIN змінено'); logAct('PIN змінено'); }
-      if (mode === 'off'){ if (!await pinRewriteAll(null)){ msg.textContent = 'Сховище не готове'; return; } PINC.cfg = null; PINC.key = null; localStorage.removeItem('po.pin'); toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
+      if (mode === 'off'){ if (!await pinDisable()){ msg.textContent = 'Сховище не готове'; return; } toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
       dlg.remove(); drawPin();
     }catch(e){ msg.textContent = mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
   };

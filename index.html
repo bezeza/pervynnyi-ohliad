@@ -1159,7 +1159,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.25 від 20.10.2026">v0.9.3.25 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.26 від 20.10.2026">v0.9.3.26 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3111,8 +3111,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.25', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.26', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.26', '21.10.2026', 'виправлено (знайшла автоматична перевірка на GitHub): якщо під час увімкнення PIN спрацьовувало автозбереження, запис пацієнта міг лишитися в браузері незашифрованим; а під час вимкнення — зашифрованим уже без PIN (після перезапуску програма просила б PIN, якого немає). Тепер спершу змінюється стан шифрування, потім перезаписуються всі записи, і наостанок ще раз зберігається найсвіжіший стан. Додано перевірку «збереження посеред увімкнення/вимкнення PIN»'],
   ['0.9.3.25', '20.10.2026', 'форма 066/о — дві редакції, перемикач над бланком: 2012 року («Карта хворого, який вибув із стаціонару») і 2016 року (наказ МОЗ № 29 від 21.01.2016, «Карта пацієнта, який вибув із стаціонару», чинна): пп. 1–28 — громадянство (код країни), документ особи (лише за згодою), поштовий індекс, відділення госпіталізації й виписки (коди), повторна госпіталізація до 30 днів, травма виробнича/невиробнича, таблиця діагнозів з кодами, категорія резистентності ТБ, процедури й операції з кодом, видом анестезії (код 1–4) і анестезіологом, обстеження органів грудної порожнини, реєстраційний номер лікаря («Налаштування»). Вибір редакції запам’ятовується'],
   ['0.9.3.24', '20.10.2026', 'форма № 066/о «Карта хворого, який вибув із стаціонару» («Інші документи» → «Карта вибулого (ф. 066/о)»): бланк на два аркуші A4, як паперовий; дата й час госпіталізації, ПІБ, стать, вік, житель міський/сільський, робота, адреса, ким направлений, відділення, екстрена/планова, результат (з епікризу), дата виписки, ліжко-дні, діагнози з кодом МКХ — підставляються самі. Нова вкладка «066/о»: профіль ліжок (запам’ятовується), строки госпіталізації (якщо порожньо — за «Вважає себе хворим протягом»), вперше/повторно, операції (таблиця п. 19), дати RW, ВІЛ, онкоогляду, флюорографії (якщо порожньо — з журналу обстежень), пільгова категорія; п. 17б і 18 (причини смерті) — показуються лише при результаті «помер». Ці ж дані заповнюють титул 003/о: ВІЛ, група крові й резус (з журналу), RW, п. 19 і 19.1. Ліжко-дні рахуються однаково всюди за наказом МОЗ № 110: день госпіталізації і день виписки — один день; госпіталізація й виписка того самого дня — 1 ліжко-день (раніше було 0). Направлення: окремо лікар (ПІБ), заклад, код закладу за ЄДРПОУ і № електронного направлення — у тексті огляду, у 003/о (п. 9 з кодом ЄДРПОУ) і 066/о (п. 7); підказки — з попередніх пацієнтів. «Налаштування» → «Код відділення» — у п. 11 і 12 титулу 003/о та п. 9 форми 066/о. Крапка в ініціалах («А. А.») більше не губиться'],
   ['0.9.3.23', '20.10.2026', 'вбудований довідник МКХ-10 доповнено (357 → 417 кодів): пневмонії за збудником (J12.0–J12.8, J14, J15.0–J15.8, J16), J18.2, J18.8, J22, хронічний бронхіт (J41), емфізема (J43.9), J44.8, неалергічна астма (J45.1), бронхоектази J47.0/J47.1/J47.9 (НК 025), абсцес легені (J85), емпієма (J86.9), J91, пневмоторакс (J93.0/J93.1), J96.9, ателектаз (J98.1), легенева гіпертензія й легеневе серце (I27.2, I27.9), саркоїдоз (D86.0), кровохаркання, кашель, а також кілька кодів ЛОР, грипу, діабету й виразки. Повний офіційний класифікатор НК 025:2021 — «Налаштування» → «Довідники кодів» (завантажити файл)'],
@@ -13132,7 +13133,25 @@ function pinForgot(){
   document.body.append(dlg);
 }
 /* переписати всю базу (кошик теж): зашифрувати новим ключем або розшифрувати (key = null) */
-async function pinRewriteAll(key){
+/* увімкнути / вимкнути шифрування: спершу стан, потім перезапис — щоб автозбереження під час перезапису
+   не записало відкритий текст (або, при вимкненні, зашифрований запис без PIN) */
+/* після перезапису — ще раз записати найсвіжіший стан (якщо пацієнта змінили під час перезапису) */
+function pinResave(){ try{ Object.keys(IDB.w).forEach(k=>{ IDB.w[k] = null; }); saveStore(loadStore()); }catch(e){} }
+async function pinEnable(key, cfg){
+  if (!IDB.ok || !IDB.db) return false;
+  PINC.key = key; PINC.cfg = cfg; try{ localStorage.setItem('po.pin', JSON.stringify(cfg)); }catch(e){}
+  if (await pinRewriteAll(key)){ pinResave(); return true; }
+  PINC.key = null; PINC.cfg = null; try{ localStorage.removeItem('po.pin'); }catch(e){} return false;
+}
+async function pinDisable(){
+  if (!IDB.ok || !IDB.db) return false;
+  const k0 = PINC.key, c0 = PINC.cfg;
+  PINC.key = null; PINC.cfg = null; try{ localStorage.removeItem('po.pin'); }catch(e){}
+  for (const id in PIN_Q) PIN_Q[id]++;   // відкласти зашифровані записи, що ще в черзі
+  if (await pinRewriteAll(null, k0)){ pinResave(); return true; }
+  PINC.key = k0; PINC.cfg = c0; try{ localStorage.setItem('po.pin', JSON.stringify(c0)); }catch(e){} return false;
+}
+async function pinRewriteAll(key, oldKey){
   if (!IDB.ok || !IDB.db) return false;
   const st = loadStore(), out = {};
   for (const id in st) out[id] = key ? await encObj(st[id], key) : st[id];
@@ -13142,7 +13161,7 @@ async function pinRewriteAll(key){
   try{ localStorage.removeItem(PKEY); localStorage.removeItem('po.trash'); }catch(e){}
   /* копії в браузері — теж */
   try{ const db = await bakOpen(); if (db){ const all = await bakTx(db, 'readonly', os=>os.getAll()), keys = await bakTx(db, 'readonly', os=>os.getAllKeys());
-    const conv = []; for (let i = 0; i < (all || []).length; i++){ const r = all[i]; let data = r.data; if (r.encData){ try{ data = JSON.stringify(await decObj(r.encData, PINC.key)); }catch(e){ continue; } }
+    const conv = []; for (let i = 0; i < (all || []).length; i++){ const r = all[i]; let data = r.data; if (r.encData){ try{ data = JSON.stringify(await decObj(r.encData, oldKey || PINC.key)); }catch(e){ continue; } }
       const nr = Object.assign({}, r); delete nr.data; delete nr.encData; if (key) nr.encData = await encObj(JSON.parse(data), key); else nr.data = data; conv.push([keys[i], nr]); }
     await bakTx(db, 'readwrite', os=>{ conv.forEach(([k, v])=>os.put(v, k)); }); } }catch(e){}
   if (typeof fsSchedule === 'function') fsSchedule(true);
@@ -13219,11 +13238,10 @@ function pinSetDialog(mode){
       msg.textContent = 'Зачекайте…';
       if (mode === 'on'){ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap(p1.value, raw);
         const key = await crypto.subtle.importKey('raw', raw, {name:'AES-GCM'}, false, ['encrypt', 'decrypt']);
-        if (!await pinRewriteAll(key)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; }
-        PINC.key = key; PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
+        if (!await pinEnable(key, cfg)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; } toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
       if (mode === 'change'){ const raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(PINC.cfg.salt), PINC.cfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(PINC.cfg.iv)}, kek, pub64(PINC.cfg.w)); })();
         const cfg = await pinWrap(p1.value, raw); PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('PIN змінено'); logAct('PIN змінено'); }
-      if (mode === 'off'){ if (!await pinRewriteAll(null)){ msg.textContent = 'Сховище не готове'; return; } PINC.cfg = null; PINC.key = null; localStorage.removeItem('po.pin'); toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
+      if (mode === 'off'){ if (!await pinDisable()){ msg.textContent = 'Сховище не готове'; return; } toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
       dlg.remove(); drawPin();
     }catch(e){ msg.textContent = mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
   };

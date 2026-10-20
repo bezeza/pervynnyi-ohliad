@@ -80,7 +80,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   // 2. увімкнути PIN → дані шифруються → перезапуск → PIN → пацієнт на місці
   if (w.eval("typeof pinRewriteAll === 'function' && typeof pinWrap === 'function'")){
     const on = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('4826', raw), key = await pinUnwrap('4826', cfg);
-      if (!await pinRewriteAll(key)) return 'rewrite false'; PINC.key = key; PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); return true; })()`).catch(e => 'ERR ' + e.message);
+      if (!await pinEnable(key, cfg)) return 'enable false'; return true; })()`).catch(e => 'ERR ' + e.message);
     ok(on === true, 'PIN не ввімкнувся: ' + on);
     await wait(300);
     const raw = [...DBS.get('po-db').get('patients').values()][0];
@@ -96,6 +96,19 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
     await wait(300);
     ok(w.eval('Object.keys(loadStore()).length') === 1, 'з PIN після перезапуску пацієнтів: ' + w.eval('Object.keys(loadStore()).length'));
     ok(w.eval("Object.values(loadStore())[0].name") === 'Тест Перший', 'з PIN ім’я не розшифрувалось');
+    // 3. вимкнення PIN із збереженням посеред перезапису → у базі відкритий текст, після перезапуску без екрана PIN
+    const off = await w.eval(`(async()=>{ const p = pinDisable(); document.getElementById('meta_pib').value='Тест Другий'; document.getElementById('meta_pib').dispatchEvent(new Event('input')); savePatient(true); return await p; })()`);
+    ok(off === true, 'PIN не вимкнувся');
+    await wait(400);
+    const raws = [...DBS.get('po-db').get('patients').values()];
+    ok(raws.length && raws.every(r => !r.enc), 'після вимкнення PIN у базі лишився зашифрований запис');
+    // 4. увімкнення PIN із збереженням посеред перезапису → усе зашифровано
+    const on2 = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('1357', raw), key = await pinUnwrap('1357', cfg);
+      const p = pinEnable(key, cfg); document.getElementById('meta_pib').value='Тест Третій'; document.getElementById('meta_pib').dispatchEvent(new Event('input')); savePatient(true); return await p; })()`);
+    ok(on2 === true, 'PIN не ввімкнувся вдруге');
+    await wait(500);
+    const raws2 = [...DBS.get('po-db').get('patients').values()];
+    ok(raws2.length && raws2.every(r => r.enc === 1), 'після ввімкнення PIN у базі є незашифрований запис (збереження посеред перезапису)');
   } else prob.push('немає функцій PIN (605-pin.js)');
   const e2 = errs.filter(x => !/Not implemented/.test(x)); if (e2.length) prob.push('помилки: ' + e2.slice(0, 3).join(' | '));
   w.close();
