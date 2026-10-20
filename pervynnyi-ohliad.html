@@ -979,6 +979,9 @@ body.pvopen{overflow:hidden}
 .resacts{margin:6px 0 8px}
 @media (max-width:620px){.ownrow{grid-template-columns:1fr 1fr}.ljcell.txt{grid-column:1/-1}}
 .ljd{font-size:11px;color:var(--muted);line-height:1.2}
+.ljside{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+body.lay-B #sidecard .ljside{width:100%;justify-content:flex-start;padding:8px 10px}
+@media (max-width:899px){#sidecard .ljside{display:none}.mbar #mbLabs{flex:0 0 auto;padding:10px 10px}}
 </style>
 </head>
 <body>
@@ -2889,8 +2892,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.12', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.13', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.13', '20.10.2026', 'журнал обстежень видно з головної сторінки: кнопка «🧪 Журнал обстежень · N» у бічній картці під еталонним шаблоном, на телефоні — «🧪 Аналізи» в нижній панелі'],
   ['0.9.3.12', '20.10.2026', 'журнал обстежень розділами: «Кров · Біохімія крові · Сеча · Кал · Мікробіологія · Інструментальні · Інші» з кількістю записів; у розділі — таблиця динаміки (показники × дати, відхилення ↑↓ за статтю); «＋ Вписати аналіз» — клітинками в прийнятому порядку (ЗАК: Hb, ер., КП, лейк., е, п/я, с/я, л, м, тр., ШОЕ; ЗАС, печінкові проби, копрограма, діастаза, глюкоза в добовій сечі, проба Нечипоренка, Зимницького, коагулограма, ЕКГ, спірографія…), Tab — далі, Enter — записати й до наступного аналізу, норма й попереднє значення під клітинкою; вставлений з МІС рядок «Hb 174 Ер 5,1 Л 10,2 ШОЕ 28» розкладається сам; «＋ Свій аналіз» (показники, одиниці, норма; іде в пакети фраз). Епікриз (п. 46–53 бланка), щоденник і текст беруть аналізи з журналу; клік по п. 46–53 — вписати саме цей аналіз; «Обстеження» в банері пацієнта. Аналізатори: «ЗАК (гематологічний аналізатор)» — WBC, Neu#/Lym#/Mon#/Eos#/Bas#, Neu%…Bas%, RBC, HGB, HCT, MCV, MCH, MCHC, RDW-CV/SD, PLT, MPV, PDW, PCT, P-LCC, P-LCR з нормами й поясненням кожного коду; ЗАС у порядку бланка ф. 210/о з хімічною частиною аналізатора сечі (SG, PH, LEU, NIT, PRO, GLU, KET, UBG, BIL, ERY, Color, Clarity): роздруківку можна вставити — SG 1.005 стає 1005, neg/norm — «негативно / норма»'],
   ['0.9.3.11', '20.10.2026', 'зі Skiagrama: перегляд перед друком на весь екран (⤢ біля тексту, Ctrl+K) — аркуші з масштабом «Сторінка / По ширині / 100 %», праворуч бланк, папір і принтер, кнопки «Друк», Word, LibreOffice; друк пачкою — у «Пацієнтах» вибрати кількох → «Друкувати вибраних» (первинний огляд, щоденник, епікриз — кожен з нового аркуша); журнал дій у Налаштуваннях (без ПІБ і тексту документів, CSV); «Як минулого разу» — для повторної госпіталізації того самого ПІБ підтягує анамнез життя, алергії, дату народження, адресу, роботу, супутні діагнози, зріст і масу; олівець ✎ у розділі — натиснути кнопку й змінити її текст або сховати; пакети фраз із підписом автора (ПІБ, посада й стаж, дата затвердження), при встановленні видно автора, «Повернути як було»; раз на тиждень — нагадування скопіювати дані на флешку. «Період лікування»: «з / по» й ліжко-дні — рівними рядками'],
   ['0.9.3.10', '20.10.2026', 'зі Skiagrama: «Пацієнти» (натисніть смужку з ПІБ) — фільтри «Усі · У відділенні · Виписані · Амбулаторно», пошук і за діагнозом, видалення 🗑 у кожному рядку, вибір кількох («вибрати всіх у списку») — видалити або зберегти у файл разом, «Виписані > 30 днів» — вибрати одним натисканням, кошик на 30 днів з відновленням. Захист екрана: після 10 хв без дій дані пацієнта ховаються за «Продовжити роботу» (час — у Налаштуваннях, Ctrl+K «Сховати екран»). Папір і принтер для бланків 003/о: поле під підшивку, зсув принтера ↔ ↕, пробний аркуш з лінійкою. Банер пацієнта: діагноз, госпіталізація й алергії — клікабельні (відкривають поле); «Чоловік / Жінка» — одразу біля ПІБ'],
@@ -12271,6 +12275,16 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
 { const i1 = importTpl; importTpl = function(file){ const rd = new FileReader(); rd.onload = () => { try{ const o = JSON.parse(rd.result); if (o && o.type === 'po-templates' && Array.isArray(o.labs)){ let n = 0; o.labs.forEach(x=>{ if (x && x.t && Array.isArray(x.p) && !(CUSTOM.labs = CUSTOM.labs || []).some(y=>y.t === x.t)){ CUSTOM.labs.push(x); n++; } }); if (n){ saveCustom(); toast(`Своїх аналізів додано: ${n}`, 2500); } } }catch(e){} }; rd.readAsText(file); return i1.apply(this, arguments); }; }
 /* Ctrl+K */
 { const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'Вписати аналіз (журнал обстежень)', go:()=>labsOpen({add:true})}, {k:'Дія', t:'Журнал обстежень розділами', go:()=>labsOpen()}, {k:'Дія', t:'Свій аналіз', go:ownLabDialog}); return L; }; }
+/* журнал — видно з головної сторінки: кнопка в бічній картці (під шаблоном) і внизу на телефоні */
+{ const sc = $('#sidecard');
+  const lb = h('button', {type:'button', class:'btn ljside', title:'Журнал обстежень: кров, біохімія, сеча, кал, мікробіологія, інструментальні', onclick:()=>labsOpen()}, h('span', {'aria-hidden':'true'}, '🧪'), h('span', {class:'ljs-t'}, ' Журнал обстежень'), h('b', {class:'ljs-n'}));
+  if (sc) sc.append(lb);
+  const mb = $('.mbar'); const mbb = h('button', {type:'button', class:'btn', id:'mbLabs', 'aria-label':'Журнал обстежень', onclick:()=>labsOpen()}, '🧪 Аналізи');
+  if (mb){ const tt = $('#toText'); if (tt) tt.before(mbb); else mb.prepend(mbb); }
+  const sync = () => { const n = RES.length; lb.querySelector('.ljs-n').textContent = n ? ' · ' + n : ''; };
+  const up = update; update = function(){ const r = up.apply(this, arguments); try{ sync(); }catch(e){} return r; };
+  sync();
+}
 </script>
 
 </body>
