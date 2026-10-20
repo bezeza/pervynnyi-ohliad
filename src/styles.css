@@ -910,3 +910,30 @@ body.shell .top .seg button:not([aria-pressed="true"]):hover{background:rgba(255
 .lockbox{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:360px;padding:24px}.lockic{font-size:40px}
 .paperctl{align-items:flex-end;gap:10px 14px}.paperctl .wl{display:flex;flex-direction:column;font-size:12.5px;color:var(--muted)}
 @media print{body.locked #print{display:block}#print .b003.bA4{padding-left:var(--bind,0mm)!important;transform:translate(var(--offx,0mm),var(--offy,0mm))}#print .ruler{transform:translate(var(--offx,0mm),var(--offy,0mm))}}
+/* ===== Зі Skiagrama, ч. 2 (0.9.3.11) ===== */
+.pvfull{position:fixed;inset:0;z-index:70;background:#525659;display:flex;flex-direction:column}
+body.pvopen{overflow:hidden}
+.pvtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 14px;background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
+.pvtop .seg button{padding:6px 10px}.pvz{min-width:4em;text-align:center;font:500 13px var(--f-num)}
+.pvbody{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 320px}
+.pvpaper{overflow:auto;padding:24px;background:transparent!important;border:0!important}
+.pvpaper .sheet{zoom:var(--pvz,1);margin:0 auto}
+.pvpaper .sheet:not(.blankmode){max-width:794px;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+.pvpaper .sheet.blankmode .b003.bA4{zoom:1}
+.pvside{background:var(--surface);color:var(--ink);border-left:1px solid var(--line);padding:12px 14px;overflow:auto}
+.pvside h4{font:600 13px var(--f-head);margin:12px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.pvside .blankbar{max-width:none;margin:0}
+@media (max-width:899px){.pvbody{grid-template-columns:1fr;grid-template-rows:1fr auto}.pvside{max-height:40vh;border-left:0;border-top:1px solid var(--line)}}
+#print .bprint-one+.bprint-one{break-before:page}
+.alog .alist{max-height:260px;overflow:auto;margin-top:8px;font-size:13px}.alog .arow{display:flex;gap:10px;padding:3px 0;border-bottom:1px solid var(--line)}
+.warnbox.usb{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:10px}
+.lastbox{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:8px;padding:8px 12px}
+.btn.pencil[aria-pressed="true"]{background:var(--flag-soft);border-color:var(--flag);color:var(--flag)}
+.pencilsec .chip,.pencilsec select{outline:1.5px dashed var(--flag);outline-offset:1px;cursor:text}
+.packsig{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;flex-direction:column;gap:2px}
+.bprint{display:inline-flex;gap:6px;align-items:center}.bprint select{width:auto}
+/* «Період лікування»: «з [дата]» / «по [дата]» рівними рядками, ліжко-дні під ними */
+.f .nums:has(> input[type=date] + .u){display:grid;grid-template-columns:auto minmax(0,13em);gap:6px 8px;align-items:center;justify-content:start}
+.f .nums:has(> input[type=date] + .u) > .u{color:var(--muted);text-align:right}
+.f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important}
+.f .nums:has(> input[type=date] + .u) > .hint{grid-column:1/-1;margin:0;color:var(--muted)}

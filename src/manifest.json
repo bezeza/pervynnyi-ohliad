@@ -77,6 +77,7 @@
   "597-shell.js",
   "598-diary-quick.js",
   "599-links.js",
-  "600-skia.js"
+  "600-skia.js",
+  "601-skia2.js"
  ]
 }
