@@ -275,13 +275,6 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    chips.find(c=>/I\.4/.test(c.textContent)).click();
    ok('Підстава з кнопки — з повною назвою Стандарту і пунктом', /затвердженого наказом МОЗ України від 30\.07\.2026 № 1044: .*погіршення стану, що потребує цілодобового медичного нагляду \(розд\. I, п\. 4\)/.test(w.eval("F('d_lik.osn').el.value")));
    w.eval("F('d_lik.osn').el.value=''; DIARIES=[]; update(); switchDoc('ohl')"); }
- { w.eval("switchDoc('epi')"); set('e_obs_z46','18.10.2026: Hb 128 г/л, ШОЕ 28 мм/год'); w.eval("BLANK=true; BLP.e45=true; PAPER=true; renderPaper()");
-   const r=[...doc.querySelectorAll('#paper .bepi [data-fld]')];
-   ok('Епікриз: п. 46–53 — поля в «Обстеженнях» і на бланку', r.length===8 && /Hb 128/.test(r[0].textContent), r.map(x=>x.textContent).join('|'));
-   r[1].click(); const q=doc.querySelector('.bqe input'); ok('Бланк епікризу: пункт можна вписати на місці', !!q);
-   if (q){ q.value='19.10.2026: білок 0,033 г/л'; q.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter'})); }
-   ok('Вписане на бланку — у формі і в тексті', $('e_obs_z47').value==='19.10.2026: білок 0,033 г/л');
-   set('e_obs_z46',''); set('e_obs_z47',''); w.eval("BLANK=false; PAPER=false; renderPaper(); switchDoc('ohl')"); }
  { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval("BLANK=true; BLP.exam=true; PAPER=true; renderPaper()");
    const rows=[...doc.querySelectorAll('#paper .b003 .brow')];
    rows.find(x=>/^Хрипи/.test(x.textContent.trim())).click(); ok('Клік по пункту бланка «Хрипи» відкриває «Дихання»', w.eval("TABS[active].id")==='dyh');
@@ -332,6 +325,28 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); await sleep(150);
    ok('Друк пачкою: документи вибраних — у друк по одному на аркуш', $('print').querySelectorAll('.bprint-one').length===2 && pr===1, $('print').querySelectorAll('.bprint-one').length+'/'+pr);
    ok('Після друку пачкою — відкритий той самий пацієнт', $('meta_pib').value==='Повтор Тестовий Пацієнт'); }
+ // 0.9.3.12 журнал обстежень розділами
+ { w.eval('newPatient()'); set('meta_pib','Лаб Тестовий Пацієнт'); doc.querySelector('[data-sex="m"]').click(); ap('pneu'); w.eval("RES.length=0; switchDoc('epi'); labsOpen({test:'ЗАК'})");
+   const t=doc.querySelector('.ljed textarea'); t.value='Hb 174 Ер 5,1 Л 12,4 ШОЕ 28 лімф 18'; ev(t,'input');
+   const v=[...doc.querySelectorAll('.ljcell input')].map(i=>i.value);
+   ok('Аналіз: рядок з МІС розкладено по клітинках', v[0]==='174' && v[1]==='5,1' && v[3]==='12,4' && v[7]==='18' && v[10]==='28', v.join('|'));
+   [...doc.querySelectorAll('.ljed button')].find(b=>b.textContent==='Записати').click();
+   ok('Аналіз записано в журнал з ↑↓', w.eval("RES.length")===1 && /лейк\. 12,4 ×10⁹\/л ↑/.test(w.eval("RES[0].v")) && /л 18 % ↓/.test(w.eval("RES[0].v")), w.eval("RES[0] && RES[0].v"));
+   ok('Журнал: розділи з кількістю й таблиця динаміки', /Кров · 1/.test(doc.querySelector('.ljtabs').textContent) && !!doc.querySelector('.ljt'));
+   ok('Епікриз: аналіз із журналу — у тексті', /ЗАК .*Hb 174/.test(out()), out().slice(0,800));
+   w.eval("BLANK=true; BLP.e45=true; PAPER=true; renderPaper()"); const r46=doc.querySelector('#paper .bepi [data-fld="e_obs_z46"]');
+   ok('Бланк епікризу: п. 46 — з журналу', r46 && /Hb 174/.test(r46.textContent));
+   doc.querySelector('.ljdlg').remove(); doc.querySelector('#paper .bepi [data-fld="e_obs_z47"]').click();
+   ok('Бланк: клік по п. 47 — вписати ЗАС клітинками', !!doc.querySelector('.ljdlg .ljed') && doc.querySelector('.ljed select').value==='ЗАС');
+   doc.querySelector('.ljdlg').remove(); w.eval("BLANK=false; PAPER=false; renderPaper()");
+   ok('Банер: «Обстеження» з кількістю', /Обстеження/.test(doc.querySelector('#ptline').textContent));
+   { const d=w.eval("labDef('ЗАК (гематологічний аналізатор)')"), v=w.lParse(d,'WBC 4.64 10^9/L\nNeu# 3.11 10^9/L\nNeu% 67.0 %\nRBC 4.62 10^12/L\nHGB 151 g/L\nMCHC 345 g/L\nPLT 212 10^9/L\nMPV B 11.1 fL\nP-LCR 35.4 %');
+     ok('Аналізатор крові: роздруківка WBC/Neu#/HGB/MPV… розкладається по клітинках', v[0]==='4,64' && v[1]==='3,11' && v[6]==='67,0' && v[12]==='151' && v[16]==='345' && v[19]==='212' && v[20]==='11,1' && v[24]==='35,4', v.join('|'));
+     const u=w.eval("labDef('ЗАС')"), z=w.lParse(u,'SG 1.005\nPH 7\nLEU 25 /µl *S\nNIT neg\nPRO neg\nGLU norm\nColor yellow');
+     ok('Аналізатор сечі: SG 1.005 → 1005, neg/norm — словами', z[3]==='1005' && z[4]==='7' && z[5]==='негативно' && z[6]==='норма' && z[1]==='жовтий' && z[12]==='25', z.join('|'));
+     ok('Аналізатор сечі: питома вага 1005 позначена ↓', /питома вага 1005 ↓/.test(w.lCompose(u,z))); }
+   w.eval("ownLabDialog()"); const dl=doc.querySelector('.navsheet:last-of-type'); ok('Свій аналіз: діалог', !!doc.querySelector('.ownrow')); doc.querySelectorAll('.navsheet').forEach(x=>{ if (x.querySelector('.ownrow')) x.remove(); });
+   w.eval("switchDoc('ohl')"); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
