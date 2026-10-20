@@ -937,3 +937,27 @@ body.pvopen{overflow:hidden}
 .f .nums:has(> input[type=date] + .u) > .u{color:var(--muted);text-align:right}
 .f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important}
 .f .nums:has(> input[type=date] + .u) > .hint{grid-column:1/-1;margin:0;color:var(--muted)}
+/* ===== Журнал обстежень розділами (0.9.3.12) ===== */
+.ljdlg .nvbox{max-width:1000px;width:100%}
+.ljdlg .nshead{gap:8px;flex-wrap:wrap}
+.ljtabs{display:flex;flex-wrap:wrap;margin:6px 0 10px}.ljtabs button{flex:1 1 auto}
+.ljed{border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));background:color-mix(in srgb,var(--accent-soft) 45%,var(--surface));border-radius:10px;padding:12px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.ljed .res-form select{flex:1 1 260px}.ljed .res-form input[type=date]{width:auto}
+.ljed textarea{font-size:13px}
+.ljgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 10px}
+.ljcell{display:flex;flex-direction:column;gap:2px}.ljcell.txt{grid-column:span 2}
+.ljn{font-size:12.5px;font-weight:600}.ljn small{font-weight:400;color:var(--muted)}
+.ljin{display:flex;align-items:center;gap:4px}.ljin input{flex:1;min-width:0}.ljin input.abn{border-color:var(--flag);background:var(--flag-soft)}
+.ljflag{color:var(--flag);font-weight:700;min-width:.8em}
+.ljcard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}
+.ljh{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ljscroll{overflow-x:auto}
+.ljt{border-collapse:collapse;font-size:13.5px;min-width:100%}.ljt th,.ljt td{border-bottom:1px solid var(--line);padding:4px 8px;text-align:left;white-space:nowrap}
+.ljt tbody th{font-weight:500}.ljt td.abn{color:var(--flag);font-weight:600}.ljt thead th{font-weight:600}
+.ljrow{display:flex;gap:10px;align-items:baseline;padding:3px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.ljfree{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.ownrow{display:grid;grid-template-columns:2fr 1fr .8fr .8fr auto;gap:6px;margin-top:6px;align-items:center}
+.resnew .res-form,.resnew .labgrid,.resnew .res-v,.resnew>.acts2:not(.resacts){display:none!important}
+.resacts{margin:6px 0 8px}
+@media (max-width:620px){.ownrow{grid-template-columns:1fr 1fr}.ljcell.txt{grid-column:1/-1}}
+.ljd{font-size:11px;color:var(--muted);line-height:1.2}
