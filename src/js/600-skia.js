@@ -33,7 +33,7 @@ openSwitcher = function(){
         dx ? h('span', {class:'swd'}, dx.split('\n')[0].slice(0, 90)) : '',
         fl.length ? h('span', {class:'swf'}, ...fl.slice(0, 3).map(f=>h('span', {class:'badge ' + (f.c || '')}, f.t))) : '',
         id === PID ? h('span', {class:'badge ok'}, 'відкрито') : '');
-      list.append(h('div', {class:'pmrow' + (sel.has(id) ? ' on' : '')}, cb, open, del));
+      const row = h('div', {class:'pmrow' + (sel.has(id) ? ' on' : '')}, cb, open, del); row.dataset.id = id; list.append(row);
     });
     if (L.length > 200) list.append(h('p', {class:'chips-hint'}, `Показано 200 з ${L.length} — уточніть пошук`));
     drawBar(); drawFoot();

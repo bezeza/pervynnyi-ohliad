@@ -308,6 +308,30 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Папір і принтер: підшивка, зсув, пробний аркуш', !!doc.querySelector('.paperctl') && /Пробний аркуш/.test(doc.querySelector('.paperctl').textContent)); }
  { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval("switchDoc('shch')"); const c=[...doc.querySelectorAll('#ptline .pcol')].find(x=>/Діагноз/.test(x.textContent));
    c.click(); ok('Банер: клік по діагнозу відкриває діагноз у первинному огляді', w.eval('DOC')==='ohl' && w.eval('TABS[active].id')==='dx'); }
+ // 0.9.3.11 зі Skiagrama, ч. 2
+ { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval('pvOpen()');
+   ok('Перегляд перед друком на весь екран: аркуш, бланк, папір і принтер, друк', !!doc.querySelector('.pvfull .sheet') && /Папір і принтер/.test(doc.querySelector('.pvside').textContent) && /Друк/.test(doc.querySelector('.pvtop').textContent));
+   w.eval('pvClose()'); ok('Перегляд закривається', !doc.querySelector('.pvfull'));
+   ok('Журнал дій: події записуються без ПІБ', w.eval("ALOG.length>0 && ALOG.every(a=>!/Тест/.test(a.t+a.d))"), w.eval("JSON.stringify(ALOG.slice(-3))"));
+   ok('Журнал дій у Налаштуваннях', !!doc.querySelector('.alog'));
+   const S=w.eval("SECTIONS.find(s=>s.id==='skarhy').panel.querySelector('.pencil')"); ok('Олівець ✎ у розділі', !!S);
+   w.eval("show(TABS.findIndex(t=>t.id==='skarhy'))"); S.click(); const ch=w.eval("F('skarhy.c').chips[2]"); const was=ch.getAttribute('aria-pressed'); ch.click();
+   const ta=doc.querySelector('.pened textarea'); ok('✎: натискання кнопки відкриває правку', !!ta);
+   if (ta){ ta.value='слабкість (змінено)'; [...doc.querySelectorAll('.pened button')].find(b=>b.textContent==='Зберегти').click(); }
+   ok('✎: змінений текст кнопки збережено, вибір не змінився', /змінено/.test(ch.textContent) && ch.getAttribute('aria-pressed')===was, ch.textContent);
+   w.eval("setOvr('skarhy.c', O(F('skarhy.c').opts[2]).t, '')"); S.click();
+   ok('Пакет фраз: кнопка «Пакет із підписом автора…»', [...doc.querySelectorAll('button')].some(b=>/Пакет із підписом автора/.test(b.textContent)));
+   w.eval("localStorage.removeItem('po.usb'); localStorage.removeItem('po.usbLater'); renderToday()");
+   ok('Нагадування: раз на тиждень копія на флешку', !!doc.querySelector('#bkBox .usb') || w.eval("Object.keys(loadStore()).length===0")); }
+ { w.eval('newPatient()'); set('meta_pib','Повтор Тестовий Пацієнт'); ap('copd'); set('meta_dob','1950-05-05'); w.eval("F('e_per.per').d1.value='2026-01-10'; F('e_per.per').d2.value='2026-01-20'; update(); savePatient(true)");
+   const old=w.eval('PID'); w.eval('newPatient()'); set('meta_pib','Повтор Тестовий Пацієнт'); await sleep(700);
+   const lb=doc.querySelector('.lastbox'); ok('«Як минулого разу»: пропонує попередню госпіталізацію', lb && !lb.hidden && /уже був/.test(lb.textContent), lb && lb.textContent);
+   if (lb) [...lb.querySelectorAll('button')].find(b=>/Як минулого разу/.test(b.textContent)).click();
+   ok('«Як минулого разу»: дата народження й анамнез життя взято', $('meta_dob').value==='1950-05-05');
+   const ids=Object.keys(w.eval('loadStore()')).slice(0,2); let pr=0; w.print=()=>{pr++};
+   w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); await sleep(150);
+   ok('Друк пачкою: документи вибраних — у друк по одному на аркуш', $('print').querySelectorAll('.bprint-one').length===2 && pr===1, $('print').querySelectorAll('.bprint-one').length+'/'+pr);
+   ok('Після друку пачкою — відкритий той самий пацієнт', $('meta_pib').value==='Повтор Тестовий Пацієнт'); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
