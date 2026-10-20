@@ -416,6 +416,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    set('d_obj_masa_0','82'); set('d_obj_masa_1','1400'); ok('Маса тіла й діурез — у тексті щоденника', /Маса тіла 82 кг, діурез 1400 мл\/добу/.test(out()), out());
    w.eval("DSHOWALL=true; update()"); ok('«Показати всі пункти» повертає сховане', vis('zhyv'));
    w.eval("DSHOWALL=false; update(); switchDoc('ohl')"); }
+ { // 0.9.3.18: знахідки наскрізного аудиту
+   w.eval("switchDoc('ohl')"); set('meta_dt','2026-10-18T09:30'); w.eval("update()");
+   w.eval("switchDoc('shch'); switchDoc('ohl')");
+   ok('Дата первинного огляду не замінюється на «зараз» після перемикання документів', $('meta_dt').value==='2026-10-18T09:30' && /18\.10\.2026, 09:30/.test(out()), $('meta_dt').value+' | '+out().slice(0,40));
+   const S=w.eval("JSON.stringify(snap())"); w.eval("(()=>{ const s=snap(); clearAll(); restore(s); switchDoc('shch'); switchDoc('ohl'); })()");
+   ok('Дата огляду зберігається з пацієнтом (snap.dts) і повертається після відкриття', JSON.parse(S).dts && JSON.parse(S).dts.ohl==='2026-10-18T09:30' && $('meta_dt').value==='2026-10-18T09:30', $('meta_dt').value);
+   ok('Кнопка «Записати в журнал» на панелі тексту — лише в щоденнику', w.eval("switchDoc('ohl'); document.getElementById('dSaveTop').hidden") && w.eval("switchDoc('shch'); !document.getElementById('dSaveTop').hidden"));
+   w.eval("switchDoc('epi'); F('e_per.per').d1.value='2026-10-21'; F('e_per.per').d2.value='2026-10-20'; update()");
+   ok('Перевірка: дата виписки раніше за надходження', w.eval("checkDoc().some(x=>/раніше за дату надходження/.test(x.m))"));
+   w.eval("F('e_per.per').d1.value=''; F('e_per.per').d2.value=''; switchDoc('ohl')"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

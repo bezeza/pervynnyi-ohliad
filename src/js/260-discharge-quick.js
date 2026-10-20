@@ -31,10 +31,12 @@ const DREK = {
   mono:['Обмеження фізичних навантажень і контактних видів спорту 3–4 тижні.']
 };
 function sectionBody(doc, id){ const keep = DOC; DOC = doc; const p = sectionText(SECTIONS.find(x=>x.id === id)); DOC = keep; return p ? g(p.body) : ''; }
+/* дата первинного огляду (поле «Дата огляду» або дата створення запису) */
+function examDateISO(){ try{ const sn = (typeof PID !== 'undefined' && PID && loadStore()[PID] || {}).snap; const v = DOC === 'ohl' ? mv('dt') : (sn && sn.f && sn.f.meta_dt) || ''; return String(v || '').split('T')[0]; }catch(e){ return ''; } }
 function epiAuto(){
   const done = [], P = F('e_per.per'), today = todayISO();
-  if (!P.d1.value){ const ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push('дата надходження — з першого щоденника, перевірте'); } }
-  if (!P.d2.value){ P.d2.value = today; done.push('дата виписки'); }
+  if (!P.d1.value){ const ex = examDateISO(), ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).concat(ex ? [ex] : []).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push(ex && ds[0] === ex ? 'дата надходження — з дати первинного огляду, перевірте' : 'дата надходження — з першого щоденника, перевірте'); } }
+  if (!P.d2.value){ const lastD = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort().pop(); P.d2.value = lastD && lastD > today ? lastD : today; done.push(lastD && lastD > today ? 'дата виписки — за останнім щоденником, перевірте' : 'дата виписки'); }
   const an = F('e_per.anam'); if (!an.el.value.trim()){ const t = sectionBody('ohl', 'morbi'); if (t){ an.el.value = t; done.push('анамнез'); } }
   const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {};
   const ldyn = lf.d_main_dyn, lsk = lf.d_main_sk;

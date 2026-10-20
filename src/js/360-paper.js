@@ -30,7 +30,7 @@ function markGaps(P, body){
   if (!GAPS || !L.length) return;
   if (!body){   // бланк: перелік пропусків над сторінками, кожен веде до свого поля
     const first = P.querySelector('.b003');
-    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])), first);
+    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.map(x=>gapMark(x.m, x.tab, x.f))), first);
     return;
   }
   L.forEach(x=>{
@@ -44,7 +44,7 @@ function markGaps(P, body){
   nodes.forEach(n=>{ const frag = document.createDocumentFragment();
     n.nodeValue.split('…').forEach((s,i,a)=>{ if (s) frag.append(s); if (i < a.length - 1) frag.append(h('span', {class:'gap dots', title:'Не заповнено'}, '…')); });
     n.replaceWith(frag); });
-  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])));
+  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.map(x=>gapMark(x.m, x.tab, x.f))));
 }
 function renderPaper(){
   const pp = $('#paper'); if (!pp) return;
