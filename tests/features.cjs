@@ -186,13 +186,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("RX.length=0; addRx({drug:'Цефтріаксон', dose:'2 г', route:'в/в', freq:'1 р/д', start:todayISO()}); renderRx(); update()");
    s('d_obj_t_0','37,9'); s('d_obj_chss_0','98'); s('d_obj_chd_0','26'); s('d_obj_chd_1','94'); s('d_obj_o2_0','3'); s('d_obj_ad_0','120'); s('d_obj_ad_1','70');
    ok('Щоденник: кисень поруч із SpO2', /SpO2 94% на кисні 3 л\/хв/.test(out()), out().slice(0,400));
-   ok('Щоденник: обґрунтованість перебування — кисень і в/в антибіотик з пунктами', /Обґрунтованість перебування в стаціонарі зберігається \(наказ МОЗ № 1044\): кисневотерапія 3 л\/хв.*п\. II\.1.*внутрішньовенна антибактеріальна терапія/.test(out()), out());
+   ok('Щоденник: обґрунтованість перебування — кисень і в/в антибіотик з пунктами', /Обґрунтованість перебування в стаціонарі зберігається відповідно до Стандарту «Критерії госпіталізації пацієнтів для надання стаціонарної медичної допомоги», затвердженого наказом МОЗ України від 30\.07\.2026 № 1044: кисневотерапія 3 л\/хв.*розд\. II, п\. 1.*внутрішньовенна антибактеріальна терапія/.test(out()), out());
    ok('Пневмонія: підказка — бракує стабільності для переходу per os', /бракує стабільності: t° > 37,8 °C, ЧД > 24, потреба в кисні/.test(doc.querySelector('.dhints').textContent));
    s('d_obj_t_0','36,8'); s('d_obj_chd_0','18'); s('d_obj_o2_0',''); s('d_obj_chd_1','95'); s('d_obj_chss_0','80');
    ok('Пневмонія: стабільність виконана — підказка про перехід на пероральний антибіотик', /Критерії клінічної стабільності виконано/.test(doc.querySelector('.dhints').textContent));
    w.eval("RX.length=0; renderRx(); update()"); set('d_main_dyn','0');
    ok('Немає підстав — без рядка в тексті, з підказкою і зауваженням перевірки', !/Обґрунтованість перебування/.test(out()) && /підстав для продовження перебування/.test(doc.querySelector('.dhints').textContent) && w.eval("checkDoc().some(x=>/наказ МОЗ № 1044/.test(x.m))"));
-   set('d_main_dyn','2'); ok('«Стан покращився» без підстав — «планується виписка»', /Підстав для продовження цілодобового нагляду немає \(наказ МОЗ № 1044\) — планується виписка/.test(out()), out());
+   set('d_main_dyn','2'); ok('«Стан покращився» без підстав — «планується виписка»', /Підстав для продовження цілодобового медичного нагляду немає \(Стандарт «Критерії госпіталізації.*», затверджений наказом МОЗ України від 30\.07\.2026 № 1044\) — планується виписка/.test(out()), out());
    s('d_obj_chd_1','90'); ok('SpO2 ≤ 92% на повітрі — підстава розд. III', /SpO2 90% при диханні атмосферним повітрям \(розд\. III, п\. 1\)/.test(out()));
    doc.querySelector('[data-mode="amb"]').click(); ok('Амбулаторно — рядка обґрунтування перебування немає', !/Обґрунтованість перебування/.test(out()));
    doc.querySelector('[data-mode="hosp"]').click(); w.eval("switchDoc('ohl')"); }
@@ -244,6 +244,52 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      w.eval("(()=>{ const f=F('ssc.shum'); f.el.value='2'; f.el.dispatchEvent(new Event('change')); })()");
      const m2=[...doc.querySelectorAll('#out mark.chg')].map(x=>x.textContent).join('|');
      ok('Зміна частини фрази — підсвічено лише нову частину', m2==='над аортою.', m2); }
+ // 0.9.3.9 бланк на весь аркуш А4, записи щоденника по місцях
+ { doc.querySelector('[data-mode="hosp"]').click(); ap('pneu'); w.eval("BLANK=true; BLP.fill=true; BLP.all=false; BLP.dn=2; BLP.doff=0; switchDoc('ohl'); PAPER=true; renderPaper()");
+   ok('Бланк: сторінки — аркуші А4 «на весь аркуш»', [...doc.querySelectorAll('#paper .b003')].every(p=>p.classList.contains('bA4') && p.classList.contains('bfill')));
+   w.eval("switchDoc('shch'); renderPaper()");
+   const sl=()=>[...doc.querySelectorAll('#paper .b003 .bslot')].map(x=>x.className.replace('bslot','').trim()||'запис').join(',');
+   ok('Щоденник: 2 записи на аркуш — поточний угорі, на вільному місці — бланк для запису від руки', sl()==='запис,bfree', sl());
+   w.eval("BLP.dfree='none'; renderPaper()"); ok('Щоденник: вільне місце можна лишити порожнім', sl()==='запис,bempty', sl()); w.eval("BLP.dfree='diary'");
+   w.eval("BLP.doff=1; renderPaper()");
+   ok('Щоденник: друк на друге місце — перше пропущено, рамка й заголовок не друкуються', sl()==='bskip,запис' && doc.querySelector('#paper .b003').classList.contains('bcont'), sl());
+   w.eval("BLP.dn=1; BLP.doff=0; renderPaper()"); ok('Щоденник: 1 запис на аркуш', sl()==='запис', sl());
+   ok('Панель бланка: «на весь аркуш», записів на аркуш', /на весь аркуш/.test(doc.querySelector('#paper .blankbar').textContent) && /Записів на аркуш/.test(doc.querySelector('#paper .blankbar').textContent));
+   w.eval("BLP.dn='auto'; renderPaper()"); ok('Щоденник: «авто» — без помилок', doc.querySelectorAll('#paper .b003').length>=1);
+   w.eval("BLP.dn=2; BLP.doff=0; BLANK=false; PAPER=false; renderPaper(); switchDoc('ohl')"); }
+ // 0.9.3.9 менше ходіння вкладками: документ з огляду, консультація, дата щоденника, підстави № 1044
+ { w.eval("switchDoc('ohl')"); ap('pneu');
+   ok('«＋ Документ з огляду» — у первинному огляді', !$('mkDocBtn').closest('[hidden]') && !$('mkDocBtn').parentElement.hidden);
+   doc.querySelector('[data-mode="amb"]').click(); w.eval("goDocFromExam('kons')");
+   ok('Консультаційний висновок: скарги, анамнез й об’єктивно — з первинного огляду без переходу', /Скарги на підвищення температури/.test(out()) && /Вважає себе хвор/.test(out()) && /Об’єктивно: Загальний стан/.test(out()), out().slice(0,600));
+   ok('Консультація: кнопка «← Первинний огляд»', !$('backExam').hidden);
+   set('k_main_sk','на кашель уночі'); ok('Консультація: скарги можна вписати тут', /Скарги на кашель уночі/.test(out()));
+   set('k_main_sk',''); doc.querySelector('[data-mode="hosp"]').click(); w.eval("switchDoc('ohl')"); }
+ { w.eval("DIARIES=[]; switchDoc('ohl')"); ap('pneu'); w.eval("F('e_per.per').d1.value='2026-09-01'; switchDoc('shch')");
+   ok('Перший щоденник заповнюється і з датою надходження', /вологі хрипи/.test(out()), out().slice(0,200));
+   const i=doc.querySelector('.ddt'); i.value='2026-09-04T10:00'; ev(i,'change');
+   ok('Дата запису щоденника: обрана дата і день перебування за нею', /04\.09\.2026, 10:00/.test(out()) && /4-й день перебування/.test(out()), out().slice(0,200));
+   w.eval("diaryFromExam(1)"); ok('Закріплена дата не міняється на сьогоднішню при заповненні', /04\.09\.2026/.test(out()));
+   w.eval("saveDiary()"); ok('Після запису в журнал — наступний день', $('meta_dt').value.startsWith('2026-09-05'), $('meta_dt').value);
+   const chips=[...doc.querySelectorAll('.stayc .chip.q')]; ok('Підстави № 1044 — кнопками з пунктами', chips.some(c=>/II\.6/.test(c.textContent)) && chips.some(c=>/III\.1/.test(c.textContent)));
+   chips.find(c=>/I\.4/.test(c.textContent)).click();
+   ok('Підстава з кнопки — з повною назвою Стандарту і пунктом', /затвердженого наказом МОЗ України від 30\.07\.2026 № 1044: .*погіршення стану, що потребує цілодобового медичного нагляду \(розд\. I, п\. 4\)/.test(w.eval("F('d_lik.osn').el.value")));
+   w.eval("F('d_lik.osn').el.value=''; DIARIES=[]; update(); switchDoc('ohl')"); }
+ { w.eval("switchDoc('epi')"); set('e_obs_z46','18.10.2026: Hb 128 г/л, ШОЕ 28 мм/год'); w.eval("BLANK=true; BLP.e45=true; PAPER=true; renderPaper()");
+   const r=[...doc.querySelectorAll('#paper .bepi [data-fld]')];
+   ok('Епікриз: п. 46–53 — поля в «Обстеженнях» і на бланку', r.length===8 && /Hb 128/.test(r[0].textContent), r.map(x=>x.textContent).join('|'));
+   r[1].click(); const q=doc.querySelector('.bqe input'); ok('Бланк епікризу: пункт можна вписати на місці', !!q);
+   if (q){ q.value='19.10.2026: білок 0,033 г/л'; q.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter'})); }
+   ok('Вписане на бланку — у формі і в тексті', $('e_obs_z47').value==='19.10.2026: білок 0,033 г/л');
+   set('e_obs_z46',''); set('e_obs_z47',''); w.eval("BLANK=false; PAPER=false; renderPaper(); switchDoc('ohl')"); }
+ { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval("BLANK=true; BLP.exam=true; PAPER=true; renderPaper()");
+   const rows=[...doc.querySelectorAll('#paper .b003 .brow')];
+   rows.find(x=>/^Хрипи/.test(x.textContent.trim())).click(); ok('Клік по пункту бланка «Хрипи» відкриває «Дихання»', w.eval("TABS[active].id")==='dyh');
+   rows.find(x=>/^33\. Скарги/.test(x.textContent.trim())).nextElementSibling.click(); ok('Клік по тексту під «33. Скарги» відкриває «Скарги»', w.eval("TABS[active].id")==='skarhy');
+   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває «Серце, судини»', w.eval("TABS[active].id")==='ssc');
+   w.eval("BLANK=false; renderPaper()"); const sec=doc.querySelector('#paper [data-sec="dyh"]'); if (sec){ sec.click(); }
+   ok('«Текст документа» на аркуші: клік по розділу відкриває його', !sec || w.eval("TABS[active].id")==='dyh');
+   w.eval("PAPER=false; renderPaper()"); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));

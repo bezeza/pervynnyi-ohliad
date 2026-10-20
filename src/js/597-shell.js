@@ -9,7 +9,9 @@ const SHELL = {};
   const docs = h('nav', {class:'topdocs', 'aria-label':'Документи'});
   brand.after(docs);
   SHELL.placeDocs = () => {
-    if (wideTop()){ if (seg.parentElement !== docs) docs.append(seg, more); }
+    if (wideTop()){ if (seg.parentElement !== docs) docs.append(seg, more);
+      /* не вміщаються в шапку (напр., поруч «Стаціонар / Амбулаторно») — лишаються над формою */
+      if (docs.scrollWidth > docs.clientWidth + 2 || seg.scrollWidth > seg.clientWidth + 2 || top.scrollWidth > top.clientWidth + 2) dbar.prepend(seg, more); }
     else if (seg.parentElement !== dbar) dbar.prepend(seg, more);
   };
   SHELL.placeDocs();
@@ -88,10 +90,10 @@ const SHELL = {};
     SECTIONS.forEach(s=>{ if (s.tplBtn) s.tplBtn.hidden = !p || !secHas(s, p); });
   }
 
-  SHELL.sync = () => { drawBanner(); drawSide(); drawTplBtns(); };
+  SHELL.sync = () => { drawBanner(); drawSide(); drawTplBtns(); if (SHELL.docsKey !== MODE + DOC + !$('#modeSeg').hidden){ SHELL.docsKey = MODE + DOC + !$('#modeSeg').hidden; SHELL.placeDocs(); } };
   const up0 = update; update = function(){ const r = up0.apply(this, arguments); try{ SHELL.sync(); }catch(e){} return r; };
   { const s0 = show; show = function(i){ const r = s0.apply(this, arguments); try{ drawSide(); }catch(e){} return r; }; }
-  window.addEventListener('resize', ()=>document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px'));
+  window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px'); clearTimeout(SHELL.rz); SHELL.rz = setTimeout(()=>{ if (seg.parentElement === dbar && wideTop()) docs.append(seg, more); SHELL.placeDocs(); }, 150); });
   SHELL.sync();
 }
 
@@ -126,3 +128,4 @@ const SHELL = {};
   const rpp = renderPaper; renderPaper = function(){ const r = rpp.apply(this, arguments); sync(); return r; };
   sync();
 }
+{ const ap0 = applyProfile; applyProfile = function(){ const r = ap0.apply(this, arguments); try{ SHELL.placeDocs(); }catch(e){} return r; }; }

@@ -216,7 +216,6 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .b003 table.bdx{width:100%;border-collapse:collapse;margin:0 0 6px}.b003 .bdx th,.b003 .bdx td{border:1px solid #000;padding:2px 5px;text-align:left;vertical-align:middle}.b003 .bdx th{text-align:center;font-weight:400}
 .b003 .bdx td:first-child{width:62px}.b003 .bdx td:last-child{width:9.2em}
 .paper .b003 .bgap,.paper .b003 .bf.bgap{background:#FFE58A}
-@media screen and (max-width:899px){.b003{padding:10px 8px;font-size:9.5pt}.b003 .bframe{padding:6px 8px}.b003 .bhead{grid-template-columns:1fr;margin:-6px -8px 8px}.b003 .bhl{border-right:0;border-bottom:1px solid #000}.b003 .bcols{grid-template-columns:1fr}.b003 .bdi{grid-template-columns:1fr;margin:0 -8px}.b003 .bdl{border-right:0;border-bottom:1px solid #000;flex-direction:row;flex-wrap:wrap;gap:4px 12px}}
 @media print{@page b003{size:A4;margin:10mm 10mm 10mm 15mm}#print .b003{page:b003;box-shadow:none;margin:0;padding:0;max-width:none;font-size:10pt;line-height:1.28}#print .b003 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}#print .b003+.b003{break-before:page}#print .b003 .bgap{background:none}#print .blankbar{display:none}
   #print .b003 .bf,#print .b003 .blines,#print .b003 .bc,#print .b003 .bbox{color:#000}#print .b003 .bu{text-decoration-color:#000}#print .b003 .bnum.on{border-color:#000}}
 /* пропуски на аркуші — лише на екрані */
@@ -704,8 +703,8 @@ body.shell .vbadge{background:transparent;color:var(--top-mut);border-color:var(
 body.shell .top .btn{background:var(--top2);border-color:transparent;color:var(--top-ink)}
 body.shell .top .btn:hover{border-color:var(--top-mut)}
 body.shell .topdocs:empty{visibility:hidden}
-body.shell .topdocs{display:flex;align-items:stretch;gap:6px;flex:1 1 auto;min-width:0;align-self:stretch;margin:-6px 0}
-body.shell .topdocs #docSeg{display:flex;border:0;border-radius:0;background:none;overflow:visible;flex:0 1 auto;min-width:0}
+body.shell .topdocs{display:flex;align-items:stretch;gap:6px;flex:1 1 auto;min-width:0;align-self:stretch;margin:-6px 0;overflow:hidden}
+body.shell .topdocs #docSeg{display:flex;border:0;border-radius:0;background:none;overflow:hidden;flex:0 1 auto;min-width:0}
 body.shell .topdocs #docSeg button{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;color:var(--top-mut);padding:0 12px;font:500 14px var(--f-head);white-space:nowrap}
 body.shell .topdocs #docSeg button+button{border-left:0}
 body.shell .topdocs #docSeg button:hover{color:#fff}
@@ -841,3 +840,60 @@ body.shell .oh{flex-wrap:nowrap}
   body.shell .oh .acts{grid-column:auto!important;order:1}
   body.shell .oh #closeSheet2{order:2}
 }
+/* бланк 003/о: шапка закладу як на друкованому бланку (назва великими жирними, адреса окремим рядком) */
+.b003 .bline{border-bottom:1px solid #000;height:1.3em;margin:2px 0 4px}
+.b003 .bzoz{font-weight:700;text-transform:uppercase;text-align:center;font-size:1.08em;line-height:1.2;margin:4px 0 2px}
+.b003 .badr{text-align:left;margin:2px 0 4px}
+.b003 .bedr{font-size:1.1em;margin-top:4px}
+/* ===== Бланк 003/о: сторінка = аркуш А4 (0.9.3.9) ===== */
+.b003.bA4{--bsc:1;width:210mm;max-width:none;height:297mm;padding:10mm 10mm 10mm 15mm;margin:0 auto 16px;overflow:hidden;font-size:calc(10pt * var(--bsc));line-height:1.32;display:flex;flex-direction:column}
+.b003.bA4 .bframe{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.b003.bA4 .bs{font-size:.75em}.b003.bA4 .bhead{font-size:.9em}.b003.bA4 .bt{font-size:1.12em}
+.b003.bA4 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}
+.b003.bA4.bfill .blines{flex-grow:1}
+.b003.bA4:not(.bfill){height:auto;min-height:297mm;overflow:visible}.b003.bA4:not(.bfill) .bframe{overflow:visible}
+.b003.bA4.bfill .bframe>*{flex-shrink:0}
+.b003.bA4.bfill .bcols{flex:1 1 auto}
+.b003.bA4.bfill .bcols>*{display:flex;flex-direction:column}
+/* щоденник: рівні місця на аркуші */
+.b003.bslots .bslot{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin:0 -14px;border-top:1.5px solid #000}
+.b003.bslots.bauto .bslot{flex:0 0 auto}.b003.bslots.bauto.bfill .bslot:last-child{flex:1 1 auto}
+.b003.bslots .bslot>.bdi{flex:1 1 auto;margin:0;border-top:0}
+.b003.bslots .bdi .bdr{display:flex;flex-direction:column}.b003.bfill.bslots .bdi .bdr .blines:last-child{flex-grow:1}
+.b003.bslots .bempty{border-top:1.5px solid #000}
+.b003.bslots .bskip{visibility:hidden;border-top-color:transparent}
+.b003.bcont .bframe{border-color:transparent}.b003.bcont .bt{visibility:hidden}
+.b003.bcont .bskip+.bslot:not(.bskip){border-top-color:#000}
+/* вимірювання (поза екраном) */
+.bmeasbox{position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none}
+.b003.bmeasure .bframe{flex:0 0 auto}.b003.bmeasure .blines{flex-grow:0!important}.b003.bmeasure .bslot{flex:0 0 auto!important}.b003.bmeasure .bcols{flex:0 0 auto}
+/* перегляд: аркуш зменшується під ширину панелі */
+.paper .sheet.blankmode .b003.bA4{zoom:var(--bz,1)}
+.blankbar .bctl{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:8px;flex-basis:100%}
+.blankbar .bcl{font-size:12.5px;color:var(--muted)}
+.blankbar .bzoom{align-items:center}.blankbar .bzv{padding:0 8px;font:500 12.5px var(--f-num);color:var(--ink)}
+@media print{#print .b003.bA4:not(.bfill){height:auto;min-height:0}#print .b003.bA4{width:auto;height:276.5mm;padding:0;margin:0;zoom:1;font-size:calc(10pt * var(--bsc));line-height:1.32}#print .b003.bA4 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}}
+/* перемикачі в темній шапці (Стаціонар / Амбулаторно) — читається і невибраний пункт */
+body.shell .top .seg{background:var(--top2);border-color:transparent}
+body.shell .top .seg button{color:var(--top-ink)}
+body.shell .top .seg button+button{border-left-color:rgba(255,255,255,.14)}
+body.shell .top .seg button[aria-pressed="true"]{background:#2F7BB8;color:#fff}
+body.shell .top .seg button:not([aria-pressed="true"]):hover{background:rgba(255,255,255,.08)}
+/* обґрунтованість перебування: підбір підстав */
+.stayc{margin-top:6px}.stayh{font-size:12.5px;color:var(--muted);margin:6px 0 4px}
+.stayc .chip.sug:not([aria-pressed="true"]){border-color:var(--flag);background:var(--flag-soft)}
+/* «Документ з огляду» */
+.docbar .mkdoc .savemenu{left:0;right:auto}
+/* вписати на бланку */
+.paper .bdi.bcur [data-fld]{cursor:pointer}.paper .bdi.bcur [data-fld]:hover{outline:2px solid var(--accent);outline-offset:1px}
+.bqe{position:fixed;z-index:60;width:290px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:12px;display:flex;flex-direction:column;gap:8px;font:14px var(--f-ui)}
+.bqe .bqg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bqe label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}.bqe input{font-size:15px}
+.b003.bslots .bfree>.bdi{flex:1 1 auto;margin:0;border-top:0}.b003.bslots .bfree .bdr{display:flex;flex-direction:column}.b003.bslots .bfree .bfree-l{flex:1 1 auto}
+.b003.bslots .bfree2{padding:6px 14px}.b003.bslots .bfree2 .bfree-l{flex:1 1 auto}
+.b003.bmeasure .bfree .bfree-l{flex-grow:0}
+.ddt-row{align-items:center}.ddt-row .ddt{width:auto;flex:0 1 210px}.ddt-row .btn{padding:6px 10px}
+.bqe .bqg.one{grid-template-columns:1fr}.bqe:has(.bqg.one){width:420px}
+.paper .bepi [data-fld]{cursor:pointer}.paper .bepi [data-fld]:hover{outline:2px solid var(--accent);outline-offset:1px}
+/* аркуш: пункти клікабельні — відкривають поле у формі */
+.paper .b003 .brow,.paper .b003 .bt2,.paper .b003 .blines,.paper .b003 .bdl,.paper [data-sec]{cursor:pointer;border-radius:2px}
+.paper .b003 .brow:hover,.paper .b003 .bt2:hover,.paper .b003 .blines:hover,.paper .b003 .bdi.bcur .bdl:hover,.paper .pr-body [data-sec]:hover{background-color:rgba(47,123,184,.09);box-shadow:0 0 0 2px rgba(47,123,184,.18)}
