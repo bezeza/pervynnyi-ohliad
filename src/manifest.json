@@ -38,6 +38,7 @@
   "350-my-buttons.js",
   "360-paper.js",
   "366-blank-003.js",
+  "367-blank-fit.js",
   "370-forms-moz.js",
   "380-dx-hints.js",
   "390-clear.js",
@@ -74,6 +75,7 @@
   "595-ai.js",
   "596-ptline.js",
   "597-shell.js",
-  "598-diary-quick.js"
+  "598-diary-quick.js",
+  "599-links.js"
  ]
 }

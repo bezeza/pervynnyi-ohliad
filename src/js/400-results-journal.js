@@ -96,7 +96,7 @@ function diaryBlock(){
     h('h3', {}, 'Журнал записів',
       h('span', {class:'acts2'},
         h('button', {type:'button', class:'btn', onclick:likePrevious}, 'Як попередній'),
-        h('button', {type:'button', class:'btn primary', onclick:saveDiary}, 'Записати в журнал'))),
+        h('button', {type:'button', class:'btn primary', onclick:()=>saveDiary()}, 'Записати в журнал'))),
     h('div', {id:'dlist', class:'plist'})));
 }
 

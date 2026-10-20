@@ -73,7 +73,8 @@ function diaryFromExam(k){
 }
 /* щоденник ще не заповнювали: усі поля порожні */
 function diaryUntouched(){
-  return DSEC.every(id=>SECTIONS.find(x=>x.id===id).fields.every(f=>f.type === 'sel' ? f.el.value === '' : f.type === 'num' ? f.inputs.every(i=>!i.value.trim()) : f.type === 'text' || f.type === 'line' ? !f.el.value.trim() : true));
+  const empty = f => f.type === 'sel' ? f.el.value === '' : f.type === 'num' ? f.inputs.every(i=>!i.value.trim()) : f.type === 'text' || f.type === 'line' ? !f.el.value.trim() : true;
+  return DSEC.every(id=>SECTIONS.find(x=>x.id===id).fields.every(f=>(id === 'd_main' && f.id === 'den') || empty(f)));   // день перебування рахується сам
 }
 /* у первинному огляді вже є об’єктивні дані */
 function examFilled(){ return !!curKey || ['zah','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')); }

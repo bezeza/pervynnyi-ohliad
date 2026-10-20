@@ -164,6 +164,8 @@ function bExam(){
 /* ---------- 43. Щоденник ---------- */
 function bDv(f, key){ const fl = F(key); if (!fl) return ''; const id = key.replace('.', '_'); const v = f[id]; if (v === undefined || v === '') return '';
   return fl.type === 'sel' ? g(O(fl.opts[+v]).t) : g(String(v)); }
+/* поле бланка, яке можна вписати на місці (лише поточний запис) */
+function bFF(el, ids){ el.dataset.fld = ids; el.title = 'Натисніть, щоб вписати'; return el; }
 function bDiaryEntry(e){
   const f = e.f, v = k => bDv(f, k), n = id => (f[id] || '').trim();
   const what = n('d_main_zal') || n('d_main_skx').replace(/^на /, ''), how = f.d_main_sk && f.d_main_sk !== '0' ? v('d_main.sk').replace(/^Скарги /, '') : '';
@@ -173,10 +175,10 @@ function bDiaryEntry(e){
   const serce = v('d_obj.serce');
   const lik = [e.rx || '', n('d_lik_obs'), n('d_lik_kor') ? 'Корекція терапії: ' + n('d_lik_kor') : '', e.osn || n('d_lik_osn'), f.d_lik_plan ? v('d_lik.plan') : ''].filter(Boolean).map(end).join(' ');
   const dt = String(e.dt || '');
-  return h('div', {class:'bdi'},
+  return h('div', {class:'bdi' + (e.cur ? ' bcur' : '')},
     h('div', {class:'bdl'}, h('div', {}, 'Дата'), bFill(dt ? fmtD(dt.split('T')[0]) + (dt.split('T')[1] ? ' ' + dt.split('T')[1] : '') : '', true),
-      h('div', {}, 'T – ', bFill(n('d_obj_t_0'), true), ' °C'), h('div', {}, 'Ps – ', bFill(n('d_obj_chss_0'), true), ' /хв.'),
-      h('div', {}, 'АТ – ', bFill(n('d_obj_ad_0') && n('d_obj_ad_1') ? n('d_obj_ad_0') + '/' + n('d_obj_ad_1') : '', true), ' мм рт. ст.'), h('div', {}, 'ЧДР – ', bFill(n('d_obj_chd_0')), ' /хв.')),
+      h('div', {}, 'T – ', bFF(bFill(n('d_obj_t_0'), true), 'd_obj_t_0'), ' °C'), h('div', {}, 'Ps – ', bFF(bFill(n('d_obj_chss_0'), true), 'd_obj_chss_0'), ' /хв.'),
+      h('div', {}, 'АТ – ', bFF(bFill(n('d_obj_ad_0') && n('d_obj_ad_1') ? n('d_obj_ad_0') + '/' + n('d_obj_ad_1') : '', true), 'd_obj_ad_0 d_obj_ad_1'), ' мм рт. ст.'), h('div', {}, 'ЧДР – ', bFF(bFill(n('d_obj_chd_0')), 'd_obj_chd_0 d_obj_chd_1'), ' /хв.')),
     h('div', {class:'bdr'},
       bRow('Скарги на: ', bFill(bJoin(sk, son), true, true)),
       bRow('Об’єктивно: загальний стан ', bFill([v('d_main.stan'), dyn ? (/^з /.test(dyn) ? dyn : 'стан ' + dyn) : ''].filter(Boolean).join(', '), true), ', свідомість не порушена.'),
@@ -196,7 +198,7 @@ function bDiaryEntry(e){
 function bDiary(){
   const cur = diaryFields(), dt = mv('dt') ? mv('dt') : '';
   const entries = (BLP.all ? DIARIES.map(d=>({dt:d.dt, f:(d.data && d.data.f) || {}})) : []);
-  const curE = {dt, f:cur.f, rx:(()=>{ const r = rxPart(); return r ? r.body : ''; })(), osn:g(val(F('d_lik.osn'), true) || '')};
+  const curE = {cur:true, dt, f:cur.f, rx:(()=>{ const r = rxPart(); return r ? r.body : ''; })(), osn:g(val(F('d_lik.osn'), true) || '')};
   if (!entries.length || entries[entries.length - 1].dt !== dt) entries.push(curE); else entries[entries.length - 1] = curE;
   const pages = [];
   for (let i = 0; i < entries.length; i += 2) pages.push(bPage('bdiary', h('div', {class:'bt'}, '43. ЩОДЕННИК'), ...entries.slice(i, i + 2).map(bDiaryEntry)));
@@ -211,7 +213,7 @@ function bEpi(){
   const T = [[46,'Загальний аналіз крові',/^(ЗАК|Загальний аналіз крові)/i],[47,'Загальний аналіз сечі',/^(ЗАС|Загальний аналіз сечі)/i],[48,'Печінкові проби',/^(Біохімічн|Печінков)/i],[49,'Копрограма',/^Копрограм/i],
     [50,'Аналіз крові на глюкозу',/^(Глюкоза|Аналіз крові на глюкозу)/i],[51,'Аналіз крові на амілазу',/^Амілаз/i],[52,'Аналіз сечі на глюкозу (з добової кількості)',/^Аналіз сечі на глюкозу/i],[53,'Аналіз сечі на діастазу',/діастаз/i]];
   const used = new Set();
-  const rows = T.map(([n,t,re])=>{ const l = obs.filter(x=>re.test(x)); l.forEach(x=>used.add(x)); return bRow(`${n}. ${t} `, bFill(l.map(x=>x.replace(re, '').replace(/^[\s:(]*/, m=>m.includes('(') ? '(' : '')).join(' ').trim(), false, true)); });
+  const rows = T.map(([n,t,re])=>{ const l = obs.filter(x=>re.test(x)); l.forEach(x=>used.add(x)); return bRow(`${n}. ${t} `, bFF(bFill(l.map(x=>x.replace(re, '').replace(/^[\s:(]*/, m=>m.includes('(') ? '(' : '')).join(' ').trim(), false, true), 'e_obs_z' + n)); });
   const other = obs.filter(x=>!used.has(x)).join('\n');
   const pages = [];
   if (BLP.e45) pages.push(bPage('bepi',

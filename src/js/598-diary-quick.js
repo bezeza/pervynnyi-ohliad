@@ -117,7 +117,7 @@ function drawDSrc(){
       const miss = [...pr.need].map(id=>F('d_obj.' + id)).filter(f=>f && !f.dHide && !(f.type === 'num' ? f.inputs.some(i=>i.value.trim()) : f.el.value !== '')).map(f=>f.label.split(' (')[0].toLowerCase());
       if (miss.length) L.unshift('«' + pr.name + '»: щодня внесіть — ' + miss.join(', ') + '.');
     }
-    return L;
+    return L.filter(x=>x && (typeof x !== 'string' || x.trim()));
   };
   const up0 = update; update = function(){ try{ applyDProfile(); }catch(e){} return up0.apply(this, arguments); };
   /* перший щоденник без огляду й без хвороби — одразу питаємо хворобу */

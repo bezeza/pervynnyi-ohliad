@@ -152,12 +152,20 @@
 { id:'k_main', docs:['kons'], title:'Консультація', short:'Консультація', head:'', fields:[
   {id:'mety', type:'sel', label:'Мета консультації', tpl:'Мета консультації: {v}', opts:['уточнення діагнозу','корекція лікування','визначення тактики ведення','вирішення питання про госпіталізацію','експертиза працездатності']},
   {id:'napr', type:'line', label:'Ким направлений(-а)', tpl:'[Направлений|Направлена] {v}', placeholder:'сімейним лікарем …'},
-  {id:'sk', type:'auto', label:'Скарги (з вкладки «Скарги» первинного огляду)', tpl:'Скарги {v}',
-    fn:()=>{ const a = val(F('skarhy.c'), true), b = val(F('skarhy.cx'), true); return [a ? 'на ' + a : '', b].filter(Boolean).join(', '); }},
-  {id:'anam', type:'text', label:'Коротко анамнез', tpl:'{v}'},
-  {id:'obj', type:'text', rows:6, wide:true, objFrom:true, label:'Об’єктивно (кнопка підставляє дані з первинного огляду)', tpl:'Об’єктивно: {v}'}
+  {id:'sk', type:'text', rows:2, label:'Скарги (якщо порожньо — з первинного огляду; можна вписати тут)', tpl:'Скарги {v}',
+    fallback:()=>{ const a = val(F('skarhy.c'), true), b = val(F('skarhy.cx'), true); return [a ? 'на ' + a : '', b].filter(Boolean).join(', '); }},
+  {id:'anam', type:'text', rows:2, label:'Коротко анамнез (якщо порожньо — анамнез хвороби з первинного огляду)', tpl:'{v}', fallback:()=>typeof bSec === 'function' ? bSec('morbi') : ''},
+  {id:'obj', type:'text', rows:6, wide:true, objFrom:true, label:'Об’єктивно (якщо порожньо — з первинного огляду; кнопка підставляє для правки)', tpl:'Об’єктивно: {v}', fallback:()=>objFromExam()}
 ]},
 { id:'e_obs', docs:['epi','kons','etap','per','napr','gosp','konc'], title:'Результати обстежень', short:'Обстеження', head:'Результати обстежень:', headBr:true, fields:[
+  {id:'z46', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'46. Загальний аналіз крові', placeholder:'дата: Hb … г/л, Ер … ×10¹²/л, Л … ×10⁹/л, ШОЕ … мм/год', tpl:'Загальний аналіз крові: {v}'},
+  {id:'z47', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'47. Загальний аналіз сечі', placeholder:'дата: питома вага …, білок …, Л … в п/з', tpl:'Загальний аналіз сечі: {v}'},
+  {id:'z48', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'48. Печінкові проби', placeholder:'дата: білірубін …, АЛТ …, АСТ …', tpl:'Печінкові проби: {v}'},
+  {id:'z49', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'49. Копрограма', placeholder:'дата: …', tpl:'Копрограма: {v}'},
+  {id:'z50', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'50. Аналіз крові на глюкозу', placeholder:'дата: … ммоль/л', tpl:'Аналіз крові на глюкозу: {v}'},
+  {id:'z51', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'51. Аналіз крові на амілазу', placeholder:'дата: … Од/л', tpl:'Аналіз крові на амілазу: {v}'},
+  {id:'z52', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'52. Аналіз сечі на глюкозу (з добової кількості)', placeholder:'дата: …', tpl:'Аналіз сечі на глюкозу (з добової кількості): {v}'},
+  {id:'z53', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'53. Аналіз сечі на діастазу', placeholder:'дата: … Од/л', tpl:'Аналіз сечі на діастазу: {v}'},
   {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')}
 ]},
 { id:'e_lik', docs:['epi'], title:'Лікування і стан при виписці', short:'Лікування', head:'', fields:[
