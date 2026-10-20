@@ -1081,3 +1081,37 @@ summary .vdot{color:var(--ok);font-weight:700}
 .cusfoot{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}.cusfoot h3{margin:0}.cusfoot p{margin:0}
 .cusentry{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
 @media (max-width:899px){.fsbanner{margin:8px 12px 0;padding:8px 10px;font-size:13px;gap:6px 8px}.fsbanner .fsb-t{flex:1 1 100%}.fsbanner .btn{min-height:38px;padding:4px 12px}}
+
+/* 0.9.3.21 — бланк: дата й час госпіталізації окремими групами */
+.b003 .bdot{display:inline-block;width:.45em;text-align:center;vertical-align:bottom}
+.b003 .bsep{margin-left:.35em}
+.b003 .bnw{white-space:nowrap;display:inline-flex;align-items:center}
+
+/* 0.9.3.21 — місце проживання полями */
+.addrbox{grid-column:1/-1;display:grid;gap:6px;margin:4px 0 2px}
+.addrg{display:grid;grid-template-columns:minmax(120px,.7fr) 1.3fr 1.3fr;gap:8px 12px}
+.addrg .f:nth-child(n+4){grid-column:auto}
+.addrg #meta_addr_st{min-width:0}
+@media (max-width:640px){.addrg{grid-template-columns:1fr 1fr}.addrg .f:nth-child(2){grid-column:2}}
+.b003 .bf.bpib{font-weight:700;font-size:1.3em;letter-spacing:.01em;color:#0b2a6b}
+@media print{.b003 .bf.bpib{color:#000}}
+.b003 .bsel{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;font-weight:600}
+.rx-dosef .units{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rx-dosef .units .chip.s{padding:2px 8px;min-height:28px;font-size:13px}
+.rx-dosef{grid-column:span 2}
+@media (max-width:640px){.rx-dosef{grid-column:1/-1}}
+.rx-dosew{display:flex;gap:4px;align-items:stretch}.rx-dosew .rx-dose{flex:1 1 auto;min-width:0}.rx-dosew .rx-unit{flex:0 0 auto;width:auto;padding-left:6px;padding-right:22px}
+.rx-dosew select.rx-unit{width:4.6em!important;min-width:4.6em;flex:0 0 4.6em!important;font-size:14px}.rx-dosew .rx-dose{min-width:3.5em}
+/* рядок призначення у вузькій колонці: препарат — на всю ширину, доза з одиницею — ширше */
+.rxbody{container-type:inline-size}
+@container (max-width:720px){
+  .rxbody .rx-g{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rxbody .rx-g .rx-drug-f{grid-column:1/-1}
+  .rxbody .rx-g .rx-dosef{grid-column:span 2}
+  .rxbody .rx-g .rx-w{grid-column:span 2}
+  .rxbody .rx-g .rx-w3,.rxbody .rx-g .rx-w4{grid-column:1/-1}
+}
+@container (max-width:420px){
+  .rxbody .rx-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rxbody .rx-g .rx-dosef{grid-column:1/-1}
+  .rxbody .rx-g .rx-w{grid-column:span 1}
+}

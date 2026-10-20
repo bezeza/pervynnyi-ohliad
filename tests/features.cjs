@@ -471,6 +471,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Свої аналізи не губляться при збереженні шаблонів', w.eval("(()=>{ CUSTOM.labs=[{t:'Тест-аналіз',g:'other',p:[{n:'x'}]}]; saveCustom(); const c=JSON.parse(localStorage.getItem('po.custom')); CUSTOM.labs=[]; saveCustom(); return !!(c.labs&&c.labs.length); })()"));
    ok('Телефон: кнопка документа в навігації розділів', w.eval("(()=>{ renderTabNav(); const b=document.querySelector('#tabnav .tn-doc'); return !!b && /Огляд/.test(b.textContent); })()"));
    ok('Налаштування: усі блоки згорнуті, «Про програму» в кінці', w.eval("(()=>{ const k=[...SETTINGS_EL.children]; return !k.some(x=>x.matches('h3.sub')) && k[k.length-1].matches('details.about'); })()")); }
+ { // 0.9.3.21: бланк — дата/час, ПІБ; адреса полями
+   const sv=(id,v)=>{ const e=$(id); e.value=v; ev(e,e.tagName==='SELECT'?'change':'input'); };
+   sv('meta_addr_np_t','с.'); sv('meta_addr_np','Тестове'); sv('meta_addr_hr','Тестова сільська'); sv('meta_addr_ra','Тестовий'); sv('meta_addr_ob','Тестова'); sv('meta_addr_st','вул. Садова, 1'); sv('meta_addr_zip','37700');
+   ok('Адреса складається з полів', $('meta_addr').value==='с. Тестове, Тестова сільська громада, Тестовий район, Тестова область, вул. Садова, 1', $('meta_addr').value);
+   const t=w.eval("(()=>{ const b=b003Title ? b003Title() : null; return b ? b.textContent : ''; })()".replace('b003Title ? b003Title() : null', "null"));
+   w.eval("clearAll()");
+   ok('Новий пацієнт: адреса й місце роботи очищені', !$('meta_addr').value && !$('meta_addr_np').value && !$('meta_work').value); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

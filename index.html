@@ -1099,6 +1099,40 @@ summary .vdot{color:var(--ok);font-weight:700}
 .cusfoot{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}.cusfoot h3{margin:0}.cusfoot p{margin:0}
 .cusentry{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
 @media (max-width:899px){.fsbanner{margin:8px 12px 0;padding:8px 10px;font-size:13px;gap:6px 8px}.fsbanner .fsb-t{flex:1 1 100%}.fsbanner .btn{min-height:38px;padding:4px 12px}}
+
+/* 0.9.3.21 — бланк: дата й час госпіталізації окремими групами */
+.b003 .bdot{display:inline-block;width:.45em;text-align:center;vertical-align:bottom}
+.b003 .bsep{margin-left:.35em}
+.b003 .bnw{white-space:nowrap;display:inline-flex;align-items:center}
+
+/* 0.9.3.21 — місце проживання полями */
+.addrbox{grid-column:1/-1;display:grid;gap:6px;margin:4px 0 2px}
+.addrg{display:grid;grid-template-columns:minmax(120px,.7fr) 1.3fr 1.3fr;gap:8px 12px}
+.addrg .f:nth-child(n+4){grid-column:auto}
+.addrg #meta_addr_st{min-width:0}
+@media (max-width:640px){.addrg{grid-template-columns:1fr 1fr}.addrg .f:nth-child(2){grid-column:2}}
+.b003 .bf.bpib{font-weight:700;font-size:1.3em;letter-spacing:.01em;color:#0b2a6b}
+@media print{.b003 .bf.bpib{color:#000}}
+.b003 .bsel{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;font-weight:600}
+.rx-dosef .units{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rx-dosef .units .chip.s{padding:2px 8px;min-height:28px;font-size:13px}
+.rx-dosef{grid-column:span 2}
+@media (max-width:640px){.rx-dosef{grid-column:1/-1}}
+.rx-dosew{display:flex;gap:4px;align-items:stretch}.rx-dosew .rx-dose{flex:1 1 auto;min-width:0}.rx-dosew .rx-unit{flex:0 0 auto;width:auto;padding-left:6px;padding-right:22px}
+.rx-dosew select.rx-unit{width:4.6em!important;min-width:4.6em;flex:0 0 4.6em!important;font-size:14px}.rx-dosew .rx-dose{min-width:3.5em}
+/* рядок призначення у вузькій колонці: препарат — на всю ширину, доза з одиницею — ширше */
+.rxbody{container-type:inline-size}
+@container (max-width:720px){
+  .rxbody .rx-g{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rxbody .rx-g .rx-drug-f{grid-column:1/-1}
+  .rxbody .rx-g .rx-dosef{grid-column:span 2}
+  .rxbody .rx-g .rx-w{grid-column:span 2}
+  .rxbody .rx-g .rx-w3,.rxbody .rx-g .rx-w4{grid-column:1/-1}
+}
+@container (max-width:420px){
+  .rxbody .rx-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rxbody .rx-g .rx-dosef{grid-column:1/-1}
+  .rxbody .rx-g .rx-w{grid-column:span 1}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1109,7 +1143,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.20 від 20.10.2026">v0.9.3.20 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.21 від 20.10.2026">v0.9.3.21 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3014,8 +3048,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.20', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.21', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.21', '20.10.2026', 'бланк 003/о: дата госпіталізації клітинками ДД.ММ.РР і окремо «час __ год __ хв» (раніше зливались); так само дата народження, дата виписки й дата заповнення; стать — окремим рядком, обрана підкреслена (так само «місто – 1; село – 2» у п. 7); ПІБ хворого на титульному аркуші — більшим жирним шрифтом. Місце проживання — полями: тип (місто, селище, село), населений пункт, громада, район, область, вулиця, індекс; адреса одним рядком складається сама (п. 7 і 7.1 бланка, виписка 027/о), підказки — з попередніх пацієнтів. Лист призначень: одиниця дози — список одразу поруч із дозою (мг, г, мкг, мл, ОД, МО, %, крап., таб., капс., інгал., впорск.), рядок призначення у вузькій колонці — ширші поля. Лист призначень: одиниця дози — список одразу поруч із дозою, рядок призначення у вузькій колонці — ширші поля. Виправлено: «Новий пацієнт» не очищав адресу й місце роботи попереднього'],
   ['0.9.3.20', '20.10.2026', 'телефон — менше на екрані: без темної шапки й рядка «Норма · Швидко · ↶ · Документ з огляду» — замість них кнопка з назвою документа поруч із розділами («Огляд ⋯»), що відкриває «Документ і дії»; смужка пацієнта ховається при гортанні вниз; «Заповнено автоматично» і текст розділу внизу — в один-два рядки; у щоденнику нижня панель «☰ · 🧪 · 📓 Записати · Копіювати». Папка даних — як у Skiagrama: смужка «Папка даних не підключена…» з «Підключити папку» / «Пізніше», після перезапуску — «Дозволити». У папці — зрозумілі файли: «Мої шаблони.json», «Мої кнопки і фрази.json», «Налаштування.json», «Перевірка вмісту.json». «⚙ Налаштувати під себе» — усе, що можна змінити, на одній сторінці; «Мої налаштування» у файл і з файлу (без пацієнтів). Перевірка клінічного вмісту: шаблони хвороб, схеми лікування, критерії № 1044, норми аналізів, препарати й шкали — «чернетка» / «перевірено (хто, коли)» / «змінено після перевірки»; позначки й зауваження, документ для звірки з підписами, обмін позначками файлом; статус шаблону видно в картці шаблону. Виправлено: свої аналізи (журнал обстежень) зникали після перезапуску. Блоки налаштувань — усі згорнуті й по порядку'],
   ['0.9.3.19', '20.10.2026', 'у «Шкалах» — SCORE2 / SCORE2-OP (ESC 2021, 10-річний ризик серцево-судинних подій, регіон дуже високого ризику — Україна; 40–69 і 70–89 років): вік і САТ — з огляду, загальний холестерин і ЛПВЩ — з журналу обстежень (ліпідограма), куріння — з анамнезу; при ЦД, атеросклеротичному ССЗ чи ХХН шкала не рахує й пояснює чому. PESI / sPESI (ТЕЛА, ESC 2019): клас I–V з 30-денною летальністю, sPESI і ризик ранньої смерті (низький, проміжний-низький, проміжний-високий, високий) з урахуванням шоку, дисфункції ПШ і тропоніну. Обидві — «Додати в текст». У дані пацієнта шкал додано загальний холестерин і ХС ЛПВЩ'],
   ['0.9.3.18', '20.10.2026', 'виправлено: у 0.9.3.17 після перезавантаження сторінки список пацієнтів виглядав порожнім (без PIN) — дані лишались у браузері й тепер знову відкриваються; останній пацієнт відкривається, як раніше. Додано автоматичну перевірку «зберегти → перезапустити → пацієнт на місці» (без PIN і з PIN). За наскрізним аудитом сценарію лікаря (ПК і телефон): дата й час первинного огляду (та інших документів) більше не замінюються на «зараз» після перемикання документів чи повторного відкриття пацієнта — кожен документ пам’ятає свою дату; «📓 Записати в журнал» щоденника — на панелі тексту й у нижній панелі телефона, а не лише у вкладці «Запис»; «Зібрати виписку» бере дату надходження з дати первинного огляду; перевірка попереджає, якщо дата виписки раніше за надходження або щоденник поза періодом; список «Ще не заповнено» — пунктами без зайвих «;»; час збереження в смужці пацієнта не налазить на № карти; після відкриття пацієнта не лишається вкладка іншого документа. Файл попередньої версії — 0.9.3.16'],
@@ -5428,7 +5463,10 @@ const bJoin = (...a) => a.flat().map(x=>String(x || '').trim().replace(/\.$/, ''
 const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
-function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k) : k)); }
+function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
+/* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
+function bDate(iso, req){ const d = bD6(iso); return h('span', {class:'bnw'}, bCells(d.slice(0,2), 2, req), h('span', {class:'bdot'}, '.'), bCells(d.slice(2,4), 2, req), h('span', {class:'bdot'}, '.'), bCells(d.slice(4,6), 2, req)); }
+function bTime(tm){ tm = tm || ''; return h('span', {class:'bnw'}, h('span', {class:'bl bsep'}, 'час\u00a0'), bCells(tm.slice(0,2), 2), h('span', {class:'bl'}, '\u00a0год\u00a0'), bCells(tm.slice(3,5), 2), h('span', {class:'bl'}, '\u00a0хв')); }
 function bLines(v, n, req){ v = String(v || '').trim(); return h('div', {class:'blines' + (!v && req && BGAP ? ' bgap' : ''), style:`min-height:${(n || 1) * 1.55}em`}, v); }
 function bOpts(label, tpl, on, extra, req){
   const row = h('div', {class:'brow'}); if (label) row.append(h('span', {class:'bl'}, label + ' '));
@@ -5463,11 +5501,12 @@ function bTitle(){
   const napr = BV('morbi.hospd') || (BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : '');
   return bPage('btitle', bHead(),
     h('div', {class:'bt'}, 'МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО № ', bFill(mv('card'), true)),
-    bRow('1. Дата госпіталізації ', bCells(bD6(d1), 6, true), ' ', bCells(tm.slice(0,2), 2), ' ', bCells(tm.slice(3,5), 2), '  2. Стать: чоловіча – 1; жіноча – 2 ', bBox(sex === 'm' ? 1 : sex === 'f' ? 2 : '', true)),
-    bRow('3. Прізвище, ім’я, по батькові хворого ', bFill(mv('pib'), true, true)),
-    bRow('4. Дата народження ', bCells(bD6(mv('dob')), 6, true), '  5. Вік ', bFill(mv('age') ? mv('age') + ' р.' : '', true)),
+    bRow('1. Дата госпіталізації ', bDate(d1, true), bTime(tm)),
+    bRow('2. Стать: ', h('span', {class:'bl' + (sex === 'm' ? ' bsel' : '')}, 'чоловіча – 1'), '; ', h('span', {class:'bl' + (sex === 'f' ? ' bsel' : '')}, 'жіноча – 2'), ' ', bBox(sex === 'm' ? 1 : sex === 'f' ? 2 : '', true)),
+    bRow('3. Прізвище, ім’я, по батькові хворого ', (()=>{ const f = bFill(mv('pib'), true, true); f.classList.add('bpib'); return f; })()),
+    bRow('4. Дата народження ', bDate(mv('dob'), true), '  5. Вік ', bFill(mv('age') ? mv('age') + ' р.' : '', true)),
     bRow('6. Документ, що посвідчує особу ', bFill(''), '  6.1. Номер документа ', bFill('')), bRow('6.2. Громадянство ', bFill(''), bSmall(' (код країни)')),
-    bRow('7. Постійне місце проживання/перебування: місто – 1; село – 2 ', bBox(''), ' ', bFill(mv('addr'), false, true)), bRow('7.1. Поштовий індекс ', bFill('')),
+    bRow('7. Постійне місце проживання/перебування: ', h('span', {class:'bl' + (mv('addr_np_t') === 'м.' ? ' bsel' : '')}, 'місто – 1'), '; ', h('span', {class:'bl' + (mv('addr_np_t') === 'с.' ? ' bsel' : '')}, 'село – 2'), ' ', bBox(({'м.':1, 'с.':2})[mv('addr_np_t')] || ''), ' ', bFill(mv('addr'), false, true)), bRow('7.1. Поштовий індекс ', bFill(mv('addr_zip'))),
     bRow('8. Місце роботи, посада ', bFill(mv('work'), false, true)),
     bRow('9. Ким направлений хворий ', bFill(napr, false, true), ' ', bCells('', 8)),
     bRow('10. Діагноз при госпіталізації ', bFill(BV('dx.osn'), true, true), ' ', bCells(BV('dx.mkh').split(/[,;\s]+/)[0], 6, true)),
@@ -5477,7 +5516,7 @@ function bTitle(){
     bRow('18. Алергічні реакції, гіперчутливість чи непереносимість лікарського засобу ', bFill(alg, true, true)),
     bRow('19. Госпіталізація з приводу цього захворювання в цьому році: вперше – 1; повторно – 2 ', bBox('')),
     bRow('19.1. Повторна госпіталізація з приводу цього захворювання до 30 днів: так – 1; ні – 2 ', bBox('')),
-    bRow('20. Дата виписки/смерті ', bCells(bD6(d2), 6), ' ', bCells('', 2), '  21. Проведено ліжко-днів ', bFill(days === '' ? '' : String(days))));
+    bRow('20. Дата виписки/смерті ', bDate(d2), bTime(''), '  21. Проведено ліжко-днів ', bFill(days === '' ? '' : String(days))));
 }
 
 /* ---------- первинний огляд лікаря (п. 33–40) ---------- */
@@ -5648,7 +5687,7 @@ function bEpi(){
       bLines('', 2),
       bRow('57.1. П.І.Б. лікаря ', bFill(mv('doc'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')),
       bRow('57.2. П.І.Б. завідувача відділення ', bFill(mv('zav'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')),
-      bRow('Дата заповнення ', bCells(bD6(P.d2.value || todayISO()), 6, true), bSmall(' (число, місяць, рік)'))));
+      bRow('Дата заповнення ', bDate(P.d2.value || todayISO(), true), bSmall(' (число, місяць, рік)'))));
   }
   return pages;
 }
@@ -7131,7 +7170,10 @@ function renderRx(){
     const chg = isDrug && !it.stop ? h('button', {type:'button', class:'btn', title:'Стара доза закривається сьогоднішньою датою, нова починається з сьогодні', onclick:()=>{ const n = rxChangeDose(it); renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${n.id}"] .rx-dose`); if (c){ c.focus(); c.select(); } toast('Нова доза — з ' + fmtS(today) + '. Вкажіть її', 2500); }}, 'Змінити дозу з ' + fmtS(today)) : '';
     const d = drugInfo(it.drug), warn = renalMsg(it), L = libInfo(it.drug);
     // одиниці дози: кнопка замінює одиницю після числа
-    const units = isDrug ? h('div', {class:'units'}, ...['мг','г','мл','%','ОД','мкг','крап.'].map(u=>h('button', {type:'button', class:'chip s', onclick:()=>{ const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }}, u))) : '';
+    const UNITS = ['мг','г','мкг','мл','ОД','МО','%','крап.','таб.','капс.','інгал.','впорск.'];
+    const curU = (String(it.dose || '').match(/^\s*[\d.,/–-]+\s*(.+)$/) || [])[1] || '';
+    const units = isDrug ? h('select', {class:'rx-unit', 'aria-label':'Одиниця дози', title:'Одиниця дози', onchange:e=>{ const u = e.target.value; if (!u) return; const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }},
+      h('option', {value:''}, UNITS.includes(curU) ? curU : 'од.'), ...UNITS.filter(u=>u !== curU).map(u=>h('option', {value:u}, u))) : '';
     const srcSel = h('select', {onchange:set('src', false)}, ...Object.entries(SRC_L).map(([k,l])=>h('option', {value:k}, l))); srcSel.value = it.src || '';
     const kindSel = h('select', {onchange:e=>{ it.kind = e.target.value; renderRx(); update(); }}, ...Object.entries(RXKINDS).map(([k,l])=>h('option', {value:k}, l))); kindSel.value = kind;
     const end = rxEnd(it), status = it.stop ? 'відмінено ' + fmtS(it.stop) : end ? 'до ' + fmtS(end) : '';
@@ -7143,7 +7185,7 @@ function renderRx(){
     const body = h('div', {class:'rxbody', hidden:it._open ? null : ''},
       h('div', {class:'rx-g'},
         h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, isDrug ? 'Препарат' : RXKINDS[kind]), drug),
-        simple ? '' : h('div', {class:'f'}, h('label', {}, 'Доза'), h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)})),
+        simple ? '' : h('div', {class:'f rx-dosef'}, h('label', {}, 'Доза'), h('div', {class:'rx-dosew'}, h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)}), units || '')),   /* одиниця — поруч із дозою */
         simple || !isDrug ? '' : inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
         simple ? '' : inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
         simple ? '' : inp('hours', {placeholder:'напр., 8:00, 20:00'}, 'Години (необов’язково)'),
@@ -7155,7 +7197,6 @@ function renderRx(){
         isDrug ? h('div', {class:'f'}, h('label', {}, 'Звідки'), srcSel) : '',
         h('div', {class:'f'}, h('label', {}, 'Тип'), kindSel),
         h('div', {class:'f rx-w4'}, h('label', {}, 'Примітка'), h('input', {value:it.note || '', oninput:set('note', false), placeholder:'напр., після їди'}))),
-      units,
       warn ? h('p', {class:'rx-warn'}, '⚠ ' + warn) : '',
       d && d.ab ? h('div', {class:'rx-ab'},
         h('span', {class:'badge ' + (d.ab === 'A' ? 'ok' : d.ab === 'W' ? 'warn' : 'bad')}, 'AWaRe: ' + AWARE[d.ab]),
@@ -13275,6 +13316,52 @@ function setRegroup(){
   const about = SETTINGS_EL.querySelector(':scope > details.about'); if (about) SETTINGS_EL.append(about);
 }
 setRegroup();
+/* ===== Місце проживання полями (0.9.3.21): тип населеного пункту, назва, громада, район, область, вулиця, індекс.
+   З них складається адреса одним рядком (meta_addr) — для бланка 003/о (п. 7, 7.1), виписки 027/о й форм МОЗ.
+   Підказки (громада, район, область, назви) — з попередніх пацієнтів цього браузера. ===== */
+const ADDR = [['np_t','Тип'],['np','Населений пункт'],['hr','Громада'],['ra','Район'],['ob','Область'],['st','Вулиця, будинок, квартира'],['zip','Поштовий індекс']];
+const aV = k => { const e = document.getElementById('meta_addr_' + k); return e ? e.value.trim() : ''; };
+function addrCompose(){
+  const t = aV('np_t'), np = aV('np'), hr = aV('hr'), ra = aV('ra'), ob = aV('ob'), st = aV('st');
+  const parts = [
+    np ? (t ? t + ' ' : '') + np : '',
+    hr ? (/громад/i.test(hr) ? hr : hr + ' громада') : '',
+    ra ? (/район|р-н/i.test(ra) ? ra : ra + ' район') : '',
+    ob ? (/обл/i.test(ob) ? ob : ob + ' область') : '',
+    st];
+  return parts.filter(Boolean).join(', ');
+}
+{ const a = document.getElementById('meta_addr'), wrap = a && (a.closest('.f') || a.parentElement);
+  if (a && wrap){
+    const dl = k => h('datalist', {id:'dl_addr_' + k});
+    const mk = (k, label, attrs) => { const id = 'meta_addr_' + k, e = h('input', Object.assign({id, autocomplete:'off', list:'dl_addr_' + k, oninput:()=>{ a.value = addrCompose(); a.dispatchEvent(new Event('input', {bubbles:true})); }}, attrs || {}));
+      return h('div', {class:'f'}, h('label', {for:id}, label), e, dl(k)); };
+    const tsel = h('select', {id:'meta_addr_np_t', onchange:()=>{ a.value = addrCompose(); a.dispatchEvent(new Event('input', {bubbles:true})); }},
+      h('option', {value:''}, '—'), h('option', {value:'м.'}, 'місто'), h('option', {value:'смт'}, 'селище (смт)'), h('option', {value:'с-ще'}, 'селище'), h('option', {value:'с.'}, 'село'));
+    const box = h('div', {class:'addrbox wide'},
+      h('div', {class:'lbl'}, 'Місце проживання'),
+      h('div', {class:'addrg'},
+        h('div', {class:'f'}, h('label', {for:'meta_addr_np_t'}, 'Тип'), tsel),
+        mk('np', 'Населений пункт', {placeholder:'назва'}),
+        mk('hr', 'Громада', {placeholder:'напр., ___ селищна'}),
+        mk('ra', 'Район', {placeholder:'напр., ___ район'}),
+        mk('ob', 'Область', {placeholder:'напр., ___ область'}),
+        mk('st', 'Вулиця, будинок, квартира', {placeholder:'вул. ___, буд. __, кв. __'}),
+        mk('zip', 'Індекс', {inputmode:'numeric', maxlength:'5', placeholder:'5 цифр'})));
+    wrap.before(box);
+    const lb = wrap.querySelector('label'); if (lb) lb.textContent = 'Адреса одним рядком (складається з полів вище; можна виправити)';
+    /* підказки з попередніх пацієнтів */
+    const fillDl = () => { const st = loadStore(), seen = {}; ADDR.forEach(([k])=>seen[k] = new Set());
+      Object.values(st).forEach(p=>{ const f = p.snap && p.snap.f || {}; ['np','hr','ra','ob'].forEach(k=>{ const v = String(f['meta_addr_' + k] || '').trim(); if (v) seen[k].add(v); }); });
+      ['np','hr','ra','ob'].forEach(k=>{ const d = document.getElementById('dl_addr_' + k); if (d){ d.innerHTML = ''; [...seen[k]].sort().slice(0, 60).forEach(v=>d.append(h('option', {value:v}))); } }); };
+    box.addEventListener('focusin', fillDl);
+  } }
+/* новий пацієнт — адреса й місце роботи очищуються (раніше лишались від попереднього) */
+{ const ca = clearAll; clearAll = function(forRestore){ const r = ca.apply(this, arguments);
+    if (!forRestore) ['addr','work', ...ADDR.map(x=>'addr_' + x[0])].forEach(k=>{ const e = document.getElementById('meta_' + k); if (e) e.value = ''; });
+    return r; }; }
+/* «Для ШІ»: адресу прибирати повністю */
+ADDR.forEach(([k])=>{ if (!AI_KEEP.includes('addr_' + k)) AI_KEEP.push('addr_' + k); });
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

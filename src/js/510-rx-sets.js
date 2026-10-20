@@ -174,7 +174,10 @@ function renderRx(){
     const chg = isDrug && !it.stop ? h('button', {type:'button', class:'btn', title:'Стара доза закривається сьогоднішньою датою, нова починається з сьогодні', onclick:()=>{ const n = rxChangeDose(it); renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${n.id}"] .rx-dose`); if (c){ c.focus(); c.select(); } toast('Нова доза — з ' + fmtS(today) + '. Вкажіть її', 2500); }}, 'Змінити дозу з ' + fmtS(today)) : '';
     const d = drugInfo(it.drug), warn = renalMsg(it), L = libInfo(it.drug);
     // одиниці дози: кнопка замінює одиницю після числа
-    const units = isDrug ? h('div', {class:'units'}, ...['мг','г','мл','%','ОД','мкг','крап.'].map(u=>h('button', {type:'button', class:'chip s', onclick:()=>{ const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }}, u))) : '';
+    const UNITS = ['мг','г','мкг','мл','ОД','МО','%','крап.','таб.','капс.','інгал.','впорск.'];
+    const curU = (String(it.dose || '').match(/^\s*[\d.,/–-]+\s*(.+)$/) || [])[1] || '';
+    const units = isDrug ? h('select', {class:'rx-unit', 'aria-label':'Одиниця дози', title:'Одиниця дози', onchange:e=>{ const u = e.target.value; if (!u) return; const m = String(it.dose || '').match(/^\s*([\d.,/–-]+)/); it.dose = (m ? m[1] : (it.dose || '').trim()) + ' ' + u; renderRx(); update(); const c = document.querySelector(`#rxList .rx[data-id="${it.id}"] .rx-dose`); if (c) c.focus(); }},
+      h('option', {value:''}, UNITS.includes(curU) ? curU : 'од.'), ...UNITS.filter(u=>u !== curU).map(u=>h('option', {value:u}, u))) : '';
     const srcSel = h('select', {onchange:set('src', false)}, ...Object.entries(SRC_L).map(([k,l])=>h('option', {value:k}, l))); srcSel.value = it.src || '';
     const kindSel = h('select', {onchange:e=>{ it.kind = e.target.value; renderRx(); update(); }}, ...Object.entries(RXKINDS).map(([k,l])=>h('option', {value:k}, l))); kindSel.value = kind;
     const end = rxEnd(it), status = it.stop ? 'відмінено ' + fmtS(it.stop) : end ? 'до ' + fmtS(end) : '';
@@ -186,7 +189,7 @@ function renderRx(){
     const body = h('div', {class:'rxbody', hidden:it._open ? null : ''},
       h('div', {class:'rx-g'},
         h('div', {class:'f rx-w rx-drug-f'}, h('label', {}, isDrug ? 'Препарат' : RXKINDS[kind]), drug),
-        simple ? '' : h('div', {class:'f'}, h('label', {}, 'Доза'), h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)})),
+        simple ? '' : h('div', {class:'f rx-dosef'}, h('label', {}, 'Доза'), h('div', {class:'rx-dosew'}, h('input', {value:it.dose || '', class:'rx-dose', list:'dl_d_' + it.id, placeholder:isDrug ? 'доза' : '—', oninput:set('dose', false)}), units || '')),   /* одиниця — поруч із дозою */
         simple || !isDrug ? '' : inp('route', {list:L && L.routes.length ? 'dl_r_' + it.id : 'routeList', placeholder:'шлях'}, 'Шлях', false, 'rx-w'),
         simple ? '' : inp('freq', {list:L && L.freqs.length ? 'dl_f_' + it.id : 'freqList', placeholder:'кратність'}, 'Кратність'),
         simple ? '' : inp('hours', {placeholder:'напр., 8:00, 20:00'}, 'Години (необов’язково)'),
@@ -198,7 +201,6 @@ function renderRx(){
         isDrug ? h('div', {class:'f'}, h('label', {}, 'Звідки'), srcSel) : '',
         h('div', {class:'f'}, h('label', {}, 'Тип'), kindSel),
         h('div', {class:'f rx-w4'}, h('label', {}, 'Примітка'), h('input', {value:it.note || '', oninput:set('note', false), placeholder:'напр., після їди'}))),
-      units,
       warn ? h('p', {class:'rx-warn'}, '⚠ ' + warn) : '',
       d && d.ab ? h('div', {class:'rx-ab'},
         h('span', {class:'badge ' + (d.ab === 'A' ? 'ok' : d.ab === 'W' ? 'warn' : 'bad')}, 'AWaRe: ' + AWARE[d.ab]),
