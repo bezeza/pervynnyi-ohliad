@@ -492,6 +492,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Шкала Падуа: 3+3+1 (вік ≥ 70) = 7 — високий ризик', w.eval("(()=>{ const c=CALCS.find(x=>x.id==='padua'); document.getElementById('pt_age').value='75'; document.getElementById('c_padua_ca').checked=true; document.getElementById('c_padua_mob').checked=true; const r=c.run(c); document.getElementById('pt_age').value=''; document.getElementById('c_padua_ca').checked=false; document.getElementById('c_padua_mob').checked=false; return r.score; })()")==='7 б.');
    ok('Схеми підписані: стаціонар / амбулаторно', w.eval("(()=>{ MODE='amb'; applyDoc(true); const p=PRESETS.find(x=>x.key==='pneu'); applyPreset(p, HV.cards[PRESETS.indexOf(p)]); const b=rxVarBlock(); return b && /амбулаторно/.test(b.querySelector('h3').textContent); })()"));
    w.eval("MODE='hosp'; applyDoc(true); RX=[];"); }
+ { // 0.9.3.23: коди МКХ-10 — пульмонологія
+   const f=q=>w.eval(`JSON.stringify(codeSearch(${JSON.stringify(q)}, mkhList(), 5).map(r=>r[0]))`);
+   ok('МКХ: J15.8 знаходиться за кодом', /"J15\.8"/.test(f('J15.8')), f('J15.8'));
+   ok('МКХ: «синьогнійна» → J15.1', /"J15\.1"/.test(f('синьогнійна')), f('синьогнійна'));
+   ok('МКХ: бронхоектази із загостренням J47.1, емпієма J86.9', /"J47\.1"/.test(f('бронхоектази загострення')) && /"J86\.9"/.test(f('емпієма')), f('бронхоектази загострення')+' '+f('емпієма')); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
