@@ -1,6 +1,6 @@
 const {JSDOM}=require('jsdom');const fs=require('fs');
 const html=fs.readFileSync(require('path').join(__dirname,'..','build','app.html'),'utf8');const errs=[];
-const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.scrollTo=()=>{};w.TextEncoder=TextEncoder;w.document.execCommand=()=>true;w.console.warn=(...a)=>errs.push('W '+a.join(' '));w.console.error=(...a)=>errs.push('CE '+a.join(' '));w.addEventListener('error',e=>errs.push('E '+e.message));}});
+const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.scrollTo=()=>{};w.TextEncoder=TextEncoder;w.document.execCommand=()=>true;w.console.warn=(...a)=>errs.push('W '+a.join(' '));w.console.error=(...a)=>errs.push('CE '+a.join(' '));w.addEventListener('error',e=>errs.push('E '+e.message));}});
 setTimeout(async()=>{const w=d.window,doc=w.document; const prob=[];
 const out=()=>[...doc.getElementById('out').children].map(x=>x.textContent).join('\n');
 const bad=t=>/undefined|null|NaN|\[object|\{v\}|\{\w+\}|  \.|\.\.(?!\.)|,,/.test(t.replace(/…/g,''));

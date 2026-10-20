@@ -1,7 +1,7 @@
 const {JSDOM}=require('jsdom');const fs=require('fs');const path=require('path');
 const html=fs.readFileSync(path.join(__dirname,'..','build','app.html'),'utf8');
 const errors=[];
-const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){
+const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}
  w.localStorage.setItem('po.welcome','1');w.localStorage.setItem('po.profask','1');
  w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.document.execCommand=()=>false;
  w.addEventListener('error',e=>errors.push(e.message));w.console.warn=(...a)=>errors.push(a.join(' '));
