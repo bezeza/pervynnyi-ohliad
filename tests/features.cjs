@@ -497,6 +497,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('МКХ: J15.8 знаходиться за кодом', /"J15\.8"/.test(f('J15.8')), f('J15.8'));
    ok('МКХ: «синьогнійна» → J15.1', /"J15\.1"/.test(f('синьогнійна')), f('синьогнійна'));
    ok('МКХ: бронхоектази із загостренням J47.1, емпієма J86.9', /"J47\.1"/.test(f('бронхоектази загострення')) && /"J86\.9"/.test(f('емпієма')), f('бронхоектази загострення')+' '+f('емпієма')); }
+ { // 0.9.3.24: ліжко-дні і форма 066/о
+   ok('Ліжко-дні: 20.10–27.10 = 7; той самий день = 1; без дати виписки — порожньо', w.eval("bedDays('2026-10-20','2026-10-27')")===7 && w.eval("bedDays('2026-10-20','2026-10-20')")===1 && w.eval("bedDays('2026-10-20','')")==='');
+   ok('Документ «Карта вибулого (ф. 066/о)» є серед документів стаціонару', w.eval("DOCMORE.hosp.some(d=>d[0]==='f066')"));
+   const pg=w.eval("(()=>{ MODE='hosp'; applyDoc(true); switchDoc('f066'); F('e_per.per').d1.value='2026-10-20'; F('e_per.per').d2.value='2026-10-20'; F('e_lik.rez').el.value='1'; const P=b066(); const t=P.map(p=>p.textContent).join(' '); switchDoc('ohl'); F('e_per.per').d1.value=''; F('e_per.per').d2.value=''; F('e_lik.rez').el.value=''; return JSON.stringify([P.length, t]); })()");
+   const [n,t]=JSON.parse(pg);
+   ok('066/о: два аркуші, пункти 1–21, ліжко-дні за правилом', n===2 && /Карта хворого, який вибув із стаціонару/.test(t) && /16\. Проведено ліжко-днів\s*1\s*17\./.test(t) && /21\.\s*Інвалід війни/.test(t) && /19\. Хірургічні операції/.test(t), t.slice(0,200));
+   ok('066/о: результат з епікризу «з покращенням» → код 2', /здоровий\(а\) – 7\s*\(підкреслити\)\s*2/.test(t)); }
+ { // 0.9.3.24: направлення — лікар і заклад; код відділення
+   const r=w.eval("(()=>{ MODE='hosp'; applyDoc(true); switchDoc('ohl'); F('morbi.hosp').el.value='0'; F('morbi.hospd').el.value='Іваненко А. А.'; F('morbi.hospz').el.value='АЗПСМ № 3'; F('morbi.hospe').el.value='12345678'; F('morbi.hospn').el.value='1111-2222'; document.getElementById('meta_vcode').value='63'; update(); const o=document.getElementById('out').textContent; const t=bTitle().textContent; ['hospd','hospz','hospe','hospn'].forEach(k=>F('morbi.'+k).el.value=''); F('morbi.hosp').el.value=''; document.getElementById('meta_vcode').value=''; update(); return JSON.stringify([o,t]); })()");
+   const [o,t]=JSON.parse(r);
+   ok('Направлення: лікар (з ініціалами), заклад, № — у тексті огляду', /сімейного лікаря Іваненко А\. А\. \(АЗПСМ № 3\), № 1111-2222/.test(o), (o.match(/сімейного лікаря.{0,60}/)||[''])[0]);
+   ok('003/о: «Ким направлений» — заклад, лікар і ЄДРПОУ; код відділення в п. 11 і 12', /9\. Ким направлений хворий\s*АЗПСМ № 3, лікар Іваненко А\. А\.\s*12345678/.test(t) && /11\. Відділення при госпіталізації\s*63/.test(t), (t.match(/9\. Ким.{0,80}/)||[''])[0]); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

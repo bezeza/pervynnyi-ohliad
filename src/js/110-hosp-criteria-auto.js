@@ -185,7 +185,7 @@ function val(f, any){
   if (f.type === 'period'){
     const a = f.d1.value, b = f.d2.value; if (!a) return '';
     if (!b) return 'з ' + fmtD(a);
-    const n = Math.round((new Date(b) - new Date(a)) / 864e5) + (f.incl ? 1 : 0), fm = f.dayForms || ['ліжко-день','ліжко-дні','ліжко-днів'];
+    const n0 = Math.round((new Date(b) - new Date(a)) / 864e5), n = f.incl ? n0 + 1 : f.dayForms ? n0 : (n0 < 0 ? n0 : Math.max(1, n0)), fm = f.dayForms || ['ліжко-день','ліжко-дні','ліжко-днів'];   /* ліжко-дні: див. bedDays */
     f.hintEl.textContent = n >= 0 ? n + ' ' + plural(n, fm) : 'Перевірте дати';
     return `з ${fmtD(a)} по ${fmtD(b)}` + (n >= 0 ? ` (${n} ${plural(n, fm)})` : '');
   }
@@ -208,7 +208,7 @@ function sectionText(s){
     const join = f.cont && prev && out.length;
     const tp = !join && f.solo ? f.solo : (F110 && f.tpl110) ? f.tpl110 : f.tpl;
     const t = f.type === 'num' ? v : tp.replace('{v}', v);
-    if (join) out[out.length-1].t = out[out.length-1].t.replace(/\.$/,'') + (f.joiner || ', ') + t;
+    if (join) out[out.length-1].t = out[out.length-1].t.replace(/(?<![А-ЯІЇЄҐA-Z])\.$/,'') + (f.joiner || ', ') + t;   /* крапку ініціалів («А. А.») не прибирати */
     else out.push({t:((s.nocap && !out.length) || /^[а-в]\) /.test(t)) ? t : cap(t), br:!!f.br});
     prev = true; if (f.type !== 'num') rich = true;
   }

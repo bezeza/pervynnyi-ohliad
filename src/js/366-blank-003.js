@@ -6,7 +6,7 @@
    чого немає в переліку — на рядку після нього. Порожні обов’язкові місця на екрані — жовті (у друк не йдуть). ===== */
 let BLANK = false; try{ BLANK = localStorage.getItem('po.blank') === '1'; }catch(e){}
 let BLP = {title:false, exam:true, all:false, e45:true, e54:true}; try{ Object.assign(BLP, JSON.parse(localStorage.getItem('po.blankp') || '{}')); }catch(e){}
-const blankOK = () => MODE === 'hosp' && ['ohl','shch','epi'].includes(DOC);
+const blankOK = () => MODE === 'hosp' && ['ohl','shch','epi','f066'].includes(DOC);
 const blankOn = () => BLANK && blankOK();
 let BGAP = false;   // підсвічувати порожні обов’язкові місця (лише на екрані)
 const BV = k => { const f = F(k); return f ? g(val(f, true)) : ''; };
@@ -16,6 +16,8 @@ const bSet = (...a) => new Set(a.flat().filter(x=>x >= 0));
 const bJoin = (...a) => a.flat().map(x=>String(x || '').trim().replace(/\.$/, '')).filter(Boolean).join('; ');
 const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
+/* «Ким направлений»: заклад і лікар; інакше — спосіб госпіталізації */
+function bNapr(){ const z = BV('morbi.hospz').replace(/^\(|\)$/g, ''), d = BV('morbi.hospd'); if (z || d) return [z, d ? 'лікар ' + d : ''].filter(Boolean).join(', '); return BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : ''; }
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
 function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
 /* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
@@ -50,9 +52,9 @@ function bHead(){
 /* ---------- титульний лист (п. 1–21) ---------- */
 function bTitle(){
   const P = F('e_per.per'), d1 = P.d1.value || (mv('dt') || '').split('T')[0], tm = (mv('dt') || '').split('T')[1] || '', d2 = P.d2.value;
-  const days = d1 && d2 ? Math.round((new Date(d2) - new Date(d1)) / 864e5) : '';
+  const days = bedDays(d1, d2);
   const vyd = BI('hosp.vyd'), alg = [BV('vitae.alerg').replace(/^Алергологічний анамнез /, ''), BV('vitae.alergx')].filter(Boolean).join(', ');
-  const napr = BV('morbi.hospd') || (BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : '');
+  const napr = bNapr();
   return bPage('btitle', bHead(),
     h('div', {class:'bt'}, 'МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО № ', bFill(mv('card'), true)),
     bRow('1. Дата госпіталізації ', bDate(d1, true), bTime(tm)),
@@ -62,9 +64,9 @@ function bTitle(){
     bRow('6. Документ, що посвідчує особу ', bFill(''), '  6.1. Номер документа ', bFill('')), bRow('6.2. Громадянство ', bFill(''), bSmall(' (код країни)')),
     bRow('7. Постійне місце проживання/перебування: ', h('span', {class:'bl' + (mv('addr_np_t') === 'м.' ? ' bsel' : '')}, 'місто – 1'), '; ', h('span', {class:'bl' + (mv('addr_np_t') === 'с.' ? ' bsel' : '')}, 'село – 2'), ' ', bBox(({'м.':1, 'с.':2})[mv('addr_np_t')] || ''), ' ', bFill(mv('addr'), false, true)), bRow('7.1. Поштовий індекс ', bFill(mv('addr_zip'))),
     bRow('8. Місце роботи, посада ', bFill(mv('work'), false, true)),
-    bRow('9. Ким направлений хворий ', bFill(napr, false, true), ' ', bCells('', 8)),
+    bRow('9. Ким направлений хворий ', bFill(napr, false, true), ' ', bCells(BV('morbi.hospe').replace(/\D/g, ''), 8)),
     bRow('10. Діагноз при госпіталізації ', bFill(BV('dx.osn'), true, true), ' ', bCells(BV('dx.mkh').split(/[,;\s]+/)[0], 6, true)),
-    bRow('11. Відділення при госпіталізації ', bCells('', 3), ' ', bFill(mv('vidd')), '  12. Відділення при виписці ', bCells('', 3)),
+    bRow('11. Відділення при госпіталізації ', bCells(mv('vcode'), 3), ' ', bFill(mv('vidd')), '  12. Відділення при виписці ', bCells(mv('vcode'), 3)),
     bRow('13. Госпіталізація: ургентна – 1; планова – 2 ', bBox(vyd === 0 ? 1 : vyd === 1 ? 2 : '', true), '  14. Обстеження на ВІЛ-інфекцію ', bCells('', 6)),
     bRow('15. Група крові ', bFill(''), '  16. Резус-приналежність ', bFill(''), '  17. Реакція Васермана ', bCells('', 6)),
     bRow('18. Алергічні реакції, гіперчутливість чи непереносимість лікарського засобу ', bFill(alg, true, true)),
@@ -250,6 +252,7 @@ function blankPages(){
   if (DOC === 'ohl') return [...(BLP.title ? [bTitle()] : []), ...(BLP.exam ? bExam() : [])];
   if (DOC === 'shch') return bDiary();
   if (DOC === 'epi') return bEpi();
+  if (DOC === 'f066') return b066();
   return [];
 }
 /* перемикач «Текст / Бланк закладу» і вибір сторінок — над аркушем */
@@ -259,7 +262,7 @@ function blankBar(){
   const seg = (on, t, fn) => h('button', {type:'button', 'aria-pressed':on ? 'true' : 'false', onclick:fn}, t);
   const setB = v => { BLANK = v; try{ localStorage.setItem('po.blank', v ? '1' : '0'); }catch(e){} renderPaper(); };
   const setP = (k, v) => { BLP[k] = v; try{ localStorage.setItem('po.blankp', JSON.stringify(BLP)); }catch(e){} renderPaper(); };
-  bar.append(h('span', {class:'seg'}, seg(!BLANK, 'Текст документа', ()=>setB(false)), seg(BLANK, 'Бланк 003/о', ()=>setB(true))));
+  bar.append(h('span', {class:'seg'}, seg(!BLANK, 'Текст документа', ()=>setB(false)), seg(BLANK, DOC === 'f066' ? 'Бланк 066/о' : 'Бланк 003/о', ()=>setB(true))));
   if (BLANK){
     const ch = (k, t) => h('label', {class:'blk'}, (()=>{ const c = h('input', {type:'checkbox'}); c.checked = !!BLP[k]; c.addEventListener('change', ()=>setP(k, c.checked)); return c; })(), ' ' + t);
     if (DOC === 'ohl') bar.append(ch('title', 'титульний лист'), ch('exam', 'первинний огляд'));
