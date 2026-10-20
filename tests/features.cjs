@@ -43,7 +43,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  box().querySelectorAll('.chip')[1].click();
  ok('Схема «Передопераційна підготовка» замінює лист', /Цефазолін/.test(rx()) && /Метронідазол/.test(rx()), rx());
  box().querySelector('button.more').click();
- ok('«Повернути попередній лист» працює', rx()==='Натрію хлорид 0,9%', rx());
+ ok('«Повернути попередній лист» працює', /Натрію хлорид 0,9%/.test(rx()) && !/Цефазолін/.test(rx()), rx());
  ap('chol'); ok('Зміна хвороби оновлює автоматичний лист', /Цефтріаксон/.test(rx()), rx());
  w.eval("addRx({drug:'Мій препарат'})"); ap('panc'); ok('Ручні правки листа не переписуються', /Мій препарат/.test(rx()), rx());
  ok('Кожна хвороба має джерело схем', w.eval("PRESETS.filter(p=>p.key && p.key!=='prof' && !RXSRC[p.key]).length")===0);
@@ -111,16 +111,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Листок 003-4/о: рядки «Лікар/Сестра», «+» у дні призначення, «—» у день відміни', !!r && /ФОРМА № 003-4\/о/.test(t.textContent) && [...r.querySelectorAll('.f-d')].map(c=>c.textContent).slice(0,3).join('')==='++—', r && [...r.querySelectorAll('.f-d')].map(c=>c.textContent).slice(0,4).join(',')); }
  // 2.23: призначення, процедури, листок з двох боків, план на коли, зручність
  doc.querySelector('[data-mode="hosp"]').click(); await sleep(20); w.eval('clearAll()'); ap('pneu'); w.eval("show(TABS.findIndex(t=>t.id==='rxt'))"); await sleep(20);
- ok('Стрічка «Призначено» над листом', /Призначено \(4\)/.test($('rxStrip').textContent), $('rxStrip').textContent.slice(0,80));
- ok('Компактні рядки: усі згорнуті', doc.querySelectorAll('#rxList .rx.rxc').length===4 && !doc.querySelector('#rxList .rx.open'));
+ ok('Стрічка «Призначено» над листом', /Призначено \(\d+\)/.test($('rxStrip').textContent) && /Амоксицилін\/клавуланат/.test($('rxStrip').textContent), $('rxStrip').textContent.slice(0,80));
+ ok('Компактні рядки: усі згорнуті', doc.querySelectorAll('#rxList .rx.rxc').length===w.eval('RX.length') && !doc.querySelector('#rxList .rx.open'));
  ok('Підказки процедур для пневмонії', /Пульсоксиметрія/.test($('rxSuggest').textContent));
  [...$('rxSuggest').querySelectorAll('button')].find(b=>/Оксигенотерапія/.test(b.textContent)).click();
  ok('Процедура додається як маніпуляція', w.eval("rxKind(RX.find(i=>/Оксигенотерапія/.test(i.drug)))")==='man');
  { const a=$('rxAdd'); a.value='Інгаляції через небулайзер'; a.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true})); }
  ok('Пошук-додавання: фізіотерапія', w.eval("rxKind(RX.find(i=>/небулайзер/.test(i.drug)))")==='phys');
- w.eval("RX[0].start=addDays(todayISO(),-2); RX[0].src='pat'; RX[0].hours='8:00, 20:00'"); w.eval("rxChangeDose(RX[0]); renderRx()");
- ok('«Змінити дозу з сьогодні»: стара закрита, нова з сьогодні', w.eval("RX[0].stop===todayISO() && RX[1].drug===RX[0].drug && RX[1].start===todayISO() && !RX[1].stop"));
- ok('Текст огляду: процедури окремим рядком', /Процедури: Оксигенотерапія/.test(out()));
+ w.eval("RX=RX.filter(i=>rxKind(i)!=='drug' || i.drug==='Амоксицилін/клавуланат').sort((a,b)=>(rxKind(a)==='drug'?0:1)-(rxKind(b)==='drug'?0:1)); RX[0].start=addDays(todayISO(),-2); RX[0].src='pat'; RX[0].hours='8:00, 20:00'"); w.eval("rxChangeDose(RX[0]); renderRx()");
+ ok('«Змінити дозу з сьогодні»: стара закрита, нова з сьогодні', w.eval("RX[0].stop===todayISO() && RX.some(i=>i!==RX[0] && i.drug===RX[0].drug && i.start===todayISO() && !i.stop)"));
+ ok('Текст огляду: процедури окремим рядком', /Процедури: [^\n]*Оксигенотерапія/.test(out()), (out().match(/Процедури:[^\n]*/)||[''])[0]);
  w.eval("const x=planDGet(); x['ЗАК']=[todayISO(),'вип']; planDSet(x); f0034Print()");
  { const P=$('print'); const fr=P.querySelector('.f0034:not(.f0034b)'), bk=P.querySelector('.f0034b');
    ok('Листок: позначка «звідки» і години на лицьовому боці', fr && /пац\./.test(fr.textContent) && /8:00, 20:00/.test(fr.textContent));
@@ -478,6 +478,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const t=w.eval("(()=>{ const b=b003Title ? b003Title() : null; return b ? b.textContent : ''; })()".replace('b003Title ? b003Title() : null', "null"));
    w.eval("clearAll()");
    ok('Новий пацієнт: адреса й місце роботи очищені', !$('meta_addr').value && !$('meta_addr_np').value && !$('meta_work').value); }
+ { // 0.9.3.22: листи призначень за настановами
+   const sheet=(k,m)=>w.eval(`(()=>{ MODE='${m}'; applyDoc(true); RX=[]; const p=PRESETS.find(x=>x.key==='${k}'); applyPreset(p, HV.cards[PRESETS.indexOf(p)]); update(); return JSON.stringify(RX.map(it=>[rxKind(it), it.drug, it.dose])); })()`);
+   let r=JSON.parse(sheet('pneu','hosp'));
+   ok('Пневмонія, стаціонар: режим, дієта, моніторинг, кисень за показаннями, антибіотики, ВТЕ', ['reg','diet'].every(k=>r.some(x=>x[0]===k)) && r.some(x=>/^Контроль АТ/.test(x[1])) && r.some(x=>/^Оксигенотерапія/.test(x[1])) && r.some(x=>x[1]==='Амоксицилін/клавуланат') && r.some(x=>x[1]==='Еноксапарин'), JSON.stringify(r));
+   ok('Пневмонія: парацетамол 500–1000 мг', r.some(x=>x[1]==='Парацетамол' && x[2]==='500–1000 мг'));
+   r=JSON.parse(sheet('pneu','amb')); ok('Пневмонія, амбулаторно: амоксицилін 1 г, без в/в і палатного режиму', r.some(x=>x[1]==='Амоксицилін' && x[2]==='1 г') && !r.some(x=>/палатний/.test(x[1])));
+   ok('Пневмонія: є тяжкий варіант з гідрокортизоном і варіант з ризиком синьогнійної', w.eval("(()=>{ MODE='hosp'; const v=rxVariants(PRESETS.find(x=>x.key==='pneu')); return v.some(x=>/Тяжка/.test(x[0]) && x[1].some(r=>r[0]==='Гідрокортизон')) && v.some(x=>/синьогнійної/.test(x[0])); })()"));
+   ok('ХОЗЛ амбулаторно: стабільні групи A/B/E за GOLD', w.eval("(()=>{ MODE='amb'; return rxVariants(PRESETS.find(x=>x.key==='copd')).filter(x=>/Стабільна/.test(x[0])).length; })()")===4);
+   ok('Астма амбулаторно: кроки GINA', w.eval("(()=>{ MODE='amb'; return rxVariants(PRESETS.find(x=>x.key==='asthma')).filter(x=>/^Крок/.test(x[0])).length; })()")===4);
+   ok('Нові хвороби: бронхоектази й ТЕЛА зі схемами', JSON.parse(sheet('bronx','hosp')).some(x=>x[1]==='Амоксицилін/клавуланат') && JSON.parse(sheet('pe','hosp')).some(x=>x[1]==='Апіксабан'));
+   ok('ЦД у стаціонарі: інсулін, без метформіну в листі', (()=>{ const x=JSON.parse(sheet('dm','hosp')); return x.some(y=>y[1]==='Інсулін гларгін') && !x.some(y=>y[1]==='Метформін'); })());
+   ok('Шкала Падуа: 3+3+1 (вік ≥ 70) = 7 — високий ризик', w.eval("(()=>{ const c=CALCS.find(x=>x.id==='padua'); document.getElementById('pt_age').value='75'; document.getElementById('c_padua_ca').checked=true; document.getElementById('c_padua_mob').checked=true; const r=c.run(c); document.getElementById('pt_age').value=''; document.getElementById('c_padua_ca').checked=false; document.getElementById('c_padua_mob').checked=false; return r.score; })()")==='7 б.');
+   ok('Схеми підписані: стаціонар / амбулаторно', w.eval("(()=>{ MODE='amb'; applyDoc(true); const p=PRESETS.find(x=>x.key==='pneu'); applyPreset(p, HV.cards[PRESETS.indexOf(p)]); const b=rxVarBlock(); return b && /амбулаторно/.test(b.querySelector('h3').textContent); })()"));
+   w.eval("MODE='hosp'; applyDoc(true); RX=[];"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

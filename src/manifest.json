@@ -54,6 +54,7 @@
   "480-rx-state.js",
   "490-data-rx-variants.js",
   "500-data-rx-sources.js",
+  "501-rx-evidence.js",
   "505-rx-kinds.js",
   "510-rx-sets.js",
   "515-rx-form.js",

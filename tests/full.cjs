@@ -35,7 +35,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  // 5 профілі хвороб
  const vis=()=>[...doc.querySelectorAll('.dcard')].filter(c=>!c.hidden).length;
  let prof=[]; [...doc.querySelectorAll('.gtab[data-g]')].filter(g=>!g.closest('.rxsets')).forEach(g=>{g.click(); prof.push(vis());});
- ok('5. Кожен профіль показує свої хвороби (сімейна — 14) (Мої — порожньо)', prof.join()==='10,10,10,10,14,10,0', prof.join());
+ ok('5. Кожен профіль показує свої хвороби (сімейна — 14) (Мої — порожньо)', prof.join()==='12,10,10,10,14,10,0', prof.join());
  doc.querySelectorAll('.gtab')[0].click();
  let bad=[]; [...doc.querySelectorAll('.dcard')].forEach(c=>{const n0=d.errs.length; c.click(); if(d.errs.length>n0) bad.push(c.querySelector('b').textContent);});
  ok('5. Усі 28 заготовок застосовуються без помилок', bad.length===0, bad.join(', '));
