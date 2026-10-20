@@ -304,3 +304,7 @@ function autoKrit(){
   const gbs = cl('gbs'); if (gbs && parseInt(gbs.score) >= 7) r.push(`шкала Глазго–Блетчфорд ${gbs.score} (високий ризик)`);
   return r.join('; ');
 }
+
+/* ліжко-дні: день госпіталізації і день виписки (смерті) рахуються як один день (наказ МОЗ № 110, інструкція до ф. 003/о, п. 16);
+   госпіталізація й виписка того самого дня — 1 ліжко-день */
+function bedDays(d1, d2){ if (!d1 || !d2) return ''; const n = Math.round((Date.parse(d2.slice(0,10)) - Date.parse(d1.slice(0,10))) / 864e5); return isNaN(n) || n < 0 ? '' : Math.max(1, n); }
