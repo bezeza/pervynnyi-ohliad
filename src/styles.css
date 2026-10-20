@@ -961,3 +961,6 @@ body.pvopen{overflow:hidden}
 .resacts{margin:6px 0 8px}
 @media (max-width:620px){.ownrow{grid-template-columns:1fr 1fr}.ljcell.txt{grid-column:1/-1}}
 .ljd{font-size:11px;color:var(--muted);line-height:1.2}
+.ljside{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+body.lay-B #sidecard .ljside{width:100%;justify-content:flex-start;padding:8px 10px}
+@media (max-width:899px){#sidecard .ljside{display:none}.mbar #mbLabs{flex:0 0 auto;padding:10px 10px}}

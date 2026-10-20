@@ -270,3 +270,13 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
 { const i1 = importTpl; importTpl = function(file){ const rd = new FileReader(); rd.onload = () => { try{ const o = JSON.parse(rd.result); if (o && o.type === 'po-templates' && Array.isArray(o.labs)){ let n = 0; o.labs.forEach(x=>{ if (x && x.t && Array.isArray(x.p) && !(CUSTOM.labs = CUSTOM.labs || []).some(y=>y.t === x.t)){ CUSTOM.labs.push(x); n++; } }); if (n){ saveCustom(); toast(`Своїх аналізів додано: ${n}`, 2500); } } }catch(e){} }; rd.readAsText(file); return i1.apply(this, arguments); }; }
 /* Ctrl+K */
 { const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'Вписати аналіз (журнал обстежень)', go:()=>labsOpen({add:true})}, {k:'Дія', t:'Журнал обстежень розділами', go:()=>labsOpen()}, {k:'Дія', t:'Свій аналіз', go:ownLabDialog}); return L; }; }
+/* журнал — видно з головної сторінки: кнопка в бічній картці (під шаблоном) і внизу на телефоні */
+{ const sc = $('#sidecard');
+  const lb = h('button', {type:'button', class:'btn ljside', title:'Журнал обстежень: кров, біохімія, сеча, кал, мікробіологія, інструментальні', onclick:()=>labsOpen()}, h('span', {'aria-hidden':'true'}, '🧪'), h('span', {class:'ljs-t'}, ' Журнал обстежень'), h('b', {class:'ljs-n'}));
+  if (sc) sc.append(lb);
+  const mb = $('.mbar'); const mbb = h('button', {type:'button', class:'btn', id:'mbLabs', 'aria-label':'Журнал обстежень', onclick:()=>labsOpen()}, '🧪 Аналізи');
+  if (mb){ const tt = $('#toText'); if (tt) tt.before(mbb); else mb.prepend(mbb); }
+  const sync = () => { const n = RES.length; lb.querySelector('.ljs-n').textContent = n ? ' · ' + n : ''; };
+  const up = update; update = function(){ const r = up.apply(this, arguments); try{ sync(); }catch(e){} return r; };
+  sync();
+}
