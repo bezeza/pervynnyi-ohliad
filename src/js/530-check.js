@@ -44,6 +44,7 @@ function checkDoc(){
     if (!sel('d_main.sk') && !v('d_main.skx')) add('Не вказано скарги', 'd_main');
     const vit = [['d_obj_t_0','t°'],['d_obj_ad_0','АТ'],['d_obj_chss_0','ЧСС']].filter(([id])=>!document.getElementById(id).value.trim());
     if (vit.length) add('Не вказано: ' + vit.map(x=>x[1]).join(', '), 'd_obj');
+    if (MODE === 'hosp' && !v('d_lik.osn')) add('Немає оцінки обґрунтованості перебування в стаціонарі (наказ МОЗ № 1044)', 'd_lik');
     abCheck(); renal();
   }
   if (DOC === 'rx'){

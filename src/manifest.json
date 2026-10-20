@@ -21,6 +21,7 @@
   "190-data-folder.js",
   "200-help.js",
   "210-diary.js",
+  "212-diary-stay.js",
   "220-pam.js",
   "230-chronic-control.js",
   "240-quick-visit.js",
