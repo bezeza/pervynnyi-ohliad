@@ -79,6 +79,7 @@
   "599-links.js",
   "600-skia.js",
   "601-skia2.js",
-  "602-labs.js"
+  "602-labs.js",
+  "603-autoreview.js"
  ]
 }

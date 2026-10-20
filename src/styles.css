@@ -964,3 +964,9 @@ body.pvopen{overflow:hidden}
 .ljside{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
 body.lay-B #sidecard .ljside{width:100%;justify-content:flex-start;padding:8px 10px}
 @media (max-width:899px){#sidecard .ljside{display:none}.mbar #mbLabs{flex:0 0 auto;padding:10px 10px}}
+/* ===== Безпечне автозаповнення (0.9.3.15) ===== */
+.autobar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;background:var(--flag-soft);border:1px solid color-mix(in srgb,var(--flag) 45%,var(--line));border-radius:9px;padding:8px 12px;margin:0 0 12px;font-size:13.5px}
+.autobar .ab-t{flex:1 1 280px}.autobar .ab-ok{border-color:var(--ok);color:var(--ok);font-weight:600}
+body.shell.lay-B .tab.autof .dot{background:var(--surface)!important;border:2px dashed var(--flag)!important;box-shadow:none!important}
+.tab.autof .dot{visibility:visible;background:var(--flag)}
+.agate .aglist{margin:6px 0 0;padding-left:18px;line-height:1.7}

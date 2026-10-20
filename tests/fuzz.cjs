@@ -4,7 +4,7 @@ const problems=new Set();
 function run(seed){
  let x=seed; const rnd=n=>{x=(x*1103515245+12345)%2147483648; return x%n;};
  const errs=[];
- const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.document.execCommand=()=>true;w.print=()=>{};w.URL.createObjectURL=()=>'blob:x';w.URL.revokeObjectURL=()=>{};w.console.warn=(...a)=>errs.push('WARN '+a.join(' '));w.addEventListener('error',e=>errs.push(e.message));}});
+ const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.document.execCommand=()=>true;w.print=()=>{};w.URL.createObjectURL=()=>'blob:x';w.URL.revokeObjectURL=()=>{};w.console.warn=(...a)=>errs.push('WARN '+a.join(' '));w.addEventListener('error',e=>errs.push(e.message));}});
  const w=d.window,doc=w.document,ev=(e,t)=>e.dispatchEvent(new w.Event(t));
  return new Promise(res=>setTimeout(()=>{
   const out=()=>doc.getElementById('out').textContent;

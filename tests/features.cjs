@@ -3,7 +3,7 @@ const {JSDOM}=require('jsdom');const fs=require('fs');const path=require('path')
 const html=fs.readFileSync(path.join(__dirname,'..','build','app.html'),'utf8');
 const R=[];const ok=(n,c,info='')=>R.push((c?'✅':'❌')+' '+n+(info&&!c?' — '+info:''));
 const errs=[];let printed=0;
-const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
+const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
 const w=d.window,doc=w.document,$=id=>doc.getElementById(id);
 const ev=(e,t)=>e.dispatchEvent(new w.Event(t));const set=(id,v)=>{const e=$(id);e.value=v;ev(e,e.tagName==='SELECT'?'change':'input');};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -348,6 +348,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Журнал обстежень — кнопка на головній сторінці й на телефоні', !!doc.querySelector('#sidecard .ljside') && !!$('mbLabs'));
    w.eval("ownLabDialog()"); const dl=doc.querySelector('.navsheet:last-of-type'); ok('Свій аналіз: діалог', !!doc.querySelector('.ownrow')); doc.querySelectorAll('.navsheet').forEach(x=>{ if (x.querySelector('.ownrow')) x.remove(); });
    w.eval("switchDoc('ohl')"); }
+ // 0.9.3.15 безпечне автозаповнення
+ { w.eval('newPatient()'); set('meta_pib','Авто Тестовий Пацієнт'); ap('pneu');
+   const A=()=>w.eval('Object.keys(arevGet())');
+   ok('Заготовка: розділи позначено «не переглянуто»', A().includes('dyh') && A().includes('skarhy') && A().includes('rxt'), A().join(','));
+   ok('Непереглянуте — у «Перевірці»', w.eval("checkDoc().some(x=>/Органи дихання.*не переглянуто/.test(x.m))"));
+   w.eval("show(TABS.findIndex(t=>t.id==='dyh'))"); const ab=w.eval("SECTIONS.find(s=>s.id==='dyh').panel.querySelector('.autobar')");
+   ok('У розділі — банер і «✓ Переглянуто»', ab && !ab.hidden); ab.querySelector('.ab-ok').click();
+   ok('«✓ Переглянуто» знімає позначку лише з цього розділу', !A().includes('dyh') && A().includes('ssc'));
+   w.eval("AGATE=true"); let pr=0; w.print=()=>{pr++}; $('printBtn').click();
+   ok('Друк з непереглянутим — спершу попередження', !!doc.querySelector('.agate') && pr===0);
+   [...doc.querySelectorAll('.agate button')].find(b=>/Я перевірив/.test(b.textContent)).click();
+   ok('«Я перевірив — продовжити» друкує й знімає позначки', pr===1 && A().length===0, pr+' '+A().join(','));
+   w.eval("show(TABS.findIndex(t=>t.id==='dyh'))"); w.eval("(()=>{ const f=F('dyh.perk'); f.el.value='2'; mark(f.el,f); update(); })()");
+   $('allNorm').click();
+   ok('«Норма всюди» при ваших даних — питає, що робити', !!doc.querySelector('.agate') && /ваші дані/.test(doc.querySelector('.agate').textContent));
+   [...doc.querySelectorAll('.agate button')].find(b=>/лише порожні/.test(b.textContent)).click();
+   ok('«Заповнити лише порожні» — ваші дані лишились', w.eval("F('dyh.perk').el.value")==='2');
+   w.eval("AGATE=false; newPatient()"); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
