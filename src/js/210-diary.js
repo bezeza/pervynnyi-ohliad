@@ -19,7 +19,7 @@ function saveDiary(){
 function likePrevious(){
   const last = DIARIES[DIARIES.length - 1]; if (!last){ toast('У журналі ще немає записів'); return; }
   DSEC.forEach(id=>{ SECTIONS.find(x=>x.id===id).fields.forEach(f=>{ if (f.type === 'sel'){ f.el.value = ''; } }); });
-  for (const id in last.data.f){ if (id === 'd_main_den_0') continue; const e = document.getElementById(id); if (e) e.value = last.data.f[id]; }
+  for (const id in last.data.f){ if (id === 'd_main_den_0' || id === 'd_lik_osn') continue; const e = document.getElementById(id); if (e) e.value = last.data.f[id]; }
   DSEC.forEach(id=>SECTIONS.find(x=>x.id===id).fields.forEach(f=>{ if (f.type === 'sel') mark(f.el, f); }));
   setNow(); dirty = false; $('#banner').hidden = true; update();
   toast('Заповнено як попередній запис — змініть те, що змінилось');
@@ -146,6 +146,7 @@ function diaryHints(){
   const d = den || 0, K = curKey;
   const amb = MODE === 'amb';
   if (d === 1 && !amb) L.push({t:'Перший щоденник: стан після надходження, реакція на перші призначення, результати невідкладних обстежень.'});
+  if (!amb) L.push(...stayHints());
   if (amb && !DIARIES.length) L.push({t:'Перший повторний огляд: динаміка після початку лікування, переносимість ліків, результати призначених аналізів.'});
   const ab = RX.filter(it=>isAB(it) && !it.stop);
   const due = ab.filter(it=>{ if (!it.start) return false; const k = Math.round((new Date(todayISO() + 'T00:00') - new Date(it.start + 'T00:00')) / 864e5); return k >= 2 && k <= 3; }).map(it=>it.drug);
