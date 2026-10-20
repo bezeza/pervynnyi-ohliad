@@ -34,7 +34,7 @@ function idbInit(){
       const db = r.result, all = {}, tx = db.transaction('patients', 'readonly'), cur = tx.objectStore('patients').openCursor();
       const trashRaw = {};
       cur.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) trashRaw[String(c.key).slice(6)] = c.value; else all[c.key] = c.value; c.continue(); } };
-      tx.oncomplete = () => (typeof pinUnlockAll === 'function' ? pinUnlockAll(all, trashRaw) : Promise.resolve({A:all, T:trashRaw})).then(({A, T}) => { for (const k in all) delete all[k]; Object.assign(all, A); Object.assign(TRASH, T); go(); });
+      tx.oncomplete = () => (typeof pinUnlockAll === 'function' ? pinUnlockAll(all, trashRaw) : Promise.resolve({A:all, T:trashRaw})).then(({A, T}) => { if (A !== all){ for (const k in all) delete all[k]; Object.assign(all, A); } Object.assign(TRASH, T); go(); });
       const go = () => {
         IDB.db = db; IDB.cache = all; Object.keys(all).forEach(id=>{ IDB.w[id] = all[id].updated; }); IDB.ok = true;
         // перенесення зі старого сховища (і все, що встигли зберегти до готовності бази) — новіша версія перемагає

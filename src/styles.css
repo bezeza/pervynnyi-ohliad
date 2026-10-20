@@ -979,3 +979,10 @@ body.shell.lay-B .tab.autof .dot{background:var(--surface)!important;border:2px 
 .pinscr{z-index:150}.pinscr input{max-width:220px;text-align:center;font-size:20px;letter-spacing:.3em}
 body.pinlocked>*:not(.pinscr):not(.navsheet):not(.toast){visibility:hidden}
 .pinmsg{min-height:1.4em;color:var(--flag)}
+
+/* 0.9.3.18: аудит сценарію — список «Ще не заповнено» пунктами; час збереження не налазить на номер картки */
+.paper .gaplist>.gap{display:block;width:100%;text-align:left;margin:3px 0;padding:2px 6px}
+.paper .gaplist>b{display:block}
+body.shell #ptbar .pt-saved{position:static;margin-left:8px;white-space:nowrap}
+@media (max-width:899px){body.doc-shch .mbar #mbLabs{font-size:0}body.doc-shch .mbar #mbLabs::before{content:'🧪';font-size:16px}body.doc-shch .mbar #copy2{background:var(--surface);color:var(--ink,inherit);border-color:var(--line)}.mbar #mbDSave[hidden]{display:none}}
+.nums input#meta_dt,.nums input[type="datetime-local"],.nums input[type="date"]{width:auto;min-width:13.5em;flex:1 1 13.5em;text-align:left}

@@ -82,6 +82,7 @@
   "602-labs.js",
   "603-autoreview.js",
   "604-restore.js",
-  "605-pin.js"
+  "605-pin.js",
+  "606-audit-fixes.js"
  ]
 }

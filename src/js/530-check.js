@@ -55,6 +55,8 @@ function checkDoc(){
   }
   if (DOC === 'epi'){
     if (!F('e_per.per').d1.value || !F('e_per.per').d2.value) add('Не вказано період лікування', 'e_per', 'e_per_per_1');
+    else if (F('e_per.per').d2.value < F('e_per.per').d1.value) add(`Дата виписки (${fmtD(F('e_per.per').d2.value)}) раніше за дату надходження (${fmtD(F('e_per.per').d1.value)}) — перевірте період`, 'e_per', 'e_per_per_1');
+    { const d1 = F('e_per.per').d1.value, d2 = F('e_per.per').d2.value, late = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(x=>x && (d1 && x < d1 || d2 && x > d2)); if (late.length) add(`Є записи щоденника поза періодом лікування (${late.map(fmtD).join(', ')})`, 'e_per', 'e_per_per_1'); }
     dx();
     if (!v('e_obs.obs')) add('Не внесено результати обстежень', 'e_obs', 'e_obs.obs');
     if (!v('e_lik.lik')) add('Не вказано проведене лікування', 'e_lik', 'e_lik.lik');

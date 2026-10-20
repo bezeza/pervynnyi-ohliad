@@ -997,12 +997,19 @@ body.shell.lay-B .tab.autof .dot{background:var(--surface)!important;border:2px 
 .pinscr{z-index:150}.pinscr input{max-width:220px;text-align:center;font-size:20px;letter-spacing:.3em}
 body.pinlocked>*:not(.pinscr):not(.navsheet):not(.toast){visibility:hidden}
 .pinmsg{min-height:1.4em;color:var(--flag)}
+
+/* 0.9.3.18: аудит сценарію — список «Ще не заповнено» пунктами; час збереження не налазить на номер картки */
+.paper .gaplist>.gap{display:block;width:100%;text-align:left;margin:3px 0;padding:2px 6px}
+.paper .gaplist>b{display:block}
+body.shell #ptbar .pt-saved{position:static;margin-left:8px;white-space:nowrap}
+@media (max-width:899px){body.doc-shch .mbar #mbLabs{font-size:0}body.doc-shch .mbar #mbLabs::before{content:'🧪';font-size:16px}body.doc-shch .mbar #copy2{background:var(--surface);color:var(--ink,inherit);border-color:var(--line)}.mbar #mbDSave[hidden]{display:none}}
+.nums input#meta_dt,.nums input[type="datetime-local"],.nums input[type="date"]{width:auto;min-width:13.5em;flex:1 1 13.5em;text-align:left}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.17 від 20.10.2026">v0.9.3.17 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.18 від 20.10.2026">v0.9.3.18 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -2907,8 +2914,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.17', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.18', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.18', '20.10.2026', 'виправлено: у 0.9.3.17 після перезавантаження сторінки список пацієнтів виглядав порожнім (без PIN) — дані лишались у браузері й тепер знову відкриваються; останній пацієнт відкривається, як раніше. Додано автоматичну перевірку «зберегти → перезапустити → пацієнт на місці» (без PIN і з PIN). За наскрізним аудитом сценарію лікаря (ПК і телефон): дата й час первинного огляду (та інших документів) більше не замінюються на «зараз» після перемикання документів чи повторного відкриття пацієнта — кожен документ пам’ятає свою дату; «📓 Записати в журнал» щоденника — на панелі тексту й у нижній панелі телефона, а не лише у вкладці «Запис»; «Зібрати виписку» бере дату надходження з дати первинного огляду; перевірка попереджає, якщо дата виписки раніше за надходження або щоденник поза періодом; список «Ще не заповнено» — пунктами без зайвих «;»; час збереження в смужці пацієнта не налазить на № карти; після відкриття пацієнта не лишається вкладка іншого документа. Файл попередньої версії — 0.9.3.16'],
   ['0.9.3.17', '20.10.2026', 'PIN-код і шифрування (Налаштування → «PIN-код і шифрування»): дані пацієнтів, кошик, копії в браузері й файли в папці даних шифруються AES-256 (ключ — з PIN, PBKDF2 310 000 ітерацій); PIN — при відкритті програми й після простою, 5 помилок — пауза 30 с; файл копії шифрується тим самим PIN і відкривається на іншому пристрої з PIN; у папці даних — без ПІБ у назвах файлів; змінити PIN, вимкнути шифрування; «Забули PIN?» — пояснення й стирання даних на пристрої (PIN не відновлюється — лише з незашифрованої копії, яку програма пропонує зберегти перед увімкненням)'],
   ['0.9.3.16', '20.10.2026', 'перевірене відновлення (Налаштування → «Резервні копії й відновлення»): перед кожним оновленням версії програма сама робить копію всіх пацієнтів у браузері (зберігаються 5 останніх); «Перевірити файл копії» — показує, скільки в ній пацієнтів, записів щоденника, аналізів і призначень, нічого не змінюючи; «Самоперевірка відновлення» — зберігає всіх і читає назад, порівнюючи до символу; відновлення з попереднім переглядом («Додати нових і оновити старіші» або «Замінити все копією»), перед ним — автоматична копія поточних даних; у файлі копії — версія програми й час; «Відкрити попередню версію програми», якщо нова працює неправильно'],
   ['0.9.3.15', '20.10.2026', 'безпечне автозаповнення: розділи, заповнені програмою (заготовка хвороби, «Норма всюди» / «Стабільно», «За шаблоном», щоденник за шаблоном, «Як попередній», схема призначень), позначено «не переглянуто» — пунктирний кружок у списку розділів і банер «✓ Переглянуто» в розділі; позначка зникає, щойно ви щось змінили в розділі; непереглянуте — у «Перевірці» й на аркуші; перед друком, копіюванням і збереженням у Word / LibreOffice — список непереглянутого з переходом до розділу. Якщо в розділах уже є ваші дані, заготовка хвороби й «Норма всюди» спершу питають: «Заповнити лише порожні» або «Перезаписати все». Вимикається в Налаштуваннях («Безпечне автозаповнення»)'],
@@ -3762,7 +3770,7 @@ function idbInit(){
       const db = r.result, all = {}, tx = db.transaction('patients', 'readonly'), cur = tx.objectStore('patients').openCursor();
       const trashRaw = {};
       cur.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) trashRaw[String(c.key).slice(6)] = c.value; else all[c.key] = c.value; c.continue(); } };
-      tx.oncomplete = () => (typeof pinUnlockAll === 'function' ? pinUnlockAll(all, trashRaw) : Promise.resolve({A:all, T:trashRaw})).then(({A, T}) => { for (const k in all) delete all[k]; Object.assign(all, A); Object.assign(TRASH, T); go(); });
+      tx.oncomplete = () => (typeof pinUnlockAll === 'function' ? pinUnlockAll(all, trashRaw) : Promise.resolve({A:all, T:trashRaw})).then(({A, T}) => { if (A !== all){ for (const k in all) delete all[k]; Object.assign(all, A); } Object.assign(TRASH, T); go(); });
       const go = () => {
         IDB.db = db; IDB.cache = all; Object.keys(all).forEach(id=>{ IDB.w[id] = all[id].updated; }); IDB.ok = true;
         // перенесення зі старого сховища (і все, що встигли зберегти до готовності бази) — новіша версія перемагає
@@ -4726,10 +4734,12 @@ const DREK = {
   mono:['Обмеження фізичних навантажень і контактних видів спорту 3–4 тижні.']
 };
 function sectionBody(doc, id){ const keep = DOC; DOC = doc; const p = sectionText(SECTIONS.find(x=>x.id === id)); DOC = keep; return p ? g(p.body) : ''; }
+/* дата первинного огляду (поле «Дата огляду» або дата створення запису) */
+function examDateISO(){ try{ const sn = (typeof PID !== 'undefined' && PID && loadStore()[PID] || {}).snap; const v = DOC === 'ohl' ? mv('dt') : (sn && sn.f && sn.f.meta_dt) || ''; return String(v || '').split('T')[0]; }catch(e){ return ''; } }
 function epiAuto(){
   const done = [], P = F('e_per.per'), today = todayISO();
-  if (!P.d1.value){ const ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push('дата надходження — з першого щоденника, перевірте'); } }
-  if (!P.d2.value){ P.d2.value = today; done.push('дата виписки'); }
+  if (!P.d1.value){ const ex = examDateISO(), ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).concat(ex ? [ex] : []).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push(ex && ds[0] === ex ? 'дата надходження — з дати первинного огляду, перевірте' : 'дата надходження — з першого щоденника, перевірте'); } }
+  if (!P.d2.value){ const lastD = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort().pop(); P.d2.value = lastD && lastD > today ? lastD : today; done.push(lastD && lastD > today ? 'дата виписки — за останнім щоденником, перевірте' : 'дата виписки'); }
   const an = F('e_per.anam'); if (!an.el.value.trim()){ const t = sectionBody('ohl', 'morbi'); if (t){ an.el.value = t; done.push('анамнез'); } }
   const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {};
   const ldyn = lf.d_main_dyn, lsk = lf.d_main_sk;
@@ -5179,7 +5189,7 @@ function markGaps(P, body){
   if (!GAPS || !L.length) return;
   if (!body){   // бланк: перелік пропусків над сторінками, кожен веде до свого поля
     const first = P.querySelector('.b003');
-    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])), first);
+    P.insertBefore(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...L.map(x=>gapMark(x.m, x.tab, x.f))), first);
     return;
   }
   L.forEach(x=>{
@@ -5193,7 +5203,7 @@ function markGaps(P, body){
   nodes.forEach(n=>{ const frag = document.createDocumentFragment();
     n.nodeValue.split('…').forEach((s,i,a)=>{ if (s) frag.append(s); if (i < a.length - 1) frag.append(h('span', {class:'gap dots', title:'Не заповнено'}, '…')); });
     n.replaceWith(frag); });
-  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab, x.f)])));
+  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.map(x=>gapMark(x.m, x.tab, x.f))));
 }
 function renderPaper(){
   const pp = $('#paper'); if (!pp) return;
@@ -7333,6 +7343,8 @@ function checkDoc(){
   }
   if (DOC === 'epi'){
     if (!F('e_per.per').d1.value || !F('e_per.per').d2.value) add('Не вказано період лікування', 'e_per', 'e_per_per_1');
+    else if (F('e_per.per').d2.value < F('e_per.per').d1.value) add(`Дата виписки (${fmtD(F('e_per.per').d2.value)}) раніше за дату надходження (${fmtD(F('e_per.per').d1.value)}) — перевірте період`, 'e_per', 'e_per_per_1');
+    { const d1 = F('e_per.per').d1.value, d2 = F('e_per.per').d2.value, late = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(x=>x && (d1 && x < d1 || d2 && x > d2)); if (late.length) add(`Є записи щоденника поза періодом лікування (${late.map(fmtD).join(', ')})`, 'e_per', 'e_per_per_1'); }
     dx();
     if (!v('e_obs.obs')) add('Не внесено результати обстежень', 'e_obs', 'e_obs.obs');
     if (!v('e_lik.lik')) add('Не вказано проведене лікування', 'e_lik', 'e_lik.lik');
@@ -12731,6 +12743,42 @@ function pinSetDialog(mode){
 }
 if (SETTINGS_EL){ pinBox = h('div', {class:'pinbox'}); SETTINGS_EL.append(h('h3', {class:'sub'}, 'PIN-код і шифрування'), pinBox); drawPin(); }
 { const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'PIN-код і шифрування даних', go:()=>{ show(TABS.findIndex(t=>t.id === 'set')); setTimeout(()=>pinBox && pinBox.scrollIntoView({block:'center'}), 80); }}); return L; }; }
+/* ===== Знахідки наскрізного аудиту сценарію лікаря (0.9.3.18) ===== */
+/* «Записати в журнал» щоденника — завжди під рукою на панелі тексту, а не лише у вкладці «Запис» */
+{ const acts = $('#outBox .oh .acts');
+  if (acts){
+    const b = h('button', {type:'button', class:'btn primary dsavebtn', id:'dSaveTop', hidden:true, title:'Записати поточний запис щоденника в журнал записів пацієнта', onclick:()=>saveDiary()}, '📓', h('span', {class:'hide-m'}, ' Записати в журнал'));
+    acts.prepend(b);
+    const mb = $('.mbar'), cp = $('#copy2'), mbd = h('button', {type:'button', class:'btn primary', id:'mbDSave', hidden:true, 'aria-label':'Записати в журнал щоденника', onclick:()=>saveDiary()}, '📓 Записати');
+    if (mb && cp) cp.before(mbd);
+    const sync = () => { const d = DOC === 'shch'; b.hidden = !d; mbd.hidden = !d; document.body.classList.toggle('doc-shch', d); };
+    const sd = switchDoc; switchDoc = function(){ const r = sd.apply(this, arguments); sync(); return r; };
+    sync();
+  } }
+/* Дата й час кожного документа зберігаються окремо: перемикання документів або повторне відкриття пацієнта
+   більше не замінює дату первинного огляду (епікризу, консультації…) на «зараз». Щоденник — як і раніше: кожен запис — своя дата. */
+let DOCDT = {}, DTKEEP = null;
+{ const md = () => document.getElementById('meta_dt');
+  const sn = setNow; setNow = function(){ if (DTKEEP){ const e = md(); if (e) e.value = DTKEEP; DTKEEP = null; return; } return sn.apply(this, arguments); };
+  const sd = switchDoc; switchDoc = function(nd){
+    const od = DOC, e = md();
+    if (od === nd || !e) return sd.apply(this, arguments);
+    if (od !== 'shch' && e.value) DOCDT[od] = e.value;
+    DTKEEP = nd !== 'shch' && DOCDT[nd] || null;
+    let r; try{ r = sd.apply(this, arguments); } finally { DTKEEP = null; }
+    if (nd !== 'shch' && DOCDT[nd] && e.value !== DOCDT[nd]){ e.value = DOCDT[nd]; try{ calcAge(); }catch(x){} if (!dirty) update(); }
+    return r;
+  };
+  const sp = snap; snap = function(){ const s = sp.apply(this, arguments); const e = md(); s.dts = Object.assign({}, DOCDT); if (e && e.value && DOC !== 'shch') s.dts[DOC] = e.value; return s; };
+  const rs = restore; restore = function(S){ DOCDT = Object.assign({}, S && S.dts || {}); if (S && !S.dts && S.f && S.f.meta_dt && (S.doc || 'ohl') !== 'shch') DOCDT[S.doc || 'ohl'] = S.f.meta_dt; return rs.apply(this, arguments); };
+  const ca = clearAll; clearAll = function(forRestore){ if (!forRestore) DOCDT = {}; return ca.apply(this, arguments); };
+  /* дата, яку лікар змінив уручну, одразу запам'ятовується для цього документа */
+  document.addEventListener('input', ev=>{ if (ev.target && ev.target.id === 'meta_dt' && DOC !== 'shch' && ev.target.value) DOCDT[DOC] = ev.target.value; }, true);
+}
+/* дата первинного огляду — для «Зібрати виписку» */
+examDateISO = function(){ const v = DOC === 'ohl' ? (document.getElementById('meta_dt') || {}).value : DOCDT.ohl; return String(v || '').split('T')[0]; };
+/* після відкриття пацієнта на іншому документі (епікриз, щоденник) — не лишати відкритою вкладку, якої в цьому документі немає */
+{ const rl = restoreLast; restoreLast = function(){ const r = rl.apply(this, arguments); try{ if (TABS[active] && TABS[active].tab.hidden){ const k = TABS.findIndex(t=>!t.tab.hidden); if (k >= 0) show(k); } }catch(e){} return r; }; }
 </script>
 
 </body>
