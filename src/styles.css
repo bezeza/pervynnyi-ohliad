@@ -182,6 +182,15 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .paper .sheet{background:#fff;color:#000;max-width:794px;margin:0 auto;padding:40px 48px 48px;box-shadow:0 2px 10px rgba(0,0,0,.18);font:12pt/1.45 "Times New Roman",Times,serif;min-height:600px}
 .paper .pr-top,#print .pr-top{display:flex;justify-content:space-between;gap:20px;font-size:10.5pt;border-bottom:1px solid #000;padding-bottom:6px;margin-bottom:10px}
 .paper .pr-top .r{text-align:right}.pr-l{display:flex;gap:10px;align-items:flex-start}.pr-logo{max-width:64px;max-height:64px;object-fit:contain}
+/* пропуски на аркуші — лише на екрані */
+.paper .gap{display:inline;background:#FFE58A;color:#5A3F00;border:0;border-radius:3px;padding:0 4px;font:inherit;font-size:.86em;font-family:system-ui,"IBM Plex Sans",sans-serif;cursor:pointer;line-height:1.35;text-align:left}
+.paper .gap.dots{padding:0 2px;font-size:1em;cursor:default}
+.paper button.gap:hover,.paper button.gap:focus-visible{background:#FFD23F;outline:2px solid #B07D00;outline-offset:1px}
+.paper .gapbar{margin:0 0 14px;padding:6px 10px;border-radius:6px;background:#FFF6D6;color:#5A3F00;font:10pt/1.4 system-ui,"IBM Plex Sans",sans-serif}
+.paper .gapbar.ok{background:#E3F4E8;color:#1E5631}
+.paper .pr-body .gaprow{text-align:left;min-height:0;margin:2px 0 3px}
+.paper .pr-body .gaplist{margin:0 0 10px;padding:6px 8px;border-left:3px solid #E0A800;background:#FFFBEA;font:10pt/1.6 system-ui,"IBM Plex Sans",sans-serif;text-align:left}
+@media print{.gap,.gapbar,.gaplist{display:none!important}}
 .paper .pr-card{text-align:center;font-size:10.5pt;margin:0 0 8px}.paper .pr-pat{margin:0 0 12px;font-size:11.5pt}.paper .pr-body div{min-height:1.2em;text-align:justify}
 .pr-logo.bw,.zlogo-prev.bw{filter:grayscale(1) contrast(1.15)}.zlogo-prev.off{opacity:.35}
 .zlogo-prev{max-height:56px;max-width:120px;border:1px solid var(--line);border-radius:6px;padding:4px;background:#fff}

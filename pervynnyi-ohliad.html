@@ -200,6 +200,15 @@ details.fold>summary{cursor:pointer;font-weight:600;padding:2px 0}details.fold[o
 .paper .sheet{background:#fff;color:#000;max-width:794px;margin:0 auto;padding:40px 48px 48px;box-shadow:0 2px 10px rgba(0,0,0,.18);font:12pt/1.45 "Times New Roman",Times,serif;min-height:600px}
 .paper .pr-top,#print .pr-top{display:flex;justify-content:space-between;gap:20px;font-size:10.5pt;border-bottom:1px solid #000;padding-bottom:6px;margin-bottom:10px}
 .paper .pr-top .r{text-align:right}.pr-l{display:flex;gap:10px;align-items:flex-start}.pr-logo{max-width:64px;max-height:64px;object-fit:contain}
+/* пропуски на аркуші — лише на екрані */
+.paper .gap{display:inline;background:#FFE58A;color:#5A3F00;border:0;border-radius:3px;padding:0 4px;font:inherit;font-size:.86em;font-family:system-ui,"IBM Plex Sans",sans-serif;cursor:pointer;line-height:1.35;text-align:left}
+.paper .gap.dots{padding:0 2px;font-size:1em;cursor:default}
+.paper button.gap:hover,.paper button.gap:focus-visible{background:#FFD23F;outline:2px solid #B07D00;outline-offset:1px}
+.paper .gapbar{margin:0 0 14px;padding:6px 10px;border-radius:6px;background:#FFF6D6;color:#5A3F00;font:10pt/1.4 system-ui,"IBM Plex Sans",sans-serif}
+.paper .gapbar.ok{background:#E3F4E8;color:#1E5631}
+.paper .pr-body .gaprow{text-align:left;min-height:0;margin:2px 0 3px}
+.paper .pr-body .gaplist{margin:0 0 10px;padding:6px 8px;border-left:3px solid #E0A800;background:#FFFBEA;font:10pt/1.6 system-ui,"IBM Plex Sans",sans-serif;text-align:left}
+@media print{.gap,.gapbar,.gaplist{display:none!important}}
 .paper .pr-card{text-align:center;font-size:10.5pt;margin:0 0 8px}.paper .pr-pat{margin:0 0 12px;font-size:11.5pt}.paper .pr-body div{min-height:1.2em;text-align:justify}
 .pr-logo.bw,.zlogo-prev.bw{filter:grayscale(1) contrast(1.15)}.zlogo-prev.off{opacity:.35}
 .zlogo-prev{max-height:56px;max-width:120px;border:1px solid var(--line);border-radius:6px;padding:4px;background:#fff}
@@ -2427,7 +2436,7 @@ function generate(){
   ORD_IDS = ORD_IDS.filter(id=>{ const sc = SECTIONS.find(x=>x.id === id); return !sc || !sc.only || sc.only === MODE; });
   RXT.tab.classList.toggle('filled', RX.length > 0);
   SECTIONS.forEach(s=>{ if (!ORD_IDS.includes(s.id)) s.tab.classList.remove('filled'); });
-  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX') return rxPart(); const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p) p.title = s.title; return p; }).filter(Boolean);
+  const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX'){ const r = rxPart(); if (r) r.sid = 'rxt'; return r; } const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p){ p.title = s.title; p.sid = id; } return p; }).filter(Boolean);
   LASTPARTS = parts;
   const M = metaLines();
   let plain = parts.map(p=>(p.head ? p.head + p.sep : '') + p.body).join('\n');
@@ -2438,7 +2447,8 @@ function generate(){
     const body = esc(p.body).replace(SUBHEADS, '$1<b>$2</b>').split('\n');
     const hd = p.head ? '<b>' + esc(p.head) + '</b>' : '';
     const lines = p.sep === '\n' && hd ? [hd, ...body] : [(hd ? hd + ' ' : '') + body[0], ...body.slice(1)];
-    return lines.map(l=>'<div>' + l + '</div>').join('');
+    const da = p.sid ? '<div data-sec="' + p.sid + '">' : '<div>';
+    return lines.map(l=>da + l + '</div>').join('');
   }).join('');
   if (html && M.head.length) html = M.head.map(x=>(x.c ? '<div style="text-align:center">' : '<div>') + (x.b ? '<b>' + esc(x.t) + '</b>' : esc(x.t)) + '</div>').join('') + html;
   if (html && M.foot.length) html += '<div><br></div>' + M.foot.map(l=>'<div>' + esc(l) + '</div>').join('');
@@ -2536,8 +2546,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.4', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.5', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.5', '20.10.2026', '«Перегляд перед друком» показує пропуски: кожне зауваження перевірки перед підписом — жовтою позначкою у своєму розділі аркуша (не вказано t°, АТ, ЧСС, бакпосів до антибіотика, обґрунтування за № 1044…), незаповнені «…» підсвічено, решта — списком угорі; натискання на позначку веде до поля; «сховати / показати»; у друк, PDF, копіювання й файли позначки не потрапляють'],
   ['0.9.3.4', '20.10.2026', 'щоденник за наказом МОЗ № 1044: рядок «Обґрунтованість перебування» формується сам — з SpO2, ЧД, САТ, кисню, динаміки й листа призначень (в/в антибіотик, парентеральна терапія, небулайзер + ГКС), з пунктами Стандарту; якщо підстав немає — підказка «плануйте виписку» і зауваження перевірки перед підписом; нове поле «Кисень, л/хв» поруч із SpO2; у вихідні — нагадування про короткий запис чергового; пневмонія — підказка про критерії клінічної стабільності для переходу на пероральний антибіотик; ХОЗЛ — попередження, якщо SpO2 на кисні вище 92%'],
   ['0.9.3.3', '13.10.2026', 'зручність: «Аркуш» перейменовано на «Перегляд перед друком» із поясненням у довідці; виправлено копіювання тексту документа на мобільному, коли панель прихована; додано наскрізний UI-тест потоку пацієнта для 8 профілів'],
   ['0.9.3.2', '12.10.2026', 'рядок пацієнта видно завжди: стать (Чоловік / Жінка, на телефоні — Ч / Ж) і «＋ Новий» — поруч із ПІБ; «Норма всюди» — над вкладками, біля «Швидкий огляд»; шапка вміщується в один рядок навіть на ноутбуці з масштабом 125 %, тема — малою кнопкою-значком'],
@@ -4747,19 +4758,47 @@ function myBtnForm(s){
 }
 /* ===== Аркуш: перегляд «як на папері» ===== */
 let PAPER = false; try{ PAPER = localStorage.getItem('po.paper') === '1'; }catch(e){}
-function fillSheet(P){
+function fillSheet(P, gaps){
   const H = formHeader(), lm = (()=>{ try{ return localStorage.getItem('po.zlogomode') || 'color'; }catch(e){ return 'color'; } })(), logo = lm === 'none' ? '' : (()=>{ try{ return localStorage.getItem('po.zlogo') || ''; }catch(e){ return ''; } })();
   P.innerHTML = '';
   P.append(h('div', {class:'pr-top'}, h('div', {class:'pr-l'}, logo ? h('img', {class:'pr-logo' + (lm === 'bw' ? ' bw' : ''), src:logo, alt:''}) : '', h('div', {}, ...H.left.flatMap((l,k)=>k ? [h('br'), l] : [l]))), h('div', {class:'r'}, ...H.right.flatMap((l,k)=>k ? [h('br'), l] : [l]))),
     H.card ? h('p', {class:'pr-card'}, H.card) : '', H.pat ? h('p', {class:'pr-pat'}, H.pat) : '');
   const body = h('div', {class:'pr-body'}); body.innerHTML = $('#out').innerHTML; P.append(body);
+  if (gaps) markGaps(P, body);
+}
+/* ===== Пропуски на аркуші: те саме, що «Перевірка перед підписом», — жовтим на своєму місці; натискання веде до поля.
+   Лише на екрані: у друк, копіювання й файли не потрапляє. ===== */
+let GAPS = true; try{ GAPS = localStorage.getItem('po.gaps') !== '0'; }catch(e){}
+function gapMark(t, tab){
+  const m = h(tab ? 'button' : 'span', tab ? {type:'button', class:'gap', title:'Перейти до поля', onclick:()=>goTab(tab)} : {class:'gap'}, t);
+  return m;
+}
+function markGaps(P, body){
+  if (!itext($('#out')).trim()) return;
+  const L = checkDoc(), rest = [];
+  const tog = h('button', {type:'button', class:'more gaptog', onclick:()=>{ GAPS = !GAPS; try{ localStorage.setItem('po.gaps', GAPS ? '1' : '0'); }catch(e){} renderPaper(); }},
+    GAPS ? 'сховати' : 'показати');
+  P.insertBefore(h('p', {class:'gapbar' + (L.length ? '' : ' ok')}, L.length ? `Пропусків і зауважень: ${L.length} · ` : 'Пропусків немає', L.length ? tog : ''), P.firstChild);
+  if (!GAPS || !L.length) return;
+  L.forEach(x=>{
+    if (/^Залишилось незаповнених «…»/.test(x.m)) return;   // «…» підсвічуються на своєму місці нижче
+    if (x.tab === 'meta' && /ПІБ пацієнта/.test(x.m)){ const pp = P.querySelector('.pr-pat'); if (pp){ pp.append(' ', gapMark('ПІБ не вказано', 'meta')); return; } }
+    const sec = x.tab && [...body.querySelectorAll('[data-sec="' + x.tab + '"]')].pop();
+    if (sec) sec.append(h('div', {class:'gaprow'}, gapMark(x.m, x.tab))); else rest.push(x);
+  });
+  const tw = document.createTreeWalker(body, NodeFilter.SHOW_TEXT), nodes = [];
+  while (tw.nextNode()) if (tw.currentNode.nodeValue.includes('…')) nodes.push(tw.currentNode);
+  nodes.forEach(n=>{ const frag = document.createDocumentFragment();
+    n.nodeValue.split('…').forEach((s,i,a)=>{ if (s) frag.append(s); if (i < a.length - 1) frag.append(h('span', {class:'gap dots', title:'Не заповнено'}, '…')); });
+    n.replaceWith(frag); });
+  if (rest.length) body.prepend(h('div', {class:'gaplist'}, h('b', {}, 'Ще не заповнено: '), ...rest.flatMap((x,i)=>[i ? '; ' : '', gapMark(x.m, x.tab)])));
 }
 function renderPaper(){
   const pp = $('#paper'); if (!pp) return;
   $('#out').hidden = PAPER; pp.hidden = !PAPER; $('#outBox').classList.toggle('paperon', PAPER);
   const b = $('#paperBtn'); if (b) b.setAttribute('aria-pressed', PAPER ? 'true' : 'false');
   if (!PAPER) return;
-  const sheet = pp.querySelector('.sheet'); fillSheet(sheet);
+  const sheet = pp.querySelector('.sheet'); fillSheet(sheet, true);
   if (!itext($('#out')).trim()) sheet.querySelector('.pr-body').append(h('p', {class:'chips-hint'}, 'Текст документа з’явиться тут, щойно заповните форму.'));
 }
 function zlogoSet(file){
