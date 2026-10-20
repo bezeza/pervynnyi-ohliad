@@ -11,11 +11,17 @@ const js = man.js.map(f => read('js/' + f)).join('');
 // джерело в тому ж вигляді, що й раніше (без doctype): голова, стилі, розмітка, скрипт, хвіст
 // шрифти вбудовуються у файл (жодних звернень до сторонніх серверів): src/fonts/fonts.json + *.woff2
 const fontCss = JSON.parse(read('fonts/fonts.json')).map(f=>`@font-face{font-family:"${f.family}";font-style:normal;font-weight:${f.weight};font-display:swap;src:url(data:font/woff2;base64,${fs.readFileSync(S('fonts/' + f.file)).toString('base64')}) format("woff2");unicode-range:${f.range}}`).join('\n') + '\n';
-const app = read('head.html') + '<style>\n' + fontCss + read('styles.css') + '</style>\n' + read('body.html') + '<script>\n' + js + '</script>\n' + read('tail.html');
+let app = read('head.html') + '<style>\n' + fontCss + read('styles.css') + '</style>\n' + read('body.html') + '<script>\n' + js + '</script>\n' + read('tail.html');
 try { new vm.Script(js, {filename: 'app.js'}); } catch (e) { console.error('Помилка синтаксису в src/js:', e.message); process.exit(1); }
 const ver = (js.match(/const VERSION = '([^']+)'/) || [])[1];
 if (!ver) { console.error('Не знайдено VERSION'); process.exit(1); }
+// версія — лише в VERSION (src/js/120-version-changelog.js); решта береться звідти
+const stage = (js.match(/STAGE = '([^']*)'/) || [])[1] || '', vdate = (js.match(/VDATE = '([^']+)'/) || [])[1] || '';
+const first = (js.match(/const CHANGELOG = \[\s*\['([^']+)'/) || [])[1];
+if (first !== ver){ console.error(`Історія змін починається з ${first}, а VERSION = ${ver} — додайте запис у CHANGELOG`); process.exit(1); }
 if (process.argv.includes('--check')) { console.log('OK, версія', ver); process.exit(0); }
+const badge = `v${ver}${stage ? ' ' + stage : ''}`;
+app = app.replace(/(id="vBadge"[^>]*>)[^<]*/, `$1${badge}`).replace(/(id="vBadge")/, `$1 title="Версія ${ver} від ${vdate}"`);
 const k = app.indexOf('</style>\n') + '</style>\n'.length;
 const offline = '<!doctype html>\n<html lang="uk">\n<head>\n' + app.slice(0, k) + '</head>\n<body>\n' + app.slice(k).replace(/\n+$/, '') + '\n\n</body>\n</html>\n';
 const pwa = '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color" content="#1D5B8A">\n<link rel="apple-touch-icon" href="apple-touch-icon.png">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-title" content="Первинний огляд">\n';
@@ -27,4 +33,5 @@ fs.writeFileSync(path.join(ROOT, 'pervynnyi-ohliad.html'), offline);  // офл�
 fs.writeFileSync(path.join(ROOT, 'index.html'), index);               // сайт
 const sw = path.join(ROOT, 'sw.js');
 fs.writeFileSync(sw, fs.readFileSync(sw, 'utf8').replace(/const CACHE = '[^']*'/, `const CACHE = 'pervynnyi-ohliad-v${ver}'`));
+{ const rp = path.join(ROOT, 'README.md'), rd = fs.readFileSync(rp, 'utf8'), nr = rd.replace(/\*\*Версія [^*·]+· [^*]+\*\*/, `**Версія ${ver} · ${stage || 'реліз'}**`); if (nr !== rd) fs.writeFileSync(rp, nr); }
 console.log(`Зібрано v${ver}: ${man.js.length} блоків, ${(Buffer.byteLength(offline) / 1024).toFixed(0)} КБ`);
