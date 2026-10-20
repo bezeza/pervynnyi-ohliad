@@ -65,6 +65,12 @@ function diaryFromExam(k){
   if (k === 3) F('d_lik.kor').el.value = '…';
   diaryDone('Заповнено: «' + dtplName(k) + '» — з даних первинного огляду. Внесіть показники (t°, АТ, ЧСС) і змініть те, що інакше');
 }
+/* щоденник ще не заповнювали: усі поля порожні */
+function diaryUntouched(){
+  return DSEC.every(id=>SECTIONS.find(x=>x.id===id).fields.every(f=>f.type === 'sel' ? f.el.value === '' : f.type === 'num' ? f.inputs.every(i=>!i.value.trim()) : f.type === 'text' || f.type === 'line' ? !f.el.value.trim() : true));
+}
+/* у первинному огляді вже є об’єктивні дані */
+function examFilled(){ return !!curKey || ['zah','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')); }
 function diaryDone(msg){ setNow(); dirty = false; $('#banner').hidden = true; update(); toast(msg, 3500); }
 function diaryTplSave(name){
   const v = {};

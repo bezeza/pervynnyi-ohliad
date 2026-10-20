@@ -141,8 +141,20 @@ function applyAuto(){
   const hint = $('#autoHint'); if (hint) hint.hidden = !autoN;
 }
 
+/* чи обрізається текст вибраного варіанта у списку (видимий — міряємо, прихований — за довжиною) */
+function selCut(sel, t){
+  const w = sel.clientWidth; if (!w) return t.length > 38;
+  try{ const c = selCut.c || (selCut.c = document.createElement('canvas').getContext('2d')); const cs = getComputedStyle(sel); c.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily; return c.measureText(t).width > w - 34; }catch(e){ return t.length > 38; }
+}
 function mark(sel, f){
   if (f.headOnly) return;
+  { // довгий вибраний варіант не вміщується в список — повний текст рядком під ним
+    const t = sel.value !== '' && sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : '';
+    sel.title = t;
+    let sf = sel.nextElementSibling && sel.nextElementSibling.classList.contains('selfull') ? sel.nextElementSibling : null;
+    if (t && selCut(sel, t)){ if (!sf){ sf = h('div', {class:'selfull'}); sel.after(sf); } sf.textContent = t; }
+    else if (sf) sf.remove();
+  }
   sel.classList.toggle('set', sel.value !== '');
   sel.classList.toggle('abn', sel.value !== '' && f.norm !== undefined && +sel.value !== f.norm);
 }

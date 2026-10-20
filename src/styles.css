@@ -59,6 +59,9 @@ button,select,input,textarea{font:inherit;color:inherit}
 .f>label,.f>.lbl{font-size:12.5px;color:var(--muted);font-weight:500;letter-spacing:.02em}
 select,input,textarea{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 9px;min-width:0}
 textarea{resize:vertical;min-height:64px}
+.nums input::placeholder{color:var(--muted);opacity:.42;font-style:italic}
+.seg-hidden+.selfull{display:none}
+.selfull{font-size:12.5px;line-height:1.35;color:var(--muted);margin-top:3px}
 select.abn,.nums input.abn{border-color:var(--flag);background:var(--flag-soft)}
 #meta_edrpou.bad,#meta_email.bad,.nums input.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
 select.set:not(.abn){border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
@@ -479,9 +482,12 @@ details.box[open]{padding-bottom:12px}
 @media (prefers-reduced-motion:reduce){.toast,.out{transition:none}}
 
 /* ===== Зручність 2 (0.9.1) ===== */
-#out .flash{animation:po-flash 1.6s ease-out}
-@keyframes po-flash{0%{background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}100%{background:transparent;box-shadow:0 0 0 3px transparent}}
-@media (prefers-reduced-motion:reduce){#out .flash{animation:none}}
+#out .flash,.paper .flash{animation:po-flash 2.6s ease-out}
+mark.chg{background:#FFE58A;color:inherit;border-radius:3px;padding:0 1px;box-shadow:0 0 0 2px #FFE58A;animation:po-chg 2.8s ease-out forwards}
+@keyframes po-chg{0%,55%{background:#FFE58A;box-shadow:0 0 0 2px #FFE58A}100%{background:transparent;box-shadow:0 0 0 2px transparent}}
+@media print{mark.chg{background:none!important;box-shadow:none!important}}
+@keyframes po-flash{0%,45%{background:#FFF3C4;box-shadow:0 0 0 3px #FFF3C4}100%{background:transparent;box-shadow:0 0 0 3px transparent}}
+@media (prefers-reduced-motion:reduce){#out .flash{animation:none}mark.chg{animation:none;background:transparent;box-shadow:none;text-decoration:underline 2px #E0A800}}
 .cbadge{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;margin-left:7px;border-radius:9px;background:var(--flag);color:#fff;font:600 11px/1 var(--f-ui)}
 .cbadge[hidden]{display:none}
 .tab.cw .dot{visibility:visible;background:var(--flag)}
