@@ -1130,3 +1130,4 @@ summary .vdot{color:var(--ok);font-weight:700}
 .b003 .b066sig{margin-top:18px}
 .fromres input{border-style:dashed}
 @media print{.b003 .btab td{color:#000}}
+.b003 .b066dx2 td{height:1.55em}.b003 .b066op2{font-size:.82em}.b003 .b066op2 th{font-size:.85em}
