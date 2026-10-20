@@ -60,7 +60,7 @@ function buildField(s, f){
   if (f.only) wrap.dataset.only = f.only;
   if (f.docs) wrap.dataset.docs = f.docs.join(' ');
   wrap.hidden = (f.only && f.only !== MODE) || (f.docs && !f.docs.includes(DOC));
-  if (f.loc){ f.wrapEl = wrap; wrap.hidden = true; }
+  f.wrapEl = wrap; if (f.loc) wrap.hidden = true;
   if (f.type === 'sel'){
     wrap.append(h('label', {for:id}, f.label));
     const sel = h('select', {id, onchange:()=>{ f.autoSet = false; mark(sel,f); update(); }});

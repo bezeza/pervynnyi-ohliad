@@ -35,9 +35,15 @@ function diaryReset(){
     if (f.type === 'text') f.el.value = '';
   }));
 }
+/* джерело даних: первинний огляд; чого в ньому немає — з еталонного шаблону хвороби (curKey) */
+function examOwn(){ return ['zah','shk','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')) || !!val(F('skarhy.c'), true); }
 function diaryFromExam(k){
-  const T = key => val(F(key), true), ix = key => F(key).el.value === '' ? -1 : +F(key).el.value;
-  const abn = key => { const f = F(key); return f.el.value !== '' && f.norm !== undefined && +f.el.value !== f.norm; };
+  const P0 = curKey ? PRESETS.find(x=>x.key === curKey) : null, P = P0 ? sidePreset(P0) : null, fromExam = examOwn();
+  const pv = key => { if (!P) return ''; if (key === 'skarhy.c') return (P.skarhy || []).join(', '); const v = (P.set || {})[key]; return v === undefined ? '' : Array.isArray(v) ? v.join(', ') : String(v); };
+  const own = key => { const f = F(key); return f.type === 'sel' ? f.el.value !== '' : !!val(f, true); };
+  const T = key => own(key) ? val(F(key), true) : pv(key);
+  const ix = key => { const f = F(key); if (f.el.value !== '') return +f.el.value; const t = pv(key); return t && f.opts ? f.opts.findIndex(o=>O(o).t === t) : -1; };
+  const abn = key => { const f = F(key); if (f.norm === undefined) return false; const i = ix(key); return i >= 0 && i !== f.norm; };
   diaryReset();
   setByText('d_main.dyn', ['Стан без суттєвої динаміки','Стан з позитивною динамікою','Стан покращився','Стан погіршився'][k]);
   let st = Math.min(Math.max(ix('zah.stan'), 0), 2);
@@ -63,7 +69,7 @@ function diaryFromExam(k){
   if (MODE === 'amb') setByText('d_lik.plan', k === 2 ? 'Лікування завершено, подальше спостереження сімейного лікаря' : k === 3 ? 'Вирішується питання про госпіталізацію' : 'Повторний огляд через … днів');
   else setByText('d_lik.plan', k === 2 ? 'Планується виписка ….' : k === 3 ? 'Консультація … призначена' : 'Продовжує лікування за планом');
   if (k === 3) F('d_lik.kor').el.value = '…';
-  diaryDone('Заповнено: «' + dtplName(k) + '» — з даних первинного огляду. Внесіть показники (t°, АТ, ЧСС) і змініть те, що інакше');
+  diaryDone('Заповнено: «' + dtplName(k) + '» — ' + (fromExam || !P0 ? 'з даних первинного огляду' : 'за хворобою «' + P0.name + '»') + '. Внесіть показники (t°, АТ, ЧСС) і змініть те, що інакше');
 }
 /* щоденник ще не заповнювали: усі поля порожні */
 function diaryUntouched(){

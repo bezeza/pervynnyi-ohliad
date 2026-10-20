@@ -86,7 +86,7 @@ function diaryBlock(){
   const tbar = h('div', {class:'pt dtpl'},
     h('div', {class:'res-form'}, h('span', {class:'lbl adm-l', style:'margin:0'}, 'Дата надходження'), adm, h('span', {class:'chips-hint adm-h'}, 'Від неї рахується день перебування; вона ж піде у виписний епікриз.')),
     h('h3', {}, 'Шаблон запису'),
-    h('p', {class:'chips-hint'}, 'Заповнює щоденник за даними первинного огляду (стан, хрипи, ритм, живіт, набряки, неврологія) і журналу обстежень.'),
+    h('p', {class:'chips-hint'}, 'Заповнює щоденник за даними первинного огляду, а чого в ньому немає — за еталонним шаблоном хвороби (стан, хрипи, ритм, живіт, набряки, неврологія) і журналу обстежень.'),
     h('div', {class:'chips'}, ...DTPL.map((n,k)=>h('button', {type:'button', class:'chip q dtpl-b', 'data-k':k, onclick:()=>diaryFromExam(k)}, n))),
     h('div', {class:'chips dtpl-my', style:'margin-top:6px'}),
     h('details', {class:'dsave'}, h('summary', {}, 'Зберегти поточний запис як мій шаблон'),

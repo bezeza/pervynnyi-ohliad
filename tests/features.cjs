@@ -244,6 +244,31 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      w.eval("(()=>{ const f=F('ssc.shum'); f.el.value='2'; f.el.dispatchEvent(new Event('change')); })()");
      const m2=[...doc.querySelectorAll('#out mark.chg')].map(x=>x.textContent).join('|');
      ok('Зміна частини фрази — підсвічено лише нову частину', m2==='над аортою.', m2); }
+ // 0.9.4 оформлення «Д» і щоденник під хворобу
+ { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
+   ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
+   const pc=doc.querySelector('#ptline .pcols').textContent;
+   ok('Оформлення: банер пацієнта з ініціалами, діагнозом і кодом МКХ-10', doc.querySelector('#ptline .pava').textContent==='ТП' && /J18/.test(pc), pc);
+   ok('Оформлення: еталонний шаблон і прогрес у бічній картці', /Негоспітальна пневмонія/.test($('sidecard').textContent) && /Заповнено/.test($('sidecard').textContent), $('sidecard').textContent);
+   const r=w.eval("(()=>{ const s=SECTIONS.find(x=>x.id==='dyh'), f=F('dyh.hr'); f.el.value=''; mark(f.el,f); update(); const b=s.tplBtn, vis=!b.hidden; b.click(); return [vis, val(F('dyh.hr'),true)] })()");
+   ok('«За шаблоном» заповнює лише поточний розділ', r[0] && /вологі/.test(r[1]), JSON.stringify(r)); }
+   { const ob=$('outBox'), tb=[...ob.querySelectorAll('.otabs button')];
+     ok('Панель тексту: вкладки «Текст · Перевірка · Перед друком»', tb.map(b=>b.textContent.replace(/\d+|✓/g,'').trim()).join('|')==='Текст|Перевірка|Перед друком', tb.map(b=>b.textContent).join('|'));
+     ok('Панель тексту: «Копіювати», «Друк», «Зберегти» — унизу', !!ob.querySelector('.ofoot #copy') && !!ob.querySelector('.ofoot #printBtn') && !!ob.querySelector('.ofoot .savewrap'));
+     tb[1].click(); ok('Вкладка «Перевірка»: список зауважень замість тексту, число — на вкладці', ob.dataset.ov==='chk' && $('chk').open && /\d/.test(tb[1].textContent));
+     tb[2].click(); ok('Вкладка «Перед друком» вмикає аркуш', w.eval('PAPER')===true && ob.dataset.ov==='paper');
+     tb[0].click(); ok('Вкладка «Текст» повертає текст', w.eval('PAPER')===false && ob.dataset.ov==='text' && !$('out').hidden); }
+ { w.eval("DIARIES=[]; curKey=null; SECTIONS.filter(s=>s.objective||s.id==='skarhy').forEach(s=>clearSection(s)); switchDoc('ohl'); switchDoc('shch')");
+   ok('Щоденник без огляду й хвороби — форма питає хворобу', /Для якої хвороби щоденник/.test($('dsrc').textContent), $('dsrc').textContent.slice(0,120));
+   w.eval("pickDiaryDisease('hf')");
+   ok('Щоденник за хворобою: заповнено з еталонного шаблону', /Щоденник/.test(out()) && /набряки/i.test(out()), out().slice(0,300));
+   const vis=id=>!w.eval(`F('d_obj.${id}').wrapEl.hidden`);
+   ok('Щоденник під ХСН: маса тіла й діурез показано, живіт і глікемію сховано', vis('masa') && !vis('zhyv') && !vis('glik') && !/Живіт/.test(out()));
+   ok('Щоденник під ХСН: обов’язкові пункти позначено «важливо»', w.eval("F('d_obj.masa').wrapEl.classList.contains('dneed')"));
+   ok('Підказка щоденника: що щодня внести', w.eval("diaryHints().some(x=>/щодня внесіть/.test(x))"));
+   set('d_obj_masa_0','82'); set('d_obj_masa_1','1400'); ok('Маса тіла й діурез — у тексті щоденника', /Маса тіла 82 кг, діурез 1400 мл\/добу/.test(out()), out());
+   w.eval("DSHOWALL=true; update()"); ok('«Показати всі пункти» повертає сховане', vis('zhyv'));
+   w.eval("DSHOWALL=false; update(); switchDoc('ohl')"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
