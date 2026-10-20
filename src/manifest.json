@@ -76,6 +76,7 @@
   "596-ptline.js",
   "597-shell.js",
   "598-diary-quick.js",
-  "599-links.js"
+  "599-links.js",
+  "600-skia.js"
  ]
 }

@@ -290,6 +290,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("BLANK=false; renderPaper()"); const sec=doc.querySelector('#paper [data-sec="dyh"]'); if (sec){ sec.click(); }
    ok('«Текст документа» на аркуші: клік по розділу відкриває його', !sec || w.eval("TABS[active].id")==='dyh');
    w.eval("PAPER=false; renderPaper()"); }
+ // 0.9.3.10 зі Skiagrama: пацієнти, захист екрана, принтер; клікабельний банер
+ { const mk=n=>{ w.eval('newPatient()'); set('meta_pib', n); ap('pneu'); w.eval('savePatient(true)'); };
+   mk('Тест Видалення Один'); mk('Тест Видалення Два'); mk('Тест Видалення Три');
+   const n0=w.eval('Object.keys(loadStore()).length');
+   $('ptbar').click(); const dl=()=>doc.querySelector('.pmgr');
+   ok('Пацієнти: список із фільтрами й видаленням', !!dl() && /У відділенні/.test(dl().textContent) && dl().querySelectorAll('.pmdel').length>=3);
+   const b=dl().querySelector('.pmdel'); b.click(); b.click();
+   ok('Пацієнти: 🗑 видаляє в кошик', w.eval('Object.keys(loadStore()).length')===n0-1 && w.eval('Object.keys(TRASH).length')>=1);
+   const cbs=[...dl().querySelectorAll('.pmrow input[type=checkbox]')]; cbs[0].click(); cbs[1].click();
+   const bd=[...dl().querySelectorAll('.pmbar button')].find(x=>/Видалити вибраних \(2\)/.test(x.textContent));
+   ok('Пацієнти: вибір кількох — «Видалити вибраних (2)»', !!bd); bd.click(); [...dl().querySelectorAll('.pmbar button')].find(x=>/Точно/.test(x.textContent)).click();
+   ok('Пацієнти: вибраних видалено разом', w.eval('Object.keys(loadStore()).length')===n0-3);
+   dl().remove(); }
+ { ok('Захист екрана: налаштування і екран «Продовжити роботу»', !!$('set_lock') && !!$('lockScr'));
+   w.eval('lockNow()'); ok('Захист екрана ховає дані', !$('lockScr').hidden); $('lockGo').click(); ok('«Продовжити роботу» повертає', $('lockScr').hidden);
+   ok('Папір і принтер: підшивка, зсув, пробний аркуш', !!doc.querySelector('.paperctl') && /Пробний аркуш/.test(doc.querySelector('.paperctl').textContent)); }
+ { w.eval("switchDoc('ohl')"); ap('pneu'); w.eval("switchDoc('shch')"); const c=[...doc.querySelectorAll('#ptline .pcol')].find(x=>/Діагноз/.test(x.textContent));
+   c.click(); ok('Банер: клік по діагнозу відкриває діагноз у первинному огляді', w.eval('DOC')==='ohl' && w.eval('TABS[active].id')==='dx'); }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
