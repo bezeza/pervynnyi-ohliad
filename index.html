@@ -735,22 +735,22 @@ body.shell #ptline{margin:0 -16px 14px;border-radius:0;background:var(--surface)
 body.shell.lay-B #ptline{padding-left:max(16px,calc((100vw - 1680px)/2));padding-right:max(16px,calc((100vw - 1680px)/2))}
 .pava{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font:600 14px var(--f-head);letter-spacing:.02em}
 .pava.none{color:var(--muted)}
-body.shell #ptline #ptbar{flex:0 1 auto;max-width:440px;padding:2px 26px 2px 0}
+body.shell #ptline #ptbar{flex:0 1 auto;max-width:400px;padding:2px 26px 2px 0}
 body.shell #ptline #ptbar .pt1{font-size:15px}
 body.shell #ptline #ptbar .pt1 b{font-size:16px}
 .pcols{display:none}
-.pcol{display:flex;flex-direction:column;gap:1px;border-left:1px solid var(--line);padding-left:16px;min-width:0;line-height:1.3}
+.pcol{display:flex;flex-direction:column;gap:1px;border:0;border-left:1px solid var(--line);background:none;color:inherit;font:inherit;text-align:left;padding:2px 8px 2px 16px;min-width:0;line-height:1.3;cursor:pointer;border-radius:0 6px 6px 0}
+.pcol:hover{background:var(--accent-soft)}.pcol:hover .pval{color:var(--accent)}.pcol:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .plab{font:500 10.5px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .pval{font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcode{font:500 12px var(--f-num);background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 5px}
 .pbadge{font-size:12px;border-radius:999px;padding:1px 8px}
 .pbadge.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
 .pbadge.warn{background:var(--flag-soft);color:var(--flag)}
-body.shell #ptline #sexSeg{margin-left:auto}
+body.shell #ptline #sexSeg{margin-left:0}body.shell #ptline #clearAll{margin-left:auto}
 @media (min-width:1200px){
   .pcols{display:flex;gap:16px;flex:1 1 auto;min-width:0;overflow:hidden}
   body.shell #ptline.hascols #ptbar .pt2{display:none}
-  body.shell #ptline #sexSeg{margin-left:0}
 }
 /* картки */
 body.shell .form,body.shell .out{border-radius:10px;box-shadow:var(--shadow)}
@@ -864,7 +864,7 @@ body.shell .oh{flex-wrap:nowrap}
 .b003 .badr{text-align:left;margin:2px 0 4px}
 .b003 .bedr{font-size:1.1em;margin-top:4px}
 /* ===== Бланк 003/о: сторінка = аркуш А4 (0.9.3.9) ===== */
-.b003.bA4{--bsc:1;width:210mm;max-width:none;height:297mm;padding:10mm 10mm 10mm 15mm;margin:0 auto 16px;overflow:hidden;font-size:calc(10pt * var(--bsc));line-height:1.32;display:flex;flex-direction:column}
+.b003.bA4{--bsc:1;width:210mm;max-width:none;height:297mm;padding:10mm 10mm 10mm calc(15mm + var(--bind,0mm));margin:0 auto 16px;overflow:hidden;font-size:calc(10pt * var(--bsc));line-height:1.32;display:flex;flex-direction:column}
 .b003.bA4 .bframe{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .b003.bA4 .bs{font-size:.75em}.b003.bA4 .bhead{font-size:.9em}.b003.bA4 .bt{font-size:1.12em}
 .b003.bA4 .blines{line-height:1.45em;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.45em - 1px),#000 calc(1.45em - 1px),#000 1.45em)}
@@ -915,6 +915,19 @@ body.shell .top .seg button:not([aria-pressed="true"]):hover{background:rgba(255
 /* аркуш: пункти клікабельні — відкривають поле у формі */
 .paper .b003 .brow,.paper .b003 .bt2,.paper .b003 .blines,.paper .b003 .bdl,.paper [data-sec]{cursor:pointer;border-radius:2px}
 .paper .b003 .brow:hover,.paper .b003 .bt2:hover,.paper .b003 .blines:hover,.paper .b003 .bdi.bcur .bdl:hover,.paper .pr-body [data-sec]:hover{background-color:rgba(47,123,184,.09);box-shadow:0 0 0 2px rgba(47,123,184,.18)}
+/* ===== Зі Skiagrama (0.9.3.10) ===== */
+.pmgr .nvbox{max-width:860px}
+.pmseg{display:flex;flex-wrap:wrap;margin-bottom:8px}.pmseg button{flex:1 1 auto}
+.pmbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.pmrow{display:flex;align-items:center;gap:8px;border-radius:8px}.pmrow>input[type=checkbox]{margin:0 2px 0 6px}
+.pmrow .swrow{flex:1 1 auto;min-width:0}.pmrow.on{background:var(--accent-soft)}
+.pmrow .pmdel{flex:0 0 auto;padding:6px 10px;color:var(--bad);border-color:transparent;background:none}.pmrow .pmdel:hover{border-color:var(--bad)}
+.pmfoot{margin-top:10px}
+.btn.danger{border-color:var(--bad);color:var(--bad);font-weight:500}
+.lockscr{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.lockbox{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:360px;padding:24px}.lockic{font-size:40px}
+.paperctl{align-items:flex-end;gap:10px 14px}.paperctl .wl{display:flex;flex-direction:column;font-size:12.5px;color:var(--muted)}
+@media print{body.locked #print{display:block}#print .b003.bA4{padding-left:var(--bind,0mm)!important;transform:translate(var(--offx,0mm),var(--offy,0mm))}#print .ruler{transform:translate(var(--offx,0mm),var(--offy,0mm))}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2830,8 +2843,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.9', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.10', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.10', '20.10.2026', 'зі Skiagrama: «Пацієнти» (натисніть смужку з ПІБ) — фільтри «Усі · У відділенні · Виписані · Амбулаторно», пошук і за діагнозом, видалення 🗑 у кожному рядку, вибір кількох («вибрати всіх у списку») — видалити або зберегти у файл разом, «Виписані > 30 днів» — вибрати одним натисканням, кошик на 30 днів з відновленням. Захист екрана: після 10 хв без дій дані пацієнта ховаються за «Продовжити роботу» (час — у Налаштуваннях, Ctrl+K «Сховати екран»). Папір і принтер для бланків 003/о: поле під підшивку, зсув принтера ↔ ↕, пробний аркуш з лінійкою. Банер пацієнта: діагноз, госпіталізація й алергії — клікабельні (відкривають поле); «Чоловік / Жінка» — одразу біля ПІБ'],
   ['0.9.3.9', '20.10.2026', 'бланк 003/о: шапка закладу — як на друкованому бланку: рядок міністерства порожній (якщо не вказано в Налаштуваннях), назва закладу великими жирними літерами по центру, адреса — окремим рядком, Код за ЄДРПОУ — у клітинках. Бланк — на весь аркуш А4: сторінка в перегляді = аркуш, розмір тексту підбирається сам, щоб займати весь аркуш (вимкнути «на весь аркуш» — розмір A− / A+ вручну), вільні поля для запису розтягуються до низу. Щоденник: 1, 2 чи 3 записи на аркуш (аркуш ділиться на рівні місця) або «авто» — скільки вміститься; «Друкувати з місця: 2-го» — новий запис друкується на вільну половину вже початого аркуша (без рамки й заголовка); вільне місце на аркуші — бланк щоденника для запису від руки (або огляд завідувача, консультація, лінійки, порожньо). Дата запису щоденника — вибір прямо в щоденнику (‹ день ›, «Зараз»), день перебування рахується від неї; закріплена дата не замінюється сьогоднішньою, після «Записати в журнал» — наступний день (зручно вести історію за минулі дні). Пропуски t°, АТ, пульсу, ЧД на бланку щоденника — натиснути і вписати на місці; перехід до поля з перевірки закриває панель тексту на телефоні. Обґрунтованість перебування: повна назва Стандарту «Критерії госпіталізації…» (наказ МОЗ від 30.07.2026 № 1044) і пункт; підстави підбираються кнопками (підсвічено ті, що є за показниками й призначеннями) + критерії для обраної хвороби. «＋ Документ з огляду» — консультаційний висновок, направлення, довідка тощо одним кліком; у консультації скарги, анамнез й об’єктивно беруться з огляду і правляться на місці («Підставити з огляду»), «← Первинний огляд» — назад. Перемикач «Стаціонар / Амбулаторно» в шапці читається; документи, що не вміщаються в шапку, — над формою. Виписний епікриз: «Дані обстеження» п. 46–53 бланка (ЗАК, ЗАС, печінкові проби, копрограма, глюкоза, амілаза, глюкоза й діастаза сечі) — окремими полями у вкладці «Обстеження» і вписуються просто на бланку натисканням на пункт. «Перед друком»: будь-який пункт аркуша (33. Скарги, 34. Анамнез, хрипи, А/Т, живіт, діагноз, 55–57 епікризу, записи щоденника…) — клік відкриває потрібну вкладку й поле, поле блимає, курсор — на початку'],
   ['0.9.3.8', '20.10.2026', 'нове оформлення, як у професійних медичних системах: темна шапка з документами вкладками; банер пацієнта на всю ширину (ініціали, ПІБ, діагноз з кодом МКХ-10, день госпіталізації, алергії) — видно з будь-якого розділу; на широкому екрані розділи — збоку з кружками стану (заповнено / є зауваження / порожньо), смужкою «Заповнено N з M» і карткою «Еталонний шаблон» («Змінити шаблон…»); кнопка «За шаблоном» біля назви розділу заповнює лише цей розділ за обраною хворобою; панель тексту — вкладки «Текст · Перевірка (число зауважень) · Перед друком», «Копіювати», «Друк», «Зберегти», «Для ШІ» — однією смужкою внизу. Щоденник під хворобу: заповнюється з первинного огляду, а чого в ньому немає — з еталонного шаблону хвороби; без огляду й хвороби форма спершу питає «Для якої хвороби щоденник?»; під хворобу показано потрібні пункти «Об’єктивно» (нові: глікемія, маса тіла й діурез, пікфлоуметрія), зайві сховано («Показати всі пункти» — повертає), обов’язкові для щоденного контролю позначено «важливо» і нагадано в підказках'],
   ['0.9.3.7', '20.10.2026', 'ергономіка: перший щоденник заповнюється з первинного огляду («Без динаміки» — хрипи, тони, набряки, живіт як в огляді), а не «нормою»; вибір хвороби більше не ставить норму в щоденник; сірі підказки в полях показників (36,6, 130/80, 76, 16, 97) — бліді й курсивом, щоб не плутати з внесеними значеннями; довгий вибраний варіант у списку, що не вміщується, показується повністю рядком під списком; коротша назва поля «Кисень»; після натискання кнопки чи вибору варіанта в тексті справа жовтим підсвічуються саме змінені слова (на 3 с), а панель тексту й «Перегляд перед друком» самі прокручуються до них'],
@@ -11105,6 +11119,8 @@ const SHELL = {};
   wrap.before(line);
   const ava = h('span', {class:'pava', 'aria-hidden':'true'}); line.prepend(ava);
   const cols = h('div', {class:'pcols'}); $('#ptbar').after(cols);
+  /* стать — одразу біля ПІБ, щоб було зрозуміло, чия вона */
+  { const sx = $('#sexSeg'); if (sx){ $('#ptbar').after(sx); sx.title = 'Стать пацієнта'; } }
   const shortDx = t => { t = String(t || '').replace(/\s*\(.*$/, '').split(/[,;.]/)[0].trim(); return t.length > 46 ? t.slice(0, 44).trim() + '…' : t; };
   const dmy = d => { const m = /^(\d{4})-(\d\d)-(\d\d)/.exec(d || ''); return m ? `${m[3]}.${m[2]}.${m[1]}` : ''; };
   function drawBanner(){
@@ -11112,20 +11128,24 @@ const SHELL = {};
     ava.textContent = pib ? pib.split(/\s+/).filter(Boolean).slice(0, 2).map(w=>w[0]).join('').toUpperCase() : '?';
     ava.classList.toggle('none', !pib);
     cols.innerHTML = '';
-    const col = (l, ...v) => cols.append(h('div', {class:'pcol'}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
+    const col = (l, go, ...v) => cols.append(h('button', {type:'button', class:'pcol', title:'Відкрити: ' + l.toLowerCase(), onclick:go}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
     try{
       const mkh = val(F('dx.mkh'), true), osn = val(F('dx.osn'), true);
-      if (mkh || osn) col('Діагноз', mkh ? h('span', {class:'pcode'}, mkh) : '', shortDx(osn));
-      if (MODE === 'hosp'){ const n = stayDay(), d = F('e_per.per').d1.value; if (n || d) col('Госпіталізація', (n ? 'День ' + n : '') + (n && d ? ' · ' : '') + dmy(d)); }
+      if (mkh || osn) col('Діагноз', ()=>SHELL.goExam('dx', 'dx.osn'), mkh ? h('span', {class:'pcode'}, mkh) : '', shortDx(osn));
+      if (MODE === 'hosp'){ const n = stayDay(), d = F('e_per.per').d1.value; if (n || d) col('Госпіталізація', ()=>SHELL.goAdm(), (n ? 'День ' + n : '') + (n && d ? ' · ' : '') + dmy(d)); }
       const a = F('vitae.alerg');
       if (a && a.el && a.el.value !== ''){
         const okA = String(a.el.value) === String(a.norm), x = val(F('vitae.alergx'), true);
-        col('Алергії', h('span', {class:'pbadge ' + (okA ? 'ok' : 'warn')}, okA ? 'не обтяжений' : (x ? shortDx(x) : 'обтяжений')));
+        col('Алергії', ()=>SHELL.goExam('vitae', 'vitae.alerg'), h('span', {class:'pbadge ' + (okA ? 'ok' : 'warn')}, okA ? 'не обтяжений' : (x ? shortDx(x) : 'обтяжений')));
       }
     }catch(e){}
     line.classList.toggle('hascols', !!cols.firstChild);
     document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
   }
+  /* клік по банеру: поле в первинному огляді (з іншого документа — перейти в огляд) */
+  SHELL.goExam = (tab, fld) => { const t = TABS.find(x=>x.id === tab); if (t && !t.docs.includes(DOC)) switchDoc('ohl'); goTab(tab, fld); };
+  SHELL.goAdm = () => { if (DOC === 'shch'){ goTab('d_main'); setTimeout(()=>{ const a = document.querySelector('.adm-d'); if (a){ a.scrollIntoView({block:'center'}); a.focus(); const w = a.closest('.res-form') || a; w.classList.add('fieldflash'); setTimeout(()=>w.classList.remove('fieldflash'), 2600); } }, 80); }
+    else { if (DOC !== 'epi') switchDoc('epi'); goTab('e_per', 'e_per.per'); } };
   const rp = renderPtBar; renderPtBar = function(){ rp.apply(this, arguments); drawBanner(); };
 
   /* 3. бічна картка: прогрес заповнення й еталонний шаблон */
@@ -11546,6 +11566,127 @@ function bFocusIn(wrap, el){
       if (!wrap.classList.contains('fieldflash')){ try{ wrap.scrollIntoView({block:'center', behavior:'smooth'}); }catch(e){} wrap.classList.add('fieldflash'); setTimeout(()=>wrap.classList.remove('fieldflash'), 2600); }
       bFocusIn(wrap, el); }
     return r; }; }
+/* ===== Зі Skiagrama (0.9.3.10): керування пацієнтами (видалення, вибір кількох, фільтри, кошик),
+   захист екрана після простою, папір і принтер для бланків (поле під підшивку, зсув принтера, пробний аркуш з лінійкою) ===== */
+
+/* ---------- 1. Пацієнти: список з видаленням і вибором кількох ---------- */
+const PSTATE = p => { const S = p.snap || {}, F0 = S.f || {}; if (S.mode === 'amb') return 'amb'; return F0.e_per_per_2 ? 'out' : 'in'; };
+const PDAYS = d => d ? Math.round((Date.now() - new Date(d + 'T00:00')) / 864e5) : 0;
+let PFILT = 'all';
+openSwitcher = function(){
+  const sel = new Set();
+  const q = h('input', {type:'search', placeholder:'Пошук за ПІБ, № карти або діагнозом', 'aria-label':'Пошук пацієнта'});
+  const list = h('div', {class:'swlist'}), bar = h('div', {class:'pmbar'}), seg = h('div', {class:'seg pmseg', role:'group', 'aria-label':'Які пацієнти'}), foot = h('div', {class:'acts2 pmfoot'});
+  const FL = [['all','Усі'],['in','У відділенні'],['out','Виписані'],['amb','Амбулаторно']];
+  const rows = () => { const st = loadStore(), s = q.value.trim().toLowerCase();
+    return Object.keys(st).sort((a,b)=>st[b].updated - st[a].updated).map(id=>[id, st[id]])
+      .filter(([, p])=>PFILT === 'all' || PSTATE(p) === PFILT)
+      .filter(([, p])=>!s || (p.name + ' ' + (p.card || '') + ' ' + ((p.snap && p.snap.f && p.snap.f.dx_osn) || '')).toLowerCase().includes(s)); };
+  const draw = () => {
+    const st = loadStore(), all = Object.values(st), L = rows();
+    seg.innerHTML = ''; FL.forEach(([k, t])=>{ const n = k === 'all' ? all.length : all.filter(p=>PSTATE(p) === k).length;
+      seg.append(h('button', {type:'button', 'aria-pressed':PFILT === k ? 'true' : 'false', onclick:()=>{ PFILT = k; sel.clear(); draw(); }}, t + ' · ' + n)); });
+    list.innerHTML = '';
+    if (!L.length) list.append(h('p', {class:'chips-hint'}, all.length ? 'Нікого не знайдено' : 'Збережених пацієнтів ще немає'));
+    L.slice(0, 200).forEach(([id, p])=>{
+      const fl = (typeof todayFlags === 'function' ? todayFlags(p) : null) || [], dx = p.snap && p.snap.f ? (p.snap.f.dx_osn || '') : '', S = PSTATE(p), F0 = (p.snap && p.snap.f) || {};
+      const cb = h('input', {type:'checkbox', 'aria-label':'Вибрати ' + p.name}); cb.checked = sel.has(id);
+      cb.addEventListener('change', ()=>{ cb.checked ? sel.add(id) : sel.delete(id); drawBar(); });
+      const del = h('button', {type:'button', class:'btn sm pmdel', title:'Видалити в кошик (30 днів можна відновити)', 'aria-label':'Видалити ' + p.name, onclick:e=>{ e.stopPropagation();
+        if (!del.dataset.arm){ del.dataset.arm = '1'; del.textContent = 'Точно?'; setTimeout(()=>{ delete del.dataset.arm; del.textContent = '🗑'; }, 3000); return; }
+        delPatient(id); sel.delete(id); draw(); }}, '🗑');
+      const st = S === 'out' ? h('span', {class:'badge'}, 'виписано ' + fmtD(F0.e_per_per_2)) : S === 'amb' ? h('span', {class:'badge'}, 'амбулаторно') : F0.e_per_per_1 ? h('span', {class:'badge ok'}, 'день ' + (PDAYS(F0.e_per_per_1) + 1)) : '';
+      const open = h('button', {type:'button', class:'swrow' + (id === PID ? ' cur' : ''), onclick:()=>{ dlg.remove(); if (id !== PID) openPatient(id); }},
+        h('span', {class:'swn'}, h('b', {}, p.name), p.card ? h('span', {class:'chips-hint'}, ' № ' + p.card) : '', ' ', st),
+        dx ? h('span', {class:'swd'}, dx.split('\n')[0].slice(0, 90)) : '',
+        fl.length ? h('span', {class:'swf'}, ...fl.slice(0, 3).map(f=>h('span', {class:'badge ' + (f.c || '')}, f.t))) : '',
+        id === PID ? h('span', {class:'badge ok'}, 'відкрито') : '');
+      list.append(h('div', {class:'pmrow' + (sel.has(id) ? ' on' : '')}, cb, open, del));
+    });
+    if (L.length > 200) list.append(h('p', {class:'chips-hint'}, `Показано 200 з ${L.length} — уточніть пошук`));
+    drawBar(); drawFoot();
+  };
+  const drawBar = () => {
+    bar.innerHTML = ''; const L = rows();
+    const all = h('label', {class:'blk'}, (()=>{ const c = h('input', {type:'checkbox'}); c.checked = L.length && L.every(([id])=>sel.has(id)); c.addEventListener('change', ()=>{ L.forEach(([id])=>c.checked ? sel.add(id) : sel.delete(id)); draw(); }); return c; })(), ' вибрати всіх у списку');
+    bar.append(all);
+    if (sel.size){
+      const d = h('button', {type:'button', class:'btn danger', onclick:()=>{ if (!d.dataset.arm){ d.dataset.arm = '1'; d.textContent = `Точно видалити ${sel.size}?`; setTimeout(()=>{ delete d.dataset.arm; d.textContent = `Видалити вибраних (${sel.size})`; }, 3500); return; }
+        const n = sel.size, ids = [...sel]; ids.forEach(id=>delPatient(id)); sel.clear(); draw();
+        snack(`Видалено ${n} — у кошику 30 днів`, 'Відновити всіх', ()=>{ ids.forEach(id=>restorePatient(id)); draw(); }); }}, `Видалити вибраних (${sel.size})`);
+      const ex = h('button', {type:'button', class:'btn', onclick:()=>{ const st = loadStore(), items = {}; sel.forEach(id=>{ if (st[id]) items[id] = st[id]; }); const d0 = new Date();
+        downloadJSON({type:'po-patients', items}, `patsienty_vybrani_${d0.getFullYear()}-${pad(d0.getMonth()+1)}-${pad(d0.getDate())}.json`); }}, 'Зберегти вибраних у файл');
+      bar.append(d, ex, h('button', {type:'button', class:'more', onclick:()=>{ sel.clear(); draw(); }}, 'Зняти вибір'));
+    }
+  };
+  const drawFoot = () => {
+    foot.innerHTML = '';
+    foot.append(h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); newPatient(); }}, '+ Новий пацієнт'));
+    const old = Object.entries(loadStore()).filter(([, p])=>PSTATE(p) === 'out' && PDAYS(p.snap.f.e_per_per_2) > 30);
+    if (old.length) foot.append(h('button', {type:'button', class:'btn', title:'Виписані понад 30 днів тому — у кошик (перед цим збережіть копію)', onclick:()=>{ PFILT = 'out'; sel.clear(); old.forEach(([id])=>sel.add(id)); draw(); toast(`Вибрано ${old.length} виписаних понад 30 днів тому — збережіть у файл і видаліть`, 4000); }}, `Виписані > 30 днів (${old.length})`));
+    const nt = Object.keys(TRASH).length;
+    if (nt) foot.append(h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); trashDialog(); }}, `Кошик (${nt})`));
+    if (typeof transferDialog === 'function') foot.append(h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); transferDialog(); }}, '⇄ Перенесення'));
+    foot.append(h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); show(TABS.indexOf(META)); }}, 'Дані цього пацієнта («Запис»)'));
+  };
+  q.addEventListener('input', draw);
+  const dlg = h('div', {class:'navsheet packsheet switcher pmgr', role:'dialog', 'aria-modal':'true', 'aria-label':'Пацієнти'},
+    h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Пацієнти'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
+      seg, q, bar, list, foot,
+      h('p', {class:'chips-hint'}, 'Видалені пацієнти 30 днів лежать у кошику — їх можна відновити. Пацієнти зберігаються лише в цьому браузері.')));
+  dlg.addEventListener('click', e=>{ if (e.target === dlg) dlg.remove(); });
+  document.addEventListener('keydown', function esc(e){ if (e.key === 'Escape'){ dlg.remove(); document.removeEventListener('keydown', esc); } });
+  draw(); document.body.append(dlg); if (!window.matchMedia || !matchMedia('(max-width:899px)').matches) q.focus();
+};
+
+/* ---------- 2. Захист екрана: після простою дані пацієнта ховаються ---------- */
+const LOCK = {last:Date.now(), min:(()=>{ const v = lsGet('po.lock', ''); return v === '' ? 10 : +v; })()};
+const lockScr = h('div', {class:'lockscr', id:'lockScr', hidden:'', role:'dialog', 'aria-modal':'true', 'aria-label':'Екран захищено'},
+  h('div', {class:'lockbox'}, h('div', {class:'lockic', 'aria-hidden':'true'}, '🔒'), h('b', {}, 'Дані пацієнта сховано'),
+    h('p', {class:'chips-hint'}, 'Минуло кілька хвилин без дій — щоб сторонні не бачили документів.'),
+    h('button', {type:'button', class:'btn primary', id:'lockGo', onclick:()=>unlockScr()}, 'Продовжити роботу')));
+document.body.append(lockScr);
+['pointerdown','keydown','wheel','touchstart'].forEach(ev=>document.addEventListener(ev, ()=>{ if (lockScr.hidden) LOCK.last = Date.now(); }, {capture:true, passive:true}));
+function lockNow(){ if (!lockScr.hidden) return; lockScr.hidden = false; document.body.classList.add('locked'); setTimeout(()=>{ const b = $('#lockGo'); if (b) b.focus(); }, 0); }
+function unlockScr(){ lockScr.hidden = true; document.body.classList.remove('locked'); LOCK.last = Date.now(); }
+setInterval(()=>{ if (LOCK.min > 0 && Date.now() - LOCK.last > LOCK.min * 60000) lockNow(); }, 15000);
+
+/* ---------- 3. Папір і принтер (бланки 003/о): поле під підшивку, зсув принтера, пробний аркуш ---------- */
+const PAPERSET = Object.assign({bind:0, offX:0, offY:0}, (()=>{ try{ return JSON.parse(lsGet('po.paperset', '{}')) || {}; }catch(e){ return {}; } })());
+function applyPaperSet(){ const r = document.documentElement.style; r.setProperty('--bind', (+PAPERSET.bind || 0) + 'mm'); r.setProperty('--offx', (+PAPERSET.offX || 0) + 'mm'); r.setProperty('--offy', (+PAPERSET.offY || 0) + 'mm'); }
+function setPaper(k, v){ PAPERSET[k] = v; lsSet('po.paperset', JSON.stringify(PAPERSET)); applyPaperSet(); try{ if (PAPER) renderPaper(); }catch(e){} drawPaperCtl(); }
+applyPaperSet();
+function rulerSheet(){
+  const tick = (n, horiz) => Array.from({length:n}, (_, i)=>`<span style="position:absolute;${horiz ? `left:${i * 10}mm;top:0;height:${i % 5 ? 3 : 6}mm;border-left` : `top:${i * 10}mm;left:0;width:${i % 5 ? 3 : 6}mm;border-top`}:.3mm solid #111"></span>`).join('');
+  const P = $('#print');
+  P.innerHTML = `<div class="ruler" style="position:relative;width:186mm;height:270mm;font:11pt Arial,sans-serif;color:#111">${tick(19, true)}${tick(28, false)}
+    <div style="position:absolute;left:10mm;top:10mm;width:166mm;height:250mm;border:.4mm solid #111"></div>
+    <div style="position:absolute;left:20mm;top:30mm;width:140mm;line-height:1.5">Пробний аркуш «Первинний огляд».<br>Рамка має стояти рівно на 10 мм від поділок лінійки зліва й зверху.<br>
+    Якщо зміщено — виміряйте, на скільки, і впишіть «Зсув принтера» в Налаштуваннях: праворуч / вниз — плюс, ліворуч / вгору — мінус.</div></div>`;
+  toast('Пробний аркуш: друкуйте без масштабування («Фактичний розмір»)', 3500);
+  setTimeout(()=>window.print(), 50);
+}
+let paperCtl = null;
+function drawPaperCtl(){
+  if (!paperCtl) return; paperCtl.innerHTML = '';
+  const num = (k, lab, min, max, step) => { const i = h('input', {type:'number', min, max, step, value:PAPERSET[k] || 0, style:'width:5.5em', 'aria-label':lab}); i.addEventListener('change', ()=>setPaper(k, Math.max(min, Math.min(max, +i.value || 0)))); return h('label', {class:'wl'}, h('span', {}, lab), i); };
+  const bc = h('input', {type:'checkbox'}); bc.checked = +PAPERSET.bind > 0; bc.addEventListener('change', ()=>setPaper('bind', bc.checked ? 20 : 0));
+  paperCtl.append(h('label', {class:'blk'}, bc, ' Поле під підшивку зліва'),
+    +PAPERSET.bind > 0 ? num('bind', 'ширина, мм', 5, 40, 1) : '',
+    num('offX', 'Зсув ↔, мм', -10, 10, 0.5), num('offY', 'Зсув ↕, мм', -10, 10, 0.5),
+    h('button', {type:'button', class:'btn', onclick:rulerSheet}, 'Пробний аркуш з лінійкою'));
+}
+if (SETTINGS_EL){
+  paperCtl = h('div', {class:'acts2 paperctl'}); drawPaperCtl();
+  const lk = h('select', {id:'set_lock'}, ...[[0,'не ховати'],[5,'5 хв'],[10,'10 хв'],[15,'15 хв'],[30,'30 хв']].map(([v,t])=>h('option', {value:String(v)}, t)));
+  lk.value = String(LOCK.min); lk.addEventListener('change', ()=>{ LOCK.min = +lk.value; lsSet('po.lock', lk.value); toast(LOCK.min ? `Дані ховатимуться після ${LOCK.min} хв без дій` : 'Захист екрана вимкнено'); });
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Захист екрана'), h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {for:'set_lock'}, 'Ховати дані пацієнта після простою'), lk,
+      h('p', {class:'chips-hint'}, 'Щоб сторонні не бачили документів, коли ви відійшли. Повернутися — «Продовжити роботу».'))),
+    h('h3', {class:'sub'}, 'Папір і принтер (бланки 003/о)'), paperCtl,
+    h('p', {class:'chips-hint'}, 'Надрукуйте пробний аркуш: якщо рамка зміщена — впишіть зсув. Поле під підшивку зсуває текст бланка праворуч.'));
+}
+/* у пошуку Ctrl+K */
+{ const si = searchItems; searchItems = function(){ const L = si(); L.push({k:'Дія', t:'Пацієнти: видалити, вибрати кількох, кошик', go:openSwitcher}, {k:'Дія', t:'Сховати екран (захист)', go:lockNow}, {k:'Дія', t:'Пробний аркуш з лінійкою (принтер)', go:rulerSheet}); return L; }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

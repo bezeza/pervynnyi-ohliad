@@ -21,6 +21,8 @@ const SHELL = {};
   wrap.before(line);
   const ava = h('span', {class:'pava', 'aria-hidden':'true'}); line.prepend(ava);
   const cols = h('div', {class:'pcols'}); $('#ptbar').after(cols);
+  /* стать — одразу біля ПІБ, щоб було зрозуміло, чия вона */
+  { const sx = $('#sexSeg'); if (sx){ $('#ptbar').after(sx); sx.title = 'Стать пацієнта'; } }
   const shortDx = t => { t = String(t || '').replace(/\s*\(.*$/, '').split(/[,;.]/)[0].trim(); return t.length > 46 ? t.slice(0, 44).trim() + '…' : t; };
   const dmy = d => { const m = /^(\d{4})-(\d\d)-(\d\d)/.exec(d || ''); return m ? `${m[3]}.${m[2]}.${m[1]}` : ''; };
   function drawBanner(){
@@ -28,20 +30,24 @@ const SHELL = {};
     ava.textContent = pib ? pib.split(/\s+/).filter(Boolean).slice(0, 2).map(w=>w[0]).join('').toUpperCase() : '?';
     ava.classList.toggle('none', !pib);
     cols.innerHTML = '';
-    const col = (l, ...v) => cols.append(h('div', {class:'pcol'}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
+    const col = (l, go, ...v) => cols.append(h('button', {type:'button', class:'pcol', title:'Відкрити: ' + l.toLowerCase(), onclick:go}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
     try{
       const mkh = val(F('dx.mkh'), true), osn = val(F('dx.osn'), true);
-      if (mkh || osn) col('Діагноз', mkh ? h('span', {class:'pcode'}, mkh) : '', shortDx(osn));
-      if (MODE === 'hosp'){ const n = stayDay(), d = F('e_per.per').d1.value; if (n || d) col('Госпіталізація', (n ? 'День ' + n : '') + (n && d ? ' · ' : '') + dmy(d)); }
+      if (mkh || osn) col('Діагноз', ()=>SHELL.goExam('dx', 'dx.osn'), mkh ? h('span', {class:'pcode'}, mkh) : '', shortDx(osn));
+      if (MODE === 'hosp'){ const n = stayDay(), d = F('e_per.per').d1.value; if (n || d) col('Госпіталізація', ()=>SHELL.goAdm(), (n ? 'День ' + n : '') + (n && d ? ' · ' : '') + dmy(d)); }
       const a = F('vitae.alerg');
       if (a && a.el && a.el.value !== ''){
         const okA = String(a.el.value) === String(a.norm), x = val(F('vitae.alergx'), true);
-        col('Алергії', h('span', {class:'pbadge ' + (okA ? 'ok' : 'warn')}, okA ? 'не обтяжений' : (x ? shortDx(x) : 'обтяжений')));
+        col('Алергії', ()=>SHELL.goExam('vitae', 'vitae.alerg'), h('span', {class:'pbadge ' + (okA ? 'ok' : 'warn')}, okA ? 'не обтяжений' : (x ? shortDx(x) : 'обтяжений')));
       }
     }catch(e){}
     line.classList.toggle('hascols', !!cols.firstChild);
     document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
   }
+  /* клік по банеру: поле в первинному огляді (з іншого документа — перейти в огляд) */
+  SHELL.goExam = (tab, fld) => { const t = TABS.find(x=>x.id === tab); if (t && !t.docs.includes(DOC)) switchDoc('ohl'); goTab(tab, fld); };
+  SHELL.goAdm = () => { if (DOC === 'shch'){ goTab('d_main'); setTimeout(()=>{ const a = document.querySelector('.adm-d'); if (a){ a.scrollIntoView({block:'center'}); a.focus(); const w = a.closest('.res-form') || a; w.classList.add('fieldflash'); setTimeout(()=>w.classList.remove('fieldflash'), 2600); } }, 80); }
+    else { if (DOC !== 'epi') switchDoc('epi'); goTab('e_per', 'e_per.per'); } };
   const rp = renderPtBar; renderPtBar = function(){ rp.apply(this, arguments); drawBanner(); };
 
   /* 3. бічна картка: прогрес заповнення й еталонний шаблон */
