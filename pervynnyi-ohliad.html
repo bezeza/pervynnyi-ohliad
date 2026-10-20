@@ -988,12 +988,17 @@ body.lay-B #sidecard .ljside{width:100%;justify-content:flex-start;padding:8px 1
 body.shell.lay-B .tab.autof .dot{background:var(--surface)!important;border:2px dashed var(--flag)!important;box-shadow:none!important}
 .tab.autof .dot{visibility:visible;background:var(--flag)}
 .agate .aglist{margin:6px 0 0;padding-left:18px;line-height:1.7}
+/* ===== Перевірене відновлення (0.9.3.16) ===== */
+.bakbox h4{font:600 13px var(--f-head);margin:14px 0 6px;color:var(--muted)}
+.bakrep{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:10px 0;display:flex;flex-direction:column;gap:3px}
+.bakrep.ok{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:color-mix(in srgb,var(--ok) 8%,var(--surface))}
+.bakrep.bad{border-color:var(--flag);background:var(--flag-soft)}.bakrep ul{margin:4px 0 0;padding-left:18px}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.15 від 20.10.2026">v0.9.3.15 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.16 від 20.10.2026">v0.9.3.16 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -2898,8 +2903,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.15', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.16', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.16', '20.10.2026', 'перевірене відновлення (Налаштування → «Резервні копії й відновлення»): перед кожним оновленням версії програма сама робить копію всіх пацієнтів у браузері (зберігаються 5 останніх); «Перевірити файл копії» — показує, скільки в ній пацієнтів, записів щоденника, аналізів і призначень, нічого не змінюючи; «Самоперевірка відновлення» — зберігає всіх і читає назад, порівнюючи до символу; відновлення з попереднім переглядом («Додати нових і оновити старіші» або «Замінити все копією»), перед ним — автоматична копія поточних даних; у файлі копії — версія програми й час; «Відкрити попередню версію програми», якщо нова працює неправильно'],
   ['0.9.3.15', '20.10.2026', 'безпечне автозаповнення: розділи, заповнені програмою (заготовка хвороби, «Норма всюди» / «Стабільно», «За шаблоном», щоденник за шаблоном, «Як попередній», схема призначень), позначено «не переглянуто» — пунктирний кружок у списку розділів і банер «✓ Переглянуто» в розділі; позначка зникає, щойно ви щось змінили в розділі; непереглянуте — у «Перевірці» й на аркуші; перед друком, копіюванням і збереженням у Word / LibreOffice — список непереглянутого з переходом до розділу. Якщо в розділах уже є ваші дані, заготовка хвороби й «Норма всюди» спершу питають: «Заповнити лише порожні» або «Перезаписати все». Вимикається в Налаштуваннях («Безпечне автозаповнення»)'],
   ['0.9.3.14', '20.10.2026', 'одна версія всюди: номер береться лише з VERSION і під час збирання сам вписується в сторінку (вже без старого напису «v2.9» для переглядів без скриптів), README й кеш офлайн-версії; підказка на значку версії — дата випуску; збирання не пропускає, якщо історія змін не починається з поточної версії'],
   ['0.9.3.13', '20.10.2026', 'журнал обстежень видно з головної сторінки: кнопка «🧪 Журнал обстежень · N» у бічній картці під еталонним шаблоном, на телефоні — «🧪 Аналізи» в нижній панелі'],
@@ -12425,6 +12431,107 @@ if (SETTINGS_EL){ const c = h('input', {type:'checkbox', id:'set_autogate'}); c.
 { const r0 = restore; restore = function(){ const r = r0.apply(this, arguments); try{ drawAuto(); }catch(e){} return r; }; }
 { const ca = clearAll; clearAll = function(){ const r = ca.apply(this, arguments); try{ arevSet({}); drawAuto(); }catch(e){} return r; }; }
 drawAuto();
+/* ===== Перевірене відновлення (0.9.3.16): копія перед кожним оновленням версії, внутрішні копії (останні 5),
+   «Перевірити копію» (що в файлі — без змін у даних), самоперевірка «зберегти → відновити → порівняти»,
+   відновлення з попереднім переглядом, попередня версія програми. ===== */
+const BAKN = 5;
+function bakOpen(){ return new Promise(res=>{ if (!window.indexedDB) return res(null); let r; try{ r = indexedDB.open('po-bak', 1); }catch(e){ return res(null); }
+  r.onupgradeneeded = () => { try{ r.result.createObjectStore('bak'); }catch(e){} }; r.onsuccess = () => res(r.result); r.onerror = () => res(null); }); }
+const bakTx = (db, mode, fn) => new Promise(res=>{ try{ const tx = db.transaction('bak', mode), os = tx.objectStore('bak'); const out = fn(os); tx.oncomplete = () => res(out && out.result !== undefined ? out.result : true); tx.onerror = () => res(null); }catch(e){ res(null); } });
+async function bakList(){ const db = await bakOpen(); if (!db) return []; const all = await bakTx(db, 'readonly', os=>os.getAll()); return (all || []).map(({at, ver, reason, n})=>({at, ver, reason, n})).sort((a, b)=>b.at - a.at); }
+async function bakGet(at){ const db = await bakOpen(); if (!db) return null; return bakTx(db, 'readonly', os=>os.get('b' + at)); }
+async function bakPut(reason){
+  const st = loadStore(), n = Object.keys(st).length; if (!n) return null;
+  const db = await bakOpen(); if (!db) return null;
+  const at = Date.now(), rec = {at, ver:VERSION, reason, n, data:JSON.stringify({type:'po-patients', app:VERSION, at, items:st})};
+  await bakTx(db, 'readwrite', os=>os.put(rec, 'b' + at));
+  const L = await bakList(); if (L.length > BAKN){ await bakTx(db, 'readwrite', os=>{ L.slice(BAKN).forEach(b=>os.delete('b' + b.at)); }); }
+  try{ logAct('Резервна копія в браузері', reason); }catch(e){}
+  return rec;
+}
+/* перевірка вмісту копії — нічого не змінює */
+function bakReport(o){
+  const R = {ok:false, err:[], n:0, diaries:0, res:0, rx:0, app:'', at:0, newest:0, names:[]};
+  if (!o || typeof o !== 'object'){ R.err.push('файл не прочитано як JSON'); return R; }
+  if (o.type !== 'po-patients' && o.type !== 'po-transfer'){ R.err.push('це не файл пацієнтів цієї програми'); return R; }
+  if (!o.items || typeof o.items !== 'object'){ R.err.push('у файлі немає пацієнтів'); return R; }
+  R.app = o.app || ''; R.at = o.at || 0;
+  for (const id in o.items){ const p = o.items[id];
+    if (!p || !p.snap || !p.snap.f){ R.err.push(`запис ${id}: немає даних огляду`); continue; }
+    R.n++; R.diaries += (p.snap.diaries || []).length; R.res += (p.snap.res || []).length; R.rx += (p.snap.rx || []).length; R.newest = Math.max(R.newest, p.updated || 0); }
+  R.ok = R.n > 0 && !R.err.length; return R;
+}
+/* самоперевірка: усіх пацієнтів зберегти у JSON, прочитати назад і порівняти до символу */
+function bakSelfTest(){
+  const st = loadStore(), ids = Object.keys(st);
+  const back = JSON.parse(JSON.stringify({type:'po-patients', app:VERSION, at:Date.now(), items:st}));
+  const bad = ids.filter(id=>JSON.stringify(back.items[id]) !== JSON.stringify(st[id]));
+  const rep = bakReport(back);
+  return {n:ids.length, bad, rep};
+}
+function bakReportBox(R, title){
+  const d = R.at ? new Date(R.at).toLocaleString('uk-UA') : '';
+  return h('div', {class:'bakrep ' + (R.ok ? 'ok' : 'bad')}, h('b', {}, (R.ok ? '✓ ' : '⚠ ') + title),
+    h('div', {}, `Пацієнтів: ${R.n} · записів щоденника: ${R.diaries} · аналізів: ${R.res} · призначень: ${R.rx}`),
+    d || R.app ? h('div', {class:'chips-hint'}, [d ? 'копію зроблено ' + d : '', R.app ? 'версією ' + R.app : '', R.newest ? 'найсвіжіша зміна ' + new Date(R.newest).toLocaleDateString('uk-UA') : ''].filter(Boolean).join(' · ')) : '',
+    R.err.length ? h('ul', {}, ...R.err.slice(0, 8).map(e=>h('li', {}, e))) : '');
+}
+/* відновлення з попереднім переглядом */
+function restoreFromObj(o, src){
+  const R = bakReport(o); const st = loadStore();
+  const ids = R.ok ? Object.keys(o.items).filter(id=>o.items[id] && o.items[id].snap) : [];
+  const add = ids.filter(id=>!st[id]), newer = ids.filter(id=>st[id] && (o.items[id].updated || 0) > (st[id].updated || 0)), older = ids.filter(id=>st[id] && (o.items[id].updated || 0) <= (st[id].updated || 0));
+  const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Відновлення'},
+    h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Відновити з копії'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
+      bakReportBox(R, src),
+      R.ok ? h('p', {}, `Нових пацієнтів: ${add.length}. У копії новіші версії: ${newer.length}. У вас новіші (не чіпаю): ${older.length}.`) : '',
+      R.ok ? h('div', {class:'acts2'},
+        h('button', {type:'button', class:'btn primary', onclick:async ()=>{ await bakPut('перед відновленням з копії'); const s2 = loadStore(); [...add, ...newer].forEach(id=>{ s2[id] = o.items[id]; }); saveStore(s2); renderPatients(); dlg.remove(); toast(`Відновлено: ${add.length + newer.length}. Поточні дані перед цим збережено копією`, 4500); try{ logAct('Відновлення з копії', `${add.length + newer.length} пацієнтів`); }catch(e){} }}, 'Додати нових і оновити старіші'),
+        h('button', {type:'button', class:'btn danger', onclick:async e=>{ const b = e.currentTarget; if (!b.dataset.arm){ b.dataset.arm = '1'; b.textContent = 'Точно? Поточні дані буде замінено копією'; setTimeout(()=>{ delete b.dataset.arm; b.textContent = 'Замінити все копією'; }, 4000); return; }
+          await bakPut('перед повною заміною копією'); const s2 = {}; ids.forEach(id=>{ s2[id] = o.items[id]; }); saveStore(s2); PID = null; newPatient(); renderPatients(); dlg.remove(); toast('Дані замінено копією. Попередні — у внутрішніх копіях (Налаштування)', 5000); try{ logAct('Повна заміна даних копією', ids.length + ' пацієнтів'); }catch(e){} }}, 'Замінити все копією')) : '',
+      h('p', {class:'chips-hint'}, 'Перед будь-яким відновленням програма сама робить копію поточних даних — її видно в «Налаштування → Резервні копії».')));
+  document.body.append(dlg);
+}
+function checkBackupFile(file, thenRestore){
+  const rd = new FileReader();
+  rd.onload = () => { let o = null; try{ o = JSON.parse(rd.result); }catch(e){}
+    if (thenRestore){ restoreFromObj(o, 'Файл: ' + file.name); return; }
+    const R = bakReport(o);
+    const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Перевірка копії'},
+      h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Перевірка копії'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
+        bakReportBox(R, 'Файл: ' + file.name), h('p', {class:'chips-hint'}, 'Перевірка нічого не змінює у ваших даних.'),
+        R.ok ? h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>{ dlg.remove(); restoreFromObj(o, 'Файл: ' + file.name); }}, 'Відновити з цієї копії…')) : ''));
+    document.body.append(dlg); try{ logAct('Перевірка файлу копії', R.ok ? `${R.n} пацієнтів` : 'помилки'); }catch(e){} };
+  rd.readAsText(file);
+}
+/* у файл копії — версія програми й час */
+{ const dj = downloadJSON; downloadJSON = function(obj){ if (obj && obj.type === 'po-patients'){ if (!obj.app) obj.app = VERSION; if (!obj.at) obj.at = Date.now(); } return dj.apply(this, arguments); }; }
+/* копія перед кожним оновленням версії (коли база вже відкрилась) */
+(function waitDb(k){ if (!IDB.ok && k < 40) return setTimeout(()=>waitDb(k + 1), 150);
+  const last = lsGet('po.lastver', '');
+  if (last !== VERSION){ (last ? bakPut('перед оновленням ' + last + ' → ' + VERSION) : Promise.resolve()).then(()=>{ lsSet('po.lastver', VERSION); try{ drawBak(); }catch(e){} }); }
+})(0);
+/* Налаштування: «Резервні копії й відновлення» */
+let bakBox = null;
+async function drawBak(){
+  if (!bakBox) return; bakBox.innerHTML = '';
+  const L = await bakList(), file = h('input', {type:'file', accept:'.json,application/json', hidden:'', onchange:e=>{ if (e.target.files[0]) checkBackupFile(e.target.files[0], false); e.target.value = ''; }});
+  bakBox.append(h('div', {class:'acts2'},
+    h('button', {type:'button', class:'btn primary', onclick:()=>exportAll()}, 'Зберегти копію у файл'),
+    h('button', {type:'button', class:'btn', onclick:()=>file.click()}, 'Перевірити файл копії…'), file,
+    h('button', {type:'button', class:'btn', onclick:async ()=>{ const r = await bakPut('вручну'); toast(r ? 'Копію в браузері зроблено' : 'Немає пацієнтів або браузер не дав сховище'); drawBak(); }}, 'Копія в браузері зараз'),
+    h('button', {type:'button', class:'btn', onclick:()=>{ const t = bakSelfTest(); const box = h('div', {}, bakReportBox(t.rep, t.bad.length ? `Самоперевірка: ${t.bad.length} записів відрізняються!` : `Самоперевірка: ${t.n} пацієнтів зберігаються й відновлюються без втрат`));
+      bakBox.querySelector('.bakself').replaceChildren(box); try{ logAct('Самоперевірка відновлення', t.bad.length ? 'розбіжності' : 'без втрат'); }catch(e){} }}, 'Самоперевірка відновлення')));
+  bakBox.append(h('div', {class:'bakself'}));
+  bakBox.append(h('h4', {}, 'Копії в браузері (останні ' + BAKN + ', сама робиться перед кожним оновленням версії)'));
+  if (!L.length) bakBox.append(h('p', {class:'chips-hint'}, 'Копій ще немає.'));
+  L.forEach(b=>bakBox.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, new Date(b.at).toLocaleString('uk-UA')), h('span', {}, `${b.reason} · пацієнтів: ${b.n} · версія ${b.ver}`)),
+    h('span', {class:'acts2'},
+      h('button', {type:'button', class:'more', onclick:async ()=>{ const r = await bakGet(b.at); let o = null; try{ o = JSON.parse(r.data); }catch(e){} restoreFromObj(o, 'Копія від ' + new Date(b.at).toLocaleString('uk-UA')); }}, 'Відновити…'),
+      h('button', {type:'button', class:'more', onclick:async ()=>{ const r = await bakGet(b.at); let o = null; try{ o = JSON.parse(r.data); }catch(e){} if (o){ const d = new Date(b.at); downloadJSON(o, `kopiya_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.json`); } }}, 'У файл')))));
+  if (location.protocol !== 'file:') bakBox.append(h('p', {class:'chips-hint'}, 'Нова версія працює неправильно? ', h('a', {href:'pervynnyi-ohliad-prev.html', target:'_blank', rel:'noopener'}, 'Відкрити попередню версію програми'), ' — дані ті самі, бо зберігаються в браузері.'));
+}
+if (SETTINGS_EL){ bakBox = h('div', {class:'bakbox'}); SETTINGS_EL.append(h('h3', {class:'sub'}, 'Резервні копії й відновлення'), bakBox); drawBak(); }
 </script>
 
 </body>
