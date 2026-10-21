@@ -515,6 +515,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('066/о ред. 2012: «Карта хворого», п. 16 ліжко-дні, операція з кодом у дужках', /Карта хворого, який вибув/.test(a) && /Плевральна пункція \(38415-00\)/.test(a), a.slice(0,120));
    ok('066/о ред. 2016: «Карта пацієнта», пп. 6, 9, 17.1, 21.1, 27, 28; код анестезії «місцева» → 2', /КАРТА ПАЦІЄНТА, ЯКИЙ ВИБУВ/.test(b) && /6\.\s*Громадянство/.test(b) && /17\.1\./.test(b) && /21\.1\./.test(b) && /27\.\s*Обстеження органів грудної порожнини/.test(b) && /Плевральна пункціяПетренко П\. П\.2/.test(b), b.slice(0,120));
    ok('Назва документа відповідає редакції', t==='КАРТА ПАЦІЄНТА, ЯКИЙ ВИБУВ ІЗ СТАЦІОНАРУ'); }
+ { // 0.9.3.27: бланк 003/о — пп. 37–39, клік по обстеженнях, аркуш іде за змінами
+   const r=w.eval("(()=>{ MODE='hosp'; applyDoc(true); switchDoc('ohl'); F('shk.kor').el.value='0'; F('shk.ped').el.value='1'; F('shk.rezh').el.value='0'; update(); const t=bExam().map(p=>p.textContent).join(' '); F('shk.kor').el.value=''; F('shk.ped').el.value=''; F('shk.rezh').el.value=''; return t; })()");
+   ok('003/о пп. 37–39 заповнюються з полів', /37\. Огляд на коросту:\s*так – 1;\s*ні – 2\s*1/.test(r) && /38\. Огляд на педикульоз:\s*так – 1;\s*ні – 2\s*2/.test(r) && /39\. З режимом дня[^:]*:\s*так – 1;\s*ні – 2\s*1/.test(r), (r.match(/38\..{0,140}/)||[''])[0]);
+   ok('Клік по 37/38/39 і «КОНСУЛЬТАЦІЯ» веде до полів', w.eval("['37. Огляд на коросту','38. Огляд на педикульоз','39. З режимом дня','КОНСУЛЬТАЦІЯ'].map(t=>(BMAP.find(([re])=>re.test(t))||[])[1]).join(',')")==='shk.kor,shk.ped,shk.rezh,dx.plan#Консультації');
+   const t2=w.eval("(()=>{ F('dx.plano').el.value='RW; кал на я/глист'; update(); const t=bExam().map(p=>p.textContent).join(' '); const o=document.getElementById('out').textContent; F('dx.plano').el.value=''; update(); return JSON.stringify([t,o]); })()");
+   const [bt,ot]=JSON.parse(t2);
+   ok('Інші обстеження: у тексті плану', /кал на я\/глист/.test(ot), (ot.match(/План обстеження:[^\n]{0,160}/)||[''])[0]); }
+ { const rr=JSON.parse(w.eval("(()=>{ const s=document.getElementById('meta_vcode'); const tag=s.tagName; s.value='63'; MODE='hosp'; applyDoc(true); switchDoc('f066'); F('s066.prof').el.value=''; const t=b066().map(p=>p.textContent).join(' '); s.value=''; switchDoc('ohl'); return JSON.stringify([tag==='SELECT' && /10\\. Профіль ліжок\\s*терапевтичний/.test(t) && DEPT.length>=80, (t.match(/10\. Профіль.{0,30}/)||['?'+F066ED+'|'+t.slice(0,80)])[0]]); })()")); ok('Код відділення — список; профіль ліжок за кодом (63 → терапевтичний)', rr[0], rr[1]); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

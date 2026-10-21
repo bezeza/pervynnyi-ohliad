@@ -18,6 +18,10 @@ const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
 /* «Ким направлений»: заклад і лікар; інакше — спосіб госпіталізації */
 function bNapr(){ const z = BV('morbi.hospz').replace(/^\(|\)$/g, ''), d = BV('morbi.hospd'); if (z || d) return [z, d ? 'лікар ' + d : ''].filter(Boolean).join(', '); return BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : ''; }
+const bU3 = (on, t) => h('span', {class:'bl' + (on ? ' bsel' : '')}, t);
+/* пункти «ОБСТЕЖЕННЯ» бланка 003/о ↔ план обстеження */
+const B003OB = ['Загальний аналіз крові','Загальний аналіз сечі','RW','Глюкоза крові','Цукор крові','ЕКГ','Креатинін, сечовина','Проби печінки','Загальний білок','Залізо','Кальцій','ПТІ','ГГТП','Фібриноген','Гематокрит','Група крові, резус-фактор','Hbs Ag','СРБ','Холестерин, В-ЛП','УЗО ОЧП, нирок, ОМСС, щитоподібної залози','Ro-гр. ОГК','ФГДС','Кал на я/глист','Сеча на діастазу'];
+const B003MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
 function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
 /* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
@@ -143,9 +147,11 @@ function bExam(){
   const dx = [BV('dx.osn') ? end(BV('dx.osn').replace(/\.$/, '') + (BV('dx.mkh') ? ' (' + BV('dx.mkh') + ')' : '')) : '', BV('dx.uskl') ? 'Ускладнення: ' + end(BV('dx.uskl')) : '', BV('dx.supd') ? 'Супутні: ' + end(BV('dx.supd')) : ''].filter(Boolean).join(' ');
   const plan = F('dx.plan').chips.map((c,i)=>c.getAttribute('aria-pressed') === 'true' ? O(F('dx.plan').opts[i]).t : null).filter(Boolean);
   const OB = ['Загальний аналіз крові','Загальний аналіз сечі','RW','Глюкоза крові','Цукор крові','ЕКГ','Креатинін, сечовина','Проби печінки','Загальний білок','Залізо','Кальцій','ПТІ','ГГТП','Фібриноген','Гематокрит','Група крові, резус-фактор','Hbs Ag','СРБ','Холестерин, В-ЛП','УЗО ОЧП, нирок, ОМСС, щитоподібної залози','Ro-гр. ОГК','ФГДС','Кал на я/глист','Сеча на діастазу'];
-  const MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
+  const MAP = B003MAP; /* також для кліку по пункту */
+  const MAP0 = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
   const on = new Set(), rest = [];
   plan.filter(t=>!/^консультація/.test(t)).forEach(t=>{ const m = MAP.find(([re])=>re.test(t)); if (m) m[1].forEach(n=>on.add(n)); else rest.push(t); });
+  BV('dx.plano').split(/[;,]\s*/).map(x=>x.trim().toLowerCase()).filter(Boolean).forEach(x=>{ const i = OB.findIndex(o=>o.toLowerCase() === x); if (i >= 0) on.add(i + 1); else rest.push(x); });
   const kons = plan.filter(t=>/^консультація/.test(t)).map(t=>t.replace(/^консультація /, ''));
   const K4 = [['ОКУЛІСТА',/офтальмолог|окуліст/],['ХІРУРГА',/^хірурга$/],['НЕВРОЛОГА',/^невролога$/],['ЛОРа',/ЛОР/]];
   const kRest = kons.filter(k=>!K4.some(([,re])=>re.test(k)));
@@ -156,13 +162,14 @@ function bExam(){
     bLines(cont, 3),
     bRow('На підставі вказаного:'), h('div', {class:'brow'}, h('b', {}, 'ДІАГНОЗ: ')), bLines(dx, 2, true),
     h('div', {class:'bcols'},
-      h('div', {}, h('div', {class:'bt2'}, 'ОБСТЕЖЕННЯ:'), ...OB.map((t,i)=>h('div', {class:'bob'}, h('span', {class:'bnum' + (on.has(i + 1) ? ' on' : '')}, String(i + 1)), '. ' + t)),
+      h('div', {}, h('div', {class:'bt2'}, 'ОБСТЕЖЕННЯ:'), ...OB.map((t,i)=>h('div', {class:'bob bobk', 'data-ob':String(i + 1), title:'Натисніть — додати до плану обстеження або прибрати'}, h('span', {class:'bnum' + (on.has(i + 1) ? ' on' : '')}, String(i + 1)), '. ' + t)),
         h('div', {class:'bob'}, h('span', {class:'bnum' + (rest.length ? ' on' : '')}, '25'), '. ', bFill(rest.join(', '))),
         h('div', {class:'bt2'}, 'КОНСУЛЬТАЦІЯ'), ...K4.map(([t,re])=>h('div', {class:'bob'}, h('span', {class:kons.some(k=>re.test(k)) ? 'bu' : ''}, t))),
         kRest.length ? h('div', {class:'bob'}, bFill(kRest.join(', '))) : ''),
       h('div', {}, h('div', {class:'bt2 r'}, 'ЛІКУВАННЯ:'), bRow('РЕЖИМ ', bFill(reg), ' ДІЄТА ', bFill(diet)), bLines(meds, 8, true))),
-    bRow('37. Огляд на коросту: так – 1; ні – 2 ', bBox(''), '   39. З режимом дня та забороною паління ознайомлений: так – 1; ні – 2 ', bBox('')),
-    bRow('38. Огляд на педикульоз: так – 1; ні – 2 ', bBox(''), '   Дата ', bCells('', 6), ' Підпис хворого ', bFill('')),
+    bRow('37. Огляд на коросту: ', bU3(BI('shk.kor') === 0, 'так – 1'), '; ', bU3(BI('shk.kor') === 1, 'ні – 2'), ' ', bBox(BI('shk.kor') >= 0 ? BI('shk.kor') + 1 : '', true)),
+    bRow('38. Огляд на педикульоз: ', bU3(BI('shk.ped') === 0, 'так – 1'), '; ', bU3(BI('shk.ped') === 1, 'ні – 2'), ' ', bBox(BI('shk.ped') >= 0 ? BI('shk.ped') + 1 : '', true)),
+    bRow('39. З режимом дня та забороною паління ознайомлений: ', bU3(BI('shk.rezh') === 0, 'так – 1'), '; ', bU3(BI('shk.rezh') === 1, 'ні – 2'), ' ', bBox(BI('shk.rezh') >= 0 ? BI('shk.rezh') + 1 : '', true), '   Дата ', bCells(BI('shk.rezh') >= 0 ? bD6((mv('dt') || '').split('T')[0]) : '', 6), ' Підпис хворого ', bFill('')),
     bRow('40. П.І.Б. лікаря ', bFill(mv('doc'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')));
   return [p1, p2];
 }

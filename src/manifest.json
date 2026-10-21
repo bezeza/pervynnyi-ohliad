@@ -1,6 +1,7 @@
 {
  "js": [
   "010-config.js",
+  "015-data-dept.js",
   "020-data-hosp-criteria.js",
   "030-data-complaint-details.js",
   "040-data-complaint-plan-groups.js",
@@ -90,6 +91,7 @@
   "609-verify.js",
   "610-customize.js",
   "611-address.js",
-  "612-f066.js"
+  "612-f066.js",
+  "613-paper-keep.js"
  ]
 }

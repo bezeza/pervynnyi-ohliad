@@ -147,7 +147,7 @@ const BMAP = [
   [/^Периф\. л\/в|^Щитоподібна/, 'shk'], [/^Система органів дихання|^Перкуторно над легенями/, 'dyh'], [/^Аускультативно:/, 'dyh'], [/^Хрипи/, 'dyh.hr'],
   [/^Температура тіла:/, 'zah'], [/^Серцево-судинна система|^А\/Т|^Межі серця|^Тони серця/, 'ssc'], [/^Система травлення|^Живіт:/, 'trav'],
   [/^С-м подразнення очеревини/, 'trav'], [/^С-м Пастернацького|^Сечовипускання/, 'sech'], [/^Випорожнення/, 'trav'], [/^Неврологічний статус/, 'nevr'],
-  [/^DIAGNOS|^Діагноз|^На підставі/, 'dx.osn'], [/^ОБСТЕЖЕННЯ/, 'dx.plan'], [/^ЛІКУВАННЯ|^РЕЖИМ/, 'rxt'], [/^КОНСУЛЬТАЦІЯ/, 'dx'],
+  [/^DIAGNOS|^Діагноз|^На підставі/, 'dx.osn'], [/^ОБСТЕЖЕННЯ|^25\./, 'dx.plan'], [/^ЛІКУВАННЯ|^РЕЖИМ/, 'rxt'], [/^КОНСУЛЬТАЦІЯ|^ОКУЛІСТА|^ХІРУРГА|^НЕВРОЛОГА|^ЛОРа/, 'dx.plan#Консультації'], [/^37\. Огляд на коросту/, 'shk.kor'], [/^38\. Огляд на педикульоз/, 'shk.ped'], [/^39\. З режимом дня/, 'shk.rezh'],
   [/^45\. ЕПІКРИЗ/, 'e_per'], [/^Медична карта стаціонарного хворого №/, 'meta_card'], [/^Дані обстеження/, 'e_obs'], [/^54\. Діагноз|^Додаткові діагнози/, 'dx.osn'],
   [/^55\. Медичне лікування/, 'e_lik.lik'], [/^56\. Лікувальні рекомендації/, 'e_rek'], [/^57\. Результат/, 'e_lik.rez'],
   /* щоденник (поточний запис) */
@@ -155,6 +155,7 @@ const BMAP = [
   [/^Живіт/, 'd_obj.zhyv'], [/^Випорожнення|^Сечовипускання/, 'd_obj.fiz'], [/^Лікування|^Призначено/, 'd_lik.kor'], [/^Дата\b/, 'meta_dt']
 ];
 function bGo(fld){
+  if (/#/.test(fld)){ const [f, grp] = fld.split('#'); bGo(f); setTimeout(()=>{ const F0 = F(f); const w = F0 && F0.wrapEl; if (!w) return; let g = [...w.querySelectorAll('*')].find(x=>x.children.length <= 2 && x.textContent.trim().startsWith(grp)); if (g && g.closest('[hidden]')){ F0.exp = true; try{ refreshChips(F0); }catch(e){} } if (g){ g.scrollIntoView({block:'center', behavior:'smooth'}); g.classList.remove('fieldflash'); void g.offsetWidth; g.classList.add('fieldflash'); setTimeout(()=>g.classList.remove('fieldflash'), 2600); } }, 700); return; }
   if (fld === 'rxt'){ goTab('rxt'); return; }
   if (fld === 'meta_dt' && DOC === 'shch'){ goTab('d_main'); setTimeout(()=>{ const i = document.querySelector('.ddt'); if (!i) return; const w = i.closest('.res-form') || i; w.scrollIntoView({block:'center', behavior:'smooth'}); i.focus({preventScroll:true}); w.classList.remove('fieldflash'); void w.offsetWidth; w.classList.add('fieldflash'); setTimeout(()=>w.classList.remove('fieldflash'), 2600); }, 80); return; }
   const sec = /^meta_/.test(fld) ? 'meta' : fld.split(/[._]/)[0] === 'e' || fld.split(/[._]/)[0] === 'd' ? fld.split('.')[0].split('_').slice(0, 2).join('_') : fld.split(/[._]/)[0];
