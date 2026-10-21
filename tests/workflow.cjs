@@ -33,7 +33,7 @@ const set=(id,value)=>{const e=$(id);e.value=value;e.dispatchEvent(new w.Event(e
      const tab=w.eval(`TABS.find(t=>t.id==='${sid}')`);
      if(tab&&tab.tab)check(`${p.n} system visibility: ${sid}`,tab.tab.hidden===!open.includes(sid));
    }
-   if(p.docs)check(`${p.n} featured document`,w.eval(`DOCLIST['${work}'].some(x=>x[0]==='zgoda')`));
+   if(p.docs)check(`${p.n} featured document`,p.docs.every(k=>w.eval(`DOCLIST['${work}'].some(x=>x[0]==='${k}')`)));
  }
 
  w.profileDialog(false);
