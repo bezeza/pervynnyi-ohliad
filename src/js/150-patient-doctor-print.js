@@ -45,7 +45,7 @@ function buildMetaPanel(){
     inp('nach', 'Заступник головного лікаря з медичної роботи', {placeholder:'для спільних оглядів і консиліумів'}),
     inp('golov', 'Головний лікар (директор)', {placeholder:'необов’язково'}),
     inp('vidd', 'Відділення', {placeholder:'Терапевтичне відділення № 2'}),
-    inp('vcode', 'Код відділення (для 003/о, 066/о — уточніть у статистиків)', {inputmode:'numeric', placeholder:'напр., 63'}),
+    h('div', {class:'f'}, h('label', {for:'meta_vcode'}, 'Код відділення (003/о, 066/о; за додатком до інструкції 066/о — звірте зі статистиками)'), h('select', {id:'meta_vcode', onchange:()=>{ saveDoc(); update(); }}, h('option', {value:''}, '— не вказано —'), ...DEPT.map(d=>h('option', {value:d[0]}, d[0] + ' — ' + d[1])))),
     );
   wrap.append(h('h3', {class:'sub', style:'margin-top:0'}, 'Пацієнт'), gP, h('h3', {class:'sub'}, 'Запис'), gR,
     h('p', {class:'chips-hint', style:'margin:8px 0 14px'}, 'Лікар, відділення й дані закладу — на вкладці «Налаштування».'), patientsBlock());

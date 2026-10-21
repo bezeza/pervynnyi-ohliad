@@ -1,6 +1,9 @@
 /* ===== Форма № 066/о «Карта хворого, який вибув із стаціонару» (наказ МОЗ № 110 від 14.02.2012) — 0.9.3.24 =====
    Бланк на два аркуші A4. Усе, що вже є в записі пацієнта, підставляється само; решта — вкладка «066/о».
    Ці ж дані заповнюють порожні пункти титульного аркуша 003/о (ВІЛ, RW, група крові, резус, п. 19, 19.1). ===== */
+/* код відділення: вибір у пацієнта або з «Налаштувань»; профіль ліжок — вибір або за кодом */
+const vcode66 = () => { const i = typeof S66 === 'function' ? S66('vcode') : -1; return i >= 0 ? DEPT[i][0] : String(mv('vcode') || '').replace(/\D/g, ''); };
+const prof66 = () => { const t = S66T('prof'); if (t) return t.replace(/^Профіль ліжок:\s*/, '').replace(/\.$/, ''); const n = deptName(vcode66()); return n ? n.split(' (')[0].replace(/не$/, 'ний') : ''; };
 const S66 = k => { const f = F('s066.' + k); return f ? (f.type === 'sel' ? (f.el.value === '' ? -1 : +f.el.value) : f.el.value.trim()) : ''; };
 const S66T = k => { const f = F('s066.' + k); return f && f.el.value !== '' ? g(val(f, true)) : ''; };
 const isoDMY = iso => iso ? iso.slice(8,10) + '.' + iso.slice(5,7) + '.' + iso.slice(0,4) : '';
@@ -58,7 +61,7 @@ function b066v12(){
     bRow('6. Місце проживання: ', bFill(mv('addr'), false, true)), h('div', {class:'bs r'}, '(область, район, населений пункт, вулиця, будинок, квартира)'),
     bRow('7. Ким направлений (заклад охорони здоров’я) ', bFill(napr, false, true), ' ', bCells(BV('morbi.hospe').replace(/\D/g, ''), 8)),
     bRow('8. Діагноз при направленні ', bFill('', false, true)),
-    bRow('9. Відділення госпіталізації ', bFill(mv('vidd')), ' ', bCells(S66('vcode') || mv('vcode'), 3), '  10. Профіль ліжок ', bFill(S66('prof'), true)),
+    bRow('9. Відділення госпіталізації ', bFill(mv('vidd')), ' ', bCells(vcode66(), 3), '  10. Профіль ліжок ', bFill(prof66(), true)),
     bRow('11. Госпіталізація екстрена – 1, планова – 2 ', bBox(urg, true)),
     bRow('12. Строки госпіталізації (до 6 годин – 1; 7–24 год. – 2; пізніше 24 год. – 3) ', bBox(sr, true)),
     bRow('13. Госпіталізація з приводу даного захворювання в даному році вперше – 1, повторно – 2 ', bBox(vp >= 0 ? vp + 1 : '', true)),
@@ -104,10 +107,9 @@ Object.defineProperty(DOCTITLES, 'f066', {get:()=>F066ED === '2016' ? 'КАРТ�
     try{ const s = SECTIONS.find(x=>x.id === 's066'); if (s){ const dd = dead66();
         s.fields.forEach(f=>{ if (f.dead && f.wrapEl) f.wrapEl.hidden = !dd; });
         [['rw', d66.rw], ['vil', d66.vil], ['flg', d66.flg]].forEach(([k, fn])=>{ const f = F('s066.' + k); if (f && f.el && !f.el.value){ const v = fn(); f.el.title = v ? 'З журналу обстежень: ' + isoDMY(v) : ''; f.wrapEl && f.wrapEl.classList.toggle('fromres', !!v); } });
-        const pf = F('s066.prof'); if (pf && pf.el && !pf.el.value){ const sp = lsGet('po.prof066', ''); if (sp) pf.el.placeholder = sp + ' (як минулого разу)'; } } }catch(e){}
+        } }catch(e){}
     return r; }; }
 /* профіль ліжок — запам'ятовується для наступних пацієнтів */
-{ const pf = F('s066.prof'); if (pf && pf.el) pf.el.addEventListener('change', ()=>{ if (pf.el.value.trim()) lsSet('po.prof066', pf.el.value.trim()); }); }
 /* титул 003/о: порожні пункти — із цих даних */
 { const bt = bTitle; bTitle = function(){ const pg = bt.apply(this, arguments);
     try{ const rows = [...pg.querySelectorAll('.brow')];
@@ -132,7 +134,7 @@ function b066v16(){
   const vyd = BI('hosp.vyd'), urg = vyd === 0 ? 1 : vyd === 1 ? 2 : '';
   const zt = mv('addr_np_t'), zh = zt === 'м.' ? 1 : zt === 'с.' ? 2 : '';
   const sr = sr66(), rz = rez66(), vp = S66('vp'), p30 = S66('p30'), pil = S66('pil'), tr = S66('trav'), tb = S66('tbres');
-  const vc = S66('vcode') || mv('vcode'), dead = dead66();
+  const vc = vcode66(), dead = dead66();
   const hd = b066Head(); hd.querySelectorAll('.bhr div').forEach(x=>{ if (/^Наказ МОЗ України$/.test(x.textContent.trim())) x.after(bSmall('(у редакції наказу Міністерства охорони здоров’я України від 21.01.2016 № 29)')); });
   const dxRows = [[BV('dx.osn'), BV('dx.mkh'), 'основний'], ...BV('dx.uskl').split(/;\s*/).filter(Boolean).map(t=>[t, '', '1']), ...BV('dx.supd').split(/;\s*/).filter(Boolean).map(t=>[t, '', '2'])];
   while (dxRows.length < 8) dxRows.push(['', '', '']);
@@ -148,7 +150,7 @@ function b066v16(){
     bRow('9. Поштовий індекс ', bCells(mv('addr_zip'), 5), '  10. Місце роботи, посада ', bFill(mv('work'), false, true)),
     bRow('11. Ким направлений пацієнт ', bFill(bNapr(), false, true), ' ', bCells(BV('morbi.hospe').replace(/\D/g, ''), 8)),
     bRow('12. Діагноз при госпіталізації ', bFill('', false, true), ' ', bCells('', 6)),
-    bRow('13. Відділення госпіталізації ', bCells(vc, 2), '  14. Відділення виписки (профіль ліжок) ', bCells(vc, 2), ' ', bFill(S66('prof'))),
+    bRow('13. Відділення госпіталізації ', bCells(vc, 2), '  14. Відділення виписки (профіль ліжок) ', bCells(vc, 2), ' ', bFill(prof66())),
     bRow('15. Госпіталізація: ургентна – 1; планова – 2 ', bBox(urg, true), '  16. Строк госпіталізації: до 6 годин – 1; 7–24 години – 2; більше 24 годин – 3 ', bBox(sr, true)),
     bRow('17. Госпіталізація з приводу цього захворювання в цьому році: вперше – 1; повторно – 2 ', bBox(vp >= 0 ? vp + 1 : '', true)),
     bRow('17.1. Повторна госпіталізація з приводу цього захворювання до 30 днів: так – 1; ні – 2 ', bBox(p30 >= 0 ? p30 + 1 : '')),
