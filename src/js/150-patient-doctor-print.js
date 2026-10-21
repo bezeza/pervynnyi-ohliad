@@ -93,7 +93,7 @@ function buildMetaPanel(){
 }
 
 
-const ALLDOCS = ['ohl','shch','rx','epi','kons','zav','konc','etap','per','napr','dov','zgoda','gosp','pam'];
+const ALLDOCS = ['ohl','shch','rx','epi','kons','zav','konc','etap','per','napr','dov','zgoda','gosp','pam','anes'];
 const DOCTITLES = {konc:'ПРОТОКОЛ КОНСИЛІУМУ', epi:'ВИПИСНИЙ ЕПІКРИЗ', kons:'КОНСУЛЬТАЦІЙНИЙ ВИСНОВОК', rx:'ЛИСТ ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ', etap:'ЕТАПНИЙ ЕПІКРИЗ', per:'ПЕРЕКАЗНИЙ ЕПІКРИЗ',
   napr:'НАПРАВЛЕННЯ НА КОНСУЛЬТАЦІЮ', gosp:'НАПРАВЛЕННЯ НА ГОСПІТАЛІЗАЦІЮ', pam:'ПАМ’ЯТКА ПАЦІЄНТУ', dov:'ДОВІДКА', zgoda:'ІНФОРМОВАНА ДОБРОВІЛЬНА ЗГОДА ПАЦІЄНТА НА ПРОВЕДЕННЯ ДІАГНОСТИКИ ТА ЛІКУВАННЯ'};
 function lc1(t){ return /^[А-ЯІЇЄҐA-Z][а-яіїєґa-z’']/.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t; }

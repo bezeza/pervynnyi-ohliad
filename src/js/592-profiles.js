@@ -7,7 +7,7 @@ const PROFS = {
   inf:  {n:'Інфекціоніст', ic:'🦠', d:'ГРВІ, кишкові, епіданамнез', spec:'ter', g:['inf'], open:['zah','shk','dyh','trav']},
   fam:  {n:'Сімейний лікар', ic:'🏠', d:'ICPC-2, скринінги, ЕЛН', spec:'fam', g:['fam','ter','inf'], open:['zah','shk','dyh','ssc','trav','sech','nevr'], work:'amb'},
   pulm: {n:'Пульмонолог', ic:'🫁', d:'ХОЗЛ, астма, пневмонія', spec:'ter', g:['ter'], open:['zah','dyh','ssc'], first:['pneu','copd','asthma','bronch'], tag:'частина — у плані'},
-  anest:{n:'Анестезіолог', ic:'💉', d:'передопераційний огляд', spec:'ter', g:['ter'], open:['zah','dyh','ssc'], tag:'у плані'}
+  anest:{n:'Анестезіолог', ic:'💉', d:'передопераційний огляд (ф. 003-3/о), протокол знеболення', spec:'ter', g:['ter'], open:['zah','dyh','ssc'], docs:['anes']}
 };
 const WORKS = {hosp:['Стаціонар','огляд при надходженні, щоденники, епікризи, критерії госпіталізації'], amb:['Поліклініка / кабінет','прийом, ЕЛН, направлення, амбулаторні маніпуляції'], both:['І там, і там','перемикач «Стаціонар / Амбулаторно» лишається в шапці']};
 const SYS_IDS = ['zah','shk','dyh','ssc','trav','sech','nevr'];
@@ -58,7 +58,7 @@ function applyProfile(quiet){
   } else $('#modeSeg').hidden = false;
   // документи на видному місці
   ['hosp','amb'].forEach(m=>{ DOCLIST[m] = DOC0[m].slice(); DOCMORE[m] = MORE0[m].slice();
-    ((P && P.docs) || []).forEach(k=>{ const i = DOCMORE[m].findIndex(d=>d[0] === k); if (i >= 0){ DOCLIST[m].push([k, k === 'zgoda' ? 'Згода' : DOCMORE[m][i][1]]); DOCMORE[m].splice(i, 1); } }); });
+    ((P && P.docs) || []).forEach(k=>{ const i = DOCMORE[m].findIndex(d=>d[0] === k); if (i >= 0){ DOCLIST[m].push([k, k === 'zgoda' ? 'Згода' : k === 'anes' ? 'Анестезіолог' : DOCMORE[m][i][1]]); DOCMORE[m].splice(i, 1); } }); });
   // порядок карток: «свої» першими
   if (HV.cardBox && HV.cards){ const first = (P && P.first) || []; const idx = c => { const k = PRESETS[HV.cards.indexOf(c)].key, f = first.indexOf(k); return f >= 0 ? f - 1000 : HV.cards.indexOf(c); };
     [...HV.cards].sort((a,b)=>idx(a) - idx(b)).forEach(c=>HV.cardBox.append(c)); }

@@ -8,6 +8,7 @@
   "050-data-screening.js",
   "060-sections-exam.js",
   "070-sections-documents.js",
+  "075-sections-anest.js",
   "080-data-presets.js",
   "090-custom-templates-store.js",
   "100-core.js",
@@ -92,6 +93,7 @@
   "610-customize.js",
   "611-address.js",
   "612-f066.js",
-  "613-paper-keep.js"
+  "613-paper-keep.js",
+  "614-anest.js"
  ]
 }
