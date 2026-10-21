@@ -208,7 +208,7 @@ function sectionText(s){
     const join = f.cont && prev && out.length;
     const tp = !join && f.solo ? f.solo : (F110 && f.tpl110) ? f.tpl110 : f.tpl;
     const t = f.type === 'num' ? v : tp.replace('{v}', v);
-    if (join) out[out.length-1].t = out[out.length-1].t.replace(/(?<![А-ЯІЇЄҐA-Z])\.$/,'') + (f.joiner || ', ') + t;   /* крапку ініціалів («А. А.») не прибирати */
+    if (join) out[out.length-1].t = out[out.length-1].t.replace(/(?<![А-ЯІЇЄҐA-Z])\.$/,'') + (f.joiner ?? ', ') + t;   /* крапку ініціалів («А. А.») не прибирати */
     else out.push({t:((s.nocap && !out.length) || /^[а-в]\) /.test(t)) ? t : cap(t), br:!!f.br});
     prev = true; if (f.type !== 'num') rich = true;
   }
@@ -253,7 +253,7 @@ const TESTS = {
 };
 const SUBHEADS = /(^|\n)(Основний:|Ускладнення:|Супутні:|План обстеження:|Рекомендації:|а\) основний:|б\) ускладнення основного:|в\) супутній:)/g;
 function generate(){
-  const ORDS = {epi:['e_per','dx','e_obs','e_lik','e_rek'], kons:['k_main','loc','ctrl','dx','e_obs','e_rek','eln'], shch:['d_main','d_obj','d_lik','ctrl','RX','eln'], gosp:['gs_main','dx','e_obs','hosp'], pam:['p_main'], rx:['RX'], zav:['z_main','dx','RX'], konc:['c_main','dx','e_obs','RX','c_end'], etap:['t_main','dx','e_obs','t_lik'], per:['t_main','dx','e_obs','t_lik'], napr:['n_main','dx','e_obs','n_end'], dov:['v_main'], zgoda:['g_main']};
+  const ORDS = {epi:['e_per','dx','e_obs','e_lik','e_rek'], kons:['k_main','loc','ctrl','dx','e_obs','e_rek','eln'], shch:['d_main','d_obj','d_lik','ctrl','RX','eln'], gosp:['gs_main','dx','e_obs','hosp'], pam:['p_main'], rx:['RX'], zav:['z_main','dx','RX'], konc:['c_main','dx','e_obs','RX','c_end'], etap:['t_main','dx','e_obs','t_lik'], per:['t_main','dx','e_obs','t_lik'], napr:['n_main','dx','e_obs','n_end'], dov:['v_main'], zgoda:['g_main'], anes:['an_main','skarhy','vitae','zah','shk','dyh','ssc','trav','sech','nevr','an_obj','an_zak','an_prot','an_pun']};
   let ORD_IDS = ORDS[DOC] ? ORDS[DOC].slice() : SECTIONS.filter(s=>s.docs.includes(DOC)).map(s=>s.id);
   if (DOC === 'ohl'){ const k = ORD_IDS.indexOf('dx'); ORD_IDS.splice(k + 1, 0, 'RX'); }
   if (DOC === 'shch' && !ORD_IDS.includes('RX')) ORD_IDS.push('RX');

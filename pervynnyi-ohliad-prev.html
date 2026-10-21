@@ -1154,7 +1154,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.26 від 20.10.2026">v0.9.3.26 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.27 від 20.10.2026">v0.9.3.27 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -1238,6 +1238,22 @@ const num = s => parseFloat(String(s).replace(',', '.'));
 const dec = n => String(n).replace('.', ',');
 const cm = s => { const h = num(s); return isNaN(h) ? 0 : (h < 3 ? Math.round(h * 100) : h); }; // 1,72 м → 172 см
 
+/* Коди стаціонарних відділень — додаток до Інструкції щодо заповнення ф. № 066/о (у ред. наказу МОЗ від 21.01.2016 № 29).
+   Список узято з вторинного джерела — звірте з відділом статистики лікарні. */
+const DEPT = [['01','алергологічне (дорослі)'],['02','алергологічне (діти)'],['03','анестезіології та інтенсивної терапії (дорослі)'],['04','анестезіології та інтенсивної терапії (діти)'],
+  ['05','гастроентерологічне (дорослі)'],['06','гастроентерологічне (діти)'],['07','гематологічне (дорослі)'],['08','гематологічне (діти)'],['09','генетичне'],['10','гінекологічне (дорослі)'],['11','гінекологічне (діти)'],
+  ['12','дерматовенерологічне (дорослі)'],['13','дерматовенерологічне (діти)'],['14','діагностичне (дорослі)'],['15','діагностичне (діти)'],['16','ендокринологічне (дорослі)'],['17','ендокринологічне (діти)'],
+  ['18','імунологічне (дорослі)'],['19','імунологічне (діти)'],['20','інфекційне (дорослі)'],['21','інфекційне (діти)'],['22','кардіологічне'],['23','кардіоревматологічне (діти)'],['24','кардіохірургічне (дорослі)'],['25','кардіохірургічне (діти)'],
+  ['26','наркологічне (дорослі)'],['27','наркологічне (діти)'],['28','неврологічне (дорослі)'],['29','неврологічне (діти)'],['30','нейрохірургічне (дорослі)'],['31','нейрохірургічне (діти)'],['32','неонатологічне'],
+  ['33','нефрологічне (дорослі)'],['34','нефрологічне (діти)'],['35','онкологічне (дорослі)'],['36','онкологічне (діти)'],['37','опікове (дорослі)'],['38','опікове (діти)'],['39','ортопедичне (дорослі)'],['40','ортопедичне (діти)'],
+  ['41','оториноларингологічне (дорослі)'],['42','оториноларингологічне (діти)'],['43','офтальмологічне (дорослі)'],['44','офтальмологічне (діти)'],['45','паліативне'],['46','патології вагітності'],['47','педіатричне'],['48','пологове'],
+  ['49','проктологічне'],['50','радіаційної патології'],['51','психіатричне (дорослі)'],['52','психіатричне (діти)'],['53','психосоматичне'],['54','пульмонологічне (дорослі)'],['55','пульмонологічне (діти)'],['56','радіологічне'],
+  ['57','реабілітаційне (дорослі)'],['58','реабілітаційне (діти)'],['59','ревматологічне (дорослі)'],['60','ревматологічне (діти)'],['61','стоматологічне (дорослі)'],['62','стоматологічне (діти)'],['63','терапевтичне (дорослі)'],['64','терапевтичне (діти)'],
+  ['65','токсикологічне (дорослі)'],['66','токсикологічне (діти)'],['67','торакальної хірургії (дорослі)'],['68','торакальної хірургії (діти)'],['69','травматологічне (дорослі)'],['70','травматологічне (діти)'],['71','трансплантації'],
+  ['72','туберкульозне (дорослі)'],['73','туберкульозне (діти)'],['74','урологічне (дорослі)'],['75','урологічне (діти)'],['76','фізіотерапевтичне (дорослі)'],['77','фізіотерапевтичне (діти)'],['78','хірургічне (дорослі)'],['79','хірургічне (діти)'],['82','лепрозорій']];
+const BEDPROF = ['терапевтичний','пульмонологічний','кардіологічний','гастроентерологічний','ендокринологічний','нефрологічний','ревматологічний','гематологічний','алергологічний','неврологічний','інфекційний',
+  'хірургічний','травматологічний','урологічний','гінекологічний','онкологічний','інтенсивної терапії','паліативний','реабілітаційний','психіатричний','туберкульозний','оториноларингологічний','офтальмологічний','педіатричний','інший'];
+const deptName = c => (DEPT.find(d=>d[0] === String(c || '').replace(/\D/g, '').padStart(2, '0')) || [, ''])[1];
 /* ======== КРИТЕРІЇ ГОСПІТАЛІЗАЦІЇ ========
    Стандарт «Критерії госпіталізації пацієнтів для надання стаціонарної медичної допомоги»,
    наказ МОЗ України від 30.07.2026 № 1044. Формулювання скорочені — звіряйте з офіційним текстом.
@@ -1626,7 +1642,10 @@ const SECTIONS = [
   {id:'lv', type:'sel', label:'Лімфовузли', norm:0, tpl:'{v}', opts:['Периферичні лімфатичні вузли не збільшені','Збільшені підщелепні лімфатичні вузли, болючі при пальпації','Збільшені шийні лімфатичні вузли',
     'Збільшені пахвові лімфатичні вузли','Збільшені пахові лімфатичні вузли справа, болючі','Збільшені пахові лімфатичні вузли зліва, болючі','Генералізована лімфаденопатія','Збільшені пахові лімфатичні вузли з обох боків, болючі']},
   {id:'shch', type:'sel', label:'Щитоподібна залоза', norm:0, tpl:'{v}', opts:['Щитоподібна залоза не збільшена','Щитоподібна залоза дифузно збільшена','Пальпуються вузлові утворення щитоподібної залози']},
-  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '},
+  {id:'kor', type:'sel', noOut:true, norm:0, label:'37. Огляд на коросту (ф. 003/о)', opts:['так','ні']},
+  {id:'ped', type:'sel', noOut:true, norm:0, label:'38. Огляд на педикульоз (ф. 003/о)', opts:['так','ні']},
+  {id:'rezh', type:'sel', noOut:true, norm:0, label:'39. З режимом дня та забороною паління ознайомлений (ф. 003/о)', opts:['так','ні']},
 ]},
 { id:'dyh', title:'Органи дихання', short:'Дихання', head:'Органи дихання:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
@@ -1775,7 +1794,8 @@ const SECTIONS = [
     'УЗД ОЧП','УЗД вен нижніх кінцівок','ФГДС','КТ головного мозку (в іншому закладі)',
     'консультація невролога','консультація хірурга','консультація судинного хірурга','консультація інфекціоніста','консультація офтальмолога','консультація ЛОР-лікаря','консультація гінеколога','тест на вагітність (ХГЛ)','С-реактивний білок','ТТГ','бактеріологічне дослідження сечі','посів крові на стерильність','люмбальна пункція','антитіла до ВЕБ (VCA IgM)','бактеріологічне дослідження ранового вмісту','пікфлоуметрія','ЕЕГ','УЗД нирок','УЗД м’яких тканин','МРТ головного мозку (в іншому закладі)','МРТ шийного відділу хребта (в іншому закладі)','консультація уролога',
     'рентгенографія ураженого сегмента у 2 проекціях','рентгенографія кульшового суглоба','рентгенографія грудопоперекового відділу хребта','КТ ураженого відділу хребта (в іншому закладі)','консультація травматолога','консультація нейрохірурга',
-    'феритин','вільний Т4','сечова кислота','ПСА','мамографія','цитологічне дослідження шийки матки (ПАП-тест)','аналіз калу на приховану кров','флюорографія']}
+    'феритин','вільний Т4','сечова кислота','ПСА','мамографія','цитологічне дослідження шийки матки (ПАП-тест)','аналіз калу на приховану кров','флюорографія']},
+  {id:'plano', type:'line', docs:['ohl'], label:'Інші обстеження (позначені на бланку 003/о)', placeholder:'напр., RW; кал на я/глист', tpl:'{v}', cont:true, joiner:', '}
 ]},
 { id:'hosp', docs:['ohl','gosp'], title:'Обґрунтування госпіталізації', short:'Госпіталізація', titleAmb:'Рішення щодо госпіталізації', shortAmb:'Направлення',
   head:'Обґрунтування госпіталізації:', headAmb:'Рішення щодо госпіталізації:', hospWarn:true, fields:[
@@ -2000,8 +2020,8 @@ const SECTIONS = [
   {id:'txt', type:'auto', label:'Текст згоди', tpl:'{v}', fn:()=>zgodaText()}
 ]},
 { id:'s066', docs:['f066'], title:'Карта вибулого: статистичні дані', short:'066/о', head:'', fields:[
-  {id:'prof', type:'line', label:'10. Профіль ліжок', placeholder:'напр., терапевтичний', tpl:'Профіль ліжок: {v}.'},
-  {id:'vcode', type:'line', noOut:true, label:'9. Код відділення (якщо є)', placeholder:'3 цифри'},
+  {id:'prof', type:'sel', label:'10. Профіль ліжок (якщо не вибрано — за кодом відділення з «Налаштувань»)', tpl:'Профіль ліжок: {v}.', opts:BEDPROF},
+  {id:'vcode', type:'sel', noOut:true, label:'Код відділення для цього пацієнта (якщо не вибрано — з «Налаштувань»)', opts:DEPT.map(d=>d[0] + ' — ' + d[1])},
   {id:'sr', type:'sel', label:'12. Строки госпіталізації від початку захворювання (якщо порожньо — за датою захворювання)', tpl:'Строки госпіталізації: {v}.', opts:['до 6 годин','7–24 години','пізніше 24 годин']},
   {id:'vp', type:'sel', label:'13. Госпіталізація з приводу цього захворювання в цьому році', tpl:'Госпіталізація в цьому році: {v}.', opts:['вперше','повторно']},
   {id:'p30', type:'sel', noOut:true, label:'Повторна госпіталізація до 30 днів (титул 003/о, п. 19.1)', opts:['так','ні']},
@@ -3106,8 +3126,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.26', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.27', VDATE = '20.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.27', '21.10.2026', 'бланк 003/о (первинний огляд, 2-й аркуш): пп. 37 «Огляд на коросту», 38 «Огляд на педикульоз», 39 «З режимом дня та забороною паління ознайомлений» — нові поля в розділі «Шкіра» (заповнюються й «= Норма =»), на бланку обране підкреслено, клік по пункту веде до поля. «ОБСТЕЖЕННЯ» на бланку клікабельні: натисніть номер — обстеження додається до плану або прибирається; те, чого немає в списку плану (RW, кальцій, кал на я/глист…), — у полі «Інші обстеження» і в тексті плану. Клік по «КОНСУЛЬТАЦІЯ» відкриває саме групу «Консультації» в плані. Аркуш «Перед друком» більше не стрибає на початок: після змін зліва показує щойно змінений пункт, після кліку по аркушу — той самий пункт. Код відділення («Налаштування») і профіль ліжок (вкладка «066/о») — випадаючі списки замість вписування: 82 коди стаціонарних відділень за додатком до інструкції 066/о (звірте зі статистиками) і перелік профілів ліжок; профіль, якщо не вибрано, береться з коду відділення (63 → терапевтичний)'],
   ['0.9.3.26', '21.10.2026', 'виправлено (знайшла автоматична перевірка на GitHub): якщо під час увімкнення PIN спрацьовувало автозбереження, запис пацієнта міг лишитися в браузері незашифрованим; а під час вимкнення — зашифрованим уже без PIN (після перезапуску програма просила б PIN, якого немає). Тепер спершу змінюється стан шифрування, потім перезаписуються всі записи, і наостанок ще раз зберігається найсвіжіший стан. Додано перевірку «збереження посеред увімкнення/вимкнення PIN»'],
   ['0.9.3.25', '20.10.2026', 'форма 066/о — дві редакції, перемикач над бланком: 2012 року («Карта хворого, який вибув із стаціонару») і 2016 року (наказ МОЗ № 29 від 21.01.2016, «Карта пацієнта, який вибув із стаціонару», чинна): пп. 1–28 — громадянство (код країни), документ особи (лише за згодою), поштовий індекс, відділення госпіталізації й виписки (коди), повторна госпіталізація до 30 днів, травма виробнича/невиробнича, таблиця діагнозів з кодами, категорія резистентності ТБ, процедури й операції з кодом, видом анестезії (код 1–4) і анестезіологом, обстеження органів грудної порожнини, реєстраційний номер лікаря («Налаштування»). Вибір редакції запам’ятовується'],
   ['0.9.3.24', '20.10.2026', 'форма № 066/о «Карта хворого, який вибув із стаціонару» («Інші документи» → «Карта вибулого (ф. 066/о)»): бланк на два аркуші A4, як паперовий; дата й час госпіталізації, ПІБ, стать, вік, житель міський/сільський, робота, адреса, ким направлений, відділення, екстрена/планова, результат (з епікризу), дата виписки, ліжко-дні, діагнози з кодом МКХ — підставляються самі. Нова вкладка «066/о»: профіль ліжок (запам’ятовується), строки госпіталізації (якщо порожньо — за «Вважає себе хворим протягом»), вперше/повторно, операції (таблиця п. 19), дати RW, ВІЛ, онкоогляду, флюорографії (якщо порожньо — з журналу обстежень), пільгова категорія; п. 17б і 18 (причини смерті) — показуються лише при результаті «помер». Ці ж дані заповнюють титул 003/о: ВІЛ, група крові й резус (з журналу), RW, п. 19 і 19.1. Ліжко-дні рахуються однаково всюди за наказом МОЗ № 110: день госпіталізації і день виписки — один день; госпіталізація й виписка того самого дня — 1 ліжко-день (раніше було 0). Направлення: окремо лікар (ПІБ), заклад, код закладу за ЄДРПОУ і № електронного направлення — у тексті огляду, у 003/о (п. 9 з кодом ЄДРПОУ) і 066/о (п. 7); підказки — з попередніх пацієнтів. «Налаштування» → «Код відділення» — у п. 11 і 12 титулу 003/о та п. 9 форми 066/о. Крапка в ініціалах («А. А.») більше не губиться'],
@@ -3722,7 +3743,7 @@ function buildMetaPanel(){
     inp('nach', 'Заступник головного лікаря з медичної роботи', {placeholder:'для спільних оглядів і консиліумів'}),
     inp('golov', 'Головний лікар (директор)', {placeholder:'необов’язково'}),
     inp('vidd', 'Відділення', {placeholder:'Терапевтичне відділення № 2'}),
-    inp('vcode', 'Код відділення (для 003/о, 066/о — уточніть у статистиків)', {inputmode:'numeric', placeholder:'напр., 63'}),
+    h('div', {class:'f'}, h('label', {for:'meta_vcode'}, 'Код відділення (003/о, 066/о; за додатком до інструкції 066/о — звірте зі статистиками)'), h('select', {id:'meta_vcode', onchange:()=>{ saveDoc(); update(); }}, h('option', {value:''}, '— не вказано —'), ...DEPT.map(d=>h('option', {value:d[0]}, d[0] + ' — ' + d[1])))),
     );
   wrap.append(h('h3', {class:'sub', style:'margin-top:0'}, 'Пацієнт'), gP, h('h3', {class:'sub'}, 'Запис'), gR,
     h('p', {class:'chips-hint', style:'margin:8px 0 14px'}, 'Лікар, відділення й дані закладу — на вкладці «Налаштування».'), patientsBlock());
@@ -5529,6 +5550,10 @@ const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
 /* «Ким направлений»: заклад і лікар; інакше — спосіб госпіталізації */
 function bNapr(){ const z = BV('morbi.hospz').replace(/^\(|\)$/g, ''), d = BV('morbi.hospd'); if (z || d) return [z, d ? 'лікар ' + d : ''].filter(Boolean).join(', '); return BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : ''; }
+const bU3 = (on, t) => h('span', {class:'bl' + (on ? ' bsel' : '')}, t);
+/* пункти «ОБСТЕЖЕННЯ» бланка 003/о ↔ план обстеження */
+const B003OB = ['Загальний аналіз крові','Загальний аналіз сечі','RW','Глюкоза крові','Цукор крові','ЕКГ','Креатинін, сечовина','Проби печінки','Загальний білок','Залізо','Кальцій','ПТІ','ГГТП','Фібриноген','Гематокрит','Група крові, резус-фактор','Hbs Ag','СРБ','Холестерин, В-ЛП','УЗО ОЧП, нирок, ОМСС, щитоподібної залози','Ro-гр. ОГК','ФГДС','Кал на я/глист','Сеча на діастазу'];
+const B003MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
 function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
 /* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
@@ -5654,9 +5679,11 @@ function bExam(){
   const dx = [BV('dx.osn') ? end(BV('dx.osn').replace(/\.$/, '') + (BV('dx.mkh') ? ' (' + BV('dx.mkh') + ')' : '')) : '', BV('dx.uskl') ? 'Ускладнення: ' + end(BV('dx.uskl')) : '', BV('dx.supd') ? 'Супутні: ' + end(BV('dx.supd')) : ''].filter(Boolean).join(' ');
   const plan = F('dx.plan').chips.map((c,i)=>c.getAttribute('aria-pressed') === 'true' ? O(F('dx.plan').opts[i]).t : null).filter(Boolean);
   const OB = ['Загальний аналіз крові','Загальний аналіз сечі','RW','Глюкоза крові','Цукор крові','ЕКГ','Креатинін, сечовина','Проби печінки','Загальний білок','Залізо','Кальцій','ПТІ','ГГТП','Фібриноген','Гематокрит','Група крові, резус-фактор','Hbs Ag','СРБ','Холестерин, В-ЛП','УЗО ОЧП, нирок, ОМСС, щитоподібної залози','Ro-гр. ОГК','ФГДС','Кал на я/глист','Сеча на діастазу'];
-  const MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
+  const MAP = B003MAP; /* також для кліку по пункту */
+  const MAP0 = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
   const on = new Set(), rest = [];
   plan.filter(t=>!/^консультація/.test(t)).forEach(t=>{ const m = MAP.find(([re])=>re.test(t)); if (m) m[1].forEach(n=>on.add(n)); else rest.push(t); });
+  BV('dx.plano').split(/[;,]\s*/).map(x=>x.trim().toLowerCase()).filter(Boolean).forEach(x=>{ const i = OB.findIndex(o=>o.toLowerCase() === x); if (i >= 0) on.add(i + 1); else rest.push(x); });
   const kons = plan.filter(t=>/^консультація/.test(t)).map(t=>t.replace(/^консультація /, ''));
   const K4 = [['ОКУЛІСТА',/офтальмолог|окуліст/],['ХІРУРГА',/^хірурга$/],['НЕВРОЛОГА',/^невролога$/],['ЛОРа',/ЛОР/]];
   const kRest = kons.filter(k=>!K4.some(([,re])=>re.test(k)));
@@ -5667,13 +5694,14 @@ function bExam(){
     bLines(cont, 3),
     bRow('На підставі вказаного:'), h('div', {class:'brow'}, h('b', {}, 'ДІАГНОЗ: ')), bLines(dx, 2, true),
     h('div', {class:'bcols'},
-      h('div', {}, h('div', {class:'bt2'}, 'ОБСТЕЖЕННЯ:'), ...OB.map((t,i)=>h('div', {class:'bob'}, h('span', {class:'bnum' + (on.has(i + 1) ? ' on' : '')}, String(i + 1)), '. ' + t)),
+      h('div', {}, h('div', {class:'bt2'}, 'ОБСТЕЖЕННЯ:'), ...OB.map((t,i)=>h('div', {class:'bob bobk', 'data-ob':String(i + 1), title:'Натисніть — додати до плану обстеження або прибрати'}, h('span', {class:'bnum' + (on.has(i + 1) ? ' on' : '')}, String(i + 1)), '. ' + t)),
         h('div', {class:'bob'}, h('span', {class:'bnum' + (rest.length ? ' on' : '')}, '25'), '. ', bFill(rest.join(', '))),
         h('div', {class:'bt2'}, 'КОНСУЛЬТАЦІЯ'), ...K4.map(([t,re])=>h('div', {class:'bob'}, h('span', {class:kons.some(k=>re.test(k)) ? 'bu' : ''}, t))),
         kRest.length ? h('div', {class:'bob'}, bFill(kRest.join(', '))) : ''),
       h('div', {}, h('div', {class:'bt2 r'}, 'ЛІКУВАННЯ:'), bRow('РЕЖИМ ', bFill(reg), ' ДІЄТА ', bFill(diet)), bLines(meds, 8, true))),
-    bRow('37. Огляд на коросту: так – 1; ні – 2 ', bBox(''), '   39. З режимом дня та забороною паління ознайомлений: так – 1; ні – 2 ', bBox('')),
-    bRow('38. Огляд на педикульоз: так – 1; ні – 2 ', bBox(''), '   Дата ', bCells('', 6), ' Підпис хворого ', bFill('')),
+    bRow('37. Огляд на коросту: ', bU3(BI('shk.kor') === 0, 'так – 1'), '; ', bU3(BI('shk.kor') === 1, 'ні – 2'), ' ', bBox(BI('shk.kor') >= 0 ? BI('shk.kor') + 1 : '', true)),
+    bRow('38. Огляд на педикульоз: ', bU3(BI('shk.ped') === 0, 'так – 1'), '; ', bU3(BI('shk.ped') === 1, 'ні – 2'), ' ', bBox(BI('shk.ped') >= 0 ? BI('shk.ped') + 1 : '', true)),
+    bRow('39. З режимом дня та забороною паління ознайомлений: ', bU3(BI('shk.rezh') === 0, 'так – 1'), '; ', bU3(BI('shk.rezh') === 1, 'ні – 2'), ' ', bBox(BI('shk.rezh') >= 0 ? BI('shk.rezh') + 1 : '', true), '   Дата ', bCells(BI('shk.rezh') >= 0 ? bD6((mv('dt') || '').split('T')[0]) : '', 6), ' Підпис хворого ', bFill('')),
     bRow('40. П.І.Б. лікаря ', bFill(mv('doc'), true), ' підпис ', bFill(''), ' реєстраційний номер ', bFill('')));
   return [p1, p2];
 }
@@ -12092,7 +12120,7 @@ const BMAP = [
   [/^Периф\. л\/в|^Щитоподібна/, 'shk'], [/^Система органів дихання|^Перкуторно над легенями/, 'dyh'], [/^Аускультативно:/, 'dyh'], [/^Хрипи/, 'dyh.hr'],
   [/^Температура тіла:/, 'zah'], [/^Серцево-судинна система|^А\/Т|^Межі серця|^Тони серця/, 'ssc'], [/^Система травлення|^Живіт:/, 'trav'],
   [/^С-м подразнення очеревини/, 'trav'], [/^С-м Пастернацького|^Сечовипускання/, 'sech'], [/^Випорожнення/, 'trav'], [/^Неврологічний статус/, 'nevr'],
-  [/^DIAGNOS|^Діагноз|^На підставі/, 'dx.osn'], [/^ОБСТЕЖЕННЯ/, 'dx.plan'], [/^ЛІКУВАННЯ|^РЕЖИМ/, 'rxt'], [/^КОНСУЛЬТАЦІЯ/, 'dx'],
+  [/^DIAGNOS|^Діагноз|^На підставі/, 'dx.osn'], [/^ОБСТЕЖЕННЯ|^25\./, 'dx.plan'], [/^ЛІКУВАННЯ|^РЕЖИМ/, 'rxt'], [/^КОНСУЛЬТАЦІЯ|^ОКУЛІСТА|^ХІРУРГА|^НЕВРОЛОГА|^ЛОРа/, 'dx.plan#Консультації'], [/^37\. Огляд на коросту/, 'shk.kor'], [/^38\. Огляд на педикульоз/, 'shk.ped'], [/^39\. З режимом дня/, 'shk.rezh'],
   [/^45\. ЕПІКРИЗ/, 'e_per'], [/^Медична карта стаціонарного хворого №/, 'meta_card'], [/^Дані обстеження/, 'e_obs'], [/^54\. Діагноз|^Додаткові діагнози/, 'dx.osn'],
   [/^55\. Медичне лікування/, 'e_lik.lik'], [/^56\. Лікувальні рекомендації/, 'e_rek'], [/^57\. Результат/, 'e_lik.rez'],
   /* щоденник (поточний запис) */
@@ -12100,6 +12128,7 @@ const BMAP = [
   [/^Живіт/, 'd_obj.zhyv'], [/^Випорожнення|^Сечовипускання/, 'd_obj.fiz'], [/^Лікування|^Призначено/, 'd_lik.kor'], [/^Дата\b/, 'meta_dt']
 ];
 function bGo(fld){
+  if (/#/.test(fld)){ const [f, grp] = fld.split('#'); bGo(f); setTimeout(()=>{ const F0 = F(f); const w = F0 && F0.wrapEl; if (!w) return; let g = [...w.querySelectorAll('*')].find(x=>x.children.length <= 2 && x.textContent.trim().startsWith(grp)); if (g && g.closest('[hidden]')){ F0.exp = true; try{ refreshChips(F0); }catch(e){} } if (g){ g.scrollIntoView({block:'center', behavior:'smooth'}); g.classList.remove('fieldflash'); void g.offsetWidth; g.classList.add('fieldflash'); setTimeout(()=>g.classList.remove('fieldflash'), 2600); } }, 700); return; }
   if (fld === 'rxt'){ goTab('rxt'); return; }
   if (fld === 'meta_dt' && DOC === 'shch'){ goTab('d_main'); setTimeout(()=>{ const i = document.querySelector('.ddt'); if (!i) return; const w = i.closest('.res-form') || i; w.scrollIntoView({block:'center', behavior:'smooth'}); i.focus({preventScroll:true}); w.classList.remove('fieldflash'); void w.offsetWidth; w.classList.add('fieldflash'); setTimeout(()=>w.classList.remove('fieldflash'), 2600); }, 80); return; }
   const sec = /^meta_/.test(fld) ? 'meta' : fld.split(/[._]/)[0] === 'e' || fld.split(/[._]/)[0] === 'd' ? fld.split('.')[0].split('_').slice(0, 2).join('_') : fld.split(/[._]/)[0];
@@ -13652,6 +13681,9 @@ ADDR.forEach(([k])=>{ if (!AI_KEEP.includes('addr_' + k)) AI_KEEP.push('addr_' +
 /* ===== Форма № 066/о «Карта хворого, який вибув із стаціонару» (наказ МОЗ № 110 від 14.02.2012) — 0.9.3.24 =====
    Бланк на два аркуші A4. Усе, що вже є в записі пацієнта, підставляється само; решта — вкладка «066/о».
    Ці ж дані заповнюють порожні пункти титульного аркуша 003/о (ВІЛ, RW, група крові, резус, п. 19, 19.1). ===== */
+/* код відділення: вибір у пацієнта або з «Налаштувань»; профіль ліжок — вибір або за кодом */
+const vcode66 = () => { const i = typeof S66 === 'function' ? S66('vcode') : -1; return i >= 0 ? DEPT[i][0] : String(mv('vcode') || '').replace(/\D/g, ''); };
+const prof66 = () => { const t = S66T('prof'); if (t) return t.replace(/^Профіль ліжок:\s*/, '').replace(/\.$/, ''); const n = deptName(vcode66()); return n ? n.split(' (')[0].replace(/не$/, 'ний') : ''; };
 const S66 = k => { const f = F('s066.' + k); return f ? (f.type === 'sel' ? (f.el.value === '' ? -1 : +f.el.value) : f.el.value.trim()) : ''; };
 const S66T = k => { const f = F('s066.' + k); return f && f.el.value !== '' ? g(val(f, true)) : ''; };
 const isoDMY = iso => iso ? iso.slice(8,10) + '.' + iso.slice(5,7) + '.' + iso.slice(0,4) : '';
@@ -13709,7 +13741,7 @@ function b066v12(){
     bRow('6. Місце проживання: ', bFill(mv('addr'), false, true)), h('div', {class:'bs r'}, '(область, район, населений пункт, вулиця, будинок, квартира)'),
     bRow('7. Ким направлений (заклад охорони здоров’я) ', bFill(napr, false, true), ' ', bCells(BV('morbi.hospe').replace(/\D/g, ''), 8)),
     bRow('8. Діагноз при направленні ', bFill('', false, true)),
-    bRow('9. Відділення госпіталізації ', bFill(mv('vidd')), ' ', bCells(S66('vcode') || mv('vcode'), 3), '  10. Профіль ліжок ', bFill(S66('prof'), true)),
+    bRow('9. Відділення госпіталізації ', bFill(mv('vidd')), ' ', bCells(vcode66(), 3), '  10. Профіль ліжок ', bFill(prof66(), true)),
     bRow('11. Госпіталізація екстрена – 1, планова – 2 ', bBox(urg, true)),
     bRow('12. Строки госпіталізації (до 6 годин – 1; 7–24 год. – 2; пізніше 24 год. – 3) ', bBox(sr, true)),
     bRow('13. Госпіталізація з приводу даного захворювання в даному році вперше – 1, повторно – 2 ', bBox(vp >= 0 ? vp + 1 : '', true)),
@@ -13755,10 +13787,9 @@ Object.defineProperty(DOCTITLES, 'f066', {get:()=>F066ED === '2016' ? 'КАРТ�
     try{ const s = SECTIONS.find(x=>x.id === 's066'); if (s){ const dd = dead66();
         s.fields.forEach(f=>{ if (f.dead && f.wrapEl) f.wrapEl.hidden = !dd; });
         [['rw', d66.rw], ['vil', d66.vil], ['flg', d66.flg]].forEach(([k, fn])=>{ const f = F('s066.' + k); if (f && f.el && !f.el.value){ const v = fn(); f.el.title = v ? 'З журналу обстежень: ' + isoDMY(v) : ''; f.wrapEl && f.wrapEl.classList.toggle('fromres', !!v); } });
-        const pf = F('s066.prof'); if (pf && pf.el && !pf.el.value){ const sp = lsGet('po.prof066', ''); if (sp) pf.el.placeholder = sp + ' (як минулого разу)'; } } }catch(e){}
+        } }catch(e){}
     return r; }; }
 /* профіль ліжок — запам'ятовується для наступних пацієнтів */
-{ const pf = F('s066.prof'); if (pf && pf.el) pf.el.addEventListener('change', ()=>{ if (pf.el.value.trim()) lsSet('po.prof066', pf.el.value.trim()); }); }
 /* титул 003/о: порожні пункти — із цих даних */
 { const bt = bTitle; bTitle = function(){ const pg = bt.apply(this, arguments);
     try{ const rows = [...pg.querySelectorAll('.brow')];
@@ -13783,7 +13814,7 @@ function b066v16(){
   const vyd = BI('hosp.vyd'), urg = vyd === 0 ? 1 : vyd === 1 ? 2 : '';
   const zt = mv('addr_np_t'), zh = zt === 'м.' ? 1 : zt === 'с.' ? 2 : '';
   const sr = sr66(), rz = rez66(), vp = S66('vp'), p30 = S66('p30'), pil = S66('pil'), tr = S66('trav'), tb = S66('tbres');
-  const vc = S66('vcode') || mv('vcode'), dead = dead66();
+  const vc = vcode66(), dead = dead66();
   const hd = b066Head(); hd.querySelectorAll('.bhr div').forEach(x=>{ if (/^Наказ МОЗ України$/.test(x.textContent.trim())) x.after(bSmall('(у редакції наказу Міністерства охорони здоров’я України від 21.01.2016 № 29)')); });
   const dxRows = [[BV('dx.osn'), BV('dx.mkh'), 'основний'], ...BV('dx.uskl').split(/;\s*/).filter(Boolean).map(t=>[t, '', '1']), ...BV('dx.supd').split(/;\s*/).filter(Boolean).map(t=>[t, '', '2'])];
   while (dxRows.length < 8) dxRows.push(['', '', '']);
@@ -13799,7 +13830,7 @@ function b066v16(){
     bRow('9. Поштовий індекс ', bCells(mv('addr_zip'), 5), '  10. Місце роботи, посада ', bFill(mv('work'), false, true)),
     bRow('11. Ким направлений пацієнт ', bFill(bNapr(), false, true), ' ', bCells(BV('morbi.hospe').replace(/\D/g, ''), 8)),
     bRow('12. Діагноз при госпіталізації ', bFill('', false, true), ' ', bCells('', 6)),
-    bRow('13. Відділення госпіталізації ', bCells(vc, 2), '  14. Відділення виписки (профіль ліжок) ', bCells(vc, 2), ' ', bFill(S66('prof'))),
+    bRow('13. Відділення госпіталізації ', bCells(vc, 2), '  14. Відділення виписки (профіль ліжок) ', bCells(vc, 2), ' ', bFill(prof66())),
     bRow('15. Госпіталізація: ургентна – 1; планова – 2 ', bBox(urg, true), '  16. Строк госпіталізації: до 6 годин – 1; 7–24 години – 2; більше 24 годин – 3 ', bBox(sr, true)),
     bRow('17. Госпіталізація з приводу цього захворювання в цьому році: вперше – 1; повторно – 2 ', bBox(vp >= 0 ? vp + 1 : '', true)),
     bRow('17.1. Повторна госпіталізація з приводу цього захворювання до 30 днів: так – 1; ні – 2 ', bBox(p30 >= 0 ? p30 + 1 : '')),
@@ -13840,6 +13871,79 @@ function b066v16(){
     if (DOC === 'f066' && BLANK){ const s = h('span', {class:'seg'}, ...[['2012', 'Ред. 2012 («Карта хворого…»)'], ['2016', 'Ред. 2016 («Карта пацієнта…», чинна)']].map(([k, t])=>h('button', {type:'button', 'aria-pressed':F066ED === k ? 'true' : 'false', onclick:()=>{ F066ED = k; lsSet('po.f066ed', k); renderPaper(); }}, t)));
       bar.append(s); }
     return bar; }; }
+/* ===== Аркуш «Перед друком» не стрибає на початок (0.9.3.27) =====
+   Після кожної зміни зліва аркуш перебудовується. Тепер він лишається на тому самому місці, а якщо ви перед тим
+   клацнули пункт на аркуші — показує саме цей пункт (з уже внесеним). ===== */
+const PKEEP = {txt:'', t:0};
+const pScroller = el => { for (let e = el; e && e !== document.body; e = e.parentElement){ const cs = getComputedStyle(e); if (/(auto|scroll)/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 2) return e; } return null; };
+const PK_SEL = '.brow, .bt2, .bob, .bdl, .blines, [data-sec], .pr-body p, .pr-body div';
+document.addEventListener('click', e=>{
+  const t = e.target; if (!t.closest || !t.closest('#paper')) return;
+  const row = t.closest(PK_SEL); if (!row) return;
+  PKEEP.txt = row.textContent.replace(/\s+/g, ' ').trim().slice(0, 28); PKEEP.t = Date.now();
+}, true);
+{ const rp = renderPaper; renderPaper = function(){
+    if (typeof PAPER !== 'undefined' && !PAPER) return rp.apply(this, arguments);   /* аркуш не показано — нічого не міряти */
+    const pp = $('#paper'), sc = pp && !pp.hidden ? (pScroller(pp.querySelector('.sheet') || pp) || pp) : null;
+    const top = sc ? sc.scrollTop : 0;
+    const r = rp.apply(this, arguments);
+    try{
+      if (!pp || pp.hidden || !sc) return r;
+      if (pp.querySelector('mark.chg, .flash')) return r;            // аркуш сам показав змінене
+      const recent = PKEEP.txt && Date.now() - PKEEP.t < 10 * 60 * 1000;
+      const key = PKEEP.txt.slice(0, 18);
+      const hit = recent && key ? [...pp.querySelectorAll(PK_SEL)].find(x=>x.textContent.replace(/\s+/g, ' ').trim().startsWith(key)) : null;
+      if (hit){ const a = hit.getBoundingClientRect(), b = sc.getBoundingClientRect(); sc.scrollTop += (a.top - b.top) - Math.max(40, (b.height - a.height) / 3); }
+      else sc.scrollTop = top;
+    }catch(e){}
+    return r; }; }
+/* змінили поле зліва → аркуш показує відповідний пункт (зворотний бік «клік по аркушу → поле») */
+const PLEFT = {key:'', t:0, kons:false};
+let FKMAP = null;
+function fieldKeyOf(el){
+  if (!FKMAP){ FKMAP = new Map(); SECTIONS.forEach(s=>s.fields.forEach(f=>{ if (f.wrapEl) FKMAP.set(f.wrapEl, s.id + '.' + f.id); })); }
+  for (let e = el; e && e.id !== 'panels'; e = e.parentElement){ const k = FKMAP.get(e); if (k) return k; }
+  const m = el.closest && el.closest('[id^="meta_"]'); return m ? m.id : '';
+}
+['input', 'change', 'click'].forEach(ev=>document.addEventListener(ev, e=>{
+  if (!e.isTrusted) return; const t = e.target; if (!t.closest || !t.closest('#panels')) return;
+  const k = fieldKeyOf(t); if (!k) return;
+  PLEFT.key = k; PLEFT.t = Date.now(); PLEFT.kons = /^консультація/i.test((t.closest('.chip') || {}).textContent || '');
+}, true));
+function bmapRowFor(key, kons){
+  if (typeof BMAP === 'undefined') return null;
+  const sec = key.split(/[._]/)[0], cand = BMAP.filter(([, k])=>k === key || k.split('#')[0] === key);
+  const L = kons ? BMAP.filter(([, k])=>/#Консультац/.test(k)) : cand.length ? cand : BMAP.filter(([, k])=>k === sec || k.split('.')[0] === sec);
+  const rows = [...document.querySelectorAll('#paper ' + PK_SEL.split(', ').join(', #paper '))];
+  for (const [re] of L){ const r = rows.find(x=>re.test(x.textContent.replace(/\s+/g, ' ').trim())); if (r) return r; }
+  return null;
+}
+{ const rp = renderPaper; renderPaper = function(){
+    const r = rp.apply(this, arguments);
+    try{
+      if (!PLEFT.key || Date.now() - PLEFT.t > 4000 || (typeof PAPER !== 'undefined' && !PAPER)) return r;
+      const pp = $('#paper'); if (!pp || pp.hidden) return r;
+      const row = bmapRowFor(PLEFT.key, PLEFT.kons); if (!row) return r;
+      const sc = pScroller(row) || pp, a = row.getBoundingClientRect(), b = sc.getBoundingClientRect();
+      if (a.top < b.top + 30 || a.bottom > b.bottom - 30) sc.scrollTop += (a.top - b.top) - Math.max(40, (b.height - a.height) / 3);
+      PKEEP.txt = row.textContent.replace(/\s+/g, ' ').trim().slice(0, 28); PKEEP.t = Date.now();
+    }catch(e){}
+    return r; }; }
+/* клік по пункту «ОБСТЕЖЕННЯ» на бланку 003/о — додати до плану або прибрати */
+document.addEventListener('click', e=>{
+  const row = e.target.closest && e.target.closest('#paper .bobk[data-ob]'); if (!row) return;
+  e.stopPropagation(); e.preventDefault();
+  const n = +row.dataset.ob, nm0 = B003OB[n - 1], name = /^[А-ЯІЇЄҐ][а-яіїєґ’]/.test(nm0) ? nm0[0].toLowerCase() + nm0.slice(1) : nm0, P = F('dx.plan'), PO = F('dx.plano');
+  const idx = P.opts.map((o, i)=>[O(o).t, i]).filter(([t])=>B003MAP.some(([re, ns])=>ns.includes(n) && re.test(t))).map(([, i])=>i);
+  const onIdx = idx.find(i=>P.chips[i].getAttribute('aria-pressed') === 'true');
+  const list = (PO.el.value || '').split(/[;,]\s*/).map(x=>x.trim()).filter(Boolean), inList = list.findIndex(x=>x.toLowerCase() === name.toLowerCase());
+  let msg;
+  if (onIdx !== undefined){ P.chips[onIdx].click(); msg = 'Прибрано з плану: ' + O(P.opts[onIdx]).t; }
+  else if (inList >= 0){ list.splice(inList, 1); PO.el.value = list.join('; '); update(); msg = 'Прибрано з плану: ' + name; }
+  else if (idx.length){ P.chips[idx[0]].click(); msg = 'Додано до плану: ' + O(P.opts[idx[0]]).t + (B003MAP.find(([re])=>re.test(O(P.opts[idx[0]]).t))[1].length > 1 ? ' (позначає кілька пунктів бланка)' : ''); }
+  else { list.push(name); PO.el.value = list.join('; '); update(); msg = 'Додано до плану: ' + name; }
+  toast(msg, 2200);
+}, true);
 </script>
 
 </body>

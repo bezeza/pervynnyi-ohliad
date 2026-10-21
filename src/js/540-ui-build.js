@@ -207,8 +207,8 @@ function buildFeet(){   // кнопки «‹ назад / Далі ›» вни
   TABS.forEach(s=>{ if (s.foot) s.foot.innerHTML = ''; }); if (typeof renderTabNav === 'function') renderTabNav();
 }
 const DOCLIST = {hosp:[['ohl','Первинний огляд'],['shch','Щоденник'],['rx','Призначення'],['epi','Виписний епікриз']], amb:[['ohl','Первинний огляд'],['shch','Повторний огляд'],['rx','Призначення'],['kons','Консультаційний висновок']]};
-const DOCMORE = {hosp:[['f066','Карта вибулого (ф. 066/о)'],['pam','Пам’ятка пацієнту'],['zav','Огляд завідувача / спільний огляд'],['konc','Консиліум'],['etap','Етапний епікриз'],['per','Переказний епікриз'],['napr','Направлення на консультацію'],['dov','Довідка'],['zgoda','Інформована згода']],
-  amb:[['gosp','Направлення на госпіталізацію'],['napr','Направлення на консультацію'],['zav','Спільний огляд'],['konc','Консиліум'],['pam','Пам’ятка пацієнту'],['dov','Довідка'],['zgoda','Інформована згода']]};
+const DOCMORE = {hosp:[['anes','Огляд анестезіолога (ф. 003-3/о)'],['f066','Карта вибулого (ф. 066/о)'],['pam','Пам’ятка пацієнту'],['zav','Огляд завідувача / спільний огляд'],['konc','Консиліум'],['etap','Етапний епікриз'],['per','Переказний епікриз'],['napr','Направлення на консультацію'],['dov','Довідка'],['zgoda','Інформована згода']],
+  amb:[['anes','Консультація анестезіолога'],['gosp','Направлення на госпіталізацію'],['napr','Направлення на консультацію'],['zav','Спільний огляд'],['konc','Консиліум'],['pam','Пам’ятка пацієнту'],['dov','Довідка'],['zgoda','Інформована згода']]};
 const RECS_DA = ['Повторний огляд','Огляд вдома','Огляд за викликом'];
 function switchDoc(nd){
   if (DOC === nd) return;
@@ -250,7 +250,7 @@ function applyDoc(first){
   $('#allNorm').title = DOC === 'shch' ? 'Типовий стабільний запис щоденника' : 'Виставити норму в усіх системах огляду';
   buildFeet();
   if (!first){
-    const start = DOC === 'ohl' ? HV : DOC === 'rx' ? RXT : SECTIONS.find(x=>x.id === {konc:'c_main', gosp:'gs_main', pam:'p_main', shch:'d_main', epi:'e_per', kons:'k_main', zav:'z_main', etap:'t_main', per:'t_main', napr:'n_main', dov:'v_main', zgoda:'g_main', f066:'s066'}[DOC]);
+    const start = DOC === 'ohl' ? HV : DOC === 'rx' ? RXT : SECTIONS.find(x=>x.id === {konc:'c_main', gosp:'gs_main', pam:'p_main', shch:'d_main', epi:'e_per', kons:'k_main', zav:'z_main', etap:'t_main', per:'t_main', napr:'n_main', dov:'v_main', zgoda:'g_main', f066:'s066', anes:'an_main'}[DOC]);
     show(TABS.indexOf(start));
   }
   dirty = false; $('#banner').hidden = true;
