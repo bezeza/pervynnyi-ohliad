@@ -1,24 +1,25 @@
 /* 0.9.3.38 — ручний текст не замінюється через зміну режиму чи розміру. */
 function manualTextStatus(){
-  const banner = document.getElementById('banner'); banner.hidden = !dirty;
+  const banner = document.getElementById('banner'); if (banner.hidden === dirty) banner.hidden = !dirty;
   let text = banner.querySelector('[data-manual-status]');
   if (!text){ text = banner.querySelector('span'); text.dataset.manualStatus = '1'; text.setAttribute('role','status'); }
-  text.textContent = 'Є ручні зміни. Автоматичне оновлення призупинено; заміна текстом із форми прибере ручні правки й форматування.';
+  const message = 'Є ручні зміни. Автоматичне оновлення призупинено; заміна текстом із форми прибере ручні правки й форматування.';
+  if (text.textContent !== message) text.textContent = message;
 }
 // Синхронізація після наявних обробників і відновлення кешу документа.
 { const x0 = update; update = function(){ const r = x0.apply(this, arguments); manualTextStatus(); return r; }; }
 let MANUAL_SWITCHING = 0;
 { const x0 = switchDoc; switchDoc = function(){
-  MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
-  finally { MANUAL_SWITCHING--; manualTextStatus(); if (!MANUAL_SWITCHING) renderCheck(); }
+  const previous = DOC; MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
+  finally { MANUAL_SWITCHING--; manualTextStatus(); if (!MANUAL_SWITCHING && dirty && previous !== DOC) renderCheck(); }
 }; }
-{ const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); manualTextStatus(); renderCheck(); return r; }; }
+{ const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); manualTextStatus(); if (dirty) renderCheck(); return r; }; }
 { const x0 = applyDoc; applyDoc = function(first){
   const keep = !MANUAL_SWITCHING && !RESTORING && dirty ? {doc:DOC, html:document.getElementById('out').innerHTML} : null;
   if (keep) CACHE[keep.doc] = {html:keep.html, dirty:true};
   const r = x0.apply(this, arguments);
   // false використовується й для швидкого режиму; новий тип має інший DOC.
-  if (keep && keep.doc === DOC || first && CACHE[DOC] && CACHE[DOC].dirty){
+  if ((keep && keep.doc === DOC) || (first && CACHE[DOC] && CACHE[DOC].dirty)){
     const saved = keep && keep.doc === DOC ? keep : CACHE[DOC];
     document.getElementById('out').innerHTML = saved.html; dirty = true;
     renderCheck();
