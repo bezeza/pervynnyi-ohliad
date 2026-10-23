@@ -632,6 +632,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Коротка перевірка: до двох наявних зауважень і перехід до поля', r.slice(0,4).every(Boolean),JSON.stringify(r));
    ok('Коротка перевірка: порожній документ не показує зауважень', r[4]===true);
  }
+ { // 0.9.3.38: пункти бланка щоденника
+   const r=JSON.parse(w.eval(`(()=>{ switchDoc('shch'); const f=F('d_obj.perk'), l=F('d_obj.lv'); const a=[!!f && !!l, !/Перкуторно|Лімфатичні/.test(generate().plain)];
+     f.el.value='1'; l.el.value='0'; update(); const t=generate().plain; a.push(/Перкуторно притуплення в нижніх відділах справа/.test(t) && /Лімфатичні вузли не збільшені/.test(t));
+     const e={f:diaryFields().f, cur:true, dt:'2026-10-23T09:00'}; const el=bDiaryEntry(e); a.push(/притуплення в нижніх відділах справа/.test(el.textContent) && !!el.querySelector('[data-dsel="d_obj.perk"]'));
+     f.el.value=''; l.el.value=''; update(); switchDoc('ohl'); return JSON.stringify(a); })()`));
+   ok('Щоденник: «Перкуторно», «Лімфатичні вузли» тощо — поля, у тексті лише коли вибрано', r[0] && r[1] && r[2], JSON.stringify(r));
+   ok('Бланк щоденника: рядок заповнюється і відкриває вибір', r[3]===true, JSON.stringify(r)); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

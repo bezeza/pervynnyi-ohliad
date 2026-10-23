@@ -98,7 +98,7 @@ function qeOpen(f, sid, anchor){
       h('button', {type:'button', class:'qe-x', 'aria-label':'Закрити', title:'Закрити (Esc)', onclick:qeClose}, '✕')),
     w);
   document.body.append(box); QE.box = box;
-  const ob = $('#out').getBoundingClientRect(), ar = anchor.getBoundingClientRect();
+  const ob = ((anchor.closest && anchor.closest('#paper')) || $('#out')).getBoundingClientRect(), ar = anchor.getBoundingClientRect();
   const width = Math.min(560, Math.max(300, ob.width - 16));
   box.style.width = width + 'px';
   box.style.left = Math.max(8, Math.min(window.innerWidth - width - 8, ob.left + 8)) + window.scrollX + 'px';
