@@ -625,7 +625,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Прогрес: важливі пропуски й перехід до поля', r.slice(0,3).every(Boolean), JSON.stringify(r));
    ok('Прогрес: необов’язкові порожні доповнення й Б/о не заважають', r.slice(3).every(Boolean), JSON.stringify(r));
  }
- { // 0.9.3.37: пункти бланка щоденника
+ { // 0.9.3.37: виклад перевірки не створює нових правил і не змінює документ.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(); switchDoc('ohl'); const out=document.getElementById('out'); out.innerHTML='<p>Перевірка інтерфейсу</p>'; document.getElementById('meta_pib').value=''; const html=out.innerHTML; renderCheck();
+     const source=checkDoc(), shown=[...document.querySelectorAll('#copyPeek .copy-peek-item')]; const a=[shown.length===Math.min(2,source.length),shown.every((b,i)=>b.textContent===source[i].m),out.innerHTML===html];
+     shown[0].click(); a.push(TABS[active].id===source[0].tab); out.innerHTML=''; renderCheck(); a.push(document.getElementById('copyPeek').hidden); restore(saved); return JSON.stringify(a); })()`));
+   ok('Коротка перевірка: до двох наявних зауважень і перехід до поля', r.slice(0,4).every(Boolean),JSON.stringify(r));
+   ok('Коротка перевірка: порожній документ не показує зауважень', r[4]===true);
+ }
+ { // 0.9.3.38: пункти бланка щоденника
    const r=JSON.parse(w.eval(`(()=>{ switchDoc('shch'); const f=F('d_obj.perk'), l=F('d_obj.lv'); const a=[!!f && !!l, !/Перкуторно|Лімфатичні/.test(generate().plain)];
      f.el.value='1'; l.el.value='0'; update(); const t=generate().plain; a.push(/Перкуторно притуплення в нижніх відділах справа/.test(t) && /Лімфатичні вузли не збільшені/.test(t));
      const e={f:diaryFields().f, cur:true, dt:'2026-10-23T09:00'}; const el=bDiaryEntry(e); a.push(/притуплення в нижніх відділах справа/.test(el.textContent) && !!el.querySelector('[data-dsel="d_obj.perk"]'));
