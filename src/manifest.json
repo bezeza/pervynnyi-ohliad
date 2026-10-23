@@ -100,6 +100,7 @@
   "617-ergo.js",
   "618-popout.js",
   "619-onepage.js",
-  "620-field-states.js"
+  "620-field-states.js",
+  "621-progress-next.js"
  ]
 }

@@ -616,6 +616,15 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Стани полів: довільний текст не оголошується нормою', r[10]===true);
    ok('Стани полів: не змінюють документ, доступні для читача екрана, не дублюються', r.slice(11).every(Boolean), JSON.stringify(r));
  }
+ { // 0.9.3.36: прогрес і необов’язкові доповнення.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(); switchDoc('ohl'); const dt=document.getElementById('meta_dt'); dt.value=''; update(); const a=[progressRequired().some(x=>x.f==='meta_dt')];
+     const next=document.querySelector('#progressNext button'); a.push(!!next && /Потрібно/.test(document.getElementById('progressNext').textContent)); next.click(); a.push(TABS[active].id==='meta');
+     const f=F('skarhy.cx'); if(f){ f.el.value=''; update(); a.push(f.entryStatus.hidden); } else a.push(false);
+     const sc=SECTIONS.find(s=>s.id==='dyh'); clearSection(sc); const b=sc.fields.find(f=>f.bo); F('dyh.ausk').el.value='0'; update(); a.push(b.entryStatus.hidden);
+     F('dyh.ausk').el.value=''; update(); a.push(!b.entryStatus.hidden); restore(saved); return JSON.stringify(a); })()`));
+   ok('Прогрес: важливі пропуски й перехід до поля', r.slice(0,3).every(Boolean), JSON.stringify(r));
+   ok('Прогрес: необов’язкові порожні доповнення й Б/о не заважають', r.slice(3).every(Boolean), JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
