@@ -1223,12 +1223,15 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .progress-next{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
 .progress-next small{font-size:11px;color:var(--muted)}.progress-next button{text-align:left;white-space:normal;line-height:1.4}
 .entry-status[hidden]{display:none!important}
+
+/* 0.9.3.37 — задача 3 */
+.copy-peek{margin:8px 0;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px}.copy-peek[hidden]{display:none}.copy-peek-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.copy-peek-item{display:block;border:0;background:none;color:var(--accent);font:inherit;text-align:left;padding:6px 0;cursor:pointer;text-decoration:underline}.copy-peek small{display:block;color:var(--muted)}#outBox[data-ov="chk"] .copy-peek{display:none}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.36 від 23.10.2026">v0.9.3.36 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.37 від 23.10.2026">v0.9.3.37 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3355,8 +3358,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.36', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.37', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.37', '23.10.2026', 'одне-два зауваження з наявної перевірки біля «Копіювати», перехід до поля без блокування'],
   ['0.9.3.36', '23.10.2026', 'прогрес підказує найближче важливе незаповнене поле з переходом; решта розділів позначена як необов’язкова; прибрано зайві порожні значки біля доповнень і Б/о при детальному описі'],
   ['0.9.3.35', '23.10.2026', 'текстові значки стану полів і розділів: «не заповнено», «норма», «є відхилення»; для довільного тексту — «заповнено», для підстановки — окрема позначка; порожнє поле не прирівнюється до норми'],
   ['0.9.3.34', '23.10.2026', 'менше переходів: розділи документа — однією сторінкою підряд, зміст ліворуч підсвічує поточний і прокручує до розділу (вкладками — перемикач у «Налаштуваннях»); порожні поля з підстановкою (скарги, анамнез, об’єктивно…) показують сірим, що підтягнеться, і кнопку «Взяти й правити»; клік по фразі в тексті документа відкриває маленьке вікно правки саме цього поля (Alt+клік — просто курсор); окреме вікно — свій масштаб −/100%/+, «По ширині», Ctrl+колесо'],
@@ -15082,6 +15086,22 @@ function progressOptional(){
 { const x0 = update; update = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
 progressOptional(); progressRender();
+/* 0.9.3.37 — короткий виклад наявної перевірки біля копіювання. */
+const COPY_PEEK = h('div', {id:'copyPeek', class:'copy-peek', hidden:'', 'aria-label':'Перевірка перед копіюванням'});
+const COPY_FOOT = document.querySelector('#outBox .ofoot'); if (COPY_FOOT) COPY_FOOT.before(COPY_PEEK);
+function copyPeekRender(){
+  const items = itext(document.getElementById('out')).trim() ? checkDoc() : []; COPY_PEEK.replaceChildren(); COPY_PEEK.hidden = !items.length;
+  if (!items.length) return;
+  COPY_PEEK.append(h('div', {class:'copy-peek-head'}, h('strong', {}, 'Перед копіюванням'),
+    h('button', {type:'button', class:'more', onclick:()=>{ SHELL.setOV('chk'); goDone(); }}, 'Усі зауваження: ' + items.length)));
+  items.slice(0,2).forEach(item=>COPY_PEEK.append(h('button', {type:'button', class:'copy-peek-item', onclick:()=>{
+    if (item.tab) progressJump(item); else { SHELL.setOV('chk'); goDone(); }
+  }}, item.m)));
+  if (dirty) COPY_PEEK.append(h('small', {}, 'Перевірка враховує поля форми. Звірте також ручні правки.'));
+}
+{ const x0 = renderCheck; renderCheck = function(){ const r = x0.apply(this, arguments); copyPeekRender(); return r; }; }
+document.getElementById('out').addEventListener('input', copyPeekRender);
+copyPeekRender();
 </script>
 
 </body>
