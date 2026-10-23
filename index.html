@@ -1178,6 +1178,11 @@ summary .vdot{color:var(--ok);font-weight:700}
 @media print{#print .b003.b333l{page:b333l;max-width:none}#print .b003 .bo.on{color:#000}#print .b003 .bclv{color:#000}#print .b003 [data-an]:hover{background:none}}
 .b003 .b333v .bol{display:block}
 @media screen{#paper .b003.b333l{zoom:.707}}
+/* ===== епікриз «як у лікарні» — фірмовий вигляд ===== */
+.pr-epi{--epi:#1f3d7a;-webkit-print-color-adjust:exact;print-color-adjust:exact}.pr-epi.pr-bw{--epi:#000}
+.pr-epi .pr-top{border-bottom:2px solid var(--epi)}.pr-epi .pr-logo{max-width:84px;max-height:84px}
+.pr-epi .pr-body>div>b{color:var(--epi)}
+.pr-epi .pr-body>div:nth-child(-n+3)>b{letter-spacing:.06em}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1188,7 +1193,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.28 від 21.10.2026">v0.9.3.28 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.29 від 23.10.2026">v0.9.3.29 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -1905,7 +1910,7 @@ const SECTIONS = [
 ]},
 /* ======== ВИПИСНИЙ ЕПІКРИЗ ======== */
 { id:'e_per', docs:['epi','f066'], title:'Перебування в стаціонарі', short:'Перебування', head:'', fields:[
-  {id:'vyg', type:'sel', noOut:true, def:0, wide:true, label:'Вигляд документа', opts:['За формою № 027/о — пункти бланка «Виписка із медичної карти амбулаторного (стаціонарного) хворого» (наказ МОЗ № 110)','Довільний виписний епікриз','Епікриз у медичну карту (форма № 003/о)']},
+  {id:'vyg', type:'sel', noOut:true, def:0, wide:true, label:'Вигляд документа', opts:['За формою № 027/о — пункти бланка «Виписка із медичної карти амбулаторного (стаціонарного) хворого» (наказ МОЗ № 110)','Довільний виписний епікриз','Епікриз у медичну карту (форма № 003/о)','Епікриз 027/о «як у лікарні» (пп. 1–11, з пунктом «Продовжити прийом»)']},
   {id:'kudy', type:'line', noOut:true, wide:true, label:'Форма 027/о: куди направляється виписка («У …»)', placeholder:'напр., КНП «ЦПМСД № 1», сімейному лікарю за місцем проживання'},
   {id:'dzah', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата захворювання (якщо порожньо — з анамнезу)'},
   {id:'dnapr', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата направлення в стаціонар'},
@@ -1939,17 +1944,22 @@ const SECTIONS = [
   {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')}
 ]},
 { id:'e_lik', docs:['epi','f066'], title:'Лікування і стан при виписці', short:'Лікування', head:'', fields:[
-  {id:'lik', type:'text', rows:4, label:'Проведене лікування (якщо порожньо — береться з листа призначень)', tpl:'Проведено лікування: {v}', fallback:()=>rxSummary()},
+  {id:'lik', type:'text', rows:4, label:'Проведене лікування (якщо порожньо — з листа призначень: групами, з курсами «з … по …»)', tpl:'Проведено лікування: {v}', fallback:()=>(typeof epiCourses === 'function' && epiCourses()) || rxSummary()},
   {id:'dyn', type:'sel', label:'Динаміка', tpl:'{v}', opts:['На тлі лікування стан покращився, скарги регресували','На тлі лікування стан покращився, скарги зменшились','Стан без суттєвої динаміки']},
-  {id:'vyp', type:'text', rows:3, label:'Стан при виписці', tpl:'При виписці: {v}', sep:' ', quick:['Скарг не пред’являє.','Загальний стан задовільний.','АТ … мм рт. ст., ЧСС … уд./хв.','Дихання везикулярне, хрипів немає.','Набряків немає.']},
-  {id:'rez', type:'sel', label:'Результат', tpl:'[Виписується|Виписується] {v}', opts:['з одужанням','з покращенням','без змін','з погіршенням']},
+  {id:'vyp', type:'text', rows:3, label:'Стан при виписці (якщо порожньо — показники з останнього щоденника)', tpl:'При виписці: {v}', sep:' ', fallback:()=>typeof vypAuto === 'function' ? vypAuto() : '', quick:['Скарг не пред’являє.','Загальний стан задовільний.','АТ … мм рт. ст., ЧСС … уд./хв.','Дихання везикулярне, хрипів немає.','Набряків немає.']},
+  {id:'rez', type:'sel', label:'Результат', tpl:'{v}', opts:['Виписується з одужанням','Виписується з покращенням','Виписується без змін','Виписується з погіршенням','[Самовільно залишив|Самовільно залишила] відділення']},
   {id:'eln', type:'sel', label:'Працездатність', tpl:'{v}', opts:['ЕЛН закрито, до праці з …','ЕЛН продовжено з … по …','ЕЛН не потребує']}
 ]},
 { id:'e_rek', docs:['epi','kons'], title:'Рекомендації', short:'Рекомендації', head:'Рекомендації:', headBr:true, fields:[
   {id:'rek', type:'text', rows:6, wide:true, label:'Рекомендації (кнопки вставляють фразу з нового рядка)', tpl:'{v}', sep:'\n', quick:[
     'Спостереження сімейного лікаря за місцем проживання.','Продовжити прийом: ….','Контроль АТ двічі на день з веденням щоденника.',
     'Контроль ЗАК та біохімічного аналізу крові через … днів.','Дієта ….','Обмеження фізичних навантажень на … тижнів.',
-    'Повторна консультація … через ….','При погіршенні стану — негайно звернутися по медичну допомогу або викликати ЕМД (103).']}
+    'Повторна консультація … через ….','При погіршенні стану — негайно звернутися по медичну допомогу або викликати ЕМД (103).',
+    '«Д» нагляд сімейного лікаря за місцем проживання.','Щадний режим 7–10 днів, уникати переохолодження.','Питний режим 1,5–2 л на добу (якщо немає обмежень).',
+    'Контроль ЗАК і ШОЕ через 7–10 днів.','Контрольний огляд через 6 тижнів; рентгенографія ОГК — якщо симптоми зберігаються, курцям і пацієнтам після 50 років.',
+    'Щоденний контроль АТ і ЧСС вранці та ввечері з веденням щоденника самоконтролю.','При АТ понад 160/100 мм рт. ст. — каптоприл 25 мг під язик; без ефекту за 30–40 хв — виклик ЕМД (103).',
+    'Дієта № 10 (сіль до 5 г на добу).','Дієта № 5 (без жирної, смаженої, гострої їжі).','Дихальна гімнастика.','Відмова від куріння.']},
+  {id:'prod', type:'text', rows:4, wide:true, docs:['epi'], br:true, label:'Продовжити прийом (якщо порожньо — з листа призначень: що не відмінено на день виписки)', tpl:'Продовжити прийом:\n{v}', fallback:()=>typeof contList === 'function' ? contList() : ''}
 ]},
 /* ======== ОГЛЯД ЗАВІДУВАЧА ======== */
 { id:'z_main', docs:['zav'], title:'Огляд завідувача / спільний огляд', short:'Спільний огляд', head:'', fields:[
@@ -3310,8 +3320,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.28', VDATE = '21.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.29', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.29', '23.10.2026', 'виписний епікриз: новий вигляд «Епікриз 027/о як у лікарні» — пп. 1–11 (паспортна частина, дати й ліжко-дні, повний діагноз, скарги/анамнез/об’єктивно при надходженні, обстеження, лікування, перебіг і стан при виписці, нумеровані рекомендації) і «Продовжити прийом»; лікування, якщо не вписано, — з листа призначень групами (антибактеріальна, інфузійна, бронхолітична…) з курсами «з … по … (N днів)»; «Продовжити прийом» — що не відмінено на день виписки (без в/в і в/м), з часом прийому й тим, скільки днів лишилось; динаміка показників (пік температури й дата нормалізації, SpO2, ЧД, АТ, ЧСС) і стан при виписці — з журналу щоденників; результат «самовільно залишив(ла) відділення»; нові готові рекомендації (щадний режим, питний режим, контроль ЗАК, огляд через 6 тижнів після пневмонії, самоконтроль АТ і самодопомога при кризі, дієти № 5 і № 10); перевірка попереджає, якщо за останню добу перед випискою є ≥ 2 ознаки нестабільності (t > 37,5 °C, ЧД ≥ 24, ЧСС > 100, сист. АТ ≤ 90, SpO2 < 90 %)'],
   ['0.9.3.28', '21.10.2026', 'огляд анестезіолога: новий документ «Анестезіолог» (у профілі «Анестезіолог» — на видному місці, інакше — у «Ще документи»). Стаціонар — форма № 003-3/о «Передопераційний огляд анестезіологом та протокол загального знеболення» (наказ МОЗ № 110): аркуш 1 — огляд (АТ, пульс, ЧД, проби Штанге й Саабразе, анамнез, переливання, кортикостероїди, шкідливі звички, об’єктивний статус «○/●» як на бланку, Маллампаті, ASA I–VI і Е, вид анестезії, профілактика тромбоемболічних і ранових ускладнень, премедикація), аркуш 2 — листок знеболення (альбомний, для запису від руки), аркуш 3 — протокол знеболення і протокол пункції субарахноїдального/епідурального простору. Скарги, анамнез життя й огляд систем — спільні з первинним оглядом (заповнене там підставляється). Амбулаторно — консультаційний висновок анестезіолога (028/о), той самий текст можна вписати в 025/о. Підказки (не друкуються): можливі труднощі з дихальними шляхами, злоякісна гіпертермія, ризик аспірації, кортикостероїди. Готові фрази премедикації, антибіотикопрофілактики, профілактики ВТЕ і відміни ліків перед операцією — чернетка, звірте з протоколами відділення'],
   ['0.9.3.27', '21.10.2026', 'бланк 003/о (первинний огляд, 2-й аркуш): пп. 37 «Огляд на коросту», 38 «Огляд на педикульоз», 39 «З режимом дня та забороною паління ознайомлений» — нові поля в розділі «Шкіра» (заповнюються й «= Норма =»), на бланку обране підкреслено, клік по пункту веде до поля. «ОБСТЕЖЕННЯ» на бланку клікабельні: натисніть номер — обстеження додається до плану або прибирається; те, чого немає в списку плану (RW, кальцій, кал на я/глист…), — у полі «Інші обстеження» і в тексті плану. Клік по «КОНСУЛЬТАЦІЯ» відкриває саме групу «Консультації» в плані. Аркуш «Перед друком» більше не стрибає на початок: після змін зліва показує щойно змінений пункт, після кліку по аркушу — той самий пункт. Код відділення («Налаштування») і профіль ліжок (вкладка «066/о») — випадаючі списки замість вписування: 82 коди стаціонарних відділень за додатком до інструкції 066/о (звірте зі статистиками) і перелік профілів ліжок; профіль, якщо не вибрано, береться з коду відділення (63 → терапевтичний)'],
   ['0.9.3.26', '21.10.2026', 'виправлено (знайшла автоматична перевірка на GitHub): якщо під час увімкнення PIN спрацьовувало автозбереження, запис пацієнта міг лишитися в браузері незашифрованим; а під час вимкнення — зашифрованим уже без PIN (після перезапуску програма просила б PIN, якого немає). Тепер спершу змінюється стан шифрування, потім перезаписуються всі записи, і наостанок ще раз зберігається найсвіжіший стан. Додано перевірку «збереження посеред увімкнення/вимкнення PIN»'],
@@ -14368,6 +14379,129 @@ document.addEventListener('click', e=>{
   if (DOC === 'anes' && /^(skarhy|vitae|zah|shk|dyh|ssc|trav|sech)/.test(fld)) toast('Це поле спільне з первинним оглядом', 1600);
   if (/^an_/.test(fld)) goTab(fld.split('.')[0], /\./.test(fld) ? fld : null); else bGo(fld);
 }, true);
+/* ===== Епікриз (0.9.3.29): варіант «як у лікарні» (пп. 1–11), лікування групами з курсами, «Продовжити прийом»
+   з листа призначень, динаміка показників і стан при виписці зі щоденників, попередження про нестабільність перед випискою. ===== */
+const epiD2 = () => F('e_per.per').d2.value || todayISO();
+const nDays = (a, b) => Math.round((new Date(b + 'T00:00') - new Date(a + 'T00:00')) / 864e5) + 1;
+const fmtDM = d => d ? d.slice(8, 10) + '.' + d.slice(5, 7) : '';
+/* групи лікування — за назвою препарату */
+const RXGRP = [
+  ['Антибактеріальна терапія', it=>isAB(it)],
+  ['Інфузійна (дезінтоксикаційна) терапія', it=>/розчин|рінгер|натрію хлорид|глюкоз|реосорб|ксилат|сорбілакт|гекодез|тівортін/i.test(it.drug) || /інфуз|крапельн/i.test(it.route || '') && /мл/.test(it.dose || '')],
+  ['Кисневотерапія', it=>/кисн|оксиген/i.test(it.drug)],
+  ['Бронхолітична та інгаляційна терапія', it=>/беродуал|сальбутамол|іпратроп|фенотерол|будесонід|пульмікорт|еуфілін|амінофілін|тіотроп|флутиказон|формотерол|вентолін/i.test(it.drug) || /інгал|небул/i.test(it.route || '')],
+  ['Глюкокортикоїди', it=>/дексаметазон|преднізолон|гідрокортизон|метилпреднізолон/i.test(it.drug)],
+  ['Антикоагулянти', it=>/еноксапарин|гепарин|надропарин|фондапарин|апіксабан|ривароксабан|дабігатран|варфарин/i.test(it.drug)],
+  ['Кардіологічна та антигіпертензивна терапія', it=>/прил$|сартан$|амлодипін|бісопролол|метопролол|карведилол|небіволол|торасемід|фуросемід|спіронолактон|еплеренон|урапідил|статин$|ацетилсаліц|клопідогрел|тикагрелор|нітро|моксонідин|індапамід|гідрохлортіазид|дигоксин|аміодарон|дапагліфлозин|емпагліфлозин|сакубітрил/i.test(it.drug)],
+  ['Гастропротекція', it=>/празол$|фамотидин/i.test(it.drug)],
+  ['Симптоматична та інша терапія', ()=>true]];
+function rxCourse(it, d2){
+  const e0 = rxEnd(it), e = e0 && e0 < d2 ? e0 : d2, s = it.start && it.start <= e ? it.start : '';
+  const base = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
+  if (!s) return base;
+  const n = nDays(s, e);
+  return base + ` — з ${fmtDM(s)} по ${fmtDM(e)} (${n} ${plural(n, ['день','дні','днів'])})`;
+}
+function epiCourses(){
+  const L = RXF(); if (!L.length) return '';
+  const d2 = epiD2(), used = new Set(), out = [];
+  RXGRP.forEach(([name, test])=>{ const g = L.filter(it=>!used.has(it) && test(it)); g.forEach(it=>used.add(it)); if (g.length) out.push(name + ': ' + g.map(it=>rxCourse(it, d2)).join('; ')); });
+  return out.map(x=>end(x)).join('\n');
+}
+/* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
+function contList(){
+  const d2 = epiD2();
+  const L = RXF().filter(it=>{ const e = rxEnd(it); return (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
+    const when = it.hours ? ' о ' + it.hours : '';
+    const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';
+    return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${how}.`; }).join('\n');
+}
+/* показники зі щоденників */
+const dnum = (D, id) => { const v = String((D.data && D.data.f || {})[id] || '').trim().replace(',', '.'); const x = parseFloat(v); return isNaN(x) ? null : x; };
+function diarySeries(){
+  return DIARIES.slice().filter(D=>D && D.data).sort((a, b)=>String(a.dt) < String(b.dt) ? -1 : 1).map(D=>({d:String(D.dt || '').split('T')[0], t:dnum(D, 'd_obj_t_0'), s:dnum(D, 'd_obj_ad_0'), di:dnum(D, 'd_obj_ad_1'), hr:dnum(D, 'd_obj_chss_0'), rr:dnum(D, 'd_obj_chd_0'), sp:dnum(D, 'd_obj_chd_1')}));
+}
+const dc = x => String(x).replace('.', ',');
+function vitDyn(){
+  const S = diarySeries(); if (S.length < 2) return '';
+  const out = [], T = S.filter(x=>x.t != null);
+  if (T.length >= 2){ const mx = T.reduce((a, b)=>b.t > a.t ? b : a);
+    if (mx.t >= 37.5){ const after = T.filter(x=>x.d > mx.d), norm = after.find((x, i)=>after.slice(i).every(y=>y.t < 37.1));
+      out.push(`температура тіла до ${dc(mx.t)} °C (${fmtDM(mx.d)})` + (norm ? `, нормалізувалась з ${fmtDM(norm.d)}` : '')); } }
+  const pair = (k, u, f) => { const A = S.filter(x=>x[k] != null); if (A.length >= 2 && A[0][k] !== A[A.length - 1][k]) out.push(f(A[0], A[A.length - 1])); };
+  pair('sp', '%', (a, b)=>`SpO2 ${dc(a.sp)} % → ${dc(b.sp)} %`);
+  pair('rr', '', (a, b)=>`ЧД ${dc(a.rr)} → ${dc(b.rr)} за хв`);
+  const A = S.filter(x=>x.s != null && x.di != null); if (A.length >= 2 && (A[0].s !== A[A.length - 1].s || A[0].di !== A[A.length - 1].di)) out.push(`АТ ${A[0].s}/${A[0].di} → ${A[A.length - 1].s}/${A[A.length - 1].di} мм рт. ст.`);
+  pair('hr', '', (a, b)=>`ЧСС ${dc(a.hr)} → ${dc(b.hr)} уд./хв`);
+  return out.length ? 'Динаміка показників: ' + out.join('; ') + '.' : '';
+}
+function vypAuto(){
+  const S = diarySeries(); if (!S.length) return '';
+  const L = S[S.length - 1], p = [];
+  if (L.t != null) p.push(`температура тіла ${dc(L.t)} °C`);
+  if (L.s != null && L.di != null) p.push(`АТ ${L.s}/${L.di} мм рт. ст.`);
+  if (L.hr != null) p.push(`ЧСС ${dc(L.hr)} уд./хв`);
+  if (L.rr != null) p.push(`ЧД ${dc(L.rr)} за хв`);
+  if (L.sp != null) p.push(`SpO2 ${dc(L.sp)} %`);
+  return p.length ? cap(p.join(', ')) + (L.d ? ` (${fmtDM(L.d)})` : '') + '.' : '';
+}
+/* ознаки нестабільності за останню добу перед випискою (≥ 2) */
+function unstableAtDischarge(){
+  const d2 = F('e_per.per').d2.value; if (!d2) return '';
+  const S = diarySeries().filter(x=>x.d && x.d >= addDays(d2, -1) && x.d <= d2); if (!S.length) return '';
+  const L = S[S.length - 1], f = [];
+  if (L.t != null && L.t > 37.5) f.push('t > 37,5 °C'); if (L.rr != null && L.rr >= 24) f.push('ЧД ≥ 24'); if (L.hr != null && L.hr > 100) f.push('ЧСС > 100');
+  if (L.s != null && L.s <= 90) f.push('сист. АТ ≤ 90'); if (L.sp != null && L.sp < 90) f.push('SpO2 < 90 %');
+  return f.length >= 2 ? f.join(', ') : '';
+}
+/* ---------- варіант «як у лікарні» ---------- */
+const epiHosp = () => { const f = F('e_per.vyg'); return !!(f && f.el && f.el.value === '3'); };
+function epiHospParts(){
+  const sec = id => SECTIONS.find(x=>x.id === id), body = id => { const t = sectionText(sec(id)); return t ? t.body : ''; };
+  const V = k => { const f = F(k); return f ? String(val(f, true) || '').trim() : ''; };
+  const P = F('e_per.per'), d1 = P.d1.value, d2 = P.d2.value, days = typeof bedDays === 'function' ? bedDays(d1, d2) : '';
+  const dob = mv('dob'), age = mv('age');
+  const sk = V('e_per.sk'), anam = V('e_per.anam') || (typeof bSec === 'function' ? bSec('morbi') : ''), obj = typeof objFromExam === 'function' ? objFromExam() : '';
+  const p7 = [sk ? end(cap(sk)) : '', anam ? 'Анамнез: ' + end(anam) : '', obj ? 'Об’єктивно при надходженні: ' + end(obj) : ''].filter(Boolean).join('\n');
+  const lik = V('e_lik.lik');
+  const dyn = V('e_lik.dyn'), vd = vitDyn(), vyp = V('e_lik.vyp'), rez = V('e_lik.rez');
+  const p10 = [dyn ? end(cap(dyn)) : '', vd, vyp ? 'При виписці: ' + end(vyp) : '', rez ? end(g(rez)) : ''].filter(Boolean).join(' ');
+  const rek = V('e_rek.rek'), eln = V('e_lik.eln');
+  const rekL = rek.split('\n').map(x=>x.trim()).filter(Boolean); if (eln) rekL.push(end(cap(eln)));
+  const prod = V('e_rek.prod');
+  const items = [];
+  const kudy = V('e_per.kudy'); if (kudy) items.push(['У', kudy]);
+  items.push(['1. Прізвище, ім’я, по батькові хворого:', mv('pib') || '______________________________'],
+    ['2. Дата народження:', dob ? fmtD(dob) + (age ? ` (${age} ${plural(+age, ['рік','роки','років'])})` : '') : '__________'],
+    ['3. Місце проживання хворого:', mv('addr') || 'область ________, район ________, село (місто) ________, вулиця ________, будинок ____'],
+    ['4. Місце роботи:', mv('work') || '______________________________'],
+    ['5. Дати:', `госпіталізації — ${d1 ? fmtD(d1) : '__________'}; виписки — ${d2 ? fmtD(d2) : '__________'}` + (days !== '' && d1 && d2 ? ` (проведено ліжко-днів: ${days})` : '')],
+    ['6. Повний діагноз (основне захворювання, супутні захворювання та ускладнення):', body('dx') || '______________________________', '\n'],
+    ['7. Скарги, анамнез, об’єктивні дані при надходженні:', p7 || '______________________________', '\n'],
+    ['8. Обстеження:', body('e_obs') || '______________________________', '\n'],
+    ['9. Лікування:', lik || '______________________________', '\n'],
+    ['10. Перебіг і стан при виписці:', p10 || '______________________________', '\n'],
+    ['11. Рекомендовано:', rekL.length ? rekL.map((x, i)=>`${i + 1}. ${x.replace(/^\d+\.\s*/, '')}`).join('\n') : '______________________________', '\n']);
+  if (prod) items.push(['Продовжити прийом:', prod, '\n']);
+  return items.map(([head, b, sep])=>({head, body:b, sep: sep || ' ', title:head}));
+}
+{ const e0 = epi027; epi027 = function(){ return e0.apply(this, arguments) || epiHosp(); };
+  const p0 = epi027Parts; epi027Parts = function(){ return epiHosp() ? epiHospParts() : p0.apply(this, arguments); };
+  const m0 = metaLines; metaLines = function(){ const r = m0.apply(this, arguments);
+    if (DOC === 'epi' && epiHosp()){ const vidd = mv('vidd');
+      r.head = [{t:'ЕПІКРИЗ', b:true, c:true}, {t:'із медичної карти стаціонарного хворого № ' + (mv('card') || '______'), b:true, c:true}];
+      if (vidd) r.head.push({t:vidd.toUpperCase(), b:false, c:true}); }
+    return r; };
+  const c0 = checkDoc; checkDoc = function(){ const L = c0.apply(this, arguments);
+    if (DOC === 'epi'){ const u = unstableAtDischarge(); if (u) L.push({m:`За останню добу перед випискою є ознаки нестабільності (${u}) — перевірте готовність до виписки`, tab:'e_lik', f:'e_lik.vyp'}); }
+    return L; }; }
+/* «Продовжити прийом» потрібен лише в епікризі; у змісті «Рекомендацій» інших варіантів — окремим блоком після рекомендацій */
+/* фірмовий вигляд епікризу: акцентні заголовки пунктів, більший логотип; «чорно-білий логотип» — і заголовки чорні */
+{ const fs0 = fillSheet; fillSheet = function(P){ const r = fs0.apply(this, arguments);
+    try{ const on = DOC === 'epi' && epiHosp() && !(typeof blankOn === 'function' && blankOn()); P.classList.toggle('pr-epi', on);
+      let lm = 'color'; try{ lm = localStorage.getItem('po.zlogomode') || 'color'; }catch(e){} P.classList.toggle('pr-bw', on && lm === 'bw'); }catch(e){}
+    return r; }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

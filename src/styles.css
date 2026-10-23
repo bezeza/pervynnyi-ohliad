@@ -1160,3 +1160,8 @@ summary .vdot{color:var(--ok);font-weight:700}
 @media print{#print .b003.b333l{page:b333l;max-width:none}#print .b003 .bo.on{color:#000}#print .b003 .bclv{color:#000}#print .b003 [data-an]:hover{background:none}}
 .b003 .b333v .bol{display:block}
 @media screen{#paper .b003.b333l{zoom:.707}}
+/* ===== епікриз «як у лікарні» — фірмовий вигляд ===== */
+.pr-epi{--epi:#1f3d7a;-webkit-print-color-adjust:exact;print-color-adjust:exact}.pr-epi.pr-bw{--epi:#000}
+.pr-epi .pr-top{border-bottom:2px solid var(--epi)}.pr-epi .pr-logo{max-width:84px;max-height:84px}
+.pr-epi .pr-body>div>b{color:var(--epi)}
+.pr-epi .pr-body>div:nth-child(-n+3)>b{letter-spacing:.06em}
