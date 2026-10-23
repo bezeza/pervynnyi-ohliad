@@ -1190,3 +1190,13 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .qe>.f{margin:0}
 #out [data-sec]{cursor:pointer}
 @media print{.ghost,.qe{display:none!important}}
+
+/* 0.9.3.35 — текстові стани полів і розділів */
+.entry-status{display:inline-flex;align-items:center;gap:4px;max-width:100%;padding:2px 7px;border:1px solid var(--line);border-radius:5px;font-size:11.5px;line-height:1.4;font-weight:500;color:var(--muted);background:var(--surface);vertical-align:middle;white-space:normal}
+.entry-field{margin:2px 0 2px 8px}.entry-icon{font-weight:700;flex-shrink:0}
+.entry-status[data-state="normal"]{color:var(--ink);background:var(--accent-soft)}
+.entry-status[data-state="abnormal"],.entry-status[data-state="check"]{color:var(--flag);background:var(--flag-soft);border-color:currentColor}
+.entry-section{margin-left:auto;flex-shrink:0}.entry-proxy{flex-basis:auto;font-size:11px}
+.panel>.ph{flex-wrap:wrap}
+@media(max-width:899px){.entry-field{font-size:11px;margin-left:6px}.entry-section{margin:0}.entry-proxy{flex-basis:100%}}
+@media print{.entry-status{display:none!important}}

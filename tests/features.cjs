@@ -593,6 +593,29 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Однією сторінкою: розділи огляду підряд', r[0]===true && r[1]>8, JSON.stringify(r));
    ok('Швидка правка поля з тексту: відкривається й повертає поле на місце', r[3]===true && r[4]===true, JSON.stringify(r));
    ok('Епікриз: порожні поля показують, що підтягнеться', r[5]>=1, JSON.stringify(r)); }
+ { // 0.9.3.35: стани введення не змінюють медичний текст і не вгадують норму.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(); switchDoc('ohl'); const a=[], allergy=F('vitae.alerg'), lungs=SECTIONS.find(s=>s.id==='dyh');
+     allergy.el.value=''; update(); a.push(allergy.entryStatus.textContent.includes('не заповнено'));
+     allergy.el.value=String(allergy.norm); mark(allergy.el,allergy); update(); a.push(allergy.entryStatus.textContent.includes('норма'));
+     allergy.el.value='1'; mark(allergy.el,allergy); update(); a.push(allergy.entryStatus.textContent.includes('є відхилення'));
+     clearSection(lungs); update(); a.push(lungs.entryStatus.textContent.includes('не заповнено'));
+     const bo=lungs.fields.find(f=>f.bo); bo.el.value='0'; update(); a.push(lungs.entryStatus.textContent.includes('норма'));
+     const exam=F('dyh.ausk'); exam.el.value='1'; mark(exam.el,exam); update(); a.push(lungs.entryStatus.textContent.includes('є відхилення'));
+     exam.el.value=''; bo.el.value=''; const vit=F('dyh.chd'); vit.inputs[0].value='16'; vit.inputs[1].value='97'; update(); a.push(vit.entryStatus.textContent.includes('норма'));
+     vit.inputs[1].value='92'; update(); a.push(vit.entryStatus.textContent.includes('є відхилення'));
+     vit.inputs[1].value=''; update(); a.push(vit.entryStatus.textContent.includes('частково') && !vit.entryStatus.textContent.includes('норма'));
+     vit.inputs[0].value='abc'; update(); a.push(vit.entryStatus.textContent.includes('перевірте значення'));
+     const text=F('vitae.alergx'); text.el.value='Перевірка введення'; update(); a.push(text.entryStatus.textContent.includes('заповнено') && !text.entryStatus.textContent.includes('норма'));
+     const html=document.getElementById('out').innerHTML; entryRender(); a.push(html===document.getElementById('out').innerHTML && !/entry-status/.test(html));
+     a.push((allergy.el.getAttribute('aria-describedby') || '').split(' ').includes(allergy.entryStatus.id));
+     const before=document.querySelectorAll('.entry-status').length; entryRender(); entryRender(); a.push(document.querySelectorAll('.entry-status').length===before);
+     restore(saved); return JSON.stringify(a); })()`));
+   ok('Стани полів: алергії — порожньо, норма, відхилення', r.slice(0,3).every(Boolean), JSON.stringify(r));
+   ok('Стани розділів: порожньо, Б/о, детальне відхилення має пріоритет', r.slice(3,6).every(Boolean), JSON.stringify(r));
+   ok('Стани показників: норма, відхилення, часткове й некоректне введення', r.slice(6,10).every(Boolean), JSON.stringify(r));
+   ok('Стани полів: довільний текст не оголошується нормою', r[10]===true);
+   ok('Стани полів: не змінюють документ, доступні для читача екрана, не дублюються', r.slice(11).every(Boolean), JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
