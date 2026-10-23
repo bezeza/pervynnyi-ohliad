@@ -1202,7 +1202,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.32 від 23.10.2026">v0.9.3.32 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.33 від 23.10.2026">v0.9.3.33 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3329,8 +3329,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.32', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.33', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.33', '23.10.2026', 'окреме вікно документа тепер робоче: у «Тексті» можна правити прямо там (зміни одразу в основному вікні); в «Аркуші» клік по рядку відкриває потрібне поле форми в основному вікні — як у перегляді перед друком'],
   ['0.9.3.32', '23.10.2026', 'документ в окремому вікні: кнопка ⧉ у панелі тексту відкриває вікно для другого монітора — оновлюється наживо під час заповнення; «Текст» або «Аркуш» (як перед друком), A−/A+; у Chrome/Edge вікно саме стає на інший екран (браузер один раз спитає дозвіл), інакше — там, де стояло минулого разу'],
   ['0.9.3.31', '23.10.2026', 'ергономіка: короткі списки (до 6 варіантів) — кнопками-чипами одним натисканням, повторне натискання знімає вибір; у заголовку вкладки одна кнопка «Норма», решта («Б/о», «Своя кнопка», «Очистити вкладку») — під «⋯»; нагадування про папку даних після «Пізніше» згортається в значок 📁 у рядку пацієнта; «Показники одним рядком» у «Загальному стані» й щоденнику: «38,5 24 92 130/80 96» → температура, ЧД, SpO2, АТ, ЧСС (можна з мітками: «ад 150/90 п 88»)'],
   ['0.9.3.30', '23.10.2026', 'ЧСС і пульс: при правильному ритмі — одне поле й «ЧСС = пульс 76 уд./хв»; поле «Пульс» з’являється лише при аритмії (ритм неправильний, екстрасистоли або «аритмічний» у характері пульсу) — тоді в тексті «ЧСС 110 уд./хв, пульс 92 уд./хв, дефіцит пульсу 18»'],
@@ -14680,16 +14681,17 @@ function popInit(w){
 .pw-seg button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);color:var(--accent,#1f5a8a);font-weight:600}
 .pw-text{max-width:900px;margin:18px auto;padding:28px 36px;background:var(--surface,#fff);border:1px solid var(--line,#dde1e8);border-radius:10px;white-space:pre-wrap;line-height:1.5}
 .pw-empty{color:var(--muted,#667);text-align:center;margin-top:60px}
+#paper.pw-paper .sheet *{cursor:pointer}.pw-text:focus{outline:2px solid var(--accent,#1f5a8a);outline-offset:2px}
 #paper.pw-paper{display:block;max-width:none;padding:18px;overflow:visible}#paper.pw-paper .sheet{margin:0 auto}`;
   d.head.append(st);
   const bar = d.createElement('div'); bar.className = 'pw-bar';
-  bar.innerHTML = '<span class="t">Документ</span><span class="s" id="pwS"></span><span class="pw-seg"><button type="button" data-m="text">Текст</button><button type="button" data-m="paper">Аркуш</button></span><button type="button" data-f="-1" title="Менший шрифт">A−</button><button type="button" data-f="1" title="Більший шрифт">A+</button>';
+  bar.innerHTML = '<span class="t">Документ</span><span class="s" id="pwS"></span><span class="s" id="pwH"></span><span class="pw-seg"><button type="button" data-m="text">Текст</button><button type="button" data-m="paper">Аркуш</button></span><button type="button" data-f="-1" title="Менший шрифт">A−</button><button type="button" data-f="1" title="Більший шрифт">A+</button>';
   bar.addEventListener('click', e=>{
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.m){ POP.mode = b.dataset.m; try{ localStorage.setItem('po.popmode', POP.mode); }catch(x){} popRender(); }
     if (b.dataset.f){ POP.fs = Math.max(11, Math.min(26, POP.fs + +b.dataset.f)); try{ localStorage.setItem('po.popfs', POP.fs); }catch(x){} popRender(); }
   });
-  const box = d.createElement('div'); box.id = 'pwBox';
+  const box = d.createElement('div'); box.id = 'pwBox'; box.addEventListener('click', popClick);
   d.body.append(bar, box);
   const save = () => { try{ localStorage.setItem('po.popgeo', JSON.stringify({left:w.screenX, top:w.screenY, width:w.outerWidth, height:w.outerHeight})); }catch(x){} };
   w.addEventListener('beforeunload', ()=>{ save(); setTimeout(popBtnSync, 50); });
@@ -14700,6 +14702,7 @@ function popRender(){
   const d = w.document, box = d.getElementById('pwBox'); if (!box) return;
   d.querySelectorAll('.pw-seg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.m === POP.mode ? 'true' : 'false'));
   const sEl = d.getElementById('pwS'); if (sEl){ const pib = (($('#meta_pib') || {}).value || '').trim(); sEl.textContent = (DOCTITLES && DOCTITLES[DOC] ? (typeof DOCTITLES[DOC] === 'string' ? DOCTITLES[DOC] : '') : '') + (pib ? ' · ' + pib : ''); }
+  const hh = d.getElementById('pwH'); if (hh) hh.textContent = POP.mode === 'paper' ? 'клік по рядку — перехід до поля у формі' : 'текст можна правити прямо тут';
   const y = w.scrollY;
   box.innerHTML = '';
   if (POP.mode === 'paper'){
@@ -14707,19 +14710,39 @@ function popRender(){
     try{ fillSheet(tmp, false); }catch(e){ tmp.textContent = 'Не вдалося побудувати аркуш: ' + e.message; }
     const bl = typeof blankOn === 'function' && blankOn(); if (bl) tmp.classList.add('blankmode');
     const pp = d.createElement('div'); pp.id = 'paper'; pp.className = 'paper pw-paper';
-    const sh = d.importNode(tmp, true); pp.append(sh); box.append(pp);
+    const sh = d.importNode(tmp, true); pp.append(sh); box.append(pp); POP.src = tmp; POP.dst = sh;
     sh.style.fontSize = '';
     const cw = w.innerWidth - 40; if (bl && cw) sh.style.setProperty('--bz', Math.min(1.4, cw / 794).toFixed(3));
   } else {
     const src = $('#out'); const t = src ? src.innerHTML.trim() : '';
     if (!t){ const e = d.createElement('p'); e.className = 'pw-empty'; e.textContent = 'Тут з’явиться текст документа.'; box.append(e); }
-    else { const tx = d.createElement('div'); tx.className = 'pw-text'; tx.innerHTML = src.innerHTML; tx.style.fontSize = POP.fs + 'px'; box.append(tx); }
+    else { const tx = d.createElement('div'); tx.className = 'pw-text'; tx.innerHTML = src.innerHTML; tx.style.fontSize = POP.fs + 'px';
+      tx.contentEditable = 'true'; tx.spellcheck = false; tx.setAttribute('role', 'textbox'); tx.setAttribute('aria-multiline', 'true');
+      tx.addEventListener('input', ()=>{ POP.edit = Date.now(); const o = $('#out'); if (!o) return; o.innerHTML = tx.innerHTML; o.dispatchEvent(new Event('input', {bubbles:true})); });
+      tx.addEventListener('paste', e=>{ e.preventDefault(); const t = (e.clipboardData || w.clipboardData).getData('text/plain'); d.execCommand('insertText', false, t); });
+      box.append(tx); }
   }
   const m = box.querySelector('mark.chg, .flash');
   if (m){ const r = m.getBoundingClientRect(); if (r.top < 60 || r.bottom > w.innerHeight) w.scrollTo(0, Math.max(0, y + r.top - w.innerHeight / 3)); else w.scrollTo(0, y); }
   else w.scrollTo(0, y);
 }
-function popSoon(){ if (!POP.w || POP.w.closed) return; clearTimeout(POP.t); POP.t = setTimeout(()=>{ try{ popRender(); }catch(e){} }, 200); }
+/* клік в «Аркуші» — як в основному вікні: перехід до поля форми (основне вікно виходить наперед) */
+function popClick(e){
+  if (POP.mode !== 'paper' || !POP.src || !POP.dst) return;
+  const path = []; for (let n = e.target; n && n !== POP.dst; n = n.parentNode){ if (!n.parentNode) return; path.unshift([...n.parentNode.childNodes].indexOf(n)); }
+  let node = POP.src; for (const i of path){ node = node && node.childNodes[i]; } if (!node || node.nodeType !== 1) node = node && node.parentElement; if (!node) return;
+  e.preventDefault();
+  const go = () => { try{ window.focus(); }catch(x){} };
+  const ff = node.closest('[data-fld]'); if (ff){ bGo(ff.dataset.fld.split(' ')[0]); go(); return; }
+  const an = node.closest('[data-an]'); if (an){ const f = an.dataset.an; if (/^an_/.test(f)) goTab(f.split('.')[0], /\./.test(f) ? f : null); else bGo(f); go(); return; }
+  const gb = node.closest('button'); if (gb){ gb.click(); go(); return; }
+  const pp = $('#paper'); if (!pp) return;
+  const holder = document.createElement('div'); holder.hidden = true; holder.append(POP.src); pp.append(holder);
+  const before = typeof active !== 'undefined' ? active : null;
+  try{ node.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true})); } finally { holder.remove(); }
+  if (typeof active === 'undefined' || active !== before) go();
+}
+function popSoon(){ if (!POP.w || POP.w.closed) return; if (POP.mode === 'text' && Date.now() - (POP.edit || 0) < 1500) return; clearTimeout(POP.t); POP.t = setTimeout(()=>{ try{ popRender(); }catch(e){} }, 200); }
 { const up = update; update = function(){ const r = up.apply(this, arguments); popSoon(); return r; }; }
 document.addEventListener('input', e=>{ if (e.target && e.target.id === 'out') popSoon(); });
 window.addEventListener('beforeunload', ()=>{ try{ if (POP.w && !POP.w.closed) POP.w.close(); }catch(e){} });
