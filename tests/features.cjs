@@ -632,6 +632,17 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Коротка перевірка: до двох наявних зауважень і перехід до поля', r.slice(0,4).every(Boolean),JSON.stringify(r));
    ok('Коротка перевірка: порожній документ не показує зауважень', r[4]===true);
  }
+ { // 0.9.3.38: ручні правки зберігаються, заміна підтверджується й скасовується.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(), q0=QUICK, cf=window.confirm; CACHE={}; dirty=false; switchDoc('ohl'); const out=document.getElementById('out'), manual='<p><b>Ручні правки</b></p>', a=[];
+     out.innerHTML=manual; out.dispatchEvent(new Event('input')); a.push(!document.getElementById('banner').hidden && /Є ручні зміни/.test(document.getElementById('banner').textContent));
+     document.getElementById('quickBtn').click(); a.push(out.innerHTML===manual && dirty); document.getElementById('allNorm').click(); a.push(out.innerHTML===manual);
+     applyPreset(PRESETS[0],HV.cards[0]); a.push(out.innerHTML===manual); switchDoc('rx'); const other='<p>Інший документ</p>'; out.innerHTML=other; out.dispatchEvent(new Event('input')); switchDoc('ohl'); a.push(out.innerHTML===manual); switchDoc('rx'); a.push(out.innerHTML===other); switchDoc('ohl');
+     window.confirm=()=>false; document.getElementById('regen').click(); a.push(out.innerHTML===manual && dirty); window.confirm=()=>true; document.getElementById('regen').click(); a.push(out.innerHTML!==manual && !dirty); undoLast(); a.push(out.innerHTML===manual && dirty); applyDoc(true); a.push(out.innerHTML===manual && dirty);
+     window.confirm=cf; QUICK=q0; localStorage.setItem('po.quick',q0?'1':'0'); restore(saved); return JSON.stringify(a); })()`));
+   ok('Ручний текст: статус, швидкий режим, норма й шаблон не стирають правки',r.slice(0,4).every(Boolean),JSON.stringify(r));
+   ok('Ручний текст: документи зберігають окремі правки',r.slice(4,6).every(Boolean),JSON.stringify(r));
+   ok('Ручний текст: відмова, підтвердження, скасування й перебудова',r.slice(6).every(Boolean),JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
