@@ -580,7 +580,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const r=JSON.parse(w.eval(`(()=>{ const fw=document.querySelector('body>iframe:last-of-type').contentWindow; fw.scrollTo=()=>{}; POP.w=fw; popInit(fw); POP.mode='text'; switchDoc('ohl'); vqApply('37,9 22'); popRender();
      const a=[fw.document.querySelector('.pw-text') ? fw.document.querySelector('.pw-text').textContent : '']; POP.mode='paper'; popRender();
      a.push(!!fw.document.querySelector('#paper .sheet') && fw.document.querySelector('#paper .sheet').textContent.length); a.push(!!document.getElementById('popBtn'));
+     const t=[...fw.document.querySelectorAll('#paper .sheet *')].find(x=>x.children.length===0 && /Перкуторно|ЧД \\d/.test(x.textContent)); if (t){ t.click(); } a.push(TABS[active].id);
      POP.mode='text'; POP.w=null; return JSON.stringify(a); })()`));
+   ok('Окреме вікно: клік в «Аркуші» відкриває поле в основному', r[3]==='dyh', JSON.stringify(r).slice(0,200));
    ok('Окреме вікно: текст наживо, аркуш, кнопка ⧉', /37,9/.test(r[0]) && r[1]>50 && r[2]===true, JSON.stringify(r).slice(0,200));
    fr.remove(); w.eval("['zah.temp','dyh.chd'].forEach(k=>F(k).inputs.forEach(i=>i.value='')); update()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
