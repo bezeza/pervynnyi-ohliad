@@ -98,6 +98,7 @@
   "615-epi-hosp.js",
   "616-pulse.js",
   "617-ergo.js",
-  "618-popout.js"
+  "618-popout.js",
+  "619-onepage.js"
  ]
 }
