@@ -1226,6 +1226,9 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 
 /* 0.9.3.37 — задача 3 */
 .copy-peek{margin:8px 0;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px}.copy-peek[hidden]{display:none}.copy-peek-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.copy-peek-item{display:block;border:0;background:none;color:var(--accent);font:inherit;text-align:left;padding:6px 0;cursor:pointer;text-decoration:underline}.copy-peek small{display:block;color:var(--muted)}#outBox[data-ov="chk"] .copy-peek{display:none}
+
+/* 0.9.3.39 — задача 4 */
+.banner{flex-wrap:wrap}.banner>span{flex:1 1 220px}.banner>.btn{flex-shrink:0}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1236,7 +1239,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.38 від 23.10.2026">v0.9.3.38 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.39 від 23.10.2026">v0.9.3.39 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3372,8 +3375,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.38', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.39', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.39', '23.10.2026', 'статус ручних змін, підтвердження заміни з форми, скасування; збереження тексту при швидкому режимі й зміні ширини'],
   ['0.9.3.38', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
   ['0.9.3.37', '23.10.2026', 'одне-два зауваження з наявної перевірки біля «Копіювати», перехід до поля без блокування'],
   ['0.9.3.36', '23.10.2026', 'прогрес підказує найближче важливе незаповнене поле з переходом; решта розділів позначена як необов’язкова; прибрано зайві порожні значки біля доповнень і Б/о при детальному описі'],
@@ -15138,6 +15142,43 @@ document.addEventListener('click', e=>{
 document.addEventListener('change', e=>{ if (PAPER && e.target.closest && e.target.closest('.qe')) setTimeout(()=>{ try{ renderPaper(); }catch(x){} }, 0); });
 /* вибраний варіант у полі без «норми» (лімфовузли, перкусія, неврологічно…) — це дані: поле не ховається профілем щоденника і йде в текст */
 { const dh0 = dHasData; dHasData = function(f){ if (f && f.type === 'sel' && f.norm === undefined && f.el && f.el.value !== '') return true; return dh0.apply(this, arguments); }; }
+/* 0.9.3.39 — ручний текст не замінюється через зміну режиму чи розміру. */
+function manualTextStatus(){
+  const banner = document.getElementById('banner'); if (banner.hidden === dirty) banner.hidden = !dirty;
+  let text = banner.querySelector('[data-manual-status]');
+  if (!text){ text = banner.querySelector('span'); text.dataset.manualStatus = '1'; text.setAttribute('role','status'); }
+  const message = 'Є ручні зміни. Автоматичне оновлення призупинено; заміна текстом із форми прибере ручні правки й форматування.';
+  if (text.textContent !== message) text.textContent = message;
+}
+// Синхронізація після наявних обробників і відновлення кешу документа.
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); manualTextStatus(); return r; }; }
+let MANUAL_SWITCHING = 0;
+{ const x0 = switchDoc; switchDoc = function(){
+  const previous = DOC; MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
+  finally { MANUAL_SWITCHING--; manualTextStatus(); if (!MANUAL_SWITCHING && dirty && previous !== DOC) renderCheck(); }
+}; }
+{ const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); manualTextStatus(); if (dirty) renderCheck(); return r; }; }
+{ const x0 = applyDoc; applyDoc = function(first){
+  const keep = !MANUAL_SWITCHING && !RESTORING && dirty ? {doc:DOC, html:document.getElementById('out').innerHTML} : null;
+  if (keep) CACHE[keep.doc] = {html:keep.html, dirty:true};
+  const r = x0.apply(this, arguments);
+  // false використовується й для швидкого режиму; новий тип має інший DOC.
+  if ((keep && keep.doc === DOC) || (first && CACHE[DOC] && CACHE[DOC].dirty)){
+    const saved = keep && keep.doc === DOC ? keep : CACHE[DOC];
+    document.getElementById('out').innerHTML = saved.html; dirty = true;
+    renderCheck();
+  }
+  manualTextStatus(); return r;
+}; applyDoc.bound = x0.bound; }
+document.getElementById('out').addEventListener('input', manualTextStatus);
+document.querySelector('.fmt').addEventListener('click', ()=>{ manualTextStatus(); autosave(); });
+document.getElementById('fsize').addEventListener('change', ()=>{ manualTextStatus(); autosave(); });
+{ const button = document.getElementById('regen'), x0 = button.onclick; button.onclick = function(){
+  if (dirty && !confirm('Замінити текст даними з форми? Ручні правки та форматування буде замінено. Дію можна скасувати.')) return;
+  if (dirty) undoPush('оновлення тексту з форми');
+  const r = x0.apply(this,arguments); manualTextStatus(); return r;
+}; }
+manualTextStatus();
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
