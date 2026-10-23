@@ -179,6 +179,8 @@ function bDv(f, key){ const fl = F(key); if (!fl) return ''; const id = key.repl
   return fl.type === 'sel' ? g(O(fl.opts[+v]).t) : g(String(v)); }
 /* поле бланка, яке можна вписати на місці (лише поточний запис) */
 function bFF(el, ids){ el.dataset.fld = ids; el.title = 'Натисніть, щоб вписати'; return el; }
+/* пункт-вибір бланка (лімфовузли, язик, печінка…) — клік відкриває вибір варіанта (лише поточний запис) */
+function bFS(el, key){ el.dataset.dsel = key; el.title = 'Натисніть, щоб вибрати'; return el; }
 function bDiaryEntry(e){
   const f = e.f, v = k => bDv(f, k), n = id => (f[id] || '').trim();
   const what = n('d_main_zal') || n('d_main_skx').replace(/^на /, ''), how = f.d_main_sk && f.d_main_sk !== '0' ? v('d_main.sk').replace(/^Скарги /, '') : '';
@@ -197,14 +199,14 @@ function bDiaryEntry(e){
       bRow('Об’єктивно: загальний стан ', bFill([v('d_main.stan'), dyn ? (/^з /.test(dyn) ? dyn : 'стан ' + dyn) : ''].filter(Boolean).join(', '), true), ', свідомість не порушена.'),
       f.d_main_svid && f.d_main_svid !== '0' ? bRow('Свідомість: ', bFill(v('d_main.svid'))) : '',
       bRow('Реакція на огляд адекватна. Шкірні покриви та видимі слизові ', bFill(v('d_obj.shk').replace(/^Шкірні покриви /, ''), false, true)),
-      bRow('Лімфатичні вузли ', bFill('', false, true)), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
-      bRow('Дихання через ніс ', bFill('', false, true)), bRow('Перкуторно ', bFill('', false, true)),
+      bRow('Лімфатичні вузли ', bFS(bFill(v('d_obj.lv'), false, true), 'd_obj.lv')), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
+      bRow('Дихання через ніс ', bFS(bFill(v('d_obj.nis'), false, true), 'd_obj.nis')), bRow('Перкуторно ', bFS(bFill(v('d_obj.perk'), false, true), 'd_obj.perk')),
       bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spo ? 'SpO2 ' + spo + '%' + (o2 ? ' на кисні ' + o2 + ' л/хв' : '') : ''), true, true)),
       bRow('Діяльність серця ', bFill(/неправильний/.test(serce) ? 'аритмічна' : /правильний/.test(serce) ? 'ритмічна' : '', false, true)), bRow('Тони ', bFill(serce.replace(/, ритм.*$/, ''), false, true)),
-      bRow('Язик ', bFill('', false, true)), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
-      bRow('рівномірно бере участь в акті дихання ', bFill('', false, true)), bRow('Печінка ', bFill('', false, true)),
+      bRow('Язик ', bFS(bFill(v('d_obj.yaz'), false, true), 'd_obj.yaz')), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
+      bRow('рівномірно бере участь в акті дихання ', bFS(bFill(f.d_obj_grk === '0' ? 'так' : v('d_obj.grk'), false, true), 'd_obj.grk')), bRow('Печінка ', bFS(bFill(v('d_obj.pech'), false, true), 'd_obj.pech')),
       bRow('Випорожнення ', bFill(/регулярні/.test(v('d_obj.fiz')) ? 'регулярні' : /Рідкі/.test(v('d_obj.fiz')) ? 'рідкі' : /Затримка/.test(v('d_obj.fiz')) ? 'затримка' : ''), ' раз на добу, ', bFill(''), ' оформлене, ', bFill('')),
-      bRow('С-м Пастернацького ', bFill(''), '. Сечовипускання вільне, не болюче, діурез достатній.'),
+      bRow('С-м Пастернацького ', bFS(bFill(v('d_obj.pst')), 'd_obj.pst'), '. Сечовипускання ', bFS(bFill(v('d_obj.sech') || (f.d_obj_fiz === '1' ? 'діурез знижений' : ''), false, true), 'd_obj.sech'), '.'),
       bRow('Лікування'), bLines(lik, 3),
       bRow(h('i', {}, 'Лікар '), bFill(mv('doc'), true))));
 }

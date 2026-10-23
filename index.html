@@ -1228,7 +1228,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.35 від 23.10.2026">v0.9.3.35 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.36 від 23.10.2026">v0.9.3.36 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -1933,6 +1933,15 @@ const SECTIONS = [
   {id:'nevr', type:'sel', label:'Неврологічно (за потреби)', tpl:'{v}', opts:['Неврологічний статус без динаміки','Вогнищева симптоматика регресує','Наростання вогнищевої симптоматики']},
   {id:'loc', type:'multi', loc:true, when:()=>locOn(), sepv:', ', label:'Status localis (травма)', tpl:'Status localis: {v}', opts:['пов’язка суха, чиста','гіпсова іммобілізація адекватна, не тисне',
     'набряк зменшився','набряк без динаміки','кровообіг і чутливість дистальніше збережені','рана без ознак запалення','шви спроможні','больовий синдром зменшився']},
+  {id:'bh', type:'hdr', label:'Інші пункти щоденника (бланк 003/о) — за потреби'},
+  {id:'lv', type:'sel', label:'Лімфатичні вузли', tpl:'Лімфатичні вузли {v}', opts:['не збільшені','збільшені підщелепні','збільшені шийні','збільшені пахвові','збільшені пахвинні']},
+  {id:'nis', type:'sel', label:'Дихання через ніс', tpl:'Дихання через ніс {v}', opts:['вільне','утруднене']},
+  {id:'grk', type:'sel', label:'Грудна клітка в акті дихання', tpl:'Грудна клітка {v}', opts:['рівномірно бере участь в акті дихання','відстає в акті дихання права половина','відстає в акті дихання ліва половина']},
+  {id:'perk', type:'sel', label:'Перкуторно над легенями', tpl:'Перкуторно {v}', opts:['ясний легеневий звук','притуплення в нижніх відділах справа','притуплення в нижніх відділах зліва','притуплення в нижніх відділах з обох боків','коробковий звук']},
+  {id:'yaz', type:'sel', label:'Язик', tpl:'Язик {v}', opts:['вологий, чистий','вологий, обкладений білим нальотом','сухий, обкладений нальотом']},
+  {id:'pech', type:'sel', label:'Печінка', tpl:'Печінка {v}', opts:['не збільшена','біля краю реберної дуги','виступає з-під краю реберної дуги']},
+  {id:'pst', type:'sel', label:'Симптом Пастернацького', tpl:'Симптом Пастернацького {v}', opts:['негативний з обох боків','позитивний справа','позитивний зліва','позитивний з обох боків']},
+  {id:'sech', type:'sel', label:'Сечовипускання', tpl:'Сечовипускання {v}', opts:['вільне, не болюче, діурез достатній','вільне, не болюче, діурез знижений','утруднене','болюче','часте, малими порціями','через катетер']},
   {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
 ]},
 { id:'d_lik', docs:['shch'], title:'Лікування і план', short:'Лікування', head:'', objective:true, fields:[
@@ -3355,8 +3364,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.35', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.36', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.36', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
   ['0.9.3.35', '23.10.2026', 'текстові значки стану полів і розділів: «не заповнено», «норма», «є відхилення»; для довільного тексту — «заповнено», для підстановки — окрема позначка; порожнє поле не прирівнюється до норми'],
   ['0.9.3.34', '23.10.2026', 'менше переходів: розділи документа — однією сторінкою підряд, зміст ліворуч підсвічує поточний і прокручує до розділу (вкладками — перемикач у «Налаштуваннях»); порожні поля з підстановкою (скарги, анамнез, об’єктивно…) показують сірим, що підтягнеться, і кнопку «Взяти й правити»; клік по фразі в тексті документа відкриває маленьке вікно правки саме цього поля (Alt+клік — просто курсор); окреме вікно — свій масштаб −/100%/+, «По ширині», Ctrl+колесо'],
   ['0.9.3.33', '23.10.2026', 'окреме вікно документа тепер робоче: у «Тексті» можна правити прямо там (зміни одразу в основному вікні); в «Аркуші» клік по рядку відкриває потрібне поле форми в основному вікні — як у перегляді перед друком'],
@@ -5948,6 +5958,8 @@ function bDv(f, key){ const fl = F(key); if (!fl) return ''; const id = key.repl
   return fl.type === 'sel' ? g(O(fl.opts[+v]).t) : g(String(v)); }
 /* поле бланка, яке можна вписати на місці (лише поточний запис) */
 function bFF(el, ids){ el.dataset.fld = ids; el.title = 'Натисніть, щоб вписати'; return el; }
+/* пункт-вибір бланка (лімфовузли, язик, печінка…) — клік відкриває вибір варіанта (лише поточний запис) */
+function bFS(el, key){ el.dataset.dsel = key; el.title = 'Натисніть, щоб вибрати'; return el; }
 function bDiaryEntry(e){
   const f = e.f, v = k => bDv(f, k), n = id => (f[id] || '').trim();
   const what = n('d_main_zal') || n('d_main_skx').replace(/^на /, ''), how = f.d_main_sk && f.d_main_sk !== '0' ? v('d_main.sk').replace(/^Скарги /, '') : '';
@@ -5966,14 +5978,14 @@ function bDiaryEntry(e){
       bRow('Об’єктивно: загальний стан ', bFill([v('d_main.stan'), dyn ? (/^з /.test(dyn) ? dyn : 'стан ' + dyn) : ''].filter(Boolean).join(', '), true), ', свідомість не порушена.'),
       f.d_main_svid && f.d_main_svid !== '0' ? bRow('Свідомість: ', bFill(v('d_main.svid'))) : '',
       bRow('Реакція на огляд адекватна. Шкірні покриви та видимі слизові ', bFill(v('d_obj.shk').replace(/^Шкірні покриви /, ''), false, true)),
-      bRow('Лімфатичні вузли ', bFill('', false, true)), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
-      bRow('Дихання через ніс ', bFill('', false, true)), bRow('Перкуторно ', bFill('', false, true)),
+      bRow('Лімфатичні вузли ', bFS(bFill(v('d_obj.lv'), false, true), 'd_obj.lv')), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
+      bRow('Дихання через ніс ', bFS(bFill(v('d_obj.nis'), false, true), 'd_obj.nis')), bRow('Перкуторно ', bFS(bFill(v('d_obj.perk'), false, true), 'd_obj.perk')),
       bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spo ? 'SpO2 ' + spo + '%' + (o2 ? ' на кисні ' + o2 + ' л/хв' : '') : ''), true, true)),
       bRow('Діяльність серця ', bFill(/неправильний/.test(serce) ? 'аритмічна' : /правильний/.test(serce) ? 'ритмічна' : '', false, true)), bRow('Тони ', bFill(serce.replace(/, ритм.*$/, ''), false, true)),
-      bRow('Язик ', bFill('', false, true)), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
-      bRow('рівномірно бере участь в акті дихання ', bFill('', false, true)), bRow('Печінка ', bFill('', false, true)),
+      bRow('Язик ', bFS(bFill(v('d_obj.yaz'), false, true), 'd_obj.yaz')), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
+      bRow('рівномірно бере участь в акті дихання ', bFS(bFill(f.d_obj_grk === '0' ? 'так' : v('d_obj.grk'), false, true), 'd_obj.grk')), bRow('Печінка ', bFS(bFill(v('d_obj.pech'), false, true), 'd_obj.pech')),
       bRow('Випорожнення ', bFill(/регулярні/.test(v('d_obj.fiz')) ? 'регулярні' : /Рідкі/.test(v('d_obj.fiz')) ? 'рідкі' : /Затримка/.test(v('d_obj.fiz')) ? 'затримка' : ''), ' раз на добу, ', bFill(''), ' оформлене, ', bFill('')),
-      bRow('С-м Пастернацького ', bFill(''), '. Сечовипускання вільне, не болюче, діурез достатній.'),
+      bRow('С-м Пастернацького ', bFS(bFill(v('d_obj.pst')), 'd_obj.pst'), '. Сечовипускання ', bFS(bFill(v('d_obj.sech') || (f.d_obj_fiz === '1' ? 'діурез знижений' : ''), false, true), 'd_obj.sech'), '.'),
       bRow('Лікування'), bLines(lik, 3),
       bRow(h('i', {}, 'Лікар '), bFill(mv('doc'), true))));
 }
@@ -14891,7 +14903,7 @@ function qeOpen(f, sid, anchor){
       h('button', {type:'button', class:'qe-x', 'aria-label':'Закрити', title:'Закрити (Esc)', onclick:qeClose}, '✕')),
     w);
   document.body.append(box); QE.box = box;
-  const ob = $('#out').getBoundingClientRect(), ar = anchor.getBoundingClientRect();
+  const ob = ((anchor.closest && anchor.closest('#paper')) || $('#out')).getBoundingClientRect(), ar = anchor.getBoundingClientRect();
   const width = Math.min(560, Math.max(300, ob.width - 16));
   box.style.width = width + 'px';
   box.style.left = Math.max(8, Math.min(window.innerWidth - width - 8, ob.left + 8)) + window.scrollX + 'px';
@@ -15033,6 +15045,25 @@ function entryRender(){
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 { const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 entryRender();
+/* ===== Щоденник: пункти бланка 003/о, що були лише порожніми рядками (0.9.3.36) =====
+   Лімфатичні вузли, дихання через ніс, грудна клітка, перкусія, язик, печінка, симптом Пастернацького —
+   тепер поля щоденника («Інші пункти щоденника»). На бланку клік по рядку відкриває вибір варіанта. */
+document.addEventListener('click', e=>{
+  const g = e.target.closest && e.target.closest('#paper .bdi.bcur [data-dsel]'); if (!g) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  const key = g.dataset.dsel, f = F(key); if (!f) return;
+  qeOpen(f, key.split('.')[0], g);
+}, true);
+/* поле, винесене у віконце швидкої правки, теж зберігається в запис щоденника */
+{ const df0 = diaryFields; diaryFields = function(){ const r = df0.apply(this, arguments);
+  try{ if (QE.box && QE.f && QE.f.wrapEl && QE.f.wrapEl.closest('.qe')){
+    QE.f.wrapEl.querySelectorAll('input[id], select[id], textarea[id]').forEach(e=>{ r.f[e.id] = e.value; });
+    QE.f.wrapEl.querySelectorAll('.chip[id][aria-pressed="true"]').forEach(b=>{ r.c[b.id] = 1; }); } }catch(e){}
+  return r; }; }
+/* після вибору у віконці — оновити бланк */
+document.addEventListener('change', e=>{ if (PAPER && e.target.closest && e.target.closest('.qe')) setTimeout(()=>{ try{ renderPaper(); }catch(x){} }, 0); });
+/* вибраний варіант у полі без «норми» (лімфовузли, перкусія, неврологічно…) — це дані: поле не ховається профілем щоденника і йде в текст */
+{ const dh0 = dHasData; dHasData = function(f){ if (f && f.type === 'sel' && f.norm === undefined && f.el && f.el.value !== '') return true; return dh0.apply(this, arguments); }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
