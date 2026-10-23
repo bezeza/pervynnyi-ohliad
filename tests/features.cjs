@@ -555,6 +555,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Продовжити прийом: per os, не відмінене; в/в — ні', /Бісопролол 5 мг per os 1 р\/д о 8:00 — тривало/.test(o) && /Амоксицилін\/клавуланат[^\n]*ще 4 дні/.test(o) && !/Продовжити прийом:[\s\S]*Цефтріаксон/.test(o), (o.match(/Продовжити прийом:[\s\S]{0,200}/)||[''])[0]);
    ok('Динаміка й стан при виписці — зі щоденників; самовільно залишив', /температура тіла до 38,6 °C \(15\.10\), нормалізувалась з 17\.10/.test(o) && /SpO2 92 % → 98 %/.test(o) && /При виписці: Температура тіла 36,6 °C/.test(o) && /залишив/i.test(o), (o.match(/10\. Перебіг.{0,300}/)||[''])[0]);
    ok('Попередження: ≥ 2 ознаки нестабільності перед випискою', /t > 37,5/.test(u) && /ЧД ≥ 24/.test(u) && /ЧСС > 100/.test(u), u); }
+ { // 0.9.3.30: ЧСС = пульс; поле «Пульс» — лише при аритмії
+   const r=JSON.parse(w.eval(`(()=>{ MODE='hosp'; applyDoc(true); switchDoc('ohl'); const C=F('ssc.chss'), P=F('ssc.ps'), R=F('ssc.rytm');
+     C.inputs[0].value='76'; P.inputs[0].value=''; R.el.value='0'; update(); const a=document.getElementById('out').textContent, hid=P.wrapEl.hidden;
+     C.inputs[0].value='110'; P.inputs[0].value='92'; R.el.value='1'; update(); const b=document.getElementById('out').textContent, shown=!P.wrapEl.hidden;
+     C.inputs[0].value=''; P.inputs[0].value=''; R.el.value=''; update(); return JSON.stringify([a,hid,b,shown]); })()`));
+   ok('Ритм правильний: «ЧСС = пульс», поле «Пульс» сховано', /ЧСС = пульс 76 уд\.\/хв/.test(r[0]) && r[1]===true, (r[0].match(/ЧСС.{0,40}/)||[''])[0]);
+   ok('Аритмія: ЧСС, пульс і дефіцит пульсу', /ЧСС 110 уд\.\/хв, пульс 92 уд\.\/хв, дефіцит пульсу 18/.test(r[2]) && r[3]===true && !/Пульс 92/.test(r[2]), (r[2].match(/ЧСС.{0,80}/)||[''])[0]); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
