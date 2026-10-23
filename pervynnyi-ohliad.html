@@ -1197,7 +1197,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.31 від 23.10.2026">v0.9.3.31 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.32 від 23.10.2026">v0.9.3.32 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3324,8 +3324,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.31', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.32', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.32', '23.10.2026', 'документ в окремому вікні: кнопка ⧉ у панелі тексту відкриває вікно для другого монітора — оновлюється наживо під час заповнення; «Текст» або «Аркуш» (як перед друком), A−/A+; у Chrome/Edge вікно саме стає на інший екран (браузер один раз спитає дозвіл), інакше — там, де стояло минулого разу'],
   ['0.9.3.31', '23.10.2026', 'ергономіка: короткі списки (до 6 варіантів) — кнопками-чипами одним натисканням, повторне натискання знімає вибір; у заголовку вкладки одна кнопка «Норма», решта («Б/о», «Своя кнопка», «Очистити вкладку») — під «⋯»; нагадування про папку даних після «Пізніше» згортається в значок 📁 у рядку пацієнта; «Показники одним рядком» у «Загальному стані» й щоденнику: «38,5 24 92 130/80 96» → температура, ЧД, SpO2, АТ, ЧСС (можна з мітками: «ад 150/90 п 88»)'],
   ['0.9.3.30', '23.10.2026', 'ЧСС і пульс: при правильному ритмі — одне поле й «ЧСС = пульс 76 уд./хв»; поле «Пульс» з’являється лише при аритмії (ритм неправильний, екстрасистоли або «аритмічний» у характері пульсу) — тоді в тексті «ЧСС 110 уд./хв, пульс 92 уд./хв, дефіцит пульсу 18»'],
   ['0.9.3.29', '23.10.2026', 'виписний епікриз: новий вигляд «Епікриз 027/о як у лікарні» — пп. 1–11 (паспортна частина, дати й ліжко-дні, повний діагноз, скарги/анамнез/об’єктивно при надходженні, обстеження, лікування, перебіг і стан при виписці, нумеровані рекомендації) і «Продовжити прийом»; лікування, якщо не вписано, — з листа призначень групами (антибактеріальна, інфузійна, бронхолітична…) з курсами «з … по … (N днів)»; «Продовжити прийом» — що не відмінено на день виписки (без в/в і в/м), з часом прийому й тим, скільки днів лишилось; динаміка показників (пік температури й дата нормалізації, SpO2, ЧД, АТ, ЧСС) і стан при виписці — з журналу щоденників; результат «самовільно залишив(ла) відділення»; нові готові рекомендації (щадний режим, питний режим, контроль ЗАК, огляд через 6 тижнів після пневмонії, самоконтроль АТ і самодопомога при кризі, дієти № 5 і № 10); перевірка попереджає, якщо за останню добу перед випискою є ≥ 2 ознаки нестабільності (t > 37,5 °C, ЧД ≥ 24, ЧСС > 100, сист. АТ ≤ 90, SpO2 < 90 %)'],
@@ -14632,6 +14633,97 @@ function vqVis(){ Object.keys(VQ).forEach(doc=>{ const s = SECTIONS.find(x=>x.id
 { const up = update; update = function(){ const r = up.apply(this, arguments); try{ vqVis(); }catch(e){} return r; }; }
 
 try{ ergoActs(); vqBuild(); vqVis(); fsIcon(); }catch(e){ console.warn('ergo', e); }
+/* ===== Документ в окремому вікні — для другого монітора (0.9.3.32) =====
+   Кнопка «⧉» у панелі тексту відкриває вікно, яке оновлюється наживо: «Текст» або «Аркуш» (як перед друком).
+   Якщо браузер уміє (Chrome/Edge: керування вікнами на кількох екранах) — вікно саме стає на інший монітор;
+   інакше відкривається там, де стояло минулого разу. */
+const POP = { w:null, mode:'text', fs:16, t:0 };
+try{ POP.mode = localStorage.getItem('po.popmode') || 'text'; POP.fs = +(localStorage.getItem('po.popfs') || 16) || 16; }catch(e){}
+
+async function popPlace(){
+  let g = null; try{ g = JSON.parse(localStorage.getItem('po.popgeo') || 'null'); }catch(e){}
+  try{
+    if ('getScreenDetails' in window){
+      const sd = await window.getScreenDetails();
+      const other = sd.screens.find(s=>s !== sd.currentScreen);
+      if (other) return {left:other.availLeft, top:other.availTop, width:other.availWidth, height:other.availHeight};
+    }
+  }catch(e){}
+  return g || {left:(screen.availLeft || 0) + Math.max(0, screen.availWidth - 900), top:screen.availTop || 0, width:900, height:screen.availHeight || 900};
+}
+async function popOpen(){
+  if (POP.w && !POP.w.closed){ POP.w.focus(); return; }
+  const p = await popPlace();
+  const w = window.open('', 'po_popout', `popup=yes,left=${Math.round(p.left)},top=${Math.round(p.top)},width=${Math.round(p.width)},height=${Math.round(p.height)}`);
+  if (!w){ toast('Браузер заблокував нове вікно — дозвольте спливні вікна для цієї сторінки', 4500); return; }
+  POP.w = w; popInit(w); popRender();
+  try{ w.moveTo(p.left, p.top); w.resizeTo(p.width, p.height); }catch(e){}
+  popBtnSync();
+}
+function popInit(w){
+  const d = w.document;
+  d.open(); d.write('<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Документ — Первинний огляд</title></head><body class="popwin"></body></html>'); d.close();
+  document.querySelectorAll('style').forEach(s=>d.head.append(d.importNode(s, true)));
+  const th = document.documentElement.getAttribute('data-theme'); if (th) d.documentElement.setAttribute('data-theme', th);
+  const st = d.createElement('style');
+  st.textContent = `body.popwin{margin:0;background:var(--bg,#f3f4f7);color:var(--ink,#1a1f2b);font-family:var(--f-sans,system-ui,sans-serif)}
+.pw-bar{position:sticky;top:0;z-index:5;display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 14px;background:var(--surface,#fff);border-bottom:1px solid var(--line,#dde1e8)}
+.pw-bar .t{font-weight:600;margin-right:auto}.pw-bar .s{font-size:12px;color:var(--muted,#667)}
+.pw-seg{display:inline-flex;border:1px solid var(--line,#dde1e8);border-radius:8px;overflow:hidden}
+.pw-seg button,.pw-bar>button{border:0;background:var(--surface,#fff);padding:5px 12px;font:inherit;cursor:pointer;color:inherit}
+.pw-bar>button{border:1px solid var(--line,#dde1e8);border-radius:8px}
+.pw-seg button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);color:var(--accent,#1f5a8a);font-weight:600}
+.pw-text{max-width:900px;margin:18px auto;padding:28px 36px;background:var(--surface,#fff);border:1px solid var(--line,#dde1e8);border-radius:10px;white-space:pre-wrap;line-height:1.5}
+.pw-empty{color:var(--muted,#667);text-align:center;margin-top:60px}
+#paper.pw-paper{display:block;max-width:none;padding:18px;overflow:visible}#paper.pw-paper .sheet{margin:0 auto}`;
+  d.head.append(st);
+  const bar = d.createElement('div'); bar.className = 'pw-bar';
+  bar.innerHTML = '<span class="t">Документ</span><span class="s" id="pwS"></span><span class="pw-seg"><button type="button" data-m="text">Текст</button><button type="button" data-m="paper">Аркуш</button></span><button type="button" data-f="-1" title="Менший шрифт">A−</button><button type="button" data-f="1" title="Більший шрифт">A+</button>';
+  bar.addEventListener('click', e=>{
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.m){ POP.mode = b.dataset.m; try{ localStorage.setItem('po.popmode', POP.mode); }catch(x){} popRender(); }
+    if (b.dataset.f){ POP.fs = Math.max(11, Math.min(26, POP.fs + +b.dataset.f)); try{ localStorage.setItem('po.popfs', POP.fs); }catch(x){} popRender(); }
+  });
+  const box = d.createElement('div'); box.id = 'pwBox';
+  d.body.append(bar, box);
+  const save = () => { try{ localStorage.setItem('po.popgeo', JSON.stringify({left:w.screenX, top:w.screenY, width:w.outerWidth, height:w.outerHeight})); }catch(x){} };
+  w.addEventListener('beforeunload', ()=>{ save(); setTimeout(popBtnSync, 50); });
+  w.addEventListener('resize', ()=>{ clearTimeout(POP.rz); POP.rz = setTimeout(()=>{ save(); if (POP.mode === 'paper') popRender(); }, 300); });
+}
+function popRender(){
+  const w = POP.w; if (!w || w.closed) return;
+  const d = w.document, box = d.getElementById('pwBox'); if (!box) return;
+  d.querySelectorAll('.pw-seg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.m === POP.mode ? 'true' : 'false'));
+  const sEl = d.getElementById('pwS'); if (sEl){ const pib = (($('#meta_pib') || {}).value || '').trim(); sEl.textContent = (DOCTITLES && DOCTITLES[DOC] ? (typeof DOCTITLES[DOC] === 'string' ? DOCTITLES[DOC] : '') : '') + (pib ? ' · ' + pib : ''); }
+  const y = w.scrollY;
+  box.innerHTML = '';
+  if (POP.mode === 'paper'){
+    const tmp = document.createElement('div'); tmp.className = 'sheet';
+    try{ fillSheet(tmp, false); }catch(e){ tmp.textContent = 'Не вдалося побудувати аркуш: ' + e.message; }
+    const bl = typeof blankOn === 'function' && blankOn(); if (bl) tmp.classList.add('blankmode');
+    const pp = d.createElement('div'); pp.id = 'paper'; pp.className = 'paper pw-paper';
+    const sh = d.importNode(tmp, true); pp.append(sh); box.append(pp);
+    sh.style.fontSize = '';
+    const cw = w.innerWidth - 40; if (bl && cw) sh.style.setProperty('--bz', Math.min(1.4, cw / 794).toFixed(3));
+  } else {
+    const src = $('#out'); const t = src ? src.innerHTML.trim() : '';
+    if (!t){ const e = d.createElement('p'); e.className = 'pw-empty'; e.textContent = 'Тут з’явиться текст документа.'; box.append(e); }
+    else { const tx = d.createElement('div'); tx.className = 'pw-text'; tx.innerHTML = src.innerHTML; tx.style.fontSize = POP.fs + 'px'; box.append(tx); }
+  }
+  const m = box.querySelector('mark.chg, .flash');
+  if (m){ const r = m.getBoundingClientRect(); if (r.top < 60 || r.bottom > w.innerHeight) w.scrollTo(0, Math.max(0, y + r.top - w.innerHeight / 3)); else w.scrollTo(0, y); }
+  else w.scrollTo(0, y);
+}
+function popSoon(){ if (!POP.w || POP.w.closed) return; clearTimeout(POP.t); POP.t = setTimeout(()=>{ try{ popRender(); }catch(e){} }, 200); }
+{ const up = update; update = function(){ const r = up.apply(this, arguments); popSoon(); return r; }; }
+document.addEventListener('input', e=>{ if (e.target && e.target.id === 'out') popSoon(); });
+window.addEventListener('beforeunload', ()=>{ try{ if (POP.w && !POP.w.closed) POP.w.close(); }catch(e){} });
+
+function popBtnSync(){ const b = $('#popBtn'); if (b) b.setAttribute('aria-pressed', POP.w && !POP.w.closed ? 'true' : 'false'); }
+{ const acts = $('#outBox .oh .acts');
+  if (acts) acts.prepend(h('button', {type:'button', class:'btn', id:'popBtn', 'aria-pressed':'false',
+    title:'Відкрити документ в окремому вікні — наприклад, на другому моніторі. Оновлюється наживо.',
+    'aria-label':'Документ в окремому вікні', onclick:()=>popOpen()}, '⧉')); }
 </script>
 
 </body>

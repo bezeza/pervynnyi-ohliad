@@ -575,6 +575,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Показники одним рядком: t, ЧД, SpO2, АТ, ЧСС', /Температура тіла 38,5 °C/.test(o) && /ЧД 24 за хв, SpO2 92%/.test(o) && /АТ 130\/80/.test(o) && /пульс 96/.test(o), v);
    ok('Показники з мітками й перевірка меж', /АТ 150\/90/.test(w.eval("vqApply('ад 150/90 п 88').join('|')")) && /⚠ t 45/.test(w.eval("vqApply('t45').join('|')")));
    w.eval("['zah.temp','dyh.chd','ssc.ad','ssc.chss'].forEach(k=>F(k).inputs.forEach(i=>i.value='')); update()"); }
+ { // 0.9.3.32: документ в окремому вікні
+   const fr=doc.createElement('iframe'); doc.body.append(fr);
+   const r=JSON.parse(w.eval(`(()=>{ const fw=document.querySelector('body>iframe:last-of-type').contentWindow; fw.scrollTo=()=>{}; POP.w=fw; popInit(fw); POP.mode='text'; switchDoc('ohl'); vqApply('37,9 22'); popRender();
+     const a=[fw.document.querySelector('.pw-text') ? fw.document.querySelector('.pw-text').textContent : '']; POP.mode='paper'; popRender();
+     a.push(!!fw.document.querySelector('#paper .sheet') && fw.document.querySelector('#paper .sheet').textContent.length); a.push(!!document.getElementById('popBtn'));
+     POP.mode='text'; POP.w=null; return JSON.stringify(a); })()`));
+   ok('Окреме вікно: текст наживо, аркуш, кнопка ⧉', /37,9/.test(r[0]) && r[1]>50 && r[2]===true, JSON.stringify(r).slice(0,200));
+   fr.remove(); w.eval("['zah.temp','dyh.chd'].forEach(k=>F(k).inputs.forEach(i=>i.value='')); update()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

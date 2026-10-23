@@ -97,6 +97,7 @@
   "614-anest.js",
   "615-epi-hosp.js",
   "616-pulse.js",
-  "617-ergo.js"
+  "617-ergo.js",
+  "618-popout.js"
  ]
 }
