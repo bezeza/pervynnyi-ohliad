@@ -616,7 +616,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Стани полів: довільний текст не оголошується нормою', r[10]===true);
    ok('Стани полів: не змінюють документ, доступні для читача екрана, не дублюються', r.slice(11).every(Boolean), JSON.stringify(r));
  }
- { // 0.9.3.36: пункти бланка щоденника
+ { // 0.9.3.36: прогрес і необов’язкові доповнення.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(); switchDoc('ohl'); const dt=document.getElementById('meta_dt'); dt.value=''; update(); const a=[progressRequired().some(x=>x.f==='meta_dt')];
+     const next=document.querySelector('#progressNext button'); a.push(!!next && /Потрібно/.test(document.getElementById('progressNext').textContent)); next.click(); a.push(TABS[active].id==='meta');
+     const f=F('skarhy.cx'); if(f){ f.el.value=''; update(); a.push(f.entryStatus.hidden); } else a.push(false);
+     const sc=SECTIONS.find(s=>s.id==='dyh'); clearSection(sc); const b=sc.fields.find(f=>f.bo); F('dyh.ausk').el.value='0'; update(); a.push(b.entryStatus.hidden);
+     F('dyh.ausk').el.value=''; update(); a.push(!b.entryStatus.hidden); restore(saved); return JSON.stringify(a); })()`));
+   ok('Прогрес: важливі пропуски й перехід до поля', r.slice(0,3).every(Boolean), JSON.stringify(r));
+   ok('Прогрес: необов’язкові порожні доповнення й Б/о не заважають', r.slice(3).every(Boolean), JSON.stringify(r));
+ }
+ { // 0.9.3.37: пункти бланка щоденника
    const r=JSON.parse(w.eval(`(()=>{ switchDoc('shch'); const f=F('d_obj.perk'), l=F('d_obj.lv'); const a=[!!f && !!l, !/Перкуторно|Лімфатичні/.test(generate().plain)];
      f.el.value='1'; l.el.value='0'; update(); const t=generate().plain; a.push(/Перкуторно притуплення в нижніх відділах справа/.test(t) && /Лімфатичні вузли не збільшені/.test(t));
      const e={f:diaryFields().f, cur:true, dt:'2026-10-23T09:00'}; const el=bDiaryEntry(e); a.push(/притуплення в нижніх відділах справа/.test(el.textContent) && !!el.querySelector('[data-dsel="d_obj.perk"]'));

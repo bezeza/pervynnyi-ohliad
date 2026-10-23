@@ -1218,6 +1218,11 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .panel>.ph{flex-wrap:wrap}
 @media(max-width:899px){.entry-field{font-size:11px;margin-left:6px}.entry-section{margin:0}.entry-proxy{flex-basis:100%}}
 @media print{.entry-status{display:none!important}}
+
+/* 0.9.3.36 — наступна важлива ділянка */
+.progress-next{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+.progress-next small{font-size:11px;color:var(--muted)}.progress-next button{text-align:left;white-space:normal;line-height:1.4}
+.entry-status[hidden]{display:none!important}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1228,7 +1233,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.36 від 23.10.2026">v0.9.3.36 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.37 від 23.10.2026">v0.9.3.37 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3364,9 +3369,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.36', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.37', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.36', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
+  ['0.9.3.37', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
+  ['0.9.3.36', '23.10.2026', 'прогрес підказує найближче важливе незаповнене поле з переходом; решта розділів позначена як необов’язкова; прибрано зайві порожні значки біля доповнень і Б/о при детальному описі'],
   ['0.9.3.35', '23.10.2026', 'текстові значки стану полів і розділів: «не заповнено», «норма», «є відхилення»; для довільного тексту — «заповнено», для підстановки — окрема позначка; порожнє поле не прирівнюється до норми'],
   ['0.9.3.34', '23.10.2026', 'менше переходів: розділи документа — однією сторінкою підряд, зміст ліворуч підсвічує поточний і прокручує до розділу (вкладками — перемикач у «Налаштуваннях»); порожні поля з підстановкою (скарги, анамнез, об’єктивно…) показують сірим, що підтягнеться, і кнопку «Взяти й правити»; клік по фразі в тексті документа відкриває маленьке вікно правки саме цього поля (Alt+клік — просто курсор); окреме вікно — свій масштаб −/100%/+, «По ширині», Ctrl+колесо'],
   ['0.9.3.33', '23.10.2026', 'окреме вікно документа тепер робоче: у «Тексті» можна правити прямо там (зміни одразу в основному вікні); в «Аркуші» клік по рядку відкриває потрібне поле форми в основному вікні — як у перегляді перед друком'],
@@ -15045,6 +15051,54 @@ function entryRender(){
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 { const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 entryRender();
+/* 0.9.3.36 — наступна важлива ділянка та необов’язкові доповнення. */
+function progressRequired(){
+  const missing = [];
+  if (!mv('pib')) missing.push({m:'Не вказано ПІБ пацієнта', tab:'meta', f:'meta_pib'});
+  if (!mv('dt')) missing.push({m:'Не вказано дату огляду', tab:'meta', f:'meta_dt'});
+  const visible = tabOrder().map(i=>TABS[i].id);
+  checkDoc().filter(x=>x.tab && visible.includes(x.tab)).forEach(x=>{
+    if (!missing.some(y=>y.tab === x.tab && y.f === x.f)) missing.push(x);
+  });
+  return missing;
+}
+function progressJump(item){
+  const proxy = item.f && document.querySelector(`#qvVit input[data-for="${item.f}"]`);
+  if (proxy && quickOn()){ show(TABS.indexOf(QV)); proxy.focus(); return; }
+  goTab(item.tab, item.f);
+}
+function progressRender(){
+  const host = document.querySelector('#sidecard .sprog'); if (!host) return;
+  const old = host.querySelector('.progress-next'); if (old) old.remove();
+  const issues = progressRequired();
+  const box = h('div', {class:'progress-next', id:'progressNext'});
+  if (issues.length){
+    box.append(h('small', {}, 'Потрібно перевірити перед завершенням'),
+      h('button', {type:'button', class:'more', onclick:()=>progressJump(issues[0])}, issues[0].m));
+  } else {
+    const sequence = tabOrder().map(i=>TABS[i]).filter(t=>t !== META && t !== HV && !TOOL_TABS.includes(t.id));
+    const i = sequence.indexOf(TABS[active]);
+    const next = [...sequence.slice(i + 1), ...sequence.slice(0, i + 1)].find(t=>!t.tab.classList.contains('filled'));
+    box.append(h('small', {}, 'Решта розділів — за потреби'));
+    if (next) box.append(h('button', {type:'button', class:'more', onclick:()=>goTab(next.id)}, 'Далі: ' + (next.short || next.title)));
+  }
+  host.append(box);
+}
+function progressOptional(){
+  SECTIONS.forEach(s=>{
+    const detailed = s.fields.some(f=>!f.bo && !f.noOut && ['sel','line','text'].includes(f.type) && f.el && f.el.value.trim() !== '');
+    s.fields.forEach(f=>{
+      if (!f.entryStatus) return;
+      const optional = /додатково|своїми словами|уточнен/i.test(f.label || '') || f.bo && detailed;
+      f.entryStatus.hidden = optional && entryFieldState(f) === 'empty';
+      if (optional) f.entryStatus.title = 'Необов’язкове доповнення';
+    });
+  });
+}
+{ const x0 = entryRender; entryRender = function(){ const r = x0.apply(this, arguments); progressOptional(); return r; }; }
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
+{ const x0 = show; show = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
+progressOptional(); progressRender();
 /* ===== Щоденник: пункти бланка 003/о, що були лише порожніми рядками (0.9.3.36) =====
    Лімфатичні вузли, дихання через ніс, грудна клітка, перкусія, язик, печінка, симптом Пастернацького —
    тепер поля щоденника («Інші пункти щоденника»). На бланку клік по рядку відкриває вибір варіанта. */

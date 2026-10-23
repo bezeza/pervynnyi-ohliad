@@ -1200,3 +1200,8 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .panel>.ph{flex-wrap:wrap}
 @media(max-width:899px){.entry-field{font-size:11px;margin-left:6px}.entry-section{margin:0}.entry-proxy{flex-basis:100%}}
 @media print{.entry-status{display:none!important}}
+
+/* 0.9.3.36 — наступна важлива ділянка */
+.progress-next{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+.progress-next small{font-size:11px;color:var(--muted)}.progress-next button{text-align:left;white-space:normal;line-height:1.4}
+.entry-status[hidden]{display:none!important}
