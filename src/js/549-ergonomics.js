@@ -21,14 +21,14 @@ function renderLive(){
   liveBar.append(h('span', {class:'lv-t'}, txt || (all ? 'У цьому розділі ще нічого не відмічено. Натисніть, щоб побачити весь документ.' : 'Тут з’явиться текст розділу, щойно почнете відмічати.')),
     h('span', {class:'lv-o', 'aria-hidden':'true'}, '▴ весь текст'));
 }
-/* 2. Короткі списки (до 5 варіантів) — кнопками; список лишається прихованим, тож усе інше працює як раніше */
+/* 2. Короткі списки (до 6 варіантів, разом не довше 200 знаків; 0.9.3.31) — кнопками; список лишається прихованим, тож усе інше працює як раніше */
 function segFor(f){
-  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.opts.length > 5 || f.opts.length < 2) return;
-  if (f.opts.some(o=>String(O(o).l).length > 34)) return;
+  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.noChips || f.opts.length > 6 || f.opts.length < 2) return;
+  const L = f.opts.map(o=>String(O(o).l).length); if (Math.max(...L) > 60 || L.reduce((a, b)=>a + b, 0) > 200) return;
   const box = h('div', {class:'segbtns', role:'group', 'aria-label':f.label || ''});
-  const sync = () => { [...box.children].forEach((b,i)=>{ b.setAttribute('aria-pressed', f.el.value === String(i) ? 'true' : 'false'); b.textContent = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)].textContent; }); };
+  const sync = () => { [...box.children].forEach((b,i)=>{ b.setAttribute('aria-pressed', f.el.value === String(i) ? 'true' : 'false'); b.classList.toggle('abn', f.el.value === String(i) && f.norm !== undefined && i !== f.norm); b.textContent = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)].textContent; }); };
   f.opts.forEach((o,i)=>box.append(h('button', {type:'button', class:'chip sg', onclick:()=>{ f.el.value = f.el.value === String(i) ? '' : String(i); f.el.dispatchEvent(new Event('change', {bubbles:true})); sync(); }})));
-  f.el.classList.add('seg-hidden'); f.el.after(box); f.seg = sync; f.el.addEventListener('change', sync); sync();
+  f.el.classList.add('seg-hidden'); { const sf = f.el.nextElementSibling; if (sf && sf.classList.contains('selfull')) sf.remove(); } f.el.after(box); f.seg = sync; f.el.addEventListener('change', sync); sync();
 }
 SECTIONS.forEach(s=>s.fields.forEach(segFor));
 { const m0 = mark; mark = function(sel, f){ m0(sel, f); if (f && f.seg) f.seg(); }; }

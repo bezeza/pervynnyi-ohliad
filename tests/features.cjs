@@ -562,6 +562,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      C.inputs[0].value=''; P.inputs[0].value=''; R.el.value=''; update(); return JSON.stringify([a,hid,b,shown]); })()`));
    ok('Ритм правильний: «ЧСС = пульс», поле «Пульс» сховано', /ЧСС = пульс 76 уд\.\/хв/.test(r[0]) && r[1]===true, (r[0].match(/ЧСС.{0,40}/)||[''])[0]);
    ok('Аритмія: ЧСС, пульс і дефіцит пульсу', /ЧСС 110 уд\.\/хв, пульс 92 уд\.\/хв, дефіцит пульсу 18/.test(r[2]) && r[3]===true && !/Пульс 92/.test(r[2]), (r[2].match(/ЧСС.{0,80}/)||[''])[0]); }
+ { // 0.9.3.31: ергономіка
+   w.eval("switchDoc('ohl')");
+   const r=JSON.parse(w.eval(`(()=>{ const n=SECTIONS.reduce((a,s)=>a+s.fields.filter(f=>f.seg).length,0); const f=SECTIONS.flatMap(s=>s.fields).find(f=>f.seg && f.opts.length===6);
+     const b=f.el.nextElementSibling; b.children[1].click(); const a=[n, f.el.value, b.children[1].getAttribute('aria-pressed'), b.querySelectorAll('.chip').length];
+     b.children[1].click(); a.push(f.el.value); update(); return JSON.stringify(a); })()`));
+   ok('Кнопки замість списків — і для 6 варіантів; повторне натискання знімає', r[0]>120 && r[1]==='1' && r[2]==='true' && r[3]===6 && r[4]==='', JSON.stringify(r));
+   ok('Довгий список лишається списком', !w.eval("F('dyh.hr').seg"));
+   const ac=w.eval(`(()=>{ const a=SECTIONS.find(s=>s.id==='dyh').panel.querySelector('.ph .acts2'); return [...a.children].filter(x=>x.tagName==='BUTTON'&&!x.hidden&&!x.classList.contains('tplsec')).map(x=>x.textContent).join('|')+'#'+[...a.querySelectorAll('.mmenu button')].map(x=>x.textContent).join('|'); })()`);
+   ok('У заголовку вкладки — «Норма», решта під «⋯»', /^Норма#/.test(ac) && /Б\/о — одним рядком/.test(ac) && /Олівець/.test(ac) && w.document.querySelectorAll('#'+'tab-x .more-dd').length===0 && /Очистити вкладку/.test(ac), ac);
+   const v=w.eval("vqApply('38,5 24 92 130/80 96').join('|')"); const o=out();
+   ok('Показники одним рядком: t, ЧД, SpO2, АТ, ЧСС', /Температура тіла 38,5 °C/.test(o) && /ЧД 24 за хв, SpO2 92%/.test(o) && /АТ 130\/80/.test(o) && /пульс 96/.test(o), v);
+   ok('Показники з мітками й перевірка меж', /АТ 150\/90/.test(w.eval("vqApply('ад 150/90 п 88').join('|')")) && /⚠ t 45/.test(w.eval("vqApply('t45').join('|')")));
+   w.eval("['zah.temp','dyh.chd','ssc.ad','ssc.chss'].forEach(k=>F(k).inputs.forEach(i=>i.value='')); update()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

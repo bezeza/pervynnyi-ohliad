@@ -96,6 +96,7 @@
   "613-paper-keep.js",
   "614-anest.js",
   "615-epi-hosp.js",
-  "616-pulse.js"
+  "616-pulse.js",
+  "617-ergo.js"
  ]
 }
