@@ -1183,6 +1183,15 @@ summary .vdot{color:var(--ok);font-weight:700}
 .pr-epi .pr-top{border-bottom:2px solid var(--epi)}.pr-epi .pr-logo{max-width:84px;max-height:84px}
 .pr-epi .pr-body>div>b{color:var(--epi)}
 .pr-epi .pr-body>div:nth-child(-n+3)>b{letter-spacing:.06em}
+/* 0.9.3.31 ергономіка */
+/* відхилення від норми */
+.segbtns .chip.sg.abn[aria-pressed="true"]{background:#fdf0d5;border-color:#b07800;color:#7a5200}
+.fsicon{border:1px solid #c9a227;background:#fff7dc;border-radius:999px;padding:2px 9px;cursor:pointer;font-size:14px;margin-left:6px}
+.vq{border:1px dashed var(--line);border-radius:10px;padding:8px 10px}
+.vq-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.vq-in{flex:1 1 220px;max-width:320px;font-family:var(--f-mono,monospace)}
+@media print{.vq,.fsicon{display:none!important}}
+.vq-h{margin:4px 0 0;font-size:12.5px;color:var(--muted)}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1193,7 +1202,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.30 від 23.10.2026">v0.9.3.30 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.31 від 23.10.2026">v0.9.3.31 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3102,7 +3111,7 @@ function mark(sel, f){
     const t = sel.value !== '' && sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : '';
     sel.title = t;
     let sf = sel.nextElementSibling && sel.nextElementSibling.classList.contains('selfull') ? sel.nextElementSibling : null;
-    if (t && selCut(sel, t)){ if (!sf){ sf = h('div', {class:'selfull'}); sel.after(sf); } sf.textContent = t; }
+    if (t && !f.seg && selCut(sel, t)){ if (!sf){ sf = h('div', {class:'selfull'}); sel.after(sf); } sf.textContent = t; }
     else if (sf) sf.remove();
   }
   sel.classList.toggle('set', sel.value !== '');
@@ -3320,8 +3329,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.30', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.31', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.31', '23.10.2026', 'ергономіка: короткі списки (до 6 варіантів) — кнопками-чипами одним натисканням, повторне натискання знімає вибір; у заголовку вкладки одна кнопка «Норма», решта («Б/о», «Своя кнопка», «Очистити вкладку») — під «⋯»; нагадування про папку даних після «Пізніше» згортається в значок 📁 у рядку пацієнта; «Показники одним рядком» у «Загальному стані» й щоденнику: «38,5 24 92 130/80 96» → температура, ЧД, SpO2, АТ, ЧСС (можна з мітками: «ад 150/90 п 88»)'],
   ['0.9.3.30', '23.10.2026', 'ЧСС і пульс: при правильному ритмі — одне поле й «ЧСС = пульс 76 уд./хв»; поле «Пульс» з’являється лише при аритмії (ритм неправильний, екстрасистоли або «аритмічний» у характері пульсу) — тоді в тексті «ЧСС 110 уд./хв, пульс 92 уд./хв, дефіцит пульсу 18»'],
   ['0.9.3.29', '23.10.2026', 'виписний епікриз: новий вигляд «Епікриз 027/о як у лікарні» — пп. 1–11 (паспортна частина, дати й ліжко-дні, повний діагноз, скарги/анамнез/об’єктивно при надходженні, обстеження, лікування, перебіг і стан при виписці, нумеровані рекомендації) і «Продовжити прийом»; лікування, якщо не вписано, — з листа призначень групами (антибактеріальна, інфузійна, бронхолітична…) з курсами «з … по … (N днів)»; «Продовжити прийом» — що не відмінено на день виписки (без в/в і в/м), з часом прийому й тим, скільки днів лишилось; динаміка показників (пік температури й дата нормалізації, SpO2, ЧД, АТ, ЧСС) і стан при виписці — з журналу щоденників; результат «самовільно залишив(ла) відділення»; нові готові рекомендації (щадний режим, питний режим, контроль ЗАК, огляд через 6 тижнів після пневмонії, самоконтроль АТ і самодопомога при кризі, дієти № 5 і № 10); перевірка попереджає, якщо за останню добу перед випискою є ≥ 2 ознаки нестабільності (t > 37,5 °C, ЧД ≥ 24, ЧСС > 100, сист. АТ ≤ 90, SpO2 < 90 %)'],
   ['0.9.3.28', '21.10.2026', 'огляд анестезіолога: новий документ «Анестезіолог» (у профілі «Анестезіолог» — на видному місці, інакше — у «Ще документи»). Стаціонар — форма № 003-3/о «Передопераційний огляд анестезіологом та протокол загального знеболення» (наказ МОЗ № 110): аркуш 1 — огляд (АТ, пульс, ЧД, проби Штанге й Саабразе, анамнез, переливання, кортикостероїди, шкідливі звички, об’єктивний статус «○/●» як на бланку, Маллампаті, ASA I–VI і Е, вид анестезії, профілактика тромбоемболічних і ранових ускладнень, премедикація), аркуш 2 — листок знеболення (альбомний, для запису від руки), аркуш 3 — протокол знеболення і протокол пункції субарахноїдального/епідурального простору. Скарги, анамнез життя й огляд систем — спільні з первинним оглядом (заповнене там підставляється). Амбулаторно — консультаційний висновок анестезіолога (028/о), той самий текст можна вписати в 025/о. Підказки (не друкуються): можливі труднощі з дихальними шляхами, злоякісна гіпертермія, ризик аспірації, кортикостероїди. Готові фрази премедикації, антибіотикопрофілактики, профілактики ВТЕ і відміни ліків перед операцією — чернетка, звірте з протоколами відділення'],
@@ -8616,14 +8626,14 @@ function renderLive(){
   liveBar.append(h('span', {class:'lv-t'}, txt || (all ? 'У цьому розділі ще нічого не відмічено. Натисніть, щоб побачити весь документ.' : 'Тут з’явиться текст розділу, щойно почнете відмічати.')),
     h('span', {class:'lv-o', 'aria-hidden':'true'}, '▴ весь текст'));
 }
-/* 2. Короткі списки (до 5 варіантів) — кнопками; список лишається прихованим, тож усе інше працює як раніше */
+/* 2. Короткі списки (до 6 варіантів, разом не довше 200 знаків; 0.9.3.31) — кнопками; список лишається прихованим, тож усе інше працює як раніше */
 function segFor(f){
-  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.opts.length > 5 || f.opts.length < 2) return;
-  if (f.opts.some(o=>String(O(o).l).length > 34)) return;
+  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.noChips || f.opts.length > 6 || f.opts.length < 2) return;
+  const L = f.opts.map(o=>String(O(o).l).length); if (Math.max(...L) > 60 || L.reduce((a, b)=>a + b, 0) > 200) return;
   const box = h('div', {class:'segbtns', role:'group', 'aria-label':f.label || ''});
-  const sync = () => { [...box.children].forEach((b,i)=>{ b.setAttribute('aria-pressed', f.el.value === String(i) ? 'true' : 'false'); b.textContent = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)].textContent; }); };
+  const sync = () => { [...box.children].forEach((b,i)=>{ b.setAttribute('aria-pressed', f.el.value === String(i) ? 'true' : 'false'); b.classList.toggle('abn', f.el.value === String(i) && f.norm !== undefined && i !== f.norm); b.textContent = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)].textContent; }); };
   f.opts.forEach((o,i)=>box.append(h('button', {type:'button', class:'chip sg', onclick:()=>{ f.el.value = f.el.value === String(i) ? '' : String(i); f.el.dispatchEvent(new Event('change', {bubbles:true})); sync(); }})));
-  f.el.classList.add('seg-hidden'); f.el.after(box); f.seg = sync; f.el.addEventListener('change', sync); sync();
+  f.el.classList.add('seg-hidden'); { const sf = f.el.nextElementSibling; if (sf && sf.classList.contains('selfull')) sf.remove(); } f.el.after(box); f.seg = sync; f.el.addEventListener('change', sync); sync();
 }
 SECTIONS.forEach(s=>s.fields.forEach(segFor));
 { const m0 = mark; mark = function(sel, f){ m0(sel, f); if (f && f.seg) f.seg(); }; }
@@ -14519,6 +14529,114 @@ function epiHospParts(){
       try{ if (Pf.wrapEl && Pf.wrapEl.dataset.only === undefined){ const show = arr() || (!!pv() && !cv()); Pf.wrapEl.hidden = !show || !(SECTIONS.find(x=>x.id === 'ssc').docs.includes(DOC)); } }catch(e){}
       return r; };
   } }
+/* ===== Ергономіка, крок 1 (0.9.3.31) =====
+   1) Кнопки замість списків (segFor, 549) — тепер до 6 варіантів і довші підписи; відхилення від норми — жовтим.
+   2) У заголовку вкладки — одна кнопка «Норма»; решта дій — під «⋯».
+   3) Банер «Папка даних не підключена» після «Пізніше» згортається в значок у рядку пацієнта.
+   4) Швидкий рядок показників: «38,5 24 92 130/80 96» → t, ЧД, SpO2, АТ, ЧСС. */
+/* ---- одна кнопка «Норма», решта під «⋯» ---- */
+function ergoActs(){
+  SECTIONS.forEach(s=>{
+    const a = s.panel && s.panel.querySelector('.ph .acts2'); if (!a || a.dataset.ergo) return;
+    a.dataset.ergo = '1';
+    const btns = [...a.children].filter(b=>b.tagName === 'BUTTON');
+    const norm = btns.find(b=>b.classList.contains('norm'));
+    const bo = btns.find(b=>/^Б\/о/.test(b.textContent));
+    const keep = new Set(btns.filter(b=>b.classList.contains('tplsec')));
+    if (norm){ norm.textContent = 'Норма'; keep.add(norm); } else if (bo) keep.add(bo);
+    const rest = btns.filter(b=>!keep.has(b)); if (!rest.length) return;
+    let dd = a.querySelector('details.more-dd'), menu = dd && dd.querySelector('.mmenu');
+    if (!menu){ menu = h('div', {class:'mmenu', role:'menu'});
+      dd = h('details', {class:'more-dd'}, h('summary', {class:'btn', title:'Інші дії', 'aria-label':'Інші дії'}, '⋯'), menu); a.append(dd); }
+    else a.append(dd);
+    rest.reverse().forEach(b=>{ b.classList.remove('btn'); b.classList.add('more'); b.setAttribute('role', 'menuitem');
+      if (b.classList.contains('pencil')) b.textContent = '✎ Олівець: змінити чи сховати кнопки';
+      if (b.textContent === 'Б/о') b.textContent = 'Б/о — одним рядком';
+      b.addEventListener('click', ()=>{ dd.open = false; });
+      menu.prepend(b); });
+  });
+}
+
+/* ---- банер папки → значок ---- */
+function fsIcon(){
+  const pl = document.getElementById('ptline'); if (!pl) return;
+  let ic = document.getElementById('fsIcon');
+  const later = fsSupported() && lsGet('po.welcome', '') !== '' && !FS.dir && lsGet('po.fslater', '') === fsToday();
+  if (!later){ if (ic) ic.hidden = true; return; }
+  if (!ic){
+    ic = h('button', {type:'button', id:'fsIcon', class:'fsicon', title:'Папка даних не підключена — пацієнти лише в цьому браузері. Натисніть, щоб підключити.', 'aria-label':'Папка даних не підключена',
+      onclick:()=>{ lsSet('po.fslater', ''); fsBanner(); fsIcon(); }}, '📁');
+    pl.append(ic);
+  }
+  ic.hidden = false;
+}
+{ const fb = fsBanner; fsBanner = function(){ const r = fb.apply(this, arguments); try{ fsIcon(); }catch(e){} return r; }; }
+document.addEventListener('click', e=>{ const b = e.target.closest && e.target.closest('#fsBanner button'); if (b && b.textContent === 'Пізніше') setTimeout(()=>{ try{ fsIcon(); }catch(x){} }, 0); });
+
+/* ---- швидкий рядок показників ---- */
+const VQ = {
+  ohl:{ t:'zah.temp', ad:'ssc.ad', chss:'ssc.chss', chd:'dyh.chd', host:'zah' },
+  shch:{ t:'d_obj.t', ad:'d_obj.ad', chss:'d_obj.chss', chd:'d_obj.chd', host:'d_obj' }
+};
+const vqNum = s => +String(s).replace(',', '.');
+function vqParse(str){
+  const r = {}, free = [];
+  String(str || '').toLowerCase().replace(/(\d)\s*\/\s*(\d)/g, '$1/$2')
+    .replace(/(^|\s)(t|т|темп|чд|ч\.д\.?|spo2|sp|сат|sat|ад|ат|bp|чсс|пульс|п|hr)\s*[:=]?\s+(?=\d)/g, '$1$2').split(/[\s;]+/).filter(Boolean).forEach(tk=>{
+    const m = tk.match(/^(t|т|темп|чд|ч\.д\.?|sp|spo2|сат|sat|ад|ат|bp|чсс|пульс|п|hr)?[:=]?(\d+(?:[.,]\d+)?(?:\/\d+)?)%?$/);
+    if (!m) return;
+    const k = m[1] || '', v = m[2];
+    if (v.includes('/')){ const [a, b] = v.split('/'); r.ad = [a, b]; return; }
+    if (/^(t|т|темп)$/.test(k)) r.t = v.replace('.', ',');
+    else if (/^(чд|ч\.д\.?)$/.test(k)) r.chd = v;
+    else if (/^(sp|spo2|сат|sat)$/.test(k)) r.sat = v;
+    else if (/^(чсс|пульс|п|hr)$/.test(k)) r.chss = v;
+    else if (/^(ад|ат|bp)$/.test(k)) return;
+    else free.push(v);
+  });
+  free.forEach(v=>{
+    const n = vqNum(v);
+    if (r.t === undefined && (/[.,]/.test(v) || (n >= 34 && n <= 42.9))){ r.t = v.replace('.', ','); return; }
+    if (r.chd === undefined) r.chd = v;
+    else if (r.sat === undefined) r.sat = v;
+    else if (r.chss === undefined) r.chss = v;
+  });
+  return r;
+}
+function vqApply(str){
+  const m = VQ[DOC]; if (!m) return [];
+  const v = vqParse(str), done = [];
+  const bad = (f, i, x) => { const p = f.parts[i], n = vqNum(x); return !!(p && p.ok && (n < p.ok[0] || n > p.ok[1])); };
+  const put = (key, i, x, name) => { const f = F(key); if (!f || !f.inputs || x === undefined) return;
+    if (bad(f, i, x)){ done.push('⚠ ' + name + ' ' + x + '?'); return; }
+    f.inputs[i].value = x; done.push(name + ' ' + x); };
+  put(m.t, 0, v.t, 't');
+  put(m.chd, 0, v.chd, 'ЧД'); put(m.chd, 1, v.sat, 'SpO2');
+  if (v.ad){ const f = F(m.ad); if (f && f.inputs){ if (bad(f, 0, v.ad[0]) || bad(f, 1, v.ad[1])) done.push('⚠ АТ ' + v.ad.join('/') + '?'); else { f.inputs[0].value = v.ad[0]; f.inputs[1].value = v.ad[1]; done.push('АТ ' + v.ad.join('/')); } } }
+  put(m.chss, 0, v.chss, 'ЧСС');
+  if (done.length) update();
+  return done;
+}
+function vqBuild(){
+  Object.keys(VQ).forEach(doc=>{
+    const s = SECTIONS.find(x=>x.id === VQ[doc].host); if (!s || !s.panel || s.vqEl) return;
+    const grid = s.panel.querySelector('.grid'); if (!grid) return;
+    const inp = h('input', {type:'text', class:'vq-in', id:'vq_' + doc, inputmode:'text', autocomplete:'off',
+      placeholder:'38,5 24 92 130/80 96', 'aria-label':'Показники одним рядком: температура, ЧД, SpO2, АТ, ЧСС'});
+    const msg = h('span', {class:'hint vq-msg', 'aria-live':'polite'});
+    const go = () => { const d = vqApply(inp.value); msg.textContent = d.length ? 'Записано: ' + d.join(', ') : 'Не розпізнано — приклад: 38,5 24 92 130/80 96'; if (d.length && !d.some(x=>x[0] === '⚠')) inp.value = ''; };
+    inp.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+    s.vqEl = h('div', {class:'f wide vq', 'data-docs':doc},
+      h('label', {for:inp.id}, 'Показники одним рядком'),
+      h('div', {class:'vq-row'}, inp, h('button', {type:'button', class:'btn', onclick:go}, 'Внести'), msg),
+      h('p', {class:'vq-h'}, 'Температура, ЧД, SpO2, АТ, ЧСС — через пробіл. Можна з мітками: «ад 150/90 п 88».'));
+    grid.prepend(s.vqEl);
+  });
+}
+function vqVis(){ Object.keys(VQ).forEach(doc=>{ const s = SECTIONS.find(x=>x.id === VQ[doc].host); if (s && s.vqEl) s.vqEl.hidden = DOC !== doc; }); }
+{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ vqVis(); }catch(e){} return r; }; }
+
+try{ ergoActs(); vqBuild(); vqVis(); fsIcon(); }catch(e){ console.warn('ergo', e); }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

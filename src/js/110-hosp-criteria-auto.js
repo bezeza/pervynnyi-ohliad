@@ -152,7 +152,7 @@ function mark(sel, f){
     const t = sel.value !== '' && sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : '';
     sel.title = t;
     let sf = sel.nextElementSibling && sel.nextElementSibling.classList.contains('selfull') ? sel.nextElementSibling : null;
-    if (t && selCut(sel, t)){ if (!sf){ sf = h('div', {class:'selfull'}); sel.after(sf); } sf.textContent = t; }
+    if (t && !f.seg && selCut(sel, t)){ if (!sf){ sf = h('div', {class:'selfull'}); sel.after(sf); } sf.textContent = t; }
     else if (sf) sf.remove();
   }
   sel.classList.toggle('set', sel.value !== '');
