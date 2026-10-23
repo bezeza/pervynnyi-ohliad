@@ -589,7 +589,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const r=JSON.parse(w.eval(`(()=>{ switchDoc('ohl'); goTab('zah'); const a=[document.body.classList.contains('onepage'), TABS.filter(t=>!t.panel.hidden).length];
      const f=SECTIONS.find(s=>s.id==='dyh').fields.find(x=>x.type!=='hdr' && !x.bo && val(x)); a.push(f ? qeField(SECTIONS.find(s=>s.id==='dyh'), document.querySelector('#out [data-sec="dyh"]').textContent, 30)===f || true : false);
      const d=document.querySelector('#out [data-sec="dyh"]'); qeOpen(f, 'dyh', d); a.push(!!document.querySelector('.qe') && f.wrapEl.parentElement.classList.contains('qe')); qeClose(); a.push(!document.querySelector('.qe') && !f.wrapEl.closest('.qe'));
-     switchDoc('epi'); update(); a.push(document.querySelectorAll('.ghost:not([hidden])').length); switchDoc('ohl'); return JSON.stringify(a); })()`));
+     switchDoc('epi'); addRx({drug:'Цефтриаксон', dose:'1 г', route:'в/в', freq:'1 р/д', start:todayISO(), days:7}); update(); a.push(document.querySelectorAll('.ghost:not([hidden])').length); RX.pop(); update(); switchDoc('ohl'); return JSON.stringify(a); })()`));
    ok('Однією сторінкою: розділи огляду підряд', r[0]===true && r[1]>8, JSON.stringify(r));
    ok('Швидка правка поля з тексту: відкривається й повертає поле на місце', r[3]===true && r[4]===true, JSON.stringify(r));
    ok('Епікриз: порожні поля показують, що підтягнеться', r[5]>=1, JSON.stringify(r)); }
