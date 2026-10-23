@@ -103,6 +103,7 @@
   "620-field-states.js",
   "621-progress-next.js",
   "622-copy-check.js",
+  "650-diary-blank.js",
   "623-manual-text.js"
  ]
 }

@@ -1209,5 +1209,5 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 /* 0.9.3.37 — задача 3 */
 .copy-peek{margin:8px 0;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px}.copy-peek[hidden]{display:none}.copy-peek-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.copy-peek-item{display:block;border:0;background:none;color:var(--accent);font:inherit;text-align:left;padding:6px 0;cursor:pointer;text-decoration:underline}.copy-peek small{display:block;color:var(--muted)}#outBox[data-ov="chk"] .copy-peek{display:none}
 
-/* 0.9.3.38 — задача 4 */
+/* 0.9.3.39 — задача 4 */
 .banner{flex-wrap:wrap}.banner>span{flex:1 1 220px}.banner>.btn{flex-shrink:0}

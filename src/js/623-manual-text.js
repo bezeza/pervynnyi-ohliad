@@ -1,4 +1,4 @@
-/* 0.9.3.38 — ручний текст не замінюється через зміну режиму чи розміру. */
+/* 0.9.3.39 — ручний текст не замінюється через зміну режиму чи розміру. */
 function manualTextStatus(){
   const banner = document.getElementById('banner'); if (banner.hidden === dirty) banner.hidden = !dirty;
   let text = banner.querySelector('[data-manual-status]');
