@@ -1297,7 +1297,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.45 від 24.10.2026">v0.9.3.45 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.46 від 24.10.2026">v0.9.3.46 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3433,8 +3433,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.45', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.46', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.46', '24.10.2026', 'уточнено підписи «Очистити поточний документ», «Норма в усіх системах огляду» та «Новий пацієнт»; після норми й очищення документа дію можна скасувати протягом 8 секунд'],
   ['0.9.3.45', '24.10.2026', 'у панелі документа основні дії — копіювання й друк / PDF; Word і LibreOffice — у «Завантажити», форматування з’являється під час ручної правки'],
   ['0.9.3.44', '24.10.2026', 'панель розділів можна згорнути до смуги; на широкому екрані робоча область ширша, текст документа має зручну довжину рядка'],
   ['0.9.3.43', '24.10.2026', 'навігація «Розділи»: фокус переходить у вікно, Tab лишається всередині, закриття повертає фокус до кнопки-виклику'],
@@ -15869,6 +15870,150 @@ renderSideFold();
   const printBtn = $('#printBtn');
   if (printBtn) printBtn.setAttribute('aria-label', 'Друк документа або збереження як PDF');
 }
+/* 0.9.3.46 — виразні підписи для масових дій і швидке скасування. */
+const DANGER_UNDO_MS = 8000;
+const DANGER_CLEAR_LABEL = 'Очистити поточний документ';
+const DANGER_CLEAR_TITLE = 'Очистити лише поточний документ. Дані пацієнта, призначення й журнали залишаться.';
+const DANGER_NORM_LABEL = 'Норма в усіх системах огляду';
+const DANGER_NEW_LABEL = 'Новий пацієнт (поточний збережено)';
+
+function dangerLabelClearButton(btn){
+  if (!btn) return;
+  if (btn.dataset.arm){
+    btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+    btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+    return;
+  }
+  if (btn.textContent.trim() !== DANGER_CLEAR_LABEL) btn.textContent = DANGER_CLEAR_LABEL;
+  btn.setAttribute('aria-label', DANGER_CLEAR_LABEL);
+  btn.title = DANGER_CLEAR_TITLE;
+}
+
+function dangerSyncStaticLabels(){
+  const clearAll = $('#clearAll');
+  if (clearAll){
+    if (clearAll.dataset.dangerLabel !== '1'){
+      clearAll.replaceChildren(
+        h('span', {'aria-hidden':'true'}, '＋'),
+        h('span', {class:'new-patient-label'}, ' Новий пацієнт'),
+        h('span', {class:'hide-m'}, ' (поточний збережено)')
+      );
+      clearAll.dataset.dangerLabel = '1';
+    }
+    clearAll.setAttribute('aria-label', DANGER_NEW_LABEL);
+    clearAll.title = DANGER_NEW_LABEL;
+  }
+  dangerLabelClearButton($('#clearDocBtn'));
+  document.querySelectorAll('.more-dd .mmenu button').forEach(btn=>{
+    if (/Очистити весь документ|Очистити поточний документ/.test(btn.textContent)) dangerLabelClearButton(btn);
+  });
+}
+
+function dangerSyncNormLabel(){
+  const btn = $('#allNorm');
+  if (!btn) return;
+  const diary = DOC === 'shch';
+  const mobile = !!(window.matchMedia && matchMedia('(max-width:899px)').matches);
+  const visible = diary ? 'Стабільно' : mobile ? 'Норма всюди' : DANGER_NORM_LABEL;
+  if (btn.textContent !== visible) btn.textContent = visible;
+  btn.setAttribute('aria-label', diary ? 'Позначити стан щоденника як стабільний' : DANGER_NORM_LABEL);
+  btn.title = diary ? 'Типовий стабільний запис щоденника' : DANGER_NORM_LABEL;
+}
+
+function dangerShowUndo(message, returnFocus){
+  const box = $('#toast');
+  if (!box || !UNDO.length) return;
+  clearTimeout(toast.h);
+  const action = h('button', {
+    type:'button',
+    class:'btn primary',
+    'aria-label':'Скасувати: ' + message,
+    onclick:()=>{
+      clearTimeout(toast.h);
+      box.classList.remove('undo-toast', 'on');
+      box.style.removeProperty('pointer-events');
+      box.replaceChildren();
+      undoLast();
+      if (returnFocus && returnFocus.isConnected && typeof returnFocus.focus === 'function') returnFocus.focus();
+    }
+  }, 'Скасувати');
+  box.replaceChildren(h('span', {}, message + ' '), action);
+  box.classList.add('undo-toast', 'on');
+  box.style.pointerEvents = 'auto';
+  toast.h = setTimeout(()=>{
+    if (!box.classList.contains('undo-toast')) return;
+    box.classList.remove('undo-toast', 'on');
+    box.style.removeProperty('pointer-events');
+    box.replaceChildren();
+    toast.h = null;
+  }, DANGER_UNDO_MS);
+}
+
+/* Звичайні повідомлення не повинні залишати інтерактивний тост активним. */
+{
+  const toast0 = toast;
+  toast = function(){
+    const box = $('#toast');
+    if (box){
+      box.classList.remove('undo-toast');
+      box.style.removeProperty('pointer-events');
+    }
+    return toast0.apply(this, arguments);
+  };
+}
+
+/* Підпис «Норма» в 540-ui-build.js залежить від документа та ширини екрана. */
+{
+  const update0 = update;
+  update = function(){
+    const result = update0.apply(this, arguments);
+    dangerSyncNormLabel();
+    return result;
+  };
+}
+
+/* Скасування відкривається лише після фактичного застосування масової дії. */
+{
+  const norm = $('#allNorm'), norm0 = norm && norm.onclick;
+  if (norm && norm0) norm.onclick = function(){
+    const previous = UNDO[UNDO.length - 1];
+    const result = norm0.apply(this, arguments);
+    if (UNDO[UNDO.length - 1] !== previous){
+      dangerShowUndo(DOC === 'shch' ? 'Стан щоденника змінено' : 'Норму виставлено в усіх системах огляду', this);
+    }
+    return result;
+  };
+}
+{
+  const clear0 = clearDoc;
+  clearDoc = function(btn){
+    const confirmed = !!(btn && btn.dataset && btn.dataset.arm);
+    const undoBefore = UNDO.slice(), redoBefore = REDO.slice();
+    const previous = UNDO[UNDO.length - 1];
+    const result = clear0.apply(this, arguments);
+    if (!confirmed && btn && btn.dataset.arm){
+      UNDO.splice(0, UNDO.length, ...undoBefore);
+      REDO.splice(0, REDO.length, ...redoBefore);
+      undoBtn();
+    }
+    if (btn){
+      dangerLabelClearButton(btn);
+      if (btn.dataset.arm){
+        btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+        btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+        setTimeout(()=>dangerLabelClearButton(btn), 3600);
+      }
+    }
+    if (confirmed && UNDO[UNDO.length - 1] !== previous){
+      const summary = btn && btn.closest('details') && btn.closest('details').querySelector('summary');
+      dangerShowUndo('Документ очищено', summary || $('#docMore'));
+    }
+    return result;
+  };
+}
+
+dangerSyncStaticLabels();
+dangerSyncNormLabel();
 </script>
 
 </body>

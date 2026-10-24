@@ -1297,7 +1297,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.46 від 24.10.2026">v0.9.3.46 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.47 від 24.10.2026">v0.9.3.47 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3433,8 +3433,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.46', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.47', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.47', '24.10.2026', 'консультативний висновок: результати з журналу обстежень додаються лише після позначення; окреме поле «Своє» для результатів поза журналом'],
   ['0.9.3.46', '24.10.2026', 'уточнено підписи «Очистити поточний документ», «Норма в усіх системах огляду» та «Новий пацієнт»; після норми й очищення документа дію можна скасувати протягом 8 секунд'],
   ['0.9.3.45', '24.10.2026', 'у панелі документа основні дії — копіювання й друк / PDF; Word і LibreOffice — у «Завантажити», форматування з’являється під час ручної правки'],
   ['0.9.3.44', '24.10.2026', 'панель розділів можна згорнути до смуги; на широкому екрані робоча область ширша, текст документа має зручну довжину рядка'],
@@ -16014,6 +16015,91 @@ function dangerShowUndo(message, returnFocus){
 
 dangerSyncStaticLabels();
 dangerSyncNormLabel();
+/* 0.9.3.47 · Обстеження в консультативному висновку — окремий добір із журналу */
+let KONSOBS = [];
+
+function konsObsLines(){
+  const selected = new Set(KONSOBS.map(String));
+  return RES.filter(r=>selected.has(String(r.id)))
+    .map(r=>`${cap(r.t)} (${fmtS(r.d)}): ${r.v}`.replace(/[.\s]*$/, '.'));
+}
+
+function renderKonsObs(){
+  const f = F('e_obs.konslog'), list = f && f.konsList;
+  if (!list) return;
+  list.innerHTML = '';
+  if (!RES.length){ list.append(h('p', {class:'chips-hint'}, 'Журнал порожній. Спочатку внесіть обстеження у форму журналу вище.')); return; }
+  RES.forEach(r=>{
+    const date = fmtS(r.d), title = cap(r.t), label = `${date} · ${title}`;
+    const cb = h('input', {type:'checkbox', 'aria-label':'Включити у висновок: ' + label});
+    cb.checked = KONSOBS.includes(+r.id);
+    cb.addEventListener('change', ()=>{
+      const selected = new Set(KONSOBS.map(Number));
+      if (cb.checked) selected.add(+r.id); else selected.delete(+r.id);
+      KONSOBS = [...selected].filter(Number.isFinite);
+      update(); savePatient(true);
+    });
+    list.append(h('label', {class:'prow'}, cb,
+      h('span', {class:'pn'}, h('b', {}, label), h('span', {}, r.v))));
+  });
+}
+
+/* Результати для висновку окремі від спільного поля e_obs.obs. */
+{
+  const s = SECTIONS.find(x=>x.id === 'e_obs');
+  const all = ['epi','kons','etap','per','napr','gosp','konc'];
+  const ordinary = F('e_obs.obs');
+  ordinary.docs = all.filter(x=>x !== 'kons');
+  ordinary.wrapEl.dataset.docs = ordinary.docs.join(' ');
+  ordinary.wrapEl.hidden = !ordinary.docs.includes(DOC);
+
+  const log = {id:'konslog', type:'auto', docs:['kons'], label:'Обстеження з журналу для висновку', tpl:'{v}', br:true, fn:()=>konsObsLines().join('\n')};
+  const own = {id:'konsown', type:'text', rows:4, wide:true, docs:['kons'], label:'Своє (результати поза журналом)', placeholder:'Впишіть результати, яких немає в журналі обстежень', tpl:'{v}', sep:'\n', br:true};
+  s.fields.push(log, own);
+  const grid = s.panel && s.panel.querySelector(':scope > .grid');
+  if (grid){
+    const logWrap = buildField(s, log);
+    log.konsList = h('div', {class:'plist', 'aria-label':'Обстеження з журналу'});
+    logWrap.append(
+      h('p', {class:'chips-hint'}, 'Джерело — «Журнал обстежень за час лікування» вище. Позначені записи й поле «Своє» потраплять у консультативний висновок.'),
+      h('div', {class:'lbl'}, 'Позначте, які результати включити у висновок:'),
+      log.konsList,
+      h('button', {type:'button', class:'btn', onclick:()=>{
+        const input = s.panel.querySelector('.res-t');
+        if (!input){ toast('Форма журналу обстежень недоступна'); return; }
+        input.scrollIntoView({behavior:'smooth', block:'center'}); input.focus();
+        toast('Додайте результат у журнал, потім позначте його для висновку');
+      }}, '+ Внести нове обстеження'));
+    grid.append(logWrap, buildField(s, own));
+  }
+  renderKonsObs();
+}
+
+/* Чекбокси й власне поле входять до звичайного знімка пацієнта. */
+{
+  const snap0 = snap;
+  snap = function(){ const state = snap0.apply(this, arguments); state.konsObs = KONSOBS.slice(); return state; };
+  const restore0 = restore;
+  restore = function(S){
+    KONSOBS = Array.isArray(S && S.konsObs) ? [...new Set(S.konsObs.map(Number).filter(Number.isFinite))] : [];
+    return restore0.apply(this, arguments);
+  };
+  const renderRes0 = renderRes;
+  renderRes = function(){ const result = renderRes0.apply(this, arguments); renderKonsObs(); return result; };
+  const clearAll0 = clearAll;
+  clearAll = function(forRestore){
+    if (!forRestore) KONSOBS = [];
+    const result = clearAll0.apply(this, arguments);
+    renderKonsObs();
+    return result;
+  };
+  const clearSection0 = clearSection;
+  clearSection = function(section){
+    const result = clearSection0.apply(this, arguments);
+    if (section && section.id === 'e_obs' && DOC === 'kons'){ KONSOBS = []; renderKonsObs(); }
+    return result;
+  };
+}
 </script>
 
 </body>

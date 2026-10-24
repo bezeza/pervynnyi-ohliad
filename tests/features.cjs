@@ -761,6 +761,21 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
    ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
  }
+ { // 0.9.3.47: у консультативний висновок потрапляють лише вибрані записи журналу; вибір зберігається з пацієнтом.
+   const r=JSON.parse(w.eval(`(()=>{ const id='fixture-kons-observations', oldMode=MODE, oldDoc=DOC; document.querySelector('[data-mode="amb"]').click(); switchDoc('kons');
+     RES=[{id:9301,d:'2026-10-22',t:'ЗАК',v:'Hb 120 г/л'},{id:9302,d:'2026-10-23',t:'ЕКГ',v:'Синусовий ритм'}]; KONSOBS=[]; renderRes(); update();
+     const f=F('e_obs.konslog'), rows=[...f.konsList.querySelectorAll('input[type="checkbox"]')], note=f.wrapEl.textContent;
+     const ui=rows.length===2&&note.includes('Журнал обстежень за час лікування')&&note.includes('Внести нове обстеження')&&F('e_obs.obs').wrapEl.hidden;
+     rows[0].click(); const own=F('e_obs.konsown').el; own.value='Додаткове обстеження: результат поза журналом'; own.dispatchEvent(new Event('input',{bubbles:true}));
+     const text=[...document.querySelectorAll('#out>*')].map(x=>x.textContent).join(' ');
+     const output= text.includes('Hb 120 г/л')&&!text.includes('Синусовий ритм')&&text.includes('Додаткове обстеження: результат поза журналом');
+     PID=id; savePatient(true); const saved=loadStore()[id].snap.konsObs.includes(9301);
+     PID=null; KONSOBS=[]; openPatient(id); const restored=KONSOBS.includes(9301)&&F('e_obs.konsown').el.value==='Додаткове обстеження: результат поза журналом'&&F('e_obs.konslog').konsList.querySelectorAll('input:checked').length===1;
+     const st=loadStore(); delete st[id]; saveStore(st); PID=null; switchDoc('ohl'); document.querySelector('[data-mode="'+oldMode+'"]').click(); switchDoc(oldDoc); return JSON.stringify([ui,output,saved,restored]); })()`));
+   ok('Консультація: джерело й дія зрозумілі, обрані обстеження мають галочки',r[0],JSON.stringify(r));
+   ok('У висновок додаються лише позначені результати та поле «Своє»',r[1],JSON.stringify(r));
+   ok('Вибір із журналу й поле «Своє» відновлюються зі збереженого пацієнта',r[2]&&r[3],JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
