@@ -4,7 +4,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-const ROOT = path.dirname(new URL(import.meta.url).pathname), S = p => path.join(ROOT, 'src', p);
+import {fileURLToPath} from 'node:url';
+const ROOT = path.dirname(fileURLToPath(import.meta.url)), S = p => path.join(ROOT, 'src', p);
 const read = p => fs.readFileSync(S(p), 'utf8');
 const man = JSON.parse(read('manifest.json'));
 const js = man.js.map(f => read('js/' + f)).join('');
