@@ -1244,3 +1244,14 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   input[type=date],input[type=datetime-local]{max-width:100%;min-width:0!important;min-height:44px}
 }
 @media print{.mobile-input-help,.mobile-input-unit{display:none!important}}
+
+/* 0.9.3.42 — вставки у вікні документа; панель не входить у документ і друк. */
+.popwin .pw-insert{position:fixed;z-index:20;box-sizing:border-box;max-height:calc(100dvh - 16px);overflow:auto;padding:14px;background:var(--surface,#fff);color:var(--ink,#1a1f2b);border:1px solid var(--line,#dde1e8);border-radius:12px;box-shadow:0 8px 36px #0003;display:flex;flex-direction:column;gap:10px}
+.popwin .pw-insert-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.popwin .pw-insert label{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.popwin .pw-insert :is(input,textarea,select){box-sizing:border-box;width:100%;min-height:40px;font:inherit}
+.popwin .pw-insert button{font:inherit;cursor:pointer;min-height:36px}
+.popwin .pw-choices{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow:auto}
+.popwin .pw-choices button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);outline:2px solid var(--accent,#1f5a8a)}
+.popwin .pw-manual-note{font-size:13px;color:var(--muted,#667)}
+@media print{.popwin .pw-insert,.popwin .pw-bar{display:none!important}.popwin #pwBox{zoom:1!important}.popwin .pw-text{margin:0;border:0;padding:0}}

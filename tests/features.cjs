@@ -581,9 +581,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const r=JSON.parse(w.eval(`(()=>{ const fw=document.querySelector('body>iframe:last-of-type').contentWindow; fw.scrollTo=()=>{}; POP.w=fw; popInit(fw); POP.mode='text'; switchDoc('ohl'); vqApply('37,9 22'); popRender();
      const a=[fw.document.querySelector('.pw-text') ? fw.document.querySelector('.pw-text').textContent : '']; POP.mode='paper'; popRender();
      a.push(!!fw.document.querySelector('#paper .sheet') && fw.document.querySelector('#paper .sheet').textContent.length); a.push(!!document.getElementById('popBtn'));
-     const t=[...fw.document.querySelectorAll('#paper .sheet *')].find(x=>x.children.length===0 && /Перкуторно|ЧД \\d/.test(x.textContent)); if (t){ t.click(); } a.push(TABS[active].id);
-     POP.mode='text'; POP.w=null; return JSON.stringify(a); })()`));
-   ok('Окреме вікно: клік в «Аркуші» відкриває поле в основному', r[3]==='dyh', JSON.stringify(r).slice(0,200));
+     const t=[...fw.document.querySelectorAll('#paper .sheet *')].find(x=>x.children.length===0 && /Перкуторно|ЧД \\d/.test(x.textContent)); if (t){ t.click(); } a.push(!!fw.document.querySelector('.pw-insert'));
+     popInsertClose(); POP.mode='text'; POP.w=null; return JSON.stringify(a); })()`));
+   ok('Окреме вікно: клік в «Аркуші» відкриває поле тут', r[3]===true, JSON.stringify(r).slice(0,200));
    ok('Окреме вікно: текст наживо, аркуш, кнопка ⧉', /37,9/.test(r[0]) && r[1]>50 && r[2]===true, JSON.stringify(r).slice(0,200));
    fr.remove(); w.eval("['zah.temp','dyh.chd'].forEach(k=>F(k).inputs.forEach(i=>i.value='')); update()"); }
  { // 0.9.3.34: однією сторінкою, підказ підстановки, швидка правка
@@ -687,6 +687,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    await sleep(20);
    const dyn=w.eval(`(()=>{ const host=document.getElementById('mobile_dynamic_test'), ins=host.querySelectorAll('input'); const ok=ins[0].inputMode==='decimal' && !!ins[1].getAttribute('aria-describedby') && host.querySelectorAll('.mobile-input-help').length===1; host.remove(); return ok; })()`);
    ok('Телефон: нові числові поля й дати отримують клавіатуру та підказку',dyn);
+ }
+ { // 0.9.3.42: поля в іншому документі DOM; джерела лишаються у формі.
+   const fr=doc.createElement('iframe'); doc.body.append(fr);
+   const r=JSON.parse(w.eval(`(()=>{ const fw=document.querySelector('body>iframe:last-of-type').contentWindow; fw.scrollTo=()=>{};
+     switchDoc('ohl'); dirty=false; POP.w=fw; POP.mode='paper'; popInit(fw); popRender(); const a=[], before=active, source=F('zah.temp').inputs[0], old=source.value;
+     popInsertOpen(['zah.temp'],fw.document.getElementById('pwAdd')); const proxy=fw.document.querySelector('[data-pop-source="zah_temp_0"]');
+     proxy.value='38,2'; proxy.dispatchEvent(new fw.Event('input',{bubbles:true}));
+     a.push(source.value==='38,2' && active===before && source.closest('#panels')!==null);
+     fw.document.querySelector('.pw-insert>button').click(); a.push(source.value===old);
+     popInsertOpen(['skarhy.c']); a.push(!!fw.document.querySelector('.pw-choices button') && !!fw.document.querySelector('input[type=search]'));
+     const archived=fw.document.createElement('div'); archived.className='bdi'; archived.innerHTML='<span data-diary-key="heart">Рядок</span>'; a.push(popInsertKeys(archived.firstChild)===null);
+     switchDoc('shch'); a.push(!POP_INSERT.box && popInsertSections().every(s=>!s.docs || s.docs.includes('shch')));
+     POP.w=null; return JSON.stringify(a); })()`));
+   ok('Окреме вікно: правка синхронізується, джерело лишається у формі без навігації',r[0]);
+   ok('Окреме вікно: скасування відновлює поле',r[1]);
+   ok('Окреме вікно: варіанти скарг із пошуком, архів не редагується',r[2] && r[3]);
+   ok('Окреме вікно: зміна документа закриває редактор і обмежує список розділів',r[4]);
+   fr.remove();
  }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
