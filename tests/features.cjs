@@ -80,7 +80,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  nb().click(); await sleep(20); ok('«Далі» відкриває наступний розділ', w.eval('TABS[active].id')==='morbi', w.eval('TABS[active].id'));
  ok('Назва розділу з ‹ › для телефона', /Анамнез хв/.test($('tabnav').textContent) && $('tabnav').querySelectorAll('.tn-arr').length===2);
  $('tabnav').querySelector('.tn-arr').click(); await sleep(20); ok('‹ повертає назад', w.eval('TABS[active].id')==='skarhy');
- ok('Очистити весь документ — у меню «⋯»', [...TABS_cur().panel.querySelectorAll('.more-dd .mmenu button')].some(b=>/Очистити весь документ/.test(b.textContent)));
+ ok('Очистити поточний документ — у меню «⋯»', [...TABS_cur().panel.querySelectorAll('.more-dd .mmenu button')].some(b=>b.textContent.trim()==='Очистити поточний документ'));
  ok('Профіль терапевта: травматологія схована за «Інші профілі»', doc.querySelector('.gtab[data-g="tr"]').hidden && !doc.querySelector('.gtab[data-g="ter"]').hidden);
  // скасування
  w.eval('clearAll()'); ap('pneu'); ap('gh');
@@ -746,6 +746,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Зміст: кнопка згортає панель розділів у смугу й оновлює доступний стан',r[0]&&r[1],JSON.stringify(r));
    ok('Зміст: повторне натискання розгортає панель, поля не змінюються',r[2]);
    ok('Зміст: збій localStorage не блокує згортання',r[3]);
+ }
+ { // 0.9.3.46: зрозумілі назви небезпечних дій і швидке скасування масових змін.
+   const r=JSON.parse(w.eval("(()=>{ const oldDoc=DOC; switchDoc('ohl'); const clearAll=$('#clearAll'), norm=$('#allNorm'); " +
+     "const clearLabel=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].some(b=>b.getAttribute('aria-label')==='Очистити поточний документ'&&b.textContent.trim()==='Очистити поточний документ'); " +
+     "const labels=clearLabel&&norm.getAttribute('aria-label')==='Норма в усіх системах огляду'&&clearAll.getAttribute('aria-label')==='Новий пацієнт (поточний збережено)'&&clearAll.title==='Новий пацієнт (поточний збережено)'&&clearAll.textContent.includes('Новий пацієнт (поточний збережено)'); " +
+     "const undoBefore=UNDO.length, beforeNorm=JSON.stringify(snap()); norm.click(); const normToast=$('#toast'), normAction=normToast.querySelector('button'), normToastOk=DANGER_UNDO_MS===8000&&normToast.classList.contains('undo-toast')&&normAction&&normAction.textContent==='Скасувати'; " +
+     "if(normAction) normAction.click(); const normUndo=UNDO.length===undoBefore&&JSON.stringify(snap())===beforeNorm; " +
+     "const clear=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].find(b=>b.getAttribute('aria-label')==='Очистити поточний документ'); const undoBeforeClear=UNDO.length, beforeClear=JSON.stringify(snap()); clear.click(); " +
+     "const firstClick=clear.dataset.arm==='1'&&!$('#toast').classList.contains('undo-toast')&&UNDO.length===undoBeforeClear; clear.click(); const clearToast=$('#toast'), clearAction=clearToast.querySelector('button'), clearToastOk=clearToast.classList.contains('undo-toast')&&clearAction&&clearAction.textContent==='Скасувати'; " +
+     "if(clearAction) clearAction.click(); const clearUndo=UNDO.length===undoBeforeClear&&JSON.stringify(snap())===beforeClear; UNDO.length=undoBefore; REDO.length=0; undoBtn(); switchDoc(oldDoc); " +
+     "return JSON.stringify([labels,normToastOk,normUndo,firstClick,clearToastOk,clearUndo]); })()"));
+   ok('Масові дії мають точні назви, а назва нового пацієнта пояснює збереження поточного',r[0],JSON.stringify(r));
+   ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
+   ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
  }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

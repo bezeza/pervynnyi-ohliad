@@ -1297,7 +1297,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.44 від 24.10.2026">v0.9.3.44 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.45 від 24.10.2026">v0.9.3.45 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3433,8 +3433,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.44', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.45', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.45', '24.10.2026', 'у панелі документа основні дії — копіювання й друк / PDF; Word і LibreOffice — у «Завантажити», форматування з’являється під час ручної правки'],
   ['0.9.3.44', '24.10.2026', 'панель розділів можна згорнути до смуги; на широкому екрані робоча область ширша, текст документа має зручну довжину рядка'],
   ['0.9.3.43', '24.10.2026', 'навігація «Розділи»: фокус переходить у вікно, Tab лишається всередині, закриття повертає фокус до кнопки-виклику'],
   ['0.9.3.42', '24.10.2026', 'окреме вікно документа: вставка тексту в позицію курсора, вибір готових фраз і полів без повернення у форму; правка бланка в тому самому вікні, скасування вставки'],
@@ -15781,6 +15782,93 @@ applyView = function(){
 };
 
 renderSideFold();
+/* 0.9.3.45 — основні дії документа, меню завантаження й форматування під час ручної правки. */
+{
+  const outBox = $('#outBox'), out = $('#out'), fmtBtn = $('#fmtBtn'), fmt = outBox && outBox.querySelector('.fmt');
+  if (outBox && out && fmtBtn && fmt){
+    let editing = false, formatOpen = lsGet('po.fmt', '0') === '1';
+    fmt.id = 'fmtToolbar';
+    fmtBtn.hidden = true;
+    fmtBtn.title = 'Показати форматування тексту під час ручної правки';
+    fmtBtn.setAttribute('aria-controls', fmt.id);
+    const syncFormat = () => {
+      fmtBtn.hidden = !editing;
+      fmt.hidden = !editing || !formatOpen;
+      fmtBtn.setAttribute('aria-pressed', formatOpen ? 'true' : 'false');
+      outBox.dataset.manualEditing = editing ? 'true' : 'false';
+    };
+    const enterEditing = () => { editing = true; syncFormat(); };
+    const leaveEditing = () => setTimeout(()=>{
+      const active = document.activeElement;
+      if (out.contains(active) || fmt.contains(active) || active === fmtBtn) return;
+      editing = false; syncFormat();
+    }, 0);
+    out.addEventListener('focusin', enterEditing);
+    fmt.addEventListener('focusin', enterEditing);
+    fmtBtn.addEventListener('focusin', enterEditing);
+    out.addEventListener('focusout', leaveEditing);
+    fmt.addEventListener('focusout', leaveEditing);
+    fmtBtn.addEventListener('focusout', leaveEditing);
+    fmtBtn.onclick = () => {
+      editing = true; formatOpen = !formatOpen;
+      lsSet('po.fmt', formatOpen ? '1' : '0'); syncFormat();
+    };
+    syncFormat();
+  }
+
+  /* Перед друком уже є окремою вкладкою; лишаємо лише її, без дублювальної кнопки. */
+  const paperBtn = $('#paperBtn');
+  if (paperBtn) paperBtn.hidden = true;
+
+  /* ШІ лишається доступним у пошуку дій, не займаючи місце в панелі документа. */
+  const aiBtn = $('#aiBtn');
+  if (aiBtn) aiBtn.hidden = true;
+
+  const save = outBox && outBox.querySelector('.savewrap');
+  const trigger = save && save.querySelector('#saveBtn');
+  const menu = save && save.querySelector('.savemenu');
+  if (trigger && menu){
+    [...menu.querySelectorAll('button')].filter(b=>/PDF/i.test(b.textContent)).forEach(b=>b.remove());
+    menu.id = 'downloadMenu';
+    trigger.textContent = 'Завантажити ▾';
+    trigger.title = 'Завантажити документ у форматі Word або LibreOffice';
+    trigger.setAttribute('aria-label', 'Завантажити документ');
+    trigger.setAttribute('aria-controls', menu.id);
+
+    const items = () => [...menu.querySelectorAll('button:not([disabled])')];
+    const closeMenu = (restoreFocus=false) => {
+      menu.hidden = true; trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    };
+    trigger.addEventListener('keydown', e=>{
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if (menu.hidden) trigger.click();
+      const list = items();
+      (e.key === 'ArrowDown' ? list[0] : list[list.length - 1])?.focus();
+    });
+    menu.addEventListener('keydown', e=>{
+      const list = items(), i = list.indexOf(e.target.closest('button'));
+      if (e.key === 'Escape'){ e.preventDefault(); closeMenu(true); return; }
+      if (e.key === 'Home' || e.key === 'End'){
+        e.preventDefault(); (e.key === 'Home' ? list[0] : list[list.length - 1])?.focus(); return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault(); const step = e.key === 'ArrowDown' ? 1 : -1;
+        list[(i + step + list.length) % list.length]?.focus();
+      }
+    });
+    menu.addEventListener('click', e=>{
+      if (e.target.closest('button')) setTimeout(()=>{ if (menu.hidden) trigger.focus(); }, 0);
+    });
+    save.addEventListener('focusout', ()=>setTimeout(()=>{
+      if (!save.contains(document.activeElement)) closeMenu();
+    }, 0));
+  }
+
+  const printBtn = $('#printBtn');
+  if (printBtn) printBtn.setAttribute('aria-label', 'Друк документа або збереження як PDF');
+}
 </script>
 
 </body>
