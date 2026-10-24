@@ -3,7 +3,7 @@ const {JSDOM}=require('jsdom');const fs=require('fs');const path=require('path')
 const html=fs.readFileSync(path.join(__dirname,'..','build','app.html'),'utf8');
 const R=[];const ok=(n,c,info='')=>R.push((c?'✅':'❌')+' '+n+(info&&!c?' — '+info:''));
 const errs=[];let printed=0;
-const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
+const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.URL.revokeObjectURL=()=>{};w.scrollTo=()=>{};try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
 const w=d.window,doc=w.document,$=id=>doc.getElementById(id);
 const ev=(e,t)=>e.dispatchEvent(new w.Event(t));const set=(id,v)=>{const e=$(id);e.value=v;ev(e,e.tagName==='SELECT'?'change':'input');};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -205,9 +205,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Аркуш: натискання на пропуск веде до поля', g && w.eval('TABS[active].id')==='zah', g ? w.eval('TABS[active].id') : 'немає');
    ok('Пропуски не потрапляють у текст для копіювання', !/Не вказано: t°/.test(out()));
    w.__printed=0; $('printBtn').click(); ok('Пропуски не потрапляють у друк', !$('print').querySelector('.gap, .gapbar, .gaplist'));
-   { const e=[...sh.querySelectorAll('button.gap')].find(b=>/працездатність/.test(b.textContent)); e && e.click(); await sleep(120);
+   { const e=[...doc.querySelectorAll('#paper .sheet button.gap')].find(b=>/працездатність/.test(b.textContent)); e && e.click();
+     for(let n=0;n<75 && (!doc.activeElement || doc.activeElement.id!=='vitae_strah');n++) await sleep(20);
      ok('Аркуш: натискання на «працездатність / ЕЛН» ставить курсор у саме поле і підсвічує його', e && doc.activeElement && doc.activeElement.id==='vitae_strah' && doc.activeElement.closest('.f').classList.contains('fieldflash'), doc.activeElement && doc.activeElement.id); }
-   sh.querySelector('.gaptog').click(); ok('Пропуски можна сховати', !doc.querySelector('#paper .sheet .gap') && /Пропусків і зауважень/.test(doc.querySelector('#paper .gapbar').textContent));
+   doc.querySelector('#paper .sheet .gaptog').click(); ok('Пропуски можна сховати', !doc.querySelector('#paper .sheet .gap') && /Пропусків і зауважень/.test(doc.querySelector('#paper .gapbar').textContent));
    doc.querySelector('#paper .gaptog').click(); $('paperBtn').click(); }
  // 0.9.3.6 бланк закладу 003/о
  { doc.querySelector('[data-mode="hosp"]').click(); ap('pneu'); w.eval("switchDoc('ohl')"); set('meta_pib','');
@@ -650,6 +651,29 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      f.el.value=''; l.el.value=''; update(); switchDoc('ohl'); return JSON.stringify(a); })()`));
    ok('Щоденник: «Перкуторно», «Лімфатичні вузли» тощо — поля, у тексті лише коли вибрано', r[0] && r[1] && r[2], JSON.stringify(r));
    ok('Бланк щоденника: рядок заповнюється і відкриває вибір', r[3]===true, JSON.stringify(r)); }
+ { // 0.9.3.40: правка поточного щоденника біля рядка, без перенесення полів із форми.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(), paper=PAPER, blank=BLANK, params={...BLP}; DIARIES=[]; switchDoc('shch'); diaryReset(); PAPER=true;BLANK=true;BLP.fill=false;BLP.all=false;BLP.dn=1;update();renderPaper();const a=[], section=active;
+     const before=F('d_obj.serce').el.value;diaryInlineAnchor('heart').click();DIARY_INLINE.box.querySelector('[data-value="1"]').click();
+     a.push(active===section && F('d_obj.serce').el.value==='1' && !!DIARY_INLINE.box && document.querySelector('#paper .bcur').textContent.includes(O(F('d_obj.serce').opts[1]).t.split(',')[0]));
+     DIARY_INLINE.box.querySelector('.diary-undo').click();a.push(F('d_obj.serce').el.value===before && !!DIARY_INLINE.box);
+     const own=DIARY_INLINE.box.querySelector('[data-diary-source="d_obj_serce_own"]');own.value='Власне формулювання';own.dispatchEvent(new Event('input',{bubbles:true}));
+     const snapshot=snap(), entry=diaryFields(), archive=bDiaryEntry({cur:false,f:entry.f});
+     const plain={...entry.f};Object.keys(plain).filter(key=>key.endsWith('_own')).forEach(key=>plain[key]='');plain.d_main_svid='1';plain.d_obj_zhyv='3';const archived=bDiaryEntry({cur:false,f:plain});
+     a.push(snapshot.f.d_obj_serce_own==='Власне формулювання' && entry.f.d_obj_serce_own==='Власне формулювання' && archive.textContent.includes('Власне формулювання') && !archive.querySelector('[data-diary-key]') && !/свідомість не порушена|Живіт м’який|Реакція на огляд адекватна|оформлене/.test(archived.textContent.split(String.fromCharCode(160)).join(' ')));
+     diaryInlineClose();clearAll(true);restore(snapshot);a.push(val(F('d_obj.serce'))==='Власне формулювання');
+     diaryInlineOpen('pressure');const inputs=DIARY_INLINE.box.querySelectorAll('input');inputs[0].value='130';inputs[0].dispatchEvent(new Event('input',{bubbles:true}));inputs[1].value='80';inputs[1].dispatchEvent(new Event('input',{bubbles:true}));
+     a.push(document.querySelector('#paper .bcur').textContent.includes('130/80'));inputs[1].dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}));a.push(DIARY_INLINE.key==='breath');
+     diaryInlineOpen('complaints');const text=DIARY_INLINE.box.querySelector('[data-diary-source="d_main_skx"]'), event=new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true});text.dispatchEvent(event);a.push(!event.defaultPrevented && DIARY_INLINE.key==='complaints' && !!DIARY_INLINE.box.querySelector('input[type=search]'));
+     const print=document.createElement('div');fillSheet(print,false);a.push(!/\\+ вибрати|\\+ вписати/.test(print.textContent) && !print.querySelector('.diary-inline-editor'));
+     DIARY_MODE_BUTTON.click();const manual=DIARY_INLINE.manual && !PAPER;document.getElementById('out').insertAdjacentHTML('beforeend','<p>Ручний текст</p>');document.getElementById('out').dispatchEvent(new Event('input',{bubbles:true}));document.getElementById('out').click();DIARY_MODE_BUTTON.click();a.push(manual && PAPER && !DIARY_INLINE.manual && !QE.box && dirty && document.getElementById('out').textContent.includes('Ручний текст'));
+     clearAll(true);a.push(!DIARY_INLINE_OWN.get(F('d_obj.serce')).value);Object.assign(BLP,params);PAPER=paper;BLANK=blank;restore(saved);renderPaper();return JSON.stringify(a); })()`));
+   ok('Щоденник на місці: вибір змінює рядок, не перемикає форму й не закриває редактор',r[0],JSON.stringify(r));
+   ok('Щоденник на місці: скасування повертає відповідь',r[1]);
+   ok('Щоденник на місці: своє формулювання зберігається, архів не редагується',r[2] && r[3],JSON.stringify(r));
+   ok('Щоденник на місці: АТ, Tab до наступного пункту й Enter у тексті',r[4] && r[5] && r[6],JSON.stringify(r));
+   ok('Щоденник на місці: підказок немає у друці; очищення прибирає своє формулювання',r[7] && r[9],JSON.stringify(r));
+   ok('Щоденник на місці: окремий ручний режим не потребує Alt і зберігає правки',r[8],JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
