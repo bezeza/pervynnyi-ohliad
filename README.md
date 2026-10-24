@@ -47,7 +47,7 @@ tests/              — автоматичні перевірки (jsdom)
 ```
 
 ```
-npm install          # один раз
+npm ci                # точні версії з package-lock.json
 npm run build        # зібрати
 npm test             # зібрати і прогнати всі перевірки (~5 хв); npm run test:quick — ~30 с
 ```
