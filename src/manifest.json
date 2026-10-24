@@ -106,6 +106,7 @@
   "650-diary-blank.js",
   "623-manual-text.js",
   "627-diary-inline.js",
-  "624-mobile-input.js"
+  "624-mobile-input.js",
+  "628-popout-insert.js"
  ]
 }
