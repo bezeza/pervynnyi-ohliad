@@ -706,6 +706,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Окреме вікно: зміна документа закриває редактор і обмежує список розділів',r[4]);
    fr.remove();
  }
+ { // Regression coverage: user-provided markup stays text through every generated document.
+   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(), presetCount=PRESETS.length, customCount=CUSTOM.presets.length;
+     const img='<img src=x onerror=alert(1)>', meta='ПІБ '+img, templ='Свій шаблон '+img, free='Вільний текст '+img;
+     const p={key:'xss-test-template',name:'Тестовий шаблон',group:'my',custom:true,set:{'skarhy.cx':templ},skarhy:[],plan:[],rx:[],hosp:'e'};
+     CUSTOM.presets.push(p); PRESETS.push(p); applyPreset(p); document.getElementById('meta_pib').value=meta; F('vitae.alergx').el.value=free;
+     CACHE={}; dirty=false; const modes=['hosp','amb'], docs=modes.flatMap(mode=>[...DOCLIST[mode],...DOCMORE[mode]].map(([doc])=>[mode,doc]));
+     const unsafe=[], seen={meta:false,templ:false,free:false}; let count=0;
+     const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+     for(const mode of modes){ MODE=mode; applyMode();
+       for(const [doc] of [...DOCLIST[mode],...DOCMORE[mode]]){ if(DOC!==doc)switchDoc(doc);else update(); const html=document.getElementById('out').innerHTML; count++;
+         if(/<img\\b[^>]*\\bonerror\\s*=/i.test(html))unsafe.push(mode+':'+doc);
+         if(html.includes(esc(meta)))seen.meta=true; if(html.includes(esc(templ)))seen.templ=true; if(html.includes(esc(free)))seen.free=true;
+       }
+     }
+     CUSTOM.presets.length=customCount; PRESETS.length=presetCount; restore(saved);
+     return JSON.stringify({count,expected:docs.length,unsafe,seen}); })()`));
+   ok('Екранування: ПІБ, власний шаблон і вільний текст залишаються текстом у всіх документах',r.count===r.expected&&r.expected>0&&!r.unsafe.length&&Object.values(r.seen).every(Boolean),JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
