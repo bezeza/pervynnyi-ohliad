@@ -706,6 +706,21 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Окреме вікно: зміна документа закриває редактор і обмежує список розділів',r[4]);
    fr.remove();
  }
+ { // 0.9.3.43: клавіатурний фокус у модальному списку розділів.
+   const r=JSON.parse(w.eval(`(()=>{ const trigger=document.getElementById('navBtn'), dlg=document.getElementById('navSheet'), close=document.getElementById('navClose');
+     if(!dlg.hidden) closeNav(); trigger.focus(); trigger.click();
+     const items=[...dlg.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>!el.closest('[hidden]')&&!el.closest('[aria-hidden="true"]'));
+     const first=items[0],last=items[items.length-1], a=[!dlg.hidden&&document.activeElement===close];
+     const back=new KeyboardEvent('keydown',{key:'Tab',shiftKey:true,bubbles:true,cancelable:true}); first.dispatchEvent(back); a.push(back.defaultPrevented&&document.activeElement===last);
+     const forward=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}); last.dispatchEvent(forward); a.push(forward.defaultPrevented&&document.activeElement===first);
+     const outside=document.createElement('button'); document.body.append(outside); outside.focus();
+     const fromOutside=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}); outside.dispatchEvent(fromOutside); a.push(fromOutside.defaultPrevented&&document.activeElement===first); outside.remove();
+     openNav(); close.click(); a.push(dlg.hidden&&document.activeElement===trigger&&document.body.style.overflow==='');
+     trigger.click(); document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})); a.push(dlg.hidden&&document.activeElement===trigger);
+     return JSON.stringify(a); })()`));
+   ok('Розділи: відкриття переводить фокус у діалог, Tab і Shift+Tab не виходять назовні',r.slice(0,4).every(Boolean),JSON.stringify(r));
+   ok('Розділи: закриття кнопкою та Escape повертає фокус до виклику',r.slice(4).every(Boolean),JSON.stringify(r));
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
