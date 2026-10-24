@@ -109,6 +109,7 @@
   "624-mobile-input.js",
   "628-popout-insert.js",
   "629-nav-dialog-focus.js",
-  "630-sidepanel-wide.js"
+  "630-sidepanel-wide.js",
+  "631-document-actions.js"
  ]
 }
