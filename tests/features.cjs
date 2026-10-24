@@ -441,6 +441,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('PIN: чинний 4-символьний конверт відкривається',r.legacy,JSON.stringify(r));
    ok('PIN: спільна перевірка pinUnwrap зберігає невдалу спробу',r.wrapper,JSON.stringify(r));
  }
+ { // 0.9.3.43: UI показує тривалу паузу після п'ятої фактичної помилки.
+   const r=JSON.parse(await w.eval(`(async()=>{ const oldCfg=PINC.cfg, oldJson=localStorage.getItem('po.pin'), oldTries=PINC.tries, oldUntil=PINC.until;
+     const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('445566',raw); PINC.cfg=cfg; localStorage.setItem('po.pin',JSON.stringify(cfg)); await pinGuardInit(cfg); pinScreen('open',()=>{});
+     const scr=document.querySelector('.pinscr'), inp=scr.querySelector('input'), btn=scr.querySelector('button'), msg=scr.querySelector('.pinmsg');
+     for(let i=0;i<5;i++){ inp.value='000000'; btn.click(); for(let n=0;n<500 && msg.textContent==='Перевіряю…';n++) await new Promise(resolve=>setTimeout(resolve,10)); }
+     const result={paused:/зачекайте \\d+ с/.test(msg.textContent),text:msg.textContent,persisted:JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+await pinGuardTag(cfg))).failures===5};
+     scr.remove(); document.body.classList.remove('pinlocked'); await pinGuardForget(cfg); if(oldJson===null)localStorage.removeItem('po.pin');else localStorage.setItem('po.pin',oldJson);
+     PINC.cfg=oldCfg;PINC.tries=oldTries;PINC.until=oldUntil;return JSON.stringify(result); })()`));
+   ok('PIN: екран входу показує паузу після п’ятої хибної спроби',r.paused&&r.persisted,JSON.stringify(r));
+ }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));
@@ -754,16 +764,6 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Окреме вікно: варіанти скарг із пошуком, архів не редагується',r[2] && r[3]);
    ok('Окреме вікно: зміна документа закриває редактор і обмежує список розділів',r[4]);
    fr.remove();
- }
- { // 0.9.3.43: UI показує тривалу паузу після п'ятої фактичної помилки.
-   const r=JSON.parse(await w.eval(`(async()=>{ const oldCfg=PINC.cfg, oldJson=localStorage.getItem('po.pin'), oldTries=PINC.tries, oldUntil=PINC.until;
-     const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('445566',raw); PINC.cfg=cfg; localStorage.setItem('po.pin',JSON.stringify(cfg)); await pinGuardInit(cfg); pinScreen('open',()=>{});
-     const scr=document.querySelector('.pinscr'), inp=scr.querySelector('input'), btn=scr.querySelector('button'), msg=scr.querySelector('.pinmsg');
-     for(let i=0;i<5;i++){ inp.value='000000'; btn.click(); for(let n=0;n<500 && msg.textContent==='Перевіряю…';n++) await new Promise(resolve=>setTimeout(resolve,10)); }
-     const result={paused:/зачекайте \\d+ с/.test(msg.textContent),text:msg.textContent,persisted:JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+await pinGuardTag(cfg))).failures===5};
-     scr.remove(); document.body.classList.remove('pinlocked'); await pinGuardForget(cfg); if(oldJson===null)localStorage.removeItem('po.pin');else localStorage.setItem('po.pin',oldJson);
-     PINC.cfg=oldCfg;PINC.tries=oldTries;PINC.until=oldUntil;return JSON.stringify(result); })()`));
-   ok('PIN: екран входу показує паузу після п’ятої хибної спроби',r.paused&&r.persisted,JSON.stringify(r));
  }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
