@@ -721,6 +721,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Розділи: відкриття переводить фокус у діалог, Tab і Shift+Tab не виходять назовні',r.slice(0,4).every(Boolean),JSON.stringify(r));
    ok('Розділи: закриття кнопкою та Escape повертає фокус до виклику',r.slice(4).every(Boolean),JSON.stringify(r));
  }
+ { // 0.9.3.44: згортання лівої панелі розділів без зміни полів пацієнта.
+   const r=JSON.parse(w.eval(`(()=>{ const old={layout:VIEW.layout,sideFold:VIEW.sideFold}, field=F('zah.temp').inputs[0], value=field.value;
+     VIEW.layout='B'; VIEW.sideFold=false; applyView(); const b=document.querySelector('#sidecol .sidefold-btn');
+     const expanded=!!b&&!b.hidden&&b.getAttribute('aria-expanded')==='true'&&!document.body.classList.contains('sidefold');
+     b.click(); const folded=VIEW.sideFold&&document.body.classList.contains('sidefold')&&b.getAttribute('aria-expanded')==='false'&&JSON.parse(localStorage.getItem('po.view')).sideFold===true&&field.value===value;
+     b.click(); const restored=!VIEW.sideFold&&!document.body.classList.contains('sidefold')&&b.getAttribute('aria-expanded')==='true'&&field.value===value;
+     const set=localStorage.setItem; localStorage.setItem=()=>{throw new Error('storage unavailable')}; let safe=true; try{b.click()}catch(e){safe=false} localStorage.setItem=set;
+     const storageFailure=safe&&VIEW.sideFold&&document.body.classList.contains('sidefold');
+     VIEW.layout=old.layout; VIEW.sideFold=old.sideFold; saveView(); applyView(); return JSON.stringify([expanded,folded,restored,storageFailure]); })()`));
+   ok('Зміст: кнопка згортає панель розділів у смугу й оновлює доступний стан',r[0]&&r[1],JSON.stringify(r));
+   ok('Зміст: повторне натискання розгортає панель, поля не змінюються',r[2]);
+   ok('Зміст: збій localStorage не блокує згортання',r[3]);
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
