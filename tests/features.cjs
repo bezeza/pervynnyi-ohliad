@@ -674,6 +674,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Щоденник на місці: підказок немає у друці; очищення прибирає своє формулювання',r[7] && r[9],JSON.stringify(r));
    ok('Щоденник на місці: окремий ручний режим не потребує Alt і зберігає правки',r[8],JSON.stringify(r));
  }
+ { // 0.9.3.41: мобільні підказки не змінюють значення, типи чи доступні описи.
+   const r=JSON.parse(w.eval(`(()=>{ const t=F('zah.temp').inputs[0], ad=F('ssc.ad').inputs, old=t.value, ids=t.getAttribute('aria-describedby').split(/\\s+/), a=[];
+     t.value='36,6'; a.push(t.inputMode==='decimal' && t.value==='36,6' && t.parentElement.textContent.includes('°C'));
+     a.push(ids.every(id=>!!document.getElementById(id)) && ids.some(id=>/^entry_/.test(id)) && ids.some(id=>/36,6/.test(document.getElementById(id).textContent)));
+     a.push(ad.every(i=>i.inputMode==='decimal') && /130\\/80/.test(ad[0].closest('.nums').textContent));
+     a.push(document.getElementById('meta_dt').type==='datetime-local' && document.getElementById('meta_dob').type==='date' && document.getElementById('pt_wt').parentElement.textContent.includes('кг') && document.getElementById('vq_ohl').inputMode==='text');
+     t.value=old; const host=h('div',{id:'mobile_dynamic_test'},h('input',{type:'number'}),h('input',{type:'date'})); document.body.append(host); return JSON.stringify(a); })()`));
+   ok('Телефон: десяткова кома та одиниці не змінюють дані',r[0]);
+   ok('Телефон: підказки температури й АТ зберігають наявні доступні описи',r[1] && r[2],JSON.stringify(r));
+   ok('Телефон: календар, одиниці калькулятора й текстовий швидкий рядок',r[3]);
+   await sleep(20);
+   const dyn=w.eval(`(()=>{ const host=document.getElementById('mobile_dynamic_test'), ins=host.querySelectorAll('input'); const ok=ins[0].inputMode==='decimal' && !!ins[1].getAttribute('aria-describedby') && host.querySelectorAll('.mobile-input-help').length===1; host.remove(); return ok; })()`);
+   ok('Телефон: нові числові поля й дати отримують клавіатуру та підказку',dyn);
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

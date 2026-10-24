@@ -1248,12 +1248,26 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .diary-edit-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.diary-edit-controls .btn{font-size:12px;min-height:36px}
 @media(max-width:899px){.diary-inline-editor{max-height:65dvh}.diary-inline-editor input,.diary-inline-editor textarea{font-size:16px}.diary-editor-actions{gap:6px}.diary-editor-actions .btn{font-size:13px;min-height:44px;padding:8px}}
 @media print{.diary-inline-editor,.diary-edit-controls{display:none!important}#paper .bcur [data-diary-key]{box-shadow:none!important;background:transparent!important}#paper .bcur .bf.empty[data-diary-hint]::after{content:none!important;display:none!important}}
+
+/* 0.9.3.41 — введення чисел із телефона */
+.mobile-input-help,.mobile-input-unit{display:none}.mobile-number-pair{display:contents}
+@media(max-width:899px){
+  .mobile-input-help{display:block;flex:1 0 100%;grid-column:1/-1;width:100%;font-size:12px;line-height:1.5;color:var(--muted);margin-top:4px}
+  .mobile-number-pair{display:inline-flex;align-items:center;gap:6px;max-width:100%;flex:0 1 auto}
+  .mobile-number-pair>.u{white-space:normal;line-height:1.3}.mobile-number-pair>input{flex:0 1 5.2em;min-width:0;min-height:44px}
+  .mobile-calculator-number{display:flex;flex-wrap:nowrap;width:100%}.mobile-calculator-number>input{flex:1 1 5em;width:0}
+  .mobile-input-unit{display:inline;font-size:13px;color:var(--muted)}
+  .ctrlbox .crow{grid-template-columns:minmax(0,1fr)}.ctrlbox .crow .cv{min-width:0;flex-wrap:wrap}
+  .ctrlbox .crow>input[type=date]{width:100%;justify-self:stretch}
+  input[type=date],input[type=datetime-local]{max-width:100%;min-width:0!important;min-height:44px}
+}
+@media print{.mobile-input-help,.mobile-input-unit{display:none!important}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.40 від 24.10.2026">v0.9.3.40 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.41 від 24.10.2026">v0.9.3.41 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3389,8 +3403,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.40', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.41', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.41', '24.10.2026', 'введення з телефона: підказки для дат, температури й АТ; одиниці поряд із числом, зокрема в калькуляторах; цифрова клавіатура для нових числових полів'],
   ['0.9.3.40', '24.10.2026', 'поточний щоденник на бланку: правка біля рядка без переходу вліво, власні формулювання, пошук скарг, скасування й перехід до наступного пункту; підказки лише на екрані'],
   ['0.9.3.39', '23.10.2026', 'статус ручних змін, підтвердження заміни з форми, скасування; збереження тексту при швидкому режимі й зміні ширини'],
   ['0.9.3.38', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
@@ -15430,6 +15445,66 @@ document.getElementById('out').addEventListener('click',e=>{
   if (DOC==='shch' && DIARY_INLINE.manual) e.stopImmediatePropagation();
 },true);
 update();
+/* 0.9.3.41 — підказки формату та одиниці поряд із числом на телефоні. */
+const MOBILE_INPUT_META = new Map();
+let MOBILE_HELP_ID = 0;
+SECTIONS.forEach(s=>s.fields.forEach(f=>{
+  if (f.type !== 'num') return;
+  const examples = f.parts.map(p=>p.ph).filter(p=>p && /\d/.test(p));
+  const pressure = f.parts.length === 2 && f.parts[0].u === '/';
+  const help = pressure ? 'Наприклад: ' + examples.join('/') + ' ' + f.parts[1].u :
+    examples.length ? 'Наприклад: ' + f.parts.map(p=>[p.ph, p.u].filter(Boolean).join(' ')).join(' · ') : '';
+  f.inputs.forEach((input,i)=>MOBILE_INPUT_META.set(input.id, {help, unit:f.parts[i].u}));
+}));
+PT.forEach(p=>MOBILE_INPUT_META.set('pt_' + p.k, {unit:p.l.split(', ').slice(1).join(', '), help:p.k === 't' ? 'Наприклад: 36,6 °C' : ''}));
+CTRL.forEach(c=>(c.two ? [0,1] : [0]).forEach(i=>MOBILE_INPUT_META.set(`ctrl_${c.k}_${i}`, {
+  ph:c.ph && c.ph[i], help:c.ph ? 'Наприклад: ' + c.ph.join(c.two ? '/' : '') + ' ' + c.u : ''
+})));
+function mobileInputHelp(input, host, message){
+  if (!message || !host) return;
+  let help = [...host.children].find(e=>e.classList.contains('mobile-input-help') && e.textContent === message);
+  if (!help){ help = h('small', {class:'mobile-input-help', id:'mobile_help_' + (++MOBILE_HELP_ID)}, message); host.append(help); }
+  const ids = (input.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+  if (!ids.includes(help.id)) input.setAttribute('aria-describedby', [...ids, help.id].join(' '));
+}
+function mobileInputEnhance(input){
+  if (!input.isConnected || input.dataset.mobileInput) return;
+  input.dataset.mobileInput = '1';
+  if (input.type === 'date' || input.type === 'datetime-local'){
+    mobileInputHelp(input, input.parentElement, input.type === 'date' ? 'Дату оберіть у календарі: день, місяць і рік' : 'Дату оберіть у календарі · час: години й хвилини');
+    return;
+  }
+  if (!input.inputMode) input.inputMode = 'decimal';
+  input.spellcheck = false;
+  const meta = MOBILE_INPUT_META.get(input.dataset.for || input.id);
+  if (meta && meta.ph && !input.placeholder) input.placeholder = meta.ph;
+  const row = input.closest('.nums, .cv');
+  // Об'єднуємо лише сусіднє поле й одиницю; обробники та значення лишаються на самому input.
+  if (row && input.parentElement === row){
+    let unit = input.nextElementSibling;
+    while (unit && unit.classList.contains('entry-status')) unit = unit.nextElementSibling;
+    if (unit && unit.classList.contains('u')){
+      const pair = h('span', {class:'mobile-number-pair'}); input.before(pair);
+      while (pair.nextSibling){ const node = pair.nextSibling; pair.append(node); if (node === unit) break; }
+    }
+  } else if (meta && meta.unit && input.id.startsWith('pt_')){
+    const pair = h('span', {class:'mobile-number-pair mobile-calculator-number'}); input.before(pair);
+    pair.append(input, h('span', {class:'mobile-input-unit'}, meta.unit));
+  }
+  if (meta) mobileInputHelp(input, row || input.closest('.f') || input.parentElement, meta.help);
+}
+const MOBILE_INPUT_SELECTOR = 'input[type="date"], input[type="datetime-local"], input[type="number"], input[inputmode="decimal"], input[inputmode="numeric"]:not([type="password"])';
+function mobileInputScan(root){
+  if (root.matches && root.matches(MOBILE_INPUT_SELECTOR)) mobileInputEnhance(root);
+  if (root.querySelectorAll) root.querySelectorAll(MOBILE_INPUT_SELECTOR).forEach(mobileInputEnhance);
+}
+mobileInputScan(document);
+// Нові поля журналу, призначень і швидкої правки також отримують підказки.
+new MutationObserver(records=>{
+  const roots = new Set();
+  records.forEach(record=>record.addedNodes.forEach(node=>{ if (node.nodeType === 1) roots.add(node); }));
+  roots.forEach(mobileInputScan);
+}).observe(document.body, {childList:true, subtree:true});
 </script>
 
 </body>

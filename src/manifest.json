@@ -105,6 +105,7 @@
   "622-copy-check.js",
   "650-diary-blank.js",
   "623-manual-text.js",
-  "627-diary-inline.js"
+  "627-diary-inline.js",
+  "624-mobile-input.js"
  ]
 }
