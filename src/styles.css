@@ -1460,3 +1460,32 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .phst-ok{flex:none;align-self:center;font-size:12px;color:var(--ok);max-width:76px;text-align:right;line-height:1.25}
   .phst-f{margin:8px 2px 0;font-size:13px;color:var(--muted)}
 }
+
+/* 0.9.3.59 — телефон: «хто я · де працюю» */
+.phwhere{display:none}
+@media (max-width:899px){
+  .phwhere{display:flex;align-items:center;gap:6px;width:100%;margin:-4px 0 8px;padding:6px 12px;border:0;border-radius:10px;background:none;color:var(--muted);font:500 14px var(--f-ui);text-align:left;min-height:36px}
+  .phwhere:active{background:var(--accent-soft)}
+  .phw-who{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .phw-mode{flex:none;font-weight:600;color:var(--ink);padding:2px 9px;border-radius:999px;background:var(--accent-soft)}
+  .phw-mode.phw-amb{background:color-mix(in srgb,var(--ok) 16%,transparent)}
+  .phw-dd{flex:none;margin-left:auto}
+  .phw-seg{display:flex;width:100%}.phw-seg button{flex:1;min-height:46px;font-size:15.5px}
+  .phw-fix{margin:2px 0 6px;font-size:14px;color:var(--muted)}.phw-fix b{color:var(--ink)}
+}
+
+/* 0.9.3.60 — шаблон хвороби за бажанням */
+.st-hint{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:10px 0 4px;padding:8px 10px;border:1px dashed var(--line);border-radius:10px;background:var(--bg);font-size:13.5px;color:var(--muted)}
+.st-hint[hidden]{display:none}
+.st-hl{font-weight:600;color:var(--ink)}
+.st-g{min-height:34px;padding:4px 12px;font-size:14px}
+.st-hn{flex-basis:100%;font-size:12.5px}
+.stsheet .st-lead{margin:4px 0 10px;color:var(--muted);font-size:14px}
+.st-list{display:flex;flex-direction:column;gap:6px}
+.st-row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.st-row input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.st-row span{display:flex;flex-direction:column;gap:2px}
+.st-row small{color:var(--muted);font-size:12.5px}
+.st-foot{display:flex;justify-content:flex-end;margin-top:12px}
+@media (min-width:900px){.stsheet{max-width:520px;margin:auto}}
+@media (max-width:899px){.phst-tpl{width:100%;margin-top:8px;min-height:40px;font-size:14px}}

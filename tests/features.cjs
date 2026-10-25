@@ -1018,6 +1018,22 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval('drawBak()'); await sleep(50);
    ok('Копії в папці: стан і кнопка в «Резервні копії й відновлення»', !!doc.getElementById('fbkBox') && /Копія в папку зараз/.test(doc.getElementById('fbkBox').textContent));
    FSo.dir=null; FSo.ok=false; w.eval('saveStore('+JSON.stringify(saved)+')'); w.eval('PINC.key=window.__pk[0]; PINC.cfg=window.__pk[1]'); }
+ { // 0.9.3.60 — шаблон хвороби не перезаписує те, що лікар уже заповнив
+   w.eval("newPatient(); switchDoc('ohl')"); await sleep(30);
+   const r=JSON.parse(w.eval(`(()=>{ const a=[]; const f=F('skarhy.c'); ['кашель з виділенням харкотиння','підвищення температури тіла'].forEach(t=>{ const i=f.opts.findIndex(o=>O(o).t===t); f.chips[i].click(); });
+     const hr=F('dyh.hr'), i=hr.opts.findIndex(o=>/сухі/.test(O(o).t)); hr.el.value=i; hr.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+     a.push(startTab()===TABS.findIndex(t=>t.id==='skarhy'));
+     stHintRender(); a.push(!document.querySelector('.st-hint').hidden && /Негоспітальна пневмонія/.test(document.querySelector('.st-hint').textContent));
+     const ag=AGATE; AGATE=true; const own=stOwn(); applyPreset(PRESETS.find(p=>p.key==='pneu')); AGATE=ag; const dlg=document.querySelector('.stsheet'); a.push(!!dlg && F('dx.osn').el.value==='');
+     if (!dlg) return JSON.stringify(a.concat(['own:'+own.join(','), 'key:'+curKey, 'doc:'+DOC]));
+     a.push(!document.getElementById('st_skarhy').checked && !document.getElementById('st_exam').checked && document.getElementById('st_dx').checked);
+     dlg.querySelector('.st-foot .btn').click();
+     a.push(F('skarhy.c').chips.filter(c=>c.getAttribute('aria-pressed')==='true').length===2, /сухі/.test(hr.el.options[hr.el.selectedIndex].text), F('dx.mkh').el.value==='J18.1', curKey==='pneu');
+     return JSON.stringify(a); })()`));
+   ok('Шаблон за бажанням: програма починає зі «Скарг», під скаргами — «Схоже на…»', r[0] && r[1], JSON.stringify(r));
+   ok('Шаблон за бажанням: коли скарги й огляд заповнені — спершу питає «Що взяти з шаблону»', r[2] && r[3], JSON.stringify(r));
+   ok('Шаблон за бажанням: ваші скарги й огляд лишились, діагноз і МКХ — з шаблону', r[4] && r[5] && r[6] && r[7], JSON.stringify(r));
+   w.eval("newPatient()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

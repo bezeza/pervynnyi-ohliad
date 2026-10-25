@@ -18,7 +18,7 @@ function welcomeDialog(force){
     [['doc', iDoc], ['pos', iPos], ['vidd', iVid], ['zoz', iZoz]].forEach(([k, e])=>{ const t = document.getElementById('meta_' + k); if (t && e.value.trim()){ t.value = e.value.trim(); t.dispatchEvent(new Event('input')); } });
     const ss = document.getElementById('set_spec'); if (ss && ss.value !== spec.value){ ss.value = spec.value; ss.dispatchEvent(new Event('change')); }
     if (md !== MODE){ const mb = document.querySelector(`#modeSeg [data-mode="${md}"]`); if (mb) mb.click(); }
-    close(); show(TABS.indexOf(HV)); toast('Збережено. Змінити й додати решту (завідувач, адреса, ЄДРПОУ, логотип) — у «Налаштуваннях»', 4500);
+    close(); show(startTab()); toast('Збережено. Змінити й додати решту (завідувач, адреса, ЄДРПОУ, логотип) — у «Налаштуваннях»', 4500);
   };
   const dlg = h('div', {class:'navsheet packsheet welcome', role:'dialog', 'aria-modal':'true', 'aria-label':'Знайомство'},
     h('div', {class:'nvbox'},
