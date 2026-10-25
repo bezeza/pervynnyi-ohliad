@@ -1378,6 +1378,15 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 :root{--f-doc:"Source Serif 4",Georgia,"Times New Roman",serif}
 #out,.pw-text,.font-sample{font-family:var(--f-doc)}
 .font-sample{font-size:16px;line-height:1.5;margin:0 0 4px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+
+/* 0.9.3.56 — тема «Кабінет»: нейтральна сіра (палітра Skiagrama) */
+:root[data-tone="grey"]{
+  --bg:#2A2B2D; --surface:#343538; --ink:#E6E6E6; --muted:#A8AAAE; --line:#4A4C50;
+  --accent:#9DB8CF; --accent-soft:#3E434A; --on-accent:#1E1F21;
+  --flag:#E0A35E; --flag-soft:#45392B; --ok:#8FCFA6; --bad:#F09A92; --bad-soft:#4A3232;
+  --warn-soft:#45402F; --warn-ink:#E8C27A; --warn-line:#7A6A45; --surface-2:#3B3C40; color-scheme:dark}
+@media screen{:root[data-tone="grey"] .paper .sheet,:root[data-tone="grey"] .b003{background:#DCDCD8}
+  :root[data-tone="grey"] .paper{background:#26272A}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -3536,7 +3545,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.56', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
+  ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Тема «Кабінет» — нейтральна сіра, як у Skiagrama (кнопка теми: авто → день → ніч → кабінет; також «Налаштування» → «Тема»), аркуш на екрані приглушений, друк без змін. Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
   ['0.9.3.55', '25.10.2026', 'резервні копії в папці даних: щодня копія всіх пацієнтів у «Резервні копії» (останні 30 днів), окремо від браузера й від «дзеркала» в папці «Пацієнти»; якщо пацієнтів стало менше — денна копія не перезаписується, а додається окремий файл із часом; копія перед кожним оновленням версії (останні 5); з PIN — зашифровано; стан і «Копія в папку зараз» — у «Резервні копії й відновлення»'],
   ['0.9.3.54', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
   ['0.9.3.53', '25.10.2026', 'PIN: правильний PIN відкриває програму навіть коли лічильник не записується; відсутній лічильник починається з нуля; після 5 хибних вводів пауза 30 с, після 10 і далі — 5 хв максимум'],
@@ -17265,6 +17274,30 @@ if (SETTINGS_EL){
   try{ setRegroup(); }catch(e){}
 }
 fontApply();
+/* ===== 0.9.3.56 — тема «Кабінет»: нейтральна сіра, як у Skiagrama (не чорна й не біла) =====
+   Перемикач теми: авто → день → ніч → кабінет. Тема «Кабінет» = темна схема (усі правила темної теми діють)
+   з власною сірою палітрою (data-tone="grey"). Аркуш на екрані — приглушений; друк не змінюється. */
+const THEME_NAMES = {auto:'авто', day:'день', night:'ніч', grey:'кабінет'}, THEME_ICONS = {auto:'◐', day:'☀', night:'☾', grey:'◑'};
+{ const x0 = applyTheme; applyTheme = function(){
+  const grey = THEME === 'grey', keep = THEME; if (grey) THEME = 'night';
+  try{ x0.apply(this, arguments); } finally { THEME = keep; }
+  const r = document.documentElement; if (grey) r.setAttribute('data-tone', 'grey'); else r.removeAttribute('data-tone');
+  const b = $('#themeBtn'); if (b){ b.innerHTML = '<span class="hide-m">Тема: ' + THEME_NAMES[THEME] + '</span><span class="show-m" aria-hidden="true">' + THEME_ICONS[THEME] + '</span>'; b.title = 'Тема: ' + THEME_NAMES[THEME] + ' (натисніть, щоб змінити)'; }
+  const s = document.getElementById('set_theme'); if (s) s.value = THEME;
+  try{ if (POP.w && !POP.w.closed){ const d = POP.w.document.documentElement; d.setAttribute('data-theme', r.getAttribute('data-theme') || ''); if (!r.getAttribute('data-theme')) d.removeAttribute('data-theme'); if (grey) d.setAttribute('data-tone', 'grey'); else d.removeAttribute('data-tone'); } }catch(e){}
+}; }
+function themeSet(t){ THEME = THEME_NAMES[t] ? t : 'auto'; try{ localStorage.setItem('po.theme', THEME); }catch(e){} applyTheme(); toast({auto:'Тема як у системі', day:'Денна тема', night:'Нічна тема', grey:'Тема «Кабінет» — нейтральна сіра'}[THEME]); }
+{ const b = $('#themeBtn'); if (b) b.onclick = ()=>themeSet({auto:'day', day:'night', night:'grey', grey:'auto'}[THEME] || 'auto'); }
+{ const x0 = popInit; popInit = function(w){ const r = x0.apply(this, arguments); try{ if (document.documentElement.getAttribute('data-tone') === 'grey') w.document.documentElement.setAttribute('data-tone', 'grey'); }catch(e){} return r; }; }
+if (SETTINGS_EL){
+  const s = h('select', {id:'set_theme'}, ...Object.entries({auto:'Як у системі', day:'День — світла', night:'Ніч — темна', grey:'Кабінет — нейтральна сіра (як у Skiagrama)'}).map(([v, t])=>h('option', {value:v}, t)));
+  s.value = THEME; s.addEventListener('change', ()=>themeSet(s.value));
+  const fh = [...SETTINGS_EL.querySelectorAll('h3.sub')].find(x=>x.textContent === 'Шрифти');
+  const grid = h('div', {class:'grid'}, h('div', {class:'f'}, h('label', {for:'set_theme'}, 'Тема кольорів'), s));
+  if (fh) fh.before(h('h3', {class:'sub'}, 'Тема'), grid); else SETTINGS_EL.append(h('h3', {class:'sub'}, 'Тема'), grid);
+  try{ setRegroup(); }catch(e){}
+}
+applyTheme();
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

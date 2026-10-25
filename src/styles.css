@@ -1340,3 +1340,12 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 :root{--f-doc:"Source Serif 4",Georgia,"Times New Roman",serif}
 #out,.pw-text,.font-sample{font-family:var(--f-doc)}
 .font-sample{font-size:16px;line-height:1.5;margin:0 0 4px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+
+/* 0.9.3.56 — тема «Кабінет»: нейтральна сіра (палітра Skiagrama) */
+:root[data-tone="grey"]{
+  --bg:#2A2B2D; --surface:#343538; --ink:#E6E6E6; --muted:#A8AAAE; --line:#4A4C50;
+  --accent:#9DB8CF; --accent-soft:#3E434A; --on-accent:#1E1F21;
+  --flag:#E0A35E; --flag-soft:#45392B; --ok:#8FCFA6; --bad:#F09A92; --bad-soft:#4A3232;
+  --warn-soft:#45402F; --warn-ink:#E8C27A; --warn-line:#7A6A45; --surface-2:#3B3C40; color-scheme:dark}
+@media screen{:root[data-tone="grey"] .paper .sheet,:root[data-tone="grey"] .b003{background:#DCDCD8}
+  :root[data-tone="grey"] .paper{background:#26272A}}
