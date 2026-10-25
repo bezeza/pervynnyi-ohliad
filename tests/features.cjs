@@ -3,8 +3,8 @@ const {JSDOM}=require('jsdom');const fs=require('fs');const path=require('path')
 const html=fs.readFileSync(path.join(__dirname,'..','build','app.html'),'utf8');
 const R=[];const ok=(n,c,info='')=>R.push((c?'✅':'❌')+' '+n+(info&&!c?' — '+info:''));
 const errs=[];let printed=0;
-const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.URL.revokeObjectURL=()=>{};w.scrollTo=()=>{};try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
-const w=d.window,doc=w.document,$=id=>doc.getElementById(id);
+const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.URL.revokeObjectURL=()=>{};w.scrollTo=()=>{};try{w.localStorage.setItem('po.autogate','0')}catch(e){}w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.confirm=message=>/^Перед друком перевірте/.test(String(message));w.print=()=>{printed++};w.addEventListener('error',e=>errs.push(e.message));w.console.warn=(...a)=>errs.push(a.join(' '));}});
+const w=d.window,doc=w.document,$=id=>doc.getElementById(id),printConfirmed=w.print;
 const ev=(e,t)=>e.dispatchEvent(new w.Event(t));const set=(id,v)=>{const e=$(id);e.value=v;ev(e,e.tagName==='SELECT'?'change':'input');};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const out=()=>[...$('out').children].map(x=>x.textContent).join('\n');
@@ -285,7 +285,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const rows=[...doc.querySelectorAll('#paper .b003 .brow')];
    rows.find(x=>/^Хрипи/.test(x.textContent.trim())).click(); ok('Клік по пункту бланка «Хрипи» відкриває «Дихання»', w.eval("TABS[active].id")==='dyh');
    rows.find(x=>/^33\. Скарги/.test(x.textContent.trim())).nextElementSibling.click(); ok('Клік по тексту під «33. Скарги» відкриває «Скарги»', w.eval("TABS[active].id")==='skarhy');
-   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває «Серце, судини»', w.eval("TABS[active].id")==='ssc');
+   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває пряме редагування обох рук на аркуші', !!doc.querySelector('.bqe[role="dialog"]') && doc.querySelectorAll('.bqe input').length===2);
    w.eval("BLANK=false; renderPaper()"); const sec=doc.querySelector('#paper [data-sec="dyh"]'); if (sec){ sec.click(); }
    ok('«Текст документа» на аркуші: клік по розділу відкриває його', !sec || w.eval("TABS[active].id")==='dyh');
    w.eval("PAPER=false; renderPaper()"); }
@@ -771,6 +771,41 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Масові дії мають точні назви, а назва нового пацієнта пояснює збереження поточного',r[0],JSON.stringify(r));
    ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
    ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
+ }
+ { // 0.9.3.49: явне внутрішнє підтвердження на останньому кроці перед системним друком.
+   const confirm0=w.confirm, print0=w.print, before=printed, messages=[];
+   w.print=printConfirmed;
+   w.confirm=message=>{messages.push(String(message));return false;};
+   w.print();
+   const canceled=printed===before && /Перед друком перевірте/.test(messages[0]) && /не є електронним підписом/.test(messages[0]);
+   w.confirm=message=>{messages.push(String(message));return true;};
+   w.print();
+   const log=w.eval('ALOG[ALOG.length-1]');
+   ok('Друк: відмова у підтвердженні не друкує й пояснює статус підтвердження',canceled,messages[0]);
+   ok('Друк: після підтвердження викликається друк і локально записується дія лікаря',printed===before+1 && log && log.t==='Підтвердження перед друком' && /друк/i.test(messages[1]),JSON.stringify({printed:printed-before,log:log&&log.t}));
+   w.confirm=confirm0; w.print=print0;
+ }
+ { // 0.9.3.50: поля, яких бракувало у бланках, редагуються на місці й зберігаються у знімку пацієнта.
+   doc.querySelector('[data-mode="hosp"]').click();
+   w.eval("switchDoc('ohl'); BLANK=true; PAPER=true; BLP.title=true; BLP.exam=true; GAPS=false; renderPaper()");
+   set('s066_docid','ID-картка, ТЕСТ'); set('s066_grom','804 — Україна');
+   set('s066_krov','A(II)'); set('s066_rh','Rh+');
+   set('s066_vp','1'); set('s066_p30','0');
+   set('ssc_adl_0','125'); set('ssc_adl_1','82'); set('zah_moloch','Опис огляду грудних залоз'); set('zah_opora','Опис опорно-рухової системи');
+   w.eval('renderPaper()');
+   const paper=$('paper'), idrow=paper.querySelector('.btitle [data-pfields="s066.docid"]'), examrow=paper.querySelector('.bexam [data-pfields="zah.moloch"]');
+   ok('003/о підставляє документ, громадянство, групу крові, Rh та АТ з полів програми',!!idrow&&/ID-картка/.test(idrow.textContent)&&/ТЕСТ/.test(idrow.textContent)&&/804/.test(paper.textContent)&&/A\(II\)/.test(paper.textContent)&&/Rh\+/.test(paper.textContent)&&/125\/82/.test(paper.textContent));
+   ok('003/о друкує введені окремо описи молочних залоз та кістково-суглобової системи',/Опис огляду грудних залоз/.test(paper.textContent)&&/Опис опорно-рухової системи/.test(paper.textContent));
+   if(examrow) examrow.click();
+   const edit=doc.querySelector('.bqe'), txt=edit&&edit.querySelector('textarea');
+   if(txt){txt.value='Змінений опис огляду';edit.querySelector('.primary').click();}
+   ok('Клік по рядку 003/о відкриває редактор біля нього й оновлює бланк після збереження',!!txt&&$('zah_moloch').value==='Змінений опис огляду'&&/Змінений опис огляду/.test(paper.textContent));
+   w.eval('window.__paperSnap=snap()'); set('zah_moloch',''); w.eval('restore(window.__paperSnap)');
+   ok('Нові поля входять у наявне збереження пацієнта', $('zah_moloch').value==='Змінений опис огляду'&&w.eval("snap().f.ssc_adl_0==='125'"));
+   w.eval("switchDoc('f066'); F066ED='2012'; renderPaper()"); set('s066_dxnapr','Діагноз у направленні'); w.eval('renderPaper()');
+   ok('066/о редакції 2012 має окреме поле діагнозу при направленні',/Діагноз у направленні/.test(paper.textContent));
+   w.eval("F066ED='2016'; renderPaper()"); set('s066_dxhosp','Діагноз при госпіталізації'); set('s066_dxhospcode','I10'); w.eval('renderPaper()');
+   ok('066/о редакції 2016 має окремі поля діагнозу та коду МКХ-10',/Діагноз при госпіталізації/.test(paper.textContent)&&/I10/.test(paper.textContent));
  }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

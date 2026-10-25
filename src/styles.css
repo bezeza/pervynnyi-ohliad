@@ -1274,3 +1274,8 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   body.lay-C.outfold .wrap{grid-template-columns:46px 16px minmax(0,1fr)}
   .scr-monitor #out{width:100%;max-width:72ch;align-self:center}
 }
+
+/* 0.9.3.50 — клікабельні рядки бланка з полями введення у програмі. */
+.paper .b003 .pedit{cursor:pointer}
+.paper .b003 .pedit:hover,.paper .b003 .pedit:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media print{.paper .b003 .pedit{outline:0!important}}
