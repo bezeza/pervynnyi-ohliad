@@ -1498,12 +1498,41 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .phst-ok{flex:none;align-self:center;font-size:12px;color:var(--ok);max-width:76px;text-align:right;line-height:1.25}
   .phst-f{margin:8px 2px 0;font-size:13px;color:var(--muted)}
 }
+
+/* 0.9.3.59 — телефон: «хто я · де працюю» */
+.phwhere{display:none}
+@media (max-width:899px){
+  .phwhere{display:flex;align-items:center;gap:6px;width:100%;margin:-4px 0 8px;padding:6px 12px;border:0;border-radius:10px;background:none;color:var(--muted);font:500 14px var(--f-ui);text-align:left;min-height:36px}
+  .phwhere:active{background:var(--accent-soft)}
+  .phw-who{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .phw-mode{flex:none;font-weight:600;color:var(--ink);padding:2px 9px;border-radius:999px;background:var(--accent-soft)}
+  .phw-mode.phw-amb{background:color-mix(in srgb,var(--ok) 16%,transparent)}
+  .phw-dd{flex:none;margin-left:auto}
+  .phw-seg{display:flex;width:100%}.phw-seg button{flex:1;min-height:46px;font-size:15.5px}
+  .phw-fix{margin:2px 0 6px;font-size:14px;color:var(--muted)}.phw-fix b{color:var(--ink)}
+}
+
+/* 0.9.3.60 — шаблон хвороби за бажанням */
+.st-hint{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:10px 0 4px;padding:8px 10px;border:1px dashed var(--line);border-radius:10px;background:var(--bg);font-size:13.5px;color:var(--muted)}
+.st-hint[hidden]{display:none}
+.st-hl{font-weight:600;color:var(--ink)}
+.st-g{min-height:34px;padding:4px 12px;font-size:14px}
+.st-hn{flex-basis:100%;font-size:12.5px}
+.stsheet .st-lead{margin:4px 0 10px;color:var(--muted);font-size:14px}
+.st-list{display:flex;flex-direction:column;gap:6px}
+.st-row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.st-row input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.st-row span{display:flex;flex-direction:column;gap:2px}
+.st-row small{color:var(--muted);font-size:12.5px}
+.st-foot{display:flex;justify-content:flex-end;margin-top:12px}
+@media (min-width:900px){.stsheet{max-width:520px;margin:auto}}
+@media (max-width:899px){.phst-tpl{width:100%;margin-top:8px;min-height:40px;font-size:14px}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.58 від 25.10.2026">v0.9.3.58 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.60 від 25.10.2026">v0.9.3.60 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3649,8 +3678,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.58', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.60', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.60', '25.10.2026', 'шаблон хвороби допомагає, а не примушує: програма починає зі «Скарг» (спершу опитування й огляд), «За хворобою» — за бажанням; якщо щось уже заповнено, шаблон питає «Що взяти з шаблону» (діагноз, план, лікування — так; ваші скарги, анамнез, огляд — лишаються); під скаргами — підказка «Схоже на: …»'],
+  ['0.9.3.59', '25.10.2026', 'телефон: під рядком пацієнта видно, хто ви і де працюєте («🫁 Пульмонолог · Стаціонар ▾»); натиснули — перемикач «Стаціонар / Амбулаторно» і зміна спеціальності; те саме — першим блоком у «⋯»; якщо в профілі лише одне місце роботи — перемикача немає, лише напис'],
   ['0.9.3.58', '25.10.2026', 'телефон: картка «Порядок роботи» у вкладці «Пацієнт» — 6 кроків від ПІБ до «Копіювати», кожен веде на потрібне місце, виконані позначаються ✓ (сховати — «Зрозуміло», повернути — «⋯» → «Як працювати з пацієнтом»); коротка шапка без пацієнта; поруч із «⋯» видно назву документа; виправлено: після перезапуску вгорі іноді лишалась стара навігація «‹ розділ ›»'],
   ['0.9.3.57', '25.10.2026', '«Перед друком» на телефоні: бланк одразу читабельний (200 %), гортається пальцем, масштаб — двома пальцями або «− / + / ⇔ по ширині» (запам’ятовується); перегляд на всю висоту екрана; перемикачі аркуша — під «Вигляд ▾», «Ще не заповнено» згорнуто; віконця правки на бланку відкриваються знизу екрана. «Вигляд» для телефона: розмір тексту, щільність (звичайно / компактно), нижня панель (значки / підписи), масштаб аркуша за замовчуванням — лише для цього пристрою; нижня панель більше не обрізає «Копіювати». Навігація на телефоні: вкладки внизу за етапами (Пацієнт · Анамнез · Огляд · Висновок · Текст із кількістю зауважень), угорі — стрічка розділів групи з крапками стану, 🧪, «⋯»; повернути як було — «Вигляд» → «Навігація». Заповнення на телефоні: документ угорі, варіанти внизу — натиснули рядок (напр. «Шкірні покриви»), вибрали, натиснули наступний; межу між документом і варіантами тягнете пальцем (запам’ятовується)'],
   ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Теми: «Теплий папір» — денна, з м’яким теплим фоном замість чисто білого, і «Кабінет» — нейтральна сіра, як у Skiagrama (кнопка теми: авто → день → теплий папір → ніч → кабінет; також «Налаштування» → «Тема»), аркуш на екрані приглушений, друк без змін. Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
@@ -3777,6 +3808,8 @@ function show(i){
 
 /* ===== Навігація по розділах: ‹ назва › на телефоні і «Далі →» внизу розділу ===== */
 const TOOL_TABS = ['calc','tpl','set','help'];
+/* з чого починати роботу: спершу опитування («Скарги»), шаблон хвороби — за бажанням (0.9.3.60) */
+function startTab(){ const i = TABS.findIndex(t=>t.id === 'skarhy'); return i >= 0 && TABS[i].tab && !TABS[i].tab.hidden ? i : TABS.indexOf(HV); }
 function tabOrder(){ return [...document.querySelectorAll('#tabs .tab')].filter(t=>!t.hidden).map(t=>TABS.findIndex(x=>x.tab === t)).filter(i=>i >= 0); }
 function tabGroupLabel(i){ const g = TABS[i].tab.closest('.tgrp'); const l = g && g.querySelector('.tgl'); return l ? l.textContent : ''; }
 function goDone(){
@@ -8763,9 +8796,9 @@ function applyMode(){
 }
 document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click', ()=>{
   MODE = b.dataset.mode; try{ localStorage.setItem('po.mode', MODE); }catch(e){}
-  applyMode(); if (DOC === 'ohl') show(TABS.indexOf(HV)); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
+  applyMode(); if (DOC === 'ohl') show(startTab()); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
 }));
-loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode();
+loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode(); show(startTab());
 $('#ptbar').addEventListener('click', ()=>openSwitcher());
 $('#misBtn').addEventListener('click', misPanel);
 $('#clearDocBtn').addEventListener('click', e=>clearDoc(e.currentTarget));
@@ -8859,7 +8892,7 @@ function welcomeDialog(force){
     [['doc', iDoc], ['pos', iPos], ['vidd', iVid], ['zoz', iZoz]].forEach(([k, e])=>{ const t = document.getElementById('meta_' + k); if (t && e.value.trim()){ t.value = e.value.trim(); t.dispatchEvent(new Event('input')); } });
     const ss = document.getElementById('set_spec'); if (ss && ss.value !== spec.value){ ss.value = spec.value; ss.dispatchEvent(new Event('change')); }
     if (md !== MODE){ const mb = document.querySelector(`#modeSeg [data-mode="${md}"]`); if (mb) mb.click(); }
-    close(); show(TABS.indexOf(HV)); toast('Збережено. Змінити й додати решту (завідувач, адреса, ЄДРПОУ, логотип) — у «Налаштуваннях»', 4500);
+    close(); show(startTab()); toast('Збережено. Змінити й додати решту (завідувач, адреса, ЄДРПОУ, логотип) — у «Налаштуваннях»', 4500);
   };
   const dlg = h('div', {class:'navsheet packsheet welcome', role:'dialog', 'aria-modal':'true', 'aria-label':'Знайомство'},
     h('div', {class:'nvbox'},
@@ -11978,7 +12011,7 @@ function profileDialog(first){
       h('p', {class:'pnote'}, 'Нічого не видаляється: сховане відкривається одним клацанням, пошук Ctrl+K знаходить усе.'));
   };
   const close = () => { dlg.remove(); lsSet('po.profask', '1'); };
-  const done = () => { if (!p){ toast('Оберіть спеціальність'); return; } PROF = {p, w}; lsSet('po.prof', JSON.stringify(PROF)); close(); applyProfile(false); if (first) show(TABS.indexOf(HV)); };
+  const done = () => { if (!p){ toast('Оберіть спеціальність'); return; } PROF = {p, w}; lsSet('po.prof', JSON.stringify(PROF)); close(); applyProfile(false); if (first) show(startTab()); };
   const skip = () => { PROF = null; try{ localStorage.removeItem('po.prof'); }catch(e){} close(); applyProfile(true); toast('Показується все — профіль можна обрати кнопкою в шапці', 3000); };
   const dlg = h('div', {class:'navsheet packsheet profdlg', role:'dialog', 'aria-modal':'true', 'aria-label':'Профіль'},
     h('div', {class:'nvbox pbox'},
@@ -17633,14 +17666,14 @@ function phstGo(label, id){
   if (label === 'Текст'){ $('#outBox').classList.add('open'); return; }
   const idx = phstGroupIdx(label); if (idx.length){ $('#outBox').classList.remove('open'); show(idx[0]); window.scrollTo({top:0}); }
 }
+const hasHv0 = () => TABS.some(t=>t.special === 'hv' && t.tab && !t.tab.hidden);
 function phstSteps(){
-  const hasHv = TABS.some(t=>t.special === 'hv' && t.tab && !t.tab.hidden), G = (()=>{ try{ return phtGroups().map(g=>g.l); }catch(e){ return []; } })();
+  const G = (()=>{ try{ return phtGroups().map(g=>g.l); }catch(e){ return []; } })();
   const S = [
     {k:'pt', i:'👤', t:'ПІБ і дата народження', d:'Розділ «Запис». Стать і вік визначаться самі.', done:!!mv('pib'), go:()=>{ const i = TABS.findIndex(t=>t.special === 'meta'); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); setTimeout(()=>{ const e = document.getElementById('meta_pib'); if (e && !e.value) e.focus(); }, 150); } else phstGo('Пацієнт'); }},
-    hasHv ? {k:'hv', i:'🔎', t:'Оберіть хворобу', d:'«За хворобою»: програма сама заповнить типові скарги, анамнез і огляд.', done:!!(typeof curKey !== 'undefined' && curKey), go:()=>{ const i = TABS.findIndex(t=>t.special === 'hv'); if (i >= 0){ show(i); window.scrollTo({top:0}); } }} : null,
-    G.includes('Анамнез') ? {k:'an', i:'💬', t:'Скарги й анамнез', d:'Вкладка «Анамнез» унизу: перевірте й підправте під пацієнта.', done:phstFilled('Анамнез'), go:()=>phstGo('Анамнез')} : null,
+    G.includes('Анамнез') ? {k:'an', i:'💬', t:'Опитайте: скарги й анамнез', d:'Вкладка «Анамнез» унизу. Коли скарги вибрано — програма підкаже, на що схоже.', done:phstFilled('Анамнез'), go:()=>phstGo('Анамнез')} : null,
     G.includes('Огляд') ? {k:'og', i:'🩺', t:'Огляд', d:'Вкладка «Огляд»: змінюйте лише те, що не в нормі.', done:phstFilled('Огляд'), go:()=>phstGo('Огляд')} : null,
-    G.includes('Висновок') ? {k:'vy', i:'📋', t:'Діагноз і план', d:'Вкладка «Висновок».', done:phstFilled('Висновок'), go:()=>phstGo('Висновок')} : null,
+    G.includes('Висновок') ? {k:'vy', i:'📋', t:'Діагноз і план', d:'Вкладка «Висновок». Допомога — шаблон хвороби (за бажанням).', done:phstFilled('Висновок'), go:()=>phstGo('Висновок')} : null,
     {k:'tx', i:'📄', t:'Перевірте текст і скопіюйте', d:'Вкладка «Текст»: зауваження, «Копіювати» або «Друк».', done:false, go:()=>phstGo('Текст')}
   ].filter(Boolean);
   const n = S.findIndex(s=>!s.done); if (n >= 0) S[n].next = true;
@@ -17658,8 +17691,8 @@ function phstCard(){
   st.forEach((s, k)=>ol.append(h('li', {}, h('button', {type:'button', class:'phst-s' + (s.done ? ' done' : '') + (s.next ? ' next' : ''), onclick:s.go},
     h('span', {class:'phst-n', 'aria-hidden':'true'}, s.done ? '✓' : String(k + 1)),
     h('span', {class:'phst-t'}, h('b', {}, s.i + ' ' + s.t), h('span', {}, s.d)),
-    s.done ? h('span', {class:'phst-ok'}, k < 2 ? 'є' : 'заповнено — перевірте') : ''))));
-  box.append(ol, h('p', {class:'phst-f'}, 'Усе зберігається само. Інший пацієнт — натисніть шапку вгорі; новий — «＋ Новий пацієнт».'),
+    s.done ? h('span', {class:'phst-ok'}, s.k === 'pt' ? 'є' : 'заповнено') : ''))));
+  box.append(ol, hasHv0() ? h('button', {type:'button', class:'btn phst-tpl', onclick:()=>{ const i = TABS.findIndex(t=>t.special === 'hv'); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); } }}, '📋 Шаблон хвороби — за бажанням') : '', h('p', {class:'phst-f'}, 'Усе зберігається само. Інший пацієнт — натисніть шапку вгорі; новий — «＋ Новий пацієнт».'),
     h('button', {type:'button', class:'btn phst-x', onclick:()=>{ PHST.hide = true; try{ localStorage.setItem('po.phstart', '0'); }catch(e){} phstRender(); toast('Повернути: «⋯» → «Як працювати з пацієнтом»', 3000); }}, 'Більше не показувати'));
   return box;
 }
@@ -17686,6 +17719,165 @@ function phstRender(){
     if (p2 && p2.textContent === 'Натисніть тут — список пацієнтів'){ p2.textContent = 'Список пацієнтів ▾'; p1.innerHTML = ''; p1.append(h('span', {class:'warn', style:'display:inline'}, 'Новий пацієнт')); } } }catch(e){}
   return r; }; }
 try{ renderPtBar(); renderTabNav(); }catch(e){}
+/* ===== 0.9.3.59 — телефон: «де працюю і хто я» видно завжди =====
+   На телефоні верхня шапка (перемикач «Стаціонар / Амбулаторно» і кнопка профілю) схована — тож режим
+   не було видно і не було як перемкнути. Тепер:
+   • під рядком пацієнта — рядок «🫁 Пульмонолог · Стаціонар ▾»; натиснули — знизу панель:
+     «Стаціонар | Амбулаторно» і «Змінити спеціальність…»;
+   • те саме — першим блоком у «⋯ Документ і дії»;
+   • якщо в профілі лише стаціонар або лише поліклініка — перемикача немає, лише напис і «змінити в профілі». */
+const phwWork = () => { const P = profNow(); return P ? (PROF.w || P.work || 'both') : 'both'; };
+const phwMode = () => MODE === 'amb' ? 'Амбулаторно' : 'Стаціонар';
+function phwSetMode(m){
+  if (m === MODE) return;
+  const b = document.querySelector(`#modeSeg [data-mode="${m}"]`); if (b) b.click();
+  phwRender();
+}
+/* блок «Де працюю / Лікар» — для панелі й для «⋯» */
+function phwBlock(close){
+  const P = profNow(), w = phwWork();
+  const box = h('div', {class:'phw-block'});
+  box.append(h('h3', {class:'as-h'}, 'Де працюю'));
+  if (w === 'both') box.append(h('div', {class:'seg phw-seg', role:'group', 'aria-label':'Де працюю'},
+    ...[['hosp', 'Стаціонар'], ['amb', 'Амбулаторно']].map(([k, l])=>h('button', {type:'button', 'aria-pressed':MODE === k ? 'true' : 'false', onclick:()=>{ close(); phwSetMode(k); }}, l))));
+  else box.append(h('p', {class:'phw-fix'}, h('b', {}, phwMode()), ' — за профілем (', WORKS[w][0].toLowerCase(), '). Працюєте і там, і там — змініть у профілі.'));
+  box.append(h('h3', {class:'as-h'}, 'Лікар'),
+    h('div', {class:'as-list'}, h('button', {type:'button', class:'btn', onclick:()=>{ close(); profileDialog(false); }},
+      P ? P.ic + ' ' + P.n + ' — змінити спеціальність…' : '👤 Обрати спеціальність…')));
+  return box;
+}
+function phwSheet(){
+  if (document.querySelector('.phw-sheet')) return;
+  const sh = h('div', {class:'navsheet actsheet phw-sheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Де працюю і лікар'});
+  const close = () => { sh.remove(); document.body.style.overflow = ''; };
+  sh.append(h('div', {class:'nshead'}, h('b', {}, 'Де працюю і лікар'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')), phwBlock(close));
+  sh.addEventListener('click', e=>{ if (e.target === sh) close(); });
+  sh.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
+  document.body.append(sh); document.body.style.overflow = 'hidden';
+  const f = sh.querySelector('[aria-pressed="true"], .as-list .btn'); if (f) f.focus();
+}
+const PHW_ROW = h('button', {type:'button', class:'phwhere', 'aria-haspopup':'dialog', onclick:phwSheet});
+function phwRender(){
+  const line = $('#ptline'); if (!line) return;
+  if (!isPhone()){ PHW_ROW.remove(); return; }
+  if (PHW_ROW.previousElementSibling !== line) line.after(PHW_ROW);
+  const P = profNow();
+  PHW_ROW.replaceChildren(
+    h('span', {class:'phw-who'}, P ? P.ic + ' ' + P.n : '👤 Профіль не обрано'),
+    h('span', {class:'phw-dot', 'aria-hidden':'true'}, '·'),
+    h('span', {class:'phw-mode phw-' + MODE}, phwMode()),
+    h('span', {class:'phw-dd', 'aria-hidden':'true'}, '▾'));
+  PHW_ROW.setAttribute('aria-label', (P ? P.n : 'Профіль не обрано') + ', ' + phwMode() + '. Змінити');
+}
+{ const x0 = renderProfBtn; renderProfBtn = function(){ const r = x0.apply(this, arguments); try{ phwRender(); }catch(e){} return r; }; }
+{ const x0 = applyMode; applyMode = function(){ const r = x0.apply(this, arguments); try{ phwRender(); }catch(e){} return r; }; }
+document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click', ()=>setTimeout(()=>{ try{ phwRender(); }catch(e){} }, 0)));
+if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ phwRender(); }catch(e){} });
+/* «⋯ Документ і дії»: першим блоком */
+{ const x0 = openActs; openActs = function(){ const r = x0.apply(this, arguments);
+  const sh = document.querySelector('.actsheet:not(.phw-sheet)'), hd = sh && sh.querySelector('.nshead');
+  if (hd) hd.after(phwBlock(()=>{ sh.remove(); document.body.style.overflow = ''; }));
+  return r; }; }
+phwRender();
+/* ===== 0.9.3.60 — шаблон хвороби допомагає, а не примушує =====
+   Лікар спершу опитує й оглядає, а діагноз ставить потім. Тому:
+   • програма відкривається на «Скаргах», а не на «За хворобою»; шаблон — за бажанням;
+   • якщо скарги, анамнез, огляд, діагноз чи лікування вже заповнені, шаблон не перезаписує їх мовчки:
+     віконце «Що взяти з шаблону» з галочками; діагноз, план і лікування — увімкнено, а вже заповнене вами
+     (скарги, анамнез, огляд) — вимкнено; ніщо не зміниться без вашого вибору;
+   • під скаргами — ненав’язлива підказка «Схоже на: … — заповнити за шаблоном?» (за збігом скарг). */
+const ST_CAT = [
+  {k:'skarhy', l:'Скарги', secs:()=>['skarhy']},
+  {k:'morbi', l:'Анамнез хвороби (типовий)', secs:()=>['morbi']},
+  {k:'exam', l:'Огляд: зміни в системах', secs:()=>OBJ_OHL()},
+  {k:'dx', l:'Діагноз і код МКХ-10', secs:()=>['dx']},
+  {k:'plan', l:'План обстеження', plan:true},
+  {k:'rx', l:'Лікування (типова схема)', rx:true}
+];
+const stPlanSave = () => { const f = F('dx.plan'); return f.chips.map(c=>({p:c.getAttribute('aria-pressed') === 'true', o:c.dataset.ord})); };
+const stPlanLoad = d => { const f = F('dx.plan'); f.chips.forEach((c, i)=>{ const x = d[i]; if (!x) return; c.setAttribute('aria-pressed', x.p ? 'true' : 'false'); if (x.o) c.dataset.ord = x.o; else delete c.dataset.ord; }); refreshChips(f); };
+const stPlanHas = () => F('dx.plan').chips.some(c=>c.getAttribute('aria-pressed') === 'true');
+/* що в пацієнта вже заповнив сам лікар (автозаповнене шаблоном чи «Нормою» — не рахується) */
+function stOwn(){
+  const own = [];
+  ST_CAT.forEach(c=>{
+    if (c.rx){ if (RX.length && !(RX_AUTO && rxSig() === RX_AUTO)) own.push(c.k); return; }
+    if (c.plan){ if (stPlanHas() && !curKey) own.push(c.k); return; }
+    if (userSecs(c.secs()).length) own.push(c.k);
+  });
+  return own;
+}
+let ST_BUSY = false;
+{ const x0 = applyPreset;
+  applyPreset = function(p0, btn){
+    if (ST_BUSY || RESTORING || DOC !== 'ohl' || !AGATE || (curKey && p0 && curKey === p0.key)) return x0.apply(this, arguments);
+    const own = stOwn();
+    if (!own.length) return x0.apply(this, arguments);
+    const self = this;
+    stDialog(p0, own, sel => {
+      const skip = ST_CAT.filter(c=>!sel.includes(c.k));
+      const saved = skip.filter(c=>c.secs).flatMap(c=>c.secs().map(id=>SECTIONS.find(x=>x.id === id)).filter(Boolean).map(s=>[s, secSave(s)]));
+      const plan0 = stPlanSave(), rx0 = JSON.parse(JSON.stringify(RX)), rxa0 = RX_AUTO, rxv0 = RX_VAR;
+      ST_BUSY = true; const ag = AGATE; AGATE = false;
+      try{ x0.call(self, p0, btn); } finally { AGATE = ag; ST_BUSY = false; }
+      const plan1 = stPlanSave();
+      saved.forEach(([s, d])=>secLoad(s, d));
+      stPlanLoad(sel.includes('plan') ? plan1 : plan0);
+      if (!sel.includes('rx')){ RX.length = 0; rx0.forEach(r=>RX.push(r)); RX_AUTO = rxa0; RX_VAR = rxv0; try{ rxVarRedraw(); }catch(e){} }
+      { const o = arevGet(); saved.forEach(([s])=>delete o[s.id]); arevSet(o); }
+      try{ drawAuto(); }catch(e){} update();
+      const t = ST_CAT.filter(c=>sel.includes(c.k)).map(c=>c.l.split(/ \(|,| і /)[0].toLowerCase());
+      toast('З шаблону «' + p0.name + '» взято: ' + t.join(', ') + '. Ваші записи лишились.', 3500);
+      if (mv('pib')) show(TABS.indexOf(TABS.find(x=>x.id === (sel.includes('dx') ? 'dx' : sel[0] === 'exam' ? 'zah' : 'skarhy'))));
+    });
+  };
+}
+function stDialog(p0, own, go){
+  const sh = h('div', {class:'navsheet actsheet stsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Що взяти з шаблону'});
+  const close = () => { sh.remove(); document.body.style.overflow = ''; };
+  const boxes = ST_CAT.map(c=>{
+    const mine = own.includes(c.k), on = !mine || ['dx','plan','rx'].includes(c.k);
+    const cb = h('input', {type:'checkbox', id:'st_' + c.k}); cb.checked = on;
+    return {c, cb, row:h('label', {class:'st-row', for:'st_' + c.k}, cb, h('span', {}, h('b', {}, c.l),
+      h('small', {}, mine ? (['dx','plan','rx'].includes(c.k) ? 'у вас уже є — шаблон замінить' : 'заповнено вами — залишиться ваше') : 'заповнить шаблон')))};
+  });
+  sh.append(
+    h('div', {class:'nshead'}, h('b', {}, 'Що взяти з шаблону'), h('button', {type:'button', class:'btn', onclick:close}, 'Скасувати')),
+    h('p', {class:'st-lead'}, '«' + p0.name + '»' + (p0.mkh ? ' (' + p0.mkh + ')' : '') + '. Позначене — заповниться з шаблону; решта лишиться як є.'),
+    h('div', {class:'st-list'}, ...boxes.map(b=>b.row)),
+    h('div', {class:'st-foot'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ const sel = boxes.filter(b=>b.cb.checked).map(b=>b.c.k); close(); if (sel.length) go(sel); }}, 'Взяти позначене')));
+  sh.addEventListener('click', e=>{ if (e.target === sh) close(); });
+  sh.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
+  document.body.append(sh); document.body.style.overflow = 'hidden';
+  const f = sh.querySelector('.st-foot .btn'); if (f) f.focus();
+}
+/* підказка під скаргами: «Схоже на: …» */
+function stGuess(){
+  const f = F('skarhy.c'); if (!f) return [];
+  const mine = f.chips.map((c, i)=>c.getAttribute('aria-pressed') === 'true' ? O(f.opts[i]).t : null).filter(Boolean);
+  if (mine.length < 2) return [];
+  const vis = new Set((HV.cards || []).map((c, k)=>c.hidden || c.style.display === 'none' ? -1 : k));
+  return PRESETS.map((p, k)=>{ const s = p.skarhy || []; const hit = mine.filter(t=>s.includes(t)).length;
+      return {p, k, hit, sc:hit + (s[0] && mine.includes(s[0]) ? 0.5 : 0) + (vis.has(k) ? 0.3 : 0)}; })
+    .filter(x=>x.p.name && x.hit >= 2).sort((a, b)=>b.sc - a.sc).slice(0, 3);
+}
+const ST_HINT = h('div', {class:'st-hint', hidden:''});
+function stHintRender(){
+  const t = TABS.find(x=>x.id === 'skarhy'); if (!t || !t.panel) return;
+  const f = F('skarhy.c'), box = f && f.chips && f.chips[0] && f.chips[0].closest('.f');
+  if (box && ST_HINT.previousElementSibling !== box) box.after(ST_HINT);
+  const G = DOC === 'ohl' && !curKey ? stGuess() : [];
+  ST_HINT.hidden = !G.length; ST_HINT.replaceChildren();
+  if (!G.length) return;
+  ST_HINT.append(h('span', {class:'st-hl'}, 'Схоже на:'),
+    ...G.map(g=>h('button', {type:'button', class:'btn st-g', title:'Заповнити за шаблоном «' + g.p.name + '» — ви оберете, що взяти', onclick:()=>{ const c = HV.cards && HV.cards[g.k]; if (c) c.click(); else applyPreset(g.p); }}, g.p.name)),
+    h('span', {class:'st-hn'}, '— за бажанням: шаблон підставить діагноз, план і лікування'));
+}
+{ let tm = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(tm); tm = setTimeout(()=>{ try{ stHintRender(); }catch(e){} }, 250); return r; }; }
+/* «За хворобою» — м’якше: за бажанням */
+{ const lead = HV.panel && HV.panel.querySelector('p.lead');
+  if (lead) lead.textContent = 'За бажанням. Спершу опитайте й огляньте пацієнта — тоді шаблон допоможе з діагнозом, планом обстеження й лікуванням. Якщо щось уже заповнено, програма спитає, що взяти з шаблону; ваші записи без вашого вибору не зміняться.'; }
+stHintRender();
 </script>
 
 </body>

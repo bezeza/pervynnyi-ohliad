@@ -1527,12 +1527,21 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .st-foot{display:flex;justify-content:flex-end;margin-top:12px}
 @media (min-width:900px){.stsheet{max-width:520px;margin:auto}}
 @media (max-width:899px){.phst-tpl{width:100%;margin-top:8px;min-height:40px;font-size:14px}}
+
+/* 0.9.3.61 — телефон: дотик до тексту без клавіатури; панель над клавіатурою */
+.phk-b{display:none}
+@media (max-width:899px){
+  .phk-b:not([hidden]){display:inline-flex;align-items:center;justify-content:center;min-width:40px;font-size:17px}
+  .phk-b[aria-pressed="true"]{background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent)}
+  body.phk-manual #out{outline:2px solid var(--accent);outline-offset:-2px}
+  body.phk-kb .pe-box,body.phk-kb .diary-inline-editor,body.phk-kb .qe{bottom:var(--kb,0px)!important;height:min(var(--phs,45vh),calc(var(--vvh,60vh) - 70px))!important}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.60 від 25.10.2026">v0.9.3.60 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.61 від 25.10.2026">v0.9.3.61 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3678,8 +3687,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.60', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.61', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.61', '25.10.2026', 'телефон: дотик до фрази в тексті більше не відкриває клавіатуру — лише варіанти; правка вручну — кнопкою «⌨»; у панелях варіантів поле не захоплює фокус саме; коли клавіатура відкрита — панель піднімається над нею'],
   ['0.9.3.60', '25.10.2026', 'шаблон хвороби допомагає, а не примушує: програма починає зі «Скарг» (спершу опитування й огляд), «За хворобою» — за бажанням; якщо щось уже заповнено, шаблон питає «Що взяти з шаблону» (діагноз, план, лікування — так; ваші скарги, анамнез, огляд — лишаються); під скаргами — підказка «Схоже на: …»'],
   ['0.9.3.59', '25.10.2026', 'телефон: під рядком пацієнта видно, хто ви і де працюєте («🫁 Пульмонолог · Стаціонар ▾»); натиснули — перемикач «Стаціонар / Амбулаторно» і зміна спеціальності; те саме — першим блоком у «⋯»; якщо в профілі лише одне місце роботи — перемикача немає, лише напис'],
   ['0.9.3.58', '25.10.2026', 'телефон: картка «Порядок роботи» у вкладці «Пацієнт» — 6 кроків від ПІБ до «Копіювати», кожен веде на потрібне місце, виконані позначаються ✓ (сховати — «Зрозуміло», повернути — «⋯» → «Як працювати з пацієнтом»); коротка шапка без пацієнта; поруч із «⋯» видно назву документа; виправлено: після перезапуску вгорі іноді лишалась стара навігація «‹ розділ ›»'],
@@ -17878,6 +17888,55 @@ function stHintRender(){
 { const lead = HV.panel && HV.panel.querySelector('p.lead');
   if (lead) lead.textContent = 'За бажанням. Спершу опитайте й огляньте пацієнта — тоді шаблон допоможе з діагнозом, планом обстеження й лікуванням. Якщо щось уже заповнено, програма спитає, що взяти з шаблону; ваші записи без вашого вибору не зміняться.'; }
 stHintRender();
+/* ===== 0.9.3.61 — телефон: дотик до тексту не відкриває клавіатуру =====
+   Раніше на телефоні дотик до фрази в тексті документа ставив туди курсор — вискакувала клавіатура,
+   і панель з варіантами внизу ставала зовсім малою. Тепер:
+   • режим «Вибір» (за замовчуванням): дотик до фрази відкриває варіанти, клавіатура не з’являється;
+   • кнопка «⌨» угорі тексту — «Правити вручну»: тоді звичайне редагування з клавіатурою; ще раз «⌨» — назад до вибору;
+   • у панелях варіантів (текст, бланк, щоденник) поле не захоплює фокус саме — клавіатура лише якщо натиснули поле;
+   • коли клавіатура все ж відкрита — панель піднімається над нею, а не ховається під неї. */
+const PHK = { manual:false };
+function phkApply(){
+  const out = $('#out'); if (!out) return;
+  const choose = isPhone() && !PHK.manual;
+  if (choose) out.setAttribute('inputmode', 'none'); else out.removeAttribute('inputmode');
+  PHK_BTN.hidden = !isPhone();
+  PHK_BTN.setAttribute('aria-pressed', PHK.manual ? 'true' : 'false');
+  PHK_BTN.title = PHK.manual ? 'Зараз: правка вручну (клавіатура). Натисніть — повернутись до вибору варіантів' : 'Правити текст вручну (з клавіатурою)';
+  document.body.classList.toggle('phk-manual', isPhone() && PHK.manual);
+}
+const PHK_BTN = h('button', {type:'button', class:'btn phk-b', 'aria-label':'Правити текст вручну', onclick:()=>{
+  PHK.manual = !PHK.manual;
+  try{ OPG.qe = PHK.manual ? false : (localStorage.getItem('po.qedit') !== '0'); }catch(e){ OPG.qe = !PHK.manual; }
+  try{ qeClose(); }catch(e){}
+  phkApply();
+  const out = $('#out');
+  if (PHK.manual){ if (out){ out.focus(); } toast('Правка вручну: клавіатура. Повернутись до вибору — «⌨» ще раз', 3000); }
+  else { if (document.activeElement) document.activeElement.blur(); toast('Вибір: дотик до фрази відкриває варіанти', 2200); }
+}}, '⌨');
+{ const fb = $('#fmtBtn'); if (fb) fb.before(PHK_BTN); }
+/* панелі варіантів: не захоплювати фокус у поле (інакше клавіатура) */
+function phkBlurIn(sel){
+  if (!isPhone()) return;
+  const a = document.activeElement, box = document.querySelector(sel);
+  if (a && box && box.contains(a) && /^(INPUT|TEXTAREA)$/.test(a.tagName) && box.querySelector('.chip, .seg button, select, .pe-opt, button[aria-pressed]')) a.blur();
+}
+{ const x0 = qeOpen; qeOpen = function(){ const r = x0.apply(this, arguments); try{ phkBlurIn('.qe'); }catch(e){} return r; }; }
+if (typeof peOpen === 'function'){ const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ setTimeout(()=>phkBlurIn('.pe-box'), 0); }catch(e){} return r; }; }
+/* закрили текст — назад до вибору */
+new MutationObserver(()=>{ const ob = $('#outBox'); if (ob && !ob.classList.contains('open') && PHK.manual){ PHK.manual = false; try{ OPG.qe = localStorage.getItem('po.qedit') !== '0'; }catch(e){ OPG.qe = true; } phkApply(); } }).observe($('#outBox'), {attributes:true, attributeFilter:['class']});
+/* клавіатура відкрита — панель над нею */
+if (window.visualViewport){
+  const vv = window.visualViewport, fit = () => {
+    const kb = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+    document.documentElement.style.setProperty('--kb', kb + 'px');
+    document.documentElement.style.setProperty('--vvh', Math.round(vv.height) + 'px');
+    document.body.classList.toggle('phk-kb', isPhone() && kb > 80);
+  };
+  vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); fit();
+}
+if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ phkApply(); }catch(e){} });
+phkApply();
 </script>
 
 </body>

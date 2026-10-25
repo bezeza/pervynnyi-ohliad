@@ -129,6 +129,7 @@
   "648-phone-split.js",
   "649-phone-start.js",
   "650-phone-where.js",
-  "651-soft-template.js"
+  "651-soft-template.js",
+  "652-phone-nokb.js"
  ]
 }
