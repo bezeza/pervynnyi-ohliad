@@ -1498,3 +1498,45 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   body.phk-manual #out{outline:2px solid var(--accent);outline-offset:-2px}
   body.phk-kb .pe-box,body.phk-kb .diary-inline-editor,body.phk-kb .qe{bottom:var(--kb,0px)!important;height:min(var(--phs,45vh),calc(var(--vvh,60vh) - 70px))!important}
 }
+
+/* 0.9.3.62 — телефон: «читабельний бланк» (лише на екрані; друк — справжній А4) */
+@media screen and (max-width:899px){
+  .phr-seg[hidden],.phr-go[hidden]{display:none!important}
+  .phr-seg button{padding:6px 10px;font-size:13.5px}
+  .phr-go{margin-left:auto;min-height:38px;font-size:14px}
+  .paper .sheet.blankmode.phz.phread,.paper .sheet.phread{width:auto!important;max-width:100%!important;overflow:visible}
+  .paper .sheet.phread .b003 *{max-width:100%}
+  .paper .sheet.phread .b003 .bnw{display:inline;white-space:normal}
+  .paper .sheet.phread .b003 .bl,.paper .sheet.phread .b003 .bf,.paper .sheet.phread .b003 .brow{white-space:normal!important;overflow-wrap:break-word}
+  .paper .sheet.phread .b003,.paper .sheet.phread .b003.bA4{zoom:1!important;width:auto!important;max-width:none!important;height:auto!important;min-height:0!important;padding:14px 12px!important;margin:0 0 12px!important;font-size:16px!important;line-height:1.5!important;overflow:visible!important;display:block!important;box-shadow:0 1px 6px rgba(0,0,0,.08);border-radius:10px}
+  .paper .sheet.phread .b003 .bframe{border:0!important;padding:0!important;overflow:visible!important;display:block!important;min-height:0!important}
+  .paper .sheet.phread .b003 .bhead{display:block;margin:0 0 12px;border-bottom:1px solid #ccc;font-size:13px}
+  .paper .sheet.phread .b003 .bhl,.paper .sheet.phread .b003 .bhr{border:0;padding:2px 0;align-items:flex-start;text-align:left}
+  .paper .sheet.phread .b003 .bcols{display:block!important;margin:0}
+  .paper .sheet.phread .b003 .bcols>*{display:block!important}
+  .paper .sheet.phread .b003 .bdi{display:block;margin:0;border-top:1px solid #ccc}
+  .paper .sheet.phread .b003 .bdl{border:0;padding:8px 0 2px;flex-direction:row;flex-wrap:wrap;gap:6px 12px;font-weight:600}
+  .paper .sheet.phread .b003 .bdr{padding:2px 0 8px}
+  .paper .sheet.phread .b003 .bslot,.paper .sheet.phread .b003 .bfree{display:block!important;margin:0!important;flex:none!important;min-height:0!important;border-top:1px solid #ccc}
+  .paper .sheet.phread .b003 .bskip{display:none!important}
+  .paper .sheet.phread .b003.bcont .bframe{border:0}.paper .sheet.phread .b003.bcont .bt{display:none}
+  .paper .sheet.phread .b003 .bt{font-size:17px;margin:4px 0 10px}
+  .paper .sheet.phread .b003 .bt2{font-size:16px;margin:12px 0 4px}
+  .paper .sheet.phread .b003 .blines{background-image:none!important;line-height:1.5!important;min-height:0!important;flex-grow:0!important;white-space:pre-wrap;padding:6px 8px;margin:2px 0 6px;border-left:3px solid #c7d6e6;background:#f7f9fc;border-radius:0 6px 6px 0}
+  .paper .sheet.phread .b003 .blines:empty::before{content:'+ внести';color:#7a8794;font-style:italic;font-family:var(--f-ui)}
+  .paper .sheet.phread .b003 .brow{padding:5px 2px;border-bottom:1px solid #eef1f4;margin:0}
+  .paper .sheet.phread .b003 .bf{border-bottom:1.5px dotted #2f6fa8;padding:0 2px}
+  .paper .sheet.phread .b003 .bf.empty{min-width:5.5em!important;border:1px dashed #9aa8b6;border-radius:6px;background:#f3f5f8;padding:0 8px;vertical-align:baseline}
+  .paper .sheet.phread .b003 .bf.empty:empty::before{content:'+ внести';color:#7a8794;font-style:italic;font-size:.88em;font-family:var(--f-ui)}
+  .paper .sheet.phread .b003 .bf.empty.wide{min-width:8em!important}
+  .paper .sheet.phread .b003 .brow:has(.bu)>.bf.empty:last-child{display:none}
+  .paper .sheet.phread .b003 .bs{font-size:12px}
+  .paper .sheet.phread .b003 table.bdx{font-size:14px;display:block;overflow-x:auto}
+  .paper .sheet.phread .b003 .pe-active{outline:2.5px solid var(--accent);outline-offset:2px;background:rgba(47,123,184,.08)}
+  .paper .sheet.phread .b003 .bgap,.paper .sheet.phread .b003 .bf.bgap{background:#FFF3C4}
+  .pe-box .pe-head{flex-wrap:wrap}
+  .phr-nav{display:flex;align-items:center;gap:8px;order:5;flex-basis:100%;font-size:13px;color:var(--muted)}
+  .phr-n{white-space:nowrap}
+  .phr-gt{font-size:12.5px;padding:3px 9px}
+  .phr-gt[aria-pressed="true"]{background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent)}
+}
