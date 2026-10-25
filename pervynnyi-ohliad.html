@@ -1335,12 +1335,30 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .btback .brow.bsigrow{display:flex;align-items:baseline;gap:0}
 .btback .brow.bsigrow>.bf{flex:1 1 auto;min-width:6em}
 .btback .brow.bsigrow>.bsig{flex:none}
+
+/* 0.9.3.56 — стать у блоці «Пацієнт»; у шапці — лише «Стать?», коли невідома */
+.sexf .seg{display:inline-flex}
+.sexask{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:8px;background:var(--warn-soft,#fff4d6);color:var(--warn-ink,#7a5200);border:1px solid var(--warn-line,#f0d48a);font-size:13px;white-space:nowrap}
+.sexask[hidden]{display:none}
+.sexask button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:6px;padding:1px 7px;font:inherit;cursor:pointer}
+.sexask button:hover,.sexask button:focus-visible{background:var(--surface,#fff)}
+
+/* 0.9.3.56 — щоденник: «з учора», «внесіть сьогоднішні», порівняння */
+.f.dprev>label::after,.f.dprev>.lbl::after{content:" · з учора";color:var(--muted,#667);font-weight:400;font-size:12px}
+.f.dprev{background:var(--surface-2,#f6f7fa);border-radius:8px}
+.f.dtoday{outline:2px dashed var(--warn-line,#e0b84a);outline-offset:3px;border-radius:8px}
+.f.dtoday>label::after,.f.dtoday>.lbl::after{content:" · внесіть сьогоднішні";color:var(--warn-ink,#7a5200);font-weight:600;font-size:12px}
+.dt-spo2{margin-top:4px}
+.dt-cmp{margin-top:6px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+.dt-cmp-t{margin:0 0 6px}
+@media screen{.b003 .dprev{background:rgba(120,130,150,.08)}.b003 .dprev::after{content:"з учора";font-size:10px;color:var(--muted,#667);margin-left:6px}}
+@media print{.b003 .dprev{background:none}.b003 .dprev::after{content:none}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.55 від 25.10.2026">v0.9.3.55 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.56 від 25.10.2026">v0.9.3.56 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3486,8 +3504,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.55', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.56', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
   ['0.9.3.55', '25.10.2026', 'резервні копії в папці даних: щодня копія всіх пацієнтів у «Резервні копії» (останні 30 днів), окремо від браузера й від «дзеркала» в папці «Пацієнти»; якщо пацієнтів стало менше — денна копія не перезаписується, а додається окремий файл із часом; копія перед кожним оновленням версії (останні 5); з PIN — зашифровано; стан і «Копія в папку зараз» — у «Резервні копії й відновлення»'],
   ['0.9.3.54', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
   ['0.9.3.53', '25.10.2026', 'PIN: правильний PIN відкриває програму навіть коли лічильник не записується; відсутній лічильник починається з нуля; після 5 хибних вводів пауза 30 с, після 10 і далі — 5 хв максимум'],
@@ -17005,6 +17024,186 @@ function fbkRender(){
   fbkRender(); return r; }; }
 { const x0 = fsRender; fsRender = function(){ const r = x0.apply(this, arguments); try{ fbkRender(); }catch(e){} return r; }; }
 try{ drawBak(); }catch(e){}
+/* ===== 0.9.3.56 — стать: з по батькові автоматично, перемикач — у блоці «Пацієнт» =====
+   • По батькові (третє слово ПІБ): «-ович», «-евич», «-йович», «-ич» → чоловік; «-івна», «-ївна», «-овна», «-евна», «-ична» → жінка.
+   • Ручний вибір завжди переважає: після кліку програма стать сама не змінює (до «Нового пацієнта»).
+   • У шапці перемикача немає; якщо стать не визначено, а ПІБ є — жовта позначка «Стать?» з вибором Ч/Ж. */
+let SEX_AUTO = false;
+function sexFromPib(pib){
+  const w = String(pib || '').trim().split(/\s+/).filter(Boolean); if (w.length < 3) return '';
+  const p = w[2].toLowerCase().replace(/[^а-яіїєґ’'ʼ-]/g, '');
+  if (/(івна|ївна|овна|евна|ична)$/.test(p)) return 'f';
+  if (/(ович|евич|йович|ич)$/.test(p)) return 'm';
+  return '';
+}
+function sexSet(v, auto){
+  sex = v; SEX_AUTO = !!(v && auto);
+  document.querySelectorAll('#sexSeg button').forEach(x=>x.setAttribute('aria-pressed', x.dataset.sex === sex ? 'true' : 'false'));
+  try{ refreshLabels(); }catch(e){} try{ sexPlan(); }catch(e){} update();
+}
+function sexAuto(){
+  if (sex && !SEX_AUTO) return;   /* вибрано вручну або відновлено з картки — не чіпаємо */
+  const d = sexFromPib(mv('pib'));
+  if (d && d !== sex) sexSet(d, true);
+}
+/* ручний клік — ручний вибір (обробник у 540 спрацює слідом і перемкне стать) */
+document.querySelectorAll('#sexSeg button').forEach(b=>b.addEventListener('click', ()=>{ SEX_AUTO = false; }, true));
+{ const pib = document.getElementById('meta_pib'); if (pib) pib.addEventListener('input', ()=>{ try{ sexAuto(); }catch(e){} }); }
+{ const x0 = snap; snap = function(){ const s = x0.apply(this, arguments); s.sexAuto = SEX_AUTO; return s; }; }
+{ const x0 = restore; restore = function(S){ const r = x0.apply(this, arguments); SEX_AUTO = !!(S && S.sexAuto); try{ sexAuto(); sexAsk(); }catch(e){} return r; }; }
+{ const x0 = clearAll; clearAll = function(){ SEX_AUTO = false; const r = x0.apply(this, arguments); try{ sexAsk(); }catch(e){} return r; }; }
+
+/* перемикач — у блок «Пацієнт», після дати народження */
+{ const sx = document.getElementById('sexSeg'), dob = document.getElementById('meta_dob'), host = dob && dob.closest('.f');
+  if (sx && host){
+    sx.querySelectorAll('button').forEach(b=>{ const t = b.dataset.sex === 'm' ? 'Чоловік' : 'Жінка'; b.replaceChildren(t); b.title = t; });
+    host.after(h('div', {class:'f sexf'}, h('div', {class:'lbl', id:'sexLbl'}, 'Стать'), sx, h('p', {class:'chips-hint'}, 'Визначається з по батькові; натисніть, щоб виправити.')));
+    sx.setAttribute('aria-labelledby', 'sexLbl');
+  } }
+/* у шапці — лише коли стать невідома */
+const SEX_ASK = h('span', {id:'sexAsk', class:'sexask', hidden:''}, h('span', {}, 'Стать?'),
+  ...[['m','Ч','Чоловік'],['f','Ж','Жінка']].map(([v, t, l])=>h('button', {type:'button', title:l, 'aria-label':'Стать: ' + l, onclick:()=>{ const b = document.querySelector(`#sexSeg button[data-sex="${v}"]`); if (b) b.click(); }}, t)));
+{ const line = document.getElementById('ptline'), bar = document.getElementById('ptbar'); if (line && bar) bar.after(SEX_ASK); else if (line) line.append(SEX_ASK); }
+function sexAsk(){ SEX_ASK.hidden = !!sex || !mv('pib'); }
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ sexAsk(); }catch(e){} return r; }; }
+try{ sexAuto(); sexAsk(); }catch(e){}
+/* ===== 0.9.3.56 — щоденник: «Без змін (як учора)», «Порівняти з учора», пункти за хворобою =====
+   Рішення лікаря (25.10.2026):
+   1) «Без змін»: з попереднього запису копіюється опис огляду; показники (t, АТ, ЧСС, ЧД, SpO2, кисень, глікемія,
+      маса й діурез, ПШВ) і скарги НЕ копіюються — порожні й підсвічені; скопійоване позначено «з учора»,
+      доки його не змінено; перед «Записати в журнал» без показників — попередження (не блокує).
+   2) «Порівняти з учора» лише пропонує фразу; межі змін: t 0,5 °C, SpO2 2 %, ЧД 4, ЧСС 10, сист. АТ 15;
+      описові пункти — фактом «було → стало». Оцінку («позитивна динаміка») дає лікар.
+   3) Базово: t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — кнопкою «+ SpO2». */
+const DT = { prev:new Set(), spo2:false, arm:0 };
+const DT_VITALS = ['d_obj.t','d_obj.ad','d_obj.chss','d_obj.chd','d_obj.o2','d_obj.glik','d_obj.masa','d_obj.pef'];
+const DT_CLEAR = ['d_main.sk','d_main.skx','d_main.zal','d_lik.obs','d_lik.kor'];
+const DT_LIMITS = {t:0.5, spo2:2, chd:4, chss:10, ad:15};
+
+/* ---- 3. пункти за хворобою (доповнення до наявних профілів 598) ---- */
+['chd','dyh','serce','zhyv'].forEach(k=>{ if (!DPROF.base.includes(k)) DPROF.base.push(k); });
+if (!DPROF.P.resp.s.includes('perk')) DPROF.P.resp.s.push('perk');
+DPROF.KEY.bronx = DPROF.KEY.bronx || 'resp'; DPROF.KEY.pe = DPROF.KEY.pe || 'resp';
+Object.entries({hf:['masa','nab','pech'], gh:['nevr'], pyelo:['pst','sech','masa'], pe:['nab']}).forEach(([k, a])=>{
+  DPROF.ADD[k] = [...new Set([...(DPROF.ADD[k] || []), ...a])]; });
+const dtNum = s => { const n = parseFloat(String(s || '').replace(',', '.')); return Number.isFinite(n) ? n : null; };
+function dtSpo2Shown(){
+  const f = F('d_obj.chd'); if (!f || !f.inputs[1]) return true;
+  const pr = typeof dprofOf === 'function' ? dprofOf(curKey) : null;
+  return !pr || DSHOWALL || pr.g === 'resp' || DT.spo2 || !!f.inputs[1].value.trim();
+}
+function dtSpo2Sync(){
+  const f = F('d_obj.chd'); if (!f || !f.inputs[1]) return;
+  const box = f.inputs[1].parentElement, on = dtSpo2Shown(); box.hidden = !on;
+  let b = f.wrapEl.querySelector('.dt-spo2');
+  if (!b){ b = h('button', {type:'button', class:'more dt-spo2', onclick:()=>{ DT.spo2 = true; dtSpo2Sync(); f.inputs[1].focus(); }}, '+ SpO2'); f.wrapEl.append(b); }
+  b.hidden = on;
+}
+{ const x0 = applyDProfile; applyDProfile = function(){ const r = x0.apply(this, arguments); try{ dtSpo2Sync(); }catch(e){} return r; }; }
+
+/* ---- 1. «Без змін (як учора)» ---- */
+function dtKeyOf(el){
+  for (const sid of DSEC){ const S = SECTIONS.find(s=>s.id === sid); for (const f of S.fields) if (f.wrapEl && f.wrapEl.contains(el)) return sid + '.' + f.id; }
+  return null;
+}
+function dtMark(){
+  DSEC.forEach(sid=>SECTIONS.find(s=>s.id === sid).fields.forEach(f=>{ if (f.wrapEl) f.wrapEl.classList.toggle('dprev', DT.prev.has(sid + '.' + f.id)); }));
+}
+function dtClearMarks(){ DT.prev.clear(); document.querySelectorAll('.dtoday').forEach(e=>e.classList.remove('dtoday')); dtMark(); }
+function diaryNoChange(){
+  const last = DIARIES[DIARIES.length - 1]; if (!last){ toast('У журналі ще немає записів — нема з чого копіювати'); return; }
+  undoPush('«Без змін (як учора)»');
+  likePrevious();
+  DT_VITALS.forEach(k=>{ const f = F(k); if (f && f.inputs) f.inputs.forEach(i=>{ i.value = ''; }); });
+  DT_CLEAR.forEach(k=>{ const f = F(k); if (!f || !f.el) return; f.el.value = ''; if (f.type === 'sel') mark(f.el, f); });
+  { const f = F('d_main.dyn'), i = f && f.opts.findIndex(o=>/без суттєвої динаміки/i.test(O(o).t)); if (i >= 0){ f.el.value = String(i); mark(f.el, f); } }
+  DT.prev.clear();
+  ['d_main','d_obj','d_lik'].forEach(sid=>SECTIONS.find(s=>s.id === sid).fields.forEach(f=>{
+    const k = sid + '.' + f.id; if (DT_VITALS.includes(k) || DT_CLEAR.includes(k) || k === 'd_main.dyn' || k === 'd_main.den') return;
+    const has = f.type === 'sel' ? f.el.value !== '' : f.el && 'value' in f.el ? !!String(f.el.value).trim() : false;
+    if (has) DT.prev.add(k);
+  }));
+  dtMark();
+  ['d_obj.t','d_obj.ad','d_obj.chss','d_obj.chd'].forEach(k=>{ const f = F(k); if (f && f.wrapEl && !f.wrapEl.hidden) f.wrapEl.classList.add('dtoday'); });
+  update(); try{ if (PAPER) renderPaper(); }catch(e){}
+  toast('Опис огляду — як у попередньому записі (позначено «з учора»). Внесіть сьогоднішні показники й скарги.', 5000);
+}
+/* будь-яка правка поля знімає позначку «з учора» / «внесіть сьогоднішні» */
+DSEC.forEach(sid=>{ const P = SECTIONS.find(s=>s.id === sid).panel; if (!P) return;
+  ['input','change','click'].forEach(t=>P.addEventListener(t, e=>{ if (!e.isTrusted && t === 'click') return; const k = dtKeyOf(e.target); if (!k) return;
+    let ch = false; if (DT.prev.delete(k)) ch = true; const f = F(k); if (f && f.wrapEl && f.wrapEl.classList.contains('dtoday') && t !== 'click'){ f.wrapEl.classList.remove('dtoday'); ch = true; }
+    if (ch){ dtMark(); try{ if (PAPER) renderPaper(); }catch(x){} } }, true)); });
+/* на бланку — позначка біля рядка поточного запису */
+{ const x0 = bDiaryEntry; bDiaryEntry = function(e){ const root = x0.apply(this, arguments);
+  if (e && e.cur && DT.prev.size && typeof DIARY_INLINE_GROUPS !== 'undefined')
+    root.querySelectorAll('[data-diary-key]').forEach(n=>{ const g = DIARY_INLINE_GROUPS[n.dataset.diaryKey] || []; n.classList.toggle('dprev', g.some(k=>DT.prev.has(k))); });
+  return root; }; }
+/* попередження перед записом без показників (не блокує: повторне натискання — записати) */
+function dtMissing(){
+  const L = [['d_obj.t','температура'],['d_obj.ad','АТ'],['d_obj.chss','ЧСС'],['d_obj.chd','ЧД']];
+  const out = L.filter(([k])=>{ const f = F(k); return f && f.wrapEl && !f.wrapEl.hidden && !f.inputs[0].value.trim(); }).map(([, n])=>n);
+  const s = F('d_obj.chd'); if (s && s.inputs[1] && dtSpo2Shown() && (dprofOf(curKey) || {}).g === 'resp' && !s.inputs[1].value.trim()) out.push('SpO2');
+  return out;
+}
+{ const x0 = saveDiary; saveDiary = function(){
+  const miss = dtMissing();
+  if (miss.length && Date.now() - DT.arm > 8000){ DT.arm = Date.now(); toast('Не внесено сьогоднішні показники: ' + miss.join(', ') + '. Натисніть «Записати в журнал» ще раз, щоб записати без них.', 8000); return; }
+  DT.arm = 0; const n = DIARIES.length, r = x0.apply(this, arguments);
+  if (DIARIES.length > n) dtClearMarks();
+  return r; }; }
+['clearAll','restore','diaryFromExam','diaryTplApply','diaryReset'].forEach(nm=>{ try{ const x0 = eval(nm); if (typeof x0 !== 'function') return;
+  const fn = function(){ dtClearMarks(); DT.spo2 = false; return x0.apply(this, arguments); }; eval(nm + ' = fn'); }catch(e){} });
+/* кнопка «Як попередній» → «Без змін (як учора)» */
+document.querySelectorAll('button').forEach(b=>{ if (b.textContent.trim() === 'Як попередній'){ b.textContent = 'Без змін (як учора)'; b.title = 'Опис огляду — як у попередньому записі; показники й скарги — внести сьогоднішні'; b.onclick = ()=>diaryNoChange(); } });
+
+/* ---- 2. «Порівняти з учора» ---- */
+function dtOptText(f, v, own){ if (own && String(own).trim()) return g(String(own).trim()); const i = +v; return v === '' || v === undefined || !f.opts[i] ? '' : g(O(f.opts[i]).t); }
+function diaryCompare(){
+  const last = DIARIES[DIARIES.length - 1]; if (!last || !last.data) return {err:'У журналі ще немає попереднього запису'};
+  const P = last.data.f || {}, cur = id => (document.getElementById(id) || {}).value || '';
+  const parts = [], same = [];
+  const fmt = n => String(n).replace('.', ',');
+  const num = (id, lim, name, unit, verbs) => {
+    const a = dtNum(P[id]), b = dtNum(cur(id)); if (a === null || b === null) return;
+    if (Math.abs(b - a) >= lim) parts.push(`${name} ${b > a ? verbs[0] : verbs[1]} з ${fmt(a)} до ${fmt(b)}${unit}`); else same.push(name);
+  };
+  { const a = dtNum(P.d_obj_t_0), b = dtNum(cur('d_obj_t_0'));
+    if (a !== null && b !== null){
+      if (a >= 37.1 && b <= 37.0) parts.push(`температура нормалізувалась (${fmt(a)} → ${fmt(b)} °C)`);
+      else if (Math.abs(b - a) >= DT_LIMITS.t) parts.push(`температура ${b > a ? 'підвищилась' : 'знизилась'} з ${fmt(a)} до ${fmt(b)} °C`);
+      else same.push('температура'); } }
+  num('d_obj_chd_1', DT_LIMITS.spo2, 'SpO2', ' %', ['зросла','знизилась']);
+  num('d_obj_chd_0', DT_LIMITS.chd, 'ЧД', ' за хв', ['збільшилась','зменшилась']);
+  num('d_obj_chss_0', DT_LIMITS.chss, 'ЧСС', ' уд/хв', ['збільшилась','зменшилась']);
+  { const a = dtNum(P.d_obj_ad_0), b = dtNum(cur('d_obj_ad_0'));
+    if (a !== null && b !== null){ if (Math.abs(b - a) >= DT_LIMITS.ad) parts.push(`АТ ${b > a ? 'підвищився' : 'знизився'} з ${P.d_obj_ad_0}/${P.d_obj_ad_1 || '…'} до ${cur('d_obj_ad_0')}/${cur('d_obj_ad_1') || '…'} мм рт. ст.`); else same.push('АТ'); } }
+  const desc = [];
+  ['d_main','d_obj'].forEach(sid=>SECTIONS.find(s=>s.id === sid).fields.forEach(f=>{
+    if (f.type !== 'sel' || ['dyn','den'].includes(f.id) || (f.wrapEl && f.wrapEl.hidden)) return;
+    const id = sid + '_' + f.id, was = dtOptText(f, P[id], P[id + '_own']), now = dtOptText(f, f.el.value, (document.getElementById(id + '_own') || {}).value);
+    if (was && now && was !== now) desc.push(`${f.label.toLowerCase()}: було — ${was.replace(/[.\s]+$/, '')} → стало — ${now.replace(/[.\s]+$/, '')}`);
+  }));
+  let text = '';
+  const end1 = t => /\.$/.test(t) ? t : t + '.';
+  if (parts.length) text += end1('Порівняно з попереднім записом: ' + parts.join(', '));
+  if (same.length && parts.length) text += ' ' + cap(same.join(', ')) + ' — без суттєвих змін.';
+  if (!parts.length && same.length) text += 'Порівняно з попереднім записом показники (' + same.join(', ') + ') без суттєвих змін.';
+  if (desc.length) text += (text ? ' ' : '') + cap(desc.join('; ')) + '.';
+  return {text:text.trim(), parts, same, desc};
+}
+{ const f = F('d_main.dyn'); if (f && f.wrapEl){
+  const out = h('div', {class:'dt-cmp', hidden:''});
+  const btn = h('button', {type:'button', class:'more', onclick:()=>{
+    const r = diaryCompare(); out.hidden = false; out.replaceChildren();
+    if (r.err || !r.text){ out.append(h('p', {class:'chips-hint'}, r.err || 'Нічого порівняти: внесіть сьогоднішні показники або змініть пункти огляду.')); return; }
+    out.append(h('p', {class:'dt-cmp-t'}, r.text), h('div', {class:'acts2'},
+      h('button', {type:'button', class:'btn primary', onclick:()=>{ const d = F('d_obj.dod'); undoPush('динаміка в запис'); d.el.value = [d.el.value.trim(), r.text].filter(Boolean).join(' '); d.el.dispatchEvent(new Event('input', {bubbles:true})); out.hidden = true; toast('Додано в «Додатково» запису'); }}, 'Вставити в запис'),
+      h('button', {type:'button', class:'more', onclick:()=>{ out.hidden = true; }}, 'Закрити')),
+      h('p', {class:'chips-hint'}, 'Оцінку динаміки (покращення / погіршення) вибираєте ви в полі «Динаміка».'));
+  }}, '↔ Порівняти з учора');
+  f.wrapEl.append(btn, out);
+} }
+try{ applyDProfile(); }catch(e){}
 </script>
 
 </body>

@@ -1324,3 +1324,14 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .sexask[hidden]{display:none}
 .sexask button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:6px;padding:1px 7px;font:inherit;cursor:pointer}
 .sexask button:hover,.sexask button:focus-visible{background:var(--surface,#fff)}
+
+/* 0.9.3.56 — щоденник: «з учора», «внесіть сьогоднішні», порівняння */
+.f.dprev>label::after,.f.dprev>.lbl::after{content:" · з учора";color:var(--muted,#667);font-weight:400;font-size:12px}
+.f.dprev{background:var(--surface-2,#f6f7fa);border-radius:8px}
+.f.dtoday{outline:2px dashed var(--warn-line,#e0b84a);outline-offset:3px;border-radius:8px}
+.f.dtoday>label::after,.f.dtoday>.lbl::after{content:" · внесіть сьогоднішні";color:var(--warn-ink,#7a5200);font-weight:600;font-size:12px}
+.dt-spo2{margin-top:4px}
+.dt-cmp{margin-top:6px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+.dt-cmp-t{margin:0 0 6px}
+@media screen{.b003 .dprev{background:rgba(120,130,150,.08)}.b003 .dprev::after{content:"з учора";font-size:10px;color:var(--muted,#667);margin-left:6px}}
+@media print{.b003 .dprev{background:none}.b003 .dprev::after{content:none}}
