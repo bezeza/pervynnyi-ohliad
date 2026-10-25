@@ -1411,6 +1411,30 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   #paper.phcol .gaplist{display:none!important}
   .pe-box,.diary-inline-editor{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-height:62vh!important;border-radius:14px 14px 0 0!important}
 }
+
+/* 0.9.3.57 — телефон: нижня панель не обрізає «Копіювати»; режими «Значки» і «Компактно» */
+@media (max-width:899px){
+  .mbar{padding-left:8px;padding-right:8px;gap:6px}
+  .mbar .btn{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mbar #copy2{flex:2 1 auto}
+  .ph-icons .mbar #navBtn,.ph-icons .mbar #mbLabs,.ph-icons .mbar #toText{flex:0 0 52px;font-size:0!important;padding:10px 0}
+  .ph-icons .mbar #navBtn::before{content:'☰';font-size:20px}
+  .ph-icons .mbar #mbLabs::before{content:'🧪';font-size:19px}
+  .ph-icons .mbar #toText::before{content:'📄';font-size:19px}
+  .ph-dense .panel{padding:10px 10px}
+  .ph-dense .ph{margin-bottom:8px}
+  .ph-dense .grid{gap:6px 10px!important}
+  .ph-dense .f{gap:2px}
+  .ph-dense .f>label,.ph-dense .f>.lbl{font-size:12.5px}
+  .ph-dense input:not([type=checkbox]):not([type=radio]),.ph-dense select{padding:5px 9px!important;min-height:38px!important;height:auto!important;font-size:15px!important}
+  .ph-dense textarea{padding:6px 9px!important;min-height:0!important;font-size:15px!important}
+  .ph-dense .ph h2,.ph-dense .ph h3{font-size:19px}
+  .ph-dense .seg button,.ph-dense .vseg button{padding-top:6px!important;padding-bottom:6px!important;min-height:38px!important}
+  .ph-dense .chip{padding:6px 10px;font-size:14px}
+  .ph-dense .chips{gap:6px}
+  .ph-dense .chips-hint{font-size:12.5px;margin-top:2px}
+  .ph-dense .wrap{gap:8px}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1486,7 +1510,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 
 <div class="mbar">
   <button class="btn" id="navBtn" type="button" aria-haspopup="dialog" aria-label="Усі розділи"><span aria-hidden="true">☰</span> Розділи</button>
-  <button class="btn" id="toText" type="button">Текст огляду</button>
+  <button class="btn" id="toText" type="button" aria-label="Текст документа">Текст огляду</button>
   <button class="btn primary" id="copy2" type="button">Копіювати</button>
 </div>
 <div class="navsheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Розділи" hidden><div class="nshead"><b>Розділи</b><button class="btn" type="button" id="navClose">Закрити ✕</button></div><div id="navList"></div></div>
@@ -3569,7 +3593,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.57', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.57', '25.10.2026', '«Перед друком» на телефоні: бланк одразу читабельний (200 %), гортається пальцем, масштаб — двома пальцями або «− / + / ⇔ по ширині» (запам’ятовується); перегляд на всю висоту екрана; перемикачі аркуша — під «Вигляд ▾», «Ще не заповнено» згорнуто; віконця правки на бланку відкриваються знизу екрана'],
+  ['0.9.3.57', '25.10.2026', '«Перед друком» на телефоні: бланк одразу читабельний (200 %), гортається пальцем, масштаб — двома пальцями або «− / + / ⇔ по ширині» (запам’ятовується); перегляд на всю висоту екрана; перемикачі аркуша — під «Вигляд ▾», «Ще не заповнено» згорнуто; віконця правки на бланку відкриваються знизу екрана. «Вигляд» для телефона: розмір тексту, щільність (звичайно / компактно), нижня панель (значки / підписи), масштаб аркуша за замовчуванням — лише для цього пристрою; нижня панель більше не обрізає «Копіювати»'],
   ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Теми: «Теплий папір» — денна, з м’яким теплим фоном замість чисто білого, і «Кабінет» — нейтральна сіра, як у Skiagrama (кнопка теми: авто → день → теплий папір → ніч → кабінет; також «Налаштування» → «Тема»), аркуш на екрані приглушений, друк без змін. Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
   ['0.9.3.55', '25.10.2026', 'резервні копії в папці даних: щодня копія всіх пацієнтів у «Резервні копії» (останні 30 днів), окремо від браузера й від «дзеркала» в папці «Пацієнти»; якщо пацієнтів стало менше — денна копія не перезаписується, а додається окремий файл із часом; копія перед кожним оновленням версії (останні 5); з PIN — зашифровано; стан і «Копія в папку зараз» — у «Резервні копії й відновлення»'],
   ['0.9.3.54', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
@@ -13828,6 +13852,7 @@ function openActs(){
       act('👥 Пацієнти', click('ptbar')),
       act('🩺 Профіль (спеціальність, де працюєте)', click('profBtn')),
       act('◐ Тема оформлення', click('themeBtn')),
+      act('▦ Вигляд на телефоні (розмір тексту, щільність, панель)', ()=>{ goTab('set'); setTimeout(()=>{ const v = document.getElementById('viewSet'); if (v){ const d = v.closest('details'); if (d) d.open = true; v.scrollIntoView({block:'start', behavior:'smooth'}); } }, 120); }),
       act('⚙ Налаштувати під себе', ()=>customizeOpen()),
       act('Усі налаштування', ()=>goTab('set'))));
   document.body.append(sh); document.body.style.overflow = 'hidden';
@@ -17397,6 +17422,39 @@ function phKeepRowVisible(){
   else if (rr.top < pr.top + 50) p.scrollTop -= pr.top + 50 - rr.top;
 }
 { const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ requestAnimationFrame(phKeepRowVisible); }catch(e){} return r; }; }
+/* ===== 0.9.3.57 — «Вигляд» для телефона =====
+   Раніше на телефоні «Вигляд» був один («На телефоні вигляд завжди один»), а ноутбук/монітор налаштовувались.
+   Тепер на телефоні (до 899 px) у «Вигляд» — свої налаштування; зберігаються лише на цьому пристрої:
+   • розмір тексту (той самий масштаб, що й на комп’ютері, але свій для кожного пристрою);
+   • щільність: звичайно / компактно (менші відступи — більше на екрані);
+   • нижня панель: значки (☰ 🧪 📄 — більше місця для «Копіювати») або підписи;
+   • масштаб аркуша «Перед друком» за замовчуванням.
+   Плюс: нижня панель більше не обрізає «Копіювати». */
+const PHV = Object.assign({dense:'normal', bar:'icons'}, (()=>{ try{ return JSON.parse(lsGet('po.phview', '{}')) || {}; }catch(e){ return {}; } })());
+function phvSave(){ lsSet('po.phview', JSON.stringify(PHV)); }
+function phvApply(){
+  const ph = isPhoneW(), r = document.documentElement;
+  r.classList.toggle('ph-dense', ph && PHV.dense === 'compact');
+  r.classList.toggle('ph-icons', ph && PHV.bar === 'icons');
+}
+{ const x0 = applyView; applyView = function(){ const r = x0.apply(this, arguments); try{ phvApply(); }catch(e){} return r; }; }
+{ const x0 = viewCtl; viewCtl = function(){
+  if (!isPhoneW()) return x0.apply(this, arguments);
+  const box = h('div', {class:'vctl'});
+  const seg = (name, cur, items, fn, hint) => h('div', {class:'vrow col'}, h('span', {class:'vl'}, name), h('div', {class:'vseg', role:'group', 'aria-label':name},
+    ...items.map(([k, l])=>h('button', {type:'button', 'aria-pressed':String(cur) === String(k) ? 'true' : 'false', onclick:()=>fn(k)}, l))), hint ? h('p', {class:'chips-hint vnote'}, hint) : '');
+  const Z = [0.9, 1, 1.1, 1.2, 1.3];
+  box.append(h('p', {class:'chips-hint vnote'}, 'Налаштування телефона — лише для цього пристрою; на комп’ютері свої.'));
+  box.append(seg('Розмір тексту', parseFloat(ZOOM) || 1, Z.map(z=>[z, Math.round(z * 100) + ' %']), z=>{ ZOOM = String(z); lsSet('po.zoom', ZOOM); applyZoom(); const s = $('#set_zoom'); if (s) s.value = ZOOM; applyView(); }));
+  box.append(seg('Щільність', PHV.dense, [['normal', 'Звичайно'], ['compact', 'Компактно']], k=>{ PHV.dense = k; phvSave(); applyView(); toast(k === 'compact' ? 'Компактно: менші відступи, більше на екрані' : 'Звичайні відступи'); },
+    'Компактно — менші відступи між полями й кнопками; на екран вміщується більше.'));
+  box.append(seg('Нижня панель', PHV.bar, [['icons', 'Значки'], ['text', 'Підписи']], k=>{ PHV.bar = k; phvSave(); applyView(); }, 'Значки ☰ 🧪 📄 залишають більше місця для «Копіювати».'));
+  box.append(seg('Аркуш «Перед друком»', typeof PHP !== 'undefined' ? PHP.k : 2, [[1, 'По ширині'], [1.5, '150 %'], [2, '200 %'], [2.5, '250 %']], k=>{ PHP.k = +k; try{ localStorage.setItem('po.phonez', String(PHP.k)); }catch(e){} try{ if (PAPER) renderPaper(); }catch(e){} renderViewCtl(); },
+    'Масштаб також змінюється двома пальцями прямо на аркуші.'));
+  return box;
+}; }
+/* кнопка «Вигляд» у шапці на телефоні — у меню «⋯ Документ і дії» (якщо є) або в «Налаштуваннях» */
+phvApply(); try{ renderViewCtl(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

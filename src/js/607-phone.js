@@ -29,6 +29,7 @@ function openActs(){
       act('👥 Пацієнти', click('ptbar')),
       act('🩺 Профіль (спеціальність, де працюєте)', click('profBtn')),
       act('◐ Тема оформлення', click('themeBtn')),
+      act('▦ Вигляд на телефоні (розмір тексту, щільність, панель)', ()=>{ goTab('set'); setTimeout(()=>{ const v = document.getElementById('viewSet'); if (v){ const d = v.closest('details'); if (d) d.open = true; v.scrollIntoView({block:'start', behavior:'smooth'}); } }, 120); }),
       act('⚙ Налаштувати під себе', ()=>customizeOpen()),
       act('Усі налаштування', ()=>goTab('set'))));
   document.body.append(sh); document.body.style.overflow = 'hidden';
