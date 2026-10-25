@@ -1435,3 +1435,28 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   body.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px)!important;min-height:120px!important}
   body.ph-split #outBox #out{max-height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px);overflow:auto}
 }
+
+/* 0.9.3.58 — телефон: «Порядок роботи з пацієнтом» */
+@media (max-width:899px){
+  .phstart{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 12px 10px;margin:0 0 14px}
+  .phst-h{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;min-height:32px}
+  .phst-h::-webkit-details-marker{display:none}
+  .phst-h b{font:600 16px var(--f-ui);flex:none}
+  .phst-p{flex:1;min-width:0;font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .phst-dd{flex:none;color:var(--muted);transition:transform .15s}
+  .phstart[open] .phst-dd{transform:rotate(180deg)}
+  .phstart[open] .phst-h{margin-bottom:8px}
+  .phst-x{min-height:36px;padding:4px 12px;margin-top:8px;font-size:13.5px}
+  .phst-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .phst-s{width:100%;display:flex;align-items:flex-start;gap:10px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:9px 10px;font:inherit}
+  .phst-s.next{border-color:var(--accent);background:var(--accent-soft)}
+  .phst-s.done{opacity:.72}
+  .phst-n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--ink);font:600 13px var(--f-ui)}
+  .phst-s.next .phst-n{background:var(--accent);color:var(--on-accent,#fff)}
+  .phst-s.done .phst-n{background:var(--ok);color:#fff}
+  .phst-t{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+  .phst-t b{font:600 15px var(--f-ui)}
+  .phst-t span{font-size:13.5px;color:var(--muted);line-height:1.35}
+  .phst-ok{flex:none;align-self:center;font-size:12px;color:var(--ok);max-width:76px;text-align:right;line-height:1.25}
+  .phst-f{margin:8px 2px 0;font-size:13px;color:var(--muted)}
+}

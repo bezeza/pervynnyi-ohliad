@@ -13,7 +13,7 @@ const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
 function show(i){
-  try{ setTimeout(renderTabNav, 0); }catch(e){}
+  try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
   active = i;
   if (TABS[i] && TABS[i].id === 'dx') dxPanel();
   TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });

@@ -1473,6 +1473,31 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   body.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px)!important;min-height:120px!important}
   body.ph-split #outBox #out{max-height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px);overflow:auto}
 }
+
+/* 0.9.3.58 — телефон: «Порядок роботи з пацієнтом» */
+@media (max-width:899px){
+  .phstart{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 12px 10px;margin:0 0 14px}
+  .phst-h{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;min-height:32px}
+  .phst-h::-webkit-details-marker{display:none}
+  .phst-h b{font:600 16px var(--f-ui);flex:none}
+  .phst-p{flex:1;min-width:0;font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .phst-dd{flex:none;color:var(--muted);transition:transform .15s}
+  .phstart[open] .phst-dd{transform:rotate(180deg)}
+  .phstart[open] .phst-h{margin-bottom:8px}
+  .phst-x{min-height:36px;padding:4px 12px;margin-top:8px;font-size:13.5px}
+  .phst-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .phst-s{width:100%;display:flex;align-items:flex-start;gap:10px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:9px 10px;font:inherit}
+  .phst-s.next{border-color:var(--accent);background:var(--accent-soft)}
+  .phst-s.done{opacity:.72}
+  .phst-n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--ink);font:600 13px var(--f-ui)}
+  .phst-s.next .phst-n{background:var(--accent);color:var(--on-accent,#fff)}
+  .phst-s.done .phst-n{background:var(--ok);color:#fff}
+  .phst-t{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+  .phst-t b{font:600 15px var(--f-ui)}
+  .phst-t span{font-size:13.5px;color:var(--muted);line-height:1.35}
+  .phst-ok{flex:none;align-self:center;font-size:12px;color:var(--ok);max-width:76px;text-align:right;line-height:1.25}
+  .phst-f{margin:8px 2px 0;font-size:13px;color:var(--muted)}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1483,7 +1508,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.57 від 25.10.2026">v0.9.3.57 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.58 від 25.10.2026">v0.9.3.58 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3629,8 +3654,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.57', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.58', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.58', '25.10.2026', 'телефон: картка «Порядок роботи» у вкладці «Пацієнт» — 6 кроків від ПІБ до «Копіювати», кожен веде на потрібне місце, виконані позначаються ✓ (сховати — «Зрозуміло», повернути — «⋯» → «Як працювати з пацієнтом»); коротка шапка без пацієнта; поруч із «⋯» видно назву документа; виправлено: після перезапуску вгорі іноді лишалась стара навігація «‹ розділ ›»'],
   ['0.9.3.57', '25.10.2026', '«Перед друком» на телефоні: бланк одразу читабельний (200 %), гортається пальцем, масштаб — двома пальцями або «− / + / ⇔ по ширині» (запам’ятовується); перегляд на всю висоту екрана; перемикачі аркуша — під «Вигляд ▾», «Ще не заповнено» згорнуто; віконця правки на бланку відкриваються знизу екрана. «Вигляд» для телефона: розмір тексту, щільність (звичайно / компактно), нижня панель (значки / підписи), масштаб аркуша за замовчуванням — лише для цього пристрою; нижня панель більше не обрізає «Копіювати». Навігація на телефоні: вкладки внизу за етапами (Пацієнт · Анамнез · Огляд · Висновок · Текст із кількістю зауважень), угорі — стрічка розділів групи з крапками стану, 🧪, «⋯»; повернути як було — «Вигляд» → «Навігація». Заповнення на телефоні: документ угорі, варіанти внизу — натиснули рядок (напр. «Шкірні покриви»), вибрали, натиснули наступний; межу між документом і варіантами тягнете пальцем (запам’ятовується)'],
   ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Теми: «Теплий папір» — денна, з м’яким теплим фоном замість чисто білого, і «Кабінет» — нейтральна сіра, як у Skiagrama (кнопка теми: авто → день → теплий папір → ніч → кабінет; також «Налаштування» → «Тема»), аркуш на екрані приглушений, друк без змін. Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
   ['0.9.3.55', '25.10.2026', 'резервні копії в папці даних: щодня копія всіх пацієнтів у «Резервні копії» (останні 30 днів), окремо від браузера й від «дзеркала» в папці «Пацієнти»; якщо пацієнтів стало менше — денна копія не перезаписується, а додається окремий файл із часом; копія перед кожним оновленням версії (останні 5); з PIN — зашифровано; стан і «Копія в папку зараз» — у «Резервні копії й відновлення»'],
@@ -3742,7 +3768,7 @@ const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
 function show(i){
-  try{ setTimeout(renderTabNav, 0); }catch(e){}
+  try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
   active = i;
   if (TABS[i] && TABS[i].id === 'dx') dxPanel();
   TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
@@ -8487,7 +8513,7 @@ function layoutTabs(){
     if (!gr || gr.l !== l){ gr = {l, el:h('div', {class:'tgrp', role:'presentation'}, h('span', {class:'tgl', 'aria-hidden':'true'}, l))}; box.append(gr.el); }
     gr.el.append(t.tab);
   });
-  if (typeof renderTabNav === 'function') setTimeout(renderTabNav, 0);
+  if (typeof renderTabNav === 'function') setTimeout(()=>renderTabNav(), 0);
 }
 TABS.forEach((s,i)=>{
   s.tab = h('button', {type:'button', class:'tab', role:'tab', id:`tab_${s.id}`, onclick:()=>show(i)}, s.short || s.title, h('span',{class:'dot','aria-hidden':'true'}));
@@ -17538,7 +17564,7 @@ function phtRenderStrip(){
       h('span', {class:'pht-d', 'aria-hidden':'true'}), t.short || t.title)); });
   const extra = h('div', {class:'pht-x'},
     h('button', {type:'button', class:'btn pht-e', 'aria-label':'Журнал обстежень', title:'Журнал обстежень', onclick:()=>{ try{ labsOpen(); }catch(e){} }}, '🧪'),
-    h('button', {type:'button', class:'btn pht-e', 'aria-label':'Документ і дії', title:'Документ і дії', onclick:()=>{ try{ openActs(); }catch(e){} }}, '⋯'));
+    h('button', {type:'button', class:'btn pht-e pht-doc-b', 'aria-label':'Документ і дії: ' + docShort(DOC), title:'Документ і дії', onclick:()=>{ try{ openActs(); }catch(e){} }}, docShort(DOC) + ' ⋯'));
   tn.append(strip, extra);
   const a = strip.querySelector('[aria-selected="true"]'); if (a) try{ a.scrollIntoView({block:'nearest', inline:'center'}); }catch(e){}
 }
@@ -17596,6 +17622,75 @@ function phsKeep(){
 new MutationObserver(()=>{ try{ phsApply(); requestAnimationFrame(phsKeep); }catch(e){} }).observe(document.body, {childList:true});
 addEventListener('resize', ()=>{ try{ phsApply(); }catch(e){} });
 phsApply();
+/* ===== 0.9.3.58 — телефон: «Як працювати з пацієнтом» =====
+   Лікар відкриває програму на телефоні і не розуміє, з чого почати. Тепер:
+   • угорі вкладки «Пацієнт» — картка «Порядок роботи»: 6 кроків від ПІБ до «Копіювати», кожен — кнопка,
+     що веде на потрібне місце; виконані кроки позначаються ✓, наступний підсвічено;
+   • поки ПІБ не вписано — розгорнута, далі згорнута в рядок «крок N з 6 · далі: …»; прибрати — «Більше не показувати»; повернути — «⋯» → «❓ Як працювати з пацієнтом»;
+   • шапка без пацієнта коротка: «Новий пацієнт» / «Список пацієнтів ▾» (без обрізаних підказок);
+   • поруч із «⋯» видно, який документ заповнюєте (Огляд, Щоденник…). */
+const PHST = { hide:false, open:null };
+try{ PHST.hide = localStorage.getItem('po.phstart') === '0'; }catch(e){}
+function phstGroupIdx(label){ try{ const g = phtGroups().find(x=>x.l === label); return g ? g.idx : []; }catch(e){ return []; } }
+function phstFilled(label){ return phstGroupIdx(label).some(i=>TABS[i] && TABS[i].special !== 'hv' && TABS[i].tab.classList.contains('filled')); }
+function phstGo(label, id){
+  if (id){ const i = TABS.findIndex(t=>t.id === id); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); return; } }
+  if (label === 'Текст'){ $('#outBox').classList.add('open'); return; }
+  const idx = phstGroupIdx(label); if (idx.length){ $('#outBox').classList.remove('open'); show(idx[0]); window.scrollTo({top:0}); }
+}
+function phstSteps(){
+  const hasHv = TABS.some(t=>t.special === 'hv' && t.tab && !t.tab.hidden), G = (()=>{ try{ return phtGroups().map(g=>g.l); }catch(e){ return []; } })();
+  const S = [
+    {k:'pt', i:'👤', t:'ПІБ і дата народження', d:'Розділ «Запис». Стать і вік визначаться самі.', done:!!mv('pib'), go:()=>{ const i = TABS.findIndex(t=>t.special === 'meta'); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); setTimeout(()=>{ const e = document.getElementById('meta_pib'); if (e && !e.value) e.focus(); }, 150); } else phstGo('Пацієнт'); }},
+    hasHv ? {k:'hv', i:'🔎', t:'Оберіть хворобу', d:'«За хворобою»: програма сама заповнить типові скарги, анамнез і огляд.', done:!!(typeof curKey !== 'undefined' && curKey), go:()=>{ const i = TABS.findIndex(t=>t.special === 'hv'); if (i >= 0){ show(i); window.scrollTo({top:0}); } }} : null,
+    G.includes('Анамнез') ? {k:'an', i:'💬', t:'Скарги й анамнез', d:'Вкладка «Анамнез» унизу: перевірте й підправте під пацієнта.', done:phstFilled('Анамнез'), go:()=>phstGo('Анамнез')} : null,
+    G.includes('Огляд') ? {k:'og', i:'🩺', t:'Огляд', d:'Вкладка «Огляд»: змінюйте лише те, що не в нормі.', done:phstFilled('Огляд'), go:()=>phstGo('Огляд')} : null,
+    G.includes('Висновок') ? {k:'vy', i:'📋', t:'Діагноз і план', d:'Вкладка «Висновок».', done:phstFilled('Висновок'), go:()=>phstGo('Висновок')} : null,
+    {k:'tx', i:'📄', t:'Перевірте текст і скопіюйте', d:'Вкладка «Текст»: зауваження, «Копіювати» або «Друк».', done:false, go:()=>phstGo('Текст')}
+  ].filter(Boolean);
+  const n = S.findIndex(s=>!s.done); if (n >= 0) S[n].next = true;
+  return S;
+}
+function phstCard(){
+  const st = phstSteps(), nx = st.findIndex(s=>s.next), open = PHST.open != null ? PHST.open : !mv('pib') && !(TABS[active] && TABS[active].special === 'meta');
+  const box = h('details', {class:'phstart', 'aria-label':'Порядок роботи з пацієнтом'}); if (open) box.open = true;
+  
+  box.append(h('summary', {class:'phst-h', onclick:()=>{ PHST.open = !box.open; }},
+    h('b', {}, 'Порядок роботи'),
+    h('span', {class:'phst-p'}, nx >= 0 ? `крок ${nx + 1} з ${st.length} · далі: ${st[nx].t}` : 'усе заповнено'),
+    h('span', {class:'phst-dd', 'aria-hidden':'true'}, '▾')));
+  const ol = h('ol', {class:'phst-l'});
+  st.forEach((s, k)=>ol.append(h('li', {}, h('button', {type:'button', class:'phst-s' + (s.done ? ' done' : '') + (s.next ? ' next' : ''), onclick:s.go},
+    h('span', {class:'phst-n', 'aria-hidden':'true'}, s.done ? '✓' : String(k + 1)),
+    h('span', {class:'phst-t'}, h('b', {}, s.i + ' ' + s.t), h('span', {}, s.d)),
+    s.done ? h('span', {class:'phst-ok'}, k < 2 ? 'є' : 'заповнено — перевірте') : ''))));
+  box.append(ol, h('p', {class:'phst-f'}, 'Усе зберігається само. Інший пацієнт — натисніть шапку вгорі; новий — «＋ Новий пацієнт».'),
+    h('button', {type:'button', class:'btn phst-x', onclick:()=>{ PHST.hide = true; try{ localStorage.setItem('po.phstart', '0'); }catch(e){} phstRender(); toast('Повернути: «⋯» → «Як працювати з пацієнтом»', 3000); }}, 'Більше не показувати'));
+  return box;
+}
+function phstRender(){
+  document.querySelectorAll('.phstart').forEach(x=>x.remove());
+  if (PHST.hide || !isPhone() || typeof phtOn !== 'function' || !phtOn()) return;
+  if (DOC === 'shch') return;
+  const cur = TABS[active]; if (!cur || !cur.panel || TOOL_TABS.includes(cur.id)) return;
+  let g = ''; try{ g = phtGroupOf(active); }catch(e){}
+  if (g !== 'Пацієнт') return;
+  cur.panel.prepend(phstCard());
+}
+{ const x0 = renderTabNav; renderTabNav = function(){ const r = x0.apply(this, arguments); try{ phstRender(); }catch(e){} return r; }; }
+{ let t = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(t); t = setTimeout(()=>{ try{ if (document.querySelector('.phstart')) phstRender(); }catch(e){} }, 400); return r; }; }
+/* у «⋯ Документ і дії» — повернути картку */
+{ const x0 = openActs; openActs = function(){ const r = x0.apply(this, arguments);
+  const lists = document.querySelectorAll('.actsheet .as-list'), l = lists[lists.length - 1];
+  if (l) l.prepend(h('button', {type:'button', class:'btn', onclick:()=>{ const sh = document.querySelector('.actsheet'); if (sh) sh.remove(); document.body.style.overflow = '';
+    PHST.hide = false; PHST.open = true; try{ localStorage.removeItem('po.phstart'); }catch(e){} phstGo('Пацієнт'); phstRender(); }}, '❓ Як працювати з пацієнтом'));
+  return r; }; }
+/* коротка шапка без пацієнта */
+{ const x0 = renderPtBar; renderPtBar = function(){ const r = x0.apply(this, arguments);
+  try{ if (isPhone()){ const bar = $('#ptbar'), p2 = bar && bar.querySelector('.pt2'), p1 = bar && bar.querySelector('.pt1');
+    if (p2 && p2.textContent === 'Натисніть тут — список пацієнтів'){ p2.textContent = 'Список пацієнтів ▾'; p1.innerHTML = ''; p1.append(h('span', {class:'warn', style:'display:inline'}, 'Новий пацієнт')); } } }catch(e){}
+  return r; }; }
+try{ renderPtBar(); renderTabNav(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
