@@ -27,11 +27,14 @@ function phsApply(){
 function phsKeep(){
   if (!isPhone()) return;
   const box = document.querySelector(PHS_SEL); if (!box) return;
-  const row = document.querySelector('#paper .pe-active, #paper .diary-edit-active') || (typeof QE !== 'undefined' && QE.f && QE.f.wrapEl ? null : null);
-  const sc = document.getElementById('paper'); if (!row || !sc) return;
+  let row = document.querySelector('#paper .pe-active, #paper .diary-edit-active'), sc = document.getElementById('paper');
+  /* звичайний текст: фраза, по якій клацнули (зберігаємо в обгортці qeOpen) */
+  if (!row && PHS.anchor && PHS.anchor.isConnected && document.querySelector('.qe')){ row = PHS.anchor; sc = document.getElementById('out'); }
+  if (!row || !sc) return;
   const top = box.getBoundingClientRect().top, r = row.getBoundingClientRect(), pr = sc.getBoundingClientRect();
   if (r.bottom > top - 8) sc.scrollTop += r.bottom - top + 24; else if (r.top < pr.top + 8) sc.scrollTop -= pr.top + 8 - r.top;
 }
+{ const x0 = qeOpen; qeOpen = function(f, sid, anchor){ PHS.anchor = anchor || null; return x0.apply(this, arguments); }; }
 new MutationObserver(()=>{ try{ phsApply(); requestAnimationFrame(phsKeep); }catch(e){} }).observe(document.body, {childList:true});
 addEventListener('resize', ()=>{ try{ phsApply(); }catch(e){} });
 phsApply();
