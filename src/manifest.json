@@ -115,6 +115,7 @@
   "633-print-audit-fixes.js",
   "635-paper-fields.js",
   "636-paper-edit.js",
-  "637-title-back.js"
+  "637-title-back.js",
+  "638-pin-hardening.js"
  ]
 }

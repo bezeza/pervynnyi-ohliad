@@ -389,14 +389,93 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  // 0.9.3.17 PIN і шифрування
  { if (!w.TextEncoder){ w.TextEncoder=require('util').TextEncoder; w.TextDecoder=require('util').TextDecoder; } if (!w.crypto.subtle){ try{ Object.defineProperty(w.crypto, 'subtle', {value:require('crypto').webcrypto.subtle, configurable:true}); }catch(e){} }
    if (w.crypto.subtle){
-     const r=await w.eval(`(async()=>{ const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('1234', raw); const k=await pinUnwrap('1234', cfg);
-       const e=await encObj({name:'Секретний Пацієнт', x:[1,2]}, k); const d=await decObj(e, k); let bad=false; try{ await pinUnwrap('0000', cfg); }catch(x){ bad=true; }
+     const r=await w.eval(`(async()=>{ const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('123456', raw); const k=await pinUnwrap('123456', cfg);
+       const e=await encObj({name:'Секретний Пацієнт', x:[1,2]}, k); const d=await decObj(e, k); let bad=false; try{ await pinUnwrap('000000', cfg); }catch(x){ bad=true; }
        return {plain:JSON.stringify(e).includes('Секретний'), ok:d.name==='Секретний Пацієнт', bad, iter:cfg.iter}; })()`);
      ok('Шифрування: AES-GCM — у зашифрованому немає ПІБ, розшифровується ключем', !r.plain && r.ok, JSON.stringify(r));
      ok('Шифрування: неправильний PIN не відкриває ключ; PBKDF2 ≥ 300 000 ітерацій', r.bad && r.iter>=300000);
    }
    ok('PIN: блок у Налаштуваннях', !!doc.querySelector('.pinbox'));
    ok('PIN: поки не введено — запис відкритим текстом заборонено', w.eval("(()=>{ const c=PINC.cfg; PINC.cfg={v:1}; const b=pinBlocked(); PINC.cfg=c; return b; })()")); }
+ { // 0.9.3.53: persistent backoff for every typed wrapper; config checksum is detectable tampering, not an HMAC.
+   const r=JSON.parse(await w.eval(`(async()=>{
+     const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('654321',raw), tag=await pinGuardTag(cfg), key=PIN_GUARD_PREFIX+tag;
+     await pinGuardInit(cfg); const wrong=await pinUnwrap('incorrect',cfg).catch(e=>e.pinGate), afterWrong=JSON.parse(localStorage.getItem(key)); await pinGuardInit(cfg); let checked=0;
+     const attempt=async now=>{try{await pinGuardCheck('incorrect',cfg,async()=>{checked++;throw Error('wrong')},now);return {code:'success'};}
+       catch(e){return {code:e.pinGate,until:e.pinUntil||0};}};
+     const first=[]; for(let i=0;i<5;i++) first.push(await attempt(1000000));
+     const reload={tries:0,until:0}; PINC.tries=reload.tries; PINC.until=reload.until;
+     const blocked=await attempt(1029999), n5=[]; for(let i=0;i<5;i++) n5.push(await attempt(1030000));
+     const n10=[]; for(let i=0;i<5;i++) n10.push(await attempt(1330000));
+     const lockedAfterReload=await attempt(1400000);
+     const expired=await pinGuardCheck('correct',cfg,async()=>true,1630000), saved=JSON.parse(localStorage.getItem(key));
+     let short=false; try{await pinWrap('1234',raw);}catch(e){short=e.pinGate==='short';}
+     const other=await pinWrap('765432',raw), otherTag=await pinGuardTag(other); await pinGuardInit(other);
+     await pinGuardCheck('wrong',other,async()=>{throw Error('wrong')},4000000).catch(()=>{});
+     const ownAfter=JSON.parse(localStorage.getItem(key));
+     const tamper=await pinWrap('987654',raw), tamperTag=await pinGuardTag(tamper), tamperKey=PIN_GUARD_PREFIX+tamperTag;
+     await pinGuardInit(tamper); await pinGuardCheck('wrong',tamper,async()=>{throw Error('wrong')},5000000).catch(()=>{});
+     const rec=JSON.parse(localStorage.getItem(tamperKey)); rec.failures=0; localStorage.setItem(tamperKey,JSON.stringify(rec));
+     const edited=await pinGuardCheck('wrong',tamper,async()=>{throw Error('wrong')},5000001).catch(e=>({code:e.pinGate,until:e.pinUntil||0}));
+     const primary=await pinWrap('112233',raw); await pinGuardInit(primary); localStorage.setItem('po.pin',JSON.stringify(primary)); PINC.cfg=primary;
+     await pinGuardCheck('wrong',primary,async()=>{throw Error('wrong')},6000000).catch(()=>{});
+     const legacyTag=await pinGuardTag(primary), legacyAttempts=JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+legacyTag)); delete primary.guard;
+     localStorage.setItem('po.pin',JSON.stringify(primary)); PINC.cfg=primary;
+     const migratedResults=await Promise.all([6000001,6000002].map(now=>pinGuardCheck('wrong',primary,async()=>{throw Error('wrong')},now).catch(e=>e.pinGate)));
+     const migratedTag=await pinGuardTag(primary), migrated=JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+migratedTag)); PINC.cfg=null; localStorage.removeItem('po.pin');
+     const missing=await pinWrap('223344',raw), missingTag=await pinGuardTag(missing); await pinGuardInit(missing); localStorage.setItem('po.pin',JSON.stringify(missing)); PINC.cfg=missing; localStorage.removeItem(PIN_GUARD_PREFIX+missingTag);
+     const oldLog=logAct, logged=[]; logAct=(...args)=>logged.push(args[0]);
+     const firstMissing=await pinGuardCheck('wrong',missing,async()=>{throw Error('wrong')},7000000).catch(e=>e.pinGate), missingState=JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+missingTag));
+     logAct=oldLog; PINC.cfg=null; localStorage.removeItem('po.pin');
+     const stored=await pinWrap('334455',raw), storedTag=await pinGuardTag(stored), storedKey=PIN_GUARD_PREFIX+storedTag; await pinGuardInit(stored);
+     const storageProto=Object.getPrototypeOf(localStorage), originalSet=storageProto.setItem; storageProto.setItem=function(k,v){if(k===storedKey)throw Error('quota');return originalSet.call(this,k,v);};
+     const oldWarn=console.warn; console.warn=()=>{};
+     const resetError=await pinGuardCheck('334455',stored,async()=>true,8000000).catch(e=>e.pinGate);
+     const failedStorage=await pinGuardCheck('wrong',stored,async()=>{throw Error('wrong')},8000001).catch(e=>({code:e.pinGate,until:e.pinUntil||0}));
+     console.warn=oldWarn; storageProto.setItem=originalSet; PINC.tries=0; PINC.until=0;
+     const legacySalt=crypto.getRandomValues(new Uint8Array(16)), legacyIv=crypto.getRandomValues(new Uint8Array(12)), legacyKek=await pinKEK('1234',legacySalt,PIN_ITER);
+     const legacyCfg={v:1,salt:pb64(legacySalt),iter:PIN_ITER,iv:pb64(legacyIv),w:pb64(await crypto.subtle.encrypt({name:'AES-GCM',iv:legacyIv},legacyKek,raw))};
+     const legacyKey=await pinUnwrap('1234',legacyCfg);
+     return JSON.stringify({new:cfg.guard===1,short,first:first.map(x=>x.code),firstUntil:first[4].until,blocked, n5:n5.map(x=>x.code),n10:n10.map(x=>x.code),
+       escalated:n5[4].until-1030000, escalated2:n10[4].until-1330000, reload:lockedAfterReload.code==='cooldown'&&lockedAfterReload.until>1400000,
+       reset:saved.failures===0&&saved.until===0&&expired===true, other:otherTag!==tag&&ownAfter.failures===0, tamper:edited.code==='cooldown'&&edited.until-5000001===300000,
+       unmark:migrated.failures===10&&migrated.until-6000001===300000&&primary.guard===1&&migratedResults.every(x=>x==='cooldown'),
+       missing:firstMissing==='wrong'&&missingState.failures===1&&missingState.until===0&&logged.some(x=>/лічильник спроб PIN відсутній/i.test(x)),
+       resetError:resetError===true&&failedStorage.code==='storage'&&failedStorage.until>8000001, legacy:!!legacyKey, wrapper:wrong==='wrong'&&afterWrong.failures===1});
+   })()`));
+   ok('Новий PIN: 6 символів; короткий новий PIN відхиляється',r.new&&r.short,JSON.stringify(r));
+   ok('PIN: 5 спроб створюють 30-секундну паузу, яка переживає скидання пам’яті',r.first.every(x=>x==='wrong'||x==='cooldown')&&r.firstUntil===1030000&&r.blocked.code==='cooldown'&&r.reload,JSON.stringify(r));
+   ok('PIN: після 5 хибних вводів пауза 30 с; після 10 і далі — 5 хвилин максимум',r.escalated===300000&&r.escalated2===300000,JSON.stringify(r));
+   ok('PIN: правильний ввід скидає лічильник; інший файловий PIN має свій лічильник',r.reset&&r.other,JSON.stringify(r));
+   ok('PIN: зміну лічильника й маркера виявлено; пауза після пошкодження — не довша за 5 хвилин',r.tamper&&r.unmark,JSON.stringify(r));
+   ok('PIN: відсутній лічильник починається з нуля з подією в журналі; помилка сховища блокує лише після хибного PIN',r.missing&&r.resetError,JSON.stringify(r));
+   ok('PIN: чинний 4-символьний конверт відкривається',r.legacy,JSON.stringify(r));
+   ok('PIN: спільна перевірка pinUnwrap зберігає невдалу спробу',r.wrapper,JSON.stringify(r));
+ }
+ { // 0.9.3.53: UI показує тривалу паузу після п'ятої фактичної помилки.
+   const r=JSON.parse(await w.eval(`(async()=>{ const oldCfg=PINC.cfg, oldJson=localStorage.getItem('po.pin'), oldTries=PINC.tries, oldUntil=PINC.until;
+     const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('445566',raw); PINC.cfg=cfg; localStorage.setItem('po.pin',JSON.stringify(cfg)); await pinGuardInit(cfg); pinScreen('open',()=>{});
+     const scr=document.querySelector('.pinscr'), inp=scr.querySelector('input'), btn=scr.querySelector('button'), msg=scr.querySelector('.pinmsg');
+     for(let i=0;i<5;i++){ inp.value='000000'; btn.click(); for(let n=0;n<500 && msg.textContent==='Перевіряю…';n++) await new Promise(resolve=>setTimeout(resolve,10)); }
+     const result={paused:/зачекайте \\d+ с/.test(msg.textContent),text:msg.textContent,persisted:JSON.parse(localStorage.getItem(PIN_GUARD_PREFIX+await pinGuardTag(cfg))).failures===5};
+     scr.remove(); document.body.classList.remove('pinlocked'); await pinGuardForget(cfg); if(oldJson===null)localStorage.removeItem('po.pin');else localStorage.setItem('po.pin',oldJson);
+     PINC.cfg=oldCfg;PINC.tries=oldTries;PINC.until=oldUntil;return JSON.stringify(result); })()`));
+   ok('PIN: екран входу показує паузу після п’ятої хибної спроби',r.paused&&r.persisted,JSON.stringify(r));
+ }
+ { // 0.9.3.53: правильний PIN відкриває програму, навіть якщо лічильник не записується.
+   const r=JSON.parse(await w.eval(`(async()=>{ const oldCfg=PINC.cfg, oldJson=localStorage.getItem('po.pin'), oldTries=PINC.tries, oldUntil=PINC.until;
+     const raw=crypto.getRandomValues(new Uint8Array(32)), cfg=await pinWrap('556677',raw), tag=await pinGuardTag(cfg), key=PIN_GUARD_PREFIX+tag;
+     PINC.cfg=cfg; localStorage.setItem('po.pin',JSON.stringify(cfg)); await pinGuardInit(cfg);
+     const proto=Object.getPrototypeOf(localStorage), originalSet=proto.setItem, originalWarn=console.warn; let opened=false, warned=false;
+     try{ proto.setItem=function(k,v){if(k===key)throw Error('quota');return originalSet.call(this,k,v);}; console.warn=(...a)=>{if(a[0]==='[PIN]')warned=true;}; pinScreen('open',()=>{opened=true;});
+       const scr=document.querySelector('.pinscr'), inp=scr.querySelector('input'), btn=scr.querySelector('button'); inp.value='556677'; btn.click();
+       for(let n=0;n<500 && document.querySelector('.pinscr');n++) await new Promise(resolve=>setTimeout(resolve,10));
+       return JSON.stringify({opened,warned,unlocked:!document.body.classList.contains('pinlocked')&&!document.querySelector('.pinscr')});
+     }finally{ proto.setItem=originalSet; console.warn=originalWarn; document.querySelectorAll('.pinscr').forEach(x=>x.remove()); document.body.classList.remove('pinlocked'); await pinGuardForget(cfg);
+       if(oldJson===null)localStorage.removeItem('po.pin');else localStorage.setItem('po.pin',oldJson); PINC.cfg=oldCfg;PINC.tries=oldTries;PINC.until=oldUntil; }
+   })()`));
+   ok('PIN: правильний код відкриває програму, а помилка лічильника лише пишеться в журнал і попередження',r.opened&&r.unlocked&&r.warned,JSON.stringify(r));
+ }
  // 0.9.4 оформлення «Д» і щоденник під хворобу
  { w.eval("switchDoc('ohl')"); ap('pneu'); set('meta_pib','Тестовий Пацієнт');
    ok('Оформлення: документи — вкладками в шапці', !!doc.querySelector('header.top .topdocs #docSeg'));

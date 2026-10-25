@@ -56,7 +56,12 @@ function pinScreen(mode, onKey){
     if (!inp.value){ inp.focus(); return; }
     msg.textContent = 'Перевіряю…';
     try{ const key = await pinUnwrap(inp.value, PINC.cfg); PINC.key = key; PINC.tries = 0; scr.remove(); document.body.classList.remove('pinlocked'); try{ logAct('PIN введено', mode === 'open' ? 'відкриття' : 'після простою'); }catch(e){} onKey(key); }
-    catch(e){ PINC.tries++; inp.value = ''; inp.focus(); if (PINC.tries >= 5){ PINC.until = Date.now() + 30000; PINC.tries = 0; msg.textContent = 'Неправильний PIN 5 разів — зачекайте 30 секунд'; } else msg.textContent = 'Неправильний PIN'; }
+    catch(e){
+      if (e && e.pinGate==='cooldown'){ PINC.tries=0; PINC.until=e.pinUntil; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
+      if (e && e.pinGate==='storage'){ PINC.tries=4; PINC.until=e.pinUntil || Date.now()+300000; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
+      if (e && e.pinGate==='empty'){ msg.textContent=e.message; inp.focus(); return; }
+      PINC.tries++; inp.value = ''; inp.focus(); if (PINC.tries >= 5){ PINC.until = Date.now() + 30000; PINC.tries = 0; msg.textContent = 'Неправильний PIN 5 разів — зачекайте 30 секунд'; } else msg.textContent = 'Неправильний PIN';
+    }
   };
   inp.addEventListener('keydown', e=>{ if (e.key === 'Enter') go(); });
   const scr = h('div', {class:'pinscr lockscr', role:'dialog', 'aria-modal':'true', 'aria-label':'Введіть PIN'},
@@ -76,7 +81,8 @@ function pinForgot(){
         if (c.value.trim().toUpperCase() !== 'СТЕРТИ'){ toast('Впишіть слово СТЕРТИ'); c.focus(); return; }
         await new Promise(r=>{ try{ const q = indexedDB.deleteDatabase('po-db'); q.onsuccess = q.onerror = q.onblocked = ()=>r(); }catch(e){ r(); } });
         await new Promise(r=>{ try{ const q = indexedDB.deleteDatabase('po-bak'); q.onsuccess = q.onerror = q.onblocked = ()=>r(); }catch(e){ r(); } });
-        ['po.pin', PKEY, 'po.trash', 'po.last'].forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
+        const throttleKeys=[]; try{ for (let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if (k && k.startsWith('po.pin.attempt.')) throttleKeys.push(k); } }catch(e){}
+        ['po.pin', PKEY, 'po.trash', 'po.last', ...throttleKeys].forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
         location.reload(); }}, 'Стерти дані пацієнтів'))));
   document.body.append(dlg);
 }
@@ -139,7 +145,7 @@ async function pinRewriteAll(key, oldKey){
 /* відкрити зашифрований файл: попросити PIN, яким його зашифровано */
 function encFileOpen(o){ return new Promise(res=>{
   const inp = h('input', {type:'password', inputmode:'numeric', placeholder:'PIN файлу', 'aria-label':'PIN файлу'}), msg = h('p', {class:'chips-hint'}, ' ');
-  const go = async () => { try{ const key = await pinUnwrap(inp.value, o.lock); const d = await decObj(o.data, key); dlg.remove(); res(d); }catch(e){ msg.textContent = 'Неправильний PIN'; inp.value = ''; inp.focus(); } };
+  const go = async () => { try{ const key = await pinUnwrap(inp.value, o.lock); const d = await decObj(o.data, key); dlg.remove(); res(d); }catch(e){ msg.textContent = e && (e.pinGate==='cooldown' || e.pinGate==='storage') ? e.message : 'Неправильний PIN'; inp.value = ''; inp.focus(); } };
   inp.addEventListener('keydown', e=>{ if (e.key === 'Enter') go(); });
   const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Зашифрований файл'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Файл зашифровано'), h('button', {type:'button', class:'btn', onclick:()=>{ dlg.remove(); res(null); }}, 'Скасувати ✕')),
@@ -170,6 +176,7 @@ function drawPin(){
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:()=>pinSetDialog('on')}, 'Увімкнути PIN і шифрування')));
   } else {
     pinBox.append(h('p', {}, '🔒 Дані пацієнтів зашифровано (AES-256). PIN потрібен при відкритті програми й після простою.'),
+      h('p', {class:'chips-hint'}, 'Після 5 хибних вводів — пауза 30 с; після 10 і далі — 5 хв. Для копій даних використовуйте довгий PIN: скопійований конверт можна перевіряти поза програмою.'),
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>pinSetDialog('change')}, 'Змінити PIN'), h('button', {type:'button', class:'btn', onclick:()=>lockNow()}, 'Заблокувати зараз'),
         h('button', {type:'button', class:'more', onclick:()=>pinSetDialog('off')}, 'Вимкнути шифрування')));
   }
@@ -181,17 +188,17 @@ function pinSetDialog(mode){
   const run = async () => {
     try{
       if (mode !== 'on'){ await pinUnwrap(p0.value, PINC.cfg); }
-      if (mode !== 'off'){ if (p1.value.length < 4){ msg.textContent = 'PIN — щонайменше 4 символи (краще 6 цифр)'; return; } if (p1.value !== p2.value){ msg.textContent = 'PIN не збігається'; return; } }
+      if (mode !== 'off'){ if (p1.value.length < 6){ msg.textContent = 'Новий PIN має містити щонайменше 6 символів'; return; } if (p1.value !== p2.value){ msg.textContent = 'PIN не збігається'; return; } }
       if (mode === 'on' && !ack.checked){ msg.textContent = 'Підтвердьте, що розумієте: забутий PIN не відновлюється'; return; }
       msg.textContent = 'Зачекайте…';
       if (mode === 'on'){ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap(p1.value, raw);
         const key = await crypto.subtle.importKey('raw', raw, {name:'AES-GCM'}, false, ['encrypt', 'decrypt']);
         if (!await pinEnable(key, cfg)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; } toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
-      if (mode === 'change'){ const raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(PINC.cfg.salt), PINC.cfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(PINC.cfg.iv)}, kek, pub64(PINC.cfg.w)); })();
-        const cfg = await pinWrap(p1.value, raw); PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('PIN змінено'); logAct('PIN змінено'); }
+      if (mode === 'change'){ const oldCfg=PINC.cfg, raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(oldCfg.salt), oldCfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(oldCfg.iv)}, kek, pub64(oldCfg.w)); })();
+        const cfg = await pinWrap(p1.value, raw); await pinGuardInit(cfg); localStorage.setItem('po.pin', JSON.stringify(cfg)); PINC.cfg = cfg; await pinGuardForget(oldCfg); toast('PIN змінено'); logAct('PIN змінено'); }
       if (mode === 'off'){ if (!await pinDisable()){ msg.textContent = 'Сховище не готове'; return; } toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
       dlg.remove(); drawPin();
-    }catch(e){ msg.textContent = mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
+    }catch(e){ msg.textContent = e && e.pinGate ? e.message : mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
   };
   const row = (l, i) => h('label', {class:'wl'}, l, i);
   const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':T},
