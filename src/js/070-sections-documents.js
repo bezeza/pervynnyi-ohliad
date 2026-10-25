@@ -151,6 +151,7 @@
   {id:'dnapr', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата направлення в стаціонар'},
   {id:'vs', type:'sel', noOut:true, def:0, label:'027/о, п. 5б', opts:['виписки','смерті']},
   {id:'per', type:'period', label:'Період лікування', tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
+  {id:'tvyp', type:'line', noOut:true, label:'Час виписки (бланк 003/о, п. 20)', placeholder:'год:хв, напр. 10:30', inputmode:'numeric'},
   {id:'nadh', type:'sel', label:'Госпіталізація (якщо не вибрано — береться з первинного огляду)', tpl:'{v}', cont:true,
     fallback:()=>{ const a = val(F('morbi.hosp'), true); if (!a) return ''; const b = val(F('morbi.hospd'), true); return a.replace(/^\[([^|]*)\|([^\]]*)\]/, (m,x,y)=>'[' + x.toLowerCase() + '|' + y.toLowerCase() + ']').replace(/^[А-ЯІЇЄҐ]/, c=>c.toLowerCase()) + (b ? ' ' + b : ''); },
     opts:['[госпіталізований|госпіталізована] за електронним направленням сімейного лікаря','[госпіталізований|госпіталізована] за самозверненням',
@@ -176,7 +177,9 @@
   {id:'z51', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'51. Аналіз крові на амілазу', placeholder:'дата: … Од/л', tpl:'Аналіз крові на амілазу: {v}'},
   {id:'z52', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'52. Аналіз сечі на глюкозу (з добової кількості)', placeholder:'дата: …', tpl:'Аналіз сечі на глюкозу (з добової кількості): {v}'},
   {id:'z53', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'53. Аналіз сечі на діастазу', placeholder:'дата: … Од/л', tpl:'Аналіз сечі на діастазу: {v}'},
-  {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')}
+  {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, docs:['epi','etap','per','napr','gosp','konc'], label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')},
+  {id:'konslog', type:'auto', docs:['kons'], label:'Обстеження з журналу для висновку', tpl:'{v}', br:true, fn:()=>''},
+  {id:'konsown', type:'text', rows:4, wide:true, docs:['kons'], label:'Своє (результати поза журналом)', placeholder:'Впишіть результати, яких немає в журналі обстежень', tpl:'{v}', sep:'\n', br:true}
 ]},
 { id:'e_lik', docs:['epi','f066'], title:'Лікування і стан при виписці', short:'Лікування', head:'', fields:[
   {id:'lik', type:'text', rows:4, label:'Проведене лікування (якщо порожньо — з листа призначень: групами, з курсами «з … по …»)', tpl:'Проведено лікування: {v}', fallback:()=>(typeof epiCourses === 'function' && epiCourses()) || rxSummary()},
@@ -326,6 +329,10 @@
   {id:'dg', type:'line', label:'18. I г) основна причина смерті', tpl:'г) {v}', dead:true},
   {id:'dt', type:'line', noOut:true, label:'18. Приблизний час між початком захворювання і смертю', dead:true},
   {id:'dII', type:'text', rows:2, label:'18. II. Інші суттєві стани, що сприяли смерті', tpl:'II. {v}', dead:true},
-  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true}
+  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true},
+  {id:'dxnapr', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'},
+  {id:'dxhosp', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'},
+  {id:'dxhospcode', type:'line', noOut:true, label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'},
+  {id:'gest', type:'text', rows:2, wide:true, noOut:true, label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'}
 ]}
 ];

@@ -1,5 +1,12 @@
-/* 0.9.3.47 · Обстеження в консультативному висновку — окремий добір із журналу */
+/* 0.9.3.53 · Обстеження в консультативному висновку — вибір із журналу та відновлення */
 let KONSOBS = [];
+
+function konsObsFromSnapshot(S){
+  if (S && Object.prototype.hasOwnProperty.call(S,'konsObs')){
+    return Array.isArray(S.konsObs) ? [...new Set(S.konsObs.map(Number).filter(Number.isFinite))] : [];
+  }
+  return RES.map(r=>Number(r.id)).filter(Number.isFinite);
+}
 
 function konsObsLines(){
   const selected = new Set(KONSOBS.map(String));
@@ -27,45 +34,36 @@ function renderKonsObs(){
   });
 }
 
-/* Результати для висновку окремі від спільного поля e_obs.obs. */
+/* Пояснення та список додаються до полів, оголошених до першого відновлення пацієнта. */
 {
-  const s = SECTIONS.find(x=>x.id === 'e_obs');
-  const all = ['epi','kons','etap','per','napr','gosp','konc'];
-  const ordinary = F('e_obs.obs');
-  ordinary.docs = all.filter(x=>x !== 'kons');
-  ordinary.wrapEl.dataset.docs = ordinary.docs.join(' ');
-  ordinary.wrapEl.hidden = !ordinary.docs.includes(DOC);
-
-  const log = {id:'konslog', type:'auto', docs:['kons'], label:'Обстеження з журналу для висновку', tpl:'{v}', br:true, fn:()=>konsObsLines().join('\n')};
-  const own = {id:'konsown', type:'text', rows:4, wide:true, docs:['kons'], label:'Своє (результати поза журналом)', placeholder:'Впишіть результати, яких немає в журналі обстежень', tpl:'{v}', sep:'\n', br:true};
-  s.fields.push(log, own);
-  const grid = s.panel && s.panel.querySelector(':scope > .grid');
-  if (grid){
-    const logWrap = buildField(s, log);
+  const log = F('e_obs.konslog');
+  if (log && log.wrapEl){
+    log.fn = ()=>konsObsLines().join('\n');
     log.konsList = h('div', {class:'plist', 'aria-label':'Обстеження з журналу'});
-    logWrap.append(
+    log.wrapEl.append(
       h('p', {class:'chips-hint'}, 'Джерело — «Журнал обстежень за час лікування» вище. Позначені записи й поле «Своє» потраплять у консультативний висновок.'),
       h('div', {class:'lbl'}, 'Позначте, які результати включити у висновок:'),
       log.konsList,
       h('button', {type:'button', class:'btn', onclick:()=>{
-        const input = s.panel.querySelector('.res-t');
+        const s = SECTIONS.find(x=>x.id === 'e_obs'), input = s && s.panel && s.panel.querySelector('.res-t');
         if (!input){ toast('Форма журналу обстежень недоступна'); return; }
         input.scrollIntoView({behavior:'smooth', block:'center'}); input.focus();
         toast('Додайте результат у журнал, потім позначте його для висновку');
       }}, '+ Внести нове обстеження'));
-    grid.append(logWrap, buildField(s, own));
   }
   renderKonsObs();
 }
 
-/* Чекбокси й власне поле входять до звичайного знімка пацієнта. */
+/* Нові знімки зберігають вибір; старі знімки без konsObs лишають попередню поведінку. */
 {
   const snap0 = snap;
   snap = function(){ const state = snap0.apply(this, arguments); state.konsObs = KONSOBS.slice(); return state; };
   const restore0 = restore;
   restore = function(S){
-    KONSOBS = Array.isArray(S && S.konsObs) ? [...new Set(S.konsObs.map(Number).filter(Number.isFinite))] : [];
-    return restore0.apply(this, arguments);
+    const result = restore0.apply(this, arguments);
+    KONSOBS = konsObsFromSnapshot(S);
+    renderKonsObs(); update();
+    return result;
   };
   const renderRes0 = renderRes;
   renderRes = function(){ const result = renderRes0.apply(this, arguments); renderKonsObs(); return result; };
@@ -73,13 +71,19 @@ function renderKonsObs(){
   clearAll = function(forRestore){
     if (!forRestore) KONSOBS = [];
     const result = clearAll0.apply(this, arguments);
-    renderKonsObs();
+    renderKonsObs(); update();
     return result;
   };
   const clearSection0 = clearSection;
   clearSection = function(section){
     const result = clearSection0.apply(this, arguments);
-    if (section && section.id === 'e_obs' && DOC === 'kons'){ KONSOBS = []; renderKonsObs(); }
+    if (section && section.id === 'e_obs' && DOC === 'kons'){ KONSOBS = []; renderKonsObs(); update(); }
     return result;
   };
 }
+
+/* restoreLast() міг запуститися до цього модуля: відновлюємо стан уже відкритого пацієнта. */
+if (PID){
+  try{ KONSOBS = konsObsFromSnapshot(loadStore()[PID]?.snap); }catch(e){ KONSOBS = []; }
+}
+renderKonsObs(); update();
