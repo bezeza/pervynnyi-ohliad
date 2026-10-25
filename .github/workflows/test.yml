@@ -26,8 +26,16 @@ jobs:
         include:
           - suite: full
             args: ''
-          - suite: features
-            args: ''
+          # features — трьома паралельними частинами (tests/features-part.cjs ділить файл за мітками «── частина N ──»)
+          - suite: features-part
+            args: '1'
+            label: features 1/3
+          - suite: features-part
+            args: '2'
+            label: features 2/3
+          - suite: features-part
+            args: '3'
+            label: features 3/3
           - suite: workflow
             args: ''
           - suite: idb

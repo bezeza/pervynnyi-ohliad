@@ -15,6 +15,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  ok('Перший запуск: знайомство з даними лікаря', !!doc.querySelector('.welcome'));
  { const ins=doc.querySelectorAll('.welcome input'); ins[0].value='Петренко О. В.'; [...doc.querySelectorAll('.welcome button')].find(b=>b.textContent==='Готово').click(); }
  ok('Знайомство зберігає ПІБ лікаря', $('meta_doc').value==='Петренко О. В.' && !doc.querySelector('.welcome'));
+ // WebCrypto і TextEncoder у jsdom — для тестів PIN і шифрування копій у будь-якій частині
+ if (!w.TextEncoder){ w.TextEncoder=require('util').TextEncoder; w.TextDecoder=require('util').TextDecoder; } if (!w.crypto.subtle){ try{ Object.defineProperty(w.crypto, 'subtle', {value:require('crypto').webcrypto.subtle, configurable:true}); }catch(e){} }
  // ── кінець підготовки (спільна для всіх частин) ──
  $('paperBtn').click();
  ok('«Перегляд перед друком» вмикає макет документа', $('paperBtn').textContent==='Перегляд перед друком' && $('paperBtn').getAttribute('aria-pressed')==='true' && !$('paper').hidden);
