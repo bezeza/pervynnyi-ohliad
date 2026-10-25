@@ -60,7 +60,8 @@ document.addEventListener('click', e=>{
 }, true);
 
 /* У протоколі анестезії не підставляємо місце переведення без вибору лікаря.
-   Розділ пункції показуємо лише після введення її основного типу/рівня/дози. */
+   Розділ пункції показуємо лише після введення її основного типу/рівня/дози;
+   рядок підпису анестезіолога лишається на бланку завжди. */
 { const anest0 = b333c; b333c = function(){
   const root = anest0.apply(this, arguments), transfer = root.querySelector('[data-an="an_prot.per"]');
   if (transfer && AI_('an_prot.per') < 0){
@@ -68,9 +69,7 @@ document.addEventListener('click', e=>{
   }
   const hasProcedure = AI_('an_pun.prost') >= 0 || ['riv','osn'].some(key=>AT_('an_pun.' + key));
   const signature = [...root.querySelectorAll('.brow')].find(row=>!row.hasAttribute('data-an') && /^Анестезіолог(?:\s|$)/.test(row.textContent.trim()));
-  if (!hasProcedure){
-    root.querySelectorAll('[data-an^="an_pun."]').forEach(row=>row.remove());
-    if (signature) signature.remove();
-  } else if (signature) signature.dataset.an = 'an_zak.anest';
+  if (!hasProcedure) root.querySelectorAll('[data-an^="an_pun."]').forEach(row=>row.remove());
+  if (signature) signature.dataset.an = 'an_zak.anest';
   return root;
 }; }

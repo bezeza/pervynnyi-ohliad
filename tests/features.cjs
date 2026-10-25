@@ -546,20 +546,21 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Документ «Анестезіолог» — у стаціонарі й амбулаторно', w.eval("DOCMORE.hosp.concat(DOCLIST.hosp).some(d=>d[0]==='anes') && DOCMORE.amb.concat(DOCLIST.amb).some(d=>d[0]==='anes')"));
    const r=w.eval(`(()=>{ MODE='hosp'; applyDoc(true); switchDoc('anes'); const sv=(k,i)=>{ F(k).el.value=String(i); }; const tx=(k,v)=>{ F(k).el.value=v; };
      clearSection(SECTIONS.find(x=>x.id==='an_pun')); clearSection(SECTIONS.find(x=>x.id==='an_prot')); const emptyProtocol=b333c(), transferRow=emptyProtocol.querySelector('[data-an="an_prot.per"]');
-     const noPuncture=!/Протокол пункції|в асептичних умовах/.test(emptyProtocol.textContent), noDefaultTransfer=!!transferRow && !/до палати відділення/.test(transferRow.textContent) && !transferRow.querySelector('.bf')?.textContent.trim();
+     const noPuncture=!/Протокол пункції|в асептичних умовах/.test(emptyProtocol.textContent), noDefaultTransfer=!!transferRow && !/до палати відділення/.test(transferRow.textContent) && !transferRow.querySelector('.bf')?.textContent.trim(), blankSignature=!!emptyProtocol.querySelector('.brow[data-an="an_zak.anest"]');
      sv('an_main.tip',0); tx('an_main.oper','лапароскопічна холецистектомія'); sv('an_obj.mal',2); sv('an_obj.sheya',1); sv('an_zak.asa',1); sv('an_zak.e',0); sv('an_zak.vg',1); sv('zah.stan',0); sv('vitae.zv',1);
      sv('an_prot.dsh',0); F('an_prot.int').inputs[0].value='7,5'; sv('an_pun.prost',0); tx('an_pun.riv','L3–L4'); tx('an_pun.osn','бупівакаїн 0,5% 3 мл'); update();
      const o=document.getElementById('out').textContent, fc=formCode(), P=b333(), t=P.map(p=>p.textContent).join(' '), hint=F('an_obj.hint').abox.textContent, signature=P.find(p=>p.classList.contains('b333c'))?.querySelector('.brow[data-an="an_zak.anest"]');
      MODE='amb'; applyDoc(true); update(); const oa=document.getElementById('out').textContent, fa=formCode();
      MODE='hosp'; applyDoc(true); clearSection(SECTIONS.find(x=>x.id==='an_main')); ['an_obj','an_zak','an_prot','an_pun'].forEach(id=>clearSection(SECTIONS.find(x=>x.id===id))); F('zah.stan').el.value=''; F('vitae.zv').el.value=''; switchDoc('ohl'); update();
-     return JSON.stringify([o,fc,P.length,t,hint,oa,fa,noPuncture,noDefaultTransfer,!!signature]); })()`);
-   const [o,fc,n,t,hint,oa,fa,noPuncture,noDefaultTransfer,signature]=JSON.parse(r);
+     return JSON.stringify([o,fc,P.length,t,hint,oa,fa,noPuncture,noDefaultTransfer,blankSignature,!!signature]); })()`);
+   const [o,fc,n,t,hint,oa,fa,noPuncture,noDefaultTransfer,blankSignature,signature]=JSON.parse(r);
    ok('Анестезіолог (стаціонар): текст — привід, Маллампаті, ASA IIE, вид анестезії, протоколи', /готується до планового оперативного лікування/.test(o) && /Клас за Маллампаті III/.test(o) && /ASA IIE/.test(o) && /інгаляційний наркоз з ШВЛ/.test(o) && /Протокол знеболення/.test(o) && /трубка № 7,5/.test(o) && /субарахноїдального простору/.test(o), [/Клас за Маллампаті III/.test(o),/ASA IIE/.test(o),/інгаляційний наркоз з ШВЛ/.test(o),/Протокол знеболення/.test(o),/трубка № 7,5/.test(o),/субарахноїдального простору/.test(o)].join()+' '+(o.match(/Висновок.{0,200}/)||[''])[0]);
    ok('Анестезіолог: форма 003-3/о, три аркуші бланка', fc==='003-3/о' && n===3 && /№ 003-3\/о/.test(t) && /ПЕРЕДОПЕРАЦІЙНИЙ ОГЛЯД АНЕСТЕЗІОЛОГОМ ТА ПРОТОКОЛ ЗАГАЛЬНОГО ЗНЕБОЛЕННЯ/.test(t) && /Листок знеболення/.test(t) && /ПРОТОКОЛ ЗНЕБОЛЕННЯ №/.test(t), t.slice(0,160));
    ok('Бланк 003-3/о: вибране позначено «●» (планового, Маллампаті III, ASA II, Е, паління так)', /●\s*III/.test(t) && /●\s*II/.test(t) && /●\s*Е \(ургентне/.test(t) && /Паління:\s*●\s*так/.test(t), (t.match(/Клас за Маллампаті.{0,40}/)||[''])[0]);
    ok('Підказка: можливі труднощі з дихальними шляхами (Маллампаті III, коротка шия)', /Маллампаті III, коротка шия/.test(hint), hint);
    ok('Амбулаторно: консультаційний висновок (028/о), без протоколу знеболення', fa==='028/о' && /КОНСУЛЬТАЦІЙНИЙ ВИСНОВОК АНЕСТЕЗІОЛОГА/.test(oa) && !/Протокол знеболення/.test(oa), oa.slice(0,200));
    ok('003-3/о: без даних не друкується протокол пункції та вигадане місце переведення', noPuncture && noDefaultTransfer, JSON.stringify([noPuncture,noDefaultTransfer]));
+   ok('003-3/о: підпис анестезіолога залишається, навіть якщо даних пункції немає', blankSignature);
    ok('003-3/о: підпис у протоколі клікабельний і відкриває поле анестезіолога', signature); }
  { // 0.9.3.29: епікриз «як у лікарні», курси лікування, «Продовжити прийом», динаміка зі щоденників
    const r=w.eval(`(()=>{ MODE='hosp'; applyDoc(true); switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-10-14'; P.d2.value='2026-10-20';

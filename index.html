@@ -1307,7 +1307,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.50 від 25.10.2026">v0.9.3.50 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.51 від 25.10.2026">v0.9.3.51 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3450,8 +3450,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.50', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.51', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.51', '25.10.2026', 'бланк 003-3/о: підпис анестезіолога залишається видимим без даних пункції; протокол пункції без даних не друкується; у старих записах щоденника залишено лише фактичний опис шкіри без фрази про реакцію на огляд'],
   ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; кліки по рядках ведуть до полів форми; нові значення відновлюються після перезапуску; діагнози 066/о зберігаються окремо від діагнозу огляду'],
   ['0.9.3.48', '24.10.2026', 'друковані бланки: щоденник не стверджує незаповнені нормальні значення; підписи показників відкривають свої поля; категорія резистентності 003/о береться з 066/о; протокол пункції приховано без даних, місце переведення лишається порожнім до вибору, підпис анестезіолога веде до поля'],
   ['0.9.3.47', '24.10.2026', 'аудит друкованих бланків 003/о, 066/о, 003-3/о та 027/о: звіт про порожні поля, безумовні твердження й переходи по кліку; виправлення — окремо після погодження'],
@@ -16096,7 +16097,8 @@ document.addEventListener('click', e=>{
 }, true);
 
 /* У протоколі анестезії не підставляємо місце переведення без вибору лікаря.
-   Розділ пункції показуємо лише після введення її основного типу/рівня/дози. */
+   Розділ пункції показуємо лише після введення її основного типу/рівня/дози;
+   рядок підпису анестезіолога лишається на бланку завжди. */
 { const anest0 = b333c; b333c = function(){
   const root = anest0.apply(this, arguments), transfer = root.querySelector('[data-an="an_prot.per"]');
   if (transfer && AI_('an_prot.per') < 0){
@@ -16104,10 +16106,8 @@ document.addEventListener('click', e=>{
   }
   const hasProcedure = AI_('an_pun.prost') >= 0 || ['riv','osn'].some(key=>AT_('an_pun.' + key));
   const signature = [...root.querySelectorAll('.brow')].find(row=>!row.hasAttribute('data-an') && /^Анестезіолог(?:\s|$)/.test(row.textContent.trim()));
-  if (!hasProcedure){
-    root.querySelectorAll('[data-an^="an_pun."]').forEach(row=>row.remove());
-    if (signature) signature.remove();
-  } else if (signature) signature.dataset.an = 'an_zak.anest';
+  if (!hasProcedure) root.querySelectorAll('[data-an^="an_pun."]').forEach(row=>row.remove());
+  if (signature) signature.dataset.an = 'an_zak.anest';
   return root;
 }; }
 /* 0.9.3.50 — зв’язування рядків бланків із заздалегідь визначеними полями форми.
