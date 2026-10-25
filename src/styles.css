@@ -1356,3 +1356,20 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   --accent:#2E5D84; --accent-soft:#E6EBEE; --on-accent:#FFFFFF;
   --flag:#A95A12; --flag-soft:#F6EADB; --ok:#2E7346; --bad:#A8322A; --bad-soft:#F6E3DE; --surface-2:#F4EFE6; color-scheme:light}
 @media screen{:root[data-tone="warm"] .paper .sheet,:root[data-tone="warm"] .b003{background:#FFFCF6}}
+
+/* 0.9.3.57 — «Перед друком» на телефоні: читабельний масштаб, повна висота, згорнуті перемикачі, віконця знизу */
+@media (max-width:899px){
+  #outBox[data-ov="paper"] #paper{flex:1 1 auto;height:calc(100dvh - 200px);min-height:360px;max-height:none;padding:6px;touch-action:pan-x pan-y}
+  #outBox[data-ov="paper"] .copy-peek{display:none!important}
+  .paper .sheet.blankmode.phz{width:max-content;max-width:none;margin:0;padding:0;background:transparent;box-shadow:none}
+  .phzbar{position:sticky;top:-6px;left:0;z-index:5;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:-6px -6px 6px;padding:6px;background:inherit;background:#d9dee3;border-bottom:1px solid rgba(0,0,0,.08)}
+  :root[data-theme="dark"] .phzbar{background:var(--bg)}
+  .phzbar .btn{min-height:40px;padding:6px 12px}
+  .phz-zoom{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+  .phz-zoom button{min-width:44px;min-height:40px;border:0;background:var(--surface);font-size:20px;line-height:1}
+  .phz-v{min-width:56px;text-align:center;font:500 14px var(--f-num)}
+  .phz-fit{font-size:18px}
+  #paper.phcol .blankbar>*:not(:first-child){display:none!important}
+  #paper.phcol .gaplist{display:none!important}
+  .pe-box,.diary-inline-editor{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-height:62vh!important;border-radius:14px 14px 0 0!important}
+}

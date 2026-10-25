@@ -1394,6 +1394,23 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   --accent:#2E5D84; --accent-soft:#E6EBEE; --on-accent:#FFFFFF;
   --flag:#A95A12; --flag-soft:#F6EADB; --ok:#2E7346; --bad:#A8322A; --bad-soft:#F6E3DE; --surface-2:#F4EFE6; color-scheme:light}
 @media screen{:root[data-tone="warm"] .paper .sheet,:root[data-tone="warm"] .b003{background:#FFFCF6}}
+
+/* 0.9.3.57 — «Перед друком» на телефоні: читабельний масштаб, повна висота, згорнуті перемикачі, віконця знизу */
+@media (max-width:899px){
+  #outBox[data-ov="paper"] #paper{flex:1 1 auto;height:calc(100dvh - 200px);min-height:360px;max-height:none;padding:6px;touch-action:pan-x pan-y}
+  #outBox[data-ov="paper"] .copy-peek{display:none!important}
+  .paper .sheet.blankmode.phz{width:max-content;max-width:none;margin:0;padding:0;background:transparent;box-shadow:none}
+  .phzbar{position:sticky;top:-6px;left:0;z-index:5;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:-6px -6px 6px;padding:6px;background:inherit;background:#d9dee3;border-bottom:1px solid rgba(0,0,0,.08)}
+  :root[data-theme="dark"] .phzbar{background:var(--bg)}
+  .phzbar .btn{min-height:40px;padding:6px 12px}
+  .phz-zoom{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+  .phz-zoom button{min-width:44px;min-height:40px;border:0;background:var(--surface);font-size:20px;line-height:1}
+  .phz-v{min-width:56px;text-align:center;font:500 14px var(--f-num)}
+  .phz-fit{font-size:18px}
+  #paper.phcol .blankbar>*:not(:first-child){display:none!important}
+  #paper.phcol .gaplist{display:none!important}
+  .pe-box,.diary-inline-editor{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-height:62vh!important;border-radius:14px 14px 0 0!important}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1404,7 +1421,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.56 від 25.10.2026">v0.9.3.56 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.57 від 25.10.2026">v0.9.3.57 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3550,8 +3567,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.56', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.57', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.57', '25.10.2026', '«Перед друком» на телефоні: бланк одразу читабельний (200 %), гортається пальцем, масштаб — двома пальцями або «− / + / ⇔ по ширині» (запам’ятовується); перегляд на всю висоту екрана; перемикачі аркуша — під «Вигляд ▾», «Ще не заповнено» згорнуто; віконця правки на бланку відкриваються знизу екрана'],
   ['0.9.3.56', '25.10.2026', 'щоденник: «Без змін (як учора)» — опис огляду з попереднього запису (позначено «з учора»), показники й скарги — внести сьогоднішні (підсвічено), перед записом без показників — попередження; «↔ Порівняти з учора» — готова фраза про зміни (t ≥ 0,5 °C, SpO2 ≥ 2 %, ЧД ≥ 4, ЧСС ≥ 10, сист. АТ ≥ 15; описові пункти «було → стало»), вставляється лише за вашим рішенням; пункти: базово t, АТ, ЧСС, ЧД, легені, серце, живіт; SpO2 — у пульмонології, в інших — «+ SpO2»; перкусія — для дихальних, печінка й набряки — для СН, неврологія — для гіпертензії, Пастернацький, сечовипускання й діурез — для пієлонефриту; бронхоектатична хвороба й ТЕЛА — як дихальні (рішення лікаря 25.10.2026). Теми: «Теплий папір» — денна, з м’яким теплим фоном замість чисто білого, і «Кабінет» — нейтральна сіра, як у Skiagrama (кнопка теми: авто → день → теплий папір → ніч → кабінет; також «Налаштування» → «Тема»), аркуш на екрані приглушений, друк без змін. Шрифти: текст документа на екрані — Source Serif 4 (легше читати довгий текст); у «Налаштуваннях» → «Шрифти» — вибір шрифту тексту (Source Serif 4, Literata, Golos Text, Inter, IBM Plex Sans) і інтерфейсу (IBM Plex Sans, Golos Text, Inter); усі вбудовані у файл, працюють без інтернету; друк і бланки — Times New Roman. Стать визначається сама з по батькові («-ович» — чоловік, «-івна» — жінка); перемикач перенесено з шапки в блок «Пацієнт» (поруч із датою народження) — ручний вибір завжди переважає; у шапці лише жовта позначка «Стать?» з вибором Ч/Ж, якщо стать не визначено'],
   ['0.9.3.55', '25.10.2026', 'резервні копії в папці даних: щодня копія всіх пацієнтів у «Резервні копії» (останні 30 днів), окремо від браузера й від «дзеркала» в папці «Пацієнти»; якщо пацієнтів стало менше — денна копія не перезаписується, а додається окремий файл із часом; копія перед кожним оновленням версії (останні 5); з PIN — зашифровано; стан і «Копія в папку зараз» — у «Резервні копії й відновлення»'],
   ['0.9.3.54', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
@@ -17308,6 +17326,77 @@ if (SETTINGS_EL){
   try{ setRegroup(); }catch(e){}
 }
 applyTheme();
+/* ===== 0.9.3.57 — «Перед друком» на телефоні =====
+   Раніше аркуш А4 (794 px) стискався до ширини екрана — текст бланка ~6 px, і все це — у віконці ~470 px.
+   Тепер на екрані до 899 px:
+   • аркуш одразу читабельний (за замовчуванням 200 % від «по ширині»), гортається пальцем у всі боки;
+     масштаб — двома пальцями або кнопками «− / + / По ширині»; запам’ятовується;
+   • перегляд — на всю висоту екрана; «Перед копіюванням» у цьому режимі сховано (є на вкладці «Перевірка»);
+   • перемикачі аркуша згорнуто під «Вигляд ▾», список «Ще не заповнено» за замовчуванням згорнуто;
+   • віконця правки на бланку відкриваються знизу екрана (як звично на телефоні).
+   Друк і комп’ютер — без змін. */
+const PHP = { k:2, open:false, pinch:null };
+try{ PHP.k = Math.min(3.5, Math.max(1, +localStorage.getItem('po.phonez') || 2)); }catch(e){}
+const phoneMQ = window.matchMedia ? window.matchMedia('(max-width:899px)') : {matches:false, addEventListener(){}};
+const phIs = () => !!phoneMQ.matches;
+/* на телефоні «Ще не заповнено» згорнуто, якщо лікар сам не вибирав */
+try{ if (phIs() && localStorage.getItem('po.gaps') === null) GAPS = false; }catch(e){}
+function phFit(){ const p = document.getElementById('paper'); return p ? Math.max(0.2, (p.clientWidth - 20) / 794) : 1; }
+function phZoom(save){
+  const p = document.getElementById('paper'), sh = p && p.querySelector('.sheet'); if (!sh) return;
+  const on = phIs() && PAPER && sh.classList.contains('blankmode');
+  sh.classList.toggle('phz', on);
+  if (on) sh.style.setProperty('--bz', (phFit() * PHP.k).toFixed(3));
+  const v = p.querySelector('.phz-v'); if (v) v.textContent = Math.round(PHP.k * 100) + ' %';
+  if (save){ try{ localStorage.setItem('po.phonez', String(PHP.k)); }catch(e){} }
+}
+function phSetK(k, keepCenter){
+  const p = document.getElementById('paper'); const old = PHP.k; PHP.k = Math.min(3.5, Math.max(1, Math.round(k * 20) / 20));
+  if (!p || old === PHP.k){ phZoom(true); return; }
+  const cx = p.scrollLeft + p.clientWidth / 2, cy = p.scrollTop + p.clientHeight / 2, r = PHP.k / old;
+  phZoom(true);
+  if (keepCenter !== false){ p.scrollLeft = cx * r - p.clientWidth / 2; p.scrollTop = cy * r - p.clientHeight / 2; }
+}
+function phBar(){
+  const p = document.getElementById('paper'); if (!p) return;
+  let bar = p.querySelector('.phzbar');
+  if (!phIs() || !PAPER){ if (bar) bar.remove(); p.classList.remove('phcol'); return; }
+  const blank = !!p.querySelector('.sheet.blankmode');
+  if (!bar){
+    bar = h('div', {class:'phzbar'},
+      h('button', {type:'button', class:'btn phz-more', 'aria-expanded':'false', onclick:()=>{ PHP.open = !PHP.open; phBar(); }}, 'Вигляд ▾'),
+      h('span', {class:'phz-zoom seg', role:'group', 'aria-label':'Масштаб аркуша'},
+        h('button', {type:'button', 'aria-label':'Зменшити', onclick:()=>phSetK(PHP.k - 0.5)}, '−'),
+        h('span', {class:'phz-v'}, ''),
+        h('button', {type:'button', 'aria-label':'Збільшити', onclick:()=>phSetK(PHP.k + 0.5)}, '+')),
+      h('button', {type:'button', class:'btn phz-fit', title:'Увесь аркуш по ширині екрана', onclick:()=>{ phSetK(1, false); p.scrollLeft = 0; }}, '⇔'));
+    p.prepend(bar);
+  } else if (bar !== p.firstElementChild) p.prepend(bar);
+  bar.querySelector('.phz-zoom').hidden = !blank; bar.querySelector('.phz-fit').hidden = !blank;
+  const more = bar.querySelector('.phz-more'); more.textContent = PHP.open ? 'Вигляд ▴' : 'Вигляд ▾'; more.setAttribute('aria-expanded', PHP.open ? 'true' : 'false');
+  p.classList.toggle('phcol', !PHP.open);
+  phZoom(false);
+}
+{ const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ phBar(); }catch(e){} return r; }; }
+/* масштаб двома пальцями (лише в режимі бланка) */
+{ const p = document.getElementById('paper');
+  if (p){
+    const dist = e => { const [a, b] = e.touches; return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); };
+    p.addEventListener('touchstart', e=>{ if (e.touches.length === 2 && phIs() && p.querySelector('.sheet.blankmode')) PHP.pinch = {d:dist(e), k:PHP.k}; }, {passive:true});
+    p.addEventListener('touchmove', e=>{ if (!PHP.pinch || e.touches.length !== 2) return; e.preventDefault(); const k = PHP.pinch.k * dist(e) / PHP.pinch.d; PHP.k = Math.min(3.5, Math.max(1, k)); phZoom(false); }, {passive:false});
+    p.addEventListener('touchend', ()=>{ if (PHP.pinch){ PHP.pinch = null; phSetK(PHP.k, false); } }, {passive:true});
+  } }
+if (phoneMQ.addEventListener) phoneMQ.addEventListener('change', ()=>{ try{ if (PAPER) renderPaper(); }catch(e){} });
+try{ if (PAPER) renderPaper(); }catch(e){}
+/* віконце правки знизу не має закривати рядок, який правимо: підсуваємо аркуш */
+function phKeepRowVisible(){
+  if (!phIs() || !PE.box || PE.w !== window) return;
+  const row = peRows(window)[PE.idx], p = document.getElementById('paper'); if (!row || !p) return;
+  const rr = row.getBoundingClientRect(), top = PE.box.getBoundingClientRect().top, pr = p.getBoundingClientRect();
+  if (rr.bottom > top - 8) p.scrollTop += rr.bottom - top + 24;
+  else if (rr.top < pr.top + 50) p.scrollTop -= pr.top + 50 - rr.top;
+}
+{ const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ requestAnimationFrame(phKeepRowVisible); }catch(e){} return r; }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
