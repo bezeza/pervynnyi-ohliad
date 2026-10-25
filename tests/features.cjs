@@ -979,6 +979,35 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      switchDoc(state.doc);document.querySelector('[data-mode="'+state.mode+'"]').click();
      if(state.last===null)localStorage.removeItem('po.last');else localStorage.setItem('po.last',state.last);delete window.__konsTestState;})()`);
  }
+ // 0.9.3.55 — щоденні резервні копії в папці даних (папка — у пам’яті)
+ { const memDir=name=>{ const files=new Map(), dirs=new Map(); return {name, kind:'directory', files, dirs,
+     async getDirectoryHandle(n,o){ if(!dirs.has(n)){ if(!o||!o.create) throw new Error('not found'); dirs.set(n,memDir(n)); } return dirs.get(n); },
+     async getFileHandle(n,o){ if(!files.has(n)&&!(o&&o.create)) throw new Error('not found'); return {kind:'file', name:n, async createWritable(){ let b=''; return {async write(d){ b+=d; }, async close(){ files.set(n,b); }}; }, async getFile(){ return {text:async()=>files.get(n)}; }}; },
+     async *entries(){ for(const [n] of files) yield [n,{kind:'file',name:n}]; for(const [n,d] of dirs) yield [n,d]; },
+     async removeEntry(n){ files.delete(n); dirs.delete(n); } }; };
+   const saved=JSON.parse(w.eval('JSON.stringify(loadStore())')), root=memDir('Первинний огляд — дані');
+   w.eval("newPatient()"); set('meta_pib','Копія Тестовий Перший'); w.eval('savePatient(true)');
+   w.eval("newPatient()"); set('meta_pib','Копія Тестовий Другий'); w.eval('savePatient(true)');
+   const FSo=w.eval('FS'); FSo.dir=root; FSo.ok=true; w.localStorage.removeItem('po.fbk');
+   const bk=()=>root.dirs.get('Резервні копії'), day=w.eval('fbkDay()'), n0=Object.keys(w.eval('loadStore()')).length;
+   const r1=await w.eval("fbkWrite('manual')"); const f1=bk() && bk().files.get('Копія_'+day+'.json');
+   ok('Копії в папці: денна копія всіх пацієнтів у «Резервні копії»', r1==='Копія_'+day+'.json' && !!f1 && JSON.parse(f1).type==='po-patients' && Object.keys(JSON.parse(f1).items).length===n0);
+   ok('Копії в папці: автокопія не частіше ніж раз на 30 хв', (await w.eval("fbkWrite('auto')"))===null);
+   w.eval("(()=>{ const st=loadStore(); delete st[Object.keys(st)[0]]; saveStore(st); })()");
+   const r2=await w.eval("fbkWrite('manual')");
+   ok('Копії в папці: коли пацієнтів стало менше, денна копія не перезаписується — окремий файл із часом', /^Копія_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.json$/.test(r2||'') && Object.keys(JSON.parse(bk().files.get('Копія_'+day+'.json')).items).length===n0, r2);
+   await w.eval("bakPut('перед оновленням 0.9.3.54 → 0.9.3.55')");
+   ok('Копії в папці: копія перед оновленням версії', [...bk().files.keys()].some(n=>/перед оновленням 0\.9\.3\.54/.test(n)));
+   for(let i=1;i<=35;i++){ const d=new Date(2025,0,i); bk().files.set('Копія_'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.json','{}'); }
+   bk().files.set('Нотатка.txt','не чіпати');
+   await w.eval("fbkWrite('manual')");
+   const days=new Set([...bk().files.keys()].filter(n=>/^Копія_/.test(n)&&!/перед оновленням/.test(n)).map(n=>n.slice(6,16)));
+   ok('Копії в папці: зберігаються останні 30 днів, чужі файли не чіпаються', days.size===30 && days.has(day) && !days.has('2025-01-01') && bk().files.has('Нотатка.txt'), [...days].sort().slice(0,3).join(','));
+   w.eval("saveStore({})"); w.localStorage.removeItem('po.fbk');
+   ok('Копії в папці: порожнє сховище ніколи не записується як копія', (await w.eval("fbkWrite('manual')"))===null);
+   w.eval('drawBak()'); await sleep(50);
+   ok('Копії в папці: стан і кнопка в «Резервні копії й відновлення»', !!doc.getElementById('fbkBox') && /Копія в папку зараз/.test(doc.getElementById('fbkBox').textContent));
+   FSo.dir=null; FSo.ok=false; w.eval('saveStore('+JSON.stringify(saved)+')'); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
