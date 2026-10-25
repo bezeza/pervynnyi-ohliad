@@ -326,6 +326,10 @@
   {id:'dg', type:'line', label:'18. I г) основна причина смерті', tpl:'г) {v}', dead:true},
   {id:'dt', type:'line', noOut:true, label:'18. Приблизний час між початком захворювання і смертю', dead:true},
   {id:'dII', type:'text', rows:2, label:'18. II. Інші суттєві стани, що сприяли смерті', tpl:'II. {v}', dead:true},
-  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true}
+  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true},
+  {id:'dxnapr', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'},
+  {id:'dxhosp', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'},
+  {id:'dxhospcode', type:'line', noOut:true, label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'},
+  {id:'gest', type:'text', rows:2, wide:true, noOut:true, label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'}
 ]}
 ];

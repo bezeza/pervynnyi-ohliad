@@ -1293,7 +1293,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .scr-monitor #out{width:100%;max-width:72ch;align-self:center}
 }
 
-/* 0.9.3.50 — клікабельні рядки бланка з полями введення у програмі. */
+/* 0.9.3.50 — рядки бланка, пов’язані з полями основної форми. */
 .paper .b003 .pedit{cursor:pointer}
 .paper .b003 .pedit:hover,.paper .b003 .pedit:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media print{.paper .b003 .pedit{outline:0!important}}
@@ -1779,7 +1779,9 @@ const SECTIONS = [
     hint:v=>{const h=cm(v[0]),w=num(v[1]); return h>0&&w>0?'ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²':'';},
     fmt:v=>{const p=[], h=cm(v[0]), w=num(v[1]); if(h>0)p.push(`Зріст ${dec(h)} см`); if(v[1])p.push(`вага ${v[1]} кг`);
       if(h>0&&w>0)p.push('ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²'); return p.join(', ');}},
-  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '},
+  {id:'moloch', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'},
+  {id:'opora', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'}
 ]},
 { id:'shk', title:'Шкіра, зів, лімфовузли', short:'Шкіра', head:'', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Шкірні покриви та видимі слизові без особливостей, периферичних набряків немає, лімфовузли не збільшені','Шкірні покриви та видимі слизові без патологічних змін']},
@@ -1813,6 +1815,7 @@ const SECTIONS = [
 { id:'ssc', title:'Серце, судини', short:'Серце', head:'Серцево-судинна система:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
   {id:'ad', type:'num', label:'Артеріальний тиск', parts:[{ph:'130',u:'/',n:[90,139],ok:[50,300]},{ph:'80',u:'мм рт. ст.',n:[50,89],ok:[20,180]}], fmt:v=>v[0]&&v[1]?`АТ ${v[0]}/${v[1]} мм рт. ст.`:''},
+  {id:'adl', type:'num', noOut:true, docs:['ohl'], label:'Артеріальний тиск — ліва рука (форма 003/о)', parts:[{ph:'120',u:'/'},{ph:'80',u:'мм рт. ст.'}]},
   {id:'chss', type:'num', label:'ЧСС', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`ЧСС ${v[0]} уд./хв`:''},
   {id:'ps', type:'num', label:'Пульс', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`Пульс ${v[0]} уд./хв`:''},
   {id:'psch', type:'sel', label:'Характер пульсу', norm:0, tpl:'{v}', solo:'Пульс {v}', cont:true, opts:['ритмічний, задовільного наповнення і напруження','аритмічний','аритмічний, з дефіцитом пульсу','напружений','слабкого наповнення, частий']},
@@ -2214,7 +2217,11 @@ const SECTIONS = [
   {id:'dg', type:'line', label:'18. I г) основна причина смерті', tpl:'г) {v}', dead:true},
   {id:'dt', type:'line', noOut:true, label:'18. Приблизний час між початком захворювання і смертю', dead:true},
   {id:'dII', type:'text', rows:2, label:'18. II. Інші суттєві стани, що сприяли смерті', tpl:'II. {v}', dead:true},
-  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true}
+  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true},
+  {id:'dxnapr', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'},
+  {id:'dxhosp', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'},
+  {id:'dxhospcode', type:'line', noOut:true, label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'},
+  {id:'gest', type:'text', rows:2, wide:true, noOut:true, label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'}
 ]}
 ];
 /* ===== Огляд анестезіолога (0.9.3.28): стаціонар — форма № 003-3/о «Передопераційний огляд анестезіологом та протокол
@@ -3445,8 +3452,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.50', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; рядки 003/о й 066/о можна редагувати прямо на аркуші; додано введення діагнозів 066/о окремо від діагнозу огляду'],
-  ['0.9.3.49', '25.10.2026', 'перед кожним друком — явне внутрішнє підтвердження лікаря; дія записується в локальний журнал, не є електронним підписом'],
+  ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; кліки по рядках ведуть до полів форми; нові значення відновлюються після перезапуску; діагнози 066/о зберігаються окремо від діагнозу огляду'],
   ['0.9.3.48', '24.10.2026', 'друковані бланки: щоденник не стверджує незаповнені нормальні значення; підписи показників відкривають свої поля; категорія резистентності 003/о береться з 066/о; протокол пункції приховано без даних, місце переведення лишається порожнім до вибору, підпис анестезіолога веде до поля'],
   ['0.9.3.47', '24.10.2026', 'аудит друкованих бланків 003/о, 066/о, 003-3/о та 027/о: звіт про порожні поля, безумовні твердження й переходи по кліку; виправлення — окремо після погодження'],
   ['0.9.3.46', '24.10.2026', 'уточнено підписи «Очистити поточний документ», «Норма в усіх системах огляду» та «Новий пацієнт»; після норми й очищення документа дію можна скасувати протягом 8 секунд'],
@@ -16104,39 +16110,8 @@ document.addEventListener('click', e=>{
   } else if (signature) signature.dataset.an = 'an_zak.anest';
   return root;
 }; }
-/* 0.9.3.49 — явне підтвердження лікаря безпосередньо перед системним друком.
-   Це локальна дія в журналі, не електронний підпис і не доказ незмінності документа. */
-{
-  const print0 = window.print;
-  if (typeof print0 === 'function') window.print = function(){
-    const title = typeof DOCN === 'function' ? DOCN(DOC) : (typeof docTitle === 'function' ? docTitle() : 'документ');
-    const doctor = typeof mv === 'function' ? String(mv('doc') || '').trim() : '';
-    const details = [
-      'Перед друком перевірте дані пацієнта та весь зміст документа.',
-      `Підтверджуєте, що переглянули «${title}»${doctor ? `, лікар: ${doctor}` : ''}, і погоджуєте його друк?`,
-      'Це внутрішнє підтвердження; воно не є електронним підписом.'
-    ].join('\n\n');
-    if (!window.confirm(details)) return;
-    try{ if (typeof logAct === 'function') logAct('Підтвердження перед друком', title); }catch(e){}
-    return print0.apply(this, arguments);
-  };
-}
-/* 0.9.3.50 — введення даних для друкованих рядків, яких раніше не було у формі.
-   Збереження використовує наявні поля пацієнта; внутрішнє підтвердження друку не є підписом. */
-function addPaperField(sectionId, field){
-  const s = SECTIONS.find(x=>x.id === sectionId); if (!s || s.fields.some(x=>x.id === field.id)) return;
-  field.noOut = true;
-  s.fields.push(field);
-  const grid = s.panel && s.panel.querySelector('.grid');
-  if (grid) grid.append(buildField(s, field));
-}
-addPaperField('zah', {id:'moloch', type:'text', rows:2, wide:true, docs:['ohl'], label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'});
-addPaperField('zah', {id:'opora', type:'text', rows:2, wide:true, docs:['ohl'], label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'});
-addPaperField('ssc', {id:'adl', type:'num', docs:['ohl'], label:'Артеріальний тиск — ліва рука (форма 003/о)', parts:[{ph:'120',u:'/'},{ph:'80',u:'мм рт. ст.'}]});
-addPaperField('s066', {id:'dxnapr', type:'text', rows:2, wide:true, docs:['f066'], label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'});
-addPaperField('s066', {id:'dxhosp', type:'text', rows:2, wide:true, docs:['f066'], label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'});
-addPaperField('s066', {id:'dxhospcode', type:'line', docs:['f066'], label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'});
-addPaperField('s066', {id:'gest', type:'text', rows:2, wide:true, docs:['f066'], label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'});
+/* 0.9.3.50 — зв’язування рядків бланків із заздалегідь визначеними полями форми.
+   Поля оголошені у файлах розділів, щоб restoreLast бачив їх під час першого відновлення. */
 
 function setPaperFill(el, value){
   if (!el) return;
@@ -16155,11 +16130,10 @@ function setPaperCodeCells(el, value){
 function paperRow(root, prefix){ return [...root.querySelectorAll('.brow')].find(r=>r.textContent.trim().startsWith(prefix)) || null; }
 function paperEditable(row, keys){
   if (!row || !keys.length) return;
-  row.dataset.fld = keys.join(' '); // 599-links leaves these rows for the direct editor below.
-  row.dataset.pfields = keys.join(' ');
+  row.dataset.fld = keys.join(' ');
   row.classList.add('pedit'); row.tabIndex = 0; row.setAttribute('role','button');
-  row.setAttribute('aria-label', 'Редагувати в документі: ' + keys.map(k=>{ const f=F(k); return f && f.label || k; }).join(', '));
-  row.title = 'Натисніть, щоб внести дані тут';
+  row.setAttribute('aria-label', 'Відкрити поле форми: ' + keys.map(k=>{ const f=F(k); return f && f.label || k; }).join(', '));
+  row.title = 'Натисніть, щоб перейти до поля у формі';
 }
 
 /* Під’єднати порожні рядки форми 003/о до окремих значень або до наявної 066/о. */
@@ -16215,47 +16189,21 @@ function paperEditable(row, keys){
   };
 }
 
-function paperFieldTargets(key){
-  const f=F(key); if(!f) return [];
-  if(f.inputs) return f.inputs.map((el,i)=>[el, f.label + (f.parts && f.parts[i] ? ', ' + f.parts[i].u : ' ' + (i+1))]);
-  if(f.d1 || f.d2) return [[f.d1,f.label+' — від'],[f.d2,f.label+' — до']].filter(x=>x[0]);
-  if(f.inp) return [[f.inp,f.label],[f.unit,f.label+' — одиниці']].filter(x=>x[0]);
-  return f.el ? [[f.el,f.label]] : [];
-}
-function paperCloneInput(src, label){
-  let el;
-  if(src.tagName === 'SELECT'){
-    el=h('select',{'aria-label':label},...Array.from(src.options).map(o=>h('option',{value:o.value},o.textContent))); el.value=src.value;
-  }else if(src.tagName === 'TEXTAREA'){
-    el=h('textarea',{rows:2,'aria-label':label,placeholder:src.placeholder||''}); el.value=src.value;
-  }else{
-    const type=['date','time','datetime-local','number'].includes(src.type) ? src.type : 'text';
-    el=h('input',{type,inputmode:src.getAttribute('inputmode')||null,'aria-label':label,placeholder:src.placeholder||''}); el.value=src.value;
-  }
-  return el;
-}
-function openPaperFieldEditor(anchor, keys){
-  document.querySelectorAll('.bqe').forEach(x=>x.remove());
-  const inputs=keys.flatMap(paperFieldTargets).map(([src,label])=>[src,label,paperCloneInput(src,label)]);
-  if(!inputs.length) return;
-  const save=()=>{ inputs.forEach(([src,,edit])=>{ if(src.value!==edit.value){ src.value=edit.value; src.dispatchEvent(new Event(src.tagName==='SELECT'?'change':'input',{bubbles:true})); } }); pop.remove(); if(PAPER) renderPaper(); };
-  const pop=h('div',{class:'bqe',role:'dialog','aria-label':'Внести дані в друкований бланк'},
-    h('b',{},'Внести дані тут'),
-    h('div',{class:'bqg'+(inputs.length===1?' one':'')},...inputs.map(([,label,edit])=>h('label',{},h('span',{},label),edit))),
-    h('div',{class:'acts2'},h('button',{type:'button',class:'btn primary',onclick:save},'Зберегти'),h('button',{type:'button',class:'more',onclick:()=>pop.remove()},'Скасувати')));
-  inputs.forEach(([, ,i])=>i.addEventListener('keydown',e=>{if(e.key==='Escape')pop.remove();else if(e.key==='Enter'&&i.tagName!=='TEXTAREA'){e.preventDefault();save();}}));
-  const r=anchor.getBoundingClientRect(); document.body.append(pop);
-  pop.style.top=Math.min(window.innerHeight-pop.offsetHeight-8,Math.max(8,r.bottom+6))+'px';
-  pop.style.left=Math.min(window.innerWidth-pop.offsetWidth-8,Math.max(8,r.left-20))+'px';
-  setTimeout(()=>{const f=inputs.find(([, ,i])=>!i.value)||inputs[0];f[2].focus();},20);
+function paperGoToField(row){
+  const key=(row.dataset.fld || '').trim().split(/\s+/)[0], field=F(key);
+  if (!field) return;
+  const section=SECTIONS.find(item=>item.fields.includes(field));
+  const targetDoc=(field.docs || section && section.docs || []).find(doc=>doc !== DOC);
+  if (targetDoc){ switchDoc(targetDoc); setTimeout(()=>bGo(key),0); return; }
+  bGo(key);
 }
 document.addEventListener('click',e=>{
-  const row=e.target.closest&&e.target.closest('#paper .b003 [data-pfields]');
-  if(row){ e.preventDefault(); openPaperFieldEditor(row,row.dataset.pfields.split(/\s+/)); return; }
-  const pop=document.querySelector('.bqe'); if(pop&&!pop.contains(e.target)) pop.remove();
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row){ e.preventDefault(); paperGoToField(row); }
 });
 document.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('#paper .b003 [data-pfields]')){e.preventDefault();openPaperFieldEditor(e.target,e.target.dataset.pfields.split(/\s+/));}
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();paperGoToField(row);}
 });
 </script>
 

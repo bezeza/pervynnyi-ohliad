@@ -1,19 +1,5 @@
-/* 0.9.3.50 — введення даних для друкованих рядків, яких раніше не було у формі.
-   Збереження використовує наявні поля пацієнта; внутрішнє підтвердження друку не є підписом. */
-function addPaperField(sectionId, field){
-  const s = SECTIONS.find(x=>x.id === sectionId); if (!s || s.fields.some(x=>x.id === field.id)) return;
-  field.noOut = true;
-  s.fields.push(field);
-  const grid = s.panel && s.panel.querySelector('.grid');
-  if (grid) grid.append(buildField(s, field));
-}
-addPaperField('zah', {id:'moloch', type:'text', rows:2, wide:true, docs:['ohl'], label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'});
-addPaperField('zah', {id:'opora', type:'text', rows:2, wide:true, docs:['ohl'], label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'});
-addPaperField('ssc', {id:'adl', type:'num', docs:['ohl'], label:'Артеріальний тиск — ліва рука (форма 003/о)', parts:[{ph:'120',u:'/'},{ph:'80',u:'мм рт. ст.'}]});
-addPaperField('s066', {id:'dxnapr', type:'text', rows:2, wide:true, docs:['f066'], label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'});
-addPaperField('s066', {id:'dxhosp', type:'text', rows:2, wide:true, docs:['f066'], label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'});
-addPaperField('s066', {id:'dxhospcode', type:'line', docs:['f066'], label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'});
-addPaperField('s066', {id:'gest', type:'text', rows:2, wide:true, docs:['f066'], label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'});
+/* 0.9.3.50 — зв’язування рядків бланків із заздалегідь визначеними полями форми.
+   Поля оголошені у файлах розділів, щоб restoreLast бачив їх під час першого відновлення. */
 
 function setPaperFill(el, value){
   if (!el) return;
@@ -32,11 +18,10 @@ function setPaperCodeCells(el, value){
 function paperRow(root, prefix){ return [...root.querySelectorAll('.brow')].find(r=>r.textContent.trim().startsWith(prefix)) || null; }
 function paperEditable(row, keys){
   if (!row || !keys.length) return;
-  row.dataset.fld = keys.join(' '); // 599-links leaves these rows for the direct editor below.
-  row.dataset.pfields = keys.join(' ');
+  row.dataset.fld = keys.join(' ');
   row.classList.add('pedit'); row.tabIndex = 0; row.setAttribute('role','button');
-  row.setAttribute('aria-label', 'Редагувати в документі: ' + keys.map(k=>{ const f=F(k); return f && f.label || k; }).join(', '));
-  row.title = 'Натисніть, щоб внести дані тут';
+  row.setAttribute('aria-label', 'Відкрити поле форми: ' + keys.map(k=>{ const f=F(k); return f && f.label || k; }).join(', '));
+  row.title = 'Натисніть, щоб перейти до поля у формі';
 }
 
 /* Під’єднати порожні рядки форми 003/о до окремих значень або до наявної 066/о. */
@@ -92,45 +77,19 @@ function paperEditable(row, keys){
   };
 }
 
-function paperFieldTargets(key){
-  const f=F(key); if(!f) return [];
-  if(f.inputs) return f.inputs.map((el,i)=>[el, f.label + (f.parts && f.parts[i] ? ', ' + f.parts[i].u : ' ' + (i+1))]);
-  if(f.d1 || f.d2) return [[f.d1,f.label+' — від'],[f.d2,f.label+' — до']].filter(x=>x[0]);
-  if(f.inp) return [[f.inp,f.label],[f.unit,f.label+' — одиниці']].filter(x=>x[0]);
-  return f.el ? [[f.el,f.label]] : [];
-}
-function paperCloneInput(src, label){
-  let el;
-  if(src.tagName === 'SELECT'){
-    el=h('select',{'aria-label':label},...Array.from(src.options).map(o=>h('option',{value:o.value},o.textContent))); el.value=src.value;
-  }else if(src.tagName === 'TEXTAREA'){
-    el=h('textarea',{rows:2,'aria-label':label,placeholder:src.placeholder||''}); el.value=src.value;
-  }else{
-    const type=['date','time','datetime-local','number'].includes(src.type) ? src.type : 'text';
-    el=h('input',{type,inputmode:src.getAttribute('inputmode')||null,'aria-label':label,placeholder:src.placeholder||''}); el.value=src.value;
-  }
-  return el;
-}
-function openPaperFieldEditor(anchor, keys){
-  document.querySelectorAll('.bqe').forEach(x=>x.remove());
-  const inputs=keys.flatMap(paperFieldTargets).map(([src,label])=>[src,label,paperCloneInput(src,label)]);
-  if(!inputs.length) return;
-  const save=()=>{ inputs.forEach(([src,,edit])=>{ if(src.value!==edit.value){ src.value=edit.value; src.dispatchEvent(new Event(src.tagName==='SELECT'?'change':'input',{bubbles:true})); } }); pop.remove(); if(PAPER) renderPaper(); };
-  const pop=h('div',{class:'bqe',role:'dialog','aria-label':'Внести дані в друкований бланк'},
-    h('b',{},'Внести дані тут'),
-    h('div',{class:'bqg'+(inputs.length===1?' one':'')},...inputs.map(([,label,edit])=>h('label',{},h('span',{},label),edit))),
-    h('div',{class:'acts2'},h('button',{type:'button',class:'btn primary',onclick:save},'Зберегти'),h('button',{type:'button',class:'more',onclick:()=>pop.remove()},'Скасувати')));
-  inputs.forEach(([, ,i])=>i.addEventListener('keydown',e=>{if(e.key==='Escape')pop.remove();else if(e.key==='Enter'&&i.tagName!=='TEXTAREA'){e.preventDefault();save();}}));
-  const r=anchor.getBoundingClientRect(); document.body.append(pop);
-  pop.style.top=Math.min(window.innerHeight-pop.offsetHeight-8,Math.max(8,r.bottom+6))+'px';
-  pop.style.left=Math.min(window.innerWidth-pop.offsetWidth-8,Math.max(8,r.left-20))+'px';
-  setTimeout(()=>{const f=inputs.find(([, ,i])=>!i.value)||inputs[0];f[2].focus();},20);
+function paperGoToField(row){
+  const key=(row.dataset.fld || '').trim().split(/\s+/)[0], field=F(key);
+  if (!field) return;
+  const section=SECTIONS.find(item=>item.fields.includes(field));
+  const targetDoc=(field.docs || section && section.docs || []).find(doc=>doc !== DOC);
+  if (targetDoc){ switchDoc(targetDoc); setTimeout(()=>bGo(key),0); return; }
+  bGo(key);
 }
 document.addEventListener('click',e=>{
-  const row=e.target.closest&&e.target.closest('#paper .b003 [data-pfields]');
-  if(row){ e.preventDefault(); openPaperFieldEditor(row,row.dataset.pfields.split(/\s+/)); return; }
-  const pop=document.querySelector('.bqe'); if(pop&&!pop.contains(e.target)) pop.remove();
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row){ e.preventDefault(); paperGoToField(row); }
 });
 document.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('#paper .b003 [data-pfields]')){e.preventDefault();openPaperFieldEditor(e.target,e.target.dataset.pfields.split(/\s+/));}
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();paperGoToField(row);}
 });

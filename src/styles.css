@@ -1275,7 +1275,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .scr-monitor #out{width:100%;max-width:72ch;align-self:center}
 }
 
-/* 0.9.3.50 — клікабельні рядки бланка з полями введення у програмі. */
+/* 0.9.3.50 — рядки бланка, пов’язані з полями основної форми. */
 .paper .b003 .pedit{cursor:pointer}
 .paper .b003 .pedit:hover,.paper .b003 .pedit:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media print{.paper .b003 .pedit{outline:0!important}}

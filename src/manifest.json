@@ -113,7 +113,6 @@
   "631-document-actions.js",
   "632-dangerous-actions.js",
   "633-print-audit-fixes.js",
-  "634-print-confirm.js",
   "635-paper-fields.js"
  ]
 }
