@@ -2,7 +2,7 @@ const {JSDOM}=require('jsdom');const fs=require('fs');
 const html=fs.readFileSync(require('path').join(__dirname,'..','build','app.html'),'utf8');
 const R=[]; const ok=(n,c,info='')=>R.push((c?'✅':'❌')+' '+n+(info&&!c?' — '+info:''));
 const mk=(store)=>{const errs=[];const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}
- w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.document.execCommand=()=>true;w.TextEncoder=TextEncoder;w.print=()=>{w.__printed=(w.__printed||0)+1};
+ w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.scrollTo=()=>{};w.document.execCommand=()=>true;w.TextEncoder=TextEncoder;w.print=()=>{w.__printed=(w.__printed||0)+1};
  w.URL.createObjectURL=()=>'blob:x';w.URL.revokeObjectURL=()=>{};w.HTMLAnchorElement.prototype.click=function(){w.__dl=(w.__dl||[]).concat(this.download)};
  if(store)for(const k in store)w.localStorage.setItem(k,store[k]); w.console.warn=(...a)=>errs.push('W '+a.join(' ')); w.addEventListener('error',e=>errs.push(e.message));}});d.errs=errs;return d;};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
