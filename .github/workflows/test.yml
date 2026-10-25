@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: node build.mjs
       - name: Запустити незмінений набір перевірок
         run: timeout 600s node tests/${{ matrix.suite }}.cjs ${{ matrix.args }}

@@ -1262,12 +1262,47 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   input[type=date],input[type=datetime-local]{max-width:100%;min-width:0!important;min-height:44px}
 }
 @media print{.mobile-input-help,.mobile-input-unit{display:none!important}}
+
+/* 0.9.3.42 — вставки у вікні документа; панель не входить у документ і друк. */
+.popwin .pw-insert{position:fixed;z-index:20;box-sizing:border-box;max-height:calc(100dvh - 16px);overflow:auto;padding:14px;background:var(--surface,#fff);color:var(--ink,#1a1f2b);border:1px solid var(--line,#dde1e8);border-radius:12px;box-shadow:0 8px 36px #0003;display:flex;flex-direction:column;gap:10px}
+.popwin .pw-insert-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.popwin .pw-insert label{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.popwin .pw-insert :is(input,textarea,select){box-sizing:border-box;width:100%;min-height:40px;font:inherit}
+.popwin .pw-insert button{font:inherit;cursor:pointer;min-height:36px}
+.popwin .pw-choices{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow:auto}
+.popwin .pw-choices button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);outline:2px solid var(--accent,#1f5a8a)}
+.popwin .pw-manual-note{font-size:13px;color:var(--muted,#667)}
+@media print{.popwin .pw-insert,.popwin .pw-bar{display:none!important}.popwin #pwBox{zoom:1!important}.popwin .pw-text{margin:0;border:0;padding:0}}
+
+/* 0.9.3.44 — згортання змісту розділів і робочий простір для широких екранів. */
+.sidefold-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:40px;margin:0 0 10px;padding:7px 10px;text-align:left;font-size:13px}
+.sidefold-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (min-width:900px){
+  body.lay-B.sidefold .form{grid-template-columns:48px minmax(0,1fr)}
+  body.lay-B.sidefold #sidecol>.sidein{width:48px;padding:8px 0;overflow:hidden}
+  body.lay-B.sidefold #sidecol>.sidein>:not(.sidefold-btn){display:none!important}
+  body.lay-B.sidefold .sidefold-btn{width:46px;min-height:calc(100vh - var(--pbh,0px) - 16px);margin:0;padding:8px 4px}
+  body.lay-B.sidefold .sidefold-btn span{writing-mode:vertical-rl;transform:rotate(180deg)}
+}
+@media (min-width:1600px){
+  body:not(.lay-D) .wrap,body:not(.lay-D) .top{max-width:2240px}
+  body:not(.lay-C):not(.lay-D) .wrap{grid-template-columns:minmax(0,var(--sf,1.4fr)) 16px minmax(480px,1fr)}
+  body.lay-C .wrap{grid-template-columns:minmax(480px,1fr) 16px minmax(0,var(--sf,1.25fr))}
+  body.outfold:not(.lay-C) .wrap{grid-template-columns:minmax(0,1fr) 16px 46px}
+  body.lay-C.outfold .wrap{grid-template-columns:46px 16px minmax(0,1fr)}
+  .scr-monitor #out{width:100%;max-width:72ch;align-self:center}
+}
+
+/* 0.9.3.50 — рядки бланка, пов’язані з полями основної форми. */
+.paper .b003 .pedit{cursor:pointer}
+.paper .b003 .pedit:hover,.paper .b003 .pedit:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media print{.paper .b003 .pedit{outline:0!important}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.41 від 24.10.2026">v0.9.3.41 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.51 від 25.10.2026">v0.9.3.51 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -1739,7 +1774,9 @@ const SECTIONS = [
     hint:v=>{const h=cm(v[0]),w=num(v[1]); return h>0&&w>0?'ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²':'';},
     fmt:v=>{const p=[], h=cm(v[0]), w=num(v[1]); if(h>0)p.push(`Зріст ${dec(h)} см`); if(v[1])p.push(`вага ${v[1]} кг`);
       if(h>0&&w>0)p.push('ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²'); return p.join(', ');}},
-  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '}
+  {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '},
+  {id:'moloch', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'},
+  {id:'opora', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'}
 ]},
 { id:'shk', title:'Шкіра, зів, лімфовузли', short:'Шкіра', head:'', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Шкірні покриви та видимі слизові без особливостей, периферичних набряків немає, лімфовузли не збільшені','Шкірні покриви та видимі слизові без патологічних змін']},
@@ -1773,6 +1810,7 @@ const SECTIONS = [
 { id:'ssc', title:'Серце, судини', short:'Серце', head:'Серцево-судинна система:', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Без особливостей','Без патологічних змін','Патологічних змін не виявлено']},
   {id:'ad', type:'num', label:'Артеріальний тиск', parts:[{ph:'130',u:'/',n:[90,139],ok:[50,300]},{ph:'80',u:'мм рт. ст.',n:[50,89],ok:[20,180]}], fmt:v=>v[0]&&v[1]?`АТ ${v[0]}/${v[1]} мм рт. ст.`:''},
+  {id:'adl', type:'num', noOut:true, docs:['ohl'], label:'Артеріальний тиск — ліва рука (форма 003/о)', parts:[{ph:'120',u:'/'},{ph:'80',u:'мм рт. ст.'}]},
   {id:'chss', type:'num', label:'ЧСС', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`ЧСС ${v[0]} уд./хв`:''},
   {id:'ps', type:'num', label:'Пульс', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`Пульс ${v[0]} уд./хв`:''},
   {id:'psch', type:'sel', label:'Характер пульсу', norm:0, tpl:'{v}', solo:'Пульс {v}', cont:true, opts:['ритмічний, задовільного наповнення і напруження','аритмічний','аритмічний, з дефіцитом пульсу','напружений','слабкого наповнення, частий']},
@@ -2174,7 +2212,11 @@ const SECTIONS = [
   {id:'dg', type:'line', label:'18. I г) основна причина смерті', tpl:'г) {v}', dead:true},
   {id:'dt', type:'line', noOut:true, label:'18. Приблизний час між початком захворювання і смертю', dead:true},
   {id:'dII', type:'text', rows:2, label:'18. II. Інші суттєві стани, що сприяли смерті', tpl:'II. {v}', dead:true},
-  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true}
+  {id:'pat', type:'text', rows:2, label:'17б. Патологоанатомічний діагноз (основний, ускладнення, супутні; код МКХ)', tpl:'Патологоанатомічний діагноз: {v}', dead:true},
+  {id:'dxnapr', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2012, п. 8: діагноз при направленні', placeholder:'Вкажіть діагноз із направлення'},
+  {id:'dxhosp', type:'text', rows:2, wide:true, noOut:true, label:'Ред. 2016, п. 12: діагноз при госпіталізації', placeholder:'Вкажіть діагноз при госпіталізації'},
+  {id:'dxhospcode', type:'line', noOut:true, label:'Ред. 2016, п. 12: код МКХ-10 діагнозу при госпіталізації'},
+  {id:'gest', type:'text', rows:2, wide:true, noOut:true, label:'066/о: дані про вагітність або післяпологовий період (за потреби)', placeholder:'Тиждень вагітності; день післяпологового періоду; тиждень після пологів'}
 ]}
 ];
 /* ===== Огляд анестезіолога (0.9.3.28): стаціонар — форма № 003-3/о «Передопераційний огляд анестезіологом та протокол
@@ -3403,8 +3445,17 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.41', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.51', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.51', '25.10.2026', 'бланк 003-3/о: підпис анестезіолога залишається видимим без даних пункції; протокол пункції без даних не друкується; у старих записах щоденника залишено лише фактичний опис шкіри без фрази про реакцію на огляд'],
+  ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; кліки по рядках ведуть до полів форми; нові значення відновлюються після перезапуску; діагнози 066/о зберігаються окремо від діагнозу огляду'],
+  ['0.9.3.48', '24.10.2026', 'друковані бланки: щоденник не стверджує незаповнені нормальні значення; підписи показників відкривають свої поля; категорія резистентності 003/о береться з 066/о; протокол пункції приховано без даних, місце переведення лишається порожнім до вибору, підпис анестезіолога веде до поля'],
+  ['0.9.3.47', '24.10.2026', 'аудит друкованих бланків 003/о, 066/о, 003-3/о та 027/о: звіт про порожні поля, безумовні твердження й переходи по кліку; виправлення — окремо після погодження'],
+  ['0.9.3.46', '24.10.2026', 'уточнено підписи «Очистити поточний документ», «Норма в усіх системах огляду» та «Новий пацієнт»; після норми й очищення документа дію можна скасувати протягом 8 секунд'],
+  ['0.9.3.45', '24.10.2026', 'у панелі документа основні дії — копіювання й друк / PDF; Word і LibreOffice — у «Завантажити», форматування з’являється під час ручної правки'],
+  ['0.9.3.44', '24.10.2026', 'панель розділів можна згорнути до смуги; на широкому екрані робоча область ширша, текст документа має зручну довжину рядка'],
+  ['0.9.3.43', '24.10.2026', 'навігація «Розділи»: фокус переходить у вікно, Tab лишається всередині, закриття повертає фокус до кнопки-виклику'],
+  ['0.9.3.42', '24.10.2026', 'окреме вікно документа: вставка тексту в позицію курсора, вибір готових фраз і полів без повернення у форму; правка бланка в тому самому вікні, скасування вставки'],
   ['0.9.3.41', '24.10.2026', 'введення з телефона: підказки для дат, температури й АТ; одиниці поряд із числом, зокрема в калькуляторах; цифрова клавіатура для нових числових полів'],
   ['0.9.3.40', '24.10.2026', 'поточний щоденник на бланку: правка біля рядка без переходу вліво, власні формулювання, пошук скарг, скасування й перехід до наступного пункту; підказки лише на екрані'],
   ['0.9.3.39', '23.10.2026', 'статус ручних змін, підтвердження заміни з форми, скасування; збереження тексту при швидкому режимі й зміні ширини'],
@@ -15505,6 +15556,650 @@ new MutationObserver(records=>{
   records.forEach(record=>record.addedNodes.forEach(node=>{ if (node.nodeType === 1) roots.add(node); }));
   roots.forEach(mobileInputScan);
 }).observe(document.body, {childList:true, subtree:true});
+/* 0.9.3.42 — вставки й поля в окремому вікні. Оригінальні поля залишаються у формі. */
+const POP_INSERT = {box:null, range:null, doc:null, pid:null, undo:null, textUndo:null};
+function popInsertClose(focus){
+  POP_INSERT.box?.remove(); POP_INSERT.box=null; POP_INSERT.undo=null;
+  if (focus && POP.w && !POP.w.closed) POP.w.document.getElementById('pwAdd')?.focus();
+}
+function popInsertSections(){
+  return SECTIONS.filter(s=>(!s.docs || s.docs.includes(DOC)) && (!s.only || s.only===MODE));
+}
+function popInsertFields(s){
+  return s.fields.filter(f=>f.wrapEl && !['hdr','auto'].includes(f.type) && !f.noOut && !f.headOnly &&
+    (!f.docs || f.docs.includes(DOC)) && (!f.only || f.only===MODE) && (!f.when || f.when()));
+}
+function popInsertChange(fn){
+  POP_INSERT.textUndo=null;
+  if (!POP_INSERT.undo){ undoPush('вставка або правка в окремому вікні'); POP_INSERT.undo=UNDO.at(-1); }
+  fn(); renderPaper(); popSoon();
+}
+function popInsertControl(source, host, name){
+  const d=host.ownerDocument, label=d.createElement('label'), input=d.createElement(source.tagName.toLowerCase());
+  label.textContent=source.getAttribute('aria-label') || name || source.labels?.[0]?.textContent || 'Значення';
+  for (const key of ['type','min','max','step','placeholder','inputmode']) if (source.hasAttribute(key)) input.setAttribute(key,source.getAttribute(key));
+  if (source.tagName==='SELECT') input.innerHTML=source.innerHTML;
+  if (source.tagName==='TEXTAREA') input.rows=3;
+  input.value=source.value; input.dataset.popSource=source.id; input.disabled=source.disabled;
+  input.addEventListener(source.tagName==='SELECT' || source.type==='checkbox'?'change':'input',()=>popInsertChange(()=>{
+    source.value=input.value; source.dispatchEvent(new Event(source.tagName==='SELECT'?'change':'input',{bubbles:true}));
+  }));
+  label.append(input); host.append(label); return input;
+}
+function popInsertField(f, host){
+  const d=host.ownerDocument;
+  if (f.type==='multi'){
+    const search=d.createElement('input'), list=d.createElement('div'); search.type='search'; search.placeholder='Знайти варіант'; search.setAttribute('aria-label','Пошук варіантів'); list.className='pw-choices';
+    const draw=()=>{ list.replaceChildren(); f.chips.forEach((source,i)=>{
+      const text=g(O(f.opts[i]).l); if (!text.toLowerCase().includes(search.value.toLowerCase())) return;
+      const button=d.createElement('button'); button.type='button'; button.textContent=text; button.dataset.popChip=source.id; button.setAttribute('aria-pressed',source.getAttribute('aria-pressed'));
+      button.onclick=()=>{ popInsertChange(()=>source.click()); draw(); }; list.append(button);
+    }); };
+    search.oninput=draw; host.append(search,list); draw();
+  }
+  const controls=f.inputs || [f.el,f.inp,f.unit,f.d1,f.d2].filter(Boolean);
+  controls.forEach(source=>popInsertControl(source,host,f.label));
+  const own=DIARY_INLINE_OWN.get(f); if (own) popInsertControl(own,host);
+  if (f.quick?.length && f.el){
+    const list=d.createElement('div'); list.className='pw-choices';
+    f.quick.forEach(raw=>{ const button=d.createElement('button'); button.type='button'; button.textContent='+ '+g(raw);
+      button.onclick=()=>{ popInsertChange(()=>{ f.el.value=[f.el.value.trim(),g(raw)].filter(Boolean).join(f.sep || '\n'); f.el.dispatchEvent(new Event('input',{bubbles:true})); }); popInsertSync(); }; list.append(button); }); host.append(list);
+  }
+}
+function popInsertSync(){
+  const box=POP_INSERT.box; if (!box) return;
+  if (POP_INSERT.doc!==DOC || POP_INSERT.pid!==PID){ popInsertClose(); return; }
+  box.querySelectorAll('[data-pop-source]').forEach(input=>{ const source=document.getElementById(input.dataset.popSource); if (source && box.ownerDocument.activeElement!==input) input.value=source.value; });
+  box.querySelectorAll('[data-pop-chip]').forEach(button=>{ const source=document.getElementById(button.dataset.popChip); if (source) button.setAttribute('aria-pressed',source.getAttribute('aria-pressed')); });
+  const note=box.querySelector('.pw-manual-note'); if (note) note.hidden=!dirty;
+}
+function popInsertText(value){
+  const w=POP.w, d=w.document, tx=d.querySelector('.pw-text'); if (!tx || !value) return;
+  const range=POP_INSERT.range;
+  tx.focus(); const selection=w.getSelection();
+  if (range && tx.contains(range.commonAncestorContainer)){ selection.removeAllRanges(); selection.addRange(range); }
+  else { const end=d.createRange(); end.selectNodeContents(tx); end.collapse(false); selection.removeAllRanges(); selection.addRange(end); }
+  POP_INSERT.textUndo={html:tx.innerHTML,doc:DOC,pid:PID,dirty};
+  POP_INSERT.undo=null;
+  // insertText зберігає вставку звичайним текстом і підтримує Ctrl+Z браузера.
+  d.execCommand('insertText',false,value); tx.dispatchEvent(new w.Event('input',{bubbles:true}));
+  POP_INSERT.textUndo.after=tx.innerHTML;
+  if (selection.rangeCount) POP_INSERT.range=selection.getRangeAt(0).cloneRange();
+}
+function popInsertOpen(keys, anchor){
+  const w=POP.w; if (!w || w.closed) return; popInsertClose();
+  const d=w.document, box=d.createElement('section'); box.className='pw-insert'; box.setAttribute('role','dialog'); box.setAttribute('aria-label','Додати або змінити в документі');
+  POP_INSERT.box=box; POP_INSERT.doc=DOC; POP_INSERT.pid=PID; POP_INSERT.mode=POP.mode;
+  const head=d.createElement('div'), title=d.createElement('b'), close=d.createElement('button'); title.textContent='Додати або змінити'; close.type='button'; close.textContent='✕'; close.setAttribute('aria-label','Закрити'); close.onclick=()=>popInsertClose(true); head.className='pw-insert-head'; head.append(title,close); box.append(head);
+  const undo=d.createElement('button'); undo.type='button'; undo.textContent='↶ Скасувати вставку / правку';
+  undo.onclick=()=>{ if (POP_INSERT.undo && UNDO.at(-1)===POP_INSERT.undo && POP_INSERT.pid===PID){ undoLast(); POP_INSERT.undo=null; popRender(); popInsertSync(); }
+    else if (POP_INSERT.textUndo?.doc===DOC && POP_INSERT.textUndo.pid===PID){ const tx=d.querySelector('.pw-text'); if (tx && tx.innerHTML===POP_INSERT.textUndo.after){
+      const previous=POP_INSERT.textUndo; tx.innerHTML=previous.html; tx.dispatchEvent(new w.Event('input',{bubbles:true}));
+      dirty=previous.dirty; CACHE[DOC]={html:previous.html,dirty}; manualTextStatus(); renderCheck(); autosave(); POP_INSERT.textUndo=null;
+    } }
+  }; box.append(undo);
+  if (POP.mode==='text'){
+    const text=d.createElement('textarea'), add=d.createElement('button'); text.rows=3; text.placeholder='Текст для вставки в позицію курсора'; text.setAttribute('aria-label',text.placeholder); add.type='button'; add.textContent='Вставити в текст'; add.onclick=()=>{ popInsertText(text.value); text.value=''; }; box.append(text,add);
+  }
+  const note=d.createElement('p'); note.className='pw-manual-note'; note.textContent='Є ручні зміни: поля збережуться у формі, але ручний текст автоматично не замінюється. Для вставки в нього скористайтеся режимом «Текст».'; note.hidden=!dirty; box.append(note);
+  const section=d.createElement('select'), field=d.createElement('select'), host=d.createElement('div'); section.setAttribute('aria-label','Розділ документа'); field.setAttribute('aria-label','Поле документа');
+  const sections=popInsertSections(); sections.forEach(s=>{ const option=d.createElement('option'); option.value=s.id; option.textContent=s.title || s.short; section.append(option); });
+  const draw=()=>{ host.replaceChildren(); const s=sections.find(s=>s.id===section.value), f=s && popInsertFields(s).find(f=>f.id===field.value); if (f) popInsertField(f,host); };
+  const choose=()=>{ field.replaceChildren(); const s=sections.find(s=>s.id===section.value); if (s) popInsertFields(s).forEach(f=>{ const option=d.createElement('option'); option.value=f.id; option.textContent=f.label; field.append(option); }); draw(); };
+  section.onchange=choose; field.onchange=draw;
+  box.append(section,field,host); d.body.append(box);
+  const items=(keys || []).filter(Boolean), exact=items.map(key=>document.getElementById(key)).filter(Boolean);
+  const key=items.find(key=>key.includes('.')), sid=key?.split('.')[0] || items.find(key=>sections.some(s=>s.id===key));
+  if (sid && sections.some(s=>s.id===sid)) section.value=sid;
+  choose();
+  if (exact.length){ section.hidden=true; field.hidden=true; host.replaceChildren(); exact.forEach(source=>popInsertControl(source,host)); }
+  else if (key){ const f=field.querySelector(`option[value="${key.split('.')[1]}"]`); if (f){ field.value=f.value; draw(); } }
+  const rect=anchor?.getBoundingClientRect(), width=Math.min(480,w.innerWidth-16); box.style.width=width+'px';
+  box.style.left=Math.max(8,Math.min(w.innerWidth-width-8,rect?.left || 8))+'px';
+  box.style.top=Math.max(8,Math.min(rect?.bottom+6 || 68,w.innerHeight-Math.min(box.offsetHeight,w.innerHeight-16)-8))+'px';
+  (host.querySelector('input,textarea,select,button') || box.querySelector('textarea,select,button'))?.focus({preventScroll:true});
+}
+function popInsertKeys(target){
+  if (target.closest('.bdi:not(.bcur)')) return null;
+  const diary=target.closest('[data-diary-key]'); if (diary) return DIARY_INLINE_GROUPS[diary.dataset.diaryKey];
+  const attr=target.closest('[data-fld],[data-dsel],[data-an]');
+  if (attr) return (attr.dataset.fld || attr.dataset.dsel || attr.dataset.an).split(' ');
+  const sec=target.closest('[data-sec]'); if (sec) return [sec.dataset.sec];
+  let row=target.closest('.brow,.bt2,.bt,.blines,.bdx,.bdl');
+  for (let i=0; row && i<5; i++,row=row.previousElementSibling){ const hit=BMAP.find(([re])=>re.test(row.textContent.trim())); if (hit) return [hit[1].split('#')[0]]; }
+  return [];
+}
+{ const x0=popInit; popInit=function(w){
+  const result=x0.apply(this,arguments), d=w.document, bar=d.querySelector('.pw-bar');
+  const add=d.createElement('button'); add.id='pwAdd'; add.type='button'; add.textContent='+ Додати'; add.setAttribute('aria-haspopup','dialog'); add.onclick=()=>popInsertOpen([],add); bar.append(add);
+  d.addEventListener('selectionchange',()=>{ const tx=d.querySelector('.pw-text'), selection=w.getSelection(); if (tx && selection?.rangeCount && tx.contains(selection.getRangeAt(0).commonAncestorContainer)) POP_INSERT.range=selection.getRangeAt(0).cloneRange(); });
+  d.addEventListener('keydown',e=>{
+    if (e.key==='Escape' && POP_INSERT.box){ e.preventDefault(); popInsertClose(true); }
+    if (POP.mode==='paper' && ['Enter',' '].includes(e.key) && e.target.closest('#pwBox [data-pop-edit]')){ e.preventDefault(); const keys=popInsertKeys(e.target); if (keys!==null) popInsertOpen(keys,e.target); }
+  });
+  d.getElementById('pwBox').addEventListener('click',e=>{
+    if (POP.mode!=='paper') return; e.preventDefault(); e.stopImmediatePropagation();
+    const keys=popInsertKeys(e.target); if (keys===null) return;
+    popInsertOpen(keys,e.target);
+  },true);
+  return result;
+}; }
+{ const x0=popRender; popRender=function(){
+  const w=POP.w, tx=w && !w.closed && w.document.querySelector('.pw-text');
+  if (POP_INSERT.box && POP_INSERT.mode!==POP.mode) popInsertClose();
+  // Не перебудовуємо contenteditable з незміненим текстом: курсор і Ctrl+Z лишаються на місці.
+  if (POP.mode==='text' && tx && tx.innerHTML===$('#out').innerHTML && POP_INSERT.doc===DOC && POP_INSERT.pid===PID){ popInsertSync(); return; }
+  const result=x0.apply(this,arguments); popInsertSync();
+  if (w && !w.closed){
+    const d=w.document, hint=d.getElementById('pwH'); if (hint) hint.textContent=POP.mode==='paper'?'клік по рядку — правка тут':'Ctrl+V або «+ Додати» в позицію курсора';
+    if (POP.mode==='paper') d.querySelectorAll('#pwBox [data-diary-key],#pwBox [data-fld],#pwBox [data-dsel],#pwBox [data-an],#pwBox [data-sec]').forEach(node=>{
+      if (node.closest('.bdi:not(.bcur)')) return;
+      node.dataset.popEdit='1'; node.tabIndex=0; node.setAttribute('role','button'); node.setAttribute('aria-haspopup','dialog'); node.title='Додати або змінити тут';
+    });
+    if (POP.mode==='text' && !d.querySelector('.pw-text')){
+      const tx=d.createElement('div'); tx.className='pw-text'; tx.contentEditable='true'; tx.setAttribute('role','textbox'); tx.setAttribute('aria-label','Текст документа'); tx.setAttribute('aria-multiline','true');
+      tx.addEventListener('input',()=>{ POP.edit=Date.now(); const out=$('#out'); out.innerHTML=tx.innerHTML; out.dispatchEvent(new Event('input',{bubbles:true})); });
+      tx.addEventListener('paste',e=>{ e.preventDefault(); d.execCommand('insertText',false,e.clipboardData.getData('text/plain')); });
+      d.getElementById('pwBox').replaceChildren(tx);
+    }
+  }
+  return result;
+}; }
+{ const x0=switchDoc; switchDoc=function(){ popInsertClose(); POP_INSERT.range=null; POP_INSERT.textUndo=null; return x0.apply(this,arguments); }; }
+/* 0.9.3.43 — керування фокусом у діалозі розділів. */
+const NAV_DIALOG = document.getElementById('navSheet');
+const NAV_DIALOG_CLOSE = document.getElementById('navClose');
+let NAV_DIALOG_RETURN_FOCUS = null;
+
+const openNav0 = openNav;
+openNav = function(){
+  if (NAV_DIALOG.hidden) NAV_DIALOG_RETURN_FOCUS = document.activeElement;
+  const result = openNav0.apply(this, arguments);
+  NAV_DIALOG_CLOSE.focus();
+  return result;
+};
+
+const closeNav0 = closeNav;
+closeNav = function(){
+  const wasOpen = !NAV_DIALOG.hidden;
+  const result = closeNav0.apply(this, arguments);
+  if (wasOpen){
+    const target = NAV_DIALOG_RETURN_FOCUS;
+    NAV_DIALOG_RETURN_FOCUS = null;
+    if (target && target.isConnected && typeof target.focus === 'function') target.focus();
+  }
+  return result;
+};
+
+function navDialogFocusable(){
+  return [...NAV_DIALOG.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>!el.closest('[hidden]') && !el.closest('[aria-hidden="true"]'));
+}
+
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Tab' || NAV_DIALOG.hidden) return;
+  const items = navDialogFocusable();
+  if (!items.length){ e.preventDefault(); NAV_DIALOG_CLOSE.focus(); return; }
+  const index = items.indexOf(document.activeElement);
+  if (index < 0){
+    e.preventDefault();
+    (e.shiftKey ? items[items.length - 1] : items[0]).focus();
+  } else if (e.shiftKey && index === 0){
+    e.preventDefault(); items[items.length - 1].focus();
+  } else if (!e.shiftKey && index === items.length - 1){
+    e.preventDefault(); items[0].focus();
+  }
+});
+
+/* The original handlers were assigned before this wrapper was loaded. */
+document.getElementById('navBtn').onclick = openNav;
+NAV_DIALOG_CLOSE.onclick = closeNav;
+/* 0.9.3.44 — згортання бічної панелі й ширший робочий простір. */
+VIEW.sideFold = !!VIEW.sideFold;
+const SIDE_COL = document.getElementById('sidecol');
+const SIDE_IN = SIDE_COL && SIDE_COL.querySelector(':scope > .sidein');
+let SIDE_FOLD_BUTTON = null;
+
+if (SIDE_IN){
+  SIDE_FOLD_BUTTON = h('button', {
+    type:'button', class:'btn sidefold-btn', 'aria-controls':'tabs', 'aria-expanded':'true',
+    'aria-label':'Згорнути панель розділів', title:'Згорнути зміст розділів'
+  }, h('span', {}, 'Згорнути зміст'));
+  SIDE_IN.prepend(SIDE_FOLD_BUTTON);
+  SIDE_FOLD_BUTTON.addEventListener('click', ()=>setSideFold(!document.body.classList.contains('sidefold')));
+}
+
+function sideFoldActive(){
+  return !isPhoneW() && layoutNow() === 'B' && !!VIEW.sideFold;
+}
+
+function renderSideFold(){
+  const folded = sideFoldActive();
+  document.body.classList.toggle('sidefold', folded);
+  if (!SIDE_FOLD_BUTTON) return;
+  SIDE_FOLD_BUTTON.hidden = isPhoneW() || layoutNow() !== 'B';
+  SIDE_FOLD_BUTTON.setAttribute('aria-expanded', folded ? 'false' : 'true');
+  SIDE_FOLD_BUTTON.setAttribute('aria-label', folded ? 'Розгорнути панель розділів' : 'Згорнути панель розділів');
+  SIDE_FOLD_BUTTON.title = folded ? 'Показати зміст розділів, шаблон і прогрес' : 'Згорнути зміст розділів';
+  const label = SIDE_FOLD_BUTTON.querySelector('span');
+  if (label) label.textContent = folded ? 'Розділи ›' : 'Згорнути зміст';
+}
+
+function setSideFold(folded){
+  VIEW.sideFold = !!folded;
+  saveView();
+  applyView();
+}
+
+const applyViewWide0 = applyView;
+applyView = function(){
+  const result = applyViewWide0.apply(this, arguments);
+  renderSideFold();
+  return result;
+};
+
+renderSideFold();
+/* 0.9.3.45 — основні дії документа, меню завантаження й форматування під час ручної правки. */
+{
+  const outBox = $('#outBox'), out = $('#out'), fmtBtn = $('#fmtBtn'), fmt = outBox && outBox.querySelector('.fmt');
+  if (outBox && out && fmtBtn && fmt){
+    let editing = false, formatOpen = lsGet('po.fmt', '0') === '1';
+    fmt.id = 'fmtToolbar';
+    fmtBtn.hidden = true;
+    fmtBtn.title = 'Показати форматування тексту під час ручної правки';
+    fmtBtn.setAttribute('aria-controls', fmt.id);
+    const syncFormat = () => {
+      fmtBtn.hidden = !editing;
+      fmt.hidden = !editing || !formatOpen;
+      fmtBtn.setAttribute('aria-pressed', formatOpen ? 'true' : 'false');
+      outBox.dataset.manualEditing = editing ? 'true' : 'false';
+    };
+    const enterEditing = () => { editing = true; syncFormat(); };
+    const leaveEditing = () => setTimeout(()=>{
+      const active = document.activeElement;
+      if (out.contains(active) || fmt.contains(active) || active === fmtBtn) return;
+      editing = false; syncFormat();
+    }, 0);
+    out.addEventListener('focusin', enterEditing);
+    fmt.addEventListener('focusin', enterEditing);
+    fmtBtn.addEventListener('focusin', enterEditing);
+    out.addEventListener('focusout', leaveEditing);
+    fmt.addEventListener('focusout', leaveEditing);
+    fmtBtn.addEventListener('focusout', leaveEditing);
+    fmtBtn.onclick = () => {
+      editing = true; formatOpen = !formatOpen;
+      lsSet('po.fmt', formatOpen ? '1' : '0'); syncFormat();
+    };
+    syncFormat();
+  }
+
+  /* Перед друком уже є окремою вкладкою; лишаємо лише її, без дублювальної кнопки. */
+  const paperBtn = $('#paperBtn');
+  if (paperBtn) paperBtn.hidden = true;
+
+  /* ШІ лишається доступним у пошуку дій, не займаючи місце в панелі документа. */
+  const aiBtn = $('#aiBtn');
+  if (aiBtn) aiBtn.hidden = true;
+
+  const save = outBox && outBox.querySelector('.savewrap');
+  const trigger = save && save.querySelector('#saveBtn');
+  const menu = save && save.querySelector('.savemenu');
+  if (trigger && menu){
+    [...menu.querySelectorAll('button')].filter(b=>/PDF/i.test(b.textContent)).forEach(b=>b.remove());
+    menu.id = 'downloadMenu';
+    trigger.textContent = 'Завантажити ▾';
+    trigger.title = 'Завантажити документ у форматі Word або LibreOffice';
+    trigger.setAttribute('aria-label', 'Завантажити документ');
+    trigger.setAttribute('aria-controls', menu.id);
+
+    const items = () => [...menu.querySelectorAll('button:not([disabled])')];
+    const closeMenu = (restoreFocus=false) => {
+      menu.hidden = true; trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    };
+    trigger.addEventListener('keydown', e=>{
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if (menu.hidden) trigger.click();
+      const list = items();
+      (e.key === 'ArrowDown' ? list[0] : list[list.length - 1])?.focus();
+    });
+    menu.addEventListener('keydown', e=>{
+      const list = items(), i = list.indexOf(e.target.closest('button'));
+      if (e.key === 'Escape'){ e.preventDefault(); closeMenu(true); return; }
+      if (e.key === 'Home' || e.key === 'End'){
+        e.preventDefault(); (e.key === 'Home' ? list[0] : list[list.length - 1])?.focus(); return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault(); const step = e.key === 'ArrowDown' ? 1 : -1;
+        list[(i + step + list.length) % list.length]?.focus();
+      }
+    });
+    menu.addEventListener('click', e=>{
+      if (e.target.closest('button')) setTimeout(()=>{ if (menu.hidden) trigger.focus(); }, 0);
+    });
+    save.addEventListener('focusout', ()=>setTimeout(()=>{
+      if (!save.contains(document.activeElement)) closeMenu();
+    }, 0));
+  }
+
+  const printBtn = $('#printBtn');
+  if (printBtn) printBtn.setAttribute('aria-label', 'Друк документа або збереження як PDF');
+}
+/* 0.9.3.46 — виразні підписи для масових дій і швидке скасування. */
+const DANGER_UNDO_MS = 8000;
+const DANGER_CLEAR_LABEL = 'Очистити поточний документ';
+const DANGER_CLEAR_TITLE = 'Очистити лише поточний документ. Дані пацієнта, призначення й журнали залишаться.';
+const DANGER_NORM_LABEL = 'Норма в усіх системах огляду';
+const DANGER_NEW_LABEL = 'Новий пацієнт (поточний збережено)';
+
+function dangerLabelClearButton(btn){
+  if (!btn) return;
+  if (btn.dataset.arm){
+    btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+    btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+    return;
+  }
+  if (btn.textContent.trim() !== DANGER_CLEAR_LABEL) btn.textContent = DANGER_CLEAR_LABEL;
+  btn.setAttribute('aria-label', DANGER_CLEAR_LABEL);
+  btn.title = DANGER_CLEAR_TITLE;
+}
+
+function dangerSyncStaticLabels(){
+  const clearAll = $('#clearAll');
+  if (clearAll){
+    if (clearAll.dataset.dangerLabel !== '1'){
+      clearAll.replaceChildren(
+        h('span', {'aria-hidden':'true'}, '＋'),
+        h('span', {class:'new-patient-label'}, ' Новий пацієнт'),
+        h('span', {class:'hide-m'}, ' (поточний збережено)')
+      );
+      clearAll.dataset.dangerLabel = '1';
+    }
+    clearAll.setAttribute('aria-label', DANGER_NEW_LABEL);
+    clearAll.title = DANGER_NEW_LABEL;
+  }
+  dangerLabelClearButton($('#clearDocBtn'));
+  document.querySelectorAll('.more-dd .mmenu button').forEach(btn=>{
+    if (/Очистити весь документ|Очистити поточний документ/.test(btn.textContent)) dangerLabelClearButton(btn);
+  });
+}
+
+function dangerSyncNormLabel(){
+  const btn = $('#allNorm');
+  if (!btn) return;
+  const diary = DOC === 'shch';
+  const mobile = !!(window.matchMedia && matchMedia('(max-width:899px)').matches);
+  const visible = diary ? 'Стабільно' : mobile ? 'Норма всюди' : DANGER_NORM_LABEL;
+  if (btn.textContent !== visible) btn.textContent = visible;
+  btn.setAttribute('aria-label', diary ? 'Позначити стан щоденника як стабільний' : DANGER_NORM_LABEL);
+  btn.title = diary ? 'Типовий стабільний запис щоденника' : DANGER_NORM_LABEL;
+}
+
+function dangerShowUndo(message, returnFocus){
+  const box = $('#toast');
+  if (!box || !UNDO.length) return;
+  clearTimeout(toast.h);
+  const action = h('button', {
+    type:'button',
+    class:'btn primary',
+    'aria-label':'Скасувати: ' + message,
+    onclick:()=>{
+      clearTimeout(toast.h);
+      box.classList.remove('undo-toast', 'on');
+      box.style.removeProperty('pointer-events');
+      box.replaceChildren();
+      undoLast();
+      if (returnFocus && returnFocus.isConnected && typeof returnFocus.focus === 'function') returnFocus.focus();
+    }
+  }, 'Скасувати');
+  box.replaceChildren(h('span', {}, message + ' '), action);
+  box.classList.add('undo-toast', 'on');
+  box.style.pointerEvents = 'auto';
+  toast.h = setTimeout(()=>{
+    if (!box.classList.contains('undo-toast')) return;
+    box.classList.remove('undo-toast', 'on');
+    box.style.removeProperty('pointer-events');
+    box.replaceChildren();
+    toast.h = null;
+  }, DANGER_UNDO_MS);
+}
+
+/* Звичайні повідомлення не повинні залишати інтерактивний тост активним. */
+{
+  const toast0 = toast;
+  toast = function(){
+    const box = $('#toast');
+    if (box){
+      box.classList.remove('undo-toast');
+      box.style.removeProperty('pointer-events');
+    }
+    return toast0.apply(this, arguments);
+  };
+}
+
+/* Підпис «Норма» в 540-ui-build.js залежить від документа та ширини екрана. */
+{
+  const update0 = update;
+  update = function(){
+    const result = update0.apply(this, arguments);
+    dangerSyncNormLabel();
+    return result;
+  };
+}
+
+/* Скасування відкривається лише після фактичного застосування масової дії. */
+{
+  const norm = $('#allNorm'), norm0 = norm && norm.onclick;
+  if (norm && norm0) norm.onclick = function(){
+    const previous = UNDO[UNDO.length - 1];
+    const result = norm0.apply(this, arguments);
+    if (UNDO[UNDO.length - 1] !== previous){
+      dangerShowUndo(DOC === 'shch' ? 'Стан щоденника змінено' : 'Норму виставлено в усіх системах огляду', this);
+    }
+    return result;
+  };
+}
+{
+  const clear0 = clearDoc;
+  clearDoc = function(btn){
+    const confirmed = !!(btn && btn.dataset && btn.dataset.arm);
+    const undoBefore = UNDO.slice(), redoBefore = REDO.slice();
+    const previous = UNDO[UNDO.length - 1];
+    const result = clear0.apply(this, arguments);
+    if (!confirmed && btn && btn.dataset.arm){
+      UNDO.splice(0, UNDO.length, ...undoBefore);
+      REDO.splice(0, REDO.length, ...redoBefore);
+      undoBtn();
+    }
+    if (btn){
+      dangerLabelClearButton(btn);
+      if (btn.dataset.arm){
+        btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+        btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+        setTimeout(()=>dangerLabelClearButton(btn), 3600);
+      }
+    }
+    if (confirmed && UNDO[UNDO.length - 1] !== previous){
+      const summary = btn && btn.closest('details') && btn.closest('details').querySelector('summary');
+      dangerShowUndo('Документ очищено', summary || $('#docMore'));
+    }
+    return result;
+  };
+}
+
+dangerSyncStaticLabels();
+dangerSyncNormLabel();
+/* 0.9.3.48 — виправлення після аудиту друкованих бланків.
+   Не додає медичних висновків: друкує лише введені значення, прибирає непідтверджені фрази
+   та спрямовує клік до вже наявного поля. */
+
+/* Старі записи щоденника могли зберегтися до появи власних полів _own.
+   Для них прибираємо фрази-норми, які не підтверджені даними. */
+{ const entry0 = bDiaryEntry; bDiaryEntry = function(e){
+  const root = entry0.apply(this, arguments), fields = e && e.f || {};
+  const legacy = e && !e.cur && !Object.keys(fields).some(key=>key.endsWith('_own'));
+  const rows = [...root.querySelectorAll('.bdr>.brow')];
+  if (legacy){
+    const value = key => bDv(fields, key);
+    const general = rows.find(row=>/^Об’єктивно/.test(row.textContent.trim()));
+    if (general){
+      const dyn = (value('d_main.dyn').match(/з позитивною динамікою|покращився|погіршився|без суттєвої динаміки/) || [''])[0];
+      general.replaceChildren(h('span', {class:'bl'}, 'Об’єктивно: загальний стан '), bFill([value('d_main.stan'), dyn].filter(Boolean).join(', '), true));
+    }
+    const skin = rows.find(row=>/^Реакція на огляд/.test(row.textContent.trim()));
+    if (skin) skin.replaceChildren(h('span', {class:'bl'}, 'Шкірні покриви та видимі слизові '), bFill(value('d_obj.shk').replace(/^Шкірні покриви /, ''), false, true));
+    const abdomen = rows.find(row=>/^Живіт/.test(row.textContent.trim()));
+    if (abdomen) abdomen.replaceChildren(h('span', {class:'bl'}, 'Живіт при пальпації '), bFill(value('d_obj.zhyv'), false, true));
+    const stool = rows.find(row=>/^Випорожнення/.test(row.textContent.trim()));
+    if (stool){
+      const raw = value('d_obj.fiz');
+      const result = /регулярні/.test(raw) ? 'регулярні' : /Рідкі/.test(raw) ? 'рідкі' : /Затримка/.test(raw) ? 'затримка' : '';
+      stool.replaceChildren(h('span', {class:'bl'}, 'Випорожнення '), bFill(result, false, true));
+    }
+  }
+  /* У поточному щоденнику клік по підпису показника має відкривати його рядок,
+     а не завжди редактор температури. */
+  if (e && e.cur){
+    const left = root.querySelector('.bdl');
+    if (left) [...left.children].forEach(row=>{
+      const text = row.textContent.trim();
+      const key = /^Дата\b/.test(text) ? 'date' : /^T\s*[–-]/i.test(text) ? 'temp' : /^Ps\s*[–-]/i.test(text) ? 'pulse' : /^АТ\s*[–-]/i.test(text) ? 'pressure' : /^ЧДР\s*[–-]/i.test(text) ? 'breath' : '';
+      if (key && typeof diaryInlineMark === 'function') diaryInlineMark(row, key);
+    });
+  }
+  return root;
+}; }
+
+/* Категорія резистентності 003/о відповідає однойменному вибору в 066/о.
+   Порожнє джерело лишається порожнім; при кліку відкриваємо саме це поле. */
+{ const epi0 = bEpi; bEpi = function(){
+  const pages = epi0.apply(this, arguments), source = F('s066.tbres');
+  const row = pages.flatMap(page=>[...page.querySelectorAll('.brow')]).find(item=>/^Категорія резистентності:/.test(item.textContent.trim()));
+  if (row && source){
+    row.dataset.s66fld = 'tbres'; row.title = 'Відкрити це поле у формі 066/о';
+    const index = S66('tbres'), box = row.querySelector('.bbox');
+    if (box && index >= 0) box.textContent = String(index + 1);
+  }
+  return pages;
+}; }
+document.addEventListener('click', e=>{
+  const row = e.target.closest && e.target.closest('#paper .bepi2 .brow[data-s66fld="tbres"]');
+  if (!row) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  switchDoc('f066');
+  setTimeout(()=>goTab('s066', 's066.tbres'), 0);
+}, true);
+
+/* У протоколі анестезії не підставляємо місце переведення без вибору лікаря.
+   Розділ пункції показуємо лише після введення її основного типу/рівня/дози;
+   рядок підпису анестезіолога лишається на бланку завжди. */
+{ const anest0 = b333c; b333c = function(){
+  const root = anest0.apply(this, arguments), transfer = root.querySelector('[data-an="an_prot.per"]');
+  if (transfer && AI_('an_prot.per') < 0){
+    const value = transfer.querySelector('.bf'); if (value) value.replaceWith(bFill(''));
+  }
+  const hasProcedure = AI_('an_pun.prost') >= 0 || ['riv','osn'].some(key=>AT_('an_pun.' + key));
+  const signature = [...root.querySelectorAll('.brow')].find(row=>!row.hasAttribute('data-an') && /^Анестезіолог(?:\s|$)/.test(row.textContent.trim()));
+  if (!hasProcedure) root.querySelectorAll('[data-an^="an_pun."]').forEach(row=>row.remove());
+  if (signature) signature.dataset.an = 'an_zak.anest';
+  return root;
+}; }
+/* 0.9.3.50 — зв’язування рядків бланків із заздалегідь визначеними полями форми.
+   Поля оголошені у файлах розділів, щоб restoreLast бачив їх під час першого відновлення. */
+
+function setPaperFill(el, value){
+  if (!el) return;
+  const v = String(value || '').trim(); el.textContent = v || '\u00a0'; el.classList.toggle('empty', !v);
+}
+function setPaperCells(el, value){
+  if (!el) return;
+  const v = String(value || '').replace(/\D/g, '');
+  [...el.querySelectorAll('.bc')].forEach((c,i)=>c.textContent = v[i] || '\u00a0');
+}
+function setPaperCodeCells(el, value){
+  if (!el) return;
+  const v = String(value || '').toUpperCase().replace(/[^A-ZА-ЯІЇЄҐ0-9]/g, '');
+  [...el.querySelectorAll('.bc')].forEach((c,i)=>c.textContent = v[i] || '\u00a0');
+}
+function paperRow(root, prefix){ return [...root.querySelectorAll('.brow')].find(r=>r.textContent.trim().startsWith(prefix)) || null; }
+function paperEditable(row, keys){
+  if (!row || !keys.length) return;
+  row.dataset.fld = keys.join(' ');
+  row.classList.add('pedit'); row.tabIndex = 0; row.setAttribute('role','button');
+  row.setAttribute('aria-label', 'Відкрити поле форми: ' + keys.map(k=>{ const f=F(k); return f && f.label || k; }).join(', '));
+  row.title = 'Натисніть, щоб перейти до поля у формі';
+}
+
+/* Під’єднати порожні рядки форми 003/о до окремих значень або до наявної 066/о. */
+{
+  const bTitle0 = bTitle;
+  bTitle = function(){
+    const page = bTitle0.apply(this, arguments);
+    const doc = paperRow(page, '6. Документ, що посвідчує особу');
+    const parts = String(S66('docid') || '').split(',');
+    if (doc){ const fill=doc.querySelectorAll('.bf'); setPaperFill(fill[0], parts[0]); setPaperFill(fill[1], parts.slice(1).join(',').trim()); paperEditable(doc,['s066.docid']); }
+    const citizen = paperRow(page, '6.2. Громадянство');
+    if (citizen){ setPaperFill(citizen.querySelector('.bf'), String(S66('grom') || '').replace(/\D/g,'')); paperEditable(citizen,['s066.grom']); }
+    const hiv = paperRow(page, '13. Госпіталізація:');
+    if (hiv){ const cells=hiv.querySelectorAll('.bcells'); setPaperCells(cells[0], bD6(d66.vil())); paperEditable(hiv,['s066.vil']); }
+    const blood = paperRow(page, '15. Група крові');
+    if (blood){ const fill=blood.querySelectorAll('.bf'), cells=blood.querySelector('.bcells'); setPaperFill(fill[0],d66.krov()); setPaperFill(fill[1],d66.rh()); setPaperCells(cells,bD6(d66.rw())); paperEditable(blood,['s066.krov','s066.rh','s066.rw']); }
+    const repeat = paperRow(page, '19. Госпіталізація з приводу');
+    if (repeat){ const boxes=repeat.querySelectorAll('.bbox'), v=S66('vp'); boxes[0].textContent=v >= 0 ? String(v+1) : '\u00a0'; paperEditable(repeat,['s066.vp']); }
+    const repeat30 = paperRow(page, '19.1. Повторна госпіталізація');
+    if (repeat30){ const box=repeat30.querySelector('.bbox'), v=S66('p30'); if(box) box.textContent=v >= 0 ? String(v+1) : '\u00a0'; paperEditable(repeat30,['s066.p30']); }
+    return page;
+  };
+  const bExam0 = bExam;
+  bExam = function(){
+    const pages = bExam0.apply(this, arguments), page=pages[0]; if (!page) return pages;
+    const blood = paperRow(page, 'А/Т: права рука');
+    if (blood){ const fills=blood.querySelectorAll('.bf'), f=F('ssc.adl'); setPaperFill(fills[1], f && f.inputs[0].value && f.inputs[1].value ? f.inputs[0].value+'/'+f.inputs[1].value : ''); paperEditable(blood,['ssc.adl']); }
+    const breast = paperRow(page, 'Молочні залози:');
+    if (breast){ setPaperFill(breast.querySelector('.bf'), F('zah.moloch').el.value); paperEditable(breast,['zah.moloch']); }
+    const musculoskeletal = paperRow(page, 'Кістково-суглобова система:');
+    if (musculoskeletal){ setPaperFill(musculoskeletal.querySelector('.bf'), F('zah.opora').el.value); paperEditable(musculoskeletal,['zah.opora']); }
+    return pages;
+  };
+}
+
+/* У формі 066/о поля лишаються окремими для кожної редакції бланка. */
+{
+  const b12 = b066v12;
+  b066v12 = function(){
+    const pages=b12.apply(this, arguments), row=paperRow(pages[0], '8. Діагноз при направленні');
+    if (row){ setPaperFill(row.querySelector('.bf'), F('s066.dxnapr').el.value); paperEditable(row,['s066.dxnapr']); }
+    const pregnancy=paperRow(pages[1], 'У разі смерті жінок під час вагітності');
+    if (pregnancy){ const v=F('s066.gest').el.value.trim(); if(v){ pregnancy.replaceChildren(h('span',{class:'bl'},'У разі смерті жінок під час вагітності або після пологів у період до одного року: '), bFill(v,false,true)); } paperEditable(pregnancy,['s066.gest']); }
+    return pages;
+  };
+  const b16 = b066v16;
+  b066v16 = function(){
+    const pages=b16.apply(this, arguments), row=paperRow(pages[0], '12. Діагноз при госпіталізації');
+    if (row){ setPaperFill(row.querySelector('.bf'), F('s066.dxhosp').el.value); setPaperCodeCells(row.querySelector('.bcells'), F('s066.dxhospcode').el.value); paperEditable(row,['s066.dxhosp','s066.dxhospcode']); }
+    const pregnancy=paperRow(pages[1], 'Для жінок, які померли під час вагітності');
+    if (pregnancy){ const v=F('s066.gest').el.value.trim(); if(v){ pregnancy.replaceChildren(h('span',{class:'bl'},'Для жінок, які померли під час вагітності або після пологів (до 1 року): '), bFill(v,false,true)); } paperEditable(pregnancy,['s066.gest']); }
+    return pages;
+  };
+}
+
+function paperGoToField(row){
+  const key=(row.dataset.fld || '').trim().split(/\s+/)[0], field=F(key);
+  if (!field) return;
+  const section=SECTIONS.find(item=>item.fields.includes(field));
+  const targetDoc=(field.docs || section && section.docs || []).find(doc=>doc !== DOC);
+  if (targetDoc){ switchDoc(targetDoc); setTimeout(()=>bGo(key),0); return; }
+  bGo(key);
+}
+document.addEventListener('click',e=>{
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row){ e.preventDefault(); paperGoToField(row); }
+});
+document.addEventListener('keydown',e=>{
+  const row=e.target.closest&&e.target.closest('#paper .b003 .pedit[data-fld]');
+  if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();paperGoToField(row);}
+});
 </script>
 
 </body>
