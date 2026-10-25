@@ -14,14 +14,14 @@ function phstGo(label, id){
   if (label === 'Текст'){ $('#outBox').classList.add('open'); return; }
   const idx = phstGroupIdx(label); if (idx.length){ $('#outBox').classList.remove('open'); show(idx[0]); window.scrollTo({top:0}); }
 }
+const hasHv0 = () => TABS.some(t=>t.special === 'hv' && t.tab && !t.tab.hidden);
 function phstSteps(){
-  const hasHv = TABS.some(t=>t.special === 'hv' && t.tab && !t.tab.hidden), G = (()=>{ try{ return phtGroups().map(g=>g.l); }catch(e){ return []; } })();
+  const G = (()=>{ try{ return phtGroups().map(g=>g.l); }catch(e){ return []; } })();
   const S = [
     {k:'pt', i:'👤', t:'ПІБ і дата народження', d:'Розділ «Запис». Стать і вік визначаться самі.', done:!!mv('pib'), go:()=>{ const i = TABS.findIndex(t=>t.special === 'meta'); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); setTimeout(()=>{ const e = document.getElementById('meta_pib'); if (e && !e.value) e.focus(); }, 150); } else phstGo('Пацієнт'); }},
-    hasHv ? {k:'hv', i:'🔎', t:'Оберіть хворобу', d:'«За хворобою»: програма сама заповнить типові скарги, анамнез і огляд.', done:!!(typeof curKey !== 'undefined' && curKey), go:()=>{ const i = TABS.findIndex(t=>t.special === 'hv'); if (i >= 0){ show(i); window.scrollTo({top:0}); } }} : null,
-    G.includes('Анамнез') ? {k:'an', i:'💬', t:'Скарги й анамнез', d:'Вкладка «Анамнез» унизу: перевірте й підправте під пацієнта.', done:phstFilled('Анамнез'), go:()=>phstGo('Анамнез')} : null,
+    G.includes('Анамнез') ? {k:'an', i:'💬', t:'Опитайте: скарги й анамнез', d:'Вкладка «Анамнез» унизу. Коли скарги вибрано — програма підкаже, на що схоже.', done:phstFilled('Анамнез'), go:()=>phstGo('Анамнез')} : null,
     G.includes('Огляд') ? {k:'og', i:'🩺', t:'Огляд', d:'Вкладка «Огляд»: змінюйте лише те, що не в нормі.', done:phstFilled('Огляд'), go:()=>phstGo('Огляд')} : null,
-    G.includes('Висновок') ? {k:'vy', i:'📋', t:'Діагноз і план', d:'Вкладка «Висновок».', done:phstFilled('Висновок'), go:()=>phstGo('Висновок')} : null,
+    G.includes('Висновок') ? {k:'vy', i:'📋', t:'Діагноз і план', d:'Вкладка «Висновок». Допомога — шаблон хвороби (за бажанням).', done:phstFilled('Висновок'), go:()=>phstGo('Висновок')} : null,
     {k:'tx', i:'📄', t:'Перевірте текст і скопіюйте', d:'Вкладка «Текст»: зауваження, «Копіювати» або «Друк».', done:false, go:()=>phstGo('Текст')}
   ].filter(Boolean);
   const n = S.findIndex(s=>!s.done); if (n >= 0) S[n].next = true;
@@ -39,8 +39,8 @@ function phstCard(){
   st.forEach((s, k)=>ol.append(h('li', {}, h('button', {type:'button', class:'phst-s' + (s.done ? ' done' : '') + (s.next ? ' next' : ''), onclick:s.go},
     h('span', {class:'phst-n', 'aria-hidden':'true'}, s.done ? '✓' : String(k + 1)),
     h('span', {class:'phst-t'}, h('b', {}, s.i + ' ' + s.t), h('span', {}, s.d)),
-    s.done ? h('span', {class:'phst-ok'}, k < 2 ? 'є' : 'заповнено — перевірте') : ''))));
-  box.append(ol, h('p', {class:'phst-f'}, 'Усе зберігається само. Інший пацієнт — натисніть шапку вгорі; новий — «＋ Новий пацієнт».'),
+    s.done ? h('span', {class:'phst-ok'}, s.k === 'pt' ? 'є' : 'заповнено') : ''))));
+  box.append(ol, hasHv0() ? h('button', {type:'button', class:'btn phst-tpl', onclick:()=>{ const i = TABS.findIndex(t=>t.special === 'hv'); if (i >= 0){ $('#outBox').classList.remove('open'); show(i); window.scrollTo({top:0}); } }}, '📋 Шаблон хвороби — за бажанням') : '', h('p', {class:'phst-f'}, 'Усе зберігається само. Інший пацієнт — натисніть шапку вгорі; новий — «＋ Новий пацієнт».'),
     h('button', {type:'button', class:'btn phst-x', onclick:()=>{ PHST.hide = true; try{ localStorage.setItem('po.phstart', '0'); }catch(e){} phstRender(); toast('Повернути: «⋯» → «Як працювати з пацієнтом»', 3000); }}, 'Більше не показувати'));
   return box;
 }

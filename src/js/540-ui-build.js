@@ -272,9 +272,9 @@ function applyMode(){
 }
 document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click', ()=>{
   MODE = b.dataset.mode; try{ localStorage.setItem('po.mode', MODE); }catch(e){}
-  applyMode(); if (DOC === 'ohl') show(TABS.indexOf(HV)); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
+  applyMode(); if (DOC === 'ohl') show(startTab()); toast(MODE === 'amb' ? 'Амбулаторний режим' : 'Стаціонарний режим');
 }));
-loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode();
+loadDoc(); setNow(); refreshLabels(); show(TABS.indexOf(HV)); applyMode(); show(startTab());
 $('#ptbar').addEventListener('click', ()=>openSwitcher());
 $('#misBtn').addEventListener('click', misPanel);
 $('#clearDocBtn').addEventListener('click', e=>clearDoc(e.currentTarget));

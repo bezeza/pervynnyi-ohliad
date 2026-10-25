@@ -103,7 +103,7 @@ function profileDialog(first){
       h('p', {class:'pnote'}, 'Нічого не видаляється: сховане відкривається одним клацанням, пошук Ctrl+K знаходить усе.'));
   };
   const close = () => { dlg.remove(); lsSet('po.profask', '1'); };
-  const done = () => { if (!p){ toast('Оберіть спеціальність'); return; } PROF = {p, w}; lsSet('po.prof', JSON.stringify(PROF)); close(); applyProfile(false); if (first) show(TABS.indexOf(HV)); };
+  const done = () => { if (!p){ toast('Оберіть спеціальність'); return; } PROF = {p, w}; lsSet('po.prof', JSON.stringify(PROF)); close(); applyProfile(false); if (first) show(startTab()); };
   const skip = () => { PROF = null; try{ localStorage.removeItem('po.prof'); }catch(e){} close(); applyProfile(true); toast('Показується все — профіль можна обрати кнопкою в шапці', 3000); };
   const dlg = h('div', {class:'navsheet packsheet profdlg', role:'dialog', 'aria-modal':'true', 'aria-label':'Профіль'},
     h('div', {class:'nvbox pbox'},

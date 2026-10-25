@@ -27,6 +27,8 @@ function show(i){
 
 /* ===== Навігація по розділах: ‹ назва › на телефоні і «Далі →» внизу розділу ===== */
 const TOOL_TABS = ['calc','tpl','set','help'];
+/* з чого починати роботу: спершу опитування («Скарги»), шаблон хвороби — за бажанням (0.9.3.60) */
+function startTab(){ const i = TABS.findIndex(t=>t.id === 'skarhy'); return i >= 0 && TABS[i].tab && !TABS[i].tab.hidden ? i : TABS.indexOf(HV); }
 function tabOrder(){ return [...document.querySelectorAll('#tabs .tab')].filter(t=>!t.hidden).map(t=>TABS.findIndex(x=>x.tab === t)).filter(i=>i >= 0); }
 function tabGroupLabel(i){ const g = TABS[i].tab.closest('.tgrp'); const l = g && g.querySelector('.tgl'); return l ? l.textContent : ''; }
 function goDone(){
