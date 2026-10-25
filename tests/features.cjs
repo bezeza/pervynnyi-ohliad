@@ -809,6 +809,37 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("F066ED='2016'; renderPaper()"); set('s066_dxhosp','Діагноз при госпіталізації'); set('s066_dxhospcode','I10'); w.eval('renderPaper()');
    ok('066/о редакції 2016 має окремі поля діагнозу та коду МКХ-10',/Діагноз при госпіталізації/.test(paper.textContent)&&/I10/.test(paper.textContent));
  }
+ // 0.9.3.52 — «Вносити на бланку»: віконце з пунктами рядка
+ { doc.querySelector('[data-mode="hosp"]').click(); ap('pneu');
+   w.eval("peSetMode('here'); BLANK=true; BLP.title=true; BLP.exam=true; switchDoc('ohl'); PAPER=true; renderPaper()");
+   const prow=re=>[...doc.querySelectorAll('#paper .b003 .pe-row')].find(r=>re.test(r.textContent.trim()));
+   const pclick=el=>el.dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+   const pbox=()=>doc.querySelector('.pe-box');
+   ok('Бланк: рядки титулу й огляду позначені як «вносити тут», над аркушем — перемикач', !!prow(/^Свідомість/) && !!prow(/^15\. Група крові/) && !!doc.querySelector('.pe-toggle[aria-pressed="true"]'));
+   pclick(prow(/^Свідомість/));
+   ok('Бланк: клік по «Свідомість» відкриває віконце з варіантами саме цього пункту', !!pbox() && pbox().querySelectorAll('[data-pe-sel="svid"]').length>=3);
+   const before=w.eval("F('zah.svid').el.value"), opt=[...pbox().querySelectorAll('.pe-opt')].find(o=>o.dataset.value!=='' && o.dataset.value!==before);
+   opt.dispatchEvent(new w.Event('pointerdown',{bubbles:true})); pclick(opt);
+   ok('Бланк: вибір у віконці змінює поле форми й аркуш, віконце лишається відкритим', w.eval("F('zah.svid').el.value")===opt.dataset.value && $('paper').textContent.includes(opt.textContent.trim().split(' ')[0]) && !!pbox() && opt.getAttribute('aria-pressed')==='true');
+   pclick(pbox().querySelector('.pe-undo'));
+   ok('Бланк: «Скасувати» у віконці повертає попереднє значення', w.eval("F('zah.svid').el.value")===before);
+   const t0=pbox().querySelector('.pe-head b').textContent; pclick(pbox().querySelector('.pe-next'));
+   ok('Бланк: «Далі ›» переходить до наступного рядка', !!pbox() && pbox().querySelector('.pe-head b').textContent!==t0);
+   pclick(prow(/^А\/Т/)); const adl=[...pbox().querySelectorAll('.pe-body input')].find(i=>i.dataset.popSource==='ssc_adl_0');
+   ok('Бланк: рядок «А/Т» показує обидві руки', !!adl && !![...pbox().querySelectorAll('.pe-body input')].find(i=>i.dataset.popSource==='ssc_ad_0'));
+   adl.value='135'; adl.dispatchEvent(new w.Event('input',{bubbles:true}));
+   ok('Бланк: число з віконця записується в поле форми', w.eval("F('ssc.adl').inputs[0].value")==='135');
+   pclick(prow(/^20\. Дата виписки/)); const tv=[...pbox().querySelectorAll('.pe-body input')].find(i=>i.dataset.popSource==='e_per_tvyp');
+   tv.value='10:30'; tv.dispatchEvent(new w.Event('input',{bubbles:true}));
+   ok('Бланк: п. 20 — час виписки вводиться й друкується в клітинках', /час\s*1\s*0\s*год\s*3\s*0\s*хв/.test(prow(/^20\. Дата виписки/).textContent.replace(/ /g,' ')));
+   pbox().dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+   ok('Бланк: Esc закриває віконце', !pbox());
+   w.eval("switchDoc('shch'); renderPaper()"); const dn=doc.querySelector('#paper .bdi.bcur [data-diary-key="nodes"]'); if (dn) pclick(dn);
+   ok('Бланк: поточний щоденник і далі відкриває власний редактор', !!doc.querySelector('.diary-inline-editor') && !pbox());
+   w.eval('diaryInlineClose()');
+   w.eval("peSetMode('form'); switchDoc('ohl'); renderPaper()"); pclick([...doc.querySelectorAll('#paper .b003 .brow')].find(r=>/^Свідомість/.test(r.textContent.trim())));
+   ok('Бланк: режим «перехід до поля у формі» — без віконця', !pbox() && !doc.querySelector('#paper .pe-row'));
+   w.eval("peSetMode('here'); switchDoc('ohl'); PAPER=false; renderPaper()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
