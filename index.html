@@ -16247,6 +16247,7 @@ try{ PE_MODE = localStorage.getItem('po.paperedit') === 'form' ? 'form' : 'here'
 const PE_ROWS = [
   /* титульний лист 003/о */
   [/^МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО/, ['meta_card']],
+  [/^2\. Стать/, ['#sexSeg']],
   [/^Хворий/, ['meta_pib','meta_dt']],
   [/^1\. Дата госпіталізації/, ['meta_dt']],
   [/^3\. Прізвище/, ['meta_pib']],
@@ -16298,7 +16299,7 @@ const PE_ROWS = [
   [/^Сечовипускання/, ['sech.sv','sech.diur','sech.secha']],
   [/^Випорожнення/, ['trav.vyp','trav.rect']],
   [/^Неврологічний статус/, ['nevr']],
-  [/^DIAGNOS|^Діагноз|^На підставі/, ['dx.osn','dx.mkh']],
+  [/^DIAGNOS|^Діагноз|^ДІАГНОЗ|^На підставі/, ['dx.osn','dx.mkh']],
   [/^37\. Огляд на коросту/, ['shk.kor']],
   [/^38\. Огляд на педикульоз/, ['shk.ped']],
   [/^39\. З режимом дня/, ['shk.rezh']],
@@ -16315,6 +16316,38 @@ const PE_ROWS = [
   [/^57\.2\./, ['meta_zav']],
   [/^57\. Результат/, ['e_lik.rez']]
 ];
+const PE_ROWS_066 = [
+  [/^КАРТА ПАЦІЄНТА|^Карта хворого, який вибув/, ['meta_card']],
+  [/^2\. Прізвище/, ['meta_pib']],
+  [/^3\. Стать/, ['#sexSeg','meta_dob']],
+  [/^5\. Вік \(кількість/, ['meta_dob','s066.grom']],
+  [/^5\. Вік \(повних/, ['meta_dob','meta_addr_np_t']],
+  [/^5\.2\. Місце роботи/, ['meta_work']],
+  [/^7\. Документ/, ['s066.docid']],
+  [/^8\. Постійне місце|^6\. Місце проживання/, ['meta_addr_np_t','meta_addr_np','meta_addr_hr','meta_addr_ra','meta_addr_ob','meta_addr_st','meta_addr_zip']],
+  [/^9\. Поштовий індекс/, ['meta_addr_zip','meta_work']],
+  [/^11\. Ким направлений|^7\. Ким направлений/, ['morbi.hosp','morbi.hospz','morbi.hospd','morbi.hospe']],
+  [/^13\. Відділення госпіталізації|^9\. Відділення госпіталізації/, ['s066.vcode','s066.prof','meta_vidd']],
+  [/^15\. Госпіталізація: ургентна/, ['hosp.vyd','s066.sr']],
+  [/^11\. Госпіталізація екстрена/, ['hosp.vyd']],
+  [/^12\. Строки госпіталізації/, ['s066.sr']],
+  [/^17\.1\./, ['s066.p30']],
+  [/^17\. Госпіталізація з приводу|^13\. Госпіталізація з приводу/, ['s066.vp','s066.p30']],
+  [/^18\. Результат лікування|^14\. Результат лікування/, ['s066.rez','e_lik.rez']],
+  [/^19\. Дата виписки|^15\. Дата виписки|^16\. Проведено ліжко-днів/, ['e_per.per','e_per.tvyp']],
+  [/^21\.1\./, ['s066.tbres']],
+  [/^21\. Діагноз заключний|^17\. Діагноз стаціонару/, ['dx.osn','dx.mkh','s066.trav']],
+  [/^22\.1\./, ['s066.pat']],
+  [/^22\.2\.|^22\. У випадку смерті|^18\. У випадку смерті/, ['s066.svid','s066.da','s066.db','s066.dv','s066.dg','s066.pat']],
+  [/^Приблизний час між/, ['s066.dt']],
+  [/^II\. Інші суттєві/, ['s066.dII']],
+  [/^23\. Медичні процедури|^19\. Хірургічні операції/, ['s066.ops']],
+  [/^24\. Обстеження на RW|^20\. Обстежений на RW/, ['s066.rw','s066.onko']],
+  [/^26\. Обстеження на ВІЛ|^на ВІЛ-інфекцію/, ['s066.vil','s066.flg']],
+  [/^28\. Пільгова|^21\. Інвалід війни/, ['s066.pil','s066.pilk','s066.pild']],
+  [/^\(категорія посвідчення/, ['s066.pilk','s066.pild']],
+  [/^Лікуючий лікар/, ['meta_doc','meta_docreg']]
+];
 const PE_ROW_SEL = '.b003 [data-diary-key], .b003 .brow, .b003 .bt, .b003 .bt2, .b003 .blines, .b003 .bdx';
 const PE_SKIP = 'button, a, input, select, textarea, label, .blankbar, .gapbar, .gaplist, .pe-box';
 
@@ -16324,8 +16357,20 @@ function peRowKeys(row){
   if (row.closest('.bdi:not(.bcur)')) return null;
   if (row.dataset.diaryKey) return (typeof DIARY_INLINE_GROUPS !== 'undefined' && DIARY_INLINE_GROUPS[row.dataset.diaryKey]) || null;
   if (row.closest('.bdi')) return null;
+  /* п. 46–53 (аналізи) відкривають журнал обстежень із клітинками — він зручніший */
+  if (row.querySelector('[data-fld^="e_obs_z"]') || (row.dataset.fld || '').startsWith('e_obs_z')) return null;
   const txt = row.textContent.replace(/\s+/g, ' ').trim();
-  const hit = PE_ROWS.find(([re])=>re.test(txt)); if (hit) return hit[1];
+  const find = t => (DOC === 'f066' ? PE_ROWS_066.find(([re])=>re.test(t)) : null) || PE_ROWS.find(([re])=>re.test(t));
+  const hit = find(txt); if (hit) return hit[1];
+  /* продовження тексту під заголовком (скарги, анамнез, діагноз…) — той самий пункт */
+  if (row.matches('.blines, .bdx') || !/[:–]/.test(txt.slice(0, 40))){
+    if (row.matches('.blines')){ let m = row.previousElementSibling;
+      for (let k = 0; m && k < 4; k++, m = m.previousElementSibling) if (/^45\. ЕПІКРИЗ/.test(m.textContent.trim())) return ['e_per','e_lik']; }
+    let n = row.previousElementSibling;
+    for (let k = 0; n && k < 4; k++, n = n.previousElementSibling){
+      const t = n.textContent.replace(/\s+/g, ' ').trim(), h2 = find(t); if (h2) return h2[1];
+      if (BMAP.some(([re])=>re.test(t))) break;   /* інший заголовок (обстеження, лікування…) — не чіпаємо */
+    } }
   const a = row.matches('[data-fld],[data-dsel],[data-s66fld]') ? row : row.querySelector('[data-fld],[data-dsel],[data-s66fld]');
   if (a) return a.dataset.s66fld ? ['s066.' + a.dataset.s66fld] : String(a.dataset.fld || a.dataset.dsel).split(/\s+/).filter(Boolean);
   return null;
@@ -16336,6 +16381,7 @@ function peFieldOk(f){ return f && f.wrapEl && !['hdr','auto'].includes(f.type) 
 function peItems(keys){
   const out = [], seen = new Set();
   (keys || []).forEach(k=>{
+    if (k === '#sexSeg'){ const seg = document.getElementById('sexSeg'); if (seg && !seen.has(seg)){ seen.add(seg); out.push({seg, label:'Стать'}); } return; }
     if (/\./.test(k)){ const f = F(k); if (peFieldOk(f) && !seen.has(f)){ seen.add(f); out.push({f}); } return; }
     const s = peSection(k);
     if (s){ s.fields.filter(f=>peFieldOk(f) && !f.noOut && !f.headOnly && (!f.docs || !s.docs || f.docs.some(d=>s.docs.includes(d)))).forEach(f=>{ if (!seen.has(f)){ seen.add(f); out.push({f}); } }); return; }
@@ -16384,6 +16430,10 @@ function peSel(f, host){
 function peField(item, host){
   const d = host.ownerDocument;
   if (item.src){ const wrap = peEl(d, 'div', {class:'pe-field'}); popInsertControl(item.src, wrap, item.label); host.append(wrap); return; }
+  if (item.seg){ const list = peEl(d, 'div', {class:'pe-opts', role:'group', 'aria-label':item.label});
+    [...item.seg.querySelectorAll('button')].forEach((src, i)=>{ if (!src.id) src.id = 'sexSeg_b' + i;
+      list.append(peEl(d, 'button', {type:'button', class:'pe-opt', 'data-pop-chip':src.id, 'aria-pressed':src.getAttribute('aria-pressed') || 'false', onclick:()=>{ peUndoMark(); src.click(); peAfter(); }}, src.textContent.trim())); });
+    host.append(peEl(d, 'div', {class:'pe-field'}, peEl(d, 'div', {class:'pe-l'}, item.label), list)); return; }
   const f = item.f;
   if (f.type === 'sel' && f.el && f.el.tagName === 'SELECT'){ peSel(f, host); return; }
   const wrap = peEl(d, 'div', {class:'pe-field'}, ['text','line'].includes(f.type) ? null : peEl(d, 'div', {class:'pe-l'}, f.label));
@@ -16527,6 +16577,15 @@ function peMarkRows(w){
     put(c[3], m[1].padStart(2, '0')); put(c[4], m[2]); }
   return page;
 }; }
+
+function peTimeCells(pages, re){
+  const m = String((F('e_per.tvyp') && F('e_per.tvyp').el.value) || '').match(/(\d{1,2})\s*[:.\-год ]+\s*(\d{2})/); if (!m) return;
+  pages.flatMap(p=>[...p.querySelectorAll('.brow')]).filter(r=>re.test(r.textContent.trim())).forEach(row=>{
+    const c = row.querySelectorAll('.bcells'); const put = (el, v)=>{ if (el) [...el.querySelectorAll('.bc')].forEach((x, i)=>x.textContent = v[i] || '\u00a0'); };
+    put(c[3], m[1].padStart(2, '0')); put(c[4], m[2]); });
+}
+{ const a0 = b066v16; b066v16 = function(){ const p = a0.apply(this, arguments); try{ peTimeCells(p, /^19\. Дата виписки/); }catch(e){} return p; }; }
+{ const a0 = b066v12; b066v12 = function(){ const p = a0.apply(this, arguments); try{ peTimeCells(p, /^15\. Дата виписки/); }catch(e){} return p; }; }
 
 /* ---- режим «перехід до поля у формі»: рядки, що раніше нікуди не вели ---- */
 BMAP.unshift([/^МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО/, 'meta_card'], [/^11\. Відділення/, 'meta_vcode'], [/^40\. П\.І\.Б\. лікаря|^57\.1\./, 'meta_doc'], [/^57\.2\./, 'meta_zav']);
