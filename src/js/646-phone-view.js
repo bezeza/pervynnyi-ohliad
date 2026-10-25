@@ -6,7 +6,7 @@
    • нижня панель: значки (☰ 🧪 📄 — більше місця для «Копіювати») або підписи;
    • масштаб аркуша «Перед друком» за замовчуванням.
    Плюс: нижня панель більше не обрізає «Копіювати». */
-const PHV = Object.assign({dense:'normal', bar:'icons'}, (()=>{ try{ return JSON.parse(lsGet('po.phview', '{}')) || {}; }catch(e){ return {}; } })());
+const PHV = Object.assign({dense:'normal', bar:'icons', nav:'tabs'}, (()=>{ try{ return JSON.parse(lsGet('po.phview', '{}')) || {}; }catch(e){ return {}; } })());
 function phvSave(){ lsSet('po.phview', JSON.stringify(PHV)); }
 function phvApply(){
   const ph = isPhoneW(), r = document.documentElement;

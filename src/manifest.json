@@ -124,6 +124,7 @@
   "643-fonts.js",
   "644-theme-grey.js",
   "645-phone-preview.js",
-  "646-phone-view.js"
+  "646-phone-view.js",
+  "647-phone-tabs.js"
  ]
 }
