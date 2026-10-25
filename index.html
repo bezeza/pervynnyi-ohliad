@@ -1316,6 +1316,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .pe-acts .pe-next{margin-left:auto;background:var(--accent,#1f5a8a);color:#fff;border-color:var(--accent,#1f5a8a)}
 .pe-btn:disabled{opacity:.5;cursor:default}
 .b003 .pe-row{cursor:pointer}
+.btback .bops td{height:1.6em}
 .b003 .pe-row:hover,.b003 .pe-row:focus-visible,.b003 .pe-active{outline:2px solid var(--accent,#1f5a8a);outline-offset:1px;border-radius:2px}
 .pe-toggle{margin-left:auto}
 .pe-toggle[aria-pressed=true]{background:var(--accent-soft,#e3edf8);color:var(--accent,#1f5a8a);font-weight:600}
@@ -1323,6 +1324,17 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .pe-box .pw-choices button{border:1px solid var(--line,#dde1e8);background:var(--surface,#fff);color:inherit;border-radius:8px;padding:5px 10px;font:inherit;cursor:pointer}
 .pe-box .pw-choices button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);border-color:var(--accent,#1f5a8a);color:var(--accent,#1f5a8a);font-weight:600}
 .pe-box input[type=search]{width:100%;box-sizing:border-box;font:inherit;padding:5px 8px;border:1px solid var(--line,#dde1e8);border-radius:6px}
+/* зворот титульного 003/о: переноси довгого тексту в межах клітинки, «підпис» не відривається */
+.btback table.bops{table-layout:fixed;width:100%}
+.btback table.bdx td,.btback table.bdx th{overflow-wrap:break-word;word-break:normal;hyphens:manual;vertical-align:top}
+.btback table.bdx:not(.bops) td:first-child{white-space:nowrap}
+.btback table.bops td:first-child{font-size:.92em}
+.btback table.bops th{font-size:.92em}
+.btback .bsig{white-space:nowrap}
+.btback .bsig .bf{min-width:7em;display:inline-block}
+.btback .brow.bsigrow{display:flex;align-items:baseline;gap:0}
+.btback .brow.bsigrow>.bf{flex:1 1 auto;min-width:6em}
+.btback .brow.bsigrow>.bsig{flex:none}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -3479,7 +3491,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.52', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.52', '25.10.2026', 'бланк 003/о: режим «✎ Вносити на бланку» — клік по рядку титулу, первинного огляду чи епікризу відкриває віконце саме з його пунктами (варіанти — кнопками, числа, текст, «Своїми словами…»), «‹ Попередній / Далі ›» і «Скасувати»; так само у виносному вікні в режимі «Аркуш». Перемикач — над аркушем і в «Налаштуваннях» («Клік по рядку бланка»). Нове поле «Час виписки» (п. 20). Рядки «Медична карта №», «11. Відділення», «40.», «57.1.», «57.2.» тепер ведуть до своїх полів'],
+  ['0.9.3.52', '25.10.2026', 'бланк 003/о: режим «✎ Вносити на бланку» — клік по рядку титулу, первинного огляду чи епікризу відкриває віконце саме з його пунктами (варіанти — кнопками, числа, текст, «Своїми словами…»), «‹ Попередній / Далі ›» і «Скасувати»; так само у виносному вікні в режимі «Аркуш». Перемикач — над аркушем і в «Налаштуваннях» («Клік по рядку бланка»). Зворот титульного аркуша 003/о: п. 22 «Діагноз заключний клінічний» (основний, ускладнення, супутні з кодом МКХ-10), п. 23 «Хірургічні операції» (з 066/о), п. 31 «Лікуючий лікар» і п. 32 «Завідувач відділення» — галочка «зворот титульного». Нове поле «Час виписки» (п. 20). Рядки «Медична карта №», «11. Відділення», «40.», «57.1.», «57.2.» тепер ведуть до своїх полів'],
   ['0.9.3.51', '25.10.2026', 'бланк 003-3/о: підпис анестезіолога залишається видимим без даних пункції; протокол пункції без даних не друкується; у старих записах щоденника залишено лише фактичний опис шкіри без фрази про реакцію на огляд'],
   ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; кліки по рядках ведуть до полів форми; нові значення відновлюються після перезапуску; діагнози 066/о зберігаються окремо від діагнозу огляду'],
   ['0.9.3.48', '24.10.2026', 'друковані бланки: щоденник не стверджує незаповнені нормальні значення; підписи показників відкривають свої поля; категорія резистентності 003/о береться з 066/о; протокол пункції приховано без даних, місце переведення лишається порожнім до вибору, підпис анестезіолога веде до поля'],
@@ -16381,8 +16393,10 @@ function peFieldOk(f){ return f && f.wrapEl && !['hdr','auto'].includes(f.type) 
 function peItems(keys){
   const out = [], seen = new Set();
   (keys || []).forEach(k=>{
+    if (k === '#achi'){ if (!seen.has(k)){ seen.add(k); out.push({achi:true}); } return; }
     if (k === '#sexSeg'){ const seg = document.getElementById('sexSeg'); if (seg && !seen.has(seg)){ seen.add(seg); out.push({seg, label:'Стать'}); } return; }
-    if (/\./.test(k)){ const f = F(k); if (peFieldOk(f) && !seen.has(f)){ seen.add(f); out.push({f}); } return; }
+    /* поле щоденника, сховане профілем, усе одно редагується: його рядок надруковано на бланку */
+    if (/\./.test(k)){ const f = F(k); if ((peFieldOk(f) || (/^d_/.test(k) && f && f.wrapEl)) && !seen.has(f)){ seen.add(f); out.push({f}); } return; }
     const s = peSection(k);
     if (s){ s.fields.filter(f=>peFieldOk(f) && !f.noOut && !f.headOnly && (!f.docs || !s.docs || f.docs.some(d=>s.docs.includes(d)))).forEach(f=>{ if (!seen.has(f)){ seen.add(f); out.push({f}); } }); return; }
     const src = document.getElementById(k);
@@ -16430,6 +16444,9 @@ function peSel(f, host){
 function peField(item, host){
   const d = host.ownerDocument;
   if (item.src){ const wrap = peEl(d, 'div', {class:'pe-field'}); popInsertControl(item.src, wrap, item.label); host.append(wrap); return; }
+  if (item.achi){ const wrap = peEl(d, 'div', {class:'pe-field'}, peEl(d, 'div', {class:'pe-l'}, 'Додати процедуру з кодом АКМІ (НК 026)'));
+    const pk = typeof achiPicker === 'function' ? achiPicker() : null; if (pk){ wrap.append(d === document ? pk : d.importNode(pk, true)); if (d !== document) peAchiProxy(wrap); }
+    host.append(wrap); return; }
   if (item.seg){ const list = peEl(d, 'div', {class:'pe-opts', role:'group', 'aria-label':item.label});
     [...item.seg.querySelectorAll('button')].forEach((src, i)=>{ if (!src.id) src.id = 'sexSeg_b' + i;
       list.append(peEl(d, 'button', {type:'button', class:'pe-opt', 'data-pop-chip':src.id, 'aria-pressed':src.getAttribute('aria-pressed') || 'false', onclick:()=>{ peUndoMark(); src.click(); peAfter(); }}, src.textContent.trim())); });
@@ -16438,6 +16455,14 @@ function peField(item, host){
   if (f.type === 'sel' && f.el && f.el.tagName === 'SELECT'){ peSel(f, host); return; }
   const wrap = peEl(d, 'div', {class:'pe-field'}, ['text','line'].includes(f.type) ? null : peEl(d, 'div', {class:'pe-l'}, f.label));
   popInsertField(f, wrap); host.append(wrap);
+}
+/* у виносному вікні пошук працює через ті самі дані довідника (копія розмітки + свої обробники) */
+function peAchiProxy(wrap){
+  const d = wrap.ownerDocument, inp = wrap.querySelector('input[type=search]'), list = wrap.querySelector('.cpres'); if (!inp || !list) return;
+  wrap.querySelectorAll('.cprow button').forEach(b=>b.remove());
+  inp.addEventListener('input', ()=>{ list.replaceChildren(); const R = codeSearch(inp.value, DICT.nk026 || []);
+    if (!R.length){ if (inp.value) list.append(peEl(d, 'p', {class:'chips-hint'}, 'Довідник НК 026:2021 не завантажено або нічого не знайдено.')); return; }
+    R.forEach(e=>list.append(peEl(d, 'button', {type:'button', class:'cpitem', onclick:()=>{ peUndoMark(); achiAdd(e); list.replaceChildren(); inp.value = ''; peAfter(); }}, peEl(d, 'b', {}, e[0]), ' ', e[1]))); });
 }
 /* «своїми словами» розділу (поле «Додатково») — під кнопкою, щоб не захаращувати */
 function peExtra(items, host){
@@ -16620,6 +16645,71 @@ let PE_FAST = 0;
   }
   return x0.apply(this, arguments);
 }; }
+/* ===== 0.9.3.52 — зворот титульного аркуша 003/о: пп. 22, 23, 31, 32 =====
+   Дані — з наявних полів: діагноз (dx), операції (066/о, «Процедури й операції»), лікар і завідувач («Налаштування»).
+   Нових полів не додає. Друкується разом із титульним аркушем (галочка «зворот титульного»). */
+if (BLP.back === undefined) BLP.back = true;
+/* процедури: «Процедури й операції» (066/о) + «Медичні інтервенції (НК 026)» з огляду; без повторів за кодом */
+const ACHI_RE = /^(\d{4,5}-\d{2}(?:-\d{2})?)\s*[–—-]?\s*(.*)$/;
+function bProcRows(){
+  const ops = (typeof ops66 === 'function' ? ops66() : []).map(o=>{
+    let code = o.code, name = o.name; const m = !code && ACHI_RE.exec(name || ''); if (m){ code = m[1]; name = m[2]; }
+    return {dt:o.dt, name, code, an:o.an, comp:o.comp}; });
+  const seen = new Set(ops.map(o=>o.code).filter(Boolean));
+  String((F('dx.posl') && F('dx.posl').el.value) || '').split(/[;\n]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{
+    const m = ACHI_RE.exec(x), code = m ? m[1] : '', name = m ? m[2] : x;
+    if (code && seen.has(code)) return; if (code) seen.add(code); ops.push({dt:'', name, code, an:'', comp:''}); });
+  return ops;
+}
+/* пошук процедури за АКМІ (НК 026): додає рядок у «Процедури й операції» (дата; код; назва; …) */
+function achiAdd(e){
+  const f = F('s066.ops'); if (!f || !f.el) return;
+  const d = new Date(), dt = String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
+  f.el.value = [f.el.value.trim(), [dt, e[0], e[1], '', '', '', ''].join('; ')].filter(Boolean).join('\n');
+  f.el.dispatchEvent(new Event('input', {bubbles:true})); update(); toast('Додано: ' + e[0] + ' — ' + e[1], 2500);
+}
+function achiPicker(){
+  return codePicker({ph:'Знайти процедуру за АКМІ (НК 026:2021): назва або код', list:()=>DICT.nk026 || [],
+    none:'Довідник НК 026:2021 не завантажено або нічого не знайдено. Завантажте офіційний файл: «Налаштування» → «Довідники кодів».', pick:achiAdd});
+}
+{ const f = F('s066.ops'), w = f && f.el && f.el.closest('.f'); if (w && !w.dataset.achi){ w.dataset.achi = '1'; w.classList.add('wide'); w.append(achiPicker()); } }
+function bTitleBack(){
+  const osn = BV('dx.osn'), code = BV('dx.mkh'), usk = BV('dx.uskl'), sup = BV('dx.supd');
+  const dxRows = [['основний', osn, code], ...usk.split(/;\s*/).filter(Boolean).map(t=>['ускладнення', t, '']), ...sup.split(/;\s*/).filter(Boolean).map(t=>['супутній', t, ''])];
+  while (dxRows.length < 5) dxRows.push(['', '', '']);
+  const opRows = [...bProcRows().map(o=>[o.dt, o.name, o.code, o.an, o.comp]), ...Array(4).fill(['', '', '', '', ''])].slice(0, Math.max(4, bProcRows().length));
+  return bPage('btitle btback',
+    h('div', {class:'bt'}, '22. Діагноз заключний клінічний'),
+    h('table', {class:'bdx'}, h('thead', {}, h('tr', {}, h('th', {}, 'Діагноз'), h('th', {}, 'Назва діагнозу'), h('th', {}, 'Код за МКХ-10'))),
+      h('tbody', {}, ...dxRows.map(([k, t, c], i)=>h('tr', {}, h('td', {class:'c'}, k || '\u00a0'), h('td', {}, i === 0 ? bFill(t, true, true) : t || '\u00a0'), h('td', {}, bCells(String(c).split(/[,;\s]+/)[0], 6, i === 0)))))),
+    h('div', {class:'bt'}, '23. Хірургічні операції та процедури'),
+    h('table', {class:'bdx bops'}, h('colgroup', {}, ...['17%','33%','16%','16%','18%'].map(w=>h('col', {style:'width:' + w}))),
+      h('thead', {}, h('tr', {}, h('th', {}, 'Дата'), h('th', {}, 'Назва процедури / операції'), h('th', {}, 'Код АКМІ (НК 026)'), h('th', {}, 'Знебо\u00adлення'), h('th', {}, 'Усклад\u00adнення'))),
+      h('tbody', {}, ...opRows.map(r=>h('tr', {}, ...r.map(v=>h('td', {}, v || '\u00a0')))))),
+    ...[['31. Лікуючий лікар ', bFill(mv('doc'), true)], ['32. Завідувач відділення ', bFill(mv('zav'))]].map(([l, f])=>{
+      const r = bRow(l, f, h('span', {class:'bnw bsig'}, ' підпис ', bFill(''))); r.classList.add('bsigrow'); return r; }));
+}
+{ const x0 = blankPages; blankPages = function(){
+  const pages = x0.apply(this, arguments);
+  if (DOC === 'ohl' && BLP.title && BLP.back) pages.splice(1, 0, bTitleBack());
+  return pages;
+}; }
+{ const x0 = blankBar; blankBar = function(){
+  const bar = x0.apply(this, arguments);
+  if (BLANK && DOC === 'ohl' && BLP.title){
+    const lb = [...bar.querySelectorAll('label.blk')].find(l=>/титульний лист/.test(l.textContent));
+    const c = h('input', {type:'checkbox'}); c.checked = !!BLP.back;
+    c.addEventListener('change', ()=>{ BLP.back = c.checked; try{ localStorage.setItem('po.blankp', JSON.stringify(BLP)); }catch(e){} renderPaper(); });
+    const el = h('label', {class:'blk'}, c, ' зворот титульного (пп. 22, 23, 31, 32)');
+    if (lb) lb.after(el); else bar.append(el);
+  }
+  return bar;
+}; }
+/* клік по рядку звороту: віконце (636) і режим «у форму» (599) */
+PE_ROWS.push([/^22\. Діагноз заключний/, ['dx.osn','dx.mkh','dx.uskl','dx.supd']], [/^23\. Хірургічні операції/, ['#achi','s066.ops','dx.posl']],
+  [/^31\. Лікуючий лікар/, ['meta_doc']], [/^32\. Завідувач відділення/, ['meta_zav']]);
+BMAP.unshift([/^22\. Діагноз заключний/, 'dx.osn'], [/^23\. Хірургічні операції/, 's066.ops'], [/^31\. Лікуючий лікар/, 'meta_doc'], [/^32\. Завідувач відділення/, 'meta_zav']);
+try{ if (PAPER) renderPaper(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

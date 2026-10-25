@@ -146,8 +146,10 @@ function peFieldOk(f){ return f && f.wrapEl && !['hdr','auto'].includes(f.type) 
 function peItems(keys){
   const out = [], seen = new Set();
   (keys || []).forEach(k=>{
+    if (k === '#achi'){ if (!seen.has(k)){ seen.add(k); out.push({achi:true}); } return; }
     if (k === '#sexSeg'){ const seg = document.getElementById('sexSeg'); if (seg && !seen.has(seg)){ seen.add(seg); out.push({seg, label:'Стать'}); } return; }
-    if (/\./.test(k)){ const f = F(k); if (peFieldOk(f) && !seen.has(f)){ seen.add(f); out.push({f}); } return; }
+    /* поле щоденника, сховане профілем, усе одно редагується: його рядок надруковано на бланку */
+    if (/\./.test(k)){ const f = F(k); if ((peFieldOk(f) || (/^d_/.test(k) && f && f.wrapEl)) && !seen.has(f)){ seen.add(f); out.push({f}); } return; }
     const s = peSection(k);
     if (s){ s.fields.filter(f=>peFieldOk(f) && !f.noOut && !f.headOnly && (!f.docs || !s.docs || f.docs.some(d=>s.docs.includes(d)))).forEach(f=>{ if (!seen.has(f)){ seen.add(f); out.push({f}); } }); return; }
     const src = document.getElementById(k);
@@ -195,6 +197,9 @@ function peSel(f, host){
 function peField(item, host){
   const d = host.ownerDocument;
   if (item.src){ const wrap = peEl(d, 'div', {class:'pe-field'}); popInsertControl(item.src, wrap, item.label); host.append(wrap); return; }
+  if (item.achi){ const wrap = peEl(d, 'div', {class:'pe-field'}, peEl(d, 'div', {class:'pe-l'}, 'Додати процедуру з кодом АКМІ (НК 026)'));
+    const pk = typeof achiPicker === 'function' ? achiPicker() : null; if (pk){ wrap.append(d === document ? pk : d.importNode(pk, true)); if (d !== document) peAchiProxy(wrap); }
+    host.append(wrap); return; }
   if (item.seg){ const list = peEl(d, 'div', {class:'pe-opts', role:'group', 'aria-label':item.label});
     [...item.seg.querySelectorAll('button')].forEach((src, i)=>{ if (!src.id) src.id = 'sexSeg_b' + i;
       list.append(peEl(d, 'button', {type:'button', class:'pe-opt', 'data-pop-chip':src.id, 'aria-pressed':src.getAttribute('aria-pressed') || 'false', onclick:()=>{ peUndoMark(); src.click(); peAfter(); }}, src.textContent.trim())); });
@@ -203,6 +208,14 @@ function peField(item, host){
   if (f.type === 'sel' && f.el && f.el.tagName === 'SELECT'){ peSel(f, host); return; }
   const wrap = peEl(d, 'div', {class:'pe-field'}, ['text','line'].includes(f.type) ? null : peEl(d, 'div', {class:'pe-l'}, f.label));
   popInsertField(f, wrap); host.append(wrap);
+}
+/* у виносному вікні пошук працює через ті самі дані довідника (копія розмітки + свої обробники) */
+function peAchiProxy(wrap){
+  const d = wrap.ownerDocument, inp = wrap.querySelector('input[type=search]'), list = wrap.querySelector('.cpres'); if (!inp || !list) return;
+  wrap.querySelectorAll('.cprow button').forEach(b=>b.remove());
+  inp.addEventListener('input', ()=>{ list.replaceChildren(); const R = codeSearch(inp.value, DICT.nk026 || []);
+    if (!R.length){ if (inp.value) list.append(peEl(d, 'p', {class:'chips-hint'}, 'Довідник НК 026:2021 не завантажено або нічого не знайдено.')); return; }
+    R.forEach(e=>list.append(peEl(d, 'button', {type:'button', class:'cpitem', onclick:()=>{ peUndoMark(); achiAdd(e); list.replaceChildren(); inp.value = ''; peAfter(); }}, peEl(d, 'b', {}, e[0]), ' ', e[1]))); });
 }
 /* «своїми словами» розділу (поле «Додатково») — під кнопкою, щоб не захаращувати */
 function peExtra(items, host){

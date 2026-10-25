@@ -1298,6 +1298,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .pe-acts .pe-next{margin-left:auto;background:var(--accent,#1f5a8a);color:#fff;border-color:var(--accent,#1f5a8a)}
 .pe-btn:disabled{opacity:.5;cursor:default}
 .b003 .pe-row{cursor:pointer}
+.btback .bops td{height:1.6em}
 .b003 .pe-row:hover,.b003 .pe-row:focus-visible,.b003 .pe-active{outline:2px solid var(--accent,#1f5a8a);outline-offset:1px;border-radius:2px}
 .pe-toggle{margin-left:auto}
 .pe-toggle[aria-pressed=true]{background:var(--accent-soft,#e3edf8);color:var(--accent,#1f5a8a);font-weight:600}
@@ -1305,3 +1306,14 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .pe-box .pw-choices button{border:1px solid var(--line,#dde1e8);background:var(--surface,#fff);color:inherit;border-radius:8px;padding:5px 10px;font:inherit;cursor:pointer}
 .pe-box .pw-choices button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);border-color:var(--accent,#1f5a8a);color:var(--accent,#1f5a8a);font-weight:600}
 .pe-box input[type=search]{width:100%;box-sizing:border-box;font:inherit;padding:5px 8px;border:1px solid var(--line,#dde1e8);border-radius:6px}
+/* зворот титульного 003/о: переноси довгого тексту в межах клітинки, «підпис» не відривається */
+.btback table.bops{table-layout:fixed;width:100%}
+.btback table.bdx td,.btback table.bdx th{overflow-wrap:break-word;word-break:normal;hyphens:manual;vertical-align:top}
+.btback table.bdx:not(.bops) td:first-child{white-space:nowrap}
+.btback table.bops td:first-child{font-size:.92em}
+.btback table.bops th{font-size:.92em}
+.btback .bsig{white-space:nowrap}
+.btback .bsig .bf{min-width:7em;display:inline-block}
+.btback .brow.bsigrow{display:flex;align-items:baseline;gap:0}
+.btback .brow.bsigrow>.bf{flex:1 1 auto;min-width:6em}
+.btback .brow.bsigrow>.bsig{flex:none}
