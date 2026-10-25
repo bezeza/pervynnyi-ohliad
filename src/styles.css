@@ -1335,3 +1335,8 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .dt-cmp-t{margin:0 0 6px}
 @media screen{.b003 .dprev{background:rgba(120,130,150,.08)}.b003 .dprev::after{content:"з учора";font-size:10px;color:var(--muted,#667);margin-left:6px}}
 @media print{.b003 .dprev{background:none}.b003 .dprev::after{content:none}}
+
+/* 0.9.3.56 — шрифт тексту документа на екрані (вибір у «Налаштуваннях»); друк і бланки — Times New Roman */
+:root{--f-doc:"Source Serif 4",Georgia,"Times New Roman",serif}
+#out,.pw-text,.font-sample{font-family:var(--f-doc)}
+.font-sample{font-size:16px;line-height:1.5;margin:0 0 4px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
