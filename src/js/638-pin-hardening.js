@@ -1,7 +1,7 @@
-/* 0.9.3.43 — локальний ліміт спроб PIN на спільній межі перевірки.
+/* 0.9.3.53 — локальний ліміт спроб PIN на спільній межі перевірки.
    Стан прив'язаний до точного конверта PIN; це best-effort захист інтерфейсу від перезапуску.
    Власник профілю браузера може змінити localStorage і перевіряти копію конверта офлайн. */
-const PIN_GUARD_PREFIX='po.pin.attempt.', PIN_GUARD_QUEUE=new Map(), PIN_GUARD_DELAYS=[30000,300000,1800000];
+const PIN_GUARD_PREFIX='po.pin.attempt.', PIN_GUARD_QUEUE=new Map(), PIN_GUARD_DELAYS=[30000,300000];
 function pinGuardError(code, until, detail){
   const e=new Error(detail || code); e.pinGate=code; e.pinUntil=until || 0; return e;
 }
@@ -35,8 +35,12 @@ function pinGuardQueue(tag,fn){
 }
 function pinGuardWaitError(state,now){
   const seconds=Math.max(1,Math.ceil((state.until-now)/1000));
-  const reason=state.reason==='edited' ? 'Лічильник спроб PIN змінено або пошкоджено — ' : state.reason==='missing' ? 'Лічильник спроб PIN відсутній — ' : '';
+  const reason=state.reason==='edited' ? 'Лічильник спроб PIN змінено або пошкоджено — ' : '';
   return pinGuardError('cooldown',state.until,reason+`зачекайте ${seconds} с`);
+}
+function pinGuardLog(message,error){
+  try{ if (error) console.warn('[PIN]',message,error); }catch(e){}
+  try{ logAct(message); }catch(e){}
 }
 async function pinGuardCheck(pin,cfg,verify,now=Date.now()){
   if (!cfg || typeof pin!=='string' || !pin) throw pinGuardError('empty',0,'Введіть PIN');
@@ -44,48 +48,67 @@ async function pinGuardCheck(pin,cfg,verify,now=Date.now()){
   const queueTag=await pinGuardTag(queueCfg);
   return pinGuardQueue(queueTag,async()=>{
     let tag=await pinGuardTag(cfg);
-    const primary=!!PINC.cfg && JSON.stringify(cfg)===JSON.stringify(PINC.cfg); let justMarked=false, raw;
-    let migrated=null;
+    const primary=!!PINC.cfg && JSON.stringify(cfg)===JSON.stringify(PINC.cfg); let raw=null, storageError=null, missing=false;
+    let state={failures:0,until:0,reason:''};
     try{
       if (primary && !cfg.guard){
-        const previous=Object.assign({},cfg,{guard:1}), oldTag=await pinGuardTag(previous), oldRaw=localStorage.getItem(PIN_GUARD_PREFIX+oldTag);
-        cfg.guard=1; localStorage.setItem('po.pin',JSON.stringify(cfg)); justMarked=true;
-        tag=oldTag;
-        if (oldRaw){ let saved,sum; try{saved=JSON.parse(oldRaw);sum=await pinGuardChecksum(saved);}catch(e){}
-          migrated=saved && saved.v===1 && saved.tag===oldTag && Number.isSafeInteger(saved.failures) && saved.failures>=0 && Number.isFinite(saved.until) && saved.until>=0 && saved.sum===sum
-            ? {failures:Math.max(15,saved.failures),until:Math.max(saved.until,now+PIN_GUARD_DELAYS[2]),reason:'edited'}
-            : {failures:15,until:now+PIN_GUARD_DELAYS[2],reason:'edited'};
+        const previous=Object.assign({},cfg,{guard:1}); tag=await pinGuardTag(previous);
+        raw=localStorage.getItem(PIN_GUARD_PREFIX+tag);
+        cfg.guard=1;
+        try{ localStorage.setItem('po.pin',JSON.stringify(cfg)); }catch(e){ storageError=e; }
+        if (raw){
+          let saved,sum; try{saved=JSON.parse(raw);sum=await pinGuardChecksum(saved);}catch(e){}
+          state=saved && saved.v===1 && saved.tag===tag && Number.isSafeInteger(saved.failures) && saved.failures>=0 && Number.isFinite(saved.until) && saved.until>=0 && saved.sum===sum
+            ? {failures:Math.max(10,saved.failures),until:Math.max(saved.until,now+PIN_GUARD_DELAYS[1]),reason:'edited'}
+            : {failures:10,until:now+PIN_GUARD_DELAYS[1],reason:'edited'};
+          raw=null;
+        }else if (!storageError){
+          missing=true;
         }
+      }else{
+        raw=localStorage.getItem(PIN_GUARD_PREFIX+tag);
+        if (raw===null) missing=true;
       }
-      raw=localStorage.getItem(PIN_GUARD_PREFIX+tag);
-    }catch(e){ throw pinGuardError('storage',0,'Не вдалося прочитати ліміт спроб PIN у сховищі браузера.'); }
-    let state={failures:0,until:0,reason:''};
-    if (migrated){ state=migrated; await pinGuardWrite(cfg,tag,state); raw=localStorage.getItem(PIN_GUARD_PREFIX+tag); }
-    if (!raw && primary && cfg.guard && !justMarked){
-      state={failures:15,until:now+PIN_GUARD_DELAYS[2],reason:'missing'};
-      await pinGuardWrite(cfg,tag,state); throw pinGuardWaitError(state,now);
-    }
+    }catch(e){ storageError=e; }
+    if (missing) pinGuardLog('Лічильник спроб PIN відсутній — новий підрахунок почато з нуля.');
     if (raw){
       let saved, sum; try{ saved=JSON.parse(raw); sum=await pinGuardChecksum(saved); }catch(e){}
       if (!saved || saved.v!==1 || saved.tag!==tag || !Number.isSafeInteger(saved.failures) || saved.failures<0 || !Number.isFinite(saved.until) || saved.until<0 || saved.sum!==sum){
-        state={failures:15,until:now+PIN_GUARD_DELAYS[2],reason:'edited'};
-        await pinGuardWrite(cfg,tag,state); throw pinGuardWaitError(state,now);
+        state={failures:10,until:now+PIN_GUARD_DELAYS[1],reason:'edited'};
+      }else{
+        state={failures:saved.failures,until:saved.until,reason:saved.reason || ''};
       }
-      if (!migrated) state={failures:saved.failures,until:saved.until,reason:saved.reason || ''};
     }
-    if (state.until>now) throw pinGuardWaitError(state,now);
-    if (state.reason){ state.reason=''; await pinGuardWrite(cfg,tag,state); }
+    if (state.reason==='edited' && !storageError){
+      try{ await pinGuardWrite(cfg,tag,state); }
+      catch(e){ storageError=e; }
+    }
+    if (state.until>now && !(storageError && state.reason==='edited')) throw pinGuardWaitError(state,now);
     let result;
     try{ result=await verify(); }
     catch(cause){
+      if (storageError){
+        PINC.tries=4; PINC.until=Date.now()+PIN_GUARD_DELAYS[1];
+        pinGuardLog('Не вдалося прочитати або зберегти ліміт спроб після хибного PIN; доступ призупинено на 5 хвилин.',storageError);
+        throw pinGuardError('storage',PINC.until,'Не вдалося зберегти ліміт спроб PIN після хибного введення. Доступ призупинено на 5 хвилин.');
+      }
       const failures=state.failures+1, delay=failures%5===0 ? PIN_GUARD_DELAYS[Math.min(Math.floor(failures/5)-1,PIN_GUARD_DELAYS.length-1)] : 0;
       state={failures,until:delay ? now+delay : 0,reason:''};
       try{ await pinGuardWrite(cfg,tag,state); }
-      catch(e){ PINC.tries=4; PINC.until=Date.now()+PIN_GUARD_DELAYS[2]; throw e; }
+      catch(e){
+        PINC.tries=4; PINC.until=Date.now()+PIN_GUARD_DELAYS[1];
+        pinGuardLog('Не вдалося зберегти ліміт спроб після хибного PIN; доступ призупинено на 5 хвилин.',e);
+        throw pinGuardError('storage',PINC.until,'Не вдалося зберегти ліміт спроб PIN після хибного введення. Доступ призупинено на 5 хвилин.');
+      }
       if (delay) throw pinGuardWaitError(state,now);
       throw pinGuardError('wrong',0,'Неправильний PIN');
     }
-    await pinGuardWrite(cfg,tag,{failures:0,until:0,reason:''}); PINC.tries=0; PINC.until=0; return result;
+    if (!storageError){
+      try{ await pinGuardWrite(cfg,tag,{failures:0,until:0,reason:''}); }
+      catch(e){ storageError=e; }
+    }
+    if (storageError) pinGuardLog('Правильний PIN підтверджено, але ліміт спроб не вдалося оновити; доступ відкрито.',storageError);
+    PINC.tries=0; PINC.until=0; return result;
   });
 }
 // Створення/зміна: нові PIN — щонайменше шість символів. Старі конверти лишаються сумісними для входу.

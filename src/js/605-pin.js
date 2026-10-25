@@ -58,7 +58,7 @@ function pinScreen(mode, onKey){
     try{ const key = await pinUnwrap(inp.value, PINC.cfg); PINC.key = key; PINC.tries = 0; scr.remove(); document.body.classList.remove('pinlocked'); try{ logAct('PIN введено', mode === 'open' ? 'відкриття' : 'після простою'); }catch(e){} onKey(key); }
     catch(e){
       if (e && e.pinGate==='cooldown'){ PINC.tries=0; PINC.until=e.pinUntil; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
-      if (e && e.pinGate==='storage'){ PINC.tries=4; PINC.until=Date.now()+1800000; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
+      if (e && e.pinGate==='storage'){ PINC.tries=4; PINC.until=e.pinUntil || Date.now()+300000; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
       if (e && e.pinGate==='empty'){ msg.textContent=e.message; inp.focus(); return; }
       PINC.tries++; inp.value = ''; inp.focus(); if (PINC.tries >= 5){ PINC.until = Date.now() + 30000; PINC.tries = 0; msg.textContent = 'Неправильний PIN 5 разів — зачекайте 30 секунд'; } else msg.textContent = 'Неправильний PIN';
     }
@@ -176,7 +176,7 @@ function drawPin(){
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:()=>pinSetDialog('on')}, 'Увімкнути PIN і шифрування')));
   } else {
     pinBox.append(h('p', {}, '🔒 Дані пацієнтів зашифровано (AES-256). PIN потрібен при відкритті програми й після простою.'),
-      h('p', {class:'chips-hint'}, 'Після п’яти хибних вводів програма робить паузу. Для копій даних використовуйте довгий PIN: скопійований конверт можна перевіряти поза програмою.'),
+      h('p', {class:'chips-hint'}, 'Після 5 хибних вводів — пауза 30 с; після 10 і далі — 5 хв. Для копій даних використовуйте довгий PIN: скопійований конверт можна перевіряти поза програмою.'),
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>pinSetDialog('change')}, 'Змінити PIN'), h('button', {type:'button', class:'btn', onclick:()=>lockNow()}, 'Заблокувати зараз'),
         h('button', {type:'button', class:'more', onclick:()=>pinSetDialog('off')}, 'Вимкнути шифрування')));
   }

@@ -3,7 +3,7 @@ const html=fs.readFileSync(path.join(__dirname,'..','build','app.html'),'utf8');
 const errors=[];
 const d=new JSDOM(html,{url:'https://x.test/',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){try{w.localStorage.setItem('po.autogate','0')}catch(e){}
  w.localStorage.setItem('po.welcome','1');w.localStorage.setItem('po.profask','1');
- w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.document.execCommand=()=>false;
+ w.Element.prototype.scrollIntoView=()=>{};w.scrollBy=()=>{};w.scrollTo=()=>{};w.document.execCommand=()=>false;
  w.addEventListener('error',e=>errors.push(e.message));w.console.warn=(...a)=>errors.push(a.join(' '));
 }});
 const w=d.window,doc=w.document,$=id=>doc.getElementById(id);
@@ -80,7 +80,7 @@ const set=(id,value)=>{const e=$(id);e.value=value;e.dispatchEvent(new w.Event(e
 
  flow.push(timed('Open save menu',()=>$('saveBtn').click()));
  const saveOptions=[...doc.querySelectorAll('.savemenu button')].map(b=>b.textContent.replace(/\s+/g,' ').trim());
- check('Save menu includes Word, LibreOffice and PDF',saveOptions.length===3&&saveOptions.some(x=>x.startsWith('Word'))&&saveOptions.some(x=>x.startsWith('LibreOffice'))&&saveOptions.some(x=>x.startsWith('PDF')),saveOptions.join(' / '));
+ check('Download menu includes Word and LibreOffice; PDF remains on print button',saveOptions.length===2&&saveOptions.some(x=>x.startsWith('Word'))&&saveOptions.some(x=>x.startsWith('LibreOffice'))&&!saveOptions.some(x=>x.startsWith('PDF'))&&!$('printBtn').hidden&&/PDF/.test($('printBtn').getAttribute('aria-label')||''),saveOptions.join(' / '));
 
  Object.defineProperty($('out'),'innerText',{configurable:true,get:()=>''});
  $('outBox').style.visibility='hidden';

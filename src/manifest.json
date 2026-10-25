@@ -108,6 +108,14 @@
   "627-diary-inline.js",
   "624-mobile-input.js",
   "628-popout-insert.js",
-  "629-pin-hardening.js"
+  "629-nav-dialog-focus.js",
+  "630-sidepanel-wide.js",
+  "631-document-actions.js",
+  "632-dangerous-actions.js",
+  "633-print-audit-fixes.js",
+  "635-paper-fields.js",
+  "636-paper-edit.js",
+  "637-title-back.js",
+  "638-pin-hardening.js"
  ]
 }
