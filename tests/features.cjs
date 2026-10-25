@@ -1034,6 +1034,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Шаблон за бажанням: коли скарги й огляд заповнені — спершу питає «Що взяти з шаблону»', r[2] && r[3], JSON.stringify(r));
    ok('Шаблон за бажанням: ваші скарги й огляд лишились, діагноз і МКХ — з шаблону', r[4] && r[5] && r[6] && r[7], JSON.stringify(r));
    w.eval("newPatient()"); }
+ { // 0.9.3.62 — читабельний бланк: що вважається порожнім місцем
+   const r=JSON.parse(w.eval(`(()=>{ const mk=s=>{ const d=document.createElement('div'); d.innerHTML=s; return d.firstChild; };
+     return JSON.stringify([
+       phrRowEmpty(mk('<div class="brow"><span class="bl">Зріст </span><span class="bf empty"></span><span class="bl"> см</span></div>')),
+       phrRowEmpty(mk('<div class="brow"><span class="bl">Стан: </span><span class="bu">середньої тяжкості</span><span class="bf empty"></span></div>')),
+       phrRowEmpty(mk('<div class="brow"><span class="bl">Хворий </span><span class="bf">Тестовий</span></div>')),
+       phrRowEmpty(mk('<div class="blines"></div>')), phrRowEmpty(mk('<div class="blines">текст</div>')) ]); })()`));
+   ok('Читабельний бланк: порожнє — лише незаповнене (рядок із вибраним варіантом — заповнений)', JSON.stringify(r)==='[true,false,false,true,false]', JSON.stringify(r)); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
