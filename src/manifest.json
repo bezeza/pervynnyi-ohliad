@@ -104,6 +104,15 @@
   "621-progress-next.js",
   "622-copy-check.js",
   "650-diary-blank.js",
-  "623-manual-text.js"
+  "623-manual-text.js",
+  "627-diary-inline.js",
+  "624-mobile-input.js",
+  "628-popout-insert.js",
+  "629-nav-dialog-focus.js",
+  "630-sidepanel-wide.js",
+  "631-document-actions.js",
+  "632-dangerous-actions.js",
+  "633-print-audit-fixes.js",
+  "635-paper-fields.js"
  ]
 }

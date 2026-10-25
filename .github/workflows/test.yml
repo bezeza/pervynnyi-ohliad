@@ -4,15 +4,65 @@ on:
     branches: [main]
   pull_request:
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node build.mjs
+      - name: Зібраний файл збігається з репозиторієм
+        run: git diff --exit-code -- index.html pervynnyi-ohliad.html pervynnyi-ohliad-prev.html sw.js README.md
+  checks:
+    name: Перевірка (${{ matrix.label || matrix.suite }})
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: full
+            args: ''
+          - suite: features
+            args: ''
+          - suite: workflow
+            args: ''
+          - suite: idb
+            args: ''
+          - suite: audit
+            args: ''
+          # fuzz «1 6» (сіди 1–6) ішов 340–570 с при ліміті 600 с і раз упав по таймауту (#125).
+          # Ті самі сіди, розбиті на два паралельні шматки — покриття не змінюється.
+          - suite: fuzz
+            args: '1 3'
+            label: fuzz 1–3
+          - suite: fuzz
+            args: '4 6'
+            label: fuzz 4–6
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm install --no-audit --no-fund
-      - run: npm test
-      - name: Зібраний файл збігається з репозиторієм
-        run: git diff --exit-code -- index.html pervynnyi-ohliad.html pervynnyi-ohliad-prev.html sw.js README.md
+      - run: node build.mjs
+      - name: Запустити незмінений набір перевірок
+        run: timeout 600s node tests/${{ matrix.suite }}.cjs ${{ matrix.args }}
+  test:
+    name: test
+    needs: [build, checks]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Усі перевірки мають пройти
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          CHECKS_RESULT: ${{ needs.checks.result }}
+        run: |
+          if [ "$BUILD_RESULT" != "success" ] || [ "$CHECKS_RESULT" != "success" ]; then
+            exit 1
+          fi

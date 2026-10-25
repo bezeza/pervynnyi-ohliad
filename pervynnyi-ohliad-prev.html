@@ -1226,12 +1226,78 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 
 /* 0.9.3.37 — задача 3 */
 .copy-peek{margin:8px 0;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px}.copy-peek[hidden]{display:none}.copy-peek-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.copy-peek-item{display:block;border:0;background:none;color:var(--accent);font:inherit;text-align:left;padding:6px 0;cursor:pointer;text-decoration:underline}.copy-peek small{display:block;color:var(--muted)}#outBox[data-ov="chk"] .copy-peek{display:none}
+
+/* 0.9.3.39 — задача 4 */
+.banner{flex-wrap:wrap}.banner>span{flex:1 1 220px}.banner>.btn{flex-shrink:0}
+
+/* 0.9.3.40 — редагування поточного щоденника біля рядка */
+#paper .bcur [data-diary-key]{cursor:pointer;border-radius:3px}
+#paper .bcur [data-diary-key]:hover,#paper .bcur .diary-edit-active{background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+#paper .bcur [data-diary-key]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#paper .bcur .bf.empty[data-diary-hint]::after{content:attr(data-diary-hint);font:11px/1.3 var(--f-ui);color:var(--accent);background:var(--accent-soft);padding:1px 4px;border-radius:3px;white-space:nowrap}
+.diary-inline-editor{position:fixed;z-index:65;background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:10px;box-shadow:0 10px 32px rgba(0,0,0,.2);display:flex;flex-direction:column;max-height:min(68vh,calc(100dvh - 32px));overflow:hidden;font:15px/1.45 var(--f-ui)}
+.diary-editor-head,.diary-editor-actions{display:flex;align-items:center;gap:8px;padding:10px 12px;flex-shrink:0;flex-wrap:wrap}
+.diary-editor-head{border-bottom:1px solid var(--line)}.diary-editor-head>b{flex:1}.diary-editor-actions{border-top:1px solid var(--line)}
+.diary-editor-body{overflow:auto;padding:4px 12px 12px;min-height:0;overscroll-behavior:contain}
+.diary-editor-field{margin-top:10px}.diary-editor-field>.lbl{margin-bottom:5px;font-weight:600}
+.diary-editor-field .chips{margin-bottom:6px}.diary-editor-field .chip{white-space:normal;text-align:left}
+.diary-editor-field [aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.diary-own{margin-top:6px}.diary-number{display:inline-flex;gap:6px;align-items:center;max-width:100%}
+.diary-complaints{max-height:180px;overflow:auto;margin-top:8px}
+.diary-editor-actions .btn{min-height:40px}.diary-editor-actions .primary{margin-left:auto}
+.diary-edit-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.diary-edit-controls .btn{font-size:12px;min-height:36px}
+@media(max-width:899px){.diary-inline-editor{max-height:65dvh}.diary-inline-editor input,.diary-inline-editor textarea{font-size:16px}.diary-editor-actions{gap:6px}.diary-editor-actions .btn{font-size:13px;min-height:44px;padding:8px}}
+@media print{.diary-inline-editor,.diary-edit-controls{display:none!important}#paper .bcur [data-diary-key]{box-shadow:none!important;background:transparent!important}#paper .bcur .bf.empty[data-diary-hint]::after{content:none!important;display:none!important}}
+
+/* 0.9.3.41 — введення чисел із телефона */
+.mobile-input-help,.mobile-input-unit{display:none}.mobile-number-pair{display:contents}
+@media(max-width:899px){
+  .mobile-input-help{display:block;flex:1 0 100%;grid-column:1/-1;width:100%;font-size:12px;line-height:1.5;color:var(--muted);margin-top:4px}
+  .mobile-number-pair{display:inline-flex;align-items:center;gap:6px;max-width:100%;flex:0 1 auto}
+  .mobile-number-pair>.u{white-space:normal;line-height:1.3}.mobile-number-pair>input{flex:0 1 5.2em;min-width:0;min-height:44px}
+  .mobile-calculator-number{display:flex;flex-wrap:nowrap;width:100%}.mobile-calculator-number>input{flex:1 1 5em;width:0}
+  .mobile-input-unit{display:inline;font-size:13px;color:var(--muted)}
+  .ctrlbox .crow{grid-template-columns:minmax(0,1fr)}.ctrlbox .crow .cv{min-width:0;flex-wrap:wrap}
+  .ctrlbox .crow>input[type=date]{width:100%;justify-self:stretch}
+  input[type=date],input[type=datetime-local]{max-width:100%;min-width:0!important;min-height:44px}
+}
+@media print{.mobile-input-help,.mobile-input-unit{display:none!important}}
+
+/* 0.9.3.42 — вставки у вікні документа; панель не входить у документ і друк. */
+.popwin .pw-insert{position:fixed;z-index:20;box-sizing:border-box;max-height:calc(100dvh - 16px);overflow:auto;padding:14px;background:var(--surface,#fff);color:var(--ink,#1a1f2b);border:1px solid var(--line,#dde1e8);border-radius:12px;box-shadow:0 8px 36px #0003;display:flex;flex-direction:column;gap:10px}
+.popwin .pw-insert-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.popwin .pw-insert label{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.popwin .pw-insert :is(input,textarea,select){box-sizing:border-box;width:100%;min-height:40px;font:inherit}
+.popwin .pw-insert button{font:inherit;cursor:pointer;min-height:36px}
+.popwin .pw-choices{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow:auto}
+.popwin .pw-choices button[aria-pressed=true]{background:var(--accent-soft,#e3edf8);outline:2px solid var(--accent,#1f5a8a)}
+.popwin .pw-manual-note{font-size:13px;color:var(--muted,#667)}
+@media print{.popwin .pw-insert,.popwin .pw-bar{display:none!important}.popwin #pwBox{zoom:1!important}.popwin .pw-text{margin:0;border:0;padding:0}}
+
+/* 0.9.3.44 — згортання змісту розділів і робочий простір для широких екранів. */
+.sidefold-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:40px;margin:0 0 10px;padding:7px 10px;text-align:left;font-size:13px}
+.sidefold-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (min-width:900px){
+  body.lay-B.sidefold .form{grid-template-columns:48px minmax(0,1fr)}
+  body.lay-B.sidefold #sidecol>.sidein{width:48px;padding:8px 0;overflow:hidden}
+  body.lay-B.sidefold #sidecol>.sidein>:not(.sidefold-btn){display:none!important}
+  body.lay-B.sidefold .sidefold-btn{width:46px;min-height:calc(100vh - var(--pbh,0px) - 16px);margin:0;padding:8px 4px}
+  body.lay-B.sidefold .sidefold-btn span{writing-mode:vertical-rl;transform:rotate(180deg)}
+}
+@media (min-width:1600px){
+  body:not(.lay-D) .wrap,body:not(.lay-D) .top{max-width:2240px}
+  body:not(.lay-C):not(.lay-D) .wrap{grid-template-columns:minmax(0,var(--sf,1.4fr)) 16px minmax(480px,1fr)}
+  body.lay-C .wrap{grid-template-columns:minmax(480px,1fr) 16px minmax(0,var(--sf,1.25fr))}
+  body.outfold:not(.lay-C) .wrap{grid-template-columns:minmax(0,1fr) 16px 46px}
+  body.lay-C.outfold .wrap{grid-template-columns:46px 16px minmax(0,1fr)}
+  .scr-monitor #out{width:100%;max-width:72ch;align-self:center}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.38 від 23.10.2026">v0.9.3.38 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.46 від 24.10.2026">v0.9.3.46 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3367,8 +3433,16 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.38', VDATE = '23.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.46', VDATE = '24.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.46', '24.10.2026', 'уточнено підписи «Очистити поточний документ», «Норма в усіх системах огляду» та «Новий пацієнт»; після норми й очищення документа дію можна скасувати протягом 8 секунд'],
+  ['0.9.3.45', '24.10.2026', 'у панелі документа основні дії — копіювання й друк / PDF; Word і LibreOffice — у «Завантажити», форматування з’являється під час ручної правки'],
+  ['0.9.3.44', '24.10.2026', 'панель розділів можна згорнути до смуги; на широкому екрані робоча область ширша, текст документа має зручну довжину рядка'],
+  ['0.9.3.43', '24.10.2026', 'навігація «Розділи»: фокус переходить у вікно, Tab лишається всередині, закриття повертає фокус до кнопки-виклику'],
+  ['0.9.3.42', '24.10.2026', 'окреме вікно документа: вставка тексту в позицію курсора, вибір готових фраз і полів без повернення у форму; правка бланка в тому самому вікні, скасування вставки'],
+  ['0.9.3.41', '24.10.2026', 'введення з телефона: підказки для дат, температури й АТ; одиниці поряд із числом, зокрема в калькуляторах; цифрова клавіатура для нових числових полів'],
+  ['0.9.3.40', '24.10.2026', 'поточний щоденник на бланку: правка біля рядка без переходу вліво, власні формулювання, пошук скарг, скасування й перехід до наступного пункту; підказки лише на екрані'],
+  ['0.9.3.39', '23.10.2026', 'статус ручних змін, підтвердження заміни з форми, скасування; збереження тексту при швидкому режимі й зміні ширини'],
   ['0.9.3.38', '23.10.2026', 'щоденник: пункти бланка 003/о, що друкувалися порожніми рядками, — тепер поля «Інші пункти щоденника»: лімфатичні вузли, дихання через ніс, грудна клітка, перкуторно, язик, печінка, симптом Пастернацького, сечовипускання (раніше на бланку завжди друкувалося «вільне, не болюче, діурез достатній» — тепер лише якщо вибрано); на бланку клік по такому рядку відкриває вибір варіанта; у тексті щоденника — лише коли вибрано'],
   ['0.9.3.37', '23.10.2026', 'одне-два зауваження з наявної перевірки біля «Копіювати», перехід до поля без блокування'],
   ['0.9.3.36', '23.10.2026', 'прогрес підказує найближче важливе незаповнене поле з переходом; решта розділів позначена як необов’язкова; прибрано зайві порожні значки біля доповнень і Б/о при детальному описі'],
@@ -15133,6 +15207,813 @@ document.addEventListener('click', e=>{
 document.addEventListener('change', e=>{ if (PAPER && e.target.closest && e.target.closest('.qe')) setTimeout(()=>{ try{ renderPaper(); }catch(x){} }, 0); });
 /* вибраний варіант у полі без «норми» (лімфовузли, перкусія, неврологічно…) — це дані: поле не ховається профілем щоденника і йде в текст */
 { const dh0 = dHasData; dHasData = function(f){ if (f && f.type === 'sel' && f.norm === undefined && f.el && f.el.value !== '') return true; return dh0.apply(this, arguments); }; }
+/* 0.9.3.39 — ручний текст не замінюється через зміну режиму чи розміру. */
+function manualTextStatus(){
+  const banner = document.getElementById('banner'); if (banner.hidden === dirty) banner.hidden = !dirty;
+  let text = banner.querySelector('[data-manual-status]');
+  if (!text){ text = banner.querySelector('span'); text.dataset.manualStatus = '1'; text.setAttribute('role','status'); }
+  const message = 'Є ручні зміни. Автоматичне оновлення призупинено; заміна текстом із форми прибере ручні правки й форматування.';
+  if (text.textContent !== message) text.textContent = message;
+}
+// Синхронізація після наявних обробників і відновлення кешу документа.
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); manualTextStatus(); return r; }; }
+let MANUAL_SWITCHING = 0;
+{ const x0 = switchDoc; switchDoc = function(){
+  const previous = DOC; MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
+  finally { MANUAL_SWITCHING--; manualTextStatus(); if (!MANUAL_SWITCHING && dirty && previous !== DOC) renderCheck(); }
+}; }
+{ const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); manualTextStatus(); if (dirty) renderCheck(); return r; }; }
+{ const x0 = applyDoc; applyDoc = function(first){
+  const keep = !MANUAL_SWITCHING && !RESTORING && dirty ? {doc:DOC, html:document.getElementById('out').innerHTML} : null;
+  if (keep) CACHE[keep.doc] = {html:keep.html, dirty:true};
+  const r = x0.apply(this, arguments);
+  // false використовується й для швидкого режиму; новий тип має інший DOC.
+  if ((keep && keep.doc === DOC) || (first && CACHE[DOC] && CACHE[DOC].dirty)){
+    const saved = keep && keep.doc === DOC ? keep : CACHE[DOC];
+    document.getElementById('out').innerHTML = saved.html; dirty = true;
+    renderCheck();
+  }
+  manualTextStatus(); return r;
+}; applyDoc.bound = x0.bound; }
+document.getElementById('out').addEventListener('input', manualTextStatus);
+document.querySelector('.fmt').addEventListener('click', ()=>{ manualTextStatus(); autosave(); });
+document.getElementById('fsize').addEventListener('change', ()=>{ manualTextStatus(); autosave(); });
+{ const button = document.getElementById('regen'), x0 = button.onclick; button.onclick = function(){
+  if (dirty && !confirm('Замінити текст даними з форми? Ручні правки та форматування буде замінено. Дію можна скасувати.')) return;
+  if (dirty) undoPush('оновлення тексту з форми');
+  const r = x0.apply(this,arguments); manualTextStatus(); return r;
+}; }
+manualTextStatus();
+/* 0.9.3.40 — поточний щоденник: поле відкривається біля рядка бланка. */
+const DIARY_INLINE = {box:null, key:null, undo:null, frame:0, manual:false};
+const DIARY_INLINE_GROUPS = {
+  date:['meta_dt'], temp:['d_obj.t'], pulse:['d_obj.chss'], pressure:['d_obj.ad'], breath:['d_obj.chd'],
+  complaints:['d_main.sk','d_main.zal','d_main.skx','d_main.son'],
+  general:['d_main.stan','d_main.dyn','d_main.svid'], skin:['d_obj.shk'], nodes:['d_obj.lv'], edema:['d_obj.nab'],
+  nose:['d_obj.nis'], percussion:['d_obj.perk'], lungs:['d_obj.dyh','d_obj.chd','d_obj.o2'],
+  heart:['d_obj.serce'], tongue:['d_obj.yaz'], abdomen:['d_obj.zhyv'], chest:['d_obj.grk'], liver:['d_obj.pech'],
+  stool:['d_obj.fiz'], urinary:['d_obj.pst','d_obj.sech'], treatment:['d_lik.per','d_lik.obs','d_lik.kor','d_lik.osn','d_lik.plan'], doctor:['meta_doc']
+};
+const DIARY_INLINE_OWN = new Map();
+// Додаткові відповіді — звичайні поля форми: наявні snap/restore/diaryFields бачать їх без зміни формату сховища.
+DSEC.forEach(sid=>SECTIONS.find(s=>s.id===sid).fields.forEach(f=>{
+  if (f.type !== 'sel') return;
+  const own = h('textarea', {id:`${sid}_${f.id}_own`, rows:'2', hidden:'', 'aria-label':'Своє формулювання: ' + f.label,
+    placeholder:'Своїми словами', oninput:()=>{ if (own.value.trim()) f.el.value = ''; mark(f.el,f); if (f.seg) f.seg(); update(); }});
+  f.wrapEl.append(own); DIARY_INLINE_OWN.set(f, own);
+  f.el.addEventListener('change', ()=>{ if (!RESTORING){ own.value = ''; own.hidden = true; } }, true);
+}));
+// Перший restoreLast міг виконатися до підключення цього модуля.
+if (PID){ try{ const fields=loadStore()[PID]?.snap?.f || {}; DIARY_INLINE_OWN.forEach(own=>{ own.value=fields[own.id] || ''; }); }catch(e){} }
+{ const x0 = val; val = function(f){ const own=DIARY_INLINE_OWN.get(f); return own && own.value.trim() ? own.value.trim() : x0.apply(this,arguments); }; }
+{ const x0 = bDv; bDv = function(fields,key){ const own=fields[key.replace('.','_') + '_own']; return own && own.trim() ? g(own.trim()) : x0.apply(this,arguments); }; }
+{ const x0 = dHasData; dHasData = function(f){ const own=DIARY_INLINE_OWN.get(f); return !!(own && own.value.trim()) || x0.apply(this,arguments); }; }
+{ const x0 = entryFieldState; entryFieldState = function(f){ const own=DIARY_INLINE_OWN.get(f); return own && own.value.trim() ? 'filled' : x0.apply(this,arguments); }; }
+function diaryInlineClearOwn(section){
+  DIARY_INLINE_OWN.forEach((own,f)=>{ if (!section || section.fields.includes(f)){ own.value=''; own.hidden=true; } });
+}
+{ const x0=clearAll; clearAll=function(){ diaryInlineClose(); diaryInlineClearOwn(); return x0.apply(this,arguments); }; }
+{ const x0=diaryReset; diaryReset=function(){ diaryInlineClose(); diaryInlineClearOwn(); return x0.apply(this,arguments); }; }
+{ const x0=clearSection; clearSection=undoable(s=>'очищення розділу «'+s.title+'»',function(s){ diaryInlineClearOwn(s); return x0.apply(this,arguments); }); }
+{ const x0=applyNorm; applyNorm=undoable(s=>'«Норма» у розділі «'+s.title+'»',function(s){ diaryInlineClearOwn(s); return x0.apply(this,arguments); }); }
+function diaryInlineMark(node,key){
+  if (!node) return; node.dataset.diaryKey=key; node.setAttribute('role','button'); node.tabIndex=0;
+  node.title='Редагувати цей пункт тут'; node.setAttribute('aria-haspopup','dialog');
+  const empty=node.matches('.bf.empty') ? node : node.querySelector('.bf.empty');
+  if (empty) empty.dataset.diaryHint=['date','temp','pulse','pressure','breath'].includes(key) ? '+ вписати' : '+ вибрати';
+}
+{ const x0=bDiaryEntry; bDiaryEntry=function(e){
+  const root=x0.apply(this,arguments);
+  // Записи старого формату не перебудовуємо; нові впізнаємо за полями власних відповідей, навіть порожніми.
+  if (!e.cur && !Object.keys(e.f).some(key=>key.endsWith('_own'))) return root;
+  const read=key=>bDv(e.f,key), own=key=>e.f[key.replace('.','_')+'_own'] || '';
+  const rows=[...root.querySelectorAll('.bdr>.brow')];
+  const map=[[/^Скарги/,'complaints'],[/^Об’єктивно|^Свідомість/,'general'],[/^Реакція/,'skin'],[/^Лімфатичні/,'nodes'],[/^Набряки/,'edema'],[/^Дихання через/,'nose'],[/^Перкуторно/,'percussion'],[/^Аускультативно/,'lungs'],[/^Діяльність серця|^Тони/,'heart'],[/^Язик/,'tongue'],[/^Живіт/,'abdomen'],[/^рівномірно/,'chest'],[/^Печінка/,'liver'],[/^Випорожнення/,'stool'],[/^С-м Пастернацького/,'urinary'],[/^Лікування/,'treatment'],[/^Лікар/,'doctor']];
+  rows.forEach(row=>{ const item=map.find(([re])=>re.test(row.textContent.trim())); if (item && e.cur) diaryInlineMark(row,item[1]); });
+  const general=rows.find(row=>/^Об’єктивно/.test(row.textContent.trim()));
+  if (general){
+    // Вибрана свідомість має відображатися без зашитого «не порушена» в тому ж рядку.
+    general.replaceChildren(h('span',{class:'bl'},'Об’єктивно: загальний стан '),bFill([read('d_main.stan'),read('d_main.dyn'),read('d_main.svid')].filter(Boolean).join(', '),true));
+    rows.filter(row=>/^Свідомість/.test(row.textContent.trim())).forEach(row=>row.remove());
+  }
+  const abdomen=rows.find(row=>/^Живіт/.test(row.textContent.trim()));
+  if (abdomen) abdomen.replaceChildren(h('span',{class:'bl'},'Живіт '),bFill(read('d_obj.zhyv'),false,true));
+  const skin=rows.find(row=>/^Реакція/.test(row.textContent.trim()));
+  if (skin) skin.replaceChildren(h('span',{class:'bl'},'Шкіра '),bFill(read('d_obj.shk').replace(/^Шкірні покриви /,''),false,true));
+  const chest=rows.find(row=>/^рівномірно/.test(row.textContent.trim()));
+  if (chest) chest.replaceChildren(h('span',{class:'bl'},'Грудна клітка '),bFill(read('d_obj.grk'),false,true));
+  const complaints=rows.find(row=>/^Скарги/.test(row.textContent.trim()));
+  if (complaints && (own('d_main.sk') || own('d_main.son'))){
+    complaints.replaceChildren(h('span',{class:'bl'},'Скарги: '),bFill([read('d_main.sk'),e.f.d_main_zal || e.f.d_main_skx,read('d_main.son')].filter(Boolean).join('; '),true,true));
+  }
+  const stool=rows.find(row=>/^Випорожнення/.test(row.textContent.trim()));
+  if (stool) stool.replaceChildren(h('span',{class:'bl'},'Фізіологічні відправлення: '),bFill(read('d_obj.fiz'),false,true));
+  const treatment=root.querySelector('.bdr>.blines');
+  if (treatment){
+    const content=[e.rx || '',read('d_lik.per'),e.f.d_lik_obs || '',e.f.d_lik_kor ? 'Корекція терапії: '+e.f.d_lik_kor : '',e.osn || e.f.d_lik_osn || '',read('d_lik.plan')].filter(Boolean).map(end).join(' ');
+    treatment.textContent=content; if (e.cur) diaryInlineMark(treatment,'treatment');
+  }
+  const left=root.querySelector('.bdl'); if (left && e.cur){
+    diaryInlineMark(left.querySelector(':scope>.bf'),'date');
+    left.querySelectorAll('[data-fld]').forEach(el=>{
+      const id=el.dataset.fld.split(' ')[0], key=id.includes('_ad_')?'pressure':id.includes('_chss_')?'pulse':id.includes('_chd_')?'breath':'temp'; diaryInlineMark(el,key);
+    });
+  }
+  root.querySelectorAll('[data-diary-key]').forEach(el=>diaryInlineMark(el,el.dataset.diaryKey));
+  return root;
+}; }
+function diaryInlineAnchor(key){ return document.querySelector(`#paper .bdi.bcur [data-diary-key="${key}"]`); }
+function diaryInlineClose(focus){
+  const key=DIARY_INLINE.key; if (DIARY_INLINE.box) DIARY_INLINE.box.remove();
+  DIARY_INLINE.box=null; DIARY_INLINE.key=null; DIARY_INLINE.undo=null;
+  document.querySelectorAll('#paper .diary-edit-active').forEach(el=>el.classList.remove('diary-edit-active'));
+  if (focus){ const anchor=diaryInlineAnchor(key); if (anchor) anchor.focus({preventScroll:true}); }
+}
+function diaryInlinePosition(){
+  const box=DIARY_INLINE.box, anchor=diaryInlineAnchor(DIARY_INLINE.key); if (!box) return;
+  if (!anchor || DOC!=='shch' || !PAPER){ diaryInlineClose(); return; }
+  const rect=anchor.getBoundingClientRect(), viewport=window.visualViewport;
+  const bottom=viewport ? viewport.offsetTop+viewport.height : window.innerHeight;
+  const width=Math.min(560,window.innerWidth-16); box.style.width=width+'px';
+  box.style.left=Math.max(8,Math.min(window.innerWidth-width-8,rect.left))+'px';
+  const height=box.getBoundingClientRect().height;
+  const top=rect.bottom+6+height<=bottom-8 ? rect.bottom+6 : rect.top-height-6>=8 ? rect.top-height-6 : Math.max(8,bottom-height-8);
+  box.style.top=top+'px';
+}
+function diaryInlineChange(fn){
+  if (!DIARY_INLINE.undo){ undoPush('правка пункту щоденника'); DIARY_INLINE.undo=UNDO[UNDO.length-1]; }
+  fn(); renderPaper(); diaryInlineSync();
+}
+function diaryInlineControl(source){
+  const input=source.tagName==='TEXTAREA' ? h('textarea',{rows:'3'}) : h('input',{type:source.type || 'text',inputmode:source.inputMode || null,placeholder:source.placeholder || ''});
+  input.value=source.value; input.dataset.diarySource=source.id;
+  input.setAttribute('aria-label',source.getAttribute('aria-label') || source.closest('.f')?.querySelector('label,.lbl')?.textContent || 'Значення');
+  input.addEventListener('input',()=>diaryInlineChange(()=>{ source.value=input.value; source.dispatchEvent(new Event(source.tagName==='SELECT'?'change':'input',{bubbles:true})); }));
+  return input;
+}
+function diaryInlineComplaints(host){
+  const search=h('input',{type:'search',placeholder:'Знайти скаргу','aria-label':'Пошук скарги'}), list=h('div',{class:'chips diary-complaints'});
+  const draw=()=>{
+    const f=F('d_main.zal'), current=remItems(f.el.value), q=search.value.trim().toLowerCase(), source=F('skarhy.c');
+    const all=[...new Set([...current,...source.opts.map(o=>O(o).t)])];
+    list.replaceChildren();
+    all.filter(t=>!q || t.toLowerCase().includes(q)).slice(0,24).forEach(text=>list.append(h('button',{type:'button',class:'chip','aria-pressed':current.includes(text)?'true':'false',onclick:()=>diaryInlineChange(()=>{
+      let values=remItems(f.el.value); values=values.includes(text)?values.filter(x=>x!==text):[...values,text];
+      f.el.value=values.join(values.some(x=>x.includes(','))?'; ':', '); f.el.dispatchEvent(new Event('input',{bubbles:true})); draw();
+    })},g(text))));
+    if (!list.children.length) list.append(h('span',{class:'chips-hint'},'Не знайдено — впишіть своїми словами нижче.'));
+  };
+  search.addEventListener('input',draw); host.append(search,list); draw();
+}
+function diaryInlineField(key){
+  const f=key.includes('.')?F(key):null, section=h('div',{class:'diary-editor-field'});
+  const label=f ? f.label : key==='meta_dt'?'Дата й час запису':'Лікар';
+  section.append(h('div',{class:'lbl'},label));
+  if (!f){ const source=document.getElementById(key); if (source) section.append(diaryInlineControl(source)); return section; }
+  if (f.type==='sel'){
+    const choices=h('div',{class:'chips',role:'group','aria-label':label});
+    [['','Не вказано'],...f.opts.map((o,i)=>[String(i),g(O(o).l)])].forEach(([value,text])=>choices.append(h('button',{type:'button',class:'chip', 'data-diary-select':key,'data-value':value,onclick:()=>diaryInlineChange(()=>{
+      f.el.value=value; f.el.dispatchEvent(new Event('change',{bubbles:true}));
+    })},text)));
+    section.append(choices);
+    const own=DIARY_INLINE_OWN.get(f);
+    if (own){
+      const area=h('div',{class:'diary-own'}), input=diaryInlineControl(own);
+      area.hidden=!own.value.trim(); area.append(input);
+      const button=h('button',{type:'button',class:'more',onclick:()=>{ area.hidden=!area.hidden; button.setAttribute('aria-expanded',area.hidden?'false':'true'); if (!area.hidden) input.focus(); diaryInlinePosition(); }},'Своє…');
+      button.setAttribute('aria-expanded',area.hidden?'false':'true'); section.append(button,area);
+    }
+  } else if (f.type==='num'){
+    const row=h('div',{class:'nums'});
+    f.inputs.forEach((source,i)=>row.append(h('span',{class:'diary-number'},diaryInlineControl(source),h('span',{class:'u'},f.parts[i].u)))); section.append(row);
+  } else if (f.el){
+    if (key==='d_main.zal') diaryInlineComplaints(section);
+    section.append(diaryInlineControl(f.el));
+  }
+  return section;
+}
+function diaryInlineSync(){
+  diaryInlineModeSync();
+  DIARY_INLINE_OWN.forEach(own=>{ own.hidden=!own.value.trim(); });
+  const box=DIARY_INLINE.box; if (!box) return;
+  box.querySelectorAll('[data-diary-select]').forEach(button=>{
+    const f=F(button.dataset.diarySelect), own=DIARY_INLINE_OWN.get(f);
+    button.setAttribute('aria-pressed',(!own?.value.trim() && f.el.value===button.dataset.value)?'true':'false');
+  });
+  box.querySelectorAll('[data-diary-source]').forEach(input=>{
+    const source=document.getElementById(input.dataset.diarySource);
+    if (source && document.activeElement!==input) input.value=source.value;
+  });
+  const undo=box.querySelector('.diary-undo'); if (undo) undo.disabled=!DIARY_INLINE.undo || UNDO[UNDO.length-1]!==DIARY_INLINE.undo;
+  document.querySelectorAll('#paper .bcur [data-diary-key]').forEach(el=>el.classList.toggle('diary-edit-active',el.dataset.diaryKey===DIARY_INLINE.key));
+  diaryInlinePosition();
+}
+function diaryInlineNavigate(direction){
+  const keys=[...new Set([...document.querySelectorAll('#paper .bdi.bcur [data-diary-key]')].map(el=>el.dataset.diaryKey))];
+  const index=keys.indexOf(DIARY_INLINE.key), next=keys[index+direction];
+  if (next) diaryInlineOpen(next); else diaryInlineClose(true);
+}
+function diaryInlineOpen(key){
+  if (DOC!=='shch' || !PAPER || !diaryInlineAnchor(key)) return;
+  if (DIARY_INLINE.box && DIARY_INLINE.key===key) return;
+  qeClose(); diaryInlineClose(); DIARY_INLINE.key=key;
+  const fields=DIARY_INLINE_GROUPS[key]; if (!fields) return;
+  const title='Правка пункту щоденника';
+  const box=h('section',{class:'diary-inline-editor',role:'dialog','aria-label':title},
+    h('div',{class:'diary-editor-head'},h('b',{},title),h('button',{type:'button',class:'btn','aria-label':'Закрити редактор',onclick:()=>diaryInlineClose(true)},'✕')),
+    h('div',{class:'diary-editor-body'},...fields.map(diaryInlineField)),
+    h('div',{class:'diary-editor-actions'},
+      h('button',{type:'button',class:'btn',onclick:()=>diaryInlineNavigate(-1)},'‹ Попередній'),
+      h('button',{type:'button',class:'btn diary-undo',disabled:'',onclick:()=>{ if (UNDO[UNDO.length-1]!==DIARY_INLINE.undo) return; const current=DIARY_INLINE.key; diaryInlineClose(); undoLast(); renderPaper(); diaryInlineOpen(current); }},'Скасувати зміну'),
+      h('button',{type:'button',class:'btn primary',onclick:()=>diaryInlineNavigate(1)},'Далі ›')));
+  DIARY_INLINE.box=box; document.body.append(box); diaryInlineSync();
+  box.addEventListener('keydown',e=>{
+    if (e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); diaryInlineClose(true); }
+    else if (e.key==='Enter' && e.target.tagName==='INPUT' && !['search','date','datetime-local'].includes(e.target.type)){ e.preventDefault(); diaryInlineNavigate(1); }
+    else if (e.key==='Tab' && e.target.matches('input:not([type=search]),textarea')){
+      const inputs=[...box.querySelectorAll('input:not([type=search]),textarea')].filter(input=>!input.closest('[hidden]'));
+      if ((!e.shiftKey && e.target===inputs[inputs.length-1]) || (e.shiftKey && e.target===inputs[0])){ e.preventDefault(); diaryInlineNavigate(e.shiftKey?-1:1); }
+    }
+  });
+  const first=box.querySelector('input:not([type=search]),textarea:not([hidden]),button[data-diary-select]');
+  if (first && !first.closest('[hidden]')) first.focus({preventScroll:true});
+}
+document.addEventListener('click',e=>{
+  const target=e.target.closest && e.target.closest('#paper .bdi.bcur [data-diary-key]');
+  if (target){ e.preventDefault(); e.stopImmediatePropagation(); diaryInlineOpen(target.dataset.diaryKey); }
+},true);
+document.addEventListener('keydown',e=>{
+  const target=e.target.closest && e.target.closest('#paper .bdi.bcur [data-diary-key]');
+  if (target && (e.key==='Enter' || e.key===' ')){ e.preventDefault(); diaryInlineOpen(target.dataset.diaryKey); }
+});
+document.addEventListener('pointerdown',e=>{
+  if (DIARY_INLINE.box && !DIARY_INLINE.box.contains(e.target) && !e.target.closest('#paper .bcur [data-diary-key]')) diaryInlineClose();
+},true);
+// Старий обробник data-dsel зареєстрований раніше; спрямовуємо його в той самий редактор.
+{ const x0=qeOpen; qeOpen=function(f,sid,anchor){
+  const target=anchor?.closest('#paper .bdi.bcur [data-diary-key]');
+  if (target) return diaryInlineOpen(target.dataset.diaryKey);
+  return x0.apply(this,arguments);
+}; }
+{ const x0=renderPaper; renderPaper=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
+{ const x0=update; update=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
+{ const x0=switchDoc; switchDoc=function(next){ if (next!==DOC) DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
+{ const x0=restore; restore=function(){ DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
+window.addEventListener('scroll',()=>{ if (!DIARY_INLINE.box || DIARY_INLINE.frame) return; DIARY_INLINE.frame=requestAnimationFrame(()=>{ DIARY_INLINE.frame=0; diaryInlinePosition(); }); },true);
+window.addEventListener('resize',diaryInlinePosition);
+if (window.visualViewport) window.visualViewport.addEventListener('resize',diaryInlinePosition);
+const DIARY_MODE_BUTTON=h('button',{type:'button',class:'btn',id:'diaryManualMode','aria-pressed':'false',onclick:()=>{
+  diaryInlineClose();qeClose();DIARY_INLINE.manual=!DIARY_INLINE.manual;
+  SHELL.setOV(DIARY_INLINE.manual?'text':'paper');diaryInlineModeSync();
+  if (DIARY_INLINE.manual) document.getElementById('out').focus({preventScroll:true});
+}},'Правити текст вручну');
+const DIARY_MODE_NOTE=h('span',{});
+const DIARY_MODE_LINE=h('div',{class:'diary-edit-controls'},DIARY_MODE_NOTE,DIARY_MODE_BUTTON);
+document.getElementById('out').before(DIARY_MODE_LINE);
+function diaryInlineModeSync(){
+  DIARY_MODE_LINE.hidden=DOC!=='shch';
+  DIARY_MODE_BUTTON.textContent=DIARY_INLINE.manual?'До бланка':'Правити текст вручну';
+  DIARY_MODE_BUTTON.setAttribute('aria-pressed',DIARY_INLINE.manual?'true':'false');
+  DIARY_MODE_NOTE.textContent=DIARY_INLINE.manual?'Вільне редагування тексту. Для полів поверніться до бланка.':'Натисніть рядок на бланку — вибір відкриється поруч.';
+}
+document.getElementById('out').addEventListener('click',e=>{
+  if (DOC==='shch' && DIARY_INLINE.manual) e.stopImmediatePropagation();
+},true);
+update();
+/* 0.9.3.41 — підказки формату та одиниці поряд із числом на телефоні. */
+const MOBILE_INPUT_META = new Map();
+let MOBILE_HELP_ID = 0;
+SECTIONS.forEach(s=>s.fields.forEach(f=>{
+  if (f.type !== 'num') return;
+  const examples = f.parts.map(p=>p.ph).filter(p=>p && /\d/.test(p));
+  const pressure = f.parts.length === 2 && f.parts[0].u === '/';
+  const help = pressure ? 'Наприклад: ' + examples.join('/') + ' ' + f.parts[1].u :
+    examples.length ? 'Наприклад: ' + f.parts.map(p=>[p.ph, p.u].filter(Boolean).join(' ')).join(' · ') : '';
+  f.inputs.forEach((input,i)=>MOBILE_INPUT_META.set(input.id, {help, unit:f.parts[i].u}));
+}));
+PT.forEach(p=>MOBILE_INPUT_META.set('pt_' + p.k, {unit:p.l.split(', ').slice(1).join(', '), help:p.k === 't' ? 'Наприклад: 36,6 °C' : ''}));
+CTRL.forEach(c=>(c.two ? [0,1] : [0]).forEach(i=>MOBILE_INPUT_META.set(`ctrl_${c.k}_${i}`, {
+  ph:c.ph && c.ph[i], help:c.ph ? 'Наприклад: ' + c.ph.join(c.two ? '/' : '') + ' ' + c.u : ''
+})));
+function mobileInputHelp(input, host, message){
+  if (!message || !host) return;
+  let help = [...host.children].find(e=>e.classList.contains('mobile-input-help') && e.textContent === message);
+  if (!help){ help = h('small', {class:'mobile-input-help', id:'mobile_help_' + (++MOBILE_HELP_ID)}, message); host.append(help); }
+  const ids = (input.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+  if (!ids.includes(help.id)) input.setAttribute('aria-describedby', [...ids, help.id].join(' '));
+}
+function mobileInputEnhance(input){
+  if (!input.isConnected || input.dataset.mobileInput) return;
+  input.dataset.mobileInput = '1';
+  if (input.type === 'date' || input.type === 'datetime-local'){
+    mobileInputHelp(input, input.parentElement, input.type === 'date' ? 'Дату оберіть у календарі: день, місяць і рік' : 'Дату оберіть у календарі · час: години й хвилини');
+    return;
+  }
+  if (!input.inputMode) input.inputMode = 'decimal';
+  input.spellcheck = false;
+  const meta = MOBILE_INPUT_META.get(input.dataset.for || input.id);
+  if (meta && meta.ph && !input.placeholder) input.placeholder = meta.ph;
+  const row = input.closest('.nums, .cv');
+  // Об'єднуємо лише сусіднє поле й одиницю; обробники та значення лишаються на самому input.
+  if (row && input.parentElement === row){
+    let unit = input.nextElementSibling;
+    while (unit && unit.classList.contains('entry-status')) unit = unit.nextElementSibling;
+    if (unit && unit.classList.contains('u')){
+      const pair = h('span', {class:'mobile-number-pair'}); input.before(pair);
+      while (pair.nextSibling){ const node = pair.nextSibling; pair.append(node); if (node === unit) break; }
+    }
+  } else if (meta && meta.unit && input.id.startsWith('pt_')){
+    const pair = h('span', {class:'mobile-number-pair mobile-calculator-number'}); input.before(pair);
+    pair.append(input, h('span', {class:'mobile-input-unit'}, meta.unit));
+  }
+  if (meta) mobileInputHelp(input, row || input.closest('.f') || input.parentElement, meta.help);
+}
+const MOBILE_INPUT_SELECTOR = 'input[type="date"], input[type="datetime-local"], input[type="number"], input[inputmode="decimal"], input[inputmode="numeric"]:not([type="password"])';
+function mobileInputScan(root){
+  if (root.matches && root.matches(MOBILE_INPUT_SELECTOR)) mobileInputEnhance(root);
+  if (root.querySelectorAll) root.querySelectorAll(MOBILE_INPUT_SELECTOR).forEach(mobileInputEnhance);
+}
+mobileInputScan(document);
+// Нові поля журналу, призначень і швидкої правки також отримують підказки.
+new MutationObserver(records=>{
+  const roots = new Set();
+  records.forEach(record=>record.addedNodes.forEach(node=>{ if (node.nodeType === 1) roots.add(node); }));
+  roots.forEach(mobileInputScan);
+}).observe(document.body, {childList:true, subtree:true});
+/* 0.9.3.42 — вставки й поля в окремому вікні. Оригінальні поля залишаються у формі. */
+const POP_INSERT = {box:null, range:null, doc:null, pid:null, undo:null, textUndo:null};
+function popInsertClose(focus){
+  POP_INSERT.box?.remove(); POP_INSERT.box=null; POP_INSERT.undo=null;
+  if (focus && POP.w && !POP.w.closed) POP.w.document.getElementById('pwAdd')?.focus();
+}
+function popInsertSections(){
+  return SECTIONS.filter(s=>(!s.docs || s.docs.includes(DOC)) && (!s.only || s.only===MODE));
+}
+function popInsertFields(s){
+  return s.fields.filter(f=>f.wrapEl && !['hdr','auto'].includes(f.type) && !f.noOut && !f.headOnly &&
+    (!f.docs || f.docs.includes(DOC)) && (!f.only || f.only===MODE) && (!f.when || f.when()));
+}
+function popInsertChange(fn){
+  POP_INSERT.textUndo=null;
+  if (!POP_INSERT.undo){ undoPush('вставка або правка в окремому вікні'); POP_INSERT.undo=UNDO.at(-1); }
+  fn(); renderPaper(); popSoon();
+}
+function popInsertControl(source, host, name){
+  const d=host.ownerDocument, label=d.createElement('label'), input=d.createElement(source.tagName.toLowerCase());
+  label.textContent=source.getAttribute('aria-label') || name || source.labels?.[0]?.textContent || 'Значення';
+  for (const key of ['type','min','max','step','placeholder','inputmode']) if (source.hasAttribute(key)) input.setAttribute(key,source.getAttribute(key));
+  if (source.tagName==='SELECT') input.innerHTML=source.innerHTML;
+  if (source.tagName==='TEXTAREA') input.rows=3;
+  input.value=source.value; input.dataset.popSource=source.id; input.disabled=source.disabled;
+  input.addEventListener(source.tagName==='SELECT' || source.type==='checkbox'?'change':'input',()=>popInsertChange(()=>{
+    source.value=input.value; source.dispatchEvent(new Event(source.tagName==='SELECT'?'change':'input',{bubbles:true}));
+  }));
+  label.append(input); host.append(label); return input;
+}
+function popInsertField(f, host){
+  const d=host.ownerDocument;
+  if (f.type==='multi'){
+    const search=d.createElement('input'), list=d.createElement('div'); search.type='search'; search.placeholder='Знайти варіант'; search.setAttribute('aria-label','Пошук варіантів'); list.className='pw-choices';
+    const draw=()=>{ list.replaceChildren(); f.chips.forEach((source,i)=>{
+      const text=g(O(f.opts[i]).l); if (!text.toLowerCase().includes(search.value.toLowerCase())) return;
+      const button=d.createElement('button'); button.type='button'; button.textContent=text; button.dataset.popChip=source.id; button.setAttribute('aria-pressed',source.getAttribute('aria-pressed'));
+      button.onclick=()=>{ popInsertChange(()=>source.click()); draw(); }; list.append(button);
+    }); };
+    search.oninput=draw; host.append(search,list); draw();
+  }
+  const controls=f.inputs || [f.el,f.inp,f.unit,f.d1,f.d2].filter(Boolean);
+  controls.forEach(source=>popInsertControl(source,host,f.label));
+  const own=DIARY_INLINE_OWN.get(f); if (own) popInsertControl(own,host);
+  if (f.quick?.length && f.el){
+    const list=d.createElement('div'); list.className='pw-choices';
+    f.quick.forEach(raw=>{ const button=d.createElement('button'); button.type='button'; button.textContent='+ '+g(raw);
+      button.onclick=()=>{ popInsertChange(()=>{ f.el.value=[f.el.value.trim(),g(raw)].filter(Boolean).join(f.sep || '\n'); f.el.dispatchEvent(new Event('input',{bubbles:true})); }); popInsertSync(); }; list.append(button); }); host.append(list);
+  }
+}
+function popInsertSync(){
+  const box=POP_INSERT.box; if (!box) return;
+  if (POP_INSERT.doc!==DOC || POP_INSERT.pid!==PID){ popInsertClose(); return; }
+  box.querySelectorAll('[data-pop-source]').forEach(input=>{ const source=document.getElementById(input.dataset.popSource); if (source && box.ownerDocument.activeElement!==input) input.value=source.value; });
+  box.querySelectorAll('[data-pop-chip]').forEach(button=>{ const source=document.getElementById(button.dataset.popChip); if (source) button.setAttribute('aria-pressed',source.getAttribute('aria-pressed')); });
+  const note=box.querySelector('.pw-manual-note'); if (note) note.hidden=!dirty;
+}
+function popInsertText(value){
+  const w=POP.w, d=w.document, tx=d.querySelector('.pw-text'); if (!tx || !value) return;
+  const range=POP_INSERT.range;
+  tx.focus(); const selection=w.getSelection();
+  if (range && tx.contains(range.commonAncestorContainer)){ selection.removeAllRanges(); selection.addRange(range); }
+  else { const end=d.createRange(); end.selectNodeContents(tx); end.collapse(false); selection.removeAllRanges(); selection.addRange(end); }
+  POP_INSERT.textUndo={html:tx.innerHTML,doc:DOC,pid:PID,dirty};
+  POP_INSERT.undo=null;
+  // insertText зберігає вставку звичайним текстом і підтримує Ctrl+Z браузера.
+  d.execCommand('insertText',false,value); tx.dispatchEvent(new w.Event('input',{bubbles:true}));
+  POP_INSERT.textUndo.after=tx.innerHTML;
+  if (selection.rangeCount) POP_INSERT.range=selection.getRangeAt(0).cloneRange();
+}
+function popInsertOpen(keys, anchor){
+  const w=POP.w; if (!w || w.closed) return; popInsertClose();
+  const d=w.document, box=d.createElement('section'); box.className='pw-insert'; box.setAttribute('role','dialog'); box.setAttribute('aria-label','Додати або змінити в документі');
+  POP_INSERT.box=box; POP_INSERT.doc=DOC; POP_INSERT.pid=PID; POP_INSERT.mode=POP.mode;
+  const head=d.createElement('div'), title=d.createElement('b'), close=d.createElement('button'); title.textContent='Додати або змінити'; close.type='button'; close.textContent='✕'; close.setAttribute('aria-label','Закрити'); close.onclick=()=>popInsertClose(true); head.className='pw-insert-head'; head.append(title,close); box.append(head);
+  const undo=d.createElement('button'); undo.type='button'; undo.textContent='↶ Скасувати вставку / правку';
+  undo.onclick=()=>{ if (POP_INSERT.undo && UNDO.at(-1)===POP_INSERT.undo && POP_INSERT.pid===PID){ undoLast(); POP_INSERT.undo=null; popRender(); popInsertSync(); }
+    else if (POP_INSERT.textUndo?.doc===DOC && POP_INSERT.textUndo.pid===PID){ const tx=d.querySelector('.pw-text'); if (tx && tx.innerHTML===POP_INSERT.textUndo.after){
+      const previous=POP_INSERT.textUndo; tx.innerHTML=previous.html; tx.dispatchEvent(new w.Event('input',{bubbles:true}));
+      dirty=previous.dirty; CACHE[DOC]={html:previous.html,dirty}; manualTextStatus(); renderCheck(); autosave(); POP_INSERT.textUndo=null;
+    } }
+  }; box.append(undo);
+  if (POP.mode==='text'){
+    const text=d.createElement('textarea'), add=d.createElement('button'); text.rows=3; text.placeholder='Текст для вставки в позицію курсора'; text.setAttribute('aria-label',text.placeholder); add.type='button'; add.textContent='Вставити в текст'; add.onclick=()=>{ popInsertText(text.value); text.value=''; }; box.append(text,add);
+  }
+  const note=d.createElement('p'); note.className='pw-manual-note'; note.textContent='Є ручні зміни: поля збережуться у формі, але ручний текст автоматично не замінюється. Для вставки в нього скористайтеся режимом «Текст».'; note.hidden=!dirty; box.append(note);
+  const section=d.createElement('select'), field=d.createElement('select'), host=d.createElement('div'); section.setAttribute('aria-label','Розділ документа'); field.setAttribute('aria-label','Поле документа');
+  const sections=popInsertSections(); sections.forEach(s=>{ const option=d.createElement('option'); option.value=s.id; option.textContent=s.title || s.short; section.append(option); });
+  const draw=()=>{ host.replaceChildren(); const s=sections.find(s=>s.id===section.value), f=s && popInsertFields(s).find(f=>f.id===field.value); if (f) popInsertField(f,host); };
+  const choose=()=>{ field.replaceChildren(); const s=sections.find(s=>s.id===section.value); if (s) popInsertFields(s).forEach(f=>{ const option=d.createElement('option'); option.value=f.id; option.textContent=f.label; field.append(option); }); draw(); };
+  section.onchange=choose; field.onchange=draw;
+  box.append(section,field,host); d.body.append(box);
+  const items=(keys || []).filter(Boolean), exact=items.map(key=>document.getElementById(key)).filter(Boolean);
+  const key=items.find(key=>key.includes('.')), sid=key?.split('.')[0] || items.find(key=>sections.some(s=>s.id===key));
+  if (sid && sections.some(s=>s.id===sid)) section.value=sid;
+  choose();
+  if (exact.length){ section.hidden=true; field.hidden=true; host.replaceChildren(); exact.forEach(source=>popInsertControl(source,host)); }
+  else if (key){ const f=field.querySelector(`option[value="${key.split('.')[1]}"]`); if (f){ field.value=f.value; draw(); } }
+  const rect=anchor?.getBoundingClientRect(), width=Math.min(480,w.innerWidth-16); box.style.width=width+'px';
+  box.style.left=Math.max(8,Math.min(w.innerWidth-width-8,rect?.left || 8))+'px';
+  box.style.top=Math.max(8,Math.min(rect?.bottom+6 || 68,w.innerHeight-Math.min(box.offsetHeight,w.innerHeight-16)-8))+'px';
+  (host.querySelector('input,textarea,select,button') || box.querySelector('textarea,select,button'))?.focus({preventScroll:true});
+}
+function popInsertKeys(target){
+  if (target.closest('.bdi:not(.bcur)')) return null;
+  const diary=target.closest('[data-diary-key]'); if (diary) return DIARY_INLINE_GROUPS[diary.dataset.diaryKey];
+  const attr=target.closest('[data-fld],[data-dsel],[data-an]');
+  if (attr) return (attr.dataset.fld || attr.dataset.dsel || attr.dataset.an).split(' ');
+  const sec=target.closest('[data-sec]'); if (sec) return [sec.dataset.sec];
+  let row=target.closest('.brow,.bt2,.bt,.blines,.bdx,.bdl');
+  for (let i=0; row && i<5; i++,row=row.previousElementSibling){ const hit=BMAP.find(([re])=>re.test(row.textContent.trim())); if (hit) return [hit[1].split('#')[0]]; }
+  return [];
+}
+{ const x0=popInit; popInit=function(w){
+  const result=x0.apply(this,arguments), d=w.document, bar=d.querySelector('.pw-bar');
+  const add=d.createElement('button'); add.id='pwAdd'; add.type='button'; add.textContent='+ Додати'; add.setAttribute('aria-haspopup','dialog'); add.onclick=()=>popInsertOpen([],add); bar.append(add);
+  d.addEventListener('selectionchange',()=>{ const tx=d.querySelector('.pw-text'), selection=w.getSelection(); if (tx && selection?.rangeCount && tx.contains(selection.getRangeAt(0).commonAncestorContainer)) POP_INSERT.range=selection.getRangeAt(0).cloneRange(); });
+  d.addEventListener('keydown',e=>{
+    if (e.key==='Escape' && POP_INSERT.box){ e.preventDefault(); popInsertClose(true); }
+    if (POP.mode==='paper' && ['Enter',' '].includes(e.key) && e.target.closest('#pwBox [data-pop-edit]')){ e.preventDefault(); const keys=popInsertKeys(e.target); if (keys!==null) popInsertOpen(keys,e.target); }
+  });
+  d.getElementById('pwBox').addEventListener('click',e=>{
+    if (POP.mode!=='paper') return; e.preventDefault(); e.stopImmediatePropagation();
+    const keys=popInsertKeys(e.target); if (keys===null) return;
+    popInsertOpen(keys,e.target);
+  },true);
+  return result;
+}; }
+{ const x0=popRender; popRender=function(){
+  const w=POP.w, tx=w && !w.closed && w.document.querySelector('.pw-text');
+  if (POP_INSERT.box && POP_INSERT.mode!==POP.mode) popInsertClose();
+  // Не перебудовуємо contenteditable з незміненим текстом: курсор і Ctrl+Z лишаються на місці.
+  if (POP.mode==='text' && tx && tx.innerHTML===$('#out').innerHTML && POP_INSERT.doc===DOC && POP_INSERT.pid===PID){ popInsertSync(); return; }
+  const result=x0.apply(this,arguments); popInsertSync();
+  if (w && !w.closed){
+    const d=w.document, hint=d.getElementById('pwH'); if (hint) hint.textContent=POP.mode==='paper'?'клік по рядку — правка тут':'Ctrl+V або «+ Додати» в позицію курсора';
+    if (POP.mode==='paper') d.querySelectorAll('#pwBox [data-diary-key],#pwBox [data-fld],#pwBox [data-dsel],#pwBox [data-an],#pwBox [data-sec]').forEach(node=>{
+      if (node.closest('.bdi:not(.bcur)')) return;
+      node.dataset.popEdit='1'; node.tabIndex=0; node.setAttribute('role','button'); node.setAttribute('aria-haspopup','dialog'); node.title='Додати або змінити тут';
+    });
+    if (POP.mode==='text' && !d.querySelector('.pw-text')){
+      const tx=d.createElement('div'); tx.className='pw-text'; tx.contentEditable='true'; tx.setAttribute('role','textbox'); tx.setAttribute('aria-label','Текст документа'); tx.setAttribute('aria-multiline','true');
+      tx.addEventListener('input',()=>{ POP.edit=Date.now(); const out=$('#out'); out.innerHTML=tx.innerHTML; out.dispatchEvent(new Event('input',{bubbles:true})); });
+      tx.addEventListener('paste',e=>{ e.preventDefault(); d.execCommand('insertText',false,e.clipboardData.getData('text/plain')); });
+      d.getElementById('pwBox').replaceChildren(tx);
+    }
+  }
+  return result;
+}; }
+{ const x0=switchDoc; switchDoc=function(){ popInsertClose(); POP_INSERT.range=null; POP_INSERT.textUndo=null; return x0.apply(this,arguments); }; }
+/* 0.9.3.43 — керування фокусом у діалозі розділів. */
+const NAV_DIALOG = document.getElementById('navSheet');
+const NAV_DIALOG_CLOSE = document.getElementById('navClose');
+let NAV_DIALOG_RETURN_FOCUS = null;
+
+const openNav0 = openNav;
+openNav = function(){
+  if (NAV_DIALOG.hidden) NAV_DIALOG_RETURN_FOCUS = document.activeElement;
+  const result = openNav0.apply(this, arguments);
+  NAV_DIALOG_CLOSE.focus();
+  return result;
+};
+
+const closeNav0 = closeNav;
+closeNav = function(){
+  const wasOpen = !NAV_DIALOG.hidden;
+  const result = closeNav0.apply(this, arguments);
+  if (wasOpen){
+    const target = NAV_DIALOG_RETURN_FOCUS;
+    NAV_DIALOG_RETURN_FOCUS = null;
+    if (target && target.isConnected && typeof target.focus === 'function') target.focus();
+  }
+  return result;
+};
+
+function navDialogFocusable(){
+  return [...NAV_DIALOG.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>!el.closest('[hidden]') && !el.closest('[aria-hidden="true"]'));
+}
+
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Tab' || NAV_DIALOG.hidden) return;
+  const items = navDialogFocusable();
+  if (!items.length){ e.preventDefault(); NAV_DIALOG_CLOSE.focus(); return; }
+  const index = items.indexOf(document.activeElement);
+  if (index < 0){
+    e.preventDefault();
+    (e.shiftKey ? items[items.length - 1] : items[0]).focus();
+  } else if (e.shiftKey && index === 0){
+    e.preventDefault(); items[items.length - 1].focus();
+  } else if (!e.shiftKey && index === items.length - 1){
+    e.preventDefault(); items[0].focus();
+  }
+});
+
+/* The original handlers were assigned before this wrapper was loaded. */
+document.getElementById('navBtn').onclick = openNav;
+NAV_DIALOG_CLOSE.onclick = closeNav;
+/* 0.9.3.44 — згортання бічної панелі й ширший робочий простір. */
+VIEW.sideFold = !!VIEW.sideFold;
+const SIDE_COL = document.getElementById('sidecol');
+const SIDE_IN = SIDE_COL && SIDE_COL.querySelector(':scope > .sidein');
+let SIDE_FOLD_BUTTON = null;
+
+if (SIDE_IN){
+  SIDE_FOLD_BUTTON = h('button', {
+    type:'button', class:'btn sidefold-btn', 'aria-controls':'tabs', 'aria-expanded':'true',
+    'aria-label':'Згорнути панель розділів', title:'Згорнути зміст розділів'
+  }, h('span', {}, 'Згорнути зміст'));
+  SIDE_IN.prepend(SIDE_FOLD_BUTTON);
+  SIDE_FOLD_BUTTON.addEventListener('click', ()=>setSideFold(!document.body.classList.contains('sidefold')));
+}
+
+function sideFoldActive(){
+  return !isPhoneW() && layoutNow() === 'B' && !!VIEW.sideFold;
+}
+
+function renderSideFold(){
+  const folded = sideFoldActive();
+  document.body.classList.toggle('sidefold', folded);
+  if (!SIDE_FOLD_BUTTON) return;
+  SIDE_FOLD_BUTTON.hidden = isPhoneW() || layoutNow() !== 'B';
+  SIDE_FOLD_BUTTON.setAttribute('aria-expanded', folded ? 'false' : 'true');
+  SIDE_FOLD_BUTTON.setAttribute('aria-label', folded ? 'Розгорнути панель розділів' : 'Згорнути панель розділів');
+  SIDE_FOLD_BUTTON.title = folded ? 'Показати зміст розділів, шаблон і прогрес' : 'Згорнути зміст розділів';
+  const label = SIDE_FOLD_BUTTON.querySelector('span');
+  if (label) label.textContent = folded ? 'Розділи ›' : 'Згорнути зміст';
+}
+
+function setSideFold(folded){
+  VIEW.sideFold = !!folded;
+  saveView();
+  applyView();
+}
+
+const applyViewWide0 = applyView;
+applyView = function(){
+  const result = applyViewWide0.apply(this, arguments);
+  renderSideFold();
+  return result;
+};
+
+renderSideFold();
+/* 0.9.3.45 — основні дії документа, меню завантаження й форматування під час ручної правки. */
+{
+  const outBox = $('#outBox'), out = $('#out'), fmtBtn = $('#fmtBtn'), fmt = outBox && outBox.querySelector('.fmt');
+  if (outBox && out && fmtBtn && fmt){
+    let editing = false, formatOpen = lsGet('po.fmt', '0') === '1';
+    fmt.id = 'fmtToolbar';
+    fmtBtn.hidden = true;
+    fmtBtn.title = 'Показати форматування тексту під час ручної правки';
+    fmtBtn.setAttribute('aria-controls', fmt.id);
+    const syncFormat = () => {
+      fmtBtn.hidden = !editing;
+      fmt.hidden = !editing || !formatOpen;
+      fmtBtn.setAttribute('aria-pressed', formatOpen ? 'true' : 'false');
+      outBox.dataset.manualEditing = editing ? 'true' : 'false';
+    };
+    const enterEditing = () => { editing = true; syncFormat(); };
+    const leaveEditing = () => setTimeout(()=>{
+      const active = document.activeElement;
+      if (out.contains(active) || fmt.contains(active) || active === fmtBtn) return;
+      editing = false; syncFormat();
+    }, 0);
+    out.addEventListener('focusin', enterEditing);
+    fmt.addEventListener('focusin', enterEditing);
+    fmtBtn.addEventListener('focusin', enterEditing);
+    out.addEventListener('focusout', leaveEditing);
+    fmt.addEventListener('focusout', leaveEditing);
+    fmtBtn.addEventListener('focusout', leaveEditing);
+    fmtBtn.onclick = () => {
+      editing = true; formatOpen = !formatOpen;
+      lsSet('po.fmt', formatOpen ? '1' : '0'); syncFormat();
+    };
+    syncFormat();
+  }
+
+  /* Перед друком уже є окремою вкладкою; лишаємо лише її, без дублювальної кнопки. */
+  const paperBtn = $('#paperBtn');
+  if (paperBtn) paperBtn.hidden = true;
+
+  /* ШІ лишається доступним у пошуку дій, не займаючи місце в панелі документа. */
+  const aiBtn = $('#aiBtn');
+  if (aiBtn) aiBtn.hidden = true;
+
+  const save = outBox && outBox.querySelector('.savewrap');
+  const trigger = save && save.querySelector('#saveBtn');
+  const menu = save && save.querySelector('.savemenu');
+  if (trigger && menu){
+    [...menu.querySelectorAll('button')].filter(b=>/PDF/i.test(b.textContent)).forEach(b=>b.remove());
+    menu.id = 'downloadMenu';
+    trigger.textContent = 'Завантажити ▾';
+    trigger.title = 'Завантажити документ у форматі Word або LibreOffice';
+    trigger.setAttribute('aria-label', 'Завантажити документ');
+    trigger.setAttribute('aria-controls', menu.id);
+
+    const items = () => [...menu.querySelectorAll('button:not([disabled])')];
+    const closeMenu = (restoreFocus=false) => {
+      menu.hidden = true; trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    };
+    trigger.addEventListener('keydown', e=>{
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if (menu.hidden) trigger.click();
+      const list = items();
+      (e.key === 'ArrowDown' ? list[0] : list[list.length - 1])?.focus();
+    });
+    menu.addEventListener('keydown', e=>{
+      const list = items(), i = list.indexOf(e.target.closest('button'));
+      if (e.key === 'Escape'){ e.preventDefault(); closeMenu(true); return; }
+      if (e.key === 'Home' || e.key === 'End'){
+        e.preventDefault(); (e.key === 'Home' ? list[0] : list[list.length - 1])?.focus(); return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault(); const step = e.key === 'ArrowDown' ? 1 : -1;
+        list[(i + step + list.length) % list.length]?.focus();
+      }
+    });
+    menu.addEventListener('click', e=>{
+      if (e.target.closest('button')) setTimeout(()=>{ if (menu.hidden) trigger.focus(); }, 0);
+    });
+    save.addEventListener('focusout', ()=>setTimeout(()=>{
+      if (!save.contains(document.activeElement)) closeMenu();
+    }, 0));
+  }
+
+  const printBtn = $('#printBtn');
+  if (printBtn) printBtn.setAttribute('aria-label', 'Друк документа або збереження як PDF');
+}
+/* 0.9.3.46 — виразні підписи для масових дій і швидке скасування. */
+const DANGER_UNDO_MS = 8000;
+const DANGER_CLEAR_LABEL = 'Очистити поточний документ';
+const DANGER_CLEAR_TITLE = 'Очистити лише поточний документ. Дані пацієнта, призначення й журнали залишаться.';
+const DANGER_NORM_LABEL = 'Норма в усіх системах огляду';
+const DANGER_NEW_LABEL = 'Новий пацієнт (поточний збережено)';
+
+function dangerLabelClearButton(btn){
+  if (!btn) return;
+  if (btn.dataset.arm){
+    btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+    btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+    return;
+  }
+  if (btn.textContent.trim() !== DANGER_CLEAR_LABEL) btn.textContent = DANGER_CLEAR_LABEL;
+  btn.setAttribute('aria-label', DANGER_CLEAR_LABEL);
+  btn.title = DANGER_CLEAR_TITLE;
+}
+
+function dangerSyncStaticLabels(){
+  const clearAll = $('#clearAll');
+  if (clearAll){
+    if (clearAll.dataset.dangerLabel !== '1'){
+      clearAll.replaceChildren(
+        h('span', {'aria-hidden':'true'}, '＋'),
+        h('span', {class:'new-patient-label'}, ' Новий пацієнт'),
+        h('span', {class:'hide-m'}, ' (поточний збережено)')
+      );
+      clearAll.dataset.dangerLabel = '1';
+    }
+    clearAll.setAttribute('aria-label', DANGER_NEW_LABEL);
+    clearAll.title = DANGER_NEW_LABEL;
+  }
+  dangerLabelClearButton($('#clearDocBtn'));
+  document.querySelectorAll('.more-dd .mmenu button').forEach(btn=>{
+    if (/Очистити весь документ|Очистити поточний документ/.test(btn.textContent)) dangerLabelClearButton(btn);
+  });
+}
+
+function dangerSyncNormLabel(){
+  const btn = $('#allNorm');
+  if (!btn) return;
+  const diary = DOC === 'shch';
+  const mobile = !!(window.matchMedia && matchMedia('(max-width:899px)').matches);
+  const visible = diary ? 'Стабільно' : mobile ? 'Норма всюди' : DANGER_NORM_LABEL;
+  if (btn.textContent !== visible) btn.textContent = visible;
+  btn.setAttribute('aria-label', diary ? 'Позначити стан щоденника як стабільний' : DANGER_NORM_LABEL);
+  btn.title = diary ? 'Типовий стабільний запис щоденника' : DANGER_NORM_LABEL;
+}
+
+function dangerShowUndo(message, returnFocus){
+  const box = $('#toast');
+  if (!box || !UNDO.length) return;
+  clearTimeout(toast.h);
+  const action = h('button', {
+    type:'button',
+    class:'btn primary',
+    'aria-label':'Скасувати: ' + message,
+    onclick:()=>{
+      clearTimeout(toast.h);
+      box.classList.remove('undo-toast', 'on');
+      box.style.removeProperty('pointer-events');
+      box.replaceChildren();
+      undoLast();
+      if (returnFocus && returnFocus.isConnected && typeof returnFocus.focus === 'function') returnFocus.focus();
+    }
+  }, 'Скасувати');
+  box.replaceChildren(h('span', {}, message + ' '), action);
+  box.classList.add('undo-toast', 'on');
+  box.style.pointerEvents = 'auto';
+  toast.h = setTimeout(()=>{
+    if (!box.classList.contains('undo-toast')) return;
+    box.classList.remove('undo-toast', 'on');
+    box.style.removeProperty('pointer-events');
+    box.replaceChildren();
+    toast.h = null;
+  }, DANGER_UNDO_MS);
+}
+
+/* Звичайні повідомлення не повинні залишати інтерактивний тост активним. */
+{
+  const toast0 = toast;
+  toast = function(){
+    const box = $('#toast');
+    if (box){
+      box.classList.remove('undo-toast');
+      box.style.removeProperty('pointer-events');
+    }
+    return toast0.apply(this, arguments);
+  };
+}
+
+/* Підпис «Норма» в 540-ui-build.js залежить від документа та ширини екрана. */
+{
+  const update0 = update;
+  update = function(){
+    const result = update0.apply(this, arguments);
+    dangerSyncNormLabel();
+    return result;
+  };
+}
+
+/* Скасування відкривається лише після фактичного застосування масової дії. */
+{
+  const norm = $('#allNorm'), norm0 = norm && norm.onclick;
+  if (norm && norm0) norm.onclick = function(){
+    const previous = UNDO[UNDO.length - 1];
+    const result = norm0.apply(this, arguments);
+    if (UNDO[UNDO.length - 1] !== previous){
+      dangerShowUndo(DOC === 'shch' ? 'Стан щоденника змінено' : 'Норму виставлено в усіх системах огляду', this);
+    }
+    return result;
+  };
+}
+{
+  const clear0 = clearDoc;
+  clearDoc = function(btn){
+    const confirmed = !!(btn && btn.dataset && btn.dataset.arm);
+    const undoBefore = UNDO.slice(), redoBefore = REDO.slice();
+    const previous = UNDO[UNDO.length - 1];
+    const result = clear0.apply(this, arguments);
+    if (!confirmed && btn && btn.dataset.arm){
+      UNDO.splice(0, UNDO.length, ...undoBefore);
+      REDO.splice(0, REDO.length, ...redoBefore);
+      undoBtn();
+    }
+    if (btn){
+      dangerLabelClearButton(btn);
+      if (btn.dataset.arm){
+        btn.setAttribute('aria-label', 'Підтвердити очищення поточного документа');
+        btn.title = 'Натисніть ще раз, щоб очистити поточний документ';
+        setTimeout(()=>dangerLabelClearButton(btn), 3600);
+      }
+    }
+    if (confirmed && UNDO[UNDO.length - 1] !== previous){
+      const summary = btn && btn.closest('details') && btn.closest('details').querySelector('summary');
+      dangerShowUndo('Документ очищено', summary || $('#docMore'));
+    }
+    return result;
+  };
+}
+
+dangerSyncStaticLabels();
+dangerSyncNormLabel();
 </script>
 
 </body>
