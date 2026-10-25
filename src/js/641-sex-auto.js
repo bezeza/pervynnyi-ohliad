@@ -21,7 +21,10 @@ function sexAuto(){
   if (d && d !== sex) sexSet(d, true);
 }
 /* ручний клік — ручний вибір (обробник у 540 спрацює слідом і перемкне стать) */
-document.querySelectorAll('#sexSeg button').forEach(b=>b.addEventListener('click', ()=>{ SEX_AUTO = false; }, true));
+/* натискання на вже визначену автоматично стать — підтвердження, а не зняття вибору */
+document.querySelectorAll('#sexSeg button').forEach(b=>b.addEventListener('click', e=>{
+  if (SEX_AUTO && b.dataset.sex === sex){ SEX_AUTO = false; e.stopImmediatePropagation(); try{ sexAsk(); }catch(x){} return; }
+  SEX_AUTO = false; }, true));
 { const pib = document.getElementById('meta_pib'); if (pib) pib.addEventListener('input', ()=>{ try{ sexAuto(); }catch(e){} }); }
 { const x0 = snap; snap = function(){ const s = x0.apply(this, arguments); s.sexAuto = SEX_AUTO; return s; }; }
 { const x0 = restore; restore = function(S){ const r = x0.apply(this, arguments); SEX_AUTO = !!(S && S.sexAuto); try{ sexAuto(); sexAsk(); }catch(e){} return r; }; }

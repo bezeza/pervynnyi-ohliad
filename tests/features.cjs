@@ -331,7 +331,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    if (lb) [...lb.querySelectorAll('button')].find(b=>/Як минулого разу/.test(b.textContent)).click();
    ok('«Як минулого разу»: дата народження й анамнез життя взято', $('meta_dob').value==='1950-05-05');
    const ids=Object.keys(w.eval('loadStore()')).slice(0,2); let pr=0; w.print=()=>{pr++};
-   w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); await sleep(150);
+   w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); for(let i=0;i<60&&!pr;i++) await sleep(50);   // під навантаженням друк приходить пізніше
    ok('Друк пачкою: документи вибраних — у друк по одному на аркуш', $('print').querySelectorAll('.bprint-one').length===2 && pr===1, $('print').querySelectorAll('.bprint-one').length+'/'+pr);
    ok('Після друку пачкою — відкритий той самий пацієнт', $('meta_pib').value==='Повтор Тестовий Пацієнт'); }
  // ── частина 2 ──
