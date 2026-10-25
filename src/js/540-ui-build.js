@@ -17,7 +17,7 @@ function layoutTabs(){
     if (!gr || gr.l !== l){ gr = {l, el:h('div', {class:'tgrp', role:'presentation'}, h('span', {class:'tgl', 'aria-hidden':'true'}, l))}; box.append(gr.el); }
     gr.el.append(t.tab);
   });
-  if (typeof renderTabNav === 'function') setTimeout(renderTabNav, 0);
+  if (typeof renderTabNav === 'function') setTimeout(()=>renderTabNav(), 0);
 }
 TABS.forEach((s,i)=>{
   s.tab = h('button', {type:'button', class:'tab', role:'tab', id:`tab_${s.id}`, onclick:()=>show(i)}, s.short || s.title, h('span',{class:'dot','aria-hidden':'true'}));

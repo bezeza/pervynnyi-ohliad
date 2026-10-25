@@ -126,6 +126,7 @@
   "645-phone-preview.js",
   "646-phone-view.js",
   "647-phone-tabs.js",
-  "648-phone-split.js"
+  "648-phone-split.js",
+  "649-phone-start.js"
  ]
 }

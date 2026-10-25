@@ -43,7 +43,7 @@ function phtRenderStrip(){
       h('span', {class:'pht-d', 'aria-hidden':'true'}), t.short || t.title)); });
   const extra = h('div', {class:'pht-x'},
     h('button', {type:'button', class:'btn pht-e', 'aria-label':'Журнал обстежень', title:'Журнал обстежень', onclick:()=>{ try{ labsOpen(); }catch(e){} }}, '🧪'),
-    h('button', {type:'button', class:'btn pht-e', 'aria-label':'Документ і дії', title:'Документ і дії', onclick:()=>{ try{ openActs(); }catch(e){} }}, '⋯'));
+    h('button', {type:'button', class:'btn pht-e pht-doc-b', 'aria-label':'Документ і дії: ' + docShort(DOC), title:'Документ і дії', onclick:()=>{ try{ openActs(); }catch(e){} }}, docShort(DOC) + ' ⋯'));
   tn.append(strip, extra);
   const a = strip.querySelector('[aria-selected="true"]'); if (a) try{ a.scrollIntoView({block:'nearest', inline:'center'}); }catch(e){}
 }
