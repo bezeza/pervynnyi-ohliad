@@ -1349,3 +1349,10 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   --warn-soft:#45402F; --warn-ink:#E8C27A; --warn-line:#7A6A45; --surface-2:#3B3C40; color-scheme:dark}
 @media screen{:root[data-tone="grey"] .paper .sheet,:root[data-tone="grey"] .b003{background:#DCDCD8}
   :root[data-tone="grey"] .paper{background:#26272A}}
+
+/* 0.9.3.56 — денна тема «Теплий папір»: злегка теплий фон замість чисто білого, темно-коричнево-сірий текст */
+:root[data-tone="warm"]{
+  --bg:#EFEAE1; --surface:#FBF8F2; --ink:#2A2620; --muted:#6A6257; --line:#DCD3C4;
+  --accent:#2E5D84; --accent-soft:#E6EBEE; --on-accent:#FFFFFF;
+  --flag:#A95A12; --flag-soft:#F6EADB; --ok:#2E7346; --bad:#A8322A; --bad-soft:#F6E3DE; --surface-2:#F4EFE6; color-scheme:light}
+@media screen{:root[data-tone="warm"] .paper .sheet,:root[data-tone="warm"] .b003{background:#FFFCF6}}
