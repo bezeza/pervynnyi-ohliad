@@ -125,6 +125,7 @@
   "644-theme-grey.js",
   "645-phone-preview.js",
   "646-phone-view.js",
-  "647-phone-tabs.js"
+  "647-phone-tabs.js",
+  "648-phone-split.js"
  ]
 }

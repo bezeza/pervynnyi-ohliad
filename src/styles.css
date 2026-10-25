@@ -1422,3 +1422,16 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .pht-e{min-height:40px;padding:6px 10px}
 }
 @media (max-width:899px){.pht-b.pht-save{color:var(--on-accent,#fff);background:var(--accent);margin:2px 4px}.pht-b.pht-save .pht-i{filter:none;opacity:1}}
+
+/* 0.9.3.57 — телефон: розділений екран «документ угорі / варіанти внизу», межу тягнуть пальцем */
+@media (max-width:899px){
+  .pe-box,.diary-inline-editor,.qe{position:fixed!important;left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;height:var(--phs,45vh)!important;max-height:none!important;border-radius:14px 14px 0 0!important;z-index:60;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+  .diary-inline-editor .diary-editor-body,.pe-box .pe-body,.qe>.f{flex:1 1 auto;overflow:auto;min-height:0}
+  .qe{background:var(--surface);padding:0 10px 10px}
+  .phs-grip{flex:none;height:22px;display:flex;align-items:center;justify-content:center;cursor:ns-resize;touch-action:none;background:var(--surface)}
+  .phs-grip span{width:44px;height:5px;border-radius:3px;background:var(--line)}
+  .phs-grip:focus-visible span,body.phs-dragging .phs-grip span{background:var(--accent)}
+  body.phs-dragging{user-select:none}
+  body.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px)!important;min-height:120px!important}
+  body.ph-split #outBox #out{max-height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px);overflow:auto}
+}
