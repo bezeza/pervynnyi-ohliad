@@ -1340,7 +1340,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.53 від 25.10.2026">v0.9.3.53 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.54 від 25.10.2026">v0.9.3.54 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3486,9 +3486,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.53', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.54', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.53', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
+  ['0.9.3.54', '25.10.2026', 'консультативний висновок: вибір обстежень із журналу й поле «Своє» відновлюються після перезапуску; для старих пацієнтів збережено включення всіх записів журналу'],
+  ['0.9.3.53', '25.10.2026', 'PIN: правильний PIN відкриває програму навіть коли лічильник не записується; відсутній лічильник починається з нуля; після 5 хибних вводів пауза 30 с, після 10 і далі — 5 хв максимум'],
   ['0.9.3.52', '25.10.2026', 'бланк 003/о: режим «✎ Вносити на бланку» — клік по рядку титулу, первинного огляду чи епікризу відкриває віконце саме з його пунктами (варіанти — кнопками, числа, текст, «Своїми словами…»), «‹ Попередній / Далі ›» і «Скасувати»; так само у виносному вікні в режимі «Аркуш». Перемикач — над аркушем і в «Налаштуваннях» («Клік по рядку бланка»). Зворот титульного аркуша 003/о: п. 22 «Діагноз заключний клінічний» (основний, ускладнення, супутні з кодом МКХ-10), п. 23 «Хірургічні операції» (з 066/о), п. 31 «Лікуючий лікар» і п. 32 «Завідувач відділення» — галочка «зворот титульного». Нове поле «Час виписки» (п. 20). Рядки «Медична карта №», «11. Відділення», «40.», «57.1.», «57.2.» тепер ведуть до своїх полів'],
   ['0.9.3.51', '25.10.2026', 'бланк 003-3/о: підпис анестезіолога залишається видимим без даних пункції; протокол пункції без даних не друкується; у старих записах щоденника залишено лише фактичний опис шкіри без фрази про реакцію на огляд'],
   ['0.9.3.50', '25.10.2026', 'бланк 003/о: окремі поля для АТ лівої руки, молочних залоз і кістково-суглобової системи; кліки по рядках ведуть до полів форми; нові значення відновлюються після перезапуску; діагнози 066/о зберігаються окремо від діагнозу огляду'],
@@ -13521,7 +13522,12 @@ function pinScreen(mode, onKey){
     if (!inp.value){ inp.focus(); return; }
     msg.textContent = 'Перевіряю…';
     try{ const key = await pinUnwrap(inp.value, PINC.cfg); PINC.key = key; PINC.tries = 0; scr.remove(); document.body.classList.remove('pinlocked'); try{ logAct('PIN введено', mode === 'open' ? 'відкриття' : 'після простою'); }catch(e){} onKey(key); }
-    catch(e){ PINC.tries++; inp.value = ''; inp.focus(); if (PINC.tries >= 5){ PINC.until = Date.now() + 30000; PINC.tries = 0; msg.textContent = 'Неправильний PIN 5 разів — зачекайте 30 секунд'; } else msg.textContent = 'Неправильний PIN'; }
+    catch(e){
+      if (e && e.pinGate==='cooldown'){ PINC.tries=0; PINC.until=e.pinUntil; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
+      if (e && e.pinGate==='storage'){ PINC.tries=4; PINC.until=e.pinUntil || Date.now()+300000; inp.value=''; msg.textContent=e.message; inp.focus(); return; }
+      if (e && e.pinGate==='empty'){ msg.textContent=e.message; inp.focus(); return; }
+      PINC.tries++; inp.value = ''; inp.focus(); if (PINC.tries >= 5){ PINC.until = Date.now() + 30000; PINC.tries = 0; msg.textContent = 'Неправильний PIN 5 разів — зачекайте 30 секунд'; } else msg.textContent = 'Неправильний PIN';
+    }
   };
   inp.addEventListener('keydown', e=>{ if (e.key === 'Enter') go(); });
   const scr = h('div', {class:'pinscr lockscr', role:'dialog', 'aria-modal':'true', 'aria-label':'Введіть PIN'},
@@ -13541,7 +13547,8 @@ function pinForgot(){
         if (c.value.trim().toUpperCase() !== 'СТЕРТИ'){ toast('Впишіть слово СТЕРТИ'); c.focus(); return; }
         await new Promise(r=>{ try{ const q = indexedDB.deleteDatabase('po-db'); q.onsuccess = q.onerror = q.onblocked = ()=>r(); }catch(e){ r(); } });
         await new Promise(r=>{ try{ const q = indexedDB.deleteDatabase('po-bak'); q.onsuccess = q.onerror = q.onblocked = ()=>r(); }catch(e){ r(); } });
-        ['po.pin', PKEY, 'po.trash', 'po.last'].forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
+        const throttleKeys=[]; try{ for (let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if (k && k.startsWith('po.pin.attempt.')) throttleKeys.push(k); } }catch(e){}
+        ['po.pin', PKEY, 'po.trash', 'po.last', ...throttleKeys].forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
         location.reload(); }}, 'Стерти дані пацієнтів'))));
   document.body.append(dlg);
 }
@@ -13604,7 +13611,7 @@ async function pinRewriteAll(key, oldKey){
 /* відкрити зашифрований файл: попросити PIN, яким його зашифровано */
 function encFileOpen(o){ return new Promise(res=>{
   const inp = h('input', {type:'password', inputmode:'numeric', placeholder:'PIN файлу', 'aria-label':'PIN файлу'}), msg = h('p', {class:'chips-hint'}, ' ');
-  const go = async () => { try{ const key = await pinUnwrap(inp.value, o.lock); const d = await decObj(o.data, key); dlg.remove(); res(d); }catch(e){ msg.textContent = 'Неправильний PIN'; inp.value = ''; inp.focus(); } };
+  const go = async () => { try{ const key = await pinUnwrap(inp.value, o.lock); const d = await decObj(o.data, key); dlg.remove(); res(d); }catch(e){ msg.textContent = e && (e.pinGate==='cooldown' || e.pinGate==='storage') ? e.message : 'Неправильний PIN'; inp.value = ''; inp.focus(); } };
   inp.addEventListener('keydown', e=>{ if (e.key === 'Enter') go(); });
   const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':'Зашифрований файл'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Файл зашифровано'), h('button', {type:'button', class:'btn', onclick:()=>{ dlg.remove(); res(null); }}, 'Скасувати ✕')),
@@ -13635,6 +13642,7 @@ function drawPin(){
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:()=>pinSetDialog('on')}, 'Увімкнути PIN і шифрування')));
   } else {
     pinBox.append(h('p', {}, '🔒 Дані пацієнтів зашифровано (AES-256). PIN потрібен при відкритті програми й після простою.'),
+      h('p', {class:'chips-hint'}, 'Після 5 хибних вводів — пауза 30 с; після 10 і далі — 5 хв. Для копій даних використовуйте довгий PIN: скопійований конверт можна перевіряти поза програмою.'),
       h('div', {class:'acts2'}, h('button', {type:'button', class:'btn', onclick:()=>pinSetDialog('change')}, 'Змінити PIN'), h('button', {type:'button', class:'btn', onclick:()=>lockNow()}, 'Заблокувати зараз'),
         h('button', {type:'button', class:'more', onclick:()=>pinSetDialog('off')}, 'Вимкнути шифрування')));
   }
@@ -13646,17 +13654,17 @@ function pinSetDialog(mode){
   const run = async () => {
     try{
       if (mode !== 'on'){ await pinUnwrap(p0.value, PINC.cfg); }
-      if (mode !== 'off'){ if (p1.value.length < 4){ msg.textContent = 'PIN — щонайменше 4 символи (краще 6 цифр)'; return; } if (p1.value !== p2.value){ msg.textContent = 'PIN не збігається'; return; } }
+      if (mode !== 'off'){ if (p1.value.length < 6){ msg.textContent = 'Новий PIN має містити щонайменше 6 символів'; return; } if (p1.value !== p2.value){ msg.textContent = 'PIN не збігається'; return; } }
       if (mode === 'on' && !ack.checked){ msg.textContent = 'Підтвердьте, що розумієте: забутий PIN не відновлюється'; return; }
       msg.textContent = 'Зачекайте…';
       if (mode === 'on'){ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap(p1.value, raw);
         const key = await crypto.subtle.importKey('raw', raw, {name:'AES-GCM'}, false, ['encrypt', 'decrypt']);
         if (!await pinEnable(key, cfg)){ msg.textContent = 'Сховище браузера ще не готове — спробуйте за кілька секунд'; return; } toast('Шифрування увімкнено. Збережіть копію у файл — вона теж буде зашифрована цим PIN', 5000); logAct('PIN і шифрування увімкнено'); }
-      if (mode === 'change'){ const raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(PINC.cfg.salt), PINC.cfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(PINC.cfg.iv)}, kek, pub64(PINC.cfg.w)); })();
-        const cfg = await pinWrap(p1.value, raw); PINC.cfg = cfg; localStorage.setItem('po.pin', JSON.stringify(cfg)); toast('PIN змінено'); logAct('PIN змінено'); }
+      if (mode === 'change'){ const oldCfg=PINC.cfg, raw = await (async ()=>{ const kek = await pinKEK(p0.value, pub64(oldCfg.salt), oldCfg.iter); return crypto.subtle.decrypt({name:'AES-GCM', iv:pub64(oldCfg.iv)}, kek, pub64(oldCfg.w)); })();
+        const cfg = await pinWrap(p1.value, raw); await pinGuardInit(cfg); localStorage.setItem('po.pin', JSON.stringify(cfg)); PINC.cfg = cfg; await pinGuardForget(oldCfg); toast('PIN змінено'); logAct('PIN змінено'); }
       if (mode === 'off'){ if (!await pinDisable()){ msg.textContent = 'Сховище не готове'; return; } toast('Шифрування вимкнено — дані знову зберігаються відкрито', 4000); logAct('PIN і шифрування вимкнено'); }
       dlg.remove(); drawPin();
-    }catch(e){ msg.textContent = mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
+    }catch(e){ msg.textContent = e && e.pinGate ? e.message : mode !== 'on' ? 'Неправильний поточний PIN' : 'Помилка: ' + (e && e.message || e); }
   };
   const row = (l, i) => h('label', {class:'wl'}, l, i);
   const dlg = h('div', {class:'navsheet packsheet', role:'dialog', 'aria-modal':'true', 'aria-label':T},
@@ -16708,6 +16716,133 @@ PE_ROWS.push([/^22\. Діагноз заключний/, ['dx.osn','dx.mkh','dx.
   [/^31\. Лікуючий лікар/, ['meta_doc']], [/^32\. Завідувач відділення/, ['meta_zav']]);
 BMAP.unshift([/^22\. Діагноз заключний/, 'dx.osn'], [/^23\. Хірургічні операції/, 's066.ops'], [/^31\. Лікуючий лікар/, 'meta_doc'], [/^32\. Завідувач відділення/, 'meta_zav']);
 try{ if (PAPER) renderPaper(); }catch(e){}
+/* 0.9.3.53 — локальний ліміт спроб PIN на спільній межі перевірки.
+   Стан прив'язаний до точного конверта PIN; це best-effort захист інтерфейсу від перезапуску.
+   Власник профілю браузера може змінити localStorage і перевіряти копію конверта офлайн. */
+const PIN_GUARD_PREFIX='po.pin.attempt.', PIN_GUARD_QUEUE=new Map(), PIN_GUARD_DELAYS=[30000,300000];
+function pinGuardError(code, until, detail){
+  const e=new Error(detail || code); e.pinGate=code; e.pinUntil=until || 0; return e;
+}
+async function pinGuardTag(cfg){
+  const data=new TextEncoder().encode(JSON.stringify(cfg)), hash=await crypto.subtle.digest('SHA-256',data);
+  return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function pinGuardChecksum(state){
+  const data=new TextEncoder().encode([state.v,state.tag,state.failures,state.until,state.reason || ''].join('|'));
+  const hash=await crypto.subtle.digest('SHA-256',data);
+  return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function pinGuardWrite(cfg,tag,state){
+  const rec={v:1,tag,failures:state.failures,until:state.until || 0,reason:state.reason || ''};
+  rec.sum=await pinGuardChecksum(rec);
+  try{ const value=JSON.stringify(rec), key=PIN_GUARD_PREFIX+tag; localStorage.setItem(key,value);
+    if (localStorage.getItem(key)!==value) throw new Error('Запис не підтверджено');
+  }catch(e){ throw pinGuardError('storage',0,'Не вдалося зберегти ліміт спроб PIN. Перевірте вільне місце у сховищі браузера.'); }
+}
+async function pinGuardInit(cfg){
+  const tag=await pinGuardTag(cfg); await pinGuardWrite(cfg,tag,{failures:0,until:0});
+}
+async function pinGuardForget(cfg){
+  if (!cfg) return; try{ const tag=await pinGuardTag(cfg); localStorage.removeItem(PIN_GUARD_PREFIX+tag); }catch(e){}
+}
+function pinGuardQueue(tag,fn){
+  try{ if (navigator.locks && typeof navigator.locks.request==='function') return navigator.locks.request('po-pin-attempt-'+tag,fn); }catch(e){}
+  const prev=PIN_GUARD_QUEUE.get(tag) || Promise.resolve(); let release;
+  const next=new Promise(resolve=>{ release=resolve; }); PIN_GUARD_QUEUE.set(tag,next);
+  return prev.catch(()=>{}).then(fn).finally(()=>{ release(); if (PIN_GUARD_QUEUE.get(tag)===next) PIN_GUARD_QUEUE.delete(tag); });
+}
+function pinGuardWaitError(state,now){
+  const seconds=Math.max(1,Math.ceil((state.until-now)/1000));
+  const reason=state.reason==='edited' ? 'Лічильник спроб PIN змінено або пошкоджено — ' : '';
+  return pinGuardError('cooldown',state.until,reason+`зачекайте ${seconds} с`);
+}
+function pinGuardLog(message,error){
+  try{ if (error) console.warn('[PIN]',message,error); }catch(e){}
+  try{ logAct(message); }catch(e){}
+}
+async function pinGuardCheck(pin,cfg,verify,now=Date.now()){
+  if (!cfg || typeof pin!=='string' || !pin) throw pinGuardError('empty',0,'Введіть PIN');
+  const queueCfg=Object.assign({},cfg); delete queueCfg.guard;
+  const queueTag=await pinGuardTag(queueCfg);
+  return pinGuardQueue(queueTag,async()=>{
+    let tag=await pinGuardTag(cfg);
+    const primary=!!PINC.cfg && JSON.stringify(cfg)===JSON.stringify(PINC.cfg); let raw=null, storageError=null, missing=false;
+    let state={failures:0,until:0,reason:''};
+    try{
+      if (primary && !cfg.guard){
+        const previous=Object.assign({},cfg,{guard:1}); tag=await pinGuardTag(previous);
+        raw=localStorage.getItem(PIN_GUARD_PREFIX+tag);
+        cfg.guard=1;
+        try{ localStorage.setItem('po.pin',JSON.stringify(cfg)); }catch(e){ storageError=e; }
+        if (raw){
+          let saved,sum; try{saved=JSON.parse(raw);sum=await pinGuardChecksum(saved);}catch(e){}
+          state=saved && saved.v===1 && saved.tag===tag && Number.isSafeInteger(saved.failures) && saved.failures>=0 && Number.isFinite(saved.until) && saved.until>=0 && saved.sum===sum
+            ? {failures:Math.max(10,saved.failures),until:Math.max(saved.until,now+PIN_GUARD_DELAYS[1]),reason:'edited'}
+            : {failures:10,until:now+PIN_GUARD_DELAYS[1],reason:'edited'};
+          raw=null;
+        }else if (!storageError){
+          missing=true;
+        }
+      }else{
+        raw=localStorage.getItem(PIN_GUARD_PREFIX+tag);
+        if (raw===null) missing=true;
+      }
+    }catch(e){ storageError=e; }
+    if (missing) pinGuardLog('Лічильник спроб PIN відсутній — новий підрахунок почато з нуля.');
+    if (raw){
+      let saved, sum; try{ saved=JSON.parse(raw); sum=await pinGuardChecksum(saved); }catch(e){}
+      if (!saved || saved.v!==1 || saved.tag!==tag || !Number.isSafeInteger(saved.failures) || saved.failures<0 || !Number.isFinite(saved.until) || saved.until<0 || saved.sum!==sum){
+        state={failures:10,until:now+PIN_GUARD_DELAYS[1],reason:'edited'};
+      }else{
+        state={failures:saved.failures,until:saved.until,reason:saved.reason || ''};
+      }
+    }
+    if (state.reason==='edited' && !storageError){
+      try{ await pinGuardWrite(cfg,tag,state); }
+      catch(e){ storageError=e; }
+    }
+    if (state.until>now && !(storageError && state.reason==='edited')) throw pinGuardWaitError(state,now);
+    let result;
+    try{ result=await verify(); }
+    catch(cause){
+      if (storageError){
+        PINC.tries=4; PINC.until=Date.now()+PIN_GUARD_DELAYS[1];
+        pinGuardLog('Не вдалося прочитати або зберегти ліміт спроб після хибного PIN; доступ призупинено на 5 хвилин.',storageError);
+        throw pinGuardError('storage',PINC.until,'Не вдалося зберегти ліміт спроб PIN після хибного введення. Доступ призупинено на 5 хвилин.');
+      }
+      const failures=state.failures+1, delay=failures%5===0 ? PIN_GUARD_DELAYS[Math.min(Math.floor(failures/5)-1,PIN_GUARD_DELAYS.length-1)] : 0;
+      state={failures,until:delay ? now+delay : 0,reason:''};
+      try{ await pinGuardWrite(cfg,tag,state); }
+      catch(e){
+        PINC.tries=4; PINC.until=Date.now()+PIN_GUARD_DELAYS[1];
+        pinGuardLog('Не вдалося зберегти ліміт спроб після хибного PIN; доступ призупинено на 5 хвилин.',e);
+        throw pinGuardError('storage',PINC.until,'Не вдалося зберегти ліміт спроб PIN після хибного введення. Доступ призупинено на 5 хвилин.');
+      }
+      if (delay) throw pinGuardWaitError(state,now);
+      throw pinGuardError('wrong',0,'Неправильний PIN');
+    }
+    if (!storageError){
+      try{ await pinGuardWrite(cfg,tag,{failures:0,until:0,reason:''}); }
+      catch(e){ storageError=e; }
+    }
+    if (storageError) pinGuardLog('Правильний PIN підтверджено, але ліміт спроб не вдалося оновити; доступ відкрито.',storageError);
+    PINC.tries=0; PINC.until=0; return result;
+  });
+}
+// Створення/зміна: нові PIN — щонайменше шість символів. Старі конверти лишаються сумісними для входу.
+{ const x0=pinWrap; pinWrap=async function(pin,raw){
+  if (typeof pin!=='string' || pin.length<6) throw pinGuardError('short',0,'Новий PIN має містити щонайменше 6 символів.');
+  const cfg=await x0.apply(this,arguments); cfg.guard=1; return cfg;
+}; }
+{ const x0=pinUnwrap; pinUnwrap=function(pin,cfg){ return pinGuardCheck(pin,cfg,()=>x0.apply(this,arguments)); }; }
+{ const x0=pinEnable; pinEnable=async function(key,cfg){
+  cfg.guard=1; await pinGuardInit(cfg); const ok=await x0.apply(this,arguments);
+  if (!ok) await pinGuardForget(cfg);
+  return ok;
+}; }
+{ const x0=pinDisable; pinDisable=async function(){
+  const cfg=PINC.cfg, ok=await x0.apply(this,arguments); if (ok) await pinGuardForget(cfg); return ok;
+}; }
 /* 0.9.3.53 · Обстеження в консультативному висновку — вибір із журналу та відновлення */
 let KONSOBS = [];
 

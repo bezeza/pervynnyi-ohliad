@@ -79,7 +79,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   ok(w.eval("(CUSTOM.labs||[]).length") === 1, 'свій аналіз зник після перезапуску');
   // 2. увімкнути PIN → дані шифруються → перезапуск → PIN → пацієнт на місці
   if (w.eval("typeof pinRewriteAll === 'function' && typeof pinWrap === 'function'")){
-    const on = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('4826', raw), key = await pinUnwrap('4826', cfg);
+    const on = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('482626', raw), key = await pinUnwrap('482626', cfg);
       if (!await pinEnable(key, cfg)) return 'enable false'; return true; })()`).catch(e => 'ERR ' + e.message);
     ok(on === true, 'PIN не ввімкнувся: ' + on);
     await wait(300);
@@ -89,7 +89,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
     ({d, w, errs} = boot());
     ok(await until(() => w.document.querySelector('.pinscr input')), 'немає екрана PIN після перезапуску');
     ok(!w.eval('IDB.ok'), 'база відкрилась без PIN');
-    const inp = w.document.querySelector('.pinscr input'); inp.value = '4826';
+    const inp = w.document.querySelector('.pinscr input'); inp.value = '482626';
     const b = [...w.document.querySelectorAll('.pinscr button')].find(x => /Відкрити|Увійти|OK|ОК/i.test(x.textContent)) || w.document.querySelector('.pinscr button');
     if (b) b.click(); else inp.dispatchEvent(new w.KeyboardEvent('keydown', {key: 'Enter', bubbles: true}));
     ok(await until(() => w.eval('IDB.ok'), 6000), 'після PIN база не відкрилась');
@@ -103,7 +103,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
     const raws = [...DBS.get('po-db').get('patients').values()];
     ok(raws.length && raws.every(r => !r.enc), 'після вимкнення PIN у базі лишився зашифрований запис');
     // 4. увімкнення PIN із збереженням посеред перезапису → усе зашифровано
-    const on2 = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('1357', raw), key = await pinUnwrap('1357', cfg);
+    const on2 = await w.eval(`(async()=>{ const raw = crypto.getRandomValues(new Uint8Array(32)), cfg = await pinWrap('135713', raw), key = await pinUnwrap('135713', cfg);
       const p = pinEnable(key, cfg); document.getElementById('meta_pib').value='Тест Третій'; document.getElementById('meta_pib').dispatchEvent(new Event('input')); savePatient(true); return await p; })()`);
     ok(on2 === true, 'PIN не ввімкнувся вдруге');
     await wait(500);
