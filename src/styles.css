@@ -1356,3 +1356,82 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   --accent:#2E5D84; --accent-soft:#E6EBEE; --on-accent:#FFFFFF;
   --flag:#A95A12; --flag-soft:#F6EADB; --ok:#2E7346; --bad:#A8322A; --bad-soft:#F6E3DE; --surface-2:#F4EFE6; color-scheme:light}
 @media screen{:root[data-tone="warm"] .paper .sheet,:root[data-tone="warm"] .b003{background:#FFFCF6}}
+
+/* 0.9.3.57 — «Перед друком» на телефоні: читабельний масштаб, повна висота, згорнуті перемикачі, віконця знизу */
+@media (max-width:899px){
+  #outBox[data-ov="paper"] #paper{flex:1 1 auto;height:calc(100dvh - 200px);min-height:360px;max-height:none;padding:6px;touch-action:pan-x pan-y}
+  #outBox[data-ov="paper"] .copy-peek{display:none!important}
+  .paper .sheet.blankmode.phz{width:max-content;max-width:none;margin:0;padding:0;background:transparent;box-shadow:none}
+  .phzbar{position:sticky;top:-6px;left:0;z-index:5;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:-6px -6px 6px;padding:6px;background:inherit;background:#d9dee3;border-bottom:1px solid rgba(0,0,0,.08)}
+  :root[data-theme="dark"] .phzbar{background:var(--bg)}
+  .phzbar .btn{min-height:40px;padding:6px 12px}
+  .phz-zoom{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+  .phz-zoom button{min-width:44px;min-height:40px;border:0;background:var(--surface);font-size:20px;line-height:1}
+  .phz-v{min-width:56px;text-align:center;font:500 14px var(--f-num)}
+  .phz-fit{font-size:18px}
+  #paper.phcol .blankbar>*:not(:first-child){display:none!important}
+  #paper.phcol .gaplist{display:none!important}
+  .pe-box,.diary-inline-editor{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-height:62vh!important;border-radius:14px 14px 0 0!important}
+}
+
+/* 0.9.3.57 — телефон: нижня панель не обрізає «Копіювати»; режими «Значки» і «Компактно» */
+@media (max-width:899px){
+  .mbar{padding-left:8px;padding-right:8px;gap:6px}
+  .mbar .btn{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mbar #copy2{flex:2 1 auto}
+  .ph-icons .mbar #navBtn,.ph-icons .mbar #mbLabs,.ph-icons .mbar #toText{flex:0 0 52px;font-size:0!important;padding:10px 0}
+  .ph-icons .mbar #navBtn::before{content:'☰';font-size:20px}
+  .ph-icons .mbar #mbLabs::before{content:'🧪';font-size:19px}
+  .ph-icons .mbar #toText::before{content:'📄';font-size:19px}
+  .ph-dense .panel{padding:10px 10px}
+  .ph-dense .ph{margin-bottom:8px}
+  .ph-dense .grid{gap:6px 10px!important}
+  .ph-dense .f{gap:2px}
+  .ph-dense .f>label,.ph-dense .f>.lbl{font-size:12.5px}
+  .ph-dense input:not([type=checkbox]):not([type=radio]),.ph-dense select{padding:5px 9px!important;min-height:38px!important;height:auto!important;font-size:15px!important}
+  .ph-dense textarea{padding:6px 9px!important;min-height:0!important;font-size:15px!important}
+  .ph-dense .ph h2,.ph-dense .ph h3{font-size:19px}
+  .ph-dense .seg button,.ph-dense .vseg button{padding-top:6px!important;padding-bottom:6px!important;min-height:38px!important}
+  .ph-dense .chip{padding:6px 10px;font-size:14px}
+  .ph-dense .chips{gap:6px}
+  .ph-dense .chips-hint{font-size:12.5px;margin-top:2px}
+  .ph-dense .wrap{gap:8px}
+}
+
+/* 0.9.3.57 — телефон: вкладки внизу (етапи) і стрічка розділів угорі */
+.phtabs{display:none}
+@media (max-width:899px){
+  body.pht .mbar{display:none!important}
+  body.pht .phtabs{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -2px 10px rgba(16,40,64,.06);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px))}
+  body.pht:has(#outBox.open) .phtabs{display:none}
+  .pht-b{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:1px;border:0;background:none;color:var(--muted);font:500 11.5px/1.2 var(--f-ui);padding:6px 2px;border-radius:10px;position:relative;min-height:54px;justify-content:center}
+  .pht-b .pht-i{font-size:21px;line-height:1.1;filter:grayscale(.35);opacity:.85}
+  .pht-b .pht-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .pht-b[aria-current]{color:var(--accent);background:var(--accent-soft)}
+  .pht-b[aria-current] .pht-i{filter:none;opacity:1}
+  .pht-n{position:absolute;top:3px;right:calc(50% - 22px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--flag);color:#fff;font:600 11px/18px var(--f-ui)}
+  #tabnav.pht-strip{display:flex;gap:6px;align-items:center}
+  .pht-chips{flex:1 1 auto;min-width:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0;-webkit-overflow-scrolling:touch}
+  .pht-chips::-webkit-scrollbar{display:none}
+  .pht-c{flex:none;white-space:nowrap;display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 13px;background:var(--surface);color:var(--ink);font:500 14.5px var(--f-ui);min-height:40px}
+  .pht-c[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+  .pht-d{width:8px;height:8px;border-radius:50%;background:var(--line);margin-right:7px;flex:none}
+  .pht-c.filled .pht-d{background:var(--ok)}
+  .pht-c.cw .pht-d,.pht-c.autof .pht-d{background:var(--flag)}
+  .pht-x{flex:none;display:flex;gap:4px}
+  .pht-e{min-height:40px;padding:6px 10px}
+}
+@media (max-width:899px){.pht-b.pht-save{color:var(--on-accent,#fff);background:var(--accent);margin:2px 4px}.pht-b.pht-save .pht-i{filter:none;opacity:1}}
+
+/* 0.9.3.57 — телефон: розділений екран «документ угорі / варіанти внизу», межу тягнуть пальцем */
+@media (max-width:899px){
+  .pe-box,.diary-inline-editor,.qe{position:fixed!important;left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;height:var(--phs,45vh)!important;max-height:none!important;border-radius:14px 14px 0 0!important;z-index:60;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+  .diary-inline-editor .diary-editor-body,.pe-box .pe-body,.qe>.f{flex:1 1 auto;overflow:auto;min-height:0}
+  .qe{background:var(--surface);padding:0 10px 10px}
+  .phs-grip{flex:none;height:22px;display:flex;align-items:center;justify-content:center;cursor:ns-resize;touch-action:none;background:var(--surface)}
+  .phs-grip span{width:44px;height:5px;border-radius:3px;background:var(--line)}
+  .phs-grip:focus-visible span,body.phs-dragging .phs-grip span{background:var(--accent)}
+  body.phs-dragging{user-select:none}
+  body.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px)!important;min-height:120px!important}
+  body.ph-split #outBox #out{max-height:calc(100dvh - var(--phs) - var(--phtop,200px) - 6px);overflow:auto}
+}

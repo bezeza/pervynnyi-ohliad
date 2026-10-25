@@ -122,6 +122,10 @@
   "641-sex-auto.js",
   "642-diary-tools.js",
   "643-fonts.js",
-  "644-theme-grey.js"
+  "644-theme-grey.js",
+  "645-phone-preview.js",
+  "646-phone-view.js",
+  "647-phone-tabs.js",
+  "648-phone-split.js"
  ]
 }
