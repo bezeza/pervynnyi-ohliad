@@ -1539,7 +1539,6 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 
 /* 0.9.3.62 — телефон: «читабельний бланк» (лише на екрані; друк — справжній А4) */
 @media screen and (max-width:899px){
-  .phr-seg[hidden],.phr-go[hidden]{display:none!important}
   .phr-seg button{padding:6px 10px;font-size:13.5px}
   .phr-go{margin-left:auto;min-height:38px;font-size:14px}
   .paper .sheet.blankmode.phz.phread,.paper .sheet.phread{width:auto!important;max-width:100%!important;overflow:visible}
@@ -1572,18 +1571,22 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
   .paper .sheet.phread .b003 table.bdx{font-size:14px;display:block;overflow-x:auto}
   .paper .sheet.phread .b003 .pe-active{outline:2.5px solid var(--accent);outline-offset:2px;background:rgba(47,123,184,.08)}
   .paper .sheet.phread .b003 .bgap,.paper .sheet.phread .b003 .bf.bgap{background:#FFF3C4}
-  .pe-box .pe-head{flex-wrap:wrap}
-  .phr-nav{display:flex;align-items:center;gap:8px;order:5;flex-basis:100%;font-size:13px;color:var(--muted)}
-  .phr-n{white-space:nowrap}
-  .phr-gt{font-size:12.5px;padding:3px 9px}
-  .phr-gt[aria-pressed="true"]{background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent)}
 }
+
+/* 0.9.3.63 — «Заповнити порожні», «12 з 45», «Лише порожні» — і на комп’ютері */
+.phr-seg[hidden],.phr-go[hidden],.phr-gt[hidden]{display:none!important}
+.pe-box .pe-head{flex-wrap:wrap}
+.phr-nav{display:flex;align-items:center;gap:8px;order:5;flex-basis:100%;font-size:13px;color:var(--muted);padding-top:2px}
+.phr-n{white-space:nowrap;font-variant-numeric:tabular-nums}
+.phr-gt{font-size:12.5px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer}
+.phr-gt[aria-pressed="true"]{background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent)}
+@media (min-width:900px){.blankbar .phr-go{margin-left:auto}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.62 від 25.10.2026">v0.9.3.62 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.63 від 25.10.2026">v0.9.3.63 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3729,8 +3732,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.62', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.63', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.63', '25.10.2026', 'комп’ютер, «Перед друком» → бланк: «✎ Заповнити порожні · N» над аркушем; у панелі правки — «25 з 45» і «Лише порожні» («Далі» стрибає лише по незаповнених місцях), як на телефоні'],
   ['0.9.3.62', '25.10.2026', 'телефон, «Перед друком»: читабельний бланк — ті самі пункти й нумерація в ширину екрана, без гортання вбік («Як на папері» — точний аркуш; друк завжди А4); видно, що можна правити (вибране підкреслено, порожнє — пунктирна плашка); «✎ Заповнити порожні» і «Лише порожні» — «Далі» стрибає по незаповнених місцях; у панелі — «12 з 45»'],
   ['0.9.3.61', '25.10.2026', 'телефон: дотик до фрази в тексті більше не відкриває клавіатуру — лише варіанти; правка вручну — кнопкою «⌨»; у панелях варіантів поле не захоплює фокус саме; коли клавіатура відкрита — панель піднімається над нею'],
   ['0.9.3.60', '25.10.2026', 'шаблон хвороби допомагає, а не примушує: програма починає зі «Скарг» (спершу опитування й огляд), «За хворобою» — за бажанням; якщо щось уже заповнено, шаблон питає «Що взяти з шаблону» (діагноз, план, лікування — так; ваші скарги, анамнез, огляд — лишаються); під скаргами — підказка «Схоже на: …»'],
@@ -17980,7 +17984,7 @@ if (window.visualViewport){
 }
 if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ phkApply(); }catch(e){} });
 phkApply();
-/* ===== 0.9.3.62 — телефон: «читабельний бланк» у «Перед друком» =====
+/* ===== 0.9.3.62 — телефон: «читабельний бланк» у «Перед друком» (0.9.3.63: «Заповнити порожні», «12 з 45» і «Лише порожні» — і на комп’ютері) =====
    Аркуш А4 ширший за телефон: при 200 % треба гортати вбік, «по ширині» — дрібно. Тепер на телефоні:
    • «Читабельно» (за замовчуванням): той самий бланк 003/о / 066/о — ті самі пункти й нумерація, — але
      в ширину екрана, звичайним розміром тексту, без гортання вбік; «Як на папері» — точний аркуш для звірки;
@@ -18000,7 +18004,15 @@ function phrApply(){
   const sh = document.querySelector('#paper .sheet'); if (!sh) return;
   const on = isPhone() && !!PAPER && sh.classList.contains('blankmode') && PHR.read;
   sh.classList.toggle('phread', on);
-  const bar = document.querySelector('#paper .phzbar'); if (!bar) return;
+  const blank = sh.classList.contains('blankmode');
+  const n = blank ? peRows(window).filter(phrRowEmpty).length : 0;
+  const bar = document.querySelector('#paper .phzbar'), host = bar || document.querySelector('#paper .blankbar');
+  if (host){
+    let go = host.querySelector('.phr-go');
+    if (!go){ go = h('button', {type:'button', class:'btn primary phr-go', title:'Відкрити перше незаповнене місце; «Далі» — лише по порожніх', onclick:()=>phrFillGaps()}); host.append(go); }
+    go.hidden = !blank || !n; go.textContent = '✎ Заповнити порожні · ' + n;
+  }
+  if (!bar) return;   // комп’ютер: справжній аркуш А4, без «Читабельно»
   let seg = bar.querySelector('.phr-seg');
   if (!seg){
     seg = h('span', {class:'seg phr-seg', role:'group', 'aria-label':'Вигляд бланка'},
@@ -18008,15 +18020,11 @@ function phrApply(){
       h('button', {type:'button', 'data-r':'0', onclick:()=>phrSet(false)}, 'Як на папері'));
     bar.insertBefore(seg, bar.querySelector('.phz-zoom'));
   }
-  const blank = sh.classList.contains('blankmode');
   seg.hidden = !blank;
   seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', (b.dataset.r === '1') === PHR.read ? 'true' : 'false'));
   const z = bar.querySelector('.phz-zoom'), fit = bar.querySelector('.phz-fit');
   if (z) z.hidden = !blank || PHR.read; if (fit) fit.hidden = !blank || PHR.read;
-  let go = bar.querySelector('.phr-go');
-  const n = blank ? peRows(window).filter(phrRowEmpty).length : 0;
-  if (!go){ go = h('button', {type:'button', class:'btn primary phr-go', onclick:()=>phrFillGaps()}); bar.append(go); }
-  go.hidden = !blank || !n; go.textContent = '✎ Заповнити порожні · ' + n;
+  const go = bar.querySelector('.phr-go'); if (go && go !== bar.lastElementChild) bar.append(go);
 }
 function phrSet(v){
   PHR.read = v; try{ localStorage.setItem('po.phread', v ? '1' : '0'); }catch(e){}

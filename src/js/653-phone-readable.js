@@ -1,4 +1,4 @@
-/* ===== 0.9.3.62 — телефон: «читабельний бланк» у «Перед друком» =====
+/* ===== 0.9.3.62 — телефон: «читабельний бланк» у «Перед друком» (0.9.3.63: «Заповнити порожні», «12 з 45» і «Лише порожні» — і на комп’ютері) =====
    Аркуш А4 ширший за телефон: при 200 % треба гортати вбік, «по ширині» — дрібно. Тепер на телефоні:
    • «Читабельно» (за замовчуванням): той самий бланк 003/о / 066/о — ті самі пункти й нумерація, — але
      в ширину екрана, звичайним розміром тексту, без гортання вбік; «Як на папері» — точний аркуш для звірки;
@@ -18,7 +18,15 @@ function phrApply(){
   const sh = document.querySelector('#paper .sheet'); if (!sh) return;
   const on = isPhone() && !!PAPER && sh.classList.contains('blankmode') && PHR.read;
   sh.classList.toggle('phread', on);
-  const bar = document.querySelector('#paper .phzbar'); if (!bar) return;
+  const blank = sh.classList.contains('blankmode');
+  const n = blank ? peRows(window).filter(phrRowEmpty).length : 0;
+  const bar = document.querySelector('#paper .phzbar'), host = bar || document.querySelector('#paper .blankbar');
+  if (host){
+    let go = host.querySelector('.phr-go');
+    if (!go){ go = h('button', {type:'button', class:'btn primary phr-go', title:'Відкрити перше незаповнене місце; «Далі» — лише по порожніх', onclick:()=>phrFillGaps()}); host.append(go); }
+    go.hidden = !blank || !n; go.textContent = '✎ Заповнити порожні · ' + n;
+  }
+  if (!bar) return;   // комп’ютер: справжній аркуш А4, без «Читабельно»
   let seg = bar.querySelector('.phr-seg');
   if (!seg){
     seg = h('span', {class:'seg phr-seg', role:'group', 'aria-label':'Вигляд бланка'},
@@ -26,15 +34,11 @@ function phrApply(){
       h('button', {type:'button', 'data-r':'0', onclick:()=>phrSet(false)}, 'Як на папері'));
     bar.insertBefore(seg, bar.querySelector('.phz-zoom'));
   }
-  const blank = sh.classList.contains('blankmode');
   seg.hidden = !blank;
   seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', (b.dataset.r === '1') === PHR.read ? 'true' : 'false'));
   const z = bar.querySelector('.phz-zoom'), fit = bar.querySelector('.phz-fit');
   if (z) z.hidden = !blank || PHR.read; if (fit) fit.hidden = !blank || PHR.read;
-  let go = bar.querySelector('.phr-go');
-  const n = blank ? peRows(window).filter(phrRowEmpty).length : 0;
-  if (!go){ go = h('button', {type:'button', class:'btn primary phr-go', onclick:()=>phrFillGaps()}); bar.append(go); }
-  go.hidden = !blank || !n; go.textContent = '✎ Заповнити порожні · ' + n;
+  const go = bar.querySelector('.phr-go'); if (go && go !== bar.lastElementChild) bar.append(go);
 }
 function phrSet(v){
   PHR.read = v; try{ localStorage.setItem('po.phread', v ? '1' : '0'); }catch(e){}
