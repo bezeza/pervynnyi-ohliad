@@ -151,6 +151,7 @@
   {id:'dnapr', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата направлення в стаціонар'},
   {id:'vs', type:'sel', noOut:true, def:0, label:'027/о, п. 5б', opts:['виписки','смерті']},
   {id:'per', type:'period', label:'Період лікування', tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
+  {id:'tvyp', type:'line', noOut:true, label:'Час виписки (бланк 003/о, п. 20)', placeholder:'год:хв, напр. 10:30', inputmode:'numeric'},
   {id:'nadh', type:'sel', label:'Госпіталізація (якщо не вибрано — береться з первинного огляду)', tpl:'{v}', cont:true,
     fallback:()=>{ const a = val(F('morbi.hosp'), true); if (!a) return ''; const b = val(F('morbi.hospd'), true); return a.replace(/^\[([^|]*)\|([^\]]*)\]/, (m,x,y)=>'[' + x.toLowerCase() + '|' + y.toLowerCase() + ']').replace(/^[А-ЯІЇЄҐ]/, c=>c.toLowerCase()) + (b ? ' ' + b : ''); },
     opts:['[госпіталізований|госпіталізована] за електронним направленням сімейного лікаря','[госпіталізований|госпіталізована] за самозверненням',
