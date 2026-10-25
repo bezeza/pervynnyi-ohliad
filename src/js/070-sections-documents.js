@@ -177,7 +177,9 @@
   {id:'z51', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'51. Аналіз крові на амілазу', placeholder:'дата: … Од/л', tpl:'Аналіз крові на амілазу: {v}'},
   {id:'z52', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'52. Аналіз сечі на глюкозу (з добової кількості)', placeholder:'дата: …', tpl:'Аналіз сечі на глюкозу (з добової кількості): {v}'},
   {id:'z53', type:'line', docs:['epi'], wide:true, br:true, box:'Дані обстеження — пункти 46–53 бланка 003/о (впишіть, що є)', label:'53. Аналіз сечі на діастазу', placeholder:'дата: … Од/л', tpl:'Аналіз сечі на діастазу: {v}'},
-  {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')}
+  {id:'obs', type:'text', rows:8, wide:true, planTpl:true, testChips:true, docs:['epi','etap','per','napr','gosp','konc'], label:'Результати обстежень (якщо порожньо — усі з журналу обстежень)', tpl:'{v}', sep:'\n', fallback:()=>resLines('all').join('\n')},
+  {id:'konslog', type:'auto', docs:['kons'], label:'Обстеження з журналу для висновку', tpl:'{v}', br:true, fn:()=>''},
+  {id:'konsown', type:'text', rows:4, wide:true, docs:['kons'], label:'Своє (результати поза журналом)', placeholder:'Впишіть результати, яких немає в журналі обстежень', tpl:'{v}', sep:'\n', br:true}
 ]},
 { id:'e_lik', docs:['epi','f066'], title:'Лікування і стан при виписці', short:'Лікування', head:'', fields:[
   {id:'lik', type:'text', rows:4, label:'Проведене лікування (якщо порожньо — з листа призначень: групами, з курсами «з … по …»)', tpl:'Проведено лікування: {v}', fallback:()=>(typeof epiCourses === 'function' && epiCourses()) || rxSummary()},

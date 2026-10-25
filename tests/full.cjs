@@ -125,7 +125,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  w2.__dl=[]; [...doc2.querySelectorAll('button')].find(b=>b.textContent==='Експорт усіх у файл').click(); await sleep(50);
  ok('17. Експорт у файл', (w2.__dl||[]).some(n=>/\.json$/.test(n)));
  const blob=JSON.stringify({type:'po-patients',items:JSON.parse(w2.localStorage.getItem('po.patients'))});
- w2.importFile(new w2.File([blob],'p.json')); await sleep(300); { const b=doc2.querySelector('.packsheet button.btn.primary'); if(b) b.click(); } ok('17. Імпорт з файлу (з підтвердженням, без дублів)', /Перенесено: нових \d+, оновлено \d+/.test(doc2.querySelector('#toast').textContent), doc2.querySelector('#toast').textContent);
+ w2.importFile(new w2.File([blob],'p.json')); { const t0=Date.now(); let b=null; while(Date.now()-t0<3000 && !(b=doc2.querySelector('.packsheet button.btn.primary'))) await sleep(25); if(b) b.click(); await sleep(50); } ok('17. Імпорт з файлу (з підтвердженням, без дублів)', /Перенесено: нових \d+, оновлено \d+/.test(doc2.querySelector('#toast').textContent), doc2.querySelector('#toast').textContent);
  w2.importFile(new w2.File(['{"a":1}'],'x.json')); await sleep(80); ok('17. Чужий файл відхиляється', doc2.querySelector('#toast').textContent.includes('не файл пацієнтів'));
  // 18 тема
  const tb=doc2.getElementById('themeBtn'); tb.click(); const t1=doc2.documentElement.getAttribute('data-theme'); tb.click(); const t2=doc2.documentElement.getAttribute('data-theme');

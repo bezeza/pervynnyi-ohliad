@@ -948,6 +948,37 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      return JSON.stringify({count,expected:docs.length,unsafe,seen}); })()`));
    ok('Екранування: ПІБ, власний шаблон і вільний текст залишаються текстом у всіх документах',r.count===r.expected&&r.expected>0&&!r.unsafe.length&&Object.values(r.seen).every(Boolean),JSON.stringify(r));
  }
+ { // 0.9.3.53: вибір обстежень і власний текст відновлюються; старі картки зберігають попередній зміст.
+   const state=JSON.parse(w.eval(`(()=>{ window.__konsTestState={mode:MODE,doc:DOC,pid:PID,last:localStorage.getItem('po.last'),snap:snap()};
+     document.querySelector('[data-mode="amb"]').click(); switchDoc('kons');
+     RES=[{id:9301,d:'2026-10-22',t:'ЗАК',v:'Hb 120 г/л'},{id:9302,d:'2026-10-23',t:'ЕКГ',v:'Синусовий ритм'}]; KONSOBS=[]; renderRes(); update();
+     const f=F('e_obs.konslog'), rows=[...f.konsList.querySelectorAll('input[type="checkbox"]')], note=f.wrapEl.textContent;
+     const ui=rows.length===2&&rows.every(x=>!x.checked)&&note.includes('Журнал обстежень за час лікування')&&note.includes('Внести нове обстеження')&&F('e_obs.obs').wrapEl.hidden;
+     rows[0].click(); const own=F('e_obs.konsown').el; own.value='Тестове власне обстеження'; own.dispatchEvent(new Event('input',{bubbles:true})); update();
+     const text=[...document.querySelectorAll('#out>*')].map(x=>x.textContent).join(' '), output=text.includes('Hb 120 г/л')&&!text.includes('Синусовий ритм')&&text.includes('Тестове власне обстеження');
+     PID='fixture-kons-observations'; savePatient(true); localStorage.setItem('po.last',PID);
+     return JSON.stringify({ui,output,saved:loadStore()[PID].snap.konsObs.includes(9301)}); })()`));
+   ok('Консультація: джерело обстежень зрозуміле, нові записи спочатку не позначені',state.ui,JSON.stringify(state));
+   ok('Висновок містить лише вибрані обстеження та поле «Своє»',state.output,JSON.stringify(state));
+   ok('Вибір і «Своє» збережені у знімку пацієнта',state.saved,JSON.stringify(state));
+   const stored={}; for(let i=0;i<w.localStorage.length;i++){const key=w.localStorage.key(i);stored[key]=w.localStorage.getItem(key);}
+   const fresh=new JSDOM(html,{url:'https://x.test/kons-restart',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(fw){
+     fw.URL.revokeObjectURL=()=>{};fw.scrollTo=()=>{};fw.Element.prototype.scrollIntoView=()=>{};fw.scrollBy=()=>{};fw.print=()=>{};
+     for(const key in stored)fw.localStorage.setItem(key,stored[key]); fw.localStorage.setItem('po.autogate','0');
+     fw.addEventListener('error',e=>errs.push('kons restart: '+e.message));fw.console.warn=(...a)=>errs.push('kons restart: '+a.join(' '));
+   }});
+   await sleep(100);
+   const fw=fresh.window, restored=fw.eval("KONSOBS.includes(9301)&&F('e_obs.konsown').el.value==='Тестове власне обстеження'&&F('e_obs.konslog').konsList.querySelectorAll('input:checked').length===1");
+   ok('Консультація: вибір і поле «Своє» залишаються після перезапуску JSDOM',restored);
+   fresh.window.close();
+   const legacy=w.eval(`(()=>{const old=Object.assign({},loadStore()['fixture-kons-observations'].snap);delete old.konsObs;restore(old);update();
+     const text=[...document.querySelectorAll('#out>*')].map(x=>x.textContent).join(' ');
+     return KONSOBS.length===2&&F('e_obs.konslog').konsList.querySelectorAll('input:checked').length===2&&text.includes('Hb 120 г/л')&&text.includes('Синусовий ритм');})()`);
+   ok('Старі пацієнти без konsObs зберігають попереднє включення всіх обстежень',legacy);
+   w.eval(`(()=>{const state=window.__konsTestState,st=loadStore();delete st['fixture-kons-observations'];saveStore(st);restore(state.snap);PID=state.pid;
+     switchDoc(state.doc);document.querySelector('[data-mode="'+state.mode+'"]').click();
+     if(state.last===null)localStorage.removeItem('po.last');else localStorage.setItem('po.last',state.last);delete window.__konsTestState;})()`);
+ }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
