@@ -1317,3 +1317,42 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .btback .brow.bsigrow{display:flex;align-items:baseline;gap:0}
 .btback .brow.bsigrow>.bf{flex:1 1 auto;min-width:6em}
 .btback .brow.bsigrow>.bsig{flex:none}
+
+/* 0.9.3.56 — стать у блоці «Пацієнт»; у шапці — лише «Стать?», коли невідома */
+.sexf .seg{display:inline-flex}
+.sexask{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:8px;background:var(--warn-soft,#fff4d6);color:var(--warn-ink,#7a5200);border:1px solid var(--warn-line,#f0d48a);font-size:13px;white-space:nowrap}
+.sexask[hidden]{display:none}
+.sexask button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:6px;padding:1px 7px;font:inherit;cursor:pointer}
+.sexask button:hover,.sexask button:focus-visible{background:var(--surface,#fff)}
+
+/* 0.9.3.56 — щоденник: «з учора», «внесіть сьогоднішні», порівняння */
+.f.dprev>label::after,.f.dprev>.lbl::after{content:" · з учора";color:var(--muted,#667);font-weight:400;font-size:12px}
+.f.dprev{background:var(--surface-2,#f6f7fa);border-radius:8px}
+.f.dtoday{outline:2px dashed var(--warn-line,#e0b84a);outline-offset:3px;border-radius:8px}
+.f.dtoday>label::after,.f.dtoday>.lbl::after{content:" · внесіть сьогоднішні";color:var(--warn-ink,#7a5200);font-weight:600;font-size:12px}
+.dt-spo2{margin-top:4px}
+.dt-cmp{margin-top:6px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+.dt-cmp-t{margin:0 0 6px}
+@media screen{.b003 .dprev{background:rgba(120,130,150,.08)}.b003 .dprev::after{content:"з учора";font-size:10px;color:var(--muted,#667);margin-left:6px}}
+@media print{.b003 .dprev{background:none}.b003 .dprev::after{content:none}}
+
+/* 0.9.3.56 — шрифт тексту документа на екрані (вибір у «Налаштуваннях»); друк і бланки — Times New Roman */
+:root{--f-doc:"Source Serif 4",Georgia,"Times New Roman",serif}
+#out,.pw-text,.font-sample{font-family:var(--f-doc)}
+.font-sample{font-size:16px;line-height:1.5;margin:0 0 4px;padding:8px 10px;border:1px solid var(--line,#dde1e8);border-radius:8px;background:var(--surface,#fff)}
+
+/* 0.9.3.56 — тема «Кабінет»: нейтральна сіра (палітра Skiagrama) */
+:root[data-tone="grey"]{
+  --bg:#2A2B2D; --surface:#343538; --ink:#E6E6E6; --muted:#A8AAAE; --line:#4A4C50;
+  --accent:#9DB8CF; --accent-soft:#3E434A; --on-accent:#1E1F21;
+  --flag:#E0A35E; --flag-soft:#45392B; --ok:#8FCFA6; --bad:#F09A92; --bad-soft:#4A3232;
+  --warn-soft:#45402F; --warn-ink:#E8C27A; --warn-line:#7A6A45; --surface-2:#3B3C40; color-scheme:dark}
+@media screen{:root[data-tone="grey"] .paper .sheet,:root[data-tone="grey"] .b003{background:#DCDCD8}
+  :root[data-tone="grey"] .paper{background:#26272A}}
+
+/* 0.9.3.56 — денна тема «Теплий папір»: злегка теплий фон замість чисто білого, темно-коричнево-сірий текст */
+:root[data-tone="warm"]{
+  --bg:#EFEAE1; --surface:#FBF8F2; --ink:#2A2620; --muted:#6A6257; --line:#DCD3C4;
+  --accent:#2E5D84; --accent-soft:#E6EBEE; --on-accent:#FFFFFF;
+  --flag:#A95A12; --flag-soft:#F6EADB; --ok:#2E7346; --bad:#A8322A; --bad-soft:#F6E3DE; --surface-2:#F4EFE6; color-scheme:light}
+@media screen{:root[data-tone="warm"] .paper .sheet,:root[data-tone="warm"] .b003{background:#FFFCF6}}

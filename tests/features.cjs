@@ -15,6 +15,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  ok('Перший запуск: знайомство з даними лікаря', !!doc.querySelector('.welcome'));
  { const ins=doc.querySelectorAll('.welcome input'); ins[0].value='Петренко О. В.'; [...doc.querySelectorAll('.welcome button')].find(b=>b.textContent==='Готово').click(); }
  ok('Знайомство зберігає ПІБ лікаря', $('meta_doc').value==='Петренко О. В.' && !doc.querySelector('.welcome'));
+ // WebCrypto і TextEncoder у jsdom — для тестів PIN і шифрування копій у будь-якій частині
+ if (!w.TextEncoder){ w.TextEncoder=require('util').TextEncoder; w.TextDecoder=require('util').TextDecoder; } if (!w.crypto.subtle){ try{ Object.defineProperty(w.crypto, 'subtle', {value:require('crypto').webcrypto.subtle, configurable:true}); }catch(e){} }
+ // ── кінець підготовки (спільна для всіх частин) ──
  $('paperBtn').click();
  ok('«Перегляд перед друком» вмикає макет документа', $('paperBtn').textContent==='Перегляд перед друком' && $('paperBtn').getAttribute('aria-pressed')==='true' && !$('paper').hidden);
  $('paperBtn').click();
@@ -328,9 +331,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    if (lb) [...lb.querySelectorAll('button')].find(b=>/Як минулого разу/.test(b.textContent)).click();
    ok('«Як минулого разу»: дата народження й анамнез життя взято', $('meta_dob').value==='1950-05-05');
    const ids=Object.keys(w.eval('loadStore()')).slice(0,2); let pr=0; w.print=()=>{pr++};
-   w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); await sleep(150);
+   w.eval(`batchPrint(${JSON.stringify(ids)}, 'ohl')`); for(let i=0;i<60&&!pr;i++) await sleep(50);   // під навантаженням друк приходить пізніше
    ok('Друк пачкою: документи вибраних — у друк по одному на аркуш', $('print').querySelectorAll('.bprint-one').length===2 && pr===1, $('print').querySelectorAll('.bprint-one').length+'/'+pr);
    ok('Після друку пачкою — відкритий той самий пацієнт', $('meta_pib').value==='Повтор Тестовий Пацієнт'); }
+ // ── частина 2 ──
  // 0.9.3.12 журнал обстежень розділами
  { w.eval('newPatient()'); set('meta_pib','Лаб Тестовий Пацієнт'); doc.querySelector('[data-sex="m"]').click(); ap('pneu'); w.eval("RES.length=0; switchDoc('epi'); labsOpen({test:'ЗАК'})");
    const t=doc.querySelector('.ljed textarea'); t.value='Hb 174 Ер 5,1 Л 12,4 ШОЕ 28 лімф 18'; ev(t,'input');
@@ -508,7 +512,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("pickDiaryDisease('hf')");
    ok('Щоденник за хворобою: заповнено з еталонного шаблону', /Щоденник/.test(out()) && /набряки/i.test(out()), out().slice(0,300));
    const vis=id=>!w.eval(`F('d_obj.${id}').wrapEl.hidden`);
-   ok('Щоденник під ХСН: маса тіла й діурез показано, живіт і глікемію сховано', vis('masa') && !vis('zhyv') && !vis('glik') && !/Живіт/.test(out()));
+   ok('Щоденник під ХСН: маса й діурез, живіт (базовий набір, рішення лікаря 25.10.2026), печінка — показано; глікемію сховано', vis('masa') && vis('zhyv') && vis('pech') && !vis('glik'));
    ok('Щоденник під ХСН: обов’язкові пункти позначено «важливо»', w.eval("F('d_obj.masa').wrapEl.classList.contains('dneed')"));
    ok('Підказка щоденника: що щодня внести', w.eval("diaryHints().some(x=>/щодня внесіть/.test(x))"));
    set('d_obj_masa_0','82'); set('d_obj_masa_1','1400'); ok('Маса тіла й діурез — у тексті щоденника', /Маса тіла 82 кг, діурез 1400 мл\/добу/.test(out()), out());
@@ -778,6 +782,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Щоденник на місці: підказок немає у друці; очищення прибирає своє формулювання',r[7] && r[9],JSON.stringify(r));
    ok('Щоденник на місці: окремий ручний режим не потребує Alt і зберігає правки',r[8],JSON.stringify(r));
  }
+ // ── частина 3 ── (tests/features-part.cjs ділить файл за цими мітками; нові тести — у кінець)
  { // 0.9.3.41: мобільні підказки не змінюють значення, типи чи доступні описи.
    const r=JSON.parse(w.eval(`(()=>{ const t=F('zah.temp').inputs[0], ad=F('ssc.ad').inputs, old=t.value, ids=t.getAttribute('aria-describedby').split(/\\s+/), a=[];
      t.value='36,6'; a.push(t.inputMode==='decimal' && t.value==='36,6' && t.parentElement.textContent.includes('°C'));

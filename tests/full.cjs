@@ -75,10 +75,10 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  const files=w.eval('[makeDocx().length, makeOdt().length]'); ok('12. Word і LibreOffice створюються', files[0]>5000 && files[1]>5000);
  // 13 щоденник
  docBtn('shch').click(); ok('13. Щоденник: свої вкладки', tabs().join('|')==='Запис|Самопочуття|Об’єктивно|Лікування|Призначення|Шкали|Мої шаблони|Налаштування|Довідка');
- $('allNorm').click(); set('d_main_sk','2'); set('d_obj_ad_0','125'); set('d_obj_ad_1','75');
+ $('allNorm').click(); set('d_main_sk','2'); set('d_obj_ad_0','125'); set('d_obj_ad_1','75'); set('d_obj_t_0','36,6'); set('d_obj_chss_0','78'); set('d_obj_chd_0','17'); set('d_obj_chd_1','96');
  ok('13. Щоденник формується', out().includes('Щоденник спостереження') && out().includes('АТ 125/75 мм рт. ст.'));
  btn('Записати в журнал').click(); ok('13. Запис у журнал', doc.querySelectorAll('#dlist .prow').length===1);
- set('d_obj_ad_0',''); btn('Як попередній').click(); ok('13. «Як попередній» відновлює дані', $('d_obj_ad_0').value==='125');
+ btn('Без змін (як учора)').click(); ok('13. «Без змін (як учора)»: опис огляду скопійовано, показники — порожні й підсвічені (рішення лікаря 25.10.2026)', $('d_obj_ad_0').value==='' && $('d_obj_t_0').value==='' && !!doc.querySelector('.dtoday') && w.eval("DT.prev.size")>0);
  // 14 ручні правки зберігаються між документами
  $('out').insertAdjacentHTML('beforeend','<div>РУЧНА ПРАВКА</div>'); ev($('out'),'input');
  docBtn('ohl').click(); docBtn('shch').click(); ok('14. Ручна правка не губиться при перемиканні', out().includes('РУЧНА ПРАВКА'));
@@ -128,8 +128,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  w2.importFile(new w2.File([blob],'p.json')); { const t0=Date.now(); let b=null; while(Date.now()-t0<3000 && !(b=doc2.querySelector('.packsheet button.btn.primary'))) await sleep(25); if(b) b.click(); await sleep(50); } ok('17. Імпорт з файлу (з підтвердженням, без дублів)', /Перенесено: нових \d+, оновлено \d+/.test(doc2.querySelector('#toast').textContent), doc2.querySelector('#toast').textContent);
  w2.importFile(new w2.File(['{"a":1}'],'x.json')); await sleep(80); ok('17. Чужий файл відхиляється', doc2.querySelector('#toast').textContent.includes('не файл пацієнтів'));
  // 18 тема
- const tb=doc2.getElementById('themeBtn'); tb.click(); const t1=doc2.documentElement.getAttribute('data-theme'); tb.click(); const t2=doc2.documentElement.getAttribute('data-theme');
- ok('18. Тема день/ніч перемикається', t1 && t2 && t1!==t2, t1+'/'+t2);
+ const tb=doc2.getElementById('themeBtn'), th=()=>(doc2.documentElement.getAttribute('data-theme')||'')+'/'+(doc2.documentElement.getAttribute('data-tone')||''), seen=[]; for(let i=0;i<5;i++){ tb.click(); seen.push(th()); }
+ ok('18. Тема: день → теплий папір → ніч → кабінет → авто', seen.join(' ')==='light/ light/warm dark/ dark/grey /', seen.join(' '));
  // 19 помилки
  ok('19. Жодної помилки JavaScript за весь сценарій', d.errs.length===0 && d2.errs.length===0, d.errs.concat(d2.errs).join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length); process.exit(R.some(x=>x[0]==='❌')?1:0);

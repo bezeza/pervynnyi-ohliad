@@ -7,7 +7,7 @@
 
 1. `git pull` → нова гілка від свіжого `main`.
 2. Зробити задачу за правилами нижче.
-3. Локально: `node build.mjs`, потім `node tests/features.cjs`, `node tests/full.cjs`, `node tests/workflow.cjs` — усе зелене.
+3. Локально: `node build.mjs`, потім `node tests/features-part.cjs` (нові функції трьома паралельними частинами; новий тест — у кінець `tests/features.cjs`), `node tests/full.cjs`, `node tests/workflow.cjs` — усе зелене.
 4. `git show origin/main:pervynnyi-ohliad.html > pervynnyi-ohliad-prev.html`, коміт, push, PR.
 5. Дочекатися CI на GitHub. Зелений → злити (merge commit, не squash). Червоний → виправити й чекати знову.
 5а. **Перед злиттям — `git fetch`.** Якщо `main` змінився з моменту створення гілки (інший виконавець або Claude щось злив): онови гілку від `main`, розв’яжи конфлікти (`120-version-changelog.js`, `manifest.json`, `tests/features.cjs`; зібрані HTML — перезібрати), версія = версія в `main` + 1, дочекайся нового зеленого CI. Лише тоді зливай.
