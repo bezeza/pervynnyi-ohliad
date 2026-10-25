@@ -1317,3 +1317,10 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 .btback .brow.bsigrow{display:flex;align-items:baseline;gap:0}
 .btback .brow.bsigrow>.bf{flex:1 1 auto;min-width:6em}
 .btback .brow.bsigrow>.bsig{flex:none}
+
+/* 0.9.3.56 — стать у блоці «Пацієнт»; у шапці — лише «Стать?», коли невідома */
+.sexf .seg{display:inline-flex}
+.sexask{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:8px;background:var(--warn-soft,#fff4d6);color:var(--warn-ink,#7a5200);border:1px solid var(--warn-line,#f0d48a);font-size:13px;white-space:nowrap}
+.sexask[hidden]{display:none}
+.sexask button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:6px;padding:1px 7px;font:inherit;cursor:pointer}
+.sexask button:hover,.sexask button:focus-visible{background:var(--surface,#fff)}
