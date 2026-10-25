@@ -985,6 +985,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      async getFileHandle(n,o){ if(!files.has(n)&&!(o&&o.create)) throw new Error('not found'); return {kind:'file', name:n, async createWritable(){ let b=''; return {async write(d){ b+=d; }, async close(){ files.set(n,b); }}; }, async getFile(){ return {text:async()=>files.get(n)}; }}; },
      async *entries(){ for(const [n] of files) yield [n,{kind:'file',name:n}]; for(const [n,d] of dirs) yield [n,d]; },
      async removeEntry(n){ files.delete(n); dirs.delete(n); } }; };
+   w.eval('window.__pk=[PINC.key,PINC.cfg]; PINC.key=null; PINC.cfg=null');   // попередні тести PIN могли лишити шифрування
    const saved=JSON.parse(w.eval('JSON.stringify(loadStore())')), root=memDir('Первинний огляд — дані');
    w.eval("newPatient()"); set('meta_pib','Копія Тестовий Перший'); w.eval('savePatient(true)');
    w.eval("newPatient()"); set('meta_pib','Копія Тестовий Другий'); w.eval('savePatient(true)');
@@ -1003,11 +1004,15 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    await w.eval("fbkWrite('manual')");
    const days=new Set([...bk().files.keys()].filter(n=>/^Копія_/.test(n)&&!/перед оновленням/.test(n)).map(n=>n.slice(6,16)));
    ok('Копії в папці: зберігаються останні 30 днів, чужі файли не чіпаються', days.size===30 && days.has(day) && !days.has('2025-01-01') && bk().files.has('Нотатка.txt'), [...days].sort().slice(0,3).join(','));
+   await w.eval("(async()=>{ const raw=crypto.getRandomValues(new Uint8Array(32)); PINC.key=await crypto.subtle.importKey('raw',raw,{name:'AES-GCM'},false,['encrypt','decrypt']); PINC.cfg={v:1,test:1}; })()");
+   const re=await w.eval("fbkWrite('manual')"), enc=re && bk().files.get(re);
+   ok('Копії в папці: з PIN копія зашифрована — без ПІБ відкритим текстом', !!enc && JSON.parse(enc).type==='po-enc-file' && !/Копія Тестовий/.test(enc), (enc||'').slice(0,60));
+   w.eval('PINC.key=null; PINC.cfg=null');
    w.eval("saveStore({})"); w.localStorage.removeItem('po.fbk');
    ok('Копії в папці: порожнє сховище ніколи не записується як копія', (await w.eval("fbkWrite('manual')"))===null);
    w.eval('drawBak()'); await sleep(50);
    ok('Копії в папці: стан і кнопка в «Резервні копії й відновлення»', !!doc.getElementById('fbkBox') && /Копія в папку зараз/.test(doc.getElementById('fbkBox').textContent));
-   FSo.dir=null; FSo.ok=false; w.eval('saveStore('+JSON.stringify(saved)+')'); }
+   FSo.dir=null; FSo.ok=false; w.eval('saveStore('+JSON.stringify(saved)+')'); w.eval('PINC.key=window.__pk[0]; PINC.cfg=window.__pk[1]'); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
