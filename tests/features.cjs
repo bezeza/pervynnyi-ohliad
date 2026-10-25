@@ -230,6 +230,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("BLP.title=false"); w.__printed=0; $('printBtn').click();
    ok('Бланк: друк — сторінки бланка без жовтих позначок і без QR', $('print').querySelectorAll('.b003').length===2 && !$('print').querySelector('.bgap, .prqr'));
    w.eval("switchDoc('shch'); renderPaper()"); ok('Бланк: «43. Щоденник» із показниками ліворуч', /43\. ЩОДЕННИК/.test(pages()[0].textContent) && /ЧДР –/.test(pages()[0].textContent));
+   w.eval("switchDoc('epi'); F('s066.tbres').el.value='2'; renderPaper()");
+   const tbres=doc.querySelector('#paper .bepi2 .brow[data-s66fld="tbres"]');
+   ok('Бланк: п. 54 бере лише вибрану категорію резистентності з 066/о', !!tbres && tbres.querySelector('.bbox').textContent.trim()==='3', tbres && tbres.textContent);
+   tbres && tbres.click(); await sleep(20);
+   ok('Бланк: клік по категорії резистентності відкриває поле у 066/о', w.eval("DOC==='f066' && TABS[active].id==='s066'"), w.eval("DOC+' / '+TABS[active].id"));
    w.eval("switchDoc('epi'); renderPaper()"); ok('Бланк: «45. Епікриз» і п. 54–57', pages().length===2 && /45\. ЕПІКРИЗ/.test(pages()[0].textContent) && /57\. Результат медичного лікування/.test(pages()[1].textContent));
    w.eval("switchDoc('rx'); renderPaper()"); ok('Бланк: для інших документів — звичайний аркуш', !doc.querySelector('#paper .b003') && !bb());
    w.eval("switchDoc('ohl'); renderPaper()"); [...bb().querySelectorAll('button')].find(b=>/Текст документа/.test(b.textContent)).click(); $('paperBtn').click(); }
@@ -280,7 +285,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    const rows=[...doc.querySelectorAll('#paper .b003 .brow')];
    rows.find(x=>/^Хрипи/.test(x.textContent.trim())).click(); ok('Клік по пункту бланка «Хрипи» відкриває «Дихання»', w.eval("TABS[active].id")==='dyh');
    rows.find(x=>/^33\. Скарги/.test(x.textContent.trim())).nextElementSibling.click(); ok('Клік по тексту під «33. Скарги» відкриває «Скарги»', w.eval("TABS[active].id")==='skarhy');
-   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває «Серце, судини»', w.eval("TABS[active].id")==='ssc');
+   rows.find(x=>/^А\/Т/.test(x.textContent.trim())).click(); ok('Клік по «А/Т» відкриває поля артеріального тиску у формі', w.eval("TABS[active].id")==='ssc' && !doc.querySelector('.bqe[aria-label="Внести дані в друкований бланк"]'));
    w.eval("BLANK=false; renderPaper()"); const sec=doc.querySelector('#paper [data-sec="dyh"]'); if (sec){ sec.click(); }
    ok('«Текст документа» на аркуші: клік по розділу відкриває його', !sec || w.eval("TABS[active].id")==='dyh');
    w.eval("PAPER=false; renderPaper()"); }
@@ -540,18 +545,23 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  { // 0.9.3.28: огляд анестезіолога (ф. 003-3/о) і консультація анестезіолога
    ok('Документ «Анестезіолог» — у стаціонарі й амбулаторно', w.eval("DOCMORE.hosp.concat(DOCLIST.hosp).some(d=>d[0]==='anes') && DOCMORE.amb.concat(DOCLIST.amb).some(d=>d[0]==='anes')"));
    const r=w.eval(`(()=>{ MODE='hosp'; applyDoc(true); switchDoc('anes'); const sv=(k,i)=>{ F(k).el.value=String(i); }; const tx=(k,v)=>{ F(k).el.value=v; };
+     clearSection(SECTIONS.find(x=>x.id==='an_pun')); clearSection(SECTIONS.find(x=>x.id==='an_prot')); const emptyProtocol=b333c(), transferRow=emptyProtocol.querySelector('[data-an="an_prot.per"]');
+     const noPuncture=!/Протокол пункції|в асептичних умовах/.test(emptyProtocol.textContent), noDefaultTransfer=!!transferRow && !/до палати відділення/.test(transferRow.textContent) && !transferRow.querySelector('.bf')?.textContent.trim(), blankSignature=!!emptyProtocol.querySelector('.brow[data-an="an_zak.anest"]');
      sv('an_main.tip',0); tx('an_main.oper','лапароскопічна холецистектомія'); sv('an_obj.mal',2); sv('an_obj.sheya',1); sv('an_zak.asa',1); sv('an_zak.e',0); sv('an_zak.vg',1); sv('zah.stan',0); sv('vitae.zv',1);
      sv('an_prot.dsh',0); F('an_prot.int').inputs[0].value='7,5'; sv('an_pun.prost',0); tx('an_pun.riv','L3–L4'); tx('an_pun.osn','бупівакаїн 0,5% 3 мл'); update();
-     const o=document.getElementById('out').textContent, fc=formCode(), P=b333(), t=P.map(p=>p.textContent).join(' '), hint=F('an_obj.hint').abox.textContent;
+     const o=document.getElementById('out').textContent, fc=formCode(), P=b333(), t=P.map(p=>p.textContent).join(' '), hint=F('an_obj.hint').abox.textContent, signature=P.find(p=>p.classList.contains('b333c'))?.querySelector('.brow[data-an="an_zak.anest"]');
      MODE='amb'; applyDoc(true); update(); const oa=document.getElementById('out').textContent, fa=formCode();
      MODE='hosp'; applyDoc(true); clearSection(SECTIONS.find(x=>x.id==='an_main')); ['an_obj','an_zak','an_prot','an_pun'].forEach(id=>clearSection(SECTIONS.find(x=>x.id===id))); F('zah.stan').el.value=''; F('vitae.zv').el.value=''; switchDoc('ohl'); update();
-     return JSON.stringify([o,fc,P.length,t,hint,oa,fa]); })()`);
-   const [o,fc,n,t,hint,oa,fa]=JSON.parse(r);
+     return JSON.stringify([o,fc,P.length,t,hint,oa,fa,noPuncture,noDefaultTransfer,blankSignature,!!signature]); })()`);
+   const [o,fc,n,t,hint,oa,fa,noPuncture,noDefaultTransfer,blankSignature,signature]=JSON.parse(r);
    ok('Анестезіолог (стаціонар): текст — привід, Маллампаті, ASA IIE, вид анестезії, протоколи', /готується до планового оперативного лікування/.test(o) && /Клас за Маллампаті III/.test(o) && /ASA IIE/.test(o) && /інгаляційний наркоз з ШВЛ/.test(o) && /Протокол знеболення/.test(o) && /трубка № 7,5/.test(o) && /субарахноїдального простору/.test(o), [/Клас за Маллампаті III/.test(o),/ASA IIE/.test(o),/інгаляційний наркоз з ШВЛ/.test(o),/Протокол знеболення/.test(o),/трубка № 7,5/.test(o),/субарахноїдального простору/.test(o)].join()+' '+(o.match(/Висновок.{0,200}/)||[''])[0]);
    ok('Анестезіолог: форма 003-3/о, три аркуші бланка', fc==='003-3/о' && n===3 && /№ 003-3\/о/.test(t) && /ПЕРЕДОПЕРАЦІЙНИЙ ОГЛЯД АНЕСТЕЗІОЛОГОМ ТА ПРОТОКОЛ ЗАГАЛЬНОГО ЗНЕБОЛЕННЯ/.test(t) && /Листок знеболення/.test(t) && /ПРОТОКОЛ ЗНЕБОЛЕННЯ №/.test(t), t.slice(0,160));
    ok('Бланк 003-3/о: вибране позначено «●» (планового, Маллампаті III, ASA II, Е, паління так)', /●\s*III/.test(t) && /●\s*II/.test(t) && /●\s*Е \(ургентне/.test(t) && /Паління:\s*●\s*так/.test(t), (t.match(/Клас за Маллампаті.{0,40}/)||[''])[0]);
    ok('Підказка: можливі труднощі з дихальними шляхами (Маллампаті III, коротка шия)', /Маллампаті III, коротка шия/.test(hint), hint);
-   ok('Амбулаторно: консультаційний висновок (028/о), без протоколу знеболення', fa==='028/о' && /КОНСУЛЬТАЦІЙНИЙ ВИСНОВОК АНЕСТЕЗІОЛОГА/.test(oa) && !/Протокол знеболення/.test(oa), oa.slice(0,200)); }
+   ok('Амбулаторно: консультаційний висновок (028/о), без протоколу знеболення', fa==='028/о' && /КОНСУЛЬТАЦІЙНИЙ ВИСНОВОК АНЕСТЕЗІОЛОГА/.test(oa) && !/Протокол знеболення/.test(oa), oa.slice(0,200));
+   ok('003-3/о: без даних не друкується протокол пункції та вигадане місце переведення', noPuncture && noDefaultTransfer, JSON.stringify([noPuncture,noDefaultTransfer]));
+   ok('003-3/о: підпис анестезіолога залишається, навіть якщо даних пункції немає', blankSignature);
+   ok('003-3/о: підпис у протоколі клікабельний і відкриває поле анестезіолога', signature); }
  { // 0.9.3.29: епікриз «як у лікарні», курси лікування, «Продовжити прийом», динаміка зі щоденників
    const r=w.eval(`(()=>{ MODE='hosp'; applyDoc(true); switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-10-14'; P.d2.value='2026-10-20';
      const rx0=RX.slice(), di0=DIARIES.slice(); RX.length=0; DIARIES.length=0;
@@ -672,7 +682,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      const own=DIARY_INLINE.box.querySelector('[data-diary-source="d_obj_serce_own"]');own.value='Власне формулювання';own.dispatchEvent(new Event('input',{bubbles:true}));
      const snapshot=snap(), entry=diaryFields(), archive=bDiaryEntry({cur:false,f:entry.f});
      const plain={...entry.f};Object.keys(plain).filter(key=>key.endsWith('_own')).forEach(key=>plain[key]='');plain.d_main_svid='1';plain.d_obj_zhyv='3';const archived=bDiaryEntry({cur:false,f:plain});
-     a.push(snapshot.f.d_obj_serce_own==='Власне формулювання' && entry.f.d_obj_serce_own==='Власне формулювання' && archive.textContent.includes('Власне формулювання') && !archive.querySelector('[data-diary-key]') && !/свідомість не порушена|Живіт м’який|Реакція на огляд адекватна|оформлене/.test(archived.textContent.split(String.fromCharCode(160)).join(' ')));
+     const legacy={...plain};Object.keys(legacy).filter(key=>key.endsWith('_own')).forEach(key=>delete legacy[key]);const archivedLegacy=bDiaryEntry({cur:false,f:legacy});
+     diaryInlineClose();const pulseRow=document.querySelector('#paper .bdi.bcur .bdl>div[data-diary-key="pulse"]');pulseRow.click();const pulseOpens=DIARY_INLINE.key==='pulse'&&!!DIARY_INLINE.box;diaryInlineClose();
+     a.push(snapshot.f.d_obj_serce_own==='Власне формулювання' && entry.f.d_obj_serce_own==='Власне формулювання' && archive.textContent.includes('Власне формулювання') && !archive.querySelector('[data-diary-key]') && /здутий, болючий/.test(archived.textContent) && !/свідомість не порушена|Живіт м’який|Реакція на огляд адекватна|раз на добу|оформлене/.test(archived.textContent.split(String.fromCharCode(160)).join(' ')) && /оглушення/.test(archivedLegacy.textContent) && /здутий, болючий/.test(archivedLegacy.textContent) && !/свідомість не порушена|Живіт м’який|Реакція на огляд адекватна|раз на добу|оформлене/.test(archivedLegacy.textContent.split(String.fromCharCode(160)).join(' ')) && pulseOpens);
      diaryInlineClose();clearAll(true);restore(snapshot);a.push(val(F('d_obj.serce'))==='Власне формулювання');
      diaryInlineOpen('pressure');const inputs=DIARY_INLINE.box.querySelectorAll('input');inputs[0].value='130';inputs[0].dispatchEvent(new Event('input',{bubbles:true}));inputs[1].value='80';inputs[1].dispatchEvent(new Event('input',{bubbles:true}));
      a.push(document.querySelector('#paper .bcur').textContent.includes('130/80'));inputs[1].dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}));a.push(DIARY_INLINE.key==='breath');
@@ -760,6 +772,42 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Масові дії мають точні назви, а назва нового пацієнта пояснює збереження поточного',r[0],JSON.stringify(r));
    ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
    ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
+ }
+ { // 0.9.3.50: нові поля бланків навігують до звичайної форми та переживають перезапуск.
+   doc.querySelector('[data-mode="hosp"]').click();
+   w.eval("switchDoc('ohl'); BLANK=true; PAPER=true; BLP.title=true; BLP.exam=true; GAPS=false; renderPaper()");
+   set('s066_docid','ID-картка, ТЕСТ'); set('s066_grom','804 — Україна');
+   set('s066_krov','A(II)'); set('s066_rh','Rh+');
+   set('s066_vp','1'); set('s066_p30','0');
+   set('ssc_adl_0','125'); set('ssc_adl_1','82'); set('zah_moloch','Опис огляду грудних залоз'); set('zah_opora','Опис опорно-рухової системи');
+   w.eval('renderPaper()');
+   const paper=$('paper'), idrow=paper.querySelector('.btitle .pedit[data-fld="s066.docid"]'), examrow=paper.querySelector('.bexam .pedit[data-fld="zah.moloch"]');
+   ok('003/о підставляє документ, громадянство, групу крові, Rh та АТ з полів програми',!!idrow&&/ID-картка/.test(idrow.textContent)&&/ТЕСТ/.test(idrow.textContent)&&/804/.test(paper.textContent)&&/A\(II\)/.test(paper.textContent)&&/Rh\+/.test(paper.textContent)&&/125\/82/.test(paper.textContent));
+   ok('003/о друкує введені окремо описи молочних залоз та кістково-суглобової системи',/Опис огляду грудних залоз/.test(paper.textContent)&&/Опис опорно-рухової системи/.test(paper.textContent));
+   if(idrow) idrow.click();
+   await sleep(90);
+   ok('Клік по реквізиту 003/о переходить до джерельного поля 066/о',w.eval("DOC==='f066' && TABS[active].id==='s066'"));
+   w.eval("switchDoc('ohl'); BLANK=true; PAPER=true; BLP.title=true; BLP.exam=true; renderPaper()");
+   const examrow2=paper.querySelector('.bexam .pedit[data-fld="zah.moloch"]');
+   if(examrow2) examrow2.click();
+   await sleep(90);
+   ok('Клік по рядку 003/о веде до поля у звичайній формі без нового віконця',w.eval("TABS[active].id")==='zah' && doc.activeElement.id==='zah_moloch' && !doc.querySelector('.bqe[aria-label="Внести дані в друкований бланк"]'));
+   set('meta_pib','Синтетичний тестовий запис'); set('ssc_adl_0','124'); set('ssc_adl_1','78'); set('zah_moloch','Тестове поле огляду');
+   w.eval('savePatient(true)'); w.localStorage.setItem('po.last',w.eval('PID'));
+   const saved={}; for(let i=0;i<w.localStorage.length;i++){const key=w.localStorage.key(i);saved[key]=w.localStorage.getItem(key);}
+   const fresh=new JSDOM(html,{url:'https://x.test/restart',runScripts:'dangerously',pretendToBeVisual:true,beforeParse(fw){
+     fw.URL.revokeObjectURL=()=>{};fw.scrollTo=()=>{};fw.Element.prototype.scrollIntoView=()=>{};fw.scrollBy=()=>{};fw.print=()=>{};
+     for(const key in saved)fw.localStorage.setItem(key,saved[key]); fw.localStorage.setItem('po.autogate','0');
+     fw.addEventListener('error',e=>errs.push('restart: '+e.message));fw.console.warn=(...a)=>errs.push('restart: '+a.join(' '));
+   }});
+   await sleep(80);
+   const fw=fresh.window, fdoc=fw.document;
+   ok('Нові поля лівої руки та молочних залоз відновлюються після перезапуску',fdoc.getElementById('ssc_adl_0')?.value==='124' && fdoc.getElementById('ssc_adl_1')?.value==='78' && fdoc.getElementById('zah_moloch')?.value==='Тестове поле огляду');
+   fresh.window.close();
+   w.eval("switchDoc('f066'); F066ED='2012'; renderPaper()"); set('s066_dxnapr','Діагноз у направленні'); w.eval('renderPaper()');
+   ok('066/о редакції 2012 має окреме поле діагнозу при направленні',/Діагноз у направленні/.test(paper.textContent));
+   w.eval("F066ED='2016'; renderPaper()"); set('s066_dxhosp','Діагноз при госпіталізації'); set('s066_dxhospcode','I10'); w.eval('renderPaper()');
+   ok('066/о редакції 2016 має окремі поля діагнозу та коду МКХ-10',/Діагноз при госпіталізації/.test(paper.textContent)&&/I10/.test(paper.textContent));
  }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
