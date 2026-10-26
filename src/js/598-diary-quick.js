@@ -57,6 +57,9 @@ function applyDProfile(){
 
 /* ---- блок «Швидкий запис» над шаблонами щоденника ---- */
 let DSRC = null, DPICK = false;
+/* «Без хвороби» — вибір лікаря, пам’ятається в цьому браузері: щоденник не питає хворобу, пункти «Об’єктивно» — усі */
+let DFREE = (()=>{ try{ return localStorage.getItem('po.dfree') === '1'; }catch(e){ return false; } })();
+function setDFree(on){ DFREE = !!on; try{ localStorage.setItem('po.dfree', DFREE ? '1' : '0'); }catch(e){} DPICK = false; drawDSrc(); }
 const DTOP = ['pneu','copd','asthma','hf','gh','ihd','af','dm','stroke','pyelo','gastr','covid'];
 function pickDiaryDisease(key){
   const p = PRESETS.find(x=>x.key === key); if (!p) return;
@@ -92,7 +95,13 @@ function drawDSrc(){
       h('button', {type:'button', class:'more', onclick:()=>{ DPICK = true; drawDSrc(); }}, 'Вказати хворобу — сховати зайве'));
     DSRC.append(row); return;
   }
-  /* ні огляду, ні хвороби — питаємо */
+  if (DFREE && !DPICK){
+    row.append(h('span', {class:'dsrc-l'}, 'Щоденник'), h('b', {}, 'без хвороби'),
+      h('span', {class:'chips-hint'}, 'усі пункти; скарги — ваші слова й загальний список'),
+      h('button', {type:'button', class:'more', onclick:()=>{ DPICK = true; drawDSrc(); }}, 'Вказати хворобу — сховати зайве'));
+    DSRC.append(row); return;
+  }
+  /* ні огляду, ні хвороби — пропонуємо хворобу або «Без хвороби» */
   const q = h('input', {type:'search', placeholder:'Пошук хвороби: пневмонія, ХОЗЛ, J44…', 'aria-label':'Пошук хвороби для щоденника', list:'dsrcList'});
   const dl = h('datalist', {id:'dsrcList'}, ...PRESETS.filter(x=>x.key && !x.custom).map(x=>h('option', {value:x.name}, x.mkh || '')));
   const go = () => { const t = q.value.trim().toLowerCase(); if (!t) return; const p1 = PRESETS.find(x=>x.name.toLowerCase() === t) || PRESETS.find(x=>x.name.toLowerCase().includes(t) || (x.mkh || '').toLowerCase().startsWith(t));
@@ -101,7 +110,8 @@ function drawDSrc(){
   DSRC.append(h('div', {class:'dsrc-ask'},
     h('b', {}, p ? 'Інша хвороба для щоденника' : 'Для якої хвороби щоденник?'),
     h('p', {class:'chips-hint'}, ex ? 'Щоденник лишиться з даних огляду, а пункти «Об’єктивно» підлаштуються під хворобу.' : 'Первинний огляд не заповнено — щоденник заповниться за еталонним шаблоном хвороби, зайві пункти сховаються.'),
-    h('div', {class:'chips'}, ...DTOP.map(k=>PRESETS.find(x=>x.key === k)).filter(Boolean).map(x=>h('button', {type:'button', class:'chip q', onclick:()=>pickDiaryDisease(x.key)}, x.name))),
+    h('div', {class:'chips'}, p || ex ? '' : h('button', {type:'button', class:'chip', id:'dsrcFree', title:'Пишіть щоденник без шаблону хвороби; програма більше не питатиме', onclick:()=>setDFree(true)}, 'Без хвороби'),
+      ...DTOP.map(k=>PRESETS.find(x=>x.key === k)).filter(Boolean).map(x=>h('button', {type:'button', class:'chip q', onclick:()=>pickDiaryDisease(x.key)}, x.name))),
     h('div', {class:'res-form', style:'margin-top:8px'}, q, dl, h('button', {type:'button', class:'btn', onclick:go}, 'Обрати')),
     DPICK ? h('button', {type:'button', class:'more', onclick:()=>{ DPICK = false; drawDSrc(); }}, 'Скасувати') : ''));
 }
@@ -123,7 +133,7 @@ function drawDSrc(){
   /* перший щоденник без огляду й без хвороби — одразу питаємо хворобу */
   const sd0 = switchDoc; switchDoc = function(k){
     const r = sd0.apply(this, arguments);
-    if (k === 'shch' && !DIARIES.length && diaryUntouched() && !examFilled()){ DPICK = false; drawDSrc(); toast('Оберіть хворобу — щоденник заповниться і підлаштується під неї', 3500);
+    if (k === 'shch' && !DFREE && !DIARIES.length && diaryUntouched() && !examFilled()){ DPICK = false; drawDSrc(); toast('Оберіть хворобу — щоденник заповниться і підлаштується під неї', 3500);
       setTimeout(()=>{ const i = DSRC.querySelector('input'); if (i && !isPhoneW()) i.focus({preventScroll:true}); DSRC.scrollIntoView({block:'nearest'}); }, 60); }
     return r;
   };
