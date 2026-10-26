@@ -1055,7 +1055,30 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    paste('Пробна Ольга Іванівна\nЖ.,20 червня 1957'); paste('Тестенко Іван Петрович\nЧ.,21 квітня 1973');
    ok('З МІС: інший пацієнт — новий запис, наявний — відкривається, без дублів', w.eval("mv('pib')+'|'+sex")==='Тестенко Іван Петрович|m' && w.eval('Object.keys(loadStore()).length')===n0+1, w.eval("mv('pib')+'|'+sex+'|'+Object.keys(loadStore()).length")+' n0='+n0);
    const ta=doc.querySelector('#panels textarea'); const e=new w.Event('paste',{bubbles:true,cancelable:true}); e.clipboardData={getData:()=>'Тестенко Іван Петрович\nЧ.,21 квітня 1973'}; ta.dispatchEvent(e);
-   ok('З МІС: вставка в звичайне поле не перехоплюється', !e.defaultPrevented); }
+   ok('З МІС: вставка в звичайне поле не перехоплюється', !e.defaultPrevented);
+   ok('З МІС: стать злилась із по батькові (однорядкове поле)', P('Тестенко Іван МиколайовичЧ.,14 квітня 1984')==='[["Тестенко Іван Миколайович","m","1984-04-14"]]'); }
+ // 0.9.3.65 щоденник без первинки
+ { w.eval("newPatient(); curKey=null; switchDoc('ohl')"); set('meta_pib','Щоденник Без Первинки'); w.eval("switchDoc('shch')");
+   ok('Щоденник без огляду: є «Без хвороби»', !!$('dsrcFree'));
+   $('dsrcFree').click();
+   ok('«Без хвороби»: форма не питає хворобу і пам’ятає вибір', w.eval('DFREE') && /без хвороби/.test($('dsrc').textContent) && !$('dsrc').querySelector('input') && w.localStorage.getItem('po.dfree')==='1');
+   const rb=()=>w.eval("F('d_main.zal').rbox"), chipT=t=>[...rb().querySelectorAll('.chip')].find(c=>c.textContent===t), zal=()=>w.eval("F('d_main.zal').el.value");
+   w.eval('renderRemain()');
+   ok('Скарги без первинки: загальний список і пошук', !!chipT('загальну слабкість') && !!rb().querySelector('input[list="dzalList"]'));
+   chipT('загальну слабкість').click();
+   ok('Скарга з загального списку — у «Зберігаються скарги»', zal()==='загальну слабкість', zal());
+   w.eval("(()=>{ const e=F('d_main.zal').el; e.value+=', біль у правому плечі'; e.dispatchEvent(new Event('input')); })()");
+   const md=$('meta_dt'); md.value='2026-10-01T09:00'; ev(md,'input');
+   const save=()=>{ const n=w.eval('DIARIES.length'); w.eval('saveDiary()'); if (w.eval('DIARIES.length')===n) w.eval('saveDiary()'); };
+   save();
+   ok('Після запису — чернетка наступного дня: дата +1, скарги порожні', w.eval('DIARIES.length')===1 && md.value.startsWith('2026-10-02') && zal()==='', md.value+' | '+zal());
+   w.eval('renderRemain()');
+   ok('Свої слова пацієнта — кнопками в наступному щоденнику', !!chipT('біль у правому плечі') && /Цього пацієнта/.test(rb().textContent));
+   const sel=doc.querySelector('.dnext-row select'); sel.value='2'; ev(sel,'change');
+   chipT('біль у правому плечі').click(); w.eval("(()=>{ const f=F('d_obj.t'); if (f && f.inputs){ f.inputs[0].value='37,4'; f.inputs[0].dispatchEvent(new Event('input')); } })()");
+   save();
+   ok('«Через день»: наступна чернетка на +2 дні', w.eval('DIARIES.length')===2 && md.value.startsWith('2026-10-04'), md.value);
+   w.eval("setDFree(false)"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
