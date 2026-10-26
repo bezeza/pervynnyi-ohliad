@@ -1591,7 +1591,7 @@ body.onepage #panels>.panel{scroll-margin-top:70px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.63 від 25.10.2026">v0.9.3.63 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.64 від 26.10.2026">v0.9.3.64 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3737,8 +3737,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.63', VDATE = '25.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.64', VDATE = '26.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.64', '26.10.2026', 'з МІС Health24: закладка «🔖 З МІС → Первинний огляд» (вкладка «Запис») або кнопка «→ ПО» зі скрипта МІС+ копіює з медкарти чи списку пацієнтів ПІБ, стать і дату народження; у програмі — Ctrl+V або «⇩ З МІС». Якщо пацієнт уже є — відкривається він. Дані йдуть лише через буфер обміну'],
   ['0.9.3.63', '25.10.2026', 'комп’ютер, «Перед друком» → бланк: «✎ Заповнити порожні · N» над аркушем; у панелі правки — «25 з 45» і «Лише порожні» («Далі» стрибає лише по незаповнених місцях), як на телефоні'],
   ['0.9.3.62', '25.10.2026', 'телефон, «Перед друком»: читабельний бланк — ті самі пункти й нумерація в ширину екрана, без гортання вбік («Як на папері» — точний аркуш; друк завжди А4); видно, що можна правити (вибране підкреслено, порожнє — пунктирна плашка); «✎ Заповнити порожні» і «Лише порожні» — «Далі» стрибає по незаповнених місцях; у панелі — «12 з 45»'],
   ['0.9.3.61', '25.10.2026', 'телефон: дотик до фрази в тексті більше не відкриває клавіатуру — лише варіанти; правка вручну — кнопкою «⌨»; у панелях варіантів поле не захоплює фокус саме; коли клавіатура відкрита — панель піднімається над нею'],
@@ -5053,6 +5054,7 @@ const HELPS = [
   'Щоб вони були завжди: «Налаштування» → «Профіль роботи: Травматологія».']],
  ['Копіювання, друк, МІС', [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
+  'З МІС: закладка «🔖 З МІС → Первинний огляд» (вкладка «Запис», перетягніть на панель закладок) або кнопка «→ ПО» у МІС копіює ПІБ, стать і дату народження; у програмі натисніть Ctrl+V або «⇩ З МІС».',
   '«Копіювати» — весь текст; «Копіювати частинами для МІС» — кожен розділ окремо для вставки в поля МІС.',
   '«Word», «LibreOffice», «Друк / PDF» — документ із шапкою закладу за формами МОЗ.',
   'Документи за бланками наказу МОЗ № 110 («Налаштування» → «Оформлення документів»): консультація — пункти 1–8 форми № 028/о; діагноз — «а) основний, б) ускладнення основного, в) супутній»; у стаціонарі — «Анамнез хвороби», «Об’єктивний стан хворого», як у формі № 003/о.',
@@ -18074,6 +18076,83 @@ function phrHead(){
 { const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ phrApply(); }catch(e){} try{ if (PE.box) phrHead(); }catch(e){} return r; }; }
 if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ phrApply(); }catch(e){} });
 try{ if (PAPER) renderPaper(); }catch(e){}
+/* ===== З МІС: ПІБ, стать і дата народження з МІС Health24 (закладка в браузері → буфер → Ctrl+V у програмі) ===== */
+/* misParse — самодостатня: її текст вбудовується в закладку, тому без зовнішніх змінних */
+function misParse(t){
+  const M = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+  const W = "[А-ЯІЇЄҐ][А-ЯІЇЄҐа-яіїєґ'’ʼ-]+", N = '(' + W + '(?:[ \\t]+' + W + '){1,3})';
+  const nice = s => s === s.toUpperCase() ? s.toLowerCase().replace(/(^|[\s-])([а-яіїєґ])/g, (m, a, b) => a + b.toUpperCase()) : s;
+  const bySx = n => /(ович|йович|ич)$/i.test(n) ? 'm' : /(івна|ївна|овна|инична)$/i.test(n) ? 'f' : '';
+  const p2 = n => String(n).padStart(2, '0'), R = [], seen = {};
+  const add = (raw, pib, sx, d, m, y) => {
+    pib = nice(pib.trim().replace(/\s+/g, ' ')); d = +d; m = +m; y = +y;
+    if (!(d >= 1 && d <= 31 && m >= 1 && m <= 12 && y > 1900 && y <= new Date().getFullYear())) return;
+    const dob = y + '-' + p2(m) + '-' + p2(d), k = pib + '|' + dob; if (seen[k]) return; seen[k] = 1;
+    R.push({pib, sex: sx === 'Ч' ? 'm' : sx === 'Ж' ? 'f' : bySx(pib.split(' ')[2] || ''), dob, raw: raw.trim()});
+  };
+  /* МІС Health24: «Прізвище Ім’я По батькові» ↵ «Ч.,21 квітня 1973 (53 р.)» */
+  for (const x of t.matchAll(new RegExp(N + '[ \\t]*\\r?\\n?[ \\t]*([ЧЖ])\\.?,?\\s*(\\d{1,2})[ \\t]+(' + M.join('|') + ')[ \\t]+(\\d{4})', 'g')))
+    add(x[0], x[1], x[2], x[3], M.indexOf(x[4]) + 1, x[5]);
+  /* просто «Прізвище Ім’я По батькові, 21.04.1973» */
+  if (!R.length) for (const x of t.matchAll(new RegExp(N + '[ \\t,]*\\r?\\n?[ \\t]*(?:дата народження:?\\s*)?(\\d{1,2})\\.(\\d{1,2})\\.(\\d{4})', 'gi')))
+    add(x[0], x[1], '', x[2], x[3], x[4]);
+  return R;
+}
+
+function misFill(p){
+  const st = loadStore(), same = Object.keys(st).find(id=>st[id].name === p.pib && (!st[id].dob || st[id].dob === p.dob));
+  if (same){ if (same !== PID) openPatient(same); toast('Пацієнт уже є — відкрито: ' + p.pib, 2600); return; }
+  if (mv('pib') && mv('pib') !== p.pib) newPatient();
+  [['pib', p.pib], ['dob', p.dob]].forEach(([k, v])=>{ const e = document.getElementById('meta_' + k); if (e){ e.value = v; e.dispatchEvent(new Event('input')); } });
+  if (p.sex) sexSet(p.sex, false);   /* стать із МІС — як ручний вибір: автовизначення за по батькові її не змінює */
+  calcAge(); update(); savePatient(true); renderPtBar();
+  toast('З МІС: ' + p.pib + ', ' + fmtD(p.dob) + (p.sex ? (p.sex === 'f' ? ', жінка' : ', чоловік') : ''), 2600);
+}
+function misPick(list){
+  if (list.length === 1){ misFill(list[0]); return; }
+  const old = document.getElementById('misPick'); if (old) old.remove();
+  const close = ()=>box.remove();
+  const box = h('div', {id:'misPick', class:'modal', role:'dialog', 'aria-label':'Кого перенести з МІС'},
+    h('div', {class:'mcard'},
+      h('div', {class:'ph'}, h('h2', {}, 'Кого перенести з МІС?'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+      h('div', {class:'acts2', style:'flex-direction:column;align-items:stretch'}, ...list.map(p=>h('button', {type:'button', class:'btn', onclick:()=>{ close(); misFill(p); }}, p.pib + ', ' + fmtD(p.dob))))));
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  document.body.append(box);
+}
+function misFromText(t, quiet){
+  const r = misParse(t || '');
+  if (!r.length){ if (!quiet) toast('У буфері немає ПІБ і дати народження з МІС. Натисніть закладку «З МІС» на сторінці пацієнта', 3500); return false; }
+  misPick(r); return true;
+}
+function misBookmarklet(){
+  const fb = "const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove();done()";
+  const code = `(()=>{const misParse=${misParse.toString()};const s=String(getSelection()),r=misParse(s.trim()?s:document.body.innerText);`
+    + `if(!r.length){alert('Первинний огляд: не знайшов ПІБ і дату народження. Відкрийте медкарту пацієнта або виділіть рядок пацієнта.');return}`
+    + `let p=r[0];if(r.length>1){const n=prompt('Кого перенести в «Первинний огляд»? Номер:\\n'+r.map((x,i)=>(i+1)+'. '+x.pib).join('\\n'),'1');if(n===null)return;p=r[(+n||0)-1];if(!p)return}`
+    + `const t=p.raw,done=()=>alert('Скопійовано: '+p.pib+'\\nПерейдіть у «Первинний огляд» і натисніть Ctrl+V');`
+    + `try{navigator.clipboard.writeText(t).then(done,()=>{${fb}})}catch(e){${fb}}})()`;
+  return 'javascript:' + encodeURIComponent(code);
+}
+
+/* Ctrl+V поза полями (або в полі ПІБ) — заповнює пацієнта, якщо в буфері рядок із МІС */
+document.addEventListener('paste', e=>{
+  const t = e.target, inField = t && t.closest && t.closest('input,textarea,select,[contenteditable="true"],#out');
+  if (inField && t.id !== 'meta_pib') return;
+  const s = (e.clipboardData || window.clipboardData).getData('text/plain');
+  if (!misParse(s).length) return;
+  e.preventDefault(); misFromText(s, true);
+});
+
+{ const pib = document.getElementById('meta_pib'), grid = pib && pib.closest('.grid');
+  if (grid){
+    const btn = h('button', {type:'button', class:'btn', title:'Вставити ПІБ, стать і дату народження, скопійовані закладкою «З МІС»', onclick:()=>{
+      try{ navigator.clipboard.readText().then(t=>misFromText(t), ()=>toast('Натисніть Ctrl+V — браузер не дав прочитати буфер', 3000)); }
+      catch(x){ toast('Натисніть Ctrl+V — браузер не дав прочитати буфер', 3000); } }}, '⇩ З МІС');
+    const bm = h('a', {class:'btn', href:misBookmarklet(), title:'Перетягніть на панель закладок браузера', onclick:e=>{ e.preventDefault(); toast('Перетягніть цю кнопку на панель закладок (Ctrl+Shift+B — показати панель)', 3500); }}, '🔖 З МІС → Первинний огляд');
+    grid.after(h('div', {class:'acts2', id:'misIn', style:'margin:6px 0 4px'}, btn, bm,
+      h('span', {class:'chips-hint', style:'margin:0'}, 'Один раз перетягніть «🔖» на панель закладок. У МІС відкрийте медкарту пацієнта → закладка → тут Ctrl+V. Дані йдуть лише через буфер обміну.')));
+  }
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

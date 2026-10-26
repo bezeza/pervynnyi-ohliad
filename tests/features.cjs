@@ -1042,6 +1042,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
        phrRowEmpty(mk('<div class="brow"><span class="bl">Хворий </span><span class="bf">Тестовий</span></div>')),
        phrRowEmpty(mk('<div class="blines"></div>')), phrRowEmpty(mk('<div class="blines">текст</div>')) ]); })()`));
    ok('Читабельний бланк: порожнє — лише незаповнене (рядок із вибраним варіантом — заповнений)', JSON.stringify(r)==='[true,false,false,true,false]', JSON.stringify(r)); }
+ // 0.9.3.64 «З МІС»
+ { const P=t=>JSON.stringify(w.eval(`misParse(${JSON.stringify(t)}).map(x=>[x.pib,x.sex,x.dob])`));
+   ok('З МІС: рядок медкарти → ПІБ, стать, дата', P('Тестенко Іван Петрович\nТестенко Іван Петрович\nЧ.,21 квітня 1973 (53 р.),   Ідентифікований')==='[["Тестенко Іван Петрович","m","1973-04-21"]]', P('Тестенко Іван Петрович\nЧ.,21 квітня 1973'));
+   ok('З МІС: список із кількох, подвійне прізвище, ВЕЛИКІ літери, дата цифрами', JSON.parse(P('Пробна Ольга Іванівна\nЖ.,20 червня 1957 (69 р.)\nКовальчук-Мельник Анна-Марія Степанівна\nЖ.,08 грудня 1988')).length===2
+     && P('ДЕМО-ПРОБНИЙ ОЛЕГ ВАЛЕРІЙОВИЧ, 05.03.1990')==='[["Демо-Пробний Олег Валерійович","m","1990-03-05"]]' && P('просто текст 2026')==='[]');
+   const code=decodeURIComponent(w.eval('misBookmarklet()').slice(11)); let bmOk=true; try{ new w.Function(code); }catch(e){ bmOk=false; }
+   ok('З МІС: закладка — коректний JavaScript, кнопки на вкладці «Запис»', bmOk && !!$('misIn'));
+   const paste=t=>{ const e=new w.Event('paste',{bubbles:true,cancelable:true}); e.clipboardData={getData:()=>t}; doc.body.dispatchEvent(e); return e.defaultPrevented; };
+   const pv=paste('Тестенко Іван Петрович\nЧ.,21 квітня 1973 (53 р.)'), n0=w.eval('Object.keys(loadStore()).length');
+   ok('З МІС: Ctrl+V заповнює ПІБ, дату, вік, стать і зберігає', pv && w.eval("[mv('pib'),mv('dob'),sex,!!PID&&loadStore()[PID].name].join('|')")==='Тестенко Іван Петрович|1973-04-21|m|Тестенко Іван Петрович' && +w.eval("mv('age')")>=50);
+   paste('Пробна Ольга Іванівна\nЖ.,20 червня 1957'); paste('Тестенко Іван Петрович\nЧ.,21 квітня 1973');
+   ok('З МІС: інший пацієнт — новий запис, наявний — відкривається, без дублів', w.eval("mv('pib')+'|'+sex")==='Тестенко Іван Петрович|m' && w.eval('Object.keys(loadStore()).length')===n0+1, w.eval("mv('pib')+'|'+sex+'|'+Object.keys(loadStore()).length")+' n0='+n0);
+   const ta=doc.querySelector('#panels textarea'); const e=new w.Event('paste',{bubbles:true,cancelable:true}); e.clipboardData={getData:()=>'Тестенко Іван Петрович\nЧ.,21 квітня 1973'}; ta.dispatchEvent(e);
+   ok('З МІС: вставка в звичайне поле не перехоплюється', !e.defaultPrevented); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

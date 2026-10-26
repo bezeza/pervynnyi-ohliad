@@ -1,0 +1,140 @@
+/* ==UserStyle==
+@name         МІС Health24 — спокійно
+@namespace    github.com/bezeza/pervynnyi-ohliad
+@version      1.1.0
+@description  Приглушені тони (день / сутінки / ніч / авто), читабельний шрифт, компактні відступи, тонкі згорнуті розділи, менш помітна «Внести запис як помилковий». Лише вигляд у вашому браузері — записи в МІС не змінюються.
+@author       bezeza
+@license      AGPL-3.0-only
+@preprocessor uso
+
+@advanced dropdown theme "Тема" {
+  auto "Авто: день / ніч як у системі" <<<EOT
+@media (prefers-color-scheme: dark) {
+  html { filter: invert(.9) hue-rotate(180deg) !important; background: #f8f7f4 !important; }
+  img, video, canvas, picture, [style*="background-image"], .svg-icon use[href*="logo"] { filter: invert(1) hue-rotate(180deg) !important; }
+}
+EOT;
+  day "День — тепле приглушене тло" <<<EOT
+EOT;
+  dusk "Сутінки — середнє, менше світла" <<<EOT
+html { filter: brightness(.8) sepia(.12) contrast(1.05) !important; }
+EOT;
+  night "Ніч — темне тло, світлий текст" <<<EOT
+html { filter: invert(.9) hue-rotate(180deg) !important; background: #f8f7f4 !important; }
+img, video, canvas, picture, [style*="background-image"] { filter: invert(1) hue-rotate(180deg) !important; }
+EOT;
+}
+@advanced dropdown font "Шрифт" {
+  noto "Noto Sans (є у Fedora, Android)" <<<EOT
+"Noto Sans", "Segoe UI", "PT Sans", Roboto, sans-serif EOT;
+  pt "PT Sans (створений для кирилиці)" <<<EOT
+"PT Sans", "Noto Sans", "Segoe UI", sans-serif EOT;
+  plex "IBM Plex Sans (як у «Первинному огляді», якщо встановлено)" <<<EOT
+"IBM Plex Sans", "Noto Sans", "Segoe UI", sans-serif EOT;
+  segoe "Segoe UI (Windows)" <<<EOT
+"Segoe UI", "Noto Sans", sans-serif EOT;
+  rubik "Rubik (як було в МІС)" <<<EOT
+Rubik, sans-serif EOT;
+}
+@advanced dropdown size "Розмір тексту" {
+  s16 "Звичайний (16)" <<<EOT
+16px EOT;
+  s15 "Менший (15)" <<<EOT
+15px EOT;
+  s17 "Більший (17)" <<<EOT
+17px EOT;
+}
+==/UserStyle== */
+
+@-moz-document domain("mis.h24.ua") {
+  :root {
+    --mh-bg: #efede8;        /* тло сторінки */
+    --mh-card: #f8f7f4;      /* картки, поля, таблиці */
+    --mh-soft: #e6e3dc;      /* сірі смужки, футер */
+    --mh-line: #d6d1c7;
+    --mh-ink: #2f3337;       /* основний текст замість чорного */
+    --mh-ink2: #5d6268;
+    --mh-blue: #4d7396;      /* замість яскраво-синього */
+    --mh-blue-soft: #e1e8ee;
+    --mh-green: #5f8c6b;
+    --mh-red: #a9665f;
+    --mh-orange: #c4916a;
+  }
+
+  /* ---------- тема ---------- */
+  /*[[theme]]*/
+
+  /* ---------- шрифт ---------- */
+  html, body, body :is(div, span, p, a, td, th, label, li, input, textarea, button, select, h1, h2, h3, h4, h5, h6, .mat-mdc-select, .mdc-button__label) {
+    font-family: /*[[font]]*/ !important;
+  }
+  body { font-size: /*[[size]]*/ !important; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  html body .material-icons, html body .mat-icon, html body [class*="material-symbols"] { font-family: "Material Icons", "Material Symbols Outlined" !important; }   /* значки-лігатури не чіпати */
+
+  /* ---------- тло й текст ---------- */
+  html, body, .content, header, .sidebar__info, .footer, .sticky_bottom { background-color: var(--mh-bg) !important; }
+  body, .content { color: var(--mh-ink) !important; }
+
+  .mat-expansion-panel, .mat-mdc-card, mat-card, .mdc-dialog__surface, .mat-mdc-dialog-surface,
+  .mat-mdc-select-panel, .mat-mdc-autocomplete-panel, .mat-mdc-menu-panel, .notification-list,
+  .patient_item-wrap, table, .mat-mdc-table, .mat-mdc-row, .mat-mdc-header-row, .group:not(:has(.group)) {
+    background-color: var(--mh-card) !important; color: var(--mh-ink) !important;
+  }
+  .group:has(.group) { background-color: var(--mh-blue-soft) !important; }   /* зовнішні блоки, як «Додаткові дані медичного запису» */
+  .action.default, .line, .footer { background-color: var(--mh-soft) !important; }
+  .mat-mdc-text-field-wrapper, .mdc-text-field--filled:not(.mdc-text-field--disabled) { background-color: var(--mh-card) !important; }
+
+  /* ---------- менше порожнього місця ---------- */
+  .group { padding: 12px 16px !important; margin: 8px 0 !important; border-radius: 10px !important; border: 1px solid var(--mh-line); }
+  .group-top { margin-bottom: 8px !important; }
+  .patient_item-wrap { padding: 10px 14px !important; margin-bottom: 8px !important; border: 1px solid var(--mh-line); border-radius: 10px; }
+  table td, table th { padding-top: 6px !important; padding-bottom: 6px !important; }
+  .mat-mdc-form-field-subscript-wrapper:not(:has(mat-error, .mat-mdc-form-field-error)) { height: 4px !important; min-height: 0 !important; }
+  .mat-mdc-text-field-wrapper { padding-top: 0 !important; }
+  .mat-mdc-form-field-infix { min-height: 40px !important; padding-top: 8px !important; padding-bottom: 8px !important; }
+  h1, h2, h3 { margin-top: .4em !important; margin-bottom: .4em !important; }
+
+  /* ---------- згорнуті розділи — тонкі рядки; необов’язкові для НСЗУ — ще й бліді ---------- */
+  .group:has(> .group_content[hidden]) { padding: 6px 14px !important; margin: 4px 0 !important; }
+  .group:has(> .group_content[hidden]) > .group-top { margin: 0 !important; }
+  .group:has(> .group_content[hidden]) .title { font-size: .92em !important; font-weight: 500 !important; }
+  .group:has(> .group_content[hidden]):not(:has(> .group-top .nszu_req)) { opacity: .6; }
+  .group:has(> .group_content[hidden]):hover { opacity: 1; }
+
+  /* ---------- таблиці журналу ---------- */
+  table th { color: var(--mh-ink2) !important; font-weight: 500; }
+  table td, table th { border-color: var(--mh-line) !important; }
+  table tbody tr:hover > td { background-color: var(--mh-blue-soft) !important; }
+
+  /* ---------- посилання й вкладки ---------- */
+  a, a:visited { color: var(--mh-blue) !important; }
+  .tabs__tab--active { color: var(--mh-blue) !important; border-color: var(--mh-blue) !important; }
+  .tabs__tab { color: var(--mh-ink2) !important; }
+
+  /* ---------- кнопки ---------- */
+  .appBtn.__blue { background-color: var(--mh-blue) !important; border-color: var(--mh-blue) !important; color: #fff !important; }
+  .appBtn.__blue * { color: #fff !important; }
+  .appBtn.__blue-transparent { color: var(--mh-blue) !important; border-color: var(--mh-blue) !important; }
+  .appBtn.__transparent { color: var(--mh-ink) !important; border-color: var(--mh-line) !important; }
+  .new_pacient, .master-btn-btn { background-color: var(--mh-green) !important; }
+  scroll-top > div { background-color: var(--mh-blue) !important; }
+
+  /* «Внести запис як помилковий», «Закрити епізод»: бліді, пунктир, далі від «Закрити»; повний колір — лише під курсором */
+  .appBtn.__red { color: var(--mh-red) !important; border: 1px dashed var(--mh-red) !important; background: transparent !important; opacity: .55; margin-left: 24px !important; transition: opacity .15s; }
+  .appBtn.__red * { color: var(--mh-red) !important; }
+  .appBtn.__red:hover, .appBtn.__red:focus-visible { opacity: 1; }
+
+  /* ---------- статуси й значки ---------- */
+  .verification-status { background-color: var(--mh-green) !important; }
+  .status_ehealth { background-color: var(--mh-orange) !important; }
+  .notification-bell__badge, .error-status__icon { background-color: var(--mh-red) !important; }
+  .sidebar-tab__badge-new { background-color: var(--mh-blue) !important; }
+
+  /* ---------- поля вводу ---------- */
+  input, textarea, select { color: var(--mh-ink) !important; }
+  input::placeholder, textarea::placeholder { color: var(--mh-ink2) !important; opacity: .8; }
+  .mdc-line-ripple::before { border-bottom-color: var(--mh-line) !important; }
+  .mdc-line-ripple::after { border-bottom-color: var(--mh-blue) !important; }
+
+  * { scrollbar-color: #bdb8ae transparent; scrollbar-width: thin; }
+}
