@@ -1079,6 +1079,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    save();
    ok('«Через день»: наступна чернетка на +2 дні', w.eval('DIARIES.length')===2 && md.value.startsWith('2026-10-04'), md.value);
    w.eval("setDFree(false)"); }
+ // 0.9.3.66 сенсорний режим (планшет горизонтально)
+ { const R=doc.documentElement;
+   w.eval("VIEW.touch='on'; applyView()"); const on=R.classList.contains('touch');
+   w.eval("VIEW.touch='off'; applyView()"); const off=!R.classList.contains('touch');
+   w.eval("openViewPop()"); const ctl=[...doc.querySelectorAll('.viewpop .vrow .vl')].some(e=>e.textContent==='Дотик'); w.eval("closeViewPop()");
+   ok('Дотик: «Великі кнопки» вмикає сенсорний режим, «Звичайні» — вимикає, перемикач у «Вигляді»', on && off && ctl, JSON.stringify([on, off, ctl]));
+   w.eval("VIEW.touch='auto'; saveView(); applyView()"); }
  ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

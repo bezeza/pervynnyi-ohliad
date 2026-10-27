@@ -1,5 +1,5 @@
 /* ===== Вигляд (0.9.2): режим екрана (ноутбук / монітор), розташування А–Г, межа форма | текст, згортання тексту ===== */
-const VIEW = Object.assign({screen:'auto', layout:'auto', split:null, fold:false}, (()=>{ try{ return JSON.parse(lsGet('po.view', '{}')) || {}; }catch(e){ return {}; } })());
+const VIEW = Object.assign({screen:'auto', layout:'auto', split:null, fold:false, touch:'auto'}, (()=>{ try{ return JSON.parse(lsGet('po.view', '{}')) || {}; }catch(e){ return {}; } })());
 if (lsGet('po.side', '0') === '1' && !lsGet('po.view', '')) VIEW.layout = 'B';   // 0.9.1: «бічна панель» → «Робоче місце»
 const saveView = () => lsSet('po.view', JSON.stringify(VIEW));
 const LAYS = {A:'Класичне', B:'Робоче місце', C:'Дзеркальне', D:'Один стовпчик'};
@@ -12,6 +12,8 @@ const LAY_ICON = {
 const isPhoneW = () => window.matchMedia && matchMedia('(max-width:899px)').matches;
 const effW = () => window.innerWidth / (parseFloat(ZOOM) || 1);
 const screenNow = () => VIEW.screen === 'auto' ? (effW() < 1500 ? 'laptop' : 'monitor') : VIEW.screen;
+/* сенсорний режим: авто — коли основний вказівник «палець» (планшет), на вузькому екрані його й так дає телефонний режим */
+const touchNow = () => VIEW.touch === 'on' || (VIEW.touch === 'auto' && !!window.matchMedia && matchMedia('(pointer:coarse)').matches);
 const layoutNow = () => isPhoneW() ? 'P' : LAYS[VIEW.layout] ? VIEW.layout : (screenNow() === 'monitor' || effW() >= 1200 ? 'B' : 'A');
 
 /* межа між формою і текстом */
@@ -38,6 +40,7 @@ function applyView(){
   ['A','B','C','D'].forEach(k=>b.classList.toggle('lay-' + k, L === k));
   r.classList.toggle('scr-laptop', !ph && S === 'laptop'); r.classList.toggle('scr-monitor', !ph && S === 'monitor');
   b.classList.toggle('outfold', !ph && L !== 'D' && !!VIEW.fold);
+  r.classList.toggle('touch', !ph && touchNow());
   if (L !== 'D' && !ph) $('#outBox').classList.remove('open');
   applySplit(); try{ renderLive(); }catch(e){} renderViewCtl();
 }
@@ -50,6 +53,8 @@ function viewCtl(){
   box.append(seg('Екран', VIEW.screen, [['auto', 'Авто', 'Визначається за шириною екрана: до 1500 px — ноутбук'], ['laptop', 'Ноутбук', 'Компактно: менші відступи, шапка в один рядок'], ['monitor', 'Монітор', 'Просторо: ширша робоча область, більший текст документа']],
     k=>{ VIEW.screen = k; saveView(); applyView(); toast(k === 'auto' ? `Екран визначається сам: зараз ${screenNow() === 'laptop' ? 'ноутбук' : 'монітор'}` : k === 'laptop' ? 'Екран: ноутбук — компактно' : 'Екран: монітор — просторо'); }));
   if (VIEW.screen === 'auto') box.append(h('p', {class:'chips-hint vnote'}, `Зараз: ${sNow === 'laptop' ? 'ноутбук' : 'монітор'} (${Math.round(effW())} px).`));
+  box.append(seg('Дотик', VIEW.touch, [['auto', 'Авто', 'Великі кнопки й поля, коли екран сенсорний (планшет); з мишею — звичайні'], ['on', 'Великі кнопки', 'Завжди під палець'], ['off', 'Звичайні', 'Як для миші']],
+    k=>{ VIEW.touch = k; saveView(); applyView(); toast(k === 'auto' ? `Дотик визначається сам: зараз ${touchNow() ? 'великі кнопки' : 'звичайні'}` : k === 'on' ? 'Великі кнопки й поля — під палець' : 'Звичайні кнопки — для миші'); }));
   const lay = h('div', {class:'vlays', role:'group', 'aria-label':'Розташування'});
   [['auto', 'Авто', 'на вузькому екрані (до 1200 px) — Класичне, ширше — Робоче місце']].concat(Object.keys(LAYS).map(k=>[k, LAYS[k], LAY_HINT[k]])).forEach(([k, l, t])=>{
     const ic = h('span', {class:'vic', 'aria-hidden':'true'}); ic.innerHTML = k === 'auto' ? '<svg viewBox="0 0 32 22"><rect x="1" y="1" width="30" height="20" rx="2"/><path d="M9 15l7-8 7 8"/></svg>' : `<svg viewBox="0 0 32 22">${LAY_ICON[k]}</svg>`;
