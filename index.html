@@ -510,7 +510,7 @@ details.box[open]{padding-bottom:12px}
   #print .pr-top{display:flex;justify-content:space-between;gap:20px;font-size:10.5pt;border-bottom:1px solid #000;padding-bottom:6px;margin-bottom:10px}
   #print .pr-top .r{text-align:right}
   #print .pr-title{text-align:center;font-size:13pt;margin:4px 0 10px}#print .pr-free{font-size:11pt}#print .pr-free h3{font-size:12pt;margin:10px 0 4px}#print .pr-val{font-weight:600;padding:0 4px}#print .pr-chip{display:inline-block;margin:0 10px 0 0}
-  #print .pr-doc+.pr-doc{break-before:page}#print .pr-free .crow,#print .pr-free .prow{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid #999;padding:3px 0}
+  #print .pr-doc+.pr-doc{break-before:page}#print .pr-free .crow,#print .pr-free .prow{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid #000;padding:3px 0}
   #print .pr-pat{margin:0 0 12px;font-size:11.5pt}
   #print .pr-card{text-align:center;font-size:10.5pt;margin:0 0 8px}
   #print .pr-body div{min-height:1.2em;text-align:justify}
@@ -583,8 +583,8 @@ body:has(#outBox.open) .livebar{display:none!important}
   #print .memo h1{font-size:15pt;margin:0 0 2px}#print .memo h2{font-size:11.5pt;margin:10px 0 3px}
   #print .memo .mcols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   #print .memo ol{margin:0;padding-left:18px}#print .memo p{margin:0 0 4px}
-  #print .memo table{border-collapse:collapse;width:100%}#print .memo td{border-bottom:1px solid #bbb;padding:2px 4px;vertical-align:top}#print .memo td:first-child{white-space:nowrap;font-weight:600}
-  #print .memo .ms{font-size:9.5pt;color:#333}
+  #print .memo table{border-collapse:collapse;width:100%}#print .memo td{border-bottom:1px solid #000;padding:2px 4px;vertical-align:top}#print .memo td:first-child{white-space:nowrap;font-weight:600}
+  #print .memo .ms{font-size:9.5pt;color:#000}
 }
 @media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.qhelp{min-width:34px;height:34px}}
 @media (min-width:900px) and (max-width:1365px){#subT{display:none}}
@@ -1188,7 +1188,7 @@ summary .vdot{color:var(--ok);font-weight:700}
 .b003.bA4.b333l{width:297mm;height:210mm;padding:8mm}
 .b003 table.bgrid{width:100%;border-collapse:collapse;table-layout:fixed}
 .b003 .bgrid th,.b003 .bgrid td{border:1px solid #000;padding:0 2px;font-weight:400;font-size:7.5pt;height:3.3mm;line-height:1.05;text-align:left;overflow:hidden;white-space:nowrap}
-.b003 .bgrid td{border-color:#999}.b003 .bgrid td.bh,.b003 .bgrid th.bh{border-left:1.5px solid #000}
+.b003 .bgrid td{border-color:#000}.b003 .bgrid td.bh,.b003 .bgrid th.bh{border-left:1.5px solid #000}
 .b003 .bgrid tr>th:first-child{width:30mm}.b003 .bgrid th.bv{width:7mm;text-align:right}.b003 .bgrid .bleg{width:23mm;white-space:normal;vertical-align:top;font-size:7pt;line-height:1.2}
 .b003 .bgrid .bsc td,.b003 .bgrid .bsc th{height:2.7mm;line-height:1}.b003 .bgrid tr.btall td,.b003 .bgrid tr.btall th{height:7mm}.b003 .bgrid .bsub{font-weight:700}
 .b003 table.b333m{width:100%;font-size:7.5pt}.b003 .b333m td{height:4mm}
@@ -1606,7 +1606,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.66 від 27.10.2026">v0.9.3.66 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.67 від 29.10.2026">v0.9.3.67 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3752,8 +3752,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.66', VDATE = '27.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.67', VDATE = '29.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.67', '29.10.2026', 'друк на старих лазерних принтерах (Canon LBP2900 тощо): лінії й підписи в друці — чорні, без сірих відтінків; сітка бланка 003/о — чорна'],
   ['0.9.3.66', '27.10.2026', 'планшет горизонтально: сенсорний режим — розкладка як на комп’ютері (розділи, форма й текст поруч), а кнопки, варіанти, поля й галочки більші, під палець. «Вигляд» → «Дотик»: Авто (сенсорний екран — великі кнопки) / Великі кнопки / Звичайні'],
   ['0.9.3.65', '26.10.2026', 'щоденник без первинки: хвороба не обов’язкова («Без хвороби» — програма більше не питає); «Скарги, що зберігаються» — з первинного огляду, слова лікаря з попередніх щоденників цього пацієнта, загальний список і пошук; після «Записати в журнал» — чернетка наступного дня (щодня / через день / кожні 3 дні): опис як учора, показники й скарги порожні'],
   ['0.9.3.64', '26.10.2026', 'з МІС Health24: закладка «🔖 З МІС → Первинний огляд» (вкладка «Запис») або кнопка «→ ПО» зі скрипта МІС+ копіює з медкарти чи списку пацієнтів ПІБ, стать і дату народження; у програмі — Ctrl+V або «⇩ З МІС». Якщо пацієнт уже є — відкривається він. Дані йдуть лише через буфер обміну'],
