@@ -1086,7 +1086,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("openViewPop()"); const ctl=[...doc.querySelectorAll('.viewpop .vrow .vl')].some(e=>e.textContent==='Дотик'); w.eval("closeViewPop()");
    ok('Дотик: «Великі кнопки» вмикає сенсорний режим, «Звичайні» — вимикає, перемикач у «Вигляді»', on && off && ctl, JSON.stringify([on, off, ctl]));
    w.eval("VIEW.touch='auto'; saveView(); applyView()"); }
- ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
+ { const css=fs.readFileSync(path.join(__dirname,'..','src','styles.css'),'utf8');
+  const pr=(css.match(/#print[^{]*\{[^}]*\}/g)||[]).join(' ');
+  const cols=pr.match(/#[0-9a-fA-F]{3,6}\b|rgba?\(/g)||[];
+  ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий', cols.every(c=>/^#(000|fff|000000|ffffff)$/i.test(c)) && !/rgba?\(/.test(pr), [...new Set(cols)].join(' ')); }
+ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
 })();
