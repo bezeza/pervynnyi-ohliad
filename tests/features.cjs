@@ -1090,6 +1090,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const pr=(css.match(/#print[^{]*\{[^}]*\}/g)||[]).join(' ');
   const cols=pr.match(/#[0-9a-fA-F]{3,6}\b|rgba?\(/g)||[];
   ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий', cols.every(c=>/^#(000|fff|000000|ffffff)$/i.test(c)) && !/rgba?\(/.test(pr), [...new Set(cols)].join(' ')); }
+{ const ff=/@font-face\{font-family:"Zakon"/.test(html);
+  const od=!!$('set_fdoc') && [...$('set_fdoc').options].some(o=>o.value==='Zakon'), ou=!!$('set_fui') && [...$('set_fui').options].some(o=>o.value==='Zakon');
+  const sp=$('set_fprint'), R0=doc.documentElement; let on=false, off=false, def=false;
+  if (sp){ def=sp.value==='Times New Roman' && !R0.classList.contains('pf-zakon');
+    sp.value='Zakon'; sp.dispatchEvent(new w.Event('change')); on=R0.classList.contains('pf-zakon');
+    sp.value='Times New Roman'; sp.dispatchEvent(new w.Event('change')); off=!R0.classList.contains('pf-zakon'); }
+  ok('Шрифт Zakon: вбудований, є у виборі тексту, інтерфейсу й друку; за замовчуванням друк — Times New Roman', ff && od && ou && def && on && off, JSON.stringify([ff, od, ou, def, on, off])); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
