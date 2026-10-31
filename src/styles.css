@@ -1558,3 +1558,7 @@ html.touch .vseg button,html.touch .fmt button{min-height:44px;min-width:44px}
 html.touch .calc>summary{padding:14px 16px}
 html.touch .vgrip{width:18px}
 html.touch .nextbar .btn{padding:12px 16px}
+
+/* 0.9.3.68 — шрифт Zakon для друку, «Аркуша» й бланків (вибір у «Налаштуваннях», клас pf-zakon на <html>) */
+:root.pf-zakon .f0034,:root.pf-zakon .paper .sheet,:root.pf-zakon .b003,:root.pf-zakon .memo{font-family:"Zakon","Times New Roman",Times,serif}
+@media print{:root.pf-zakon #print,:root.pf-zakon #print .memo{font-family:"Zakon","Times New Roman",Times,serif}}
