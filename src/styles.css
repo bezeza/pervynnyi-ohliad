@@ -1562,3 +1562,295 @@ html.touch .nextbar .btn{padding:12px 16px}
 /* 0.9.3.68 — шрифт Zakon для друку, «Аркуша» й бланків (вибір у «Налаштуваннях», клас pf-zakon на <html>) */
 :root.pf-zakon .f0034,:root.pf-zakon .paper .sheet,:root.pf-zakon .b003,:root.pf-zakon .memo{font-family:"Zakon","Times New Roman",Times,serif}
 @media print{:root.pf-zakon #print,:root.pf-zakon #print .memo{font-family:"Zakon","Times New Roman",Times,serif}}
+
+/* 0.9.3.70 — порожні бланки для заповнення ручкою (щоденники, епікризи): друк з меню «⋯» → «🖨 Порожні бланки». Класи fb-*, обмежені .fbk-*; лише чорне на білому */
+.fbk{color:#000;background:#fff;font-family:"Times New Roman",Times,serif}
+:root.pf-zakon .fbk{font-family:"Zakon","Times New Roman",Times,serif}
+.fbk-ter .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-ter .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-ter p{margin:0}
+.fbk-ter b{font-weight:700}
+.fbk-ter i{font-style:italic}
+.fbk-ter .fb-top,.fbk-ter .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-ter .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-ter .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-ter .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-ter .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-ter .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-ter .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-ter .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-ter .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-ter .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-ter .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-ter .fb-sign{justify-content:space-between}
+.fbk-ter .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-ter .fb-grow{flex:1;min-width:24mm}
+.fbk-ter .fb-w5{width:5mm}
+.fbk-ter .fb-w6{width:6mm}
+.fbk-ter .fb-w7{width:7mm}
+.fbk-ter .fb-w8{width:8mm}
+.fbk-ter .fb-w9{width:9mm}
+.fbk-ter .fb-w14{width:14mm}
+.fbk-ter .fb-w16{width:16mm}
+.fbk-ter .fb-w22{width:22mm}
+.fbk-ter .fb-w26{width:26mm}
+.fbk-ter .fb-w52{width:52mm}
+.fbk-ter .fb-w12{width:12mm}
+.fbk-ter .fb-w30{width:30mm}
+.fbk-ter .fb-w40{width:40mm}
+.fbk-ter .fb-w34{width:34mm}
+.fbk-ter .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-ter{font-size:8.3pt;line-height:1.24;page:fbd}
+.fbk-pulm .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-pulm .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-pulm p{margin:0}
+.fbk-pulm b{font-weight:700}
+.fbk-pulm i{font-style:italic}
+.fbk-pulm .fb-top,.fbk-pulm .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-pulm .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-pulm .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-pulm .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-pulm .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-pulm .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-pulm .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-pulm .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-pulm .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-pulm .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-pulm .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-pulm .fb-sign{justify-content:space-between}
+.fbk-pulm .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-pulm .fb-grow{flex:1;min-width:24mm}
+.fbk-pulm .fb-w5{width:5mm}
+.fbk-pulm .fb-w6{width:6mm}
+.fbk-pulm .fb-w7{width:7mm}
+.fbk-pulm .fb-w8{width:8mm}
+.fbk-pulm .fb-w9{width:9mm}
+.fbk-pulm .fb-w14{width:14mm}
+.fbk-pulm .fb-w16{width:16mm}
+.fbk-pulm .fb-w22{width:22mm}
+.fbk-pulm .fb-w26{width:26mm}
+.fbk-pulm .fb-w52{width:52mm}
+.fbk-pulm .fb-w30{width:30mm}
+.fbk-pulm .fb-w40{width:40mm}
+.fbk-pulm .fb-w34{width:34mm}
+.fbk-pulm .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-pulm{font-size:8pt;line-height:1.22;page:fbd}
+.fbk-nevr .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-nevr .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-nevr p{margin:0}
+.fbk-nevr b{font-weight:700}
+.fbk-nevr i{font-style:italic}
+.fbk-nevr .fb-top,.fbk-nevr .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-nevr .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-nevr .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-nevr .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-nevr .fb-in{padding-left:3mm}
+.fbk-nevr .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-nevr .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-nevr .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-nevr .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-nevr .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-nevr .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-nevr .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-nevr .fb-sign{justify-content:space-between}
+.fbk-nevr .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-nevr .fb-grow{flex:1;min-width:24mm}
+.fbk-nevr .fb-w5{width:5mm}
+.fbk-nevr .fb-w6{width:6mm}
+.fbk-nevr .fb-w7{width:7mm}
+.fbk-nevr .fb-w8{width:8mm}
+.fbk-nevr .fb-w9{width:9mm}
+.fbk-nevr .fb-w14{width:14mm}
+.fbk-nevr .fb-w16{width:16mm}
+.fbk-nevr .fb-w22{width:22mm}
+.fbk-nevr .fb-w26{width:26mm}
+.fbk-nevr .fb-w52{width:52mm}
+.fbk-nevr .fb-w12{width:12mm}
+.fbk-nevr .fb-w30{width:30mm}
+.fbk-nevr .fb-w40{width:40mm}
+.fbk-nevr .fb-w34{width:34mm}
+.fbk-nevr .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-nevr{font-size:8.2pt;line-height:1.23;page:fbd}
+.fbk-khir .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-khir .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-khir p{margin:0}
+.fbk-khir b{font-weight:700}
+.fbk-khir i{font-style:italic}
+.fbk-khir .fb-top,.fbk-khir .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-khir .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-khir .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-khir .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-khir .fb-in{padding-left:3mm}
+.fbk-khir .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-khir .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-khir .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-khir .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-khir .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-khir .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-khir .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-khir .fb-sign{justify-content:space-between}
+.fbk-khir .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-khir .fb-grow{flex:1;min-width:24mm}
+.fbk-khir .fb-w5{width:5mm}
+.fbk-khir .fb-w6{width:6mm}
+.fbk-khir .fb-w7{width:7mm}
+.fbk-khir .fb-w8{width:8mm}
+.fbk-khir .fb-w9{width:9mm}
+.fbk-khir .fb-w14{width:14mm}
+.fbk-khir .fb-w16{width:16mm}
+.fbk-khir .fb-w22{width:22mm}
+.fbk-khir .fb-w26{width:26mm}
+.fbk-khir .fb-w52{width:52mm}
+.fbk-khir .fb-w12{width:12mm}
+.fbk-khir .fb-w90{width:90mm}
+.fbk-khir .fb-w30{width:30mm}
+.fbk-khir .fb-w40{width:40mm}
+.fbk-khir .fb-w34{width:34mm}
+.fbk-khir .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-khir{font-size:8pt;line-height:1.22;page:fbd}
+.fbk-amb .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-amb .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-amb p{margin:0}
+.fbk-amb b{font-weight:700}
+.fbk-amb i{font-style:italic}
+.fbk-amb .fb-top,.fbk-amb .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-amb .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-amb .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-amb .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-amb .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-amb .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-amb .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-amb .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-amb .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-amb .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-amb .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-amb .fb-sign{justify-content:space-between}
+.fbk-amb .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-amb .fb-grow{flex:1;min-width:24mm}
+.fbk-amb .fb-w5{width:5mm}
+.fbk-amb .fb-w6{width:6mm}
+.fbk-amb .fb-w7{width:7mm}
+.fbk-amb .fb-w8{width:8mm}
+.fbk-amb .fb-w9{width:9mm}
+.fbk-amb .fb-w14{width:14mm}
+.fbk-amb .fb-w16{width:16mm}
+.fbk-amb .fb-w22{width:22mm}
+.fbk-amb .fb-w26{width:26mm}
+.fbk-amb .fb-w52{width:52mm}
+.fbk-amb .fb-w12{width:12mm}
+.fbk-amb .fb-w5{width:5mm}
+.fbk-amb .fb-w14{width:14mm}
+.fbk-amb .fb-w18{width:18mm}
+.fbk-amb .fb-w20{width:20mm}
+.fbk-amb .fb-w22{width:22mm}
+.fbk-amb .fb-w40{width:40mm}
+.fbk-amb .fb-w30{width:30mm}
+.fbk-amb .fb-w40{width:40mm}
+.fbk-amb .fb-w34{width:34mm}
+.fbk-amb .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-amb .fb-fx{display:flex;flex-wrap:wrap;gap:.6mm 2.5mm;align-items:baseline}
+.fbk-amb{font-size:8.3pt;line-height:1.24;page:fbd}
+.fbk-e003 .fb-ep{max-width:190mm;margin:0 auto;display:flex;flex-direction:column;gap:1.3mm}
+.fbk-e003 .fb-ep+.fb-ep{margin-top:10mm;border-top:1px dashed #000;padding-top:6mm}
+.fbk-e003 b{font-weight:700}
+.fbk-e003 .fb-t{font-weight:700;font-size:10.5pt;margin-top:1mm}
+.fbk-e003 .fb-t2{font-weight:700;margin-top:1.5mm;border-top:1px solid #000;padding-top:1mm}
+.fbk-e003 .fb-hint{font-size:7.6pt;font-weight:400}
+.fbk-e003 .fb-r{text-align:right;margin-top:-1mm}
+.fbk-e003 .fb-sm{font-size:8pt}
+.fbk-e003 .fb-row{display:flex;flex-wrap:wrap;gap:.6mm 2.5mm;align-items:baseline}
+.fbk-e003 .fb-k{font-weight:700;white-space:nowrap}
+.fbk-e003 .fb-g{white-space:normal}
+.fbk-e003 .fb-f{display:inline-block;border-bottom:1px solid #000;height:.95em;vertical-align:baseline;font-style:normal}
+.fbk-e003 .fb-grow{flex:1;min-width:20mm}
+.fbk-e003 .fb-ln{height:1.35em;border-bottom:1px solid #000}
+.fbk-e003 .fb-it{display:flex;flex-direction:column;gap:.5mm}
+.fbk-e003 .fb-it.fb-row1{flex-direction:row;flex-wrap:wrap;gap:.6mm 2.5mm;align-items:baseline}
+.fbk-e003 .fb-lab{display:flex;flex-wrap:nowrap;gap:.5mm 1.6mm;align-items:baseline;padding-left:2mm;font-size:8.1pt}
+.fbk-e003 .fb-c{white-space:nowrap}
+.fbk-e003 .fb-u{font-size:6.8pt}
+.fbk-e003 .fb-box{display:inline-block;width:4.5mm;height:4.5mm;border:1px solid #000;vertical-align:middle}
+.fbk-e003 .fb-box.fb-b2{border-width:1.5px}
+.fbk-e003 .fb-tb{border-collapse:collapse;width:100%;font-size:8.8pt}
+.fbk-e003 .fb-tb th,.fbk-e003 .fb-tb td{border:1px solid #000;padding:.3mm 1.2mm;height:5.6mm;text-align:left;font-weight:400}
+.fbk-e003 .fb-tb th{font-size:8pt;height:auto}
+.fbk-e003 .fb-tb .fb-cb{width:16mm;text-align:center}
+.fbk-e003 .fb-tb .fb-mkh{width:36mm}
+.fbk-e003 .fb-cells{display:inline-flex}
+.fbk-e003 .fb-cells i{display:inline-block;width:4.6mm;height:4.2mm;border:1px solid #000;margin-left:-1px}
+.fbk-e003 .fb-w26{width:26mm}
+.fbk-e003 .fb-w30{width:30mm}
+.fbk-e003 .fb-w38{width:42mm}
+.fbk-e003 .fb-sig{display:flex;flex-direction:column;gap:2.4mm;margin-top:2mm}
+.fbk-e003 .fb-w8{width:8mm}
+.fbk-e003 .fb-w9{width:9mm}
+.fbk-e003 .fb-w12{width:12mm}
+.fbk-e003 .fb-w14{width:14mm}
+.fbk-e003 .fb-w18{width:18mm}
+.fbk-e003 .fb-w20{width:20mm}
+.fbk-e003 .fb-w22{width:22mm}
+.fbk-e003 .fb-w40{width:40mm}
+.fbk-e003 .fb-w60{width:60mm}
+.fbk-e003 .fb-note{font-size:7.5pt;max-width:190mm;margin:6mm auto 0}
+.fbk-e003{font-size:9.4pt;line-height:1.3;page:fbe}
+.fbk-epi .fb-page{max-width:194mm;margin:0 auto;display:flex;flex-direction:column;gap:4mm}
+.fbk-epi .fb-diary{border:1px solid #000;padding:2mm 3mm;display:flex;flex-direction:column;gap:1.2mm;min-width:0}
+.fbk-epi p{margin:0}
+.fbk-epi b{font-weight:700}
+.fbk-epi i{font-style:italic}
+.fbk-epi .fb-top,.fbk-epi .fb-vit{display:flex;flex-wrap:wrap;gap:.5mm 3.5mm;align-items:baseline}
+.fbk-epi .fb-top{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-epi .fb-vit{border-bottom:1px solid #000;padding-bottom:1mm}
+.fbk-epi .fb-body{display:flex;flex-direction:column;gap:.7mm}
+.fbk-epi .fb-sys{border-top:1px solid #000;padding-top:.7mm}
+.fbk-epi .fb-g{display:inline;margin-right:2.2mm;white-space:normal}
+.fbk-epi .fb-g+.fb-g::before{content:"| ";font-weight:400}
+.fbk-epi .fb-free{display:flex;margin-top:auto;padding-top:1mm}
+.fbk-epi .fb-tx{border-top:1px solid #000;padding-top:1mm;display:flex;flex-direction:column;gap:1mm}
+.fbk-epi .fb-tx p{display:flex;align-items:baseline;gap:1.5mm;flex-wrap:wrap}
+.fbk-epi .fb-ln{height:1.2em;border-bottom:1px solid #000}
+.fbk-epi .fb-sign{justify-content:space-between}
+.fbk-epi .fb-f{display:inline-block;border-bottom:1px solid #000;height:.9em;vertical-align:baseline;font-style:normal}
+.fbk-epi .fb-grow{flex:1;min-width:24mm}
+.fbk-epi .fb-w5{width:5mm}
+.fbk-epi .fb-w6{width:6mm}
+.fbk-epi .fb-w7{width:7mm}
+.fbk-epi .fb-w8{width:8mm}
+.fbk-epi .fb-w9{width:9mm}
+.fbk-epi .fb-w14{width:14mm}
+.fbk-epi .fb-w16{width:16mm}
+.fbk-epi .fb-w22{width:22mm}
+.fbk-epi .fb-w26{width:26mm}
+.fbk-epi .fb-w52{width:52mm}
+.fbk-epi .fb-w12{width:12mm}
+.fbk-epi .fb-w18{width:18mm}
+.fbk-epi .fb-w20{width:20mm}
+.fbk-epi .fb-w24{width:24mm}
+.fbk-epi .fb-w36{width:36mm}
+.fbk-epi .fb-w40{width:40mm}
+.fbk-epi .fb-w44{width:44mm}
+.fbk-epi .fb-w60{width:60mm}
+.fbk-epi .fb-w70{width:70mm}
+.fbk-epi .fb-w30{width:30mm}
+.fbk-epi .fb-w40{width:40mm}
+.fbk-epi .fb-w34{width:34mm}
+.fbk-epi .fb-note{font-size:7.5pt;max-width:194mm;margin:4mm auto 0}
+.fbk-epi .fb-epi{display:flex;flex-direction:column;gap:1.3mm;max-width:194mm;margin:0 auto}
+.fbk-epi .fb-epi h1{font-size:13pt;text-align:center;margin:0;letter-spacing:.02em}
+.fbk-epi .fb-epi h2{font-size:9.5pt;margin:1.2mm 0 0;border-top:1px solid #000;padding-top:1mm}
+.fbk-epi .fb-epi .fb-sm{font-weight:400;font-size:7.8pt}
+.fbk-epi .fb-epi .fb-c{text-align:center;margin:0}
+.fbk-epi .fb-epi .fb-row,.fbk-epi .fb-epi .fb-blk,.fbk-epi .fb-epi .fb-inst p,.fbk-epi .fb-epi .fb-sig{display:flex;flex-wrap:wrap;gap:.6mm 3.5mm;align-items:baseline;margin:0}
+.fbk-epi .fb-epi .fb-sig{justify-content:space-between;margin-top:3mm}
+.fbk-epi .fb-labs{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 4mm}
+.fbk-epi table.fb-lab{border-collapse:collapse;width:100%;font-size:8pt;align-self:start}
+.fbk-epi table.fb-lab caption{text-align:left;font-weight:700;padding-bottom:.4mm}
+.fbk-epi table.fb-lab th,.fbk-epi table.fb-lab td{border:1px solid #000;padding:.25mm 1mm;height:4.3mm;text-align:left;font-weight:400}
+.fbk-epi table.fb-lab th{font-size:7.4pt}
+.fbk-epi table.fb-lab .fb-an{width:29%}
+.fbk-epi table.fb-lab .fb-un{width:17%;font-size:7.2pt;white-space:nowrap}
+.fbk-epi table.fb-lab .fb-dc{white-space:nowrap}
+.fbk-epi .fb-inst{display:flex;flex-direction:column;gap:1.1mm}
+.fbk-epi{font-size:8.7pt;line-height:1.28;page:fbd}
+@media print{@page fbd{size:A4;margin:5mm 7mm}@page fbe{size:A4;margin:10mm 10mm 10mm 15mm}.fbk+.fbk{break-before:page}.fbk-d .fb-page{max-width:none;gap:3mm}.fbk-d .fb-diary{break-inside:avoid}.fbk-g .fb-page{max-width:none;gap:3mm}.fbk-g .fb-epi{max-width:none}.fbk-e .fb-ep{max-width:none}.fbk-e .fb-ep+.fb-ep{break-before:page;margin-top:0;border-top:0;padding-top:0}}
+#fbPick .fbrows{display:flex;flex-direction:column;gap:6px;margin:10px 0}#fbPick .fbrows label{display:flex;gap:10px;align-items:center;cursor:pointer;padding:4px 2px}#fbPick .fbrows input{width:18px;height:18px}
