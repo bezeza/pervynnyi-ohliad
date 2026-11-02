@@ -141,6 +141,7 @@
   "660-drugs-analgesics.js",
   "661-amp-checks.js",
   "662-epi-improve.js",
-  "663-backfill.js"
+  "663-backfill.js",
+  "664-ui-ios.js"
  ]
 }

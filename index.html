@@ -1940,6 +1940,75 @@ html.touch .nextbar .btn{padding:12px 16px}
 .bf-t select{max-width:210px}
 .bf-t tr.bf-done td{opacity:.6}
 .bf-t .bf-st{color:var(--ok,#2f7d4f);font-weight:600}
+/* 0.9.3.77 — стиль інтерфейсу «iOS» (html.ui-ios). Лише екран: друк, «Аркуш» і бланки не змінюються. */
+:root.ui-ios:not([data-tone]){
+  --bg:#F2F2F7; --surface:#FFFFFF; --ink:#1C1C1E; --muted:#6C6C70; --line:#E3E3E8;
+  --accent:#007AFF; --accent-soft:#E6F0FF; --on-accent:#FFFFFF;
+  --flag:#B95E00; --flag-soft:#FFF3E2; --ok:#248A3D; --bad:#D70015; --bad-soft:#FFEDEC;
+  --top:rgba(249,249,251,.86); --top2:rgba(118,118,128,.12); --top-ink:#1C1C1E; --top-mut:#6C6C70;
+  --shadow:0 1px 3px rgba(0,0,0,.05)}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-tone]):not([data-theme="light"]){
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}}
+:root.ui-ios:not([data-tone])[data-theme="dark"]{
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}
+:root.ui-ios{--fill:rgba(118,118,128,.12); --fill2:rgba(118,118,128,.08); --seg-on:#FFFFFF; --r:12px}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-theme="light"]){--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}}
+:root.ui-ios[data-theme="dark"]{--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}
+:root.ui-ios body{-webkit-font-smoothing:antialiased}
+/* шапка: світла напівпрозора з розмиттям, як навігаційна панель iOS */
+:root.ui-ios body.shell .top{background:var(--top);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+:root.ui-ios body.shell .top h1 .bn{color:var(--top-ink)}
+:root.ui-ios body.shell .vbadge{color:var(--top-mut);background:var(--fill)}
+:root.ui-ios body.shell .top .btn{background:var(--top2);color:var(--top-ink);border-color:transparent}
+:root.ui-ios body.shell .topdocs #docSeg button{color:var(--top-mut)}
+:root.ui-ios body.shell .topdocs #docSeg button:hover{color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docSeg button[aria-pressed="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+:root.ui-ios body.shell .topdocs #docMore{background:var(--top2);color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docMore.on{background:var(--accent);color:#fff}
+:root.ui-ios body.shell #ptline{background:var(--surface);box-shadow:none}
+/* картки */
+:root.ui-ios .form,:root.ui-ios .out{border-color:transparent;border-radius:16px;box-shadow:var(--shadow)}
+:root.ui-ios .mcard,:root.ui-ios .packsheet .nvbox{border-radius:16px}
+:root.ui-ios .modal,:root.ui-ios .packsheet{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+:root.ui-ios .copy-peek{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
+/* кнопки: тоноване тло без рамки; головна — заповнена */
+:where(.ui-ios) .btn{border-color:transparent;background:var(--fill);color:var(--accent);border-radius:10px;font-weight:500}
+:where(.ui-ios) .btn:hover{border-color:transparent;background:color-mix(in srgb,var(--accent) 14%,var(--fill))}
+:where(.ui-ios) .btn:active{opacity:.7}
+:where(.ui-ios) .btn.primary{background:var(--accent);color:#fff;border-radius:var(--r);font-weight:600}
+:where(.ui-ios) .btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+:where(.ui-ios) .btn.norm{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+:where(.ui-ios) .btn[disabled]{opacity:.45}
+/* перемикачі — «пігулки» на сірій доріжці */
+:where(.ui-ios) .seg,:where(.ui-ios) .vseg{border:0;background:var(--fill);border-radius:10px;padding:2px;gap:2px;overflow:visible}
+:where(.ui-ios) .seg button,:where(.ui-ios) .vseg button{border-radius:8px;background:transparent;color:var(--ink)}
+:where(.ui-ios) .seg button+button,:where(.ui-ios) .vseg button+button,:where(.ui-ios) .vseg .vz+button,:where(.ui-ios) .vseg button+.vz{border-left:0}
+:where(.ui-ios) .seg button[aria-pressed="true"],:where(.ui-ios) .vseg button[aria-pressed="true"]{background:var(--seg-on);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04)}
+:where(.ui-ios) .otabs{border:0;background:var(--fill);border-radius:10px;padding:2px}
+:where(.ui-ios) .otabs button{border-radius:8px}
+:where(.ui-ios) .otabs button[aria-selected="true"]{background:var(--seg-on);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:root.ui-ios body.shell .top .seg{background:var(--top2)}
+/* поля: без рамки, на сірій підкладці; фокус — синя рамка */
+:where(.ui-ios) select,:where(.ui-ios) input,:where(.ui-ios) textarea{border-color:transparent;background-color:var(--fill2);border-radius:10px}
+:where(.ui-ios) input[type=checkbox],:where(.ui-ios) input[type=radio]{accent-color:var(--accent)}
+:where(.ui-ios) select:focus,:where(.ui-ios) input:focus,:where(.ui-ios) textarea:focus{border-color:var(--accent);background-color:var(--surface);outline:3px solid color-mix(in srgb,var(--accent) 22%,transparent);outline-offset:0}
+:where(.ui-ios) select.set:not(.abn){border-color:transparent;box-shadow:inset 3px 0 0 color-mix(in srgb,var(--ok) 70%,transparent)}
+/* варіанти: сірі «пігулки», вибраний — синій */
+:where(.ui-ios) .chip{border-color:transparent;background:var(--fill)}
+:where(.ui-ios) .chip:hover{background:color-mix(in srgb,var(--accent) 12%,var(--fill))}
+:where(.ui-ios) .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:where(.ui-ios) .chip.q{border-color:var(--line);border-style:dashed;background:transparent}
+/* бічний зміст — рядки-списки */
+:root.ui-ios body.lay-B .form>#sidecol{border-right-color:var(--line)}
+:root.ui-ios #sidecol #tabs .tab{border-radius:10px}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
+:root.ui-ios body.lay-B .stpl{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -1950,7 +2019,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.76 від 02.11.2026">v0.9.3.76 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.77 від 02.11.2026">v0.9.3.77 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4096,8 +4165,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.76', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.77', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.77', '02.11.2026', 'стиль інтерфейсу «iOS» — лаконічний, як на iPhone/iPad: світла шапка з розмиттям, картки з заокругленням, поля без рамок на сірій підкладці, перемикачі-«пігулки», кнопки з тонованим тлом, системний синій; у денній і нічній темах. Вибір: «Вигляд» → «Стиль»: iOS / Класичний (як було). Друк і бланки не змінюються'],
   ['0.9.3.76', '02.11.2026', '«Перед друком» без бланка 003/о (звичайний текст): клік по розділу (Скарги, Анамнез, огляд…) відкриває віконце з пунктами цього розділу прямо на аркуші — як на бланку; віконце відкривається на вже вибраних пунктах, а не прокручене донизу до «Додатково»; окреме вікно ⧉ в режимі «Аркуш» тепер стежить за формою — змінили скарги зліва, і вікно показує цей рядок (і на бланку 003/о, і без нього)'],
   ['0.9.3.75', '02.11.2026', '«Дописати історію» (меню «⋯» на вкладках «Запис» і «За хворобою»): для паперової історії — дати перебування, таблиця робочих днів (субота й неділя пропущені, вихідний можна додати) з показниками температурного листка й динамікою на кожен день → «Згенерувати щоденники» (з первинного огляду або шаблону хвороби, з лікуванням на цей день) → епікриз → друк історії'],
   ['0.9.3.74', '02.11.2026', 'епікриз: результат «Виписується за власним бажанням» (у «Перевірці» — нагадування про письмову відмову пацієнта); у «Результатах обстежень» кнопка «± Динаміка аналізів з журналу» — дописує, напр., «лейк. 14,2 → 7,8 ×10⁹/л» для аналізів, зроблених двічі й більше'],
@@ -5425,6 +5495,7 @@ const HELPS = [
   'Щоб вони були завжди: «Налаштування» → «Профіль роботи: Травматологія».']],
  ['Копіювання, друк, МІС', [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
+  'Стиль інтерфейсу: «Вигляд» → «Стиль» — iOS (лаконічний: картки, поля без рамок, перемикачі-«пігулки») або Класичний. Тема кольорів (день / ніч…) вибирається окремо.',
   'Планшет: тримайте горизонтально — розділи, форма й текст поруч, як на комп’ютері; на сенсорному екрані кнопки й поля більші (кнопка «Вигляд» → «Дотик»: Авто / Великі кнопки / Звичайні).',
   'Щоденник без первинки: «Без хвороби» у блоці вибору хвороби; скарги — кнопками (ваші слова з попередніх щоденників пацієнта, загальний список, пошук). Після «Записати в журнал» форма стає чернеткою наступного дня — інтервал (щодня / через день) поруч із датою запису.',
   'З МІС: закладка «🔖 З МІС → Первинний огляд» (вкладка «Запис», перетягніть на панель закладок) або кнопка «→ ПО» у МІС копіює ПІБ, стать і дату народження; у програмі натисніть Ctrl+V або «⇩ З МІС».',
@@ -19265,6 +19336,31 @@ try{
     multi.before(h('button', {type:'button', class:'more bfbtn', role:'menuitem', title:'Паперова історія: щоденники за дні перебування з температурного листка, епікриз, друк', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; bfDialog(); }}, '📝 Дописати історію'));
   });
 }catch(e){}
+/* ===== 0.9.3.77 — стиль інтерфейсу «iOS»: лаконічний, як у застосунках iPhone/iPad =====
+   Окремо від теми кольорів (авто / день / ніч…): стиль міняє форму — сірий фон, білі картки з заокругленням,
+   поля без рамок на сірій підкладці, перемикачі-«пігулки», кнопки з тонованим тлом, системний синій.
+   Працює в денній і нічній темах. Теми «Теплий папір» і «Кабінет» лишають свої кольори, форма — iOS.
+   Вибір: «Вигляд» → «Стиль»: iOS / Класичний (зберігається в «Налаштуваннях», файл Налаштування.json).
+   Друк, «Аркуш», бланки й файли Word/LibreOffice не змінюються. */
+const UI_STYLES = {ios:'iOS', classic:'Класичний'};
+let UISTYLE = lsGet('po.uistyle', 'ios'); if (!UI_STYLES[UISTYLE]) UISTYLE = 'ios';
+function uiStyleApply(){
+  const on = UISTYLE === 'ios';
+  document.documentElement.classList.toggle('ui-ios', on);
+  try{ if (POP.w && !POP.w.closed) POP.w.document.documentElement.classList.toggle('ui-ios', on); }catch(e){}
+  { const m = document.querySelector('meta[name="theme-color"]'); if (m && on) m.setAttribute('content', matchMedia('(prefers-color-scheme: dark)').matches ? '#000000' : '#F2F2F7'); }
+}
+function uiStyleSet(k){ UISTYLE = UI_STYLES[k] ? k : 'ios'; lsSet('po.uistyle', UISTYLE); uiStyleApply(); try{ renderViewCtl(); }catch(e){} toast('Стиль інтерфейсу: ' + UI_STYLES[UISTYLE]); }
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  const row = h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Стиль'), h('div', {class:'vseg', role:'group', 'aria-label':'Стиль інтерфейсу'},
+    ...[['ios', 'iOS', 'Лаконічний: картки, поля без рамок, перемикачі-«пігулки»'], ['classic', 'Класичний', 'Як було: рамки, темна шапка']].map(([k, l, t])=>
+      h('button', {type:'button', 'aria-pressed':UISTYLE === k ? 'true' : 'false', title:t, onclick:()=>uiStyleSet(k)}, l))));
+  box.prepend(row); return box; }; }
+{ const x0 = popInit; popInit = function(w){ const r = x0.apply(this, arguments); try{ w.document.documentElement.classList.toggle('ui-ios', UISTYLE === 'ios'); }catch(e){} return r; }; }
+try{ if (!FS_SET_KEYS.includes('po.uistyle')) FS_SET_KEYS.push('po.uistyle'); }catch(e){}
+uiStyleApply();
+try{ renderViewCtl(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

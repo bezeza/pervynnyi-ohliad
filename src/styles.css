@@ -1901,3 +1901,72 @@ html.touch .nextbar .btn{padding:12px 16px}
 .bf-t select{max-width:210px}
 .bf-t tr.bf-done td{opacity:.6}
 .bf-t .bf-st{color:var(--ok,#2f7d4f);font-weight:600}
+/* 0.9.3.77 — стиль інтерфейсу «iOS» (html.ui-ios). Лише екран: друк, «Аркуш» і бланки не змінюються. */
+:root.ui-ios:not([data-tone]){
+  --bg:#F2F2F7; --surface:#FFFFFF; --ink:#1C1C1E; --muted:#6C6C70; --line:#E3E3E8;
+  --accent:#007AFF; --accent-soft:#E6F0FF; --on-accent:#FFFFFF;
+  --flag:#B95E00; --flag-soft:#FFF3E2; --ok:#248A3D; --bad:#D70015; --bad-soft:#FFEDEC;
+  --top:rgba(249,249,251,.86); --top2:rgba(118,118,128,.12); --top-ink:#1C1C1E; --top-mut:#6C6C70;
+  --shadow:0 1px 3px rgba(0,0,0,.05)}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-tone]):not([data-theme="light"]){
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}}
+:root.ui-ios:not([data-tone])[data-theme="dark"]{
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}
+:root.ui-ios{--fill:rgba(118,118,128,.12); --fill2:rgba(118,118,128,.08); --seg-on:#FFFFFF; --r:12px}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-theme="light"]){--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}}
+:root.ui-ios[data-theme="dark"]{--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}
+:root.ui-ios body{-webkit-font-smoothing:antialiased}
+/* шапка: світла напівпрозора з розмиттям, як навігаційна панель iOS */
+:root.ui-ios body.shell .top{background:var(--top);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+:root.ui-ios body.shell .top h1 .bn{color:var(--top-ink)}
+:root.ui-ios body.shell .vbadge{color:var(--top-mut);background:var(--fill)}
+:root.ui-ios body.shell .top .btn{background:var(--top2);color:var(--top-ink);border-color:transparent}
+:root.ui-ios body.shell .topdocs #docSeg button{color:var(--top-mut)}
+:root.ui-ios body.shell .topdocs #docSeg button:hover{color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docSeg button[aria-pressed="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+:root.ui-ios body.shell .topdocs #docMore{background:var(--top2);color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docMore.on{background:var(--accent);color:#fff}
+:root.ui-ios body.shell #ptline{background:var(--surface);box-shadow:none}
+/* картки */
+:root.ui-ios .form,:root.ui-ios .out{border-color:transparent;border-radius:16px;box-shadow:var(--shadow)}
+:root.ui-ios .mcard,:root.ui-ios .packsheet .nvbox{border-radius:16px}
+:root.ui-ios .modal,:root.ui-ios .packsheet{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+:root.ui-ios .copy-peek{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
+/* кнопки: тоноване тло без рамки; головна — заповнена */
+:where(.ui-ios) .btn{border-color:transparent;background:var(--fill);color:var(--accent);border-radius:10px;font-weight:500}
+:where(.ui-ios) .btn:hover{border-color:transparent;background:color-mix(in srgb,var(--accent) 14%,var(--fill))}
+:where(.ui-ios) .btn:active{opacity:.7}
+:where(.ui-ios) .btn.primary{background:var(--accent);color:#fff;border-radius:var(--r);font-weight:600}
+:where(.ui-ios) .btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+:where(.ui-ios) .btn.norm{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+:where(.ui-ios) .btn[disabled]{opacity:.45}
+/* перемикачі — «пігулки» на сірій доріжці */
+:where(.ui-ios) .seg,:where(.ui-ios) .vseg{border:0;background:var(--fill);border-radius:10px;padding:2px;gap:2px;overflow:visible}
+:where(.ui-ios) .seg button,:where(.ui-ios) .vseg button{border-radius:8px;background:transparent;color:var(--ink)}
+:where(.ui-ios) .seg button+button,:where(.ui-ios) .vseg button+button,:where(.ui-ios) .vseg .vz+button,:where(.ui-ios) .vseg button+.vz{border-left:0}
+:where(.ui-ios) .seg button[aria-pressed="true"],:where(.ui-ios) .vseg button[aria-pressed="true"]{background:var(--seg-on);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04)}
+:where(.ui-ios) .otabs{border:0;background:var(--fill);border-radius:10px;padding:2px}
+:where(.ui-ios) .otabs button{border-radius:8px}
+:where(.ui-ios) .otabs button[aria-selected="true"]{background:var(--seg-on);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:root.ui-ios body.shell .top .seg{background:var(--top2)}
+/* поля: без рамки, на сірій підкладці; фокус — синя рамка */
+:where(.ui-ios) select,:where(.ui-ios) input,:where(.ui-ios) textarea{border-color:transparent;background-color:var(--fill2);border-radius:10px}
+:where(.ui-ios) input[type=checkbox],:where(.ui-ios) input[type=radio]{accent-color:var(--accent)}
+:where(.ui-ios) select:focus,:where(.ui-ios) input:focus,:where(.ui-ios) textarea:focus{border-color:var(--accent);background-color:var(--surface);outline:3px solid color-mix(in srgb,var(--accent) 22%,transparent);outline-offset:0}
+:where(.ui-ios) select.set:not(.abn){border-color:transparent;box-shadow:inset 3px 0 0 color-mix(in srgb,var(--ok) 70%,transparent)}
+/* варіанти: сірі «пігулки», вибраний — синій */
+:where(.ui-ios) .chip{border-color:transparent;background:var(--fill)}
+:where(.ui-ios) .chip:hover{background:color-mix(in srgb,var(--accent) 12%,var(--fill))}
+:where(.ui-ios) .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:where(.ui-ios) .chip.q{border-color:var(--line);border-style:dashed;background:transparent}
+/* бічний зміст — рядки-списки */
+:root.ui-ios body.lay-B .form>#sidecol{border-right-color:var(--line)}
+:root.ui-ios #sidecol #tabs .tab{border-radius:10px}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
+:root.ui-ios body.lay-B .stpl{border-color:transparent;background:var(--fill2);border-radius:var(--r)}

@@ -1161,6 +1161,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     PAPER=kP; BLANK=kB; if (DOC!==kD) switchDoc(kD); renderPaper();
     return JSON.stringify([marked, keys, op, t, foc, scr, fol]); })()`);
   ok('«Перед друком» без бланка: клік по «Скарги» — віконце з пунктами розділу на вибраних пунктах, аркуш стежить за полем', r==='[true,"[\\"skarhy\\"]",true,"Скарги",true,0,true]', r); }
+{ const R=doc.documentElement; const def=R.classList.contains('ui-ios');
+  w.eval("uiStyleSet('classic')"); const cl=!R.classList.contains('ui-ios') && w.eval("lsGet('po.uistyle','')")==='classic';
+  w.eval("openViewPop()"); const row=[...doc.querySelectorAll('.viewpop .vrow .vl')].some(e=>e.textContent==='Стиль'); w.eval("closeViewPop()");
+  w.eval("uiStyleSet('ios')"); const back=R.classList.contains('ui-ios'); const fs=w.eval("FS_SET_KEYS.includes('po.uistyle')");
+  ok('Стиль інтерфейсу: за замовчуванням iOS, «Класичний» на вибір у «Вигляді», зберігається', def && cl && row && back && fs, JSON.stringify([def, cl, row, back, fs])); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
