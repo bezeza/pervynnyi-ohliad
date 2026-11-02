@@ -1123,6 +1123,17 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const notOp=!DCLS.nsaid.includes('Трамадол')&&!DCLS.nsaid.includes('Метамізол натрію'); const noTr=!DMAP['тримеперидин'];
     return JSON.stringify([inCat,ns,notOp,noTr]); })()`);
   ok('Знеболювальні: 10 нових препаратів у переліку й підказках доз, нові НПЗП — у перевірці взаємодій, опіоїди й метамізол — ні', r==='[true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const keep=RX.slice(), keepR=RES.slice(); RX.length=0; RES.length=0; lsSet('po.ampsop','0'); const off=ampWarnings().length===0; lsSet('po.ampsop','1');
+    const t=todayISO(); const a=addRx({drug:'Цефтріаксон', start:addDays(t,-4), route:'в/в', cult:'взято'}); a.rev=addDays(t,-2);
+    const b=addRx({drug:'Левофлоксацин', start:t, route:'в/в', cult:'взято'}); const g=addRx({drug:'Гентаміцин', start:t, freq:'2 р/д', cult:''});
+    const W=rxWarnings().map(x=>x.t).join(' | ');
+    const rev=/перегляд призначення Цефтріаксон мав бути/.test(W), par=/Цефтріаксон парентерально понад 72 год/.test(W)&&/амоксицилін\\/клавуланова кислота або цефіксим/.test(W);
+    const cfq=/заборонена комбінація Цефтріаксон[^|]*Левофлоксацин/.test(W), camg=/заборонена комбінація Цефтріаксон[^|]*Гентаміцин/.test(W), amg1=/Гентаміцин: рекомендовано повну добову дозу/.test(W), cult=/Гентаміцин: до введення ПЛЗ/.test(W);
+    RES.push({id:999,d:t,t:'бактеріологічне дослідження мокротиння',v:'Str. pneumoniae 10^6 КУО/мл'}); const W2=rxWarnings().map(x=>x.t).join(' | ');
+    const cfq2=!/заборонена комбінація Цефтріаксон[^|]*Левофлоксацин/.test(W2)&&/заборонена комбінація Цефтріаксон[^|]*Гентаміцин/.test(W2);
+    RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
+    return JSON.stringify([off,rev,par,cfq,camg,amg1,cult,cfq2]); })()`);
+  ok('СОП закладу, перевірки: перегляд 48–72 год, парентерально > 72 год із заміною, заборонені комбінації (цефалоспорин + фторхінолон — лише без посіву), аміноглікозид 1 р/д, бакпосів; без СОП — нічого', r==='[true,true,true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

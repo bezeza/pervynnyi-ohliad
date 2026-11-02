@@ -138,6 +138,7 @@
   "657-drug-dexketoprofen.js",
   "658-print-blanks.js",
   "659-amp-sop.js",
-  "660-drugs-analgesics.js"
+  "660-drugs-analgesics.js",
+  "661-amp-checks.js"
  ]
 }
