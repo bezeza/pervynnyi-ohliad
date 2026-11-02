@@ -1097,6 +1097,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     sp.value='Zakon'; sp.dispatchEvent(new w.Event('change')); on=R0.classList.contains('pf-zakon');
     sp.value='Times New Roman'; sp.dispatchEvent(new w.Event('change')); off=!R0.classList.contains('pf-zakon'); }
   ok('Шрифт Zakon: вбудований, є у виборі тексту, інтерфейсу й друку; за замовчуванням друк — Times New Roman', ff && od && ou && def && on && off, JSON.stringify([ff, od, ou, def, on, off])); }
+{ const r=w.eval(`(()=>{ const a=!!DMAP['декскетопрофен'] && !!DMAP['кедол (декскетопрофен)'] && !!DMAP['кедол'];
+    const n=['Декскетопрофен','Кедол (декскетопрофен)','Кедол'].every(x=>DCLS.nsaid.includes(x));
+    const l=!!rxLib()['декскетопрофен'] && !!rxLib()['кедол (декскетопрофен)'];
+    const k=(DMAP['декскетопрофен'].renal||[]).some(x=>x.lt===50);
+    return JSON.stringify([a,n,l,k]); })()`);
+  ok('Декскетопрофен і Кедол: у переліку препаратів, у підказках доз, НПЗП у перевірці взаємодій, корекція за КК', r==='[true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
