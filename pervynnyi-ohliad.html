@@ -2009,6 +2009,98 @@ html.touch .nextbar .btn{padding:12px 16px}
 :root.ui-ios #sidecol #tabs .tab{border-radius:10px}
 :root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
 :root.ui-ios body.lay-B .stpl{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
+/* 0.9.3.77 — iOS: не лише кольори, а й компоновка (лише з html.ui-ios) */
+/* форма — сірий «згрупований» фон, кожна група полів — біла картка (як «Налаштування» на iPhone) */
+:root.ui-ios .form{background:transparent;box-shadow:none}
+:root.ui-ios .form .panel{padding:8px 16px 20px}
+:root.ui-ios .form .panel>.grid,:root.ui-ios .form .panel>div>.grid{background:var(--surface);border-radius:14px;padding:14px 16px 16px;gap:14px 16px;box-shadow:var(--shadow)}
+:root.ui-ios .form .panel>div>.grid+.grid,:root.ui-ios .form .panel>.grid+.grid{margin-top:12px}
+:root.ui-ios .form .panel h3.sub{font:600 12.5px/1.3 var(--f-ui);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:22px 16px 7px}
+:root.ui-ios .form .panel>div>h3.sub:first-child{margin-top:6px}
+/* великий заголовок розділу */
+:root.ui-ios .panel>.ph{margin:4px 0 12px;align-items:center}
+:root.ui-ios .panel>.ph h2{font:700 26px/1.15 var(--f-head);letter-spacing:-.01em}
+:root.ui-ios .panel>.ph .qhelp{width:26px;height:26px;padding:0;border-radius:50%;font-size:13px}
+:root.ui-ios .out .oh h2,:root.ui-ios .out>.oh h2{font:700 20px/1.2 var(--f-head);letter-spacing:-.01em}
+/* підписи полів — спокійніші, поля — вищі (зручно і мишею, і пальцем) */
+:where(.ui-ios) .f>label,:where(.ui-ios) .f>.lbl{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted)}
+:where(.ui-ios) select,:where(.ui-ios) input:not([type=checkbox]):not([type=radio]):not([type=range]),:where(.ui-ios) textarea{padding:9px 11px;min-height:38px}
+:where(.ui-ios) .entry-status{border-color:transparent;background:var(--fill2);border-radius:999px;padding:1px 8px}
+/* варіанти — під палець, з плавним перемиканням */
+:where(.ui-ios) .chips,:where(.ui-ios) .segbtns{gap:7px}
+:where(.ui-ios) .chip{padding:6px 13px;font-size:14px;transition:background-color .15s,color .15s,transform .1s}
+:where(.ui-ios) .chip:active,:where(.ui-ios) .btn:active,:where(.ui-ios) .seg button:active{transform:scale(.97)}
+:where(.ui-ios) .seg button,:where(.ui-ios) .vseg button,:where(.ui-ios) .otabs button,:where(.ui-ios) .btn{transition:background-color .15s,color .15s,box-shadow .15s,transform .1s}
+/* панель документів і дій — компактна «панель інструментів» */
+:root.ui-ios .docbar{padding:4px 16px 0;gap:8px}
+:root.ui-ios .docbar .seg button{padding:8px 10px;font-size:14px}
+:root.ui-ios .docbar>.btn,:root.ui-ios .docbar .mkdoc>.btn,:root.ui-ios .docbar>details>summary.btn{padding:7px 12px;font-size:14px}
+:root.ui-ios .docbar #docMore{border-radius:10px}
+/* бічний зміст — список iPadOS: рядки, вибраний — заповнений синім */
+:root.ui-ios #sidecol #tabs .tab{padding:8px 10px;margin:1px 0;font-weight:500;color:var(--ink)}
+:root.ui-ios #sidecol #tabs .tab:hover{background:var(--fill2)}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent);color:#fff}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"] *{color:inherit;border-color:currentColor}
+:root.ui-ios #sidecol .tgl{font-size:11.5px;letter-spacing:.05em;opacity:1;padding-top:6px}
+:root.ui-ios body.lay-B .form>#sidecol{border-right:0}
+:root.ui-ios #sidecol .sidefold-btn{background:transparent}
+/* права панель */
+:root.ui-ios .out{padding-top:4px}
+:root.ui-ios #out{border-radius:12px}
+:root.ui-ios .ofoot .btn{min-height:44px}
+/* сповіщення — «капсула» з розмиттям */
+:root.ui-ios .toast{border-radius:14px;padding:10px 16px;background:color-mix(in srgb,var(--ink) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+/* меню «⋯» — як контекстне меню iOS */
+:root.ui-ios .more-dd .mmenu{border:0;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.08);padding:6px;background:var(--surface)}
+:root.ui-ios .more-dd .mmenu .more{border-radius:8px}
+:root.ui-ios .more-dd .mmenu .more:hover{background:var(--fill2)}
+/* нижні вкладки на телефоні — напівпрозорі з розмиттям */
+:root.ui-ios .phtabs{background:var(--top);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line)}
+/* поява розділу — коротке м’яке згасання */
+@media (prefers-reduced-motion:no-preference){:root.ui-ios .form .panel:not([hidden]){animation:iosIn .18s ease-out}}
+@keyframes iosIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (max-width:899px){:root.ui-ios .form .tabs,:root.ui-ios .form .docbar,:root.ui-ios .form .tabnav{background:var(--bg)}:root.ui-ios .form .panel{padding:6px 10px 16px}:root.ui-ios .panel>.ph h2{font-size:24px}}
+/* 0.9.3.77 — той самий стиль на комп’ютері — як macOS (Sonoma): щільніше, під мишку; на телефоні й планшеті під палець — iOS */
+@media (min-width:900px){
+  :root.ui-ios:not(.touch){--r:8px}
+  :root.ui-ios:not(.touch) body{font-size:14px}
+  /* шапка — як панель інструментів вікна */
+  :root.ui-ios:not(.touch) body.shell .top{min-height:46px}
+  /* кнопки й перемикачі — компактні, як у macOS */
+  :where(.ui-ios:not(.touch)) .btn{border-radius:7px;padding:5px 11px;font-size:13.5px;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 .5px 1px rgba(0,0,0,.06)}
+  :where(.ui-ios:not(.touch)) .btn:hover{background:var(--fill2);border-color:var(--line)}
+  :where(.ui-ios:not(.touch)) .btn.primary{border-color:transparent;background:var(--accent);color:#fff;border-radius:7px;box-shadow:0 .5px 1px rgba(0,0,0,.15)}
+  :where(.ui-ios:not(.touch)) .btn.norm{border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+  :root.ui-ios:not(.touch) body.shell .top .btn{border-color:transparent;box-shadow:none}
+  :where(.ui-ios:not(.touch)) .seg,:where(.ui-ios:not(.touch)) .vseg,:where(.ui-ios:not(.touch)) .otabs{border-radius:8px}
+  :where(.ui-ios:not(.touch)) .seg button,:where(.ui-ios:not(.touch)) .vseg button,:where(.ui-ios:not(.touch)) .otabs button{border-radius:6px;padding:5px 12px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .docbar .seg button{padding:6px 10px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .docbar>.btn,:root.ui-ios:not(.touch) .docbar .mkdoc>.btn,:root.ui-ios:not(.touch) .docbar>details>summary.btn{padding:5px 11px;font-size:13.5px}
+  /* поля — білі з тонкою рамкою і синім кільцем фокусу, як у macOS */
+  :where(.ui-ios:not(.touch)) select,:where(.ui-ios:not(.touch)) input:not([type=checkbox]):not([type=radio]):not([type=range]),:where(.ui-ios:not(.touch)) textarea{background-color:var(--surface);border-color:var(--line);border-radius:6px;padding:5px 9px;min-height:30px;font-size:14px;box-shadow:inset 0 .5px 1px rgba(0,0,0,.04)}
+  :where(.ui-ios:not(.touch)) select:focus,:where(.ui-ios:not(.touch)) input:focus,:where(.ui-ios:not(.touch)) textarea:focus{outline:3px solid color-mix(in srgb,var(--accent) 35%,transparent);outline-offset:0;border-color:var(--accent)}
+  /* варіанти — менші «пігулки» */
+  :where(.ui-ios:not(.touch)) .chips,:where(.ui-ios:not(.touch)) .segbtns{gap:5px}
+  :where(.ui-ios:not(.touch)) .chip{padding:3px 10px;font-size:13.5px}
+  /* групи полів — як «Системні параметри»: картка з тонкою рамкою */
+  :root.ui-ios:not(.touch) .form .panel>.grid,:root.ui-ios:not(.touch) .form .panel>div>.grid{border-radius:10px;padding:12px 14px 14px;gap:10px 14px;border:1px solid var(--line);box-shadow:none}
+  :root.ui-ios:not(.touch) .form .panel h3.sub{font:600 13px/1.3 var(--f-ui);text-transform:none;letter-spacing:0;color:var(--ink);margin:18px 4px 6px}
+  :root.ui-ios:not(.touch) .panel>.ph h2{font:700 22px/1.2 var(--f-head)}
+  :root.ui-ios:not(.touch) .out .oh h2,:root.ui-ios:not(.touch) .out>.oh h2{font:700 17px/1.2 var(--f-head)}
+  :root.ui-ios:not(.touch) .form,:root.ui-ios:not(.touch) .out{border-radius:12px}
+  :root.ui-ios:not(.touch) .out{border:1px solid var(--line);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  /* бічна панель — як у Finder: напівпрозора сіра, вибраний рядок — сіра «плашка», значок синій */
+  :root.ui-ios:not(.touch) body.lay-B .form>#sidecol{background:color-mix(in srgb,var(--fill2) 70%,transparent);border-radius:12px;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab{padding:5px 9px;font-size:13.5px;border-radius:6px;margin:0}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab[aria-selected="true"]{background:var(--fill);color:var(--ink);font-weight:600}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab[aria-selected="true"] *{color:var(--accent);border-color:var(--accent)}
+  :root.ui-ios:not(.touch) #sidecol .tgl{font-size:11px;font-weight:600;color:var(--muted);padding-top:8px}
+  :root.ui-ios:not(.touch) .ofoot .btn{min-height:34px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu{border-radius:10px;padding:5px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu .more{border-radius:5px;padding:4px 10px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu .more:hover{background:var(--accent);color:#fff}
+  :root.ui-ios:not(.touch) .toast{border-radius:10px;font-size:13.5px}
+}
 </style>
 </head>
 <body>
@@ -4162,7 +4254,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.77', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.77', '02.11.2026', 'стиль інтерфейсу «iOS» — лаконічний, як на iPhone/iPad: світла шапка з розмиттям, картки з заокругленням, поля без рамок на сірій підкладці, перемикачі-«пігулки», кнопки з тонованим тлом, системний синій; у денній і нічній темах. Вибір: «Вигляд» → «Стиль»: iOS / Класичний (як було). Друк і бланки не змінюються'],
+  ['0.9.3.77', '02.11.2026', 'стиль інтерфейсу «Apple»: на комп’ютері — як macOS (компактні кнопки й перемикачі під мишку, білі поля з тонкою рамкою й синім кільцем фокусу, бічна панель як у Finder, групи як у «Системних параметрах»), на телефоні й планшеті — як iOS, і не лише кольори: поля розділу згруповані в білі картки на сірому тлі з підписами груп (як «Налаштування» iPhone), великі заголовки розділів, бічний зміст — список із виділеним синім рядком, компактна панель дій, вищі поля й більші варіанти під палець, меню «⋯» і сповіщення — як в iOS, плавні перемикання; поля без рамок, перемикачі-«пігулки», тоновані кнопки, системний синій; у денній і нічній темах. Вибір: «Вигляд» → «Стиль»: Apple / Класичний (як було). Друк і бланки не змінюються'],
   ['0.9.3.76', '02.11.2026', '«Перед друком» без бланка 003/о (звичайний текст): клік по розділу (Скарги, Анамнез, огляд…) відкриває віконце з пунктами цього розділу прямо на аркуші — як на бланку; віконце відкривається на вже вибраних пунктах, а не прокручене донизу до «Додатково»; окреме вікно ⧉ в режимі «Аркуш» тепер стежить за формою — змінили скарги зліва, і вікно показує цей рядок (і на бланку 003/о, і без нього)'],
   ['0.9.3.75', '02.11.2026', '«Дописати історію» (меню «⋯» на вкладках «Запис» і «За хворобою»): для паперової історії — дати перебування, таблиця робочих днів (субота й неділя пропущені, вихідний можна додати) з показниками температурного листка й динамікою на кожен день → «Згенерувати щоденники» (з первинного огляду або шаблону хвороби, з лікуванням на цей день) → епікриз → друк історії'],
   ['0.9.3.74', '02.11.2026', 'епікриз: результат «Виписується за власним бажанням» (у «Перевірці» — нагадування про письмову відмову пацієнта); у «Результатах обстежень» кнопка «± Динаміка аналізів з журналу» — дописує, напр., «лейк. 14,2 → 7,8 ×10⁹/л» для аналізів, зроблених двічі й більше'],
@@ -5490,7 +5582,7 @@ const HELPS = [
   'Щоб вони були завжди: «Налаштування» → «Профіль роботи: Травматологія».']],
  ['Копіювання, друк, МІС', [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
-  'Стиль інтерфейсу: «Вигляд» → «Стиль» — iOS (лаконічний: картки, поля без рамок, перемикачі-«пігулки») або Класичний. Тема кольорів (день / ніч…) вибирається окремо.',
+  'Стиль інтерфейсу: «Вигляд» → «Стиль» — Apple (на комп’ютері як macOS: щільно, під мишку; на телефоні й планшеті як iOS: під палець) або Класичний. Тема кольорів (день / ніч…) вибирається окремо.',
   'Планшет: тримайте горизонтально — розділи, форма й текст поруч, як на комп’ютері; на сенсорному екрані кнопки й поля більші (кнопка «Вигляд» → «Дотик»: Авто / Великі кнопки / Звичайні).',
   'Щоденник без первинки: «Без хвороби» у блоці вибору хвороби; скарги — кнопками (ваші слова з попередніх щоденників пацієнта, загальний список, пошук). Після «Записати в журнал» форма стає чернеткою наступного дня — інтервал (щодня / через день) поруч із датою запису.',
   'З МІС: закладка «🔖 З МІС → Первинний огляд» (вкладка «Запис», перетягніть на панель закладок) або кнопка «→ ПО» у МІС копіює ПІБ, стать і дату народження; у програмі натисніть Ctrl+V або «⇩ З МІС».',
@@ -19331,13 +19423,13 @@ try{
     multi.before(h('button', {type:'button', class:'more bfbtn', role:'menuitem', title:'Паперова історія: щоденники за дні перебування з температурного листка, епікриз, друк', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; bfDialog(); }}, '📝 Дописати історію'));
   });
 }catch(e){}
-/* ===== 0.9.3.77 — стиль інтерфейсу «iOS»: лаконічний, як у застосунках iPhone/iPad =====
+/* ===== 0.9.3.77 — стиль інтерфейсу «Apple»: на комп’ютері — як macOS, на телефоні й планшеті (сенсорний режим) — як iOS =====
    Окремо від теми кольорів (авто / день / ніч…): стиль міняє форму — сірий фон, білі картки з заокругленням,
    поля без рамок на сірій підкладці, перемикачі-«пігулки», кнопки з тонованим тлом, системний синій.
    Працює в денній і нічній темах. Теми «Теплий папір» і «Кабінет» лишають свої кольори, форма — iOS.
    Вибір: «Вигляд» → «Стиль»: iOS / Класичний (зберігається в «Налаштуваннях», файл Налаштування.json).
    Друк, «Аркуш», бланки й файли Word/LibreOffice не змінюються. */
-const UI_STYLES = {ios:'iOS', classic:'Класичний'};
+const UI_STYLES = {ios:'Apple (macOS / iOS)', classic:'Класичний'};
 let UISTYLE = lsGet('po.uistyle', 'ios'); if (!UI_STYLES[UISTYLE]) UISTYLE = 'ios';
 function uiStyleApply(){
   const on = UISTYLE === 'ios';
@@ -19349,7 +19441,7 @@ function uiStyleSet(k){ UISTYLE = UI_STYLES[k] ? k : 'ios'; lsSet('po.uistyle', 
 { const x0 = viewCtl; viewCtl = function(){
   const box = x0.apply(this, arguments);
   const row = h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Стиль'), h('div', {class:'vseg', role:'group', 'aria-label':'Стиль інтерфейсу'},
-    ...[['ios', 'iOS', 'Лаконічний: картки, поля без рамок, перемикачі-«пігулки»'], ['classic', 'Класичний', 'Як було: рамки, темна шапка']].map(([k, l, t])=>
+    ...[['ios', 'Apple', 'Лаконічний: на комп’ютері — як macOS (щільно, під мишку), на телефоні й планшеті — як iOS (під палець)'], ['classic', 'Класичний', 'Як було: рамки, темна шапка']].map(([k, l, t])=>
       h('button', {type:'button', 'aria-pressed':UISTYLE === k ? 'true' : 'false', title:t, onclick:()=>uiStyleSet(k)}, l))));
   box.prepend(row); return box; }; }
 { const x0 = popInit; popInit = function(w){ const r = x0.apply(this, arguments); try{ w.document.documentElement.classList.toggle('ui-ios', UISTYLE === 'ios'); }catch(e){} return r; }; }
