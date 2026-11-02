@@ -1166,6 +1166,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   w.eval("openViewPop()"); const row=[...doc.querySelectorAll('.viewpop .vrow .vl')].some(e=>e.textContent==='Стиль'); w.eval("closeViewPop()");
   w.eval("uiStyleSet('ios')"); const back=R.classList.contains('ui-ios'); const fs=w.eval("FS_SET_KEYS.includes('po.uistyle')");
   ok('Стиль інтерфейсу: за замовчуванням iOS, «Класичний» на вибір у «Вигляді», зберігається', def && cl && row && back && fs, JSON.stringify([def, cl, row, back, fs])); }
+{ const r=w.eval(`(()=>{ uiStyleSet('ios'); const pd=typeof SHELL.placeDocs==='function'; const sty=[...document.styleSheets].map(s=>{ try{ return [...s.cssRules].map(x=>x.cssText).join(' '); }catch(e){ return ''; } }).join(' ');
+    const peek=/ui-ios #copyPeek/.test(sty), fld=/ui-ios \.entry-field:not/.test(sty), und=/ui-ios #undoBtn \.hide-m/.test(sty);
+    return JSON.stringify([pd, peek, fld, und]); })()`);
+  ok('Стиль Apple без шуму: «Перед копіюванням» — у «Перевірці», на полях лише відхилення, «Скасувати» — значком, документи в шапці', r==='[true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

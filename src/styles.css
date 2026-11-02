@@ -2062,3 +2062,48 @@ html.touch .nextbar .btn{padding:12px 16px}
   :root.ui-ios:not(.touch) .more-dd .mmenu .more:hover{background:var(--accent);color:#fff}
   :root.ui-ios:not(.touch) .toast{border-radius:10px;font-size:13.5px}
 }
+/* 0.9.3.78 — стиль «Apple»: менше шуму, форма одразу під заголовком, розділи — першими */
+/* 1. Сигнали: одна позначка там, де проблема */
+:root.ui-ios #copyPeek{display:none!important}          /* те саме — у вкладці «Перевірка» */
+:root.ui-ios #outBox>.note{display:none}
+@media (min-width:900px){
+  :root.ui-ios .entry-field:not([data-state="abnormal"]):not([data-state="check"]){display:none}
+  :root.ui-ios .panel>.ph>.entry-section{display:none}   /* стан розділу — значок у бічному списку */
+  :root.ui-ios .ofoot #copy .cbadge{display:none}          /* лічильник — на вкладці «Перевірка» */
+  :root.ui-ios .toast{left:auto;right:24px;bottom:24px;transform:none;max-width:420px}
+}
+/* 2. Панель дій — один компактний рядок */
+:root.ui-ios body.shell .top .vbadge{display:none}
+:root.ui-ios body.shell .topdocs #docMore{flex:0 1 150px}
+:root.ui-ios #undoBtn .hide-m{display:none}
+:root.ui-ios #undoBtn{min-width:34px;justify-content:center}
+:root.ui-ios .docbar{align-items:center;padding-bottom:2px}
+:root.ui-ios .docbar #docMore{flex:1 1 220px}
+/* 3. Бічна панель: розділи першими, шаблон і прогрес — один компактний блок */
+@media (min-width:900px){
+  :root.ui-ios #sidecol .sidefold-btn{width:auto;min-height:0;margin:0 4px 6px auto;padding:3px 8px;font-size:12px;background:transparent;border-color:transparent;box-shadow:none;color:var(--muted)}
+  :root.ui-ios #sidecol .sidefold-btn:hover{color:var(--accent);background:var(--fill2)}
+  :root.ui-ios body.lay-B #sidecard{gap:6px;margin-bottom:6px}
+  :root.ui-ios body.lay-B .stpl{flex-direction:row;align-items:center;gap:6px;padding:6px 8px}
+  :root.ui-ios body.lay-B .stpl .st1{display:none}
+  :root.ui-ios body.lay-B .stpl .st2{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+  :root.ui-ios body.lay-B .stpl .st3{flex:0 0 auto;width:auto;padding:2px 8px;font-size:12px;background:transparent;border-color:transparent;box-shadow:none;color:var(--accent)}
+  :root.ui-ios body.lay-B .stpl .stx,:root.ui-ios body.lay-B .stpl>:not(.st1):not(.st2):not(.st3){display:none}
+  :root.ui-ios body.lay-B .sprog{padding:0 8px}
+  :root.ui-ios .sp1{font-size:12px}
+  :root.ui-ios .spbar{height:4px;border:0;background:var(--fill)}
+  :root.ui-ios .progress-next{display:none}               /* пропуски — у «Перевірці» */
+  :root.ui-ios body.lay-B #sidecard .ljside{padding:5px 9px;font-size:13.5px;background:transparent;border-color:transparent;box-shadow:none;color:var(--ink)}
+  :root.ui-ios body.lay-B #sidecard .ljside:hover{background:var(--fill2)}
+}
+@media (min-width:900px){
+  :root.ui-ios:not(.touch) .docbar{gap:6px}
+  :root.ui-ios:not(.touch) .docbar>.btn,:root.ui-ios:not(.touch) .docbar .mkdoc>.btn{padding:5px 9px;font-size:13px}
+  :root.ui-ios .toast{top:58px;bottom:auto}
+  :root.ui-ios body.lay-B #sidecard,:root.ui-ios body.lay-B #sidecard>*{min-width:0;max-width:100%;box-sizing:border-box}
+  :root.ui-ios body.lay-B #sidecard .stpl{width:100%;overflow:hidden}
+}
+@media (min-width:900px){
+  :root.ui-ios body.lay-B .stpl .st3{font-size:0}
+  :root.ui-ios body.lay-B .stpl .st3::after{content:"Змінити";font-size:12px}
+}

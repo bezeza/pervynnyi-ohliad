@@ -142,6 +142,7 @@
   "661-amp-checks.js",
   "662-epi-improve.js",
   "663-backfill.js",
-  "664-ui-ios.js"
+  "664-ui-ios.js",
+  "665-ui-declutter.js"
  ]
 }
