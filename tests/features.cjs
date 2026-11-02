@@ -1170,6 +1170,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const peek=/ui-ios #copyPeek/.test(sty), fld=/ui-ios \.entry-field:not/.test(sty), und=/ui-ios #undoBtn \.hide-m/.test(sty);
     return JSON.stringify([pd, peek, fld, und]); })()`);
   ok('Стиль Apple без шуму: «Перед копіюванням» — у «Перевірці», на полях лише відхилення, «Скасувати» — значком, документи в шапці', r==='[true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ uiStyleSet('ios'); const f=F('dyh.gk'); const box=f.el.nextElementSibling; const list=!!box&&box.classList.contains('seglist')&&f.el.classList.contains('seg-hidden');
+    const keep=f.el.value; box.children[1].click(); const set=f.el.value==='1'&&box.children[1].getAttribute('aria-pressed')==='true'; f.el.value=keep; f.el.dispatchEvent(new Event('change',{bubbles:true}));
+    const perk=F('dyh.perk').el.nextElementSibling.classList.contains('seglist'); const big=F('dyh.hr'); const dd=!big.el.classList.contains('seg-hidden');
+    uiStyleSet('classic'); const back=!f.el.classList.contains('seg-hidden')&&!(f.el.nextElementSibling&&f.el.nextElementSibling.classList.contains('seglist'))&&!F('dyh.perk').el.nextElementSibling.classList.contains('seglist');
+    uiStyleSet('ios'); const again=f.el.nextElementSibling.classList.contains('seglist'); update();
+    return JSON.stringify([list,set,perk,dd,back,again]); })()`);
+  ok('Стиль Apple: випадний список до 8 варіантів і довгі варіанти — списком рядків (вибір пишеться у поле), 9+ — випадний; «Класичний» повертає як було', r==='[true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

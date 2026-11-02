@@ -2146,12 +2146,24 @@ html.touch .nextbar .btn{padding:12px 16px}
   :root.ui-ios body.lay-B .stpl .st3{font-size:0}
   :root.ui-ios body.lay-B .stpl .st3::after{content:"Змінити";font-size:12px}
 }
+/* 0.9.3.79 — стиль «Apple»: довгі варіанти — списком рядків (кружечок — один вибір, квадратик — кілька) */
+:root.ui-ios .seglist,:root.ui-ios .chiplist{display:flex;flex-direction:column;flex-wrap:nowrap;gap:1px;background:var(--fill2);border-radius:10px;padding:3px}
+:root.ui-ios .seglist .chip,:root.ui-ios .chiplist .chip{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;border:0;border-radius:7px;background:transparent;color:var(--ink);padding:6px 10px;font-size:14px;line-height:1.35;font-weight:400;box-shadow:none}
+:root.ui-ios .seglist .chip:hover,:root.ui-ios .chiplist .chip:hover{background:var(--surface)}
+:root.ui-ios .seglist .chip::before,:root.ui-ios .chiplist .chip:not([data-n])::before{content:"";flex:0 0 15px;height:15px;margin-top:2px;box-sizing:border-box;border:1.5px solid color-mix(in srgb,var(--muted) 70%,transparent);border-radius:50%;background:var(--surface)}
+:root.ui-ios .chiplist .chip:not([data-n])::before{border-radius:4px}
+:root.ui-ios .seglist .chip[aria-pressed="true"],:root.ui-ios .chiplist .chip[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+:root.ui-ios .seglist .chip[aria-pressed="true"]::before{border:4.5px solid var(--accent)}
+:root.ui-ios .chiplist .chip[aria-pressed="true"]:not([data-n])::before{content:"✓";border-color:var(--accent);background:var(--accent);color:#fff;font:700 11px/12px var(--f-ui);text-align:center}
+:root.ui-ios .seglist .chip.abn[aria-pressed="true"],:root.ui-ios .segbtns.seglist .chip.sg.abn[aria-pressed="true"]{background:var(--flag-soft);color:var(--ink);border:0}
+:root.ui-ios .seglist .chip.abn[aria-pressed="true"]::before{border-color:var(--flag)}
+:root.ui-ios .seglist .chip[data-auto="1"]::after,:root.ui-ios .chiplist .chip[data-auto="1"]::after{margin-left:auto;align-self:center}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.78 від 02.11.2026">v0.9.3.78 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.79 від 02.11.2026">v0.9.3.79 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4297,8 +4309,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.78', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.79', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.79', '02.11.2026', 'стиль «Apple» — однакові елементи для схожих виборів: короткі варіанти — «пігулками» в рядок; довгі — списком рядків із кружечком (один вибір) або квадратиком (кілька) замість стовпчика великих «пігулок»; випадні списки до 8 варіантів — теж списком: вибір одним натисканням, без повтору вибраного тексту сірим під полем (9 і більше варіантів — випадний список, як був). Відхилення від норми — жовтим рядком. «Класичний» стиль — без змін'],
   ['0.9.3.78', '02.11.2026', 'стиль «Apple» — менше шуму й форма одразу під рукою: на полях лишилися тільки позначки відхилень і того, що треба перевірити («не заповнено» й «норма» — значком у бічному списку); блок «Перед копіюванням» і лічильник на «Копіювати» прибрано — усе у вкладці «Перевірка»; сповіщення — у правому куті, не поверх форми; документи — вкладками в шапці (на ширині від 1280 px), дії над формою — одним компактним рядком, «Скасувати» — значком ↶ (Ctrl+Z); у бічній панелі розділи стоять одразу під шаблоном і прогресом, зібраними в компактний блок. «Класичний» стиль — без змін'],
   ['0.9.3.77', '02.11.2026', 'стиль інтерфейсу «Apple»: на комп’ютері — як macOS (компактні кнопки й перемикачі під мишку, білі поля з тонкою рамкою й синім кільцем фокусу, бічна панель як у Finder, групи як у «Системних параметрах»), на телефоні й планшеті — як iOS, і не лише кольори: поля розділу згруповані в білі картки на сірому тлі з підписами груп (як «Налаштування» iPhone), великі заголовки розділів, бічний зміст — список із виділеним синім рядком, компактна панель дій, вищі поля й більші варіанти під палець, меню «⋯» і сповіщення — як в iOS, плавні перемикання; поля без рамок, перемикачі-«пігулки», тоновані кнопки, системний синій; у денній і нічній темах. Вибір: «Вигляд» → «Стиль»: Apple / Класичний (як було). Друк і бланки не змінюються'],
   ['0.9.3.76', '02.11.2026', '«Перед друком» без бланка 003/о (звичайний текст): клік по розділу (Скарги, Анамнез, огляд…) відкриває віконце з пунктами цього розділу прямо на аркуші — як на бланку; віконце відкривається на вже вибраних пунктах, а не прокручене донизу до «Додатково»; окреме вікно ⧉ в режимі «Аркуш» тепер стежить за формою — змінили скарги зліва, і вікно показує цей рядок (і на бланку 003/о, і без нього)'],
@@ -19498,6 +19511,46 @@ try{ renderViewCtl(); }catch(e){}
 { const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ if (SHELL && SHELL.placeDocs){ SHELL.placeDocs(); if (SHELL.sync) SHELL.sync(); } }catch(e){} return r; }; }
 try{ requestAnimationFrame(()=>{ try{ SHELL.placeDocs(); }catch(e){} }); }catch(e){}
 try{ SHELL.placeDocs(); }catch(e){}
+/* ===== 0.9.3.79 — стиль «Apple»: однакові елементи для схожих виборів =====
+   Правило: короткі варіанти — «пігулками» в рядок (як було); довгі варіанти — списком рядків із кружечком
+   (один вибір) або квадратиком (кілька), а не стовпчиком великих «пігулок»; випадні списки до 8 варіантів —
+   теж списком рядків: вибір одним натисканням, без повтору вибраного тексту сірим під полем.
+   Списки на 9+ варіантів лишаються випадними. «Класичний» стиль — як було.
+   Прихований <select> лишається джерелом даних: збереження, перевірки, шаблони працюють як завжди. */
+const UIL = {built:[], tagged:[]};
+const uilAvg = f => { const L = (f.opts || []).map(o=>String(O(o).l).length); return L.length ? L.reduce((a, b)=>a + b, 0) / L.length : 0; };
+function uilListFor(f){
+  if (f.type !== 'sel' || f.headOnly || !f.el || f.seg || f.noChips || !f.opts || f.opts.length < 2 || f.opts.length > 8) return;
+  const box = h('div', {class:'segbtns seglist uil', role:'radiogroup', 'aria-label':f.label || ''});
+  const lab = i => { const o = f.el.options[i + (f.el.options[0] && f.el.options[0].value === '' ? 1 : 0)]; return o ? o.textContent : String(O(f.opts[i]).l); };
+  const sync = () => [...box.children].forEach((b, i)=>{ const on = f.el.value === String(i); b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.classList.toggle('abn', on && f.norm !== undefined && i !== f.norm); });
+  f.opts.forEach((o, i)=>box.append(h('button', {type:'button', class:'chip sg', onclick:()=>{ f.el.value = f.el.value === String(i) ? '' : String(i); f.el.dispatchEvent(new Event('change', {bubbles:true})); sync(); }}, lab(i))));
+  { const sf = f.el.nextElementSibling; if (sf && sf.classList.contains('selfull')) sf.remove(); }
+  f.el.classList.add('seg-hidden'); f.el.after(box); f.seg = sync; f._uil = {box, sync}; f.el.addEventListener('change', sync); sync();
+  UIL.built.push(f);
+}
+function uilUnbuild(f){
+  const u = f._uil; if (!u) return;
+  u.box.remove(); f.el.removeEventListener('change', u.sync); f.el.classList.remove('seg-hidden'); f.seg = undefined; f._uil = undefined;
+  try{ mark(f.el, f); }catch(e){}
+}
+function uilApply(){
+  const on = typeof UISTYLE !== 'undefined' && UISTYLE === 'ios';
+  if (on){
+    SECTIONS.forEach(s=>s.fields.forEach(f=>{
+      if (f.type === 'sel' && f.seg && !f._uil){ const box = f.el && f.el.nextElementSibling; if (box && box.classList.contains('segbtns') && uilAvg(f) > 22 && !box.classList.contains('seglist')){ box.classList.add('seglist'); UIL.tagged.push(box); } }
+      else if (f.type === 'sel' && !f.seg) uilListFor(f);
+      else if (f.type === 'multi' && !f.search && f.chips && f.chips.length > 1 && uilAvg(f) > 24){ const c = f.chips[0].parentElement; if (c && !c.classList.contains('chiplist')){ c.classList.add('chiplist'); UIL.tagged.push(c); } }
+    }));
+  } else {
+    UIL.built.splice(0).forEach(uilUnbuild);
+    UIL.tagged.splice(0).forEach(b=>b.classList.remove('seglist', 'chiplist'));
+  }
+}
+{ const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ uilApply(); }catch(e){} return r; }; }
+/* поле, перебудоване іншим модулем (напр., «Результат лікування» з новим варіантом), — ще раз за правилом */
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} return r; }; }
+try{ uilApply(); }catch(e){}
 </script>
 
 </body>

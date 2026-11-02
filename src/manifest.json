@@ -143,6 +143,7 @@
   "662-epi-improve.js",
   "663-backfill.js",
   "664-ui-ios.js",
-  "665-ui-declutter.js"
+  "665-ui-declutter.js",
+  "666-ui-lists.js"
  ]
 }
