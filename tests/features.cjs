@@ -1103,6 +1103,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const k=(DMAP['декскетопрофен'].renal||[]).some(x=>x.lt===50);
     return JSON.stringify([a,n,l,k]); })()`);
   ok('Декскетопрофен і Кедол: у переліку препаратів, у підказках доз, НПЗП у перевірці взаємодій, корекція за КК', r==='[true,true,true,true]', r); }
+{ const btn=doc.querySelector('.more-dd .mmenu .fbbtn'); const n0=printed;
+  const okp=w.eval("printBlanks(['ter','amb','e003'])"); const P=$('print');
+  const cnt=P.querySelectorAll('.fbk').length, d2=P.querySelectorAll('.fbk-ter .fb-diary').length, ep=P.querySelectorAll('.fbk-e003 .fb-ep').length;
+  const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
+  w.eval('blanksDialog()'); const dlg=$('fbPick'), boxes=dlg ? dlg.querySelectorAll('input[type=checkbox]').length : 0; if (dlg) dlg.remove();
+  ok('Порожні бланки: пункт у меню «⋯», вибір 7 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===7, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
