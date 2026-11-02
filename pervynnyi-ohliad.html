@@ -1606,7 +1606,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.68 від 31.10.2026">v0.9.3.68 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.69 від 02.11.2026">v0.9.3.69 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3752,8 +3752,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.68', VDATE = '31.10.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.69', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.69', '02.11.2026', 'лист призначень: декскетопрофен і «Кедол (декскетопрофен)» — типова доза 50 мг в/м кожні 8–12 год, не більше 150 мг/добу, парентерально до 2 днів, корекція за кліренсом креатиніну; обидві назви — НПЗП у перевірці взаємодій (два НПЗП, антикоагулянт + НПЗП, алергія)'],
   ['0.9.3.68', '31.10.2026', 'шрифт Zakon (Мінкульт України) на вибір: для тексту документа, інтерфейсу, а також друку, «Аркуша» й бланків («Налаштування» → «Шрифти» → «Шрифт друку, «Аркуша» й бланків»). За замовчуванням усе як було'],
   ['0.9.3.67', '29.10.2026', 'друк на старих лазерних принтерах (Canon LBP2900 тощо): лінії й підписи в друці — чорні, без сірих відтінків; сітка бланка 003/о — чорна'],
   ['0.9.3.66', '27.10.2026', 'планшет горизонтально: сенсорний режим — розкладка як на комп’ютері (розділи, форма й текст поруч), а кнопки, варіанти, поля й галочки більші, під палець. «Вигляд» → «Дотик»: Авто (сенсорний екран — великі кнопки) / Великі кнопки / Звичайні'],
@@ -18299,6 +18300,24 @@ try{
 }catch(e){}
 try{ if (!FS_SET_KEYS.includes('po.fprint')) FS_SET_KEYS.push('po.fprint'); }catch(e){}
 fontApply();
+/* ===== 0.9.3.69 — декскетопрофен і «Кедол» у переліку препаратів =====
+   Кедол — торгова назва декскетопрофену (розчин для ін’єкцій 50 мг/2 мл), тобто той самий препарат.
+   Обидві назви — НПЗП: для них діють перевірки «два НПЗП одночасно», «антикоагулянт + НПЗП», «потрійний удар», алергія на НПЗП.
+   Дози — за інструкцією до препарату (Державний реєстр ЛЗ України); перед призначенням звірте з інструкцією конкретного виробника. */
+{
+  const NOTE = 'кожні 8–12 год, не більше 150 мг/добу; парентерально не довше 2 днів, далі — per os';
+  const RENAL = [{lt:50, m:'протипоказаний (помірне й тяжке порушення функції нирок)'}, {lt:80, m:'початкова добова доза — не більше 50 мг'}];
+  const ADD = [
+    {n:'Декскетопрофен', d:'50 мг', r:'в/м', f:'кожні 8–12 год', note:NOTE + '; таблетки 25 мг — кожні 8 год, не більше 75 мг/добу', renal:RENAL},
+    {n:'Кедол (декскетопрофен)', d:'50 мг', r:'в/м', f:'кожні 8–12 год', note:'Кедол 50 мг/2 мл = декскетопрофен; ' + NOTE, renal:RENAL}
+  ];
+  try{ ADD.forEach(d=>{ if (!DRUGS.some(x=>x.n === d.n)){ DRUGS.push(d); DMAP[d.n.toLowerCase()] = d; } }); }catch(e){}
+  try{ DMAP['кедол'] = DMAP['кедол (декскетопрофен)']; }catch(e){}
+  try{ ['Декскетопрофен', 'Кедол (декскетопрофен)', 'Кедол'].forEach(n=>{ if (!DCLS.nsaid.includes(n)) DCLS.nsaid.push(n); }); }catch(e){}
+  /* довідник доз будується один раз — перебудувати, щоб нові назви з’явились у підказках листа призначень */
+  try{ RXLIB = null; const dl = document.getElementById('drugList');
+    if (dl) ADD.forEach(d=>{ if (![...dl.options].some(o=>o.value === d.n)) dl.append(h('option', {value:d.n})); }); }catch(e){}
+}
 </script>
 
 </body>
