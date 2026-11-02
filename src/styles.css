@@ -1854,3 +1854,34 @@ html.touch .nextbar .btn{padding:12px 16px}
 .fbk-epi{font-size:8.7pt;line-height:1.28;page:fbd}
 @media print{@page fbd{size:A4;margin:5mm 7mm}@page fbe{size:A4;margin:10mm 10mm 10mm 15mm}.fbk+.fbk{break-before:page}.fbk-d .fb-page{max-width:none;gap:3mm}.fbk-d .fb-diary{break-inside:avoid}.fbk-g .fb-page{max-width:none;gap:3mm}.fbk-g .fb-epi{max-width:none}.fbk-e .fb-ep{max-width:none}.fbk-e .fb-ep+.fb-ep{break-before:page;margin-top:0;border-top:0;padding-top:0}}
 #fbPick .fbrows{display:flex;flex-direction:column;gap:6px;margin:10px 0}#fbPick .fbrows label{display:flex;gap:10px;align-items:center;cursor:pointer;padding:4px 2px}#fbPick .fbrows input{width:18px;height:18px}
+
+/* 0.9.3.71 — СОП закладу з протимікробної терапії: Додатки 1–5 (друк порожніх і заповнених), позначки в листі призначень */
+.ampf{font:11pt/1.38 "Times New Roman",Times,serif;color:#000;background:#fff;max-width:186mm;margin:0 auto}
+:root.pf-zakon .ampf{font-family:"Zakon","Times New Roman",Times,serif}
+.ampf .ah{display:flex;justify-content:space-between;align-items:baseline;gap:6mm}
+.ampf h2{font-size:12.5pt;margin:0 0 1mm;font-weight:700}
+.ampf .asub{margin:0 0 2mm;font:inherit;color:#000}
+.ampf p{margin:1.5mm 0}
+.ampf .b{font-weight:700;margin-top:2.5mm}
+.ampf .sm{font-size:9pt}
+.ampf .r{text-align:right}
+.ampf table{border-collapse:collapse;width:100%;margin:1.5mm 0}
+.ampf td,.ampf th{border:1px solid #000;padding:1mm 1.6mm;vertical-align:top;text-align:left;font-weight:400}
+.ampf th{font-weight:700;text-align:center;vertical-align:middle}
+.ampf .grid td{height:6.5mm}
+.ampf .kv td:first-child{width:42%}
+.ampf .ar{display:flex;flex-wrap:wrap;gap:.8mm 2mm;align-items:baseline;margin:1.6mm 0}
+.ampf .av{display:inline-block;min-width:16mm;border-bottom:1px solid #000;padding:0 1mm;min-height:1.15em}
+.ampf .av.g{flex:1;min-width:40mm}
+.ampf .av.w8{min-width:8mm}.ampf .av.w12{min-width:12mm}.ampf .av.w30{min-width:30mm}.ampf .av.w50{min-width:50mm}
+.ampf .au{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;font-weight:700}
+.ampf .abx{display:inline-block;width:3.8mm;height:3.8mm;border:1px solid #000;vertical-align:-.6mm;margin:0 1mm;text-align:center;line-height:3.6mm;font-size:9pt}
+.ampf .ln{border-bottom:1px solid #000;height:1.45em}
+.ampf.d4 .d4b{min-height:128mm}
+.ampf.d3{font-size:10.2pt;line-height:1.28}.ampf.d3 .ar{margin:1.1mm 0}
+.ampf.d5{font-size:9.3pt;line-height:1.22}.ampf.d5 td,.ampf.d5 th{padding:.5mm 1.2mm}.ampf.d5 .grid td{height:5mm}.ampf.d5 table{margin:1mm 0}
+.ampf.d4 .cut{border-top:1px dashed #000;margin:4mm 0}
+.fbk-amp .ampf+.ampf{break-before:page}
+@media print{@page ampf{size:A4;margin:10mm 10mm 10mm 15mm}.fbk-amp{page:ampf}.ampf{max-width:none}}
+.amp-acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.badge.ampk{margin-left:4px}
