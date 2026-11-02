@@ -1109,6 +1109,15 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
   w.eval('blanksDialog()'); const dlg=$('fbPick'), boxes=dlg ? dlg.querySelectorAll('input[type=checkbox]').length : 0; if (dlg) dlg.remove();
   ok('Порожні бланки: пункт у меню «⋯», вибір 7 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===7, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
+{ const r=w.eval(`(()=>{ const sw=$('#set_ampsop'); const off0=!ampOn();
+    lsSet('po.ampsop','1'); const on=ampOn(); ampBlanksSync(); const nb=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length;
+    const it=addRx({drug:'Цефтріаксон'}); renderRx(); const row=document.querySelector('#rxList .rx[data-id="'+it.id+'"]');
+    const btns=row?row.querySelectorAll('.amp-acts button').length:0, badge=!!(row&&row.querySelector('.ampk'));
+    const ok1=ampPrintD1(it); const P=$('#print'); const t1=P.textContent; const ok4=ampPrintD4(it); const t4=P.textContent;
+    const kinds=[ampKind('Флуконазол'),ampKind('Осельтамівір'),ampKind('Альбендазол'),ampKind('Цефтріаксон'),ampKind('Парацетамол')].join(',');
+    RX.splice(RX.indexOf(it),1); renderRx(); lsSet('po.ampsop','0'); ampBlanksSync(); const nb0=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length; lsSet('po.ampsop','');
+    return JSON.stringify([!!sw, off0, on, nb, btns, badge, ok1, /Додаток 1/.test(t1)&&/Цефтріаксон/.test(t1)&&/спостереження/.test(t1), ok4, /Додаток 4/.test(t4)&&/СОП № 214/.test(t4), kinds, nb0]); })()`);
+  ok('СОП закладу: вмикач у «Налаштуваннях» (за замовчуванням вимкнено), Додатки 1–5 у порожніх бланках, у листі призначень — вид і друк заповнених Додатків 1 і 4', r==='[true,true,true,5,2,true,true,true,true,true,"af,av,ap,ab,",0]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
