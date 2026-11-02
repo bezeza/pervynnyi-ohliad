@@ -33,7 +33,7 @@ function ampWarnings(){
   const has = re => ab.filter(it=>re.test(nm(it))).map(nm);
   /* 1. перегляд 48–72 год */
   act.forEach(it=>{ if (!it.rev) return;
-    if (it.rev < t) W.push({c:'bad', t:`${S}перегляд призначення ${nm(it)} мав бути ${fmtD(it.rev)} — запишіть оцінку ефективності: продовження / деескалація / ескалація / припинення / зміна в/в на per os.`});
+    if (it.rev < t) W.push({c:'warn', t:`${S}перегляд призначення ${nm(it)} мав бути ${fmtD(it.rev)} — запишіть оцінку ефективності: продовження / деескалація / ескалація / припинення / зміна в/в на per os.`});
     else if (it.rev === t) W.push({c:'warn', t:`${S}сьогодні перегляд призначення ${nm(it)} (48–72 год від початку): оцінка ефективності й рішення щодо продовження.`}); });
   /* 2. парентерально понад 72 год */
   act.forEach(it=>{ if (!ampParent(it) || !it.start || addDays(it.start, 3) > t) return;
