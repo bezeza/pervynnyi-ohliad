@@ -1118,6 +1118,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     RX.splice(RX.indexOf(it),1); renderRx(); lsSet('po.ampsop','0'); ampBlanksSync(); const nb0=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length; lsSet('po.ampsop','');
     return JSON.stringify([!!sw, off0, on, nb, btns, badge, ok1, /Додаток 1/.test(t1)&&/Цефтріаксон/.test(t1)&&/спостереження/.test(t1), ok4, /Додаток 4/.test(t4)&&/СОП № 214/.test(t4), kinds, nb0]); })()`);
   ok('СОП закладу: вмикач у «Налаштуваннях» (за замовчуванням вимкнено), Додатки 1–5 у порожніх бланках, у листі призначень — вид і друк заповнених Додатків 1 і 4', r==='[true,true,true,5,2,true,true,true,true,true,"af,av,ap,ab,",0]', r); }
+{ const r=w.eval(`(()=>{ const n=['Метамізол натрію','Мелоксикам','Німесулід','Кетопрофен','Лорноксикам','Ацеклофенак','Целекоксиб','Еторикоксиб','Трамадол','Морфін'];
+    const inCat=n.every(x=>!!DMAP[x.toLowerCase()]&&!!rxLib()[x.toLowerCase()]); const ns=['Мелоксикам','Німесулід','Кетопрофен','Лорноксикам','Ацеклофенак','Целекоксиб','Еторикоксиб'].every(x=>DCLS.nsaid.includes(x));
+    const notOp=!DCLS.nsaid.includes('Трамадол')&&!DCLS.nsaid.includes('Метамізол натрію'); const noTr=!DMAP['тримеперидин'];
+    return JSON.stringify([inCat,ns,notOp,noTr]); })()`);
+  ok('Знеболювальні: 10 нових препаратів у переліку й підказках доз, нові НПЗП — у перевірці взаємодій, опіоїди й метамізол — ні', r==='[true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

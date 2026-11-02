@@ -1934,7 +1934,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.71 від 02.11.2026">v0.9.3.71 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.72 від 02.11.2026">v0.9.3.72 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4080,8 +4080,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.71', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.72', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.72', '02.11.2026', 'лист призначень: більше знеболювальних — метамізол натрію, мелоксикам, німесулід, кетопрофен, лорноксикам, ацеклофенак, целекоксиб, еторикоксиб, трамадол, морфін (типові дози, корекція за кліренсом креатиніну); нові НПЗП — у перевірці взаємодій'],
   ['0.9.3.71', '02.11.2026', 'СОП закладу з протимікробної терапії (№ 212–215): у листі призначень біля антибактеріального, антифунгального, противірусного чи протипаразитарного препарату — позначка виду і друк Додатків, заповнених даними пацієнта: обґрунтування (Додаток 1), бланк замовлення ПЛЗ (Додаток 4), для групи резерву — преавторизація (Додаток 2) і протокол консиліуму (Додаток 3); порожні Додатки 1–5 — у «🖨 Порожні бланки». Вмикач «СОП закладу» — у «Налаштуваннях» (за кодом ЄДРПОУ закладу вмикається сам)'],
   ['0.9.3.70', '02.11.2026', 'порожні бланки для заповнення ручкою: меню «⋯» на вкладках «Запис» і «За хворобою» → «🖨 Порожні бланки» — щоденники (терапія, пульмонологія, неврологія, хірургія; по два на аркуш А4), запис огляду для карти 025/о, епікриз 003/о (п. 45–57, дві сторінки) і загальний виписний епікриз; позначити потрібні й надрукувати разом, кожен з нового аркуша; шрифт — як «Шрифт друку, «Аркуша» й бланків»'],
   ['0.9.3.69', '02.11.2026', 'лист призначень: декскетопрофен і «Кедол (декскетопрофен)» — типова доза 50 мг в/м кожні 8–12 год, не більше 150 мг/добу, парентерально до 2 днів, корекція за кліренсом креатиніну; обидві назви — НПЗП у перевірці взаємодій (два НПЗП, антикоагулянт + НПЗП, алергія)'],
@@ -18965,6 +18966,30 @@ try{
 }catch(e){}
 ampBlanksSync();
 try{ renderRx(); }catch(e){}
+/* ===== 0.9.3.72 — знеболювальні: більше препаратів у листі призначень =====
+   НПЗП: мелоксикам, німесулід, кетопрофен, лорноксикам, ацеклофенак, целекоксиб, еторикоксиб — у перевірці взаємодій як НПЗП
+   (два НПЗП одночасно, антикоагулянт + НПЗП, «потрійний удар», алергія на НПЗП).
+   Ненаркотичний анальгетик: метамізол натрію. Опіоїди: трамадол, морфін.
+   Дози — типові для дорослих за інструкціями; лікар звіряє перед злиттям, остаточно — за інструкцією конкретного препарату. */
+{
+  const NS = 'уникати НПЗП';
+  const ADD = [
+    {n:'Метамізол натрію', d:'1 г', r:'в/м', f:'2 р/д', note:'розчин 50 % 2 мл = 1 г; максимальна добова доза — за інструкцією препарату; ризик агранулоцитозу — контроль ЗАК при повторних введеннях'},
+    {n:'Мелоксикам', d:'15 мг', r:'в/м', f:'1 р/д', note:'не більше 15 мг/добу; в/м — перші дні, далі per os 7,5–15 мг', renal:[{lt:30, m:'протипоказаний (тяжка ниркова недостатність без діалізу)'}]},
+    {n:'Німесулід', d:'100 мг', r:'per os', f:'2 р/д', note:'після їди; найкоротшим курсом, не довше 15 днів; гепатотоксичність', renal:[{lt:30, m:'протипоказаний'}]},
+    {n:'Кетопрофен', d:'100 мг', r:'в/м', f:'2 р/д', note:'не більше 200 мг/добу', renal:[{lt:30, m:NS}]},
+    {n:'Лорноксикам', d:'8 мг', r:'в/м', f:'2 р/д', note:'не більше 16 мг/добу (у перший день — до 24 мг)', renal:[{lt:30, m:'протипоказаний'}]},
+    {n:'Ацеклофенак', d:'100 мг', r:'per os', f:'2 р/д', note:'після їди', renal:[{lt:30, m:NS}]},
+    {n:'Целекоксиб', d:'200 мг', r:'per os', f:'1 р/д', note:'не більше 400 мг/добу; серцево-судинні захворювання — з обережністю', renal:[{lt:30, m:NS}]},
+    {n:'Еторикоксиб', d:'90 мг', r:'per os', f:'1 р/д', note:'гострий біль — до 120 мг 1 р/д, не довше 8 днів; контроль АТ', renal:[{lt:30, m:'протипоказаний'}]},
+    {n:'Трамадол', d:'100 мг', r:'в/м', f:'кожні 6 год', note:'50–100 мг; не більше 400 мг/добу; контроль свідомості й дихання', renal:[{lt:30, m:'інтервал 12 год, не більше 200 мг/добу'}]},
+    {n:'Морфін', d:'10 мг', r:'п/ш', f:'кожні 4 год', note:'розчин 1 % 1 мл = 10 мг; кожні 4–6 год за потреби; контроль ЧД і свідомості; наркотичний засіб — облік', renal:[{lt:30, m:'зменшити дозу й збільшити інтервал (кумуляція метаболітів)'}]}
+  ];
+  try{ ADD.forEach(d=>{ if (!DRUGS.some(x=>x.n === d.n)){ DRUGS.push(d); DMAP[d.n.toLowerCase()] = d; } }); }catch(e){}
+  try{ ['Мелоксикам','Німесулід','Кетопрофен','Лорноксикам','Ацеклофенак','Целекоксиб','Еторикоксиб'].forEach(n=>{ if (!DCLS.nsaid.includes(n)) DCLS.nsaid.push(n); }); }catch(e){}
+  try{ RXLIB = null; const dl = document.getElementById('drugList');
+    if (dl) ADD.forEach(d=>{ if (![...dl.options].some(o=>o.value === d.n)) dl.append(h('option', {value:d.n})); }); }catch(e){}
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
