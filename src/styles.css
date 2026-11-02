@@ -1885,3 +1885,19 @@ html.touch .nextbar .btn{padding:12px 16px}
 @media print{@page ampf{size:A4;margin:10mm 10mm 10mm 15mm}.fbk-amp{page:ampf}.ampf{max-width:none}}
 .amp-acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
 .badge.ampk{margin-left:4px}
+
+/* 0.9.3.75 — «Дописати історію»: картка, таблиця днів */
+.bf-m{max-width:1000px;width:100%}
+.bf-card{margin:8px 0}
+.bf-card .f:has(.bf-dx){grid-column:1/-1}
+.bf-card .bf-dx{width:100%}
+.acts2 .bf-xd{width:auto;flex:0 0 auto}
+.bf-tbl{overflow-x:auto;margin:8px 0;max-height:52vh;overflow-y:auto;border:1px solid var(--line,#dde1e8);border-radius:8px}
+.bf-t{border-collapse:collapse;width:100%;font-size:14px}
+.bf-t th,.bf-t td{padding:4px 6px;border-bottom:1px solid var(--line,#dde1e8);text-align:left;white-space:nowrap}
+.bf-t th{position:sticky;top:0;background:var(--surface,#fff);font-weight:600;font-size:13px}
+.bf-t .bf-in{width:64px;padding:4px 6px}
+.bf-t .bf-ad .bf-in{width:50px}
+.bf-t select{max-width:210px}
+.bf-t tr.bf-done td{opacity:.6}
+.bf-t .bf-st{color:var(--ok,#2f7d4f);font-weight:600}

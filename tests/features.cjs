@@ -1140,6 +1140,27 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const dyn=epiDynamics(); RES.length=0; keep.forEach(x=>RES.push(x));
     return JSON.stringify([opt, btn, /лейк\\. 14,2 → 7,8/.test(dyn)&&/Hb 112 → 124/.test(dyn), !!document.querySelector('.epidyn')]); })()`);
   ok('Епікриз: «Виписується за власним бажанням» (у списку й кнопках), «± Динаміка аналізів з журналу» — «лейк. 14,2 → 7,8»', r==='[true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const P=F('e_per.per'), k1=P.d1.value, k2=P.d2.value, keepD=DIARIES.slice(), keepDoc=DOC, keepDt=mv('dt');
+    P.d1.value='2026-10-02'; P.d2.value='2026-10-06'; BF.pid='x'; const days=bfRowsSync().map(r=>r.d).join(',');
+    BF.rows[0].t='38,2'; BF.rows[1].t='37,4'; BF.rows[1].spo='95';
+    DIARIES.length=0; const nB=DIARIES.length; const n=bfGenerate(); const add=DIARIES.slice(nB);
+    const dates=DIARIES.filter(x=>x.bf).map(x=>String(x.dt).split('T')[0]).join(',');
+    const t1=DIARIES.find(x=>x.bf&&/^2026-10-02/.test(x.dt)); const ok1=!!t1&&/38,2/.test(t1.html);
+    const again=bfGenerate();
+    const menu=!!document.querySelector('.more-dd .mmenu .bfbtn'); bfDialog(); const dlg=document.getElementById('bfBox'); const rows=dlg?dlg.querySelectorAll('.bf-t tbody tr').length:0; if(dlg) dlg.remove();
+    DIARIES.length=0; keepD.forEach(x=>DIARIES.push(x)); P.d1.value=k1; P.d2.value=k2; const e=document.getElementById('meta_dt'); if(e) e.value=keepDt; if (DOC!==keepDoc) switchDoc(keepDoc); renderDiaries(); BF.rows=[]; BF.pid=null; update();
+    return JSON.stringify([days, n, dates, ok1, again, menu, rows]); })()`);
+  ok('Дописати історію: робочі дні (без суботи й неділі, крім дня надходження й виписки), щоденники з датою й показниками, повторно не дублюються, пункт у меню «⋯»', r==='["2026-10-02,2026-10-05,2026-10-06",3,"2026-10-02,2026-10-05,2026-10-06",true,0,true,3]', r); }
+{ const r=w.eval(`(()=>{ const kP=PAPER, kB=BLANK, kD=DOC; if (DOC!=='ohl') switchDoc('ohl'); PAPER=true; BLANK=false;
+    const c=F('skarhy.c').chips[0]; if (c.getAttribute('aria-pressed')!=='true') c.click(); update(); renderPaper();
+    const row=document.querySelector('#paper .pr-body [data-sec="skarhy"]'); const marked=!!row&&row.classList.contains('pe-row');
+    const keys=row?JSON.stringify(peRowKeys(row)):''; const op=row?peOpen(window,row):false;
+    const box=document.querySelector('.pe-box'); const t=box?box.querySelector('.pe-head b').textContent:''; const foc=document.activeElement&&document.activeElement.getAttribute('aria-pressed')==='true';
+    const scr=box?box.querySelector('.pe-body').scrollTop:-1; peClose();
+    const fol=bmapRowFor('skarhy.c',false,document.getElementById('paper'))===row;
+    PAPER=kP; BLANK=kB; if (DOC!==kD) switchDoc(kD); renderPaper();
+    return JSON.stringify([marked, keys, op, t, foc, scr, fol]); })()`);
+  ok('«Перед друком» без бланка: клік по «Скарги» — віконце з пунктами розділу на вибраних пунктах, аркуш стежить за полем', r==='[true,"[\\"skarhy\\"]",true,"Скарги",true,0,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

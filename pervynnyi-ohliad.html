@@ -1924,12 +1924,28 @@ html.touch .nextbar .btn{padding:12px 16px}
 @media print{@page ampf{size:A4;margin:10mm 10mm 10mm 15mm}.fbk-amp{page:ampf}.ampf{max-width:none}}
 .amp-acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
 .badge.ampk{margin-left:4px}
+
+/* 0.9.3.75 — «Дописати історію»: картка, таблиця днів */
+.bf-m{max-width:1000px;width:100%}
+.bf-card{margin:8px 0}
+.bf-card .f:has(.bf-dx){grid-column:1/-1}
+.bf-card .bf-dx{width:100%}
+.acts2 .bf-xd{width:auto;flex:0 0 auto}
+.bf-tbl{overflow-x:auto;margin:8px 0;max-height:52vh;overflow-y:auto;border:1px solid var(--line,#dde1e8);border-radius:8px}
+.bf-t{border-collapse:collapse;width:100%;font-size:14px}
+.bf-t th,.bf-t td{padding:4px 6px;border-bottom:1px solid var(--line,#dde1e8);text-align:left;white-space:nowrap}
+.bf-t th{position:sticky;top:0;background:var(--surface,#fff);font-weight:600;font-size:13px}
+.bf-t .bf-in{width:64px;padding:4px 6px}
+.bf-t .bf-ad .bf-in{width:50px}
+.bf-t select{max-width:210px}
+.bf-t tr.bf-done td{opacity:.6}
+.bf-t .bf-st{color:var(--ok,#2f7d4f);font-weight:600}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.74 від 02.11.2026">v0.9.3.74 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.76 від 02.11.2026">v0.9.3.76 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4075,8 +4091,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.74', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.76', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.76', '02.11.2026', '«Перед друком» без бланка 003/о (звичайний текст): клік по розділу (Скарги, Анамнез, огляд…) відкриває віконце з пунктами цього розділу прямо на аркуші — як на бланку; віконце відкривається на вже вибраних пунктах, а не прокручене донизу до «Додатково»; окреме вікно ⧉ в режимі «Аркуш» тепер стежить за формою — змінили скарги зліва, і вікно показує цей рядок (і на бланку 003/о, і без нього)'],
+  ['0.9.3.75', '02.11.2026', '«Дописати історію» (меню «⋯» на вкладках «Запис» і «За хворобою»): для паперової історії — дати перебування, таблиця робочих днів (субота й неділя пропущені, вихідний можна додати) з показниками температурного листка й динамікою на кожен день → «Згенерувати щоденники» (з первинного огляду або шаблону хвороби, з лікуванням на цей день) → епікриз → друк історії'],
   ['0.9.3.74', '02.11.2026', 'епікриз: результат «Виписується за власним бажанням» (у «Перевірці» — нагадування про письмову відмову пацієнта); у «Результатах обстежень» кнопка «± Динаміка аналізів з журналу» — дописує, напр., «лейк. 14,2 → 7,8 ×10⁹/л» для аналізів, зроблених двічі й більше'],
   ['0.9.3.73', '02.11.2026', 'СОП закладу з протимікробної терапії — перевірки в листі призначень і «Перевірці»: перегляд через 48–72 год, парентерально понад 72 год — критерії й заміна на пероральну форму, заборонені комбінації з таблиці СОП (цефалоспорин + фторхінолон — лише без результату посіву), дублювання спектру, в/м шлях, аміноглікозиди 1 р/д, бакпосів до першої дози, група спостереження — консультація координатора, група резерву — преавторизація'],
   ['0.9.3.72', '02.11.2026', 'лист призначень: більше знеболювальних — метамізол натрію, мелоксикам, німесулід, кетопрофен, лорноксикам, ацеклофенак, целекоксиб, еторикоксиб, трамадол, морфін (типові дози, корекція за кліренсом креатиніну); нові НПЗП — у перевірці взаємодій'],
@@ -14937,11 +14955,14 @@ function fieldKeyOf(el){
   const k = fieldKeyOf(t); if (!k) return;
   PLEFT.key = k; PLEFT.t = Date.now(); PLEFT.kons = /^консультація/i.test((t.closest('.chip') || {}).textContent || '');
 }, true));
-function bmapRowFor(key, kons){
+function bmapRowFor(key, kons, root){
+  const R = root || document.getElementById('paper'); if (!R) return null;
+  /* «Перед друком» без бланка — блок розділу в тексті */
+  if (!R.querySelector('.b003')){ const sid = key.split('.')[0]; return [...R.querySelectorAll('.pr-body [data-sec="' + sid + '"]')].pop() || null; }
   if (typeof BMAP === 'undefined') return null;
   const sec = key.split(/[._]/)[0], cand = BMAP.filter(([, k])=>k === key || k.split('#')[0] === key);
   const L = kons ? BMAP.filter(([, k])=>/#Консультац/.test(k)) : cand.length ? cand : BMAP.filter(([, k])=>k === sec || k.split('.')[0] === sec);
-  const rows = [...document.querySelectorAll('#paper ' + PK_SEL.split(', ').join(', #paper '))];
+  const rows = [...R.querySelectorAll(PK_SEL)];
   for (const [re] of L){ const r = rows.find(x=>re.test(x.textContent.replace(/\s+/g, ' ').trim())); if (r) return r; }
   return null;
 }
@@ -16996,7 +17017,7 @@ const PE_ROWS_066 = [
   [/^\(категорія посвідчення/, ['s066.pilk','s066.pild']],
   [/^Лікуючий лікар/, ['meta_doc','meta_docreg']]
 ];
-const PE_ROW_SEL = '.b003 [data-diary-key], .b003 .brow, .b003 .bt, .b003 .bt2, .b003 .blines, .b003 .bdx';
+const PE_ROW_SEL = '.b003 [data-diary-key], .b003 .brow, .b003 .bt, .b003 .bt2, .b003 .blines, .b003 .bdx, .pr-body [data-sec]';
 const PE_SKIP = 'button, a, input, select, textarea, label, .blankbar, .gapbar, .gaplist, .pe-box';
 
 /* ---- які поля стоять за рядком ---- */
@@ -17004,6 +17025,8 @@ function peRowKeys(row){
   if (!row) return null;
   if (row.closest('.bdi:not(.bcur)')) return null;
   if (row.dataset.diaryKey) return (typeof DIARY_INLINE_GROUPS !== 'undefined' && DIARY_INLINE_GROUPS[row.dataset.diaryKey]) || null;
+  /* «Перед друком» без бланка 003/о: блок розділу тексту (Скарги, Анамнез…) — поля цього розділу (0.9.3.75) */
+  if (row.dataset.sec && !row.closest('.b003')){ const sid = row.dataset.sec; return peSection(sid) ? [sid] : null; }
   if (row.closest('.bdi')) return null;
   /* п. 46–53 (аналізи) відкривають журнал обстежень із клітинками — він зручніший */
   if (row.querySelector('[data-fld^="e_obs_z"]') || (row.dataset.fld || '').startsWith('e_obs_z')) return null;
@@ -17141,8 +17164,12 @@ function peOpen(w, row){
   });
   d.body.append(box); PE.box = box;
   peSync();
-  const first = box.querySelector('.pe-body input:not([type=search]), .pe-body textarea, .pe-body .pe-opt[aria-pressed="true"], .pe-body .pe-opt, .pe-body button');
+  /* фокус — на перший уже вибраний пункт (видно, що внесено), інакше на перший елемент; список — з початку, а не прокручений до «Додатково» */
+  const on = [...box.querySelectorAll('.pe-body [aria-pressed="true"]')].find(x=>!x.closest('[hidden]'));
+  const first = on || box.querySelector('.pe-body input:not([type=search]), .pe-body textarea, .pe-body .pe-opt, .pe-body button');
   if (first && !first.closest('[hidden]')) first.focus({preventScroll:true});
+  body.scrollTop = 0;
+  if (on){ const a = on.getBoundingClientRect(), b = body.getBoundingClientRect(); if (a.bottom > b.bottom - 8) body.scrollTop = Math.max(0, a.top - b.top - 40); }
   return true;
 }
 function peStep(dir){
@@ -17281,6 +17308,16 @@ let PE_FAST = 0;
   }
   return x0.apply(this, arguments);
 }; }
+/* виносне вікно в режимі «Аркуш» стежить за формою, як і основне: змінили поле зліва → вікно показує його рядок (0.9.3.75) */
+function popFollow(){
+  const w = POP.w; if (!w || w.closed || POP.mode !== 'paper' || typeof PLEFT === 'undefined') return;
+  if (!PLEFT.key || Date.now() - PLEFT.t > 4000) return;
+  const box = w.document.getElementById('pwBox'), row = box && bmapRowFor(PLEFT.key, PLEFT.kons, box); if (!row) return;
+  const a = row.getBoundingClientRect(), top = 60;
+  if (a.top < top || a.bottom > w.innerHeight - 30) w.scrollTo(0, Math.max(0, w.scrollY + a.top - Math.max(top + 20, (w.innerHeight - a.height) / 3)));
+}
+{ const x0 = popRender; popRender = function(){ const r = x0.apply(this, arguments); try{ popFollow(); }catch(e){} return r; }; }
+
 /* ===== 0.9.3.52 — зворот титульного аркуша 003/о: пп. 22, 23, 31, 32 =====
    Дані — з наявних полів: діагноз (dx), операції (066/о, «Процедури й операції»), лікар і завідувач («Налаштування»).
    Нових полів не додає. Друкується разом із титульним аркушем (галочка «зворот титульного»). */
@@ -19098,6 +19135,130 @@ try{
       f.el.value = (cur ? cur + '\n' : '') + 'Динаміка: ' + t; f.el.dispatchEvent(new Event('input', {bubbles:true})); update(); toast('Динаміку аналізів дописано'); }}, '± Динаміка аналізів з журналу');
     (f.wrapEl || f.el.parentNode).append(h('div', {class:'acts2'}, b));
   }
+}catch(e){}
+/* ===== 0.9.3.75 — «Дописати історію»: паперова історія → щоденники за дні перебування, епікриз, друк =====
+   Для історій, де первинний огляд, лікування й аналізи вже є на папері, а щоденників та епікризу ще немає.
+   • Картка: ПІБ, № карти, дати надходження й виписки, діагноз (поля ті самі, що в програмі).
+   • Таблиця днів: від надходження до виписки, без субот і неділь (день надходження й виписки — завжди; вихідний можна додати
+     для тяжкого хворого). Показники з температурного листка — жоден не обов’язковий; динаміка на кожен день
+     (за замовчуванням «з позитивною динамікою», останній день — «перед випискою»).
+   • «Згенерувати щоденники»: на кожен день без запису — щоденник з первинного огляду / шаблону хвороби за динамікою
+     (той самий механізм, що й кнопки шаблонів щоденника) з датою дня, показниками і лікуванням на цей день (лист призначень).
+     Нічого понад внесені дані не вигадується; порожній показник у щоденник не йде.
+   • Далі — «Епікриз» і «🖨 Друк історії» (кілька документів одним завданням).
+   Формат збереження пацієнтів не змінюється: щоденники потрапляють у звичайний журнал щоденників. */
+const BF = {rows:[], pid:null, skip:new Set()};
+const BF_T = ['36,6','36,8','37,0','37,2','37,5','38,0','38,5','39,0'];
+const BF_DYN = [['1','↑ з позитивною динамікою'],['0','= без суттєвої динаміки'],['3','↘ погіршення'],['2','перед випискою (покращення)']];
+const BF_WD = ['нд','пн','вт','ср','чт','пт','сб'];
+const bfWd = d => BF_WD[new Date(d + 'T00:00').getDay()];
+function bfDays(d1, d2){
+  if (!d1 || !d2 || d2 < d1) return [];
+  const out = [];
+  for (let d = d1, k = 0; d <= d2 && k < 400; d = addDays(d, 1), k++){ const wd = new Date(d + 'T00:00').getDay(); if ((wd === 0 || wd === 6) && d !== d1 && d !== d2) continue; out.push(d); }
+  return out;
+}
+const bfHasDiary = d => DIARIES.some(x=>String(x.dt || '').split('T')[0] === d);
+function bfRowsSync(){
+  const P = F('e_per.per'), d1 = P.d1.value, d2 = P.d2.value;
+  if (BF.pid !== (typeof PID !== 'undefined' ? PID : null)){ BF.rows = []; BF.skip = new Set(); BF.pid = (typeof PID !== 'undefined' ? PID : null); }
+  const old = new Map(BF.rows.map(r=>[r.d, r]));
+  const extra = BF.rows.filter(r=>r.extra && d1 && d2 && r.d >= d1 && r.d <= d2).map(r=>r.d);
+  const days = [...new Set([...bfDays(d1, d2), ...extra])].filter(d=>!BF.skip.has(d)).sort();
+  BF.rows = days.map(d=>old.get(d) || {d, t:'', ad1:'', ad2:'', hr:'', rr:'', spo:'', o2:'', dyn: d === d2 ? '2' : '1', extra: extra.includes(d)});
+  return BF.rows;
+}
+function bfFillDown(){
+  const K = ['t','ad1','ad2','hr','rr','spo','o2'];
+  for (let i = 1; i < BF.rows.length; i++) K.forEach(k=>{ if (!String(BF.rows[i][k] || '').trim() && String(BF.rows[i - 1][k] || '').trim()) BF.rows[i][k] = BF.rows[i - 1][k]; });
+}
+function bfGenerate(){
+  const rows = BF.rows.filter(r=>!bfHasDiary(r.d));
+  if (!rows.length){ toast('Щоденники на всі дні таблиці вже є в журналі'); return 0; }
+  const keepDt = mv('dt'), keepToast = toast; let n = 0;
+  try{
+    toast = function(){};
+    if (DOC !== 'shch') switchDoc('shch');
+    rows.forEach(r=>{
+      diaryFromExam(+r.dyn);
+      const dt = document.getElementById('meta_dt'); if (dt) dt.value = r.d + 'T09:00';
+      const set = (k, i, v) => { try{ const f = F(k); if (f && f.inputs && f.inputs[i]) f.inputs[i].value = String(v || '').trim(); }catch(e){} };
+      set('d_obj.t', 0, r.t); set('d_obj.ad', 0, r.ad1); set('d_obj.ad', 1, r.ad2); set('d_obj.chss', 0, r.hr); set('d_obj.chd', 0, r.rr); set('d_obj.chd', 1, r.spo); set('d_obj.o2', 0, r.o2);
+      const di = document.getElementById('d_main_den_0'); if (di){ delete di.dataset.user; di.value = ''; }
+      update();
+      DIARIES.push({dt:mv('dt'), rec:mv('rec'), html:$('#out').innerHTML, data:diaryFields(), bf:1}); n++;
+    });
+    DIARIES.sort((a, b)=>String(a.dt).localeCompare(String(b.dt)));
+  } finally { toast = keepToast; }
+  const dt = document.getElementById('meta_dt'); if (dt) dt.value = keepDt;
+  try{ renderDiaries(); }catch(e){} try{ savePatient(true); }catch(e){} update();
+  toast(`Додано щоденників: ${n}. Перегляньте їх у журналі щоденників і за потреби поправте`, 4000);
+  return n;
+}
+/* ---------- вікно ---------- */
+function bfDialog(){
+  const old = document.getElementById('bfBox'); if (old) old.remove();
+  const back = document.activeElement;
+  const close = () => { box.remove(); try{ if (back && back.focus) back.focus(); }catch(e){} };
+  const P = F('e_per.per');
+  const proxy = (label, el, attrs) => { if (!el) return ''; const id = 'bf_' + (el.id || Math.random().toString(36).slice(2));
+    const i = h('input', Object.assign({id, value:el.value}, attrs || {})); i.addEventListener('input', ()=>{ el.value = i.value; el.dispatchEvent(new Event('input', {bubbles:true})); if (el === P.d1 || el === P.d2) draw(); });
+    return h('div', {class:'f'}, h('label', {for:id}, label), i); };
+  const dx = (()=>{ try{ return F('dx.osn').el; }catch(e){ return null; } })();
+  const card = h('div', {class:'grid bf-card'},
+    proxy('ПІБ (або «Історія N»)', document.getElementById('meta_pib')), proxy('№ медичної карти', document.getElementById('meta_card')),
+    proxy('Дата надходження', P.d1, {type:'date'}), proxy('Дата виписки', P.d2, {type:'date'}),
+    dx ? proxy('Діагноз', dx, {class:'bf-dx'}) : '');
+  const hint = h('p', {class:'chips-hint'});
+  const tbox = h('div', {class:'bf-tbl'}), info = h('p', {class:'chips-hint bf-info'}), gen = h('button', {type:'button', class:'btn primary'});
+  const extraD = h('input', {type:'date', class:'bf-xd', 'aria-label':'Дата вихідного дня'});
+  const dl = h('datalist', {id:'bfTlist'}, ...BF_T.map(v=>h('option', {value:v})));
+  function draw(){
+    bfRowsSync();
+    hint.textContent = 'Хвороба (шаблон щоденника): ' + ((typeof curKey !== 'undefined' && curKey && (PRESETS.find(x=>x.key === curKey) || {}).name) || 'не обрано — щоденники будуть з первинного огляду') + '. Субота й неділя пропущені; день надходження й виписки — завжди.';
+    tbox.innerHTML = '';
+    if (!BF.rows.length){ tbox.append(h('p', {}, 'Вкажіть дати надходження й виписки — з’явиться таблиця днів.')); gen.disabled = true; gen.textContent = 'Згенерувати щоденники'; info.textContent = ''; return; }
+    const inp = (r, k, ph, extra) => { const i = h('input', Object.assign({value:r[k] || '', placeholder:ph, inputmode:'decimal', 'aria-label':ph + ' ' + fmtD(r.d), class:'bf-in'}, extra || {})); i.addEventListener('input', ()=>{ r[k] = i.value; }); return i; };
+    const tb = h('tbody', {}, ...BF.rows.map(r=>{
+      const done = bfHasDiary(r.d);
+      const sel = h('select', {'aria-label':'Динаміка ' + fmtD(r.d)}, ...BF_DYN.map(([v, t])=>h('option', {value:v}, t))); sel.value = r.dyn; sel.addEventListener('change', ()=>{ r.dyn = sel.value; });
+      const rm = h('button', {type:'button', class:'more', title:'Прибрати день з таблиці', 'aria-label':'Прибрати ' + fmtD(r.d), onclick:()=>{ BF.skip.add(r.d); BF.rows = BF.rows.filter(x=>x !== r); draw(); }}, '×');
+      return h('tr', {class:done ? 'bf-done' : ''}, h('td', {class:'bf-d'}, fmtS(r.d), ' ', h('span', {class:'chips-hint'}, bfWd(r.d))),
+        h('td', {}, inp(r, 't', 't°', {list:'bfTlist'})), h('td', {class:'bf-ad'}, inp(r, 'ad1', 'САТ'), '/', inp(r, 'ad2', 'ДАТ')),
+        h('td', {}, inp(r, 'hr', 'ЧСС')), h('td', {}, inp(r, 'rr', 'ЧД')), h('td', {}, inp(r, 'spo', 'SpO₂')), h('td', {}, inp(r, 'o2', 'О₂ л/хв')),
+        h('td', {}, sel), h('td', {class:'bf-st'}, done ? '✓ є' : ''), h('td', {}, done ? '' : rm));
+    }));
+    const tbl = h('table', {class:'bf-t'}, h('thead', {}, h('tr', {}, ...['Дата','t°','АТ','ЧСС','ЧД','SpO₂','О₂','Динаміка','Щоденник',''].map(x=>h('th', {}, x)))), tb);
+    tbox.append(tbl);
+    const todo = BF.rows.filter(r=>!bfHasDiary(r.d)).length;
+    gen.disabled = !todo; gen.textContent = todo ? `Згенерувати щоденники (${todo})` : 'Щоденники на всі дні вже є';
+    info.textContent = `Днів у таблиці: ${BF.rows.length}; уже є щоденників: ${BF.rows.length - todo}. Порожні показники в щоденник не йдуть.`;
+  }
+  gen.addEventListener('click', ()=>{ const n = bfGenerate(); if (n) draw(); });
+  const box = h('div', {id:'bfBox', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-labelledby':'bfT'},
+    h('div', {class:'mcard bf-m'},
+      h('div', {class:'ph'}, h('h2', {id:'bfT'}, 'Дописати історію'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+      h('p', {class:'chips-hint'}, 'Для паперової історії, де первинний огляд, лікування й аналізи вже є: внесіть дати й показники з температурного листка — програма складе щоденники на робочі дні. Лікування на кожен день береться з листа призначень, аналізи — з журналу обстежень.'),
+      card, hint, dl, tbox,
+      h('div', {class:'acts2'},
+        h('button', {type:'button', class:'btn', onclick:()=>{ bfFillDown(); draw(); }, title:'Порожні клітинки заповнити значенням попереднього дня'}, '↓ Порожні — як попередній день'),
+        extraD, h('button', {type:'button', class:'btn', onclick:()=>{ const d = extraD.value; if (!d) return; if (!P.d1.value || !P.d2.value || d < P.d1.value || d > P.d2.value){ toast('Дата має бути в межах перебування'); return; } BF.skip.delete(d); if (!BF.rows.some(r=>r.d === d)){ BF.rows.push({d, t:'', ad1:'', ad2:'', hr:'', rr:'', spo:'', o2:'', dyn:'1', extra:true}); } draw(); }}, '+ день (вихідний для тяжкого хворого)')),
+      info,
+      h('div', {class:'acts2'}, gen,
+        h('button', {type:'button', class:'btn', onclick:()=>{ close(); if (DOC !== 'epi') switchDoc('epi'); toast('Епікриз складається з картки, призначень, журналу обстежень і останнього щоденника. Перевірте й допишіть'); }}, 'Епікриз →'),
+        h('button', {type:'button', class:'btn', onclick:()=>{ close(); packDialog(); }}, '🖨 Друк історії'))));
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
+  document.body.append(box); draw();
+  const f = box.querySelector('.bf-card input'); if (f) f.focus();
+}
+/* пункт меню «⋯» поруч із «🖨 Кілька документів» */
+try{
+  document.querySelectorAll('.more-dd .mmenu').forEach(menu=>{
+    const multi = [...menu.querySelectorAll('button')].find(b=>/^🖨 Кілька документів/.test(b.textContent.trim()));
+    if (!multi || menu.querySelector('.bfbtn')) return;
+    multi.before(h('button', {type:'button', class:'more bfbtn', role:'menuitem', title:'Паперова історія: щоденники за дні перебування з температурного листка, епікриз, друк', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; bfDialog(); }}, '📝 Дописати історію'));
+  });
 }catch(e){}
 </script>
 

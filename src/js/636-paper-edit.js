@@ -113,7 +113,7 @@ const PE_ROWS_066 = [
   [/^\(категорія посвідчення/, ['s066.pilk','s066.pild']],
   [/^Лікуючий лікар/, ['meta_doc','meta_docreg']]
 ];
-const PE_ROW_SEL = '.b003 [data-diary-key], .b003 .brow, .b003 .bt, .b003 .bt2, .b003 .blines, .b003 .bdx';
+const PE_ROW_SEL = '.b003 [data-diary-key], .b003 .brow, .b003 .bt, .b003 .bt2, .b003 .blines, .b003 .bdx, .pr-body [data-sec]';
 const PE_SKIP = 'button, a, input, select, textarea, label, .blankbar, .gapbar, .gaplist, .pe-box';
 
 /* ---- які поля стоять за рядком ---- */
@@ -121,6 +121,8 @@ function peRowKeys(row){
   if (!row) return null;
   if (row.closest('.bdi:not(.bcur)')) return null;
   if (row.dataset.diaryKey) return (typeof DIARY_INLINE_GROUPS !== 'undefined' && DIARY_INLINE_GROUPS[row.dataset.diaryKey]) || null;
+  /* «Перед друком» без бланка 003/о: блок розділу тексту (Скарги, Анамнез…) — поля цього розділу (0.9.3.75) */
+  if (row.dataset.sec && !row.closest('.b003')){ const sid = row.dataset.sec; return peSection(sid) ? [sid] : null; }
   if (row.closest('.bdi')) return null;
   /* п. 46–53 (аналізи) відкривають журнал обстежень із клітинками — він зручніший */
   if (row.querySelector('[data-fld^="e_obs_z"]') || (row.dataset.fld || '').startsWith('e_obs_z')) return null;
@@ -258,8 +260,12 @@ function peOpen(w, row){
   });
   d.body.append(box); PE.box = box;
   peSync();
-  const first = box.querySelector('.pe-body input:not([type=search]), .pe-body textarea, .pe-body .pe-opt[aria-pressed="true"], .pe-body .pe-opt, .pe-body button');
+  /* фокус — на перший уже вибраний пункт (видно, що внесено), інакше на перший елемент; список — з початку, а не прокручений до «Додатково» */
+  const on = [...box.querySelectorAll('.pe-body [aria-pressed="true"]')].find(x=>!x.closest('[hidden]'));
+  const first = on || box.querySelector('.pe-body input:not([type=search]), .pe-body textarea, .pe-body .pe-opt, .pe-body button');
   if (first && !first.closest('[hidden]')) first.focus({preventScroll:true});
+  body.scrollTop = 0;
+  if (on){ const a = on.getBoundingClientRect(), b = body.getBoundingClientRect(); if (a.bottom > b.bottom - 8) body.scrollTop = Math.max(0, a.top - b.top - 40); }
   return true;
 }
 function peStep(dir){
@@ -398,3 +404,13 @@ let PE_FAST = 0;
   }
   return x0.apply(this, arguments);
 }; }
+/* виносне вікно в режимі «Аркуш» стежить за формою, як і основне: змінили поле зліва → вікно показує його рядок (0.9.3.75) */
+function popFollow(){
+  const w = POP.w; if (!w || w.closed || POP.mode !== 'paper' || typeof PLEFT === 'undefined') return;
+  if (!PLEFT.key || Date.now() - PLEFT.t > 4000) return;
+  const box = w.document.getElementById('pwBox'), row = box && bmapRowFor(PLEFT.key, PLEFT.kons, box); if (!row) return;
+  const a = row.getBoundingClientRect(), top = 60;
+  if (a.top < top || a.bottom > w.innerHeight - 30) w.scrollTo(0, Math.max(0, w.scrollY + a.top - Math.max(top + 20, (w.innerHeight - a.height) / 3)));
+}
+{ const x0 = popRender; popRender = function(){ const r = x0.apply(this, arguments); try{ popFollow(); }catch(e){} return r; }; }
+
