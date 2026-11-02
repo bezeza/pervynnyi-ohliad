@@ -1134,6 +1134,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
     return JSON.stringify([off,rev,par,cfq,camg,amg1,cult,cfq2]); })()`);
   ok('СОП закладу, перевірки: перегляд 48–72 год, парентерально > 72 год із заміною, заборонені комбінації (цефалоспорин + фторхінолон — лише без посіву), аміноглікозид 1 р/д, бакпосів; без СОП — нічого', r==='[true,true,true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const f=F('e_lik.rez'); const i=f.opts.findIndex(o=>O(o).t==='Виписується за власним бажанням');
+    const opt=i>=0&&!![...f.el.options].find(o=>o.value===String(i)); const btn=!!(f.el.nextElementSibling&&f.el.nextElementSibling.classList.contains('segbtns')&&f.el.nextElementSibling.children.length===f.opts.length);
+    const keep=RES.slice(); RES.length=0; RES.push({id:901,d:'2026-10-01',t:'ЗАК',v:'Hb 112 г/л, лейк. 14,2 ×10⁹/л'},{id:902,d:'2026-10-05',t:'ЗАК',v:'Hb 124 г/л, лейк. 7,8 ×10⁹/л'});
+    const dyn=epiDynamics(); RES.length=0; keep.forEach(x=>RES.push(x));
+    return JSON.stringify([opt, btn, /лейк\\. 14,2 → 7,8/.test(dyn)&&/Hb 112 → 124/.test(dyn), !!document.querySelector('.epidyn')]); })()`);
+  ok('Епікриз: «Виписується за власним бажанням» (у списку й кнопках), «± Динаміка аналізів з журналу» — «лейк. 14,2 → 7,8»', r==='[true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
