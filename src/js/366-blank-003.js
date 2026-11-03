@@ -6,7 +6,7 @@
    чого немає в переліку — на рядку після нього. Порожні обов’язкові місця на екрані — жовті (у друк не йдуть). ===== */
 let BLANK = false; try{ BLANK = localStorage.getItem('po.blank') === '1'; }catch(e){}
 let BLP = {title:false, exam:true, all:false, e45:true, e54:true, a1:true, a2:true, a3:true}; try{ Object.assign(BLP, JSON.parse(localStorage.getItem('po.blankp') || '{}')); }catch(e){}
-const blankOK = () => MODE === 'hosp' && ['ohl','shch','epi','f066','anes'].includes(DOC);
+const blankOK = () => (MODE === 'hosp' && ['ohl','shch','epi','f066','anes'].includes(DOC)) || (DOC === 'kons' && typeof b028 === 'function');
 const blankOn = () => BLANK && blankOK();
 let BGAP = false;   // підсвічувати порожні обов’язкові місця (лише на екрані)
 const BV = k => { const f = F(k); return f ? g(val(f, true)) : ''; };
@@ -263,6 +263,7 @@ function blankPages(){
   if (DOC === 'epi') return bEpi();
   if (DOC === 'f066') return b066();
   if (DOC === 'anes') return typeof b333 === 'function' ? b333() : [];
+  if (DOC === 'kons') return typeof b028 === 'function' ? b028() : [];
   return [];
 }
 /* перемикач «Текст / Бланк закладу» і вибір сторінок — над аркушем */
@@ -272,7 +273,7 @@ function blankBar(){
   const seg = (on, t, fn) => h('button', {type:'button', 'aria-pressed':on ? 'true' : 'false', onclick:fn}, t);
   const setB = v => { BLANK = v; try{ localStorage.setItem('po.blank', v ? '1' : '0'); }catch(e){} renderPaper(); };
   const setP = (k, v) => { BLP[k] = v; try{ localStorage.setItem('po.blankp', JSON.stringify(BLP)); }catch(e){} renderPaper(); };
-  bar.append(h('span', {class:'seg'}, seg(!BLANK, 'Текст документа', ()=>setB(false)), seg(BLANK, DOC === 'f066' ? 'Бланк 066/о' : DOC === 'anes' ? 'Бланк 003-3/о' : 'Бланк 003/о', ()=>setB(true))));
+  bar.append(h('span', {class:'seg'}, seg(!BLANK, 'Текст документа', ()=>setB(false)), seg(BLANK, DOC === 'f066' ? 'Бланк 066/о' : DOC === 'anes' ? 'Бланк 003-3/о' : DOC === 'kons' ? 'Бланк 028/о' : 'Бланк 003/о', ()=>setB(true))));
   if (BLANK){
     const ch = (k, t) => h('label', {class:'blk'}, (()=>{ const c = h('input', {type:'checkbox'}); c.checked = !!BLP[k]; c.addEventListener('change', ()=>setP(k, c.checked)); return c; })(), ' ' + t);
     if (DOC === 'ohl') bar.append(ch('title', 'титульний лист'), ch('exam', 'первинний огляд'));

@@ -1108,7 +1108,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const cnt=P.querySelectorAll('.fbk').length, d2=P.querySelectorAll('.fbk-ter .fb-diary').length, ep=P.querySelectorAll('.fbk-e003 .fb-ep').length;
   const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
   w.eval('blanksDialog()'); const dlg=$('fbPick'), boxes=dlg ? dlg.querySelectorAll('input[type=checkbox]').length : 0; if (dlg) dlg.remove();
-  ok('Порожні бланки: пункт у меню «⋯», вибір 7 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===7, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
+  ok('Порожні бланки: пункт у меню «⋯», вибір 8 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===8, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
 { const r=w.eval(`(()=>{ const sw=$('#set_ampsop'); const off0=!ampOn();
     lsSet('po.ampsop','1'); const on=ampOn(); ampBlanksSync(); const nb=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length;
     const it=addRx({drug:'Цефтріаксон'}); renderRx(); const row=document.querySelector('#rxList .rx[data-id="'+it.id+'"]');
@@ -1184,6 +1184,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     uiStyleSet('classic'); const back=document.getElementById('cmdkBtn').hidden&&!document.documentElement.classList.contains('pt-side')&&!document.querySelector('.addrbox.addr-c'); uiStyleSet('ios');
     return JSON.stringify([ok1,ok2,btn,fit,back]); })()`);
   ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const kD=DOC, kB=BLANK; switchDoc('kons'); BLANK=true; const ok1=blankOK()&&blankOn();
+    const pg=b028(); const t=pg[0].textContent; const items=['№ 028/о','Консультаційний висновок спеціаліста','1. Найменування закладу охорони здоров’я, який направив','2. Прізвище, ім’я, по батькові пацієнта','3. Дата народження','(число, місяць, рік)','4. Спеціальність, прізвище','5. Результати лабораторного','6. Результати функціонального','7. Висновок спеціаліста','8. Рекомендації','М.П.','Лікар-консультант','Завідувач поліклініки або стаціонарного відділення','14 лютого 2012 року'].every(x=>t.includes(x));
+    const empty=b028(true)[0]; const noPat=!(mv('pib')&&empty.textContent.includes(mv('pib'))); const inPack=FBLANKS.some(b=>b.k==='k028'&&b.html.includes('028/о'));
+    const hosp=DOCMORE.hosp.some(x=>x[0]==='kons'); BLANK=kB; switchDoc(kD);
+    return JSON.stringify([ok1,items,noPat,inPack,hosp]); })()`);
+  ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
