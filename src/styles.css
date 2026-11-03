@@ -1885,3 +1885,237 @@ html.touch .nextbar .btn{padding:12px 16px}
 @media print{@page ampf{size:A4;margin:10mm 10mm 10mm 15mm}.fbk-amp{page:ampf}.ampf{max-width:none}}
 .amp-acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
 .badge.ampk{margin-left:4px}
+
+/* 0.9.3.75 — «Дописати історію»: картка, таблиця днів */
+.bf-m{max-width:1000px;width:100%}
+.bf-card{margin:8px 0}
+.bf-card .f:has(.bf-dx){grid-column:1/-1}
+.bf-card .bf-dx{width:100%}
+.acts2 .bf-xd{width:auto;flex:0 0 auto}
+.bf-tbl{overflow-x:auto;margin:8px 0;max-height:52vh;overflow-y:auto;border:1px solid var(--line,#dde1e8);border-radius:8px}
+.bf-t{border-collapse:collapse;width:100%;font-size:14px}
+.bf-t th,.bf-t td{padding:4px 6px;border-bottom:1px solid var(--line,#dde1e8);text-align:left;white-space:nowrap}
+.bf-t th{position:sticky;top:0;background:var(--surface,#fff);font-weight:600;font-size:13px}
+.bf-t .bf-in{width:64px;padding:4px 6px}
+.bf-t .bf-ad .bf-in{width:50px}
+.bf-t select{max-width:210px}
+.bf-t tr.bf-done td{opacity:.6}
+.bf-t .bf-st{color:var(--ok,#2f7d4f);font-weight:600}
+/* 0.9.3.77 — стиль інтерфейсу «iOS» (html.ui-ios). Лише екран: друк, «Аркуш» і бланки не змінюються. */
+:root.ui-ios:not([data-tone]){
+  --bg:#F2F2F7; --surface:#FFFFFF; --ink:#1C1C1E; --muted:#6C6C70; --line:#E3E3E8;
+  --accent:#007AFF; --accent-soft:#E6F0FF; --on-accent:#FFFFFF;
+  --flag:#B95E00; --flag-soft:#FFF3E2; --ok:#248A3D; --bad:#D70015; --bad-soft:#FFEDEC;
+  --top:rgba(249,249,251,.86); --top2:rgba(118,118,128,.12); --top-ink:#1C1C1E; --top-mut:#6C6C70;
+  --shadow:0 1px 3px rgba(0,0,0,.05)}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-tone]):not([data-theme="light"]){
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}}
+:root.ui-ios:not([data-tone])[data-theme="dark"]{
+  --bg:#000000; --surface:#1C1C1E; --ink:#F2F2F7; --muted:#98989F; --line:#38383A;
+  --accent:#0A84FF; --accent-soft:#0B2B4F; --on-accent:#FFFFFF;
+  --flag:#FF9F0A; --flag-soft:#3A2A10; --ok:#30D158; --bad:#FF453A; --bad-soft:#3B1715;
+  --top:rgba(22,22,24,.86); --top2:rgba(118,118,128,.24); --top-ink:#F2F2F7; --top-mut:#98989F; --shadow:none}
+:root.ui-ios{--fill:rgba(118,118,128,.12); --fill2:rgba(118,118,128,.08); --seg-on:#FFFFFF; --r:12px}
+@media (prefers-color-scheme: dark){:root.ui-ios:not([data-theme="light"]){--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}}
+:root.ui-ios[data-theme="dark"]{--fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.16); --seg-on:#636366}
+:root.ui-ios body{-webkit-font-smoothing:antialiased}
+/* шапка: світла напівпрозора з розмиттям, як навігаційна панель iOS */
+:root.ui-ios body.shell .top{background:var(--top);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+:root.ui-ios body.shell .top h1 .bn{color:var(--top-ink)}
+:root.ui-ios body.shell .vbadge{color:var(--top-mut);background:var(--fill)}
+:root.ui-ios body.shell .top .btn{background:var(--top2);color:var(--top-ink);border-color:transparent}
+:root.ui-ios body.shell .topdocs #docSeg button{color:var(--top-mut)}
+:root.ui-ios body.shell .topdocs #docSeg button:hover{color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docSeg button[aria-pressed="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+:root.ui-ios body.shell .topdocs #docMore{background:var(--top2);color:var(--top-ink)}
+:root.ui-ios body.shell .topdocs #docMore.on{background:var(--accent);color:#fff}
+:root.ui-ios body.shell #ptline{background:var(--surface);box-shadow:none}
+/* картки */
+:root.ui-ios .form,:root.ui-ios .out{border-color:transparent;border-radius:16px;box-shadow:var(--shadow)}
+:root.ui-ios .mcard,:root.ui-ios .packsheet .nvbox{border-radius:16px}
+:root.ui-ios .modal,:root.ui-ios .packsheet{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+:root.ui-ios .copy-peek{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
+/* кнопки: тоноване тло без рамки; головна — заповнена */
+:where(.ui-ios) .btn{border-color:transparent;background:var(--fill);color:var(--accent);border-radius:10px;font-weight:500}
+:where(.ui-ios) .btn:hover{border-color:transparent;background:color-mix(in srgb,var(--accent) 14%,var(--fill))}
+:where(.ui-ios) .btn:active{opacity:.7}
+:where(.ui-ios) .btn.primary{background:var(--accent);color:#fff;border-radius:var(--r);font-weight:600}
+:where(.ui-ios) .btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+:where(.ui-ios) .btn.norm{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+:where(.ui-ios) .btn[disabled]{opacity:.45}
+/* перемикачі — «пігулки» на сірій доріжці */
+:where(.ui-ios) .seg,:where(.ui-ios) .vseg{border:0;background:var(--fill);border-radius:10px;padding:2px;gap:2px;overflow:visible}
+:where(.ui-ios) .seg button,:where(.ui-ios) .vseg button{border-radius:8px;background:transparent;color:var(--ink)}
+:where(.ui-ios) .seg button+button,:where(.ui-ios) .vseg button+button,:where(.ui-ios) .vseg .vz+button,:where(.ui-ios) .vseg button+.vz{border-left:0}
+:where(.ui-ios) .seg button[aria-pressed="true"],:where(.ui-ios) .vseg button[aria-pressed="true"]{background:var(--seg-on);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04)}
+:where(.ui-ios) .otabs{border:0;background:var(--fill);border-radius:10px;padding:2px}
+:where(.ui-ios) .otabs button{border-radius:8px}
+:where(.ui-ios) .otabs button[aria-selected="true"]{background:var(--seg-on);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:root.ui-ios body.shell .top .seg{background:var(--top2)}
+/* поля: без рамки, на сірій підкладці; фокус — синя рамка */
+:where(.ui-ios) select,:where(.ui-ios) input,:where(.ui-ios) textarea{border-color:transparent;background-color:var(--fill2);border-radius:10px}
+:where(.ui-ios) input[type=checkbox],:where(.ui-ios) input[type=radio]{accent-color:var(--accent)}
+:where(.ui-ios) select:focus,:where(.ui-ios) input:focus,:where(.ui-ios) textarea:focus{border-color:var(--accent);background-color:var(--surface);outline:3px solid color-mix(in srgb,var(--accent) 22%,transparent);outline-offset:0}
+:where(.ui-ios) select.set:not(.abn){border-color:transparent;box-shadow:inset 3px 0 0 color-mix(in srgb,var(--ok) 70%,transparent)}
+/* варіанти: сірі «пігулки», вибраний — синій */
+:where(.ui-ios) .chip{border-color:transparent;background:var(--fill)}
+:where(.ui-ios) .chip:hover{background:color-mix(in srgb,var(--accent) 12%,var(--fill))}
+:where(.ui-ios) .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:where(.ui-ios) .chip.q{border-color:var(--line);border-style:dashed;background:transparent}
+/* бічний зміст — рядки-списки */
+:root.ui-ios body.lay-B .form>#sidecol{border-right-color:var(--line)}
+:root.ui-ios #sidecol #tabs .tab{border-radius:10px}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
+:root.ui-ios body.lay-B .stpl{border-color:transparent;background:var(--fill2);border-radius:var(--r)}
+/* 0.9.3.77 — iOS: не лише кольори, а й компоновка (лише з html.ui-ios) */
+/* форма — сірий «згрупований» фон, кожна група полів — біла картка (як «Налаштування» на iPhone) */
+:root.ui-ios .form{background:transparent;box-shadow:none}
+:root.ui-ios .form .panel{padding:8px 16px 20px}
+:root.ui-ios .form .panel>.grid,:root.ui-ios .form .panel>div>.grid{background:var(--surface);border-radius:14px;padding:14px 16px 16px;gap:14px 16px;box-shadow:var(--shadow)}
+:root.ui-ios .form .panel>div>.grid+.grid,:root.ui-ios .form .panel>.grid+.grid{margin-top:12px}
+:root.ui-ios .form .panel h3.sub{font:600 12.5px/1.3 var(--f-ui);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:22px 16px 7px}
+:root.ui-ios .form .panel>div>h3.sub:first-child{margin-top:6px}
+/* великий заголовок розділу */
+:root.ui-ios .panel>.ph{margin:4px 0 12px;align-items:center}
+:root.ui-ios .panel>.ph h2{font:700 26px/1.15 var(--f-head);letter-spacing:-.01em}
+:root.ui-ios .panel>.ph .qhelp{width:26px;height:26px;padding:0;border-radius:50%;font-size:13px}
+:root.ui-ios .out .oh h2,:root.ui-ios .out>.oh h2{font:700 20px/1.2 var(--f-head);letter-spacing:-.01em}
+/* підписи полів — спокійніші, поля — вищі (зручно і мишею, і пальцем) */
+:where(.ui-ios) .f>label,:where(.ui-ios) .f>.lbl{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted)}
+:where(.ui-ios) select,:where(.ui-ios) input:not([type=checkbox]):not([type=radio]):not([type=range]),:where(.ui-ios) textarea{padding:9px 11px;min-height:38px}
+:where(.ui-ios) .entry-status{border-color:transparent;background:var(--fill2);border-radius:999px;padding:1px 8px}
+/* варіанти — під палець, з плавним перемиканням */
+:where(.ui-ios) .chips,:where(.ui-ios) .segbtns{gap:7px}
+:where(.ui-ios) .chip{padding:6px 13px;font-size:14px;transition:background-color .15s,color .15s,transform .1s}
+:where(.ui-ios) .chip:active,:where(.ui-ios) .btn:active,:where(.ui-ios) .seg button:active{transform:scale(.97)}
+:where(.ui-ios) .seg button,:where(.ui-ios) .vseg button,:where(.ui-ios) .otabs button,:where(.ui-ios) .btn{transition:background-color .15s,color .15s,box-shadow .15s,transform .1s}
+/* панель документів і дій — компактна «панель інструментів» */
+:root.ui-ios .docbar{padding:4px 16px 0;gap:8px}
+:root.ui-ios .docbar .seg button{padding:8px 10px;font-size:14px}
+:root.ui-ios .docbar>.btn,:root.ui-ios .docbar .mkdoc>.btn,:root.ui-ios .docbar>details>summary.btn{padding:7px 12px;font-size:14px}
+:root.ui-ios .docbar #docMore{border-radius:10px}
+/* бічний зміст — список iPadOS: рядки, вибраний — заповнений синім */
+:root.ui-ios #sidecol #tabs .tab{padding:8px 10px;margin:1px 0;font-weight:500;color:var(--ink)}
+:root.ui-ios #sidecol #tabs .tab:hover{background:var(--fill2)}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent);color:#fff}
+:root.ui-ios #sidecol #tabs .tab[aria-selected="true"] *{color:inherit;border-color:currentColor}
+:root.ui-ios #sidecol .tgl{font-size:11.5px;letter-spacing:.05em;opacity:1;padding-top:6px}
+:root.ui-ios body.lay-B .form>#sidecol{border-right:0}
+:root.ui-ios #sidecol .sidefold-btn{background:transparent}
+/* права панель */
+:root.ui-ios .out{padding-top:4px}
+:root.ui-ios #out{border-radius:12px}
+:root.ui-ios .ofoot .btn{min-height:44px}
+/* сповіщення — «капсула» з розмиттям */
+:root.ui-ios .toast{border-radius:14px;padding:10px 16px;background:color-mix(in srgb,var(--ink) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+/* меню «⋯» — як контекстне меню iOS */
+:root.ui-ios .more-dd .mmenu{border:0;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.08);padding:6px;background:var(--surface)}
+:root.ui-ios .more-dd .mmenu .more{border-radius:8px}
+:root.ui-ios .more-dd .mmenu .more:hover{background:var(--fill2)}
+/* нижні вкладки на телефоні — напівпрозорі з розмиттям */
+:root.ui-ios .phtabs{background:var(--top);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line)}
+/* поява розділу — коротке м’яке згасання */
+@media (prefers-reduced-motion:no-preference){:root.ui-ios .form .panel:not([hidden]){animation:iosIn .18s ease-out}}
+@keyframes iosIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (max-width:899px){:root.ui-ios .form .tabs,:root.ui-ios .form .docbar,:root.ui-ios .form .tabnav{background:var(--bg)}:root.ui-ios .form .panel{padding:6px 10px 16px}:root.ui-ios .panel>.ph h2{font-size:24px}}
+/* 0.9.3.77 — той самий стиль на комп’ютері — як macOS (Sonoma): щільніше, під мишку; на телефоні й планшеті під палець — iOS */
+@media (min-width:900px){
+  :root.ui-ios:not(.touch){--r:8px}
+  :root.ui-ios:not(.touch) body{font-size:14px}
+  /* шапка — як панель інструментів вікна */
+  :root.ui-ios:not(.touch) body.shell .top{min-height:46px}
+  /* кнопки й перемикачі — компактні, як у macOS */
+  :where(.ui-ios:not(.touch)) .btn{border-radius:7px;padding:5px 11px;font-size:13.5px;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 .5px 1px rgba(0,0,0,.06)}
+  :where(.ui-ios:not(.touch)) .btn:hover{background:var(--fill2);border-color:var(--line)}
+  :where(.ui-ios:not(.touch)) .btn.primary{border-color:transparent;background:var(--accent);color:#fff;border-radius:7px;box-shadow:0 .5px 1px rgba(0,0,0,.15)}
+  :where(.ui-ios:not(.touch)) .btn.norm{border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+  :root.ui-ios:not(.touch) body.shell .top .btn{border-color:transparent;box-shadow:none}
+  :where(.ui-ios:not(.touch)) .seg,:where(.ui-ios:not(.touch)) .vseg,:where(.ui-ios:not(.touch)) .otabs{border-radius:8px}
+  :where(.ui-ios:not(.touch)) .seg button,:where(.ui-ios:not(.touch)) .vseg button,:where(.ui-ios:not(.touch)) .otabs button{border-radius:6px;padding:5px 12px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .docbar .seg button{padding:6px 10px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .docbar>.btn,:root.ui-ios:not(.touch) .docbar .mkdoc>.btn,:root.ui-ios:not(.touch) .docbar>details>summary.btn{padding:5px 11px;font-size:13.5px}
+  /* поля — білі з тонкою рамкою і синім кільцем фокусу, як у macOS */
+  :where(.ui-ios:not(.touch)) select,:where(.ui-ios:not(.touch)) input:not([type=checkbox]):not([type=radio]):not([type=range]),:where(.ui-ios:not(.touch)) textarea{background-color:var(--surface);border-color:var(--line);border-radius:6px;padding:5px 9px;min-height:30px;font-size:14px;box-shadow:inset 0 .5px 1px rgba(0,0,0,.04)}
+  :where(.ui-ios:not(.touch)) select:focus,:where(.ui-ios:not(.touch)) input:focus,:where(.ui-ios:not(.touch)) textarea:focus{outline:3px solid color-mix(in srgb,var(--accent) 35%,transparent);outline-offset:0;border-color:var(--accent)}
+  /* варіанти — менші «пігулки» */
+  :where(.ui-ios:not(.touch)) .chips,:where(.ui-ios:not(.touch)) .segbtns{gap:5px}
+  :where(.ui-ios:not(.touch)) .chip{padding:3px 10px;font-size:13.5px}
+  /* групи полів — як «Системні параметри»: картка з тонкою рамкою */
+  :root.ui-ios:not(.touch) .form .panel>.grid,:root.ui-ios:not(.touch) .form .panel>div>.grid{border-radius:10px;padding:12px 14px 14px;gap:10px 14px;border:1px solid var(--line);box-shadow:none}
+  :root.ui-ios:not(.touch) .form .panel h3.sub{font:600 13px/1.3 var(--f-ui);text-transform:none;letter-spacing:0;color:var(--ink);margin:18px 4px 6px}
+  :root.ui-ios:not(.touch) .panel>.ph h2{font:700 22px/1.2 var(--f-head)}
+  :root.ui-ios:not(.touch) .out .oh h2,:root.ui-ios:not(.touch) .out>.oh h2{font:700 17px/1.2 var(--f-head)}
+  :root.ui-ios:not(.touch) .form,:root.ui-ios:not(.touch) .out{border-radius:12px}
+  :root.ui-ios:not(.touch) .out{border:1px solid var(--line);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  /* бічна панель — як у Finder: напівпрозора сіра, вибраний рядок — сіра «плашка», значок синій */
+  :root.ui-ios:not(.touch) body.lay-B .form>#sidecol{background:color-mix(in srgb,var(--fill2) 70%,transparent);border-radius:12px;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab{padding:5px 9px;font-size:13.5px;border-radius:6px;margin:0}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab[aria-selected="true"]{background:var(--fill);color:var(--ink);font-weight:600}
+  :root.ui-ios:not(.touch) #sidecol #tabs .tab[aria-selected="true"] *{color:var(--accent);border-color:var(--accent)}
+  :root.ui-ios:not(.touch) #sidecol .tgl{font-size:11px;font-weight:600;color:var(--muted);padding-top:8px}
+  :root.ui-ios:not(.touch) .ofoot .btn{min-height:34px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu{border-radius:10px;padding:5px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu .more{border-radius:5px;padding:4px 10px;font-size:13.5px}
+  :root.ui-ios:not(.touch) .more-dd .mmenu .more:hover{background:var(--accent);color:#fff}
+  :root.ui-ios:not(.touch) .toast{border-radius:10px;font-size:13.5px}
+}
+/* 0.9.3.78 — стиль «Apple»: менше шуму, форма одразу під заголовком, розділи — першими */
+/* 1. Сигнали: одна позначка там, де проблема */
+:root.ui-ios #copyPeek{display:none!important}          /* те саме — у вкладці «Перевірка» */
+:root.ui-ios #outBox>.note{display:none}
+@media (min-width:900px){
+  :root.ui-ios .entry-field:not([data-state="abnormal"]):not([data-state="check"]){display:none}
+  :root.ui-ios .panel>.ph>.entry-section{display:none}   /* стан розділу — значок у бічному списку */
+  :root.ui-ios .ofoot #copy .cbadge{display:none}          /* лічильник — на вкладці «Перевірка» */
+  :root.ui-ios .toast{left:auto;right:24px;bottom:24px;transform:none;max-width:420px}
+}
+/* 2. Панель дій — один компактний рядок */
+:root.ui-ios body.shell .top .vbadge{display:none}
+:root.ui-ios body.shell .topdocs #docMore{flex:0 1 150px}
+:root.ui-ios #undoBtn .hide-m{display:none}
+:root.ui-ios #undoBtn{min-width:34px;justify-content:center}
+:root.ui-ios .docbar{align-items:center;padding-bottom:2px}
+:root.ui-ios .docbar #docMore{flex:1 1 220px}
+/* 3. Бічна панель: розділи першими, шаблон і прогрес — один компактний блок */
+@media (min-width:900px){
+  :root.ui-ios #sidecol .sidefold-btn{width:auto;min-height:0;margin:0 4px 6px auto;padding:3px 8px;font-size:12px;background:transparent;border-color:transparent;box-shadow:none;color:var(--muted)}
+  :root.ui-ios #sidecol .sidefold-btn:hover{color:var(--accent);background:var(--fill2)}
+  :root.ui-ios body.lay-B #sidecard{gap:6px;margin-bottom:6px}
+  :root.ui-ios body.lay-B .stpl{flex-direction:row;align-items:center;gap:6px;padding:6px 8px}
+  :root.ui-ios body.lay-B .stpl .st1{display:none}
+  :root.ui-ios body.lay-B .stpl .st2{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+  :root.ui-ios body.lay-B .stpl .st3{flex:0 0 auto;width:auto;padding:2px 8px;font-size:12px;background:transparent;border-color:transparent;box-shadow:none;color:var(--accent)}
+  :root.ui-ios body.lay-B .stpl .stx,:root.ui-ios body.lay-B .stpl>:not(.st1):not(.st2):not(.st3){display:none}
+  :root.ui-ios body.lay-B .sprog{padding:0 8px}
+  :root.ui-ios .sp1{font-size:12px}
+  :root.ui-ios .spbar{height:4px;border:0;background:var(--fill)}
+  :root.ui-ios .progress-next{display:none}               /* пропуски — у «Перевірці» */
+  :root.ui-ios body.lay-B #sidecard .ljside{padding:5px 9px;font-size:13.5px;background:transparent;border-color:transparent;box-shadow:none;color:var(--ink)}
+  :root.ui-ios body.lay-B #sidecard .ljside:hover{background:var(--fill2)}
+}
+@media (min-width:900px){
+  :root.ui-ios:not(.touch) .docbar{gap:6px}
+  :root.ui-ios:not(.touch) .docbar>.btn,:root.ui-ios:not(.touch) .docbar .mkdoc>.btn{padding:5px 9px;font-size:13px}
+  :root.ui-ios .toast{top:58px;bottom:auto}
+  :root.ui-ios body.lay-B #sidecard,:root.ui-ios body.lay-B #sidecard>*{min-width:0;max-width:100%;box-sizing:border-box}
+  :root.ui-ios body.lay-B #sidecard .stpl{width:100%;overflow:hidden}
+}
+@media (min-width:900px){
+  :root.ui-ios body.lay-B .stpl .st3{font-size:0}
+  :root.ui-ios body.lay-B .stpl .st3::after{content:"Змінити";font-size:12px}
+}
+/* 0.9.3.79 — стиль «Apple»: довгі варіанти — списком рядків (кружечок — один вибір, квадратик — кілька) */
+:root.ui-ios .seglist,:root.ui-ios .chiplist{display:flex;flex-direction:column;flex-wrap:nowrap;gap:1px;background:var(--fill2);border-radius:10px;padding:3px}
+:root.ui-ios .seglist .chip,:root.ui-ios .chiplist .chip{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;border:0;border-radius:7px;background:transparent;color:var(--ink);padding:6px 10px;font-size:14px;line-height:1.35;font-weight:400;box-shadow:none}
+:root.ui-ios .seglist .chip:hover,:root.ui-ios .chiplist .chip:hover{background:var(--surface)}
+:root.ui-ios .seglist .chip::before,:root.ui-ios .chiplist .chip:not([data-n])::before{content:"";flex:0 0 15px;height:15px;margin-top:2px;box-sizing:border-box;border:1.5px solid color-mix(in srgb,var(--muted) 70%,transparent);border-radius:50%;background:var(--surface)}
+:root.ui-ios .chiplist .chip:not([data-n])::before{border-radius:4px}
+:root.ui-ios .seglist .chip[aria-pressed="true"],:root.ui-ios .chiplist .chip[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+:root.ui-ios .seglist .chip[aria-pressed="true"]::before{border:4.5px solid var(--accent)}
+:root.ui-ios .chiplist .chip[aria-pressed="true"]:not([data-n])::before{content:"✓";border-color:var(--accent);background:var(--accent);color:#fff;font:700 11px/12px var(--f-ui);text-align:center}
+:root.ui-ios .seglist .chip.abn[aria-pressed="true"],:root.ui-ios .segbtns.seglist .chip.sg.abn[aria-pressed="true"]{background:var(--flag-soft);color:var(--ink);border:0}
+:root.ui-ios .seglist .chip.abn[aria-pressed="true"]::before{border-color:var(--flag)}
+:root.ui-ios .seglist .chip[data-auto="1"]::after,:root.ui-ios .chiplist .chip[data-auto="1"]::after{margin-left:auto;align-self:center}

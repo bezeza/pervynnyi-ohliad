@@ -37,11 +37,14 @@ function fieldKeyOf(el){
   const k = fieldKeyOf(t); if (!k) return;
   PLEFT.key = k; PLEFT.t = Date.now(); PLEFT.kons = /^консультація/i.test((t.closest('.chip') || {}).textContent || '');
 }, true));
-function bmapRowFor(key, kons){
+function bmapRowFor(key, kons, root){
+  const R = root || document.getElementById('paper'); if (!R) return null;
+  /* «Перед друком» без бланка — блок розділу в тексті */
+  if (!R.querySelector('.b003')){ const sid = key.split('.')[0]; return [...R.querySelectorAll('.pr-body [data-sec="' + sid + '"]')].pop() || null; }
   if (typeof BMAP === 'undefined') return null;
   const sec = key.split(/[._]/)[0], cand = BMAP.filter(([, k])=>k === key || k.split('#')[0] === key);
   const L = kons ? BMAP.filter(([, k])=>/#Консультац/.test(k)) : cand.length ? cand : BMAP.filter(([, k])=>k === sec || k.split('.')[0] === sec);
-  const rows = [...document.querySelectorAll('#paper ' + PK_SEL.split(', ').join(', #paper '))];
+  const rows = [...R.querySelectorAll(PK_SEL)];
   for (const [re] of L){ const r = rows.find(x=>re.test(x.textContent.replace(/\s+/g, ' ').trim())); if (r) return r; }
   return null;
 }
