@@ -2158,12 +2158,49 @@ html.touch .nextbar .btn{padding:12px 16px}
 :root.ui-ios .seglist .chip.abn[aria-pressed="true"],:root.ui-ios .segbtns.seglist .chip.sg.abn[aria-pressed="true"]{background:var(--flag-soft);color:var(--ink);border:0}
 :root.ui-ios .seglist .chip.abn[aria-pressed="true"]::before{border-color:var(--flag)}
 :root.ui-ios .seglist .chip[data-auto="1"]::after,:root.ui-ios .chiplist .chip[data-auto="1"]::after{margin-left:auto;align-self:center}
+/* 0.9.3.80 — стиль «Apple»: шапка в один рядок (пацієнт — у бічній панелі), права панель на всю висоту, адреса одним полем, пошук у шапці */
+:root.pt-side{--pbh:0px!important}
+:root.pt-side #sidecol #ptline{position:static;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 10px;align-items:center;margin:0 0 10px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:none;width:auto}
+:root.pt-side #sidecol #ptline>:not(.pava):not(#ptbar){grid-column:1/-1}
+:root.pt-side #sidecol #ptline #ptbar{max-width:none;padding:0 20px 0 0;min-width:0}
+:root.pt-side #sidecol #ptline #ptbar .pt1{font-size:14.5px;white-space:normal}
+:root.pt-side #sidecol #ptline.hascols #ptbar .pt2{display:none}
+:root.pt-side #sidecol #ptline .pcols{display:flex;flex-direction:column;gap:2px;overflow:visible}
+:root.pt-side #sidecol #ptline .pcol{border-left:0;padding:5px 8px;border-radius:8px;background:var(--fill2)}
+:root.pt-side #sidecol #ptline .pcol:hover{background:var(--accent-soft)}
+:root.pt-side #sidecol #ptline .pval{white-space:normal;flex-wrap:wrap;font-size:13px}
+:root.pt-side #sidecol #ptline #clearAll{margin:2px 0 0;width:100%;justify-content:center}
+:root.pt-side #sidecol #ptline #clearAll .hide-m{display:none}
+:root.pt-side #sidecol #ptline #sexSeg{justify-self:start}
+:root.pt-side body.lay-B.sidefold #sidecol>.sidein>#ptline{display:none!important}
+/* адреса одним полем; поля — під «Розбити на поля» */
+:root.ui-ios .addrbox.addr-c>.lbl{display:none}
+:root.ui-ios .addrbox.addr-c>.addrg{display:none}
+:root.ui-ios .addrbox.addr-c.addr-open>.addrg{display:grid;margin-top:6px}
+:root.ui-ios .addrbox.addr-c{margin-top:-6px}
+:root.ui-ios .addr-tg{border:0;background:none;color:var(--accent);font-size:13px;padding:2px 0;cursor:pointer}
+/* пошук у шапці */
+.cmdk-btn kbd{font:500 11px var(--f-ui);border:1px solid var(--line);border-radius:5px;padding:0 5px;margin-left:8px;color:var(--muted);background:transparent}
+:root.ui-ios body.shell .top .cmdk-btn{min-width:150px;justify-content:flex-start;display:inline-flex;align-items:center;color:var(--top-mut)}
+:root.ui-ios body.shell .top .cmdk-btn kbd{margin-left:auto}
+@media (max-width:1279px){:root.ui-ios body.shell .top .cmdk-btn{min-width:0}:root.ui-ios .cmdk-btn .cmdk-l,:root.ui-ios .cmdk-btn kbd{display:none}}
+/* телефон: рядок розділів — видно, що гортається */
+@media (max-width:899px){
+  :root.ui-ios .pht-chips{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);padding-right:22px;scroll-padding:0 24px}
+  :root.ui-ios .pht-c{border:0;background:var(--fill);padding:7px 12px;font-size:14px;min-height:36px}
+  :root.ui-ios .pht-c[aria-selected="true"]{background:var(--accent);color:#fff}
+  :root.ui-ios .pht-c[aria-selected="true"] .pht-d{background:#fff}
+}
+:root.ui-ios .addrbox.addr-c{display:flex;flex-direction:column;align-items:flex-start}
+:root.ui-ios .addrbox.addr-c.addr-open>.addrg{align-self:stretch}
+@media (max-width:1599px){:root.ui-ios body.shell .top .cmdk-btn{min-width:0;padding-inline:10px}:root.ui-ios .cmdk-btn .cmdk-l,:root.ui-ios .cmdk-btn kbd{display:none}}
+.cmdk-btn .cmdk-i{display:inline-flex;align-items:center}.cmdk-btn .cmdk-i+.cmdk-l{margin-left:6px}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.79 від 02.11.2026">v0.9.3.79 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.80 від 02.11.2026">v0.9.3.80 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4309,8 +4346,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.79', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.80', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.80', '03.11.2026', 'стиль «Apple»: шапка в один рядок — картка пацієнта (ПІБ, діагноз, алергії, обстеження, «＋ Новий пацієнт») угорі бічної панелі; права панель — на всю висоту вікна, «Копіювати» й «Друк» видно одразу; адреса — одним полем: «с. …, вул. …, … р-н, … обл.» сама розкладається на поля для бланків (поля — під «Розбити на поля»); пошук по всьому (Ctrl+K) — кнопкою в шапці; на телефоні рядок розділів показує, що його можна гортати. «Класичний» стиль — без змін'],
   ['0.9.3.79', '02.11.2026', 'стиль «Apple» — однакові елементи для схожих виборів: короткі варіанти — «пігулками» в рядок; довгі — списком рядків із кружечком (один вибір) або квадратиком (кілька) замість стовпчика великих «пігулок»; випадні списки до 8 варіантів — теж списком: вибір одним натисканням, без повтору вибраного тексту сірим під полем (9 і більше варіантів — випадний список, як був). Відхилення від норми — жовтим рядком. «Класичний» стиль — без змін'],
   ['0.9.3.78', '02.11.2026', 'стиль «Apple» — менше шуму й форма одразу під рукою: на полях лишилися тільки позначки відхилень і того, що треба перевірити («не заповнено» й «норма» — значком у бічному списку); блок «Перед копіюванням» і лічильник на «Копіювати» прибрано — усе у вкладці «Перевірка»; сповіщення — у правому куті, не поверх форми; документи — вкладками в шапці (на ширині від 1280 px), дії над формою — одним компактним рядком, «Скасувати» — значком ↶ (Ctrl+Z); у бічній панелі розділи стоять одразу під шаблоном і прогресом, зібраними в компактний блок. «Класичний» стиль — без змін'],
   ['0.9.3.77', '02.11.2026', 'стиль інтерфейсу «Apple»: на комп’ютері — як macOS (компактні кнопки й перемикачі під мишку, білі поля з тонкою рамкою й синім кільцем фокусу, бічна панель як у Finder, групи як у «Системних параметрах»), на телефоні й планшеті — як iOS, і не лише кольори: поля розділу згруповані в білі картки на сірому тлі з підписами груп (як «Налаштування» iPhone), великі заголовки розділів, бічний зміст — список із виділеним синім рядком, компактна панель дій, вищі поля й більші варіанти під палець, меню «⋯» і сповіщення — як в iOS, плавні перемикання; поля без рамок, перемикачі-«пігулки», тоновані кнопки, системний синій; у денній і нічній темах. Вибір: «Вигляд» → «Стиль»: Apple / Класичний (як було). Друк і бланки не змінюються'],
@@ -5641,6 +5679,7 @@ const HELPS = [
   'Щоб вони були завжди: «Налаштування» → «Профіль роботи: Травматологія».']],
  ['Копіювання, друк, МІС', [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
+  'Адреса (стиль «Apple»): впишіть одним рядком — «с. …, вул. …, буд., … р-н, … обл.» — програма сама розкладе її на поля для бланків; перевірити чи виправити — «Розбити на поля». Пошук по всьому — кнопка з лупою в шапці або Ctrl+K.',
   'Стиль інтерфейсу: «Вигляд» → «Стиль» — Apple (на комп’ютері як macOS: щільно, під мишку; на телефоні й планшеті як iOS: під палець) або Класичний. Тема кольорів (день / ніч…) вибирається окремо.',
   'Планшет: тримайте горизонтально — розділи, форма й текст поруч, як на комп’ютері; на сенсорному екрані кнопки й поля більші (кнопка «Вигляд» → «Дотик»: Авто / Великі кнопки / Звичайні).',
   'Щоденник без первинки: «Без хвороби» у блоці вибору хвороби; скарги — кнопками (ваші слова з попередніх щоденників пацієнта, загальний список, пошук). Після «Записати в журнал» форма стає чернеткою наступного дня — інтервал (щодня / через день) поруч із датою запису.',
@@ -19551,6 +19590,98 @@ function uilApply(){
 /* поле, перебудоване іншим модулем (напр., «Результат лікування» з новим варіантом), — ще раз за правилом */
 { const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} return r; }; }
 try{ uilApply(); }catch(e){}
+/* ===== 0.9.3.80 — стиль «Apple», далі:
+   • шапка в один рядок: картка пацієнта (ПІБ, діагноз, алергії, обстеження, «＋ Новий») — угорі бічної панелі
+     («Робоче місце»); без бічної панелі — рядок під шапкою, як було;
+   • права панель — на всю висоту вікна (кнопки «Копіювати», «Друк» завжди видно);
+   • адреса — одним полем: «с. Оржиця, вул. Шевченка, 5, Лубенський р-н, Полтавська обл.» розкладається на поля
+     для бланків сама; поля — під «Розбити на поля»;
+   • пошук по всьому (Ctrl+K) — кнопкою в шапці. «Класичний» стиль — як було. ===== */
+const UIM = {};
+const uimOn = () => typeof UISTYLE !== 'undefined' && UISTYLE === 'ios';
+/* 1. картка пацієнта в бічній панелі */
+function ptPlace(){
+  const line = document.getElementById('ptline'), side = document.querySelector('#sidecol > .sidein'), wrap = document.querySelector('main.wrap');
+  if (!line || !wrap) return;
+  const want = !!side && uimOn() && document.body.classList.contains('lay-B') && window.innerWidth >= 900;
+  if (want){ const fb = side.querySelector('.sidefold-btn');
+    if (line.parentElement !== side){ UIM.home = {p:line.parentElement, n:line.nextSibling}; }
+    if (line.parentElement !== side || line.previousElementSibling !== fb){ if (fb) fb.after(line); else side.prepend(line); } }
+  else if (UIM.home && line.parentElement === side){ const {p, n} = UIM.home; if (n && n.parentNode === p) p.insertBefore(line, n); else wrap.before(line); UIM.home = null; }
+  document.documentElement.classList.toggle('pt-side', want);
+  if (!want) try{ document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px'); }catch(e){}
+}
+/* 2. права панель — до низу вікна */
+function outFit(){
+  const o = document.getElementById('outBox'); if (!o) return;
+  if (!uimOn() || window.innerWidth < 900 || getComputedStyle(o).position !== 'sticky'){ if (o.style.maxHeight) o.style.maxHeight = ''; return; }
+  const top = Math.max(o.getBoundingClientRect().top, 0), mh = Math.max(360, Math.round(window.innerHeight - top - 12)) + 'px';
+  if (o.style.maxHeight !== mh) o.style.maxHeight = mh;
+}
+{ let rq = 0; const soon = () => { if (rq) return; rq = requestAnimationFrame(()=>{ rq = 0; outFit(); }); };
+  window.addEventListener('scroll', soon, {passive:true}); window.addEventListener('resize', ()=>{ ptPlace(); soon(); }); UIM.soon = soon; }
+/* 3. адреса одним полем */
+function addrParse(s){
+  const o = {np_t:'', np:'', hr:'', ra:'', ob:'', st:'', zip:''}, rest = [];
+  String(s || '').split(/[,;]+/).map(x=>x.trim()).filter(Boolean).forEach(p=>{
+    let m;
+    if (!o.zip && /^\d{5}$/.test(p)){ o.zip = p; return; }
+    if (!o.ob && /(^|\s)(обл\.?|область)(\s|$)/i.test(p)){ o.ob = p; return; }
+    if (!o.ra && /(^|\s)(р-н|район)(\s|$)/i.test(p)){ o.ra = p; return; }
+    if (!o.hr && /громад|(^|\s)(тг|отг)(\s|$)/i.test(p)){ o.hr = p; return; }
+    if (!o.np && (m = p.match(/^(м\.|місто|смт|с-ще|селище|с\.|село)\s*(.+)$/i))){ const t = m[1].toLowerCase(); o.np_t = /^м/.test(t) ? 'м.' : t === 'смт' ? 'смт' : /^(с-ще|селище)$/.test(t) ? 'с-ще' : 'с.'; o.np = m[2].trim(); return; }
+    rest.push(p);
+  });
+  if (!o.np && rest.length && !/^(вул|пров|просп|бульв|бул\.|пл\.|майдан|буд|кв|\d)/i.test(rest[0])) o.np = rest.shift();
+  o.st = rest.join(', ');
+  return o;
+}
+function addrFromLine(){
+  const a = document.getElementById('meta_addr'); if (!a) return;
+  const ids = ADDR.map(([k])=>'meta_addr_' + k), els = ids.map(id=>document.getElementById(id));
+  if (els.some(e=>e && e.value.trim() && e.dataset.auto !== '1')) return;   /* поля заповнено вручну — не чіпаємо */
+  const p = addrParse(a.value);
+  ADDR.forEach(([k], i)=>{ const e = els[i]; if (!e) return; e.value = p[k] || ''; if (e.tagName === 'SELECT' && e.value !== (p[k] || '')) e.value = ''; e.dataset.auto = '1'; });
+}
+{ const a = document.getElementById('meta_addr');
+  if (a){
+    let t = 0; a.addEventListener('input', e=>{ if (!e.isTrusted) return; clearTimeout(t); t = setTimeout(addrFromLine, 400); });
+    a.addEventListener('change', addrFromLine);
+    ADDR.forEach(([k])=>{ const e = document.getElementById('meta_addr_' + k); if (e) ['input','change'].forEach(ev=>e.addEventListener(ev, x=>{ if (x.isTrusted) delete e.dataset.auto; })); });
+  } }
+function addrPlace(){
+  const a = document.getElementById('meta_addr'), af = a && (a.closest('.f') || a.parentElement), box = document.querySelector('.addrbox'); if (!af || !box) return;
+  const lb = af.querySelector('label'), on = uimOn();
+  if (!UIM.addrLbl && lb) UIM.addrLbl = lb.textContent;
+  let tg = box.querySelector('.addr-tg');
+  if (on){
+    if (af.nextElementSibling !== box) box.before(af);
+    if (lb) lb.textContent = 'Місце проживання';
+    a.placeholder = 'с. Оржиця, вул. Шевченка, 5, Лубенський р-н, Полтавська обл.';
+    if (!tg){ tg = h('button', {type:'button', class:'more addr-tg', 'aria-expanded':'false', onclick:()=>{ const open = !box.classList.contains('addr-open'); box.classList.toggle('addr-open', open); tg.setAttribute('aria-expanded', open ? 'true' : 'false'); tg.textContent = open ? 'Сховати поля адреси ▴' : 'Розбити на поля (для бланків) ▾'; }}, 'Розбити на поля (для бланків) ▾');
+      box.prepend(tg); }
+    box.classList.add('addr-c');
+  } else {
+    if (box.nextElementSibling !== af) box.after(af);
+    if (lb && UIM.addrLbl) lb.textContent = UIM.addrLbl;
+    a.placeholder = 'необов’язково'; if (tg) tg.remove(); box.classList.remove('addr-c', 'addr-open');
+  }
+}
+/* 4. пошук — кнопкою в шапці */
+function searchBtnPlace(){
+  let b = document.getElementById('cmdkBtn');
+  if (!uimOn()){ if (b) b.hidden = true; return; }
+  if (!b){ const anchor = document.querySelector('header.top .profbtn') || document.getElementById('themeBtn'); if (!anchor) return;
+    b = h('button', {type:'button', class:'btn cmdk-btn', id:'cmdkBtn', title:'Знайти розділ, поле, хворобу чи дію (Ctrl+K)', 'aria-label':'Пошук (Ctrl+K)', onclick:()=>openSearch()},
+      (()=>{ const i = h('span', {'aria-hidden':'true', class:'cmdk-i'}); i.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14"><circle cx="6.8" cy="6.8" r="4.8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.4 10.4L14 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'; return i; })(), h('span', {class:'cmdk-l'}, ' Пошук'), h('kbd', {}, /Mac/i.test(navigator.platform || '') ? '⌘K' : 'Ctrl K'));
+    anchor.before(b); }
+  b.hidden = false;
+}
+function uimApply(){ ptPlace(); addrPlace(); searchBtnPlace(); try{ SHELL.placeDocs(); }catch(e){} outFit(); }
+{ const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ uimApply(); }catch(e){} return r; }; }
+{ const x0 = applyView; applyView = function(){ const r = x0.apply(this, arguments); try{ ptPlace(); outFit(); }catch(e){} return r; }; }
+try{ uimApply(); }catch(e){}
+try{ requestAnimationFrame(()=>{ try{ uimApply(); }catch(e){} }); }catch(e){}
 </script>
 
 </body>
