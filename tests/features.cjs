@@ -1177,6 +1177,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     uiStyleSet('ios'); const again=f.el.nextElementSibling.classList.contains('seglist'); update();
     return JSON.stringify([list,set,perk,dd,back,again]); })()`);
   ok('Стиль Apple: випадний список до 8 варіантів і довгі варіанти — списком рядків (вибір пишеться у поле), 9+ — випадний; «Класичний» повертає як було', r==='[true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ uiStyleSet('ios'); const p=addrParse('с. Тестове, вул. Садова, 5, кв. 2, Тестова громада, Тестовий р-н, Полтавська обл., 37700');
+    const ok1=p.np_t==='с.'&&p.np==='Тестове'&&p.hr==='Тестова громада'&&p.ra==='Тестовий р-н'&&p.ob==='Полтавська обл.'&&p.st==='вул. Садова, 5, кв. 2'&&p.zip==='37700';
+    const p2=addrParse('м. Тестів, просп. Миру, 1'); const ok2=p2.np_t==='м.'&&p2.np==='Тестів'&&p2.st==='просп. Миру, 1';
+    const btn=!!document.getElementById('cmdkBtn')&&!document.getElementById('cmdkBtn').hidden; const fit=typeof outFit==='function'&&typeof ptPlace==='function';
+    uiStyleSet('classic'); const back=document.getElementById('cmdkBtn').hidden&&!document.documentElement.classList.contains('pt-side')&&!document.querySelector('.addrbox.addr-c'); uiStyleSet('ios');
+    return JSON.stringify([ok1,ok2,btn,fit,back]); })()`);
+  ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
