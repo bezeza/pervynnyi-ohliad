@@ -58,7 +58,7 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
    await page.keyboard.press('Tab');
    const v=await bounded(page.evaluate(()=>{
     const e=document.activeElement,cs=getComputedStyle(e),r=e.getBoundingClientRect();
-    return {tag:e.tagName,id:e.id||'',role:e.getAttribute('role')||'',label:e.getAttribute('aria-label')||e.getAttribute('title')||'',text:(e.innerText||e.textContent||'').trim().replace(/\\s+/g,' ').slice(0,60),visible:r.width>0&&r.height>0,outline:cs.outlineStyle,outlineWidth:cs.outlineWidth};
+    return {tag:e.tagName,id:e.id||'',role:e.getAttribute('role')||'',label:e.getAttribute('aria-label')||e.getAttribute('title')||'',text:(e.innerText||e.textContent||'').trim().replace(/\s+/g,' ').slice(0,60),visible:r.width>0&&r.height>0,outline:cs.outlineStyle,outlineWidth:cs.outlineWidth};
    }),2000);
    if(v?.timeout){steps.push({timeout:true});break;}
    steps.push(v);
