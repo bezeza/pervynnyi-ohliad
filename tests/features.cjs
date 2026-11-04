@@ -1224,6 +1224,25 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const runs2 = w.eval('PO18_CHECK_CACHE.executions') - before2;
   ok('Результат перевірки не кешується між різними оновленнями', runs2 === 1, String(runs2));
 }
+// Задача 18: show() не обходить усі вкладки при звичайному перемиканні.
+{
+  const r=w.eval(`(()=> {
+    const oldActive=active, oldOn=OPG.on, oldFast=PO18_SHOW_FAST.enabled, oldDismiss=UST.dismissed;
+    const a=TABS.findIndex(t=>t.id==='skarhy'), b=TABS.findIndex(t=>t.id==='morbi');
+    UST.dismissed=true; OPG.on=false; PO18_SHOW_FAST.enabled=false; show(a);
+    const each0=TABS.forEach;
+    const count=()=>{ let n=0; TABS.forEach=function(fn){ return each0.call(this,function(...args){ n++; return fn.apply(this,args); }); }; try{ show(b); } finally{ TABS.forEach=each0; } return n; };
+    const baselineVisits=count();
+    PO18_SHOW_FAST.enabled=true; show(a);
+    const optimizedVisits=count();
+    const classic=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && TABS[a].panel.hidden && TABS[b].tab.getAttribute('aria-selected')==='true';
+    OPG.on=true; show(a); const visible=opSet().every(k=>!TABS[k].panel.hidden);
+    OPG.on=false; show(b); const returned=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && !document.body.classList.contains('onepage');
+    OPG.on=oldOn; PO18_SHOW_FAST.enabled=oldFast; UST.dismissed=oldDismiss; show(oldActive);
+    return JSON.stringify([baselineVisits>0,optimizedVisits===0,classic,visible,returned]);
+  })()`);
+  ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true]', r);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
