@@ -1224,6 +1224,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const runs2 = w.eval('PO18_CHECK_CACHE.executions') - before2;
   ok('Результат перевірки не кешується між різними оновленнями', runs2 === 1, String(runs2));
 }
+// Задача 18: прогрес використовує перевірені дані під час звичайного перемикання вкладок.
+{
+  const r=w.eval(`(()=> {
+    const before=PO18_PROGRESS_CACHE.misses;
+    update();
+    const afterUpdate=PO18_PROGRESS_CACHE.misses, hits=PO18_PROGRESS_CACHE.hits;
+    const target=opSet().find(k=>k!==active);
+    if(target==null) throw new Error('Не знайдено іншу видиму вкладку');
+    show(target);
+    return JSON.stringify([afterUpdate>before,PO18_PROGRESS_CACHE.misses===afterUpdate,PO18_PROGRESS_CACHE.hits>hits]);
+  })()`);
+  ok('Прогрес: після оновлення документа перемикання вкладки повторно не запускає checkDoc()', r==='[true,true,true]', r);
+}
 // Задача 18: show() не обходить усі вкладки при звичайному перемиканні.
 {
   const r=w.eval(`(()=> {
