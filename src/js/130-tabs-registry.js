@@ -58,9 +58,7 @@ function renderTabNav(){
   const k = seq.indexOf(active), prev = k > 0 ? seq[k - 1] : -1, next = k >= 0 && k < seq.length - 1 ? seq[k + 1] : -1;
   const nm = i => TABS[i].short || TABS[i].title;
   const tn = $('#tabnav');
-  // На телефоні 647-phone-tabs повністю замінює вміст #tabnav своєю стрічкою — там не будуємо зайвий desktop DOM.
-  const phoneStrip = typeof phtOn === 'function' && phtOn();
-  if (tn && !phoneStrip){
+  if (tn){
     if (NAV_RENDER.tn !== tn || !NAV_RENDER.current || !tn.contains(NAV_RENDER.current)){
       const prevBtn = h('button', {type:'button', class:'btn tn-arr', 'aria-label':'Попередній розділ'}, '‹');
       const group = h('span', {class:'tn-g'});
