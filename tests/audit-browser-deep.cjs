@@ -49,6 +49,7 @@ async function perfScenario(populated){
   if(!out||!chip)return {error:'У видимому розділі «Скарги» не знайдено варіанта для вимірювання'};
   window.__updateTimes=[];
   const u0=update;window.update=function(){const t=performance.now();try{return u0.apply(this,arguments);}finally{window.__updateTimes.push(performance.now()-t);}};
+  const stat=a=>{if(!a.length)return null;const s=a.slice().sort((x,y)=>x-y);return {n:a.length,values:a.map(x=>+x.toFixed(1)),median:+s[Math.floor(s.length/2)].toFixed(1),min:+s[0].toFixed(1),max:+s[s.length-1].toFixed(1)};};
   const clickToText=[];
   for(let i=0;i<5;i++){
    const before=out.innerHTML,start=performance.now();
@@ -67,7 +68,7 @@ async function perfScenario(populated){
   for(let i=0;i<5;i++){const t=performance.now();renderPaper();await new Promise(r=>requestAnimationFrame(r));paperTimes.push(performance.now()-t);}
   PAPER=false;renderPaper();
   const u=window.__updateTimes.slice();
-  return {clickToVisibleText:stats(clickToText),updateSync:stats(u),showToFrame:stats(showTimes),renderPaperToFrame:stats(paperTimes),chipText:chip.textContent.trim().slice(0,80),chipVisible:!!(chip.offsetWidth||chip.offsetHeight)};
+  return {clickToVisibleText:stat(clickToText),updateSync:stat(u),showToFrame:stat(showTimes),renderPaperToFrame:stat(paperTimes),chipText:chip.textContent.trim().slice(0,80),chipVisible:!!(chip.offsetWidth||chip.offsetHeight)};
  });
  let popoutMs=null;
  if(populated){try{const start=await x.page.evaluate(()=>performance.now());const p=x.page.waitForEvent('popup',{timeout:4000});await x.page.locator('#popBtn').click({timeout:4000});const popup=await p;await popup.waitForSelector('#pwBox',{timeout:5000});popoutMs=await x.page.evaluate(t=>performance.now()-t,start);await popup.close();}catch(e){result.errors.push({type:'perf-popout',message:String(e.message||e)});}}
@@ -145,7 +146,7 @@ async function perfScenario(populated){
   const glyphOnly=[...document.querySelectorAll('button')].filter(b=>{const t=(b.innerText||'').trim();return t&&/^[^\p{L}\p{N}]+$/u.test(t)&&!b.getAttribute('aria-label')&&!b.getAttribute('aria-labelledby')&&!b.title;}).map(b=>({text:(b.innerText||'').trim(),id:b.id,cls:b.className}));
   return {named,glyphOnly,tabs:document.getElementById('tabs')?.outerHTML.slice(0,1400)||''};
  });
- await kb.page.screenshot({path:path.join(OUT,'ui-390-apple-day.png')}).catch(()=>{});
+ await kb.page.setViewportSize({width:390,height:844});await sleep(250);await kb.page.screenshot({path:path.join(OUT,'ui-390-apple-day.png')}).catch(()=>{});
  result.keyboard={grip,sideWidth,menus:menu,icons:iconAudit};
  await kb.context.close();
  const blocked=await open({width:1366,height:768,style:'ios',theme:'day',blockStorage:true});
