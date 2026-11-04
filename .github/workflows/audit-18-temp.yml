@@ -20,6 +20,16 @@ jobs:
       - run: npm install --no-save --package-lock=false --no-audit --no-fund playwright axe-core
       - run: npx playwright install --with-deps chromium
       - run: node build.mjs
+      - name: Базові перевірки features 1/3
+        run: node tests/features-part.cjs 1
+      - name: Базові перевірки features 2/3
+        run: node tests/features-part.cjs 2
+      - name: Базові перевірки features 3/3
+        run: node tests/features-part.cjs 3
+      - name: Повні перевірки
+        run: node tests/full.cjs
+      - name: UI workflow
+        run: node tests/workflow.cjs
       - run: node tests/audit-browser-lite.cjs
       - uses: actions/upload-artifact@v4
         if: always()
