@@ -406,6 +406,9 @@ details.box[open]{padding-bottom:12px}
 .prow.cur{border-color:var(--accent);background:var(--accent-soft)}
 .prow .pn{flex:1;min-width:0;display:flex;flex-direction:column}
 .prow .pn span{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.tpl-find{display:block;max-width:360px;margin:8px 0 0}
+.tpl-acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;align-items:center}
+.tpl-acts .btn{white-space:nowrap}
 .acts2{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .rxlist{display:flex;flex-direction:column;gap:10px}
 .rx{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
@@ -548,7 +551,7 @@ body:has(#outBox.open) .livebar{display:none!important}
   #print .memo table{border-collapse:collapse;width:100%}#print .memo td{border-bottom:1px solid #000;padding:2px 4px;vertical-align:top}#print .memo td:first-child{white-space:nowrap;font-weight:600}
   #print .memo .ms{font-size:9.5pt;color:#000}
 }
-@media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.qhelp{min-width:34px;height:34px}}
+@media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.hvsearch .tpl-save-doc{display:none}.qhelp{min-width:34px;height:34px}}
 @media (min-width:900px) and (max-width:1365px){#subT{display:none}}
 
 /* ===== Вигляд (0.9.2): екран, розташування, межа, згортання тексту ===== */

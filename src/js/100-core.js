@@ -268,7 +268,8 @@ function refreshChips(f){
   f.chips.forEach((c,i)=>{
     const on = c.getAttribute('aria-pressed') === 'true';
     let vis;
-    if (on) vis = true;
+    if (f.gone && f.gone.has(O(f.opts[i]).t)) vis = false;   /* видалений свій варіант не повертається пошуком */
+    else if (on) vis = true;
     else if (f.hidT && f.hidT.has(O(f.opts[i]).t)) vis = false;
     else if (t) vis = O(f.opts[i]).l.toLowerCase().includes(t);
     else if (f.krit) vis = f.exp || (!!curKey && f.keys[i].includes(curKey)) || (!!f.urg && URGK.has(O(f.opts[i]).t));

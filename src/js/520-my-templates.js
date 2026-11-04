@@ -10,16 +10,44 @@ function editableFields(){
 }
 function addOptionLive(key, text){
   const [sid, fid] = key.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) return false;
-  if (f.type === 'sel'){ if (f.opts.some(o=>O(o).t === text)) return false; f.opts.push(text); f.el.append(h('option', {value:f.opts.length - 1}, g(text))); return true; }
-  if (f.type === 'multi'){ if (f.opts.some(o=>O(o).t === text)) return false; f.opts.push(text); f.chips.push(makeChip(f, f.opts.length - 1)); refreshChips(f); return true; }
-  if (f.type === 'text'){ if (f.quick.includes(text)) return false; f.quick.push(text); f.quickOrig.push(text); f.qchips.push(makeQuick(f, text)); return true; }
+  const revive = () => { if (f.gone && f.gone.has(text)){ f.gone.delete(text); return true; } return false; };
+  if (f.type === 'sel'){
+    const i = f.opts.findIndex(o=>O(o).t === text);
+    if (i >= 0){ if (!revive()) return false; const op = f.el.querySelector(`option[value="${i}"]`); if (op){ op.hidden = false; op.disabled = false; } else f.el.append(h('option', {value:i}, g(text))); return true; }
+    f.opts.push(text); f.el.append(h('option', {value:f.opts.length - 1}, g(text))); return true;
+  }
+  if (f.type === 'multi'){
+    const i = f.opts.findIndex(o=>O(o).t === text);
+    if (i >= 0){ if (!revive()) return false; refreshChips(f); return true; }
+    f.opts.push(text); f.chips.push(makeChip(f, f.opts.length - 1)); refreshChips(f); return true;
+  }
+  if (f.type === 'text'){
+    const i = f.quick.indexOf(text);
+    if (i >= 0){ if (!revive()) return false; if (f.qchips[i]) f.qchips[i].hidden = false; return true; }
+    f.quick.push(text); f.quickOrig.push(text); f.qchips.push(makeQuick(f, text)); return true;
+  }
   return false;
 }
 function removeOptionLive(key, text){
   const [sid, fid] = key.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) return;
-  if (f.type === 'sel'){ const i = f.opts.findIndex(o=>O(o).t === text); const op = f.el.querySelector(`option[value="${i}"]`); if (op && f.el.value !== String(i)) op.remove(); }
-  if (f.type === 'multi'){ const i = f.opts.findIndex(o=>O(o).t === text); const c = f.chips[i]; if (c && c.getAttribute('aria-pressed') !== 'true') c.remove(); }
-  if (f.type === 'text'){ const i = f.quick.indexOf(text); if (i >= 0 && f.qchips[i]) f.qchips[i].remove(); }
+  f.gone = f.gone || new Set();
+  if (f.type === 'sel'){
+    const i = f.opts.findIndex(o=>O(o).t === text); if (i < 0) return;
+    f.gone.add(text);
+    if (f.el.value === String(i)){ f.el.value = ''; mark(f.el, f); }
+    const op = f.el.querySelector(`option[value="${i}"]`); if (op){ op.hidden = true; op.disabled = true; }
+    return;
+  }
+  if (f.type === 'multi'){
+    const i = f.opts.findIndex(o=>O(o).t === text); if (i < 0) return;
+    f.gone.add(text);
+    const c = f.chips[i]; if (c){ c.setAttribute('aria-pressed', 'false'); delete c.dataset.ord; }
+    refreshChips(f); return;
+  }
+  if (f.type === 'text'){
+    const i = f.quick.indexOf(text); if (i < 0) return;
+    f.gone.add(text); if (f.qchips[i]) f.qchips[i].hidden = true;
+  }
 }
 function presetFromForm(name, group){
   const p = {key:'u' + Date.now(), group, name, custom:true, hosp:'e', set:{}, skarhy:[], plan:[], rx:[]};
@@ -32,9 +60,48 @@ function presetFromForm(name, group){
   }));
   p.osn = val(F('dx.osn'), true); p.mkh = val(F('dx.mkh'), true); p.uskl = val(F('dx.uskl'), true);
   p.plan = pressed(F('dx.plan'));
-  p.rx = RX.map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || '']);
+  p.rx = RX.filter(it=>String(it.drug || '').trim()).map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || '']);
   if (MODE === 'hosp' && F('hosp.vyd').el.value === '1') p.hosp = 'p';
   return p;
+}
+/* підтвердження руйнівної дії з шаблоном: нічого не змінюється, доки не натиснуто основну кнопку */
+function tplConfirm(msg, ok, onYes){
+  const old = document.getElementById('tplAsk'); if (old) old.remove();
+  const yes = h('button', {type:'button', class:'btn primary'}, ok || 'Так');
+  const no = h('button', {type:'button', class:'btn'}, 'Скасувати');
+  const box = h('div', {id:'tplAsk', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-label':msg},
+    h('div', {class:'mcard'}, h('p', {style:'margin:0 0 12px'}, msg), h('div', {class:'acts2'}, yes, no)));
+  const close = () => box.remove();
+  no.addEventListener('click', close);
+  yes.addEventListener('click', ()=>{ close(); onYes(); });
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
+  document.body.append(box); no.focus();
+  return box;
+}
+function examTemplateUseful(p){
+  return !!(p.skarhy.length || p.osn || Object.keys(p.set || {}).length || (p.plan || []).length || (p.rx || []).some(r=>r && r[0]));
+}
+function saveExamTemplate(name, group, replace){
+  const n = String(name || '').trim();
+  if (!n){ toast('Введіть назву шаблону'); return false; }
+  const g = group && GROUPS.some(x=>x[0] === group) ? group : 'my';
+  const dup = CUSTOM.presets.find(p=>p.name === n);
+  if (dup && !replace){ tplConfirm('Шаблон «' + n + '» вже є. Замінити його поточним оглядом?', 'Замінити', ()=>saveExamTemplate(n, g, true)); return false; }
+  const p = presetFromForm(n, g);
+  if (!examTemplateUseful(p)){ toast('Спершу заповніть хоча б скарги, огляд або діагноз'); return false; }
+  if (dup && replace){
+    const key = dup.key;
+    Object.keys(dup).forEach(k=>{ delete dup[k]; });
+    Object.assign(dup, p, {key, custom:true, name:n, group:g});
+    saveCustom();
+    const i = PRESETS.indexOf(dup), c = HV.cards && HV.cards[i];
+    if (c){ const b = c.querySelector('b'); if (b) b.textContent = n; const code = c.querySelector('.code'); if (code) code.textContent = dup.mkh || 'мій шаблон'; c.dataset.g = g; }
+    if (typeof HV.filter === 'function') HV.filter();
+    renderTplLists(); toast('Шаблон «' + n + '» оновлено'); return true;
+  }
+  CUSTOM.presets.push(p); saveCustom(); PRESETS.push(p); addCardLive(p); renderTplLists();
+  toast('Збережено шаблон «' + n + '»'); return true;
 }
 function tplPanel(){
   const wrap = h('div', {});
@@ -57,16 +124,12 @@ function tplPanel(){
   const nm = h('input', {id:'tplName', placeholder:'напр., Позагоспітальна пневмонія, ускладнена плевритом'});
   const gr = h('select', {id:'tplGroup'}); GROUPS.forEach(([k,l])=>gr.append(h('option', {value:k}, l))); gr.value = 'my';
   wrap.append(h('div', {class:'pt'},
-    h('h3', {}, 'Моя хвороба з поточного огляду'),
-    h('p', {class:'chips-hint'}, 'Заповніть огляд так, як зазвичай буває при цій хворобі (скарги, зміни при огляді, діагноз, план, призначення), і збережіть як заготовку. Вона з’явиться на вкладці «За хворобою».'),
+    h('h3', {}, 'Шаблон з поточного огляду'),
+    h('p', {class:'chips-hint'}, 'Заповніть огляд так, як зазвичай буває (скарги, зміни при огляді, діагноз, план, призначення) і збережіть як шаблон. Він з’явиться в цьому списку і на вкладці «За хворобою» — кнопка «Застосувати».'),
     h('div', {class:'grid'}, h('div', {class:'f wide'}, h('label', {for:'tplName'}, 'Назва'), nm), h('div', {class:'f'}, h('label', {for:'tplGroup'}, 'Профіль'), gr)),
-    h('div', {class:'acts2', style:'margin-top:8px'}, h('button', {type:'button', class:'btn primary', onclick:()=>{
-      const n = nm.value.trim(); if (!n){ toast('Введіть назву хвороби'); return; }
-      const p = presetFromForm(n, gr.value);
-      if (!p.skarhy.length && !p.osn){ toast('Спершу заповніть хоча б скарги або діагноз у первинному огляді'); return; }
-      CUSTOM.presets.push(p); saveCustom(); PRESETS.push(p); addCardLive(p); nm.value = ''; renderTplLists();
-      toast('Збережено: «' + n + '» у профілі «' + GROUPS.find(x=>x[0]===p.group)[1] + '»');
-    }}, 'Зберегти як мою хворобу')),
+    h('div', {class:'acts2', style:'margin-top:8px'}, h('button', {type:'button', class:'btn primary', id:'tplSaveExam', onclick:()=>{
+      if (saveExamTemplate(nm.value, gr.value)) nm.value = '';
+    }}, 'Зберегти як шаблон')),
     h('div', {id:'tplPresets', class:'plist'})));
   // 2б. змінити або сховати наявне
   const ef = h('select', {id:'ovrField'}); editableFields().forEach(x=>ef.append(h('option', {value:x.key}, x.label)));
@@ -78,6 +141,7 @@ function tplPanel(){
     const all = f.type === 'text' ? f.quickOrig : f.opts.map(o=>O(o).t);
     let n = 0;
     all.forEach(orig=>{
+      if (f.gone && f.gone.has(orig)) return;
       const cur = m[orig] || orig; if (q && !cur.toLowerCase().includes(q) && !orig.toLowerCase().includes(q)) return;
       if (++n > (ovrAll || q ? 80 : 10)) return;
       const inp = h('input', {value:cur, 'aria-label':'Текст варіанта'});
@@ -128,11 +192,11 @@ function applyOvr(key){
   const m = CUSTOM.ovr[key] || {}, hid = new Set(CUSTOM.hid[key] || []);
   if (f.type === 'text'){
     if (!f.quickOrig) return;
-    f.quickOrig.forEach((q,i)=>{ const nq = m[q] || q; if (f.quick[i] !== nq){ f.quick[i] = nq; const c = makeQuick(f, nq); f.qchips[i].replaceWith(c); f.qchips[i] = c; } f.qchips[i].hidden = hid.has(q); });
+    f.quickOrig.forEach((q,i)=>{ const nq = m[q] || q; if (f.quick[i] !== nq){ f.quick[i] = nq; const c = makeQuick(f, nq); f.qchips[i].replaceWith(c); f.qchips[i] = c; } f.qchips[i].hidden = hid.has(q) || !!(f.gone && f.gone.has(q)); });
     return;
   }
   f.ovr = m; f.hidT = hid;
-  if (f.type === 'sel') [...f.el.options].forEach(op=>{ if (op.value === '') return; const t = O(f.opts[+op.value]).t; op.hidden = op.disabled = hid.has(t) && f.el.value !== op.value; });
+  if (f.type === 'sel') [...f.el.options].forEach(op=>{ if (op.value === '') return; const t = O(f.opts[+op.value]).t; const dead = !!(f.gone && f.gone.has(t)); op.hidden = op.disabled = dead || (hid.has(t) && f.el.value !== op.value); });
   if (f.type === 'multi') refreshChips(f);
   refreshLabels();
 }
@@ -167,9 +231,9 @@ function renderTplLists(){
   keys.forEach(k=>CUSTOM.opts[k].forEach(t=>{
     const del = h('button', {type:'button', class:'more'}, 'Видалити');
     del.addEventListener('click', ()=>{ CUSTOM.opts[k] = CUSTOM.opts[k].filter(x=>x !== t); saveCustom(); removeOptionLive(k, t); renderTplLists(); toast('Видалено'); });
-    a.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, t), h('span', {}, labels[k] || k)), del));
+    a.append(h('div', {class:'prow', 'data-key':k, 'data-text':t}, h('div', {class:'pn'}, h('b', {}, t), h('span', {}, labels[k] || k)), del));
   }));
-  if (!CUSTOM.presets.length) b.append(h('p', {class:'chips-hint'}, 'Своїх хвороб ще немає.'));
+  if (!CUSTOM.presets.length) b.append(h('p', {class:'chips-hint'}, 'Своїх шаблонів ще немає.'));
   CUSTOM.presets.forEach(p=>{
     const del = h('button', {type:'button', class:'more'}, 'Видалити');
     del.addEventListener('click', ()=>{
@@ -178,7 +242,7 @@ function renderTplLists(){
       const k = PRESETS.indexOf(p); if (k >= 0){ PRESETS.splice(k, 1); const c = HV.cards.splice(k, 1)[0]; if (c) c.remove(); }
       renderTplLists(); toast('Видалено');
     });
-    b.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, p.name), h('span', {}, [GROUPS.find(x=>x[0]===p.group)?.[1], p.mkh, p.skarhy.slice(0,3).join(', ')].filter(Boolean).join(' · '))), del));
+    b.append(h('div', {class:'prow' + (p.key && p.key === curKey ? ' cur' : ''), 'data-key':p.key}, h('div', {class:'pn'}, h('b', {}, p.name), h('span', {}, [GROUPS.find(x=>x[0]===p.group)?.[1], p.mkh, (p.skarhy || []).slice(0,3).join(', ')].filter(Boolean).join(' · '))), del));
   });
 }
 

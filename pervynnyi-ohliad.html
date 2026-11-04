@@ -445,6 +445,9 @@ details.box[open]{padding-bottom:12px}
 .prow.cur{border-color:var(--accent);background:var(--accent-soft)}
 .prow .pn{flex:1;min-width:0;display:flex;flex-direction:column}
 .prow .pn span{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.tpl-find{display:block;max-width:360px;margin:8px 0 0}
+.tpl-acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;align-items:center}
+.tpl-acts .btn{white-space:nowrap}
 .acts2{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .rxlist{display:flex;flex-direction:column;gap:10px}
 .rx{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
@@ -587,7 +590,7 @@ body:has(#outBox.open) .livebar{display:none!important}
   #print .memo table{border-collapse:collapse;width:100%}#print .memo td{border-bottom:1px solid #000;padding:2px 4px;vertical-align:top}#print .memo td:first-child{white-space:nowrap;font-weight:600}
   #print .memo .ms{font-size:9.5pt;color:#000}
 }
-@media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.qhelp{min-width:34px;height:34px}}
+@media (max-width:899px){.hvsearch{flex-wrap:nowrap}.hvsearch input{flex:1 1 0}.hvsearch .chips-hint{display:none}.hvsearch .tpl-save-doc{display:none}.qhelp{min-width:34px;height:34px}}
 @media (min-width:900px) and (max-width:1365px){#subT{display:none}}
 
 /* ===== Вигляд (0.9.2): екран, розташування, межа, згортання тексту ===== */
@@ -2280,7 +2283,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.86 від 04.11.2026">v0.9.3.86 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.87 від 04.11.2026">v0.9.3.87 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4014,7 +4017,8 @@ function refreshChips(f){
   f.chips.forEach((c,i)=>{
     const on = c.getAttribute('aria-pressed') === 'true';
     let vis;
-    if (on) vis = true;
+    if (f.gone && f.gone.has(O(f.opts[i]).t)) vis = false;   /* видалений свій варіант не повертається пошуком */
+    else if (on) vis = true;
     else if (f.hidT && f.hidT.has(O(f.opts[i]).t)) vis = false;
     else if (t) vis = O(f.opts[i]).l.toLowerCase().includes(t);
     else if (f.krit) vis = f.exp || (!!curKey && f.keys[i].includes(curKey)) || (!!f.urg && URGK.has(O(f.opts[i]).t));
@@ -4245,7 +4249,10 @@ function val(f, any){
     f.hintEl.textContent = n >= 0 ? n + ' ' + plural(n, fm) : 'Перевірте дати';
     return `з ${fmtD(a)} по ${fmtD(b)}` + (n >= 0 ? ` (${n} ${plural(n, fm)})` : '');
   }
-  const tv = f.el.value.trim(); return tv || (f.fallback ? f.fallback() : '');
+  const tv = f.el.value.trim();
+  /* порожнє або самий лише «…» — не текст: у документ не потрапляє (підстановка, якщо вона є) */
+  if (!tv || /^[….]+$/.test(tv)) return f.fallback ? f.fallback() : '';
+  return tv;
 }
 
 const cap = s => /^\[[^|\]]*\|[^\]]*\]/.test(s) ? s.replace(/^\[([^|\]]*)\|([^\]]*)\]/, (m,a,b)=>'[' + a.charAt(0).toUpperCase() + a.slice(1) + '|' + b.charAt(0).toUpperCase() + b.slice(1) + ']') : s.charAt(0).toUpperCase() + s.slice(1);
@@ -4426,8 +4433,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.86', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.87', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.87', '04.11.2026', 'шаблони: список своїх шаблонів із пошуком, одна кнопка «Застосувати», «Перейменувати» і підтвердження перед видаленням; «Зберегти як шаблон» — з огляду (меню «⋯» і біля пошуку хвороб) і з щоденника; видалений свій варіант можна додати знову; порожнє поле й саме лише «…» не потрапляють у текст, у обґрунтуванні антибіотика не друкується незаповнений бакпосів і дата перегляду'],
   ['0.9.3.86', '04.11.2026', 'збереження: з PIN у папці не лишається відкритий файл пацієнта; видалений із PIN не повертається; папка не губить останній запис і сама не вважається резервною копією (нагадування гасне лише після денної копії); старіший файл не затирає новішу картку; друге вікно не перезаписує новіший запис; кошик не оживає зі старого сховища; чужа розмітка у файлі пацієнта не виконується; запис у файл не стирає попередній, доки новий не записаний до кінця; без мережі сайт не показує сторінку помилки замість збереженої програми'],
   ['0.9.3.85', '04.11.2026', 'бічне меню: ширину змінюють, перетягуючи праву межу мишкою (180–380 px; стрілками — коли межа у фокусі); стягнули вузько або «« Лише значки» — меню стає смужкою значків (назва розділу — при наведенні, кольорова крапка — стан розділу); подвійний клік по межі — звичайна ширина; запам’ятовується'],
   ['0.9.3.84', '04.11.2026', 'стиль «Apple» — менше на екрані при вході: екран «Пацієнти» (пошук, «Сьогодні», список, одна кнопка «＋ Новий пацієнт» і «⇩ З МІС»; перенесення й файли — під посиланням), форма — після вибору пацієнта; «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду, рядок дій прилипає вгорі; бічна панель без «Новий пацієнт» двічі, «не обрано» й «0 з 13», кружечки — лише в заповнених розділах; «Стаціонар / Амбулаторно» — у меню «Профіль», тема — у «Вигляді»; виправлено: при вході в змісті було позначено «Скарги» замість «Пацієнт і запис»'],
@@ -8422,7 +8430,14 @@ function rxLine(it, dates){
 function abLines(){
   const ab = RX.filter(isAB); if (!ab.length) return '';
   let osn = val(F('dx.osn'), true); if (/^[А-ЯІЇЄҐ][а-яіїєґ’']/.test(osn)) osn = osn.charAt(0).toLowerCase() + osn.slice(1);
-  return ab.map(it=>`${it.drug} (група ${AWARE[drugInfo(it.drug).ab]} за AWaRe): показання — ${it.ind || osn || '…'}; бактеріологічне дослідження до початку — ${it.cult || '…'}; перегляд ефективності — ${it.rev ? fmtD(it.rev) : '…'}.`).join('\n');
+  return ab.map(it=>{
+    const bits = [];
+    const ind = (it.ind || osn || '').trim();
+    if (ind && ind !== '…') bits.push('показання — ' + ind);
+    if (String(it.cult || '').trim()) bits.push('бактеріологічне дослідження до початку — ' + String(it.cult).trim());
+    if (it.rev) bits.push('перегляд ефективності — ' + fmtD(it.rev));
+    return `${it.drug} (група ${AWARE[drugInfo(it.drug).ab]} за AWaRe)` + (bits.length ? ': ' + bits.join('; ') : '') + '.';
+  }).join('\n');
 }
 const AB_HEAD = 'Обґрунтування антибактеріальної терапії (наказ МОЗ України від 09.09.2026 № 1328):';
 const RXF = () => RX.filter(it=>String(it.drug || '').trim());   // порожні рядки не потрапляють у документ
@@ -9057,16 +9072,44 @@ function editableFields(){
 }
 function addOptionLive(key, text){
   const [sid, fid] = key.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) return false;
-  if (f.type === 'sel'){ if (f.opts.some(o=>O(o).t === text)) return false; f.opts.push(text); f.el.append(h('option', {value:f.opts.length - 1}, g(text))); return true; }
-  if (f.type === 'multi'){ if (f.opts.some(o=>O(o).t === text)) return false; f.opts.push(text); f.chips.push(makeChip(f, f.opts.length - 1)); refreshChips(f); return true; }
-  if (f.type === 'text'){ if (f.quick.includes(text)) return false; f.quick.push(text); f.quickOrig.push(text); f.qchips.push(makeQuick(f, text)); return true; }
+  const revive = () => { if (f.gone && f.gone.has(text)){ f.gone.delete(text); return true; } return false; };
+  if (f.type === 'sel'){
+    const i = f.opts.findIndex(o=>O(o).t === text);
+    if (i >= 0){ if (!revive()) return false; const op = f.el.querySelector(`option[value="${i}"]`); if (op){ op.hidden = false; op.disabled = false; } else f.el.append(h('option', {value:i}, g(text))); return true; }
+    f.opts.push(text); f.el.append(h('option', {value:f.opts.length - 1}, g(text))); return true;
+  }
+  if (f.type === 'multi'){
+    const i = f.opts.findIndex(o=>O(o).t === text);
+    if (i >= 0){ if (!revive()) return false; refreshChips(f); return true; }
+    f.opts.push(text); f.chips.push(makeChip(f, f.opts.length - 1)); refreshChips(f); return true;
+  }
+  if (f.type === 'text'){
+    const i = f.quick.indexOf(text);
+    if (i >= 0){ if (!revive()) return false; if (f.qchips[i]) f.qchips[i].hidden = false; return true; }
+    f.quick.push(text); f.quickOrig.push(text); f.qchips.push(makeQuick(f, text)); return true;
+  }
   return false;
 }
 function removeOptionLive(key, text){
   const [sid, fid] = key.split('.'); const sec = SECTIONS.find(x=>x.id===sid); const f = sec && sec.fields.find(x=>x.id===fid); if (!f) return;
-  if (f.type === 'sel'){ const i = f.opts.findIndex(o=>O(o).t === text); const op = f.el.querySelector(`option[value="${i}"]`); if (op && f.el.value !== String(i)) op.remove(); }
-  if (f.type === 'multi'){ const i = f.opts.findIndex(o=>O(o).t === text); const c = f.chips[i]; if (c && c.getAttribute('aria-pressed') !== 'true') c.remove(); }
-  if (f.type === 'text'){ const i = f.quick.indexOf(text); if (i >= 0 && f.qchips[i]) f.qchips[i].remove(); }
+  f.gone = f.gone || new Set();
+  if (f.type === 'sel'){
+    const i = f.opts.findIndex(o=>O(o).t === text); if (i < 0) return;
+    f.gone.add(text);
+    if (f.el.value === String(i)){ f.el.value = ''; mark(f.el, f); }
+    const op = f.el.querySelector(`option[value="${i}"]`); if (op){ op.hidden = true; op.disabled = true; }
+    return;
+  }
+  if (f.type === 'multi'){
+    const i = f.opts.findIndex(o=>O(o).t === text); if (i < 0) return;
+    f.gone.add(text);
+    const c = f.chips[i]; if (c){ c.setAttribute('aria-pressed', 'false'); delete c.dataset.ord; }
+    refreshChips(f); return;
+  }
+  if (f.type === 'text'){
+    const i = f.quick.indexOf(text); if (i < 0) return;
+    f.gone.add(text); if (f.qchips[i]) f.qchips[i].hidden = true;
+  }
 }
 function presetFromForm(name, group){
   const p = {key:'u' + Date.now(), group, name, custom:true, hosp:'e', set:{}, skarhy:[], plan:[], rx:[]};
@@ -9079,9 +9122,48 @@ function presetFromForm(name, group){
   }));
   p.osn = val(F('dx.osn'), true); p.mkh = val(F('dx.mkh'), true); p.uskl = val(F('dx.uskl'), true);
   p.plan = pressed(F('dx.plan'));
-  p.rx = RX.map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || '']);
+  p.rx = RX.filter(it=>String(it.drug || '').trim()).map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || '']);
   if (MODE === 'hosp' && F('hosp.vyd').el.value === '1') p.hosp = 'p';
   return p;
+}
+/* підтвердження руйнівної дії з шаблоном: нічого не змінюється, доки не натиснуто основну кнопку */
+function tplConfirm(msg, ok, onYes){
+  const old = document.getElementById('tplAsk'); if (old) old.remove();
+  const yes = h('button', {type:'button', class:'btn primary'}, ok || 'Так');
+  const no = h('button', {type:'button', class:'btn'}, 'Скасувати');
+  const box = h('div', {id:'tplAsk', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-label':msg},
+    h('div', {class:'mcard'}, h('p', {style:'margin:0 0 12px'}, msg), h('div', {class:'acts2'}, yes, no)));
+  const close = () => box.remove();
+  no.addEventListener('click', close);
+  yes.addEventListener('click', ()=>{ close(); onYes(); });
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
+  document.body.append(box); no.focus();
+  return box;
+}
+function examTemplateUseful(p){
+  return !!(p.skarhy.length || p.osn || Object.keys(p.set || {}).length || (p.plan || []).length || (p.rx || []).some(r=>r && r[0]));
+}
+function saveExamTemplate(name, group, replace){
+  const n = String(name || '').trim();
+  if (!n){ toast('Введіть назву шаблону'); return false; }
+  const g = group && GROUPS.some(x=>x[0] === group) ? group : 'my';
+  const dup = CUSTOM.presets.find(p=>p.name === n);
+  if (dup && !replace){ tplConfirm('Шаблон «' + n + '» вже є. Замінити його поточним оглядом?', 'Замінити', ()=>saveExamTemplate(n, g, true)); return false; }
+  const p = presetFromForm(n, g);
+  if (!examTemplateUseful(p)){ toast('Спершу заповніть хоча б скарги, огляд або діагноз'); return false; }
+  if (dup && replace){
+    const key = dup.key;
+    Object.keys(dup).forEach(k=>{ delete dup[k]; });
+    Object.assign(dup, p, {key, custom:true, name:n, group:g});
+    saveCustom();
+    const i = PRESETS.indexOf(dup), c = HV.cards && HV.cards[i];
+    if (c){ const b = c.querySelector('b'); if (b) b.textContent = n; const code = c.querySelector('.code'); if (code) code.textContent = dup.mkh || 'мій шаблон'; c.dataset.g = g; }
+    if (typeof HV.filter === 'function') HV.filter();
+    renderTplLists(); toast('Шаблон «' + n + '» оновлено'); return true;
+  }
+  CUSTOM.presets.push(p); saveCustom(); PRESETS.push(p); addCardLive(p); renderTplLists();
+  toast('Збережено шаблон «' + n + '»'); return true;
 }
 function tplPanel(){
   const wrap = h('div', {});
@@ -9104,16 +9186,12 @@ function tplPanel(){
   const nm = h('input', {id:'tplName', placeholder:'напр., Позагоспітальна пневмонія, ускладнена плевритом'});
   const gr = h('select', {id:'tplGroup'}); GROUPS.forEach(([k,l])=>gr.append(h('option', {value:k}, l))); gr.value = 'my';
   wrap.append(h('div', {class:'pt'},
-    h('h3', {}, 'Моя хвороба з поточного огляду'),
-    h('p', {class:'chips-hint'}, 'Заповніть огляд так, як зазвичай буває при цій хворобі (скарги, зміни при огляді, діагноз, план, призначення), і збережіть як заготовку. Вона з’явиться на вкладці «За хворобою».'),
+    h('h3', {}, 'Шаблон з поточного огляду'),
+    h('p', {class:'chips-hint'}, 'Заповніть огляд так, як зазвичай буває (скарги, зміни при огляді, діагноз, план, призначення) і збережіть як шаблон. Він з’явиться в цьому списку і на вкладці «За хворобою» — кнопка «Застосувати».'),
     h('div', {class:'grid'}, h('div', {class:'f wide'}, h('label', {for:'tplName'}, 'Назва'), nm), h('div', {class:'f'}, h('label', {for:'tplGroup'}, 'Профіль'), gr)),
-    h('div', {class:'acts2', style:'margin-top:8px'}, h('button', {type:'button', class:'btn primary', onclick:()=>{
-      const n = nm.value.trim(); if (!n){ toast('Введіть назву хвороби'); return; }
-      const p = presetFromForm(n, gr.value);
-      if (!p.skarhy.length && !p.osn){ toast('Спершу заповніть хоча б скарги або діагноз у первинному огляді'); return; }
-      CUSTOM.presets.push(p); saveCustom(); PRESETS.push(p); addCardLive(p); nm.value = ''; renderTplLists();
-      toast('Збережено: «' + n + '» у профілі «' + GROUPS.find(x=>x[0]===p.group)[1] + '»');
-    }}, 'Зберегти як мою хворобу')),
+    h('div', {class:'acts2', style:'margin-top:8px'}, h('button', {type:'button', class:'btn primary', id:'tplSaveExam', onclick:()=>{
+      if (saveExamTemplate(nm.value, gr.value)) nm.value = '';
+    }}, 'Зберегти як шаблон')),
     h('div', {id:'tplPresets', class:'plist'})));
   // 2б. змінити або сховати наявне
   const ef = h('select', {id:'ovrField'}); editableFields().forEach(x=>ef.append(h('option', {value:x.key}, x.label)));
@@ -9125,6 +9203,7 @@ function tplPanel(){
     const all = f.type === 'text' ? f.quickOrig : f.opts.map(o=>O(o).t);
     let n = 0;
     all.forEach(orig=>{
+      if (f.gone && f.gone.has(orig)) return;
       const cur = m[orig] || orig; if (q && !cur.toLowerCase().includes(q) && !orig.toLowerCase().includes(q)) return;
       if (++n > (ovrAll || q ? 80 : 10)) return;
       const inp = h('input', {value:cur, 'aria-label':'Текст варіанта'});
@@ -9175,11 +9254,11 @@ function applyOvr(key){
   const m = CUSTOM.ovr[key] || {}, hid = new Set(CUSTOM.hid[key] || []);
   if (f.type === 'text'){
     if (!f.quickOrig) return;
-    f.quickOrig.forEach((q,i)=>{ const nq = m[q] || q; if (f.quick[i] !== nq){ f.quick[i] = nq; const c = makeQuick(f, nq); f.qchips[i].replaceWith(c); f.qchips[i] = c; } f.qchips[i].hidden = hid.has(q); });
+    f.quickOrig.forEach((q,i)=>{ const nq = m[q] || q; if (f.quick[i] !== nq){ f.quick[i] = nq; const c = makeQuick(f, nq); f.qchips[i].replaceWith(c); f.qchips[i] = c; } f.qchips[i].hidden = hid.has(q) || !!(f.gone && f.gone.has(q)); });
     return;
   }
   f.ovr = m; f.hidT = hid;
-  if (f.type === 'sel') [...f.el.options].forEach(op=>{ if (op.value === '') return; const t = O(f.opts[+op.value]).t; op.hidden = op.disabled = hid.has(t) && f.el.value !== op.value; });
+  if (f.type === 'sel') [...f.el.options].forEach(op=>{ if (op.value === '') return; const t = O(f.opts[+op.value]).t; const dead = !!(f.gone && f.gone.has(t)); op.hidden = op.disabled = dead || (hid.has(t) && f.el.value !== op.value); });
   if (f.type === 'multi') refreshChips(f);
   refreshLabels();
 }
@@ -9214,9 +9293,9 @@ function renderTplLists(){
   keys.forEach(k=>CUSTOM.opts[k].forEach(t=>{
     const del = h('button', {type:'button', class:'more'}, 'Видалити');
     del.addEventListener('click', ()=>{ CUSTOM.opts[k] = CUSTOM.opts[k].filter(x=>x !== t); saveCustom(); removeOptionLive(k, t); renderTplLists(); toast('Видалено'); });
-    a.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, t), h('span', {}, labels[k] || k)), del));
+    a.append(h('div', {class:'prow', 'data-key':k, 'data-text':t}, h('div', {class:'pn'}, h('b', {}, t), h('span', {}, labels[k] || k)), del));
   }));
-  if (!CUSTOM.presets.length) b.append(h('p', {class:'chips-hint'}, 'Своїх хвороб ще немає.'));
+  if (!CUSTOM.presets.length) b.append(h('p', {class:'chips-hint'}, 'Своїх шаблонів ще немає.'));
   CUSTOM.presets.forEach(p=>{
     const del = h('button', {type:'button', class:'more'}, 'Видалити');
     del.addEventListener('click', ()=>{
@@ -9225,7 +9304,7 @@ function renderTplLists(){
       const k = PRESETS.indexOf(p); if (k >= 0){ PRESETS.splice(k, 1); const c = HV.cards.splice(k, 1)[0]; if (c) c.remove(); }
       renderTplLists(); toast('Видалено');
     });
-    b.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, p.name), h('span', {}, [GROUPS.find(x=>x[0]===p.group)?.[1], p.mkh, p.skarhy.slice(0,3).join(', ')].filter(Boolean).join(' · '))), del));
+    b.append(h('div', {class:'prow' + (p.key && p.key === curKey ? ' cur' : ''), 'data-key':p.key}, h('div', {class:'pn'}, h('b', {}, p.name), h('span', {}, [GROUPS.find(x=>x[0]===p.group)?.[1], p.mkh, (p.skarhy || []).slice(0,3).join(', ')].filter(Boolean).join(' · '))), del));
   });
 }
 
@@ -18718,7 +18797,7 @@ function stDialog(p0, own, go){
     h('div', {class:'nshead'}, h('b', {}, 'Що взяти з шаблону'), h('button', {type:'button', class:'btn', onclick:close}, 'Скасувати')),
     h('p', {class:'st-lead'}, '«' + p0.name + '»' + (p0.mkh ? ' (' + p0.mkh + ')' : '') + '. Позначене — заповниться з шаблону; решта лишиться як є.'),
     h('div', {class:'st-list'}, ...boxes.map(b=>b.row)),
-    h('div', {class:'st-foot'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ const sel = boxes.filter(b=>b.cb.checked).map(b=>b.c.k); close(); if (sel.length) go(sel); }}, 'Взяти позначене')));
+    h('div', {class:'st-foot'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ const sel = boxes.filter(b=>b.cb.checked).map(b=>b.c.k); close(); if (sel.length) go(sel); }}, 'Застосувати')));
   sh.addEventListener('click', e=>{ if (e.target === sh) close(); });
   sh.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
   document.body.append(sh); document.body.style.overflow = 'hidden';
@@ -20192,6 +20271,162 @@ async function reconcileTrash(){
   try{ localStorage.removeItem('po.trash'); localStorage.setItem('po.trash.mode', 'idb'); }catch(e){}
   try{ if (typeof renderTrashLink === 'function') renderTrashLink(); }catch(e){}
 }
+/* ===== Шаблони: список із пошуком, одна дія «Застосувати», збереження з документа =====
+   Свої хвороби й варіанти — у «Мої шаблони»: пошук, «Застосувати», «Перейменувати», видалення лише після підтвердження.
+   «Зберегти як шаблон» — у меню «⋯» розділу і біля пошуку хвороб (огляд) або в щоденнику. */
+function tplPrompt(title, label, ok, onOk, value){
+  const old = document.getElementById('tplAsk'); if (old) old.remove();
+  const inp = h('input', {type:'text', value:value || '', 'aria-label':label, placeholder:label});
+  const yes = h('button', {type:'button', class:'btn primary'}, ok || 'Зберегти');
+  const no = h('button', {type:'button', class:'btn'}, 'Скасувати');
+  const box = h('div', {id:'tplAsk', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-label':title},
+    h('div', {class:'mcard'},
+      h('h2', {style:'margin:0 0 8px;font-size:18px'}, title),
+      h('div', {class:'f'}, h('label', {}, label), inp),
+      h('div', {class:'acts2', style:'margin-top:12px'}, yes, no)));
+  const close = () => box.remove();
+  const go = () => { const v = inp.value.trim(); if (!v){ toast('Введіть назву'); inp.focus(); return; } close(); onOk(v); };
+  no.addEventListener('click', close);
+  yes.addEventListener('click', go);
+  inp.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
+  document.body.append(box); setTimeout(()=>{ inp.focus(); inp.select(); }, 0);
+}
+function tplSaveDialog(){
+  if (DOC === 'shch'){
+    tplPrompt('Зберегти щоденник як шаблон', 'Назва шаблону', 'Зберегти', name=>{ diaryTplSave(name); });
+    return;
+  }
+  if (DOC !== 'ohl'){ toast('Шаблон огляду зберігається з первинного огляду. Відкрийте «Огляд» або збережіть щоденник у «Щоденнику».', 4000); return; }
+  tplPrompt('Зберегти огляд як шаблон', 'Назва шаблону', 'Зберегти', name=>{ saveExamTemplate(name, 'my'); });
+}
+function tplApply(p){
+  if (!p) return;
+  if (DOC !== 'ohl') switchDoc('ohl');
+  const i = PRESETS.indexOf(p), card = HV.cards && i >= 0 ? HV.cards[i] : null;
+  if (card) card.click(); else applyPreset(p);
+}
+function tplRename(p){
+  tplPrompt('Перейменувати шаблон', 'Нова назва', 'Зберегти', name=>{
+    if (name === p.name) return;
+    if (CUSTOM.presets.some(x=>x !== p && x.name === name)){ toast('Шаблон з такою назвою вже є'); return; }
+    p.name = name; saveCustom();
+    const i = PRESETS.indexOf(p), c = HV.cards && HV.cards[i];
+    if (c){ const b = c.querySelector('b'); if (b) b.textContent = name; }
+    try{ renderHvTips(); }catch(e){}
+    renderTplLists();
+    try{ if (typeof SHELL !== 'undefined' && SHELL.sync) SHELL.sync(); }catch(e){}
+    toast('Шаблон перейменовано: «' + name + '»');
+  }, p.name);
+}
+function tplEnsureFind(id, listId, label){
+  if (document.getElementById(id)) return;
+  const list = document.getElementById(listId); if (!list) return;
+  const q = h('input', {type:'search', id, class:'tpl-find', placeholder:label, 'aria-label':label});
+  q.addEventListener('input', tplFilterLists);
+  list.before(q);
+}
+function tplFilterLists(){
+  const run = (id, box) => {
+    if (!box) return;
+    const q = ((document.getElementById(id) || {}).value || '').trim().toLowerCase();
+    const rows = [...box.querySelectorAll('.prow')];
+    let n = 0;
+    rows.forEach(r=>{ const ok = !q || r.textContent.toLowerCase().includes(q); r.hidden = !ok; if (ok) n++; });
+    let empty = box.querySelector('.tpl-none');
+    if (q && rows.length && !n){
+      if (!empty){ empty = h('p', {class:'chips-hint tpl-none'}, 'Нічого не знайдено.'); box.append(empty); }
+      empty.hidden = false;
+    } else if (empty) empty.hidden = true;
+  };
+  run('tplOptQ', document.getElementById('tplOpts'));
+  run('tplPresetQ', document.getElementById('tplPresets'));
+}
+function tplDecorateLists(){
+  tplEnsureFind('tplOptQ', 'tplOpts', 'Пошук своїх варіантів');
+  tplEnsureFind('tplPresetQ', 'tplPresets', 'Пошук своїх шаблонів');
+  document.querySelectorAll('#tplOpts .prow').forEach(row=>{
+    if (row.querySelector('.tpl-acts')) return;
+    const key = row.dataset.key, text = row.dataset.text || (row.querySelector('b') && row.querySelector('b').textContent) || '';
+    const del = row.querySelector('button');
+    const acts = h('div', {class:'tpl-acts'});
+    const kill = h('button', {type:'button', class:'more'}, 'Видалити');
+    kill.addEventListener('click', ()=>tplConfirm('Видалити варіант «' + text + '»? Він зникне зі списку цього поля.', 'Видалити', ()=>{
+      CUSTOM.opts[key] = (CUSTOM.opts[key] || []).filter(x=>x !== text);
+      if (!CUSTOM.opts[key].length) delete CUSTOM.opts[key];
+      saveCustom(); removeOptionLive(key, text); renderTplLists(); toast('Видалено');
+    }));
+    acts.append(kill);
+    if (del) del.replaceWith(acts); else row.append(acts);
+  });
+  document.querySelectorAll('#tplPresets .prow').forEach(row=>{
+    if (row.querySelector('.tpl-apply')) return;
+    const key = row.dataset.key;
+    const p = CUSTOM.presets.find(x=>x.key === key) || PRESETS.find(x=>x.key === key);
+    const del = [...row.querySelectorAll('button')].pop();
+    const acts = h('div', {class:'tpl-acts'});
+    const on = !!(p && curKey && p.key === curKey);
+    const apply = h('button', {type:'button', class:'btn primary tpl-apply', 'aria-pressed':on ? 'true' : 'false', title:on ? 'Цей шаблон уже застосовано' : 'Застосувати шаблон до огляду'}, on ? 'Застосовано' : 'Застосувати');
+    apply.addEventListener('click', ()=>tplApply(p));
+    const ren = h('button', {type:'button', class:'more'}, 'Перейменувати');
+    ren.addEventListener('click', ()=>{ if (p) tplRename(p); });
+    const kill = h('button', {type:'button', class:'more'}, 'Видалити');
+    kill.addEventListener('click', ()=>tplConfirm('Видалити шаблон «' + (p && p.name || '') + '»? Його не буде в списку.', 'Видалити', ()=>{
+      const obj = CUSTOM.presets.find(x=>x.key === key) || p;
+      CUSTOM.presets = CUSTOM.presets.filter(x=>x !== obj && x.key !== key); saveCustom();
+      const i = PRESETS.indexOf(obj); if (i >= 0){ PRESETS.splice(i, 1); const c = HV.cards.splice(i, 1)[0]; if (c) c.remove(); }
+      renderTplLists(); toast('Шаблон видалено');
+    }));
+    acts.append(apply, ren, kill);
+    if (del) del.replaceWith(acts); else row.append(acts);
+  });
+  tplFilterLists();
+}
+{ const lists0 = renderTplLists;
+  renderTplLists = function(){ const r = lists0.apply(this, arguments); try{ tplDecorateLists(); }catch(e){} return r; };
+  try{ renderTplLists(); }catch(e){} }
+{ const ap0 = applyPreset;
+  applyPreset = function(){ const r = ap0.apply(this, arguments); clearTimeout(tplApply._t); tplApply._t = setTimeout(()=>{ try{ if (CUSTOM.presets.length) renderTplLists(); }catch(e){} }, 0); return r; }; }
+{ const d0 = diaryTplSave;
+  diaryTplSave = function(name){
+    if (!diaryTplSave.force && CUSTOM.diary.some(x=>x.name === name)){
+      tplConfirm('Шаблон щоденника «' + name + '» вже є. Замінити?', 'Замінити', ()=>{ diaryTplSave.force = true; try{ d0(name); } finally { diaryTplSave.force = false; } });
+      return false;
+    }
+    return d0.apply(this, arguments);
+  }; }
+{ const r0 = renderDtpl;
+  renderDtpl = function(){
+    const r = r0.apply(this, arguments);
+    document.querySelectorAll('.dtpl-my .mytpl').forEach(span=>{
+      const inn = span.querySelector('.chip-in'); if (!inn) return;
+      const name = inn.textContent.trim();
+      inn.title = 'Застосувати шаблон «' + name + '»';
+      const x = span.querySelector('.chip-x'); if (!x) return;
+      const n = h('button', {type:'button', class:'more', title:'Видалити шаблон «' + name + '»', 'aria-label':'Видалити шаблон ' + name}, 'Видалити');
+      n.addEventListener('click', e=>{
+        e.stopPropagation();
+        const t = CUSTOM.diary.find(d=>d.name === name); if (!t) return;
+        tplConfirm('Видалити шаблон щоденника «' + name + '»?', 'Видалити', ()=>{
+          CUSTOM.diary = CUSTOM.diary.filter(y=>y !== t); saveCustom(); renderDtpl(); toast('Шаблон видалено');
+        });
+      });
+      x.replaceWith(n);
+    });
+    document.querySelectorAll('details.dsave summary').forEach(s=>{ s.textContent = 'Зберегти як шаблон'; });
+    return r;
+  };
+  try{ renderDtpl(); }catch(e){} }
+document.querySelectorAll('.more-dd .mmenu').forEach(menu=>{
+  if (menu.querySelector('.tpl-save-doc')) return;
+  const b = h('button', {type:'button', class:'more tpl-save-doc', role:'menuitem', title:'Зберегти заповнений огляд або щоденник як власний шаблон', onclick:()=>{
+    const dd = menu.closest('details'); if (dd) dd.open = false; tplSaveDialog();
+  }}, 'Зберегти як шаблон');
+  menu.prepend(b);
+});
+{ const hs = document.querySelector('.hvsearch');
+  if (hs && !hs.querySelector('.tpl-save-doc')) hs.append(h('button', {type:'button', class:'btn tpl-save-doc', title:'Зберегти поточний огляд як шаблон', onclick:()=>tplSaveDialog()}, 'Зберегти як шаблон')); }
 </script>
 
 </body>

@@ -101,7 +101,14 @@ function rxLine(it, dates){
 function abLines(){
   const ab = RX.filter(isAB); if (!ab.length) return '';
   let osn = val(F('dx.osn'), true); if (/^[А-ЯІЇЄҐ][а-яіїєґ’']/.test(osn)) osn = osn.charAt(0).toLowerCase() + osn.slice(1);
-  return ab.map(it=>`${it.drug} (група ${AWARE[drugInfo(it.drug).ab]} за AWaRe): показання — ${it.ind || osn || '…'}; бактеріологічне дослідження до початку — ${it.cult || '…'}; перегляд ефективності — ${it.rev ? fmtD(it.rev) : '…'}.`).join('\n');
+  return ab.map(it=>{
+    const bits = [];
+    const ind = (it.ind || osn || '').trim();
+    if (ind && ind !== '…') bits.push('показання — ' + ind);
+    if (String(it.cult || '').trim()) bits.push('бактеріологічне дослідження до початку — ' + String(it.cult).trim());
+    if (it.rev) bits.push('перегляд ефективності — ' + fmtD(it.rev));
+    return `${it.drug} (група ${AWARE[drugInfo(it.drug).ab]} за AWaRe)` + (bits.length ? ': ' + bits.join('; ') : '') + '.';
+  }).join('\n');
 }
 const AB_HEAD = 'Обґрунтування антибактеріальної терапії (наказ МОЗ України від 09.09.2026 № 1328):';
 const RXF = () => RX.filter(it=>String(it.drug || '').trim());   // порожні рядки не потрапляють у документ

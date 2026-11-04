@@ -64,7 +64,7 @@ function stDialog(p0, own, go){
     h('div', {class:'nshead'}, h('b', {}, 'Що взяти з шаблону'), h('button', {type:'button', class:'btn', onclick:close}, 'Скасувати')),
     h('p', {class:'st-lead'}, '«' + p0.name + '»' + (p0.mkh ? ' (' + p0.mkh + ')' : '') + '. Позначене — заповниться з шаблону; решта лишиться як є.'),
     h('div', {class:'st-list'}, ...boxes.map(b=>b.row)),
-    h('div', {class:'st-foot'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ const sel = boxes.filter(b=>b.cb.checked).map(b=>b.c.k); close(); if (sel.length) go(sel); }}, 'Взяти позначене')));
+    h('div', {class:'st-foot'}, h('button', {type:'button', class:'btn primary', onclick:()=>{ const sel = boxes.filter(b=>b.cb.checked).map(b=>b.c.k); close(); if (sel.length) go(sel); }}, 'Застосувати')));
   sh.addEventListener('click', e=>{ if (e.target === sh) close(); });
   sh.addEventListener('keydown', e=>{ if (e.key === 'Escape') close(); });
   document.body.append(sh); document.body.style.overflow = 'hidden';
