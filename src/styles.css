@@ -2207,3 +2207,32 @@ html.touch .nextbar .btn{padding:12px 16px}
 @media (min-width:900px){:root.ui-start #sidecol #ptline{display:none!important}}
 :root.ui-ios.ui-nonexam #undoBtn[disabled]{display:none}
 :root.ui-ios.ui-nonexam body.shell .form>.docbar:not(:has(#docSeg)):has(#undoBtn[disabled]){display:none}
+/* 0.9.3.85 — бічне меню: ширина перетягуванням, згорнуте — лише значки */
+@media (min-width:900px){
+  body.lay-B #sidecol>.sidein{position:sticky}
+  body.lay-B.sidefold #sidecol>.sidein>#sideGrip.side-grip{display:block!important}
+  .side-grip{position:absolute;top:0;right:0;width:9px;height:100%;min-height:100%;cursor:col-resize;z-index:6;touch-action:none}
+  .side-grip::after{content:"";position:absolute;top:0;bottom:0;right:0;width:2px;border-radius:1px;background:transparent;transition:background .15s}
+  .side-grip:hover::after,.side-grip:focus-visible::after,body.side-dragging .side-grip::after{background:var(--accent)}
+  .side-grip:focus-visible{outline:none}
+  body.side-dragging{cursor:col-resize;user-select:none}
+  body.lay-B.side-sized:not(.sidefold) .form{grid-template-columns:var(--sidew,232px) minmax(0,1fr)}
+  /* згорнуте — смужка значків */
+  body.lay-B.sidefold .form{grid-template-columns:60px minmax(0,1fr)}
+  body.lay-B.sidefold #sidecol>.sidein{width:60px;padding:6px 0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+  body.lay-B.sidefold #sidecol>.sidein>:not(.sidefold-btn):not(#tabs):not(#sideGrip){display:none!important}
+  body.lay-B.sidefold #sidecol>.sidein>#tabs{display:flex!important;padding:0 6px 8px}
+  body.lay-B.sidefold .sidefold-btn{width:48px;min-height:32px;margin:0 6px 6px;padding:4px;font-size:15px}
+  body.lay-B.sidefold .sidefold-btn span{writing-mode:horizontal-tb;transform:none}
+  :root body.lay-B.sidefold #sidecol #tabs .tgl{font-size:0;padding:4px 0 2px;height:9px;display:block;border-top:1px solid var(--line);margin:4px 6px 0}
+  :root body.lay-B.sidefold #sidecol #tabs .tgrp:first-child .tgl{border-top:0}
+  :root body.lay-B.sidefold #sidecol #tabs .tab,:root body.lay-B.sidefold #sidecol #tabs .tab-act{font-size:0;justify-content:center;padding:6px 0;gap:0;position:relative;width:48px;min-height:36px}
+  :root body.lay-B.sidefold #sidecol #tabs .tab::before,:root body.lay-B.sidefold #sidecol #tabs .tab-act::before{content:attr(data-ic);display:inline-block;font-size:18px;line-height:1}
+    :root body.lay-B.sidefold #sidecol #tabs .tab .dot{position:absolute;right:5px;top:5px;width:8px!important;height:8px!important;flex:none;margin:0;order:0;border-width:0!important;box-shadow:none!important}
+  :root body.lay-B.sidefold #sidecol #tabs .tab:not(.filled):not(.cw):not(.autof) .dot{visibility:hidden}
+  :root body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"] .dot{visibility:hidden}
+  :root body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft)}
+  :root.ui-ios body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"]{background:var(--fill)}
+  :root body.lay-B.sidefold #sidecol #tabs .tab.autof:not(.filled) .dot,:root body.lay-B.sidefold #sidecol #tabs .tab.cw .dot{background:var(--flag)!important}
+  :root body.lay-B.sidefold #sidecol #tabs .tab.filled:not(.cw) .dot{background:var(--ok)!important}
+}
