@@ -153,6 +153,7 @@
   "672-side-resize.js",
   "673-storage-guards.js",
   "674-templates-ux.js",
-  "674-h24-import.js"
+  "674-h24-import.js",
+  "675-see-edit.js"
  ]
 }

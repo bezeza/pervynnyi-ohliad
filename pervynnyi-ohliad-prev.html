@@ -2278,12 +2278,32 @@ html.touch .nextbar .btn{padding:12px 16px}
   :root body.lay-B.sidefold #sidecol #tabs .tab.autof:not(.filled) .dot,:root body.lay-B.sidefold #sidecol #tabs .tab.cw .dot{background:var(--flag)!important}
   :root body.lay-B.sidefold #sidecol #tabs .tab.filled:not(.cw) .dot{background:var(--ok)!important}
 }
+
+/* 0.9.3.89 — «бачу-редагую»: фраза в документі клікабельна, віконце біля слова */
+.se{cursor:pointer;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;background-image:linear-gradient(transparent 92%, var(--accent) 92%);background-repeat:no-repeat}
+.se:hover,.se:focus-visible{background-color:var(--accent-soft);outline:1px dashed var(--accent);outline-offset:1px}
+.se-empty,.bf.empty.se,.gap.se{background-color:#FFE58A;background-image:none}
+.see-pop{position:fixed;z-index:70;background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.18);padding:8px;max-width:min(340px,calc(100vw - 16px));max-height:min(320px,calc(100vh - 16px));display:flex;flex-direction:column;gap:6px;font:15px/1.35 var(--f-ui,system-ui,sans-serif)}
+.see-pop .see-h{display:flex;align-items:center;gap:8px;font-weight:650;font-size:13px}
+.see-pop .see-h button{margin-left:auto;border:0;background:transparent;color:inherit;cursor:pointer;min-width:44px;min-height:36px}
+.see-list{overflow:auto;display:flex;flex-direction:column;gap:4px;min-height:0}
+.see-opt{text-align:left;border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:10px;padding:8px 10px;min-height:44px;font:inherit;cursor:pointer;touch-action:manipulation}
+.see-opt.on,.see-opt[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.see-own{display:flex;gap:6px}
+.see-own input{flex:1;min-width:0;min-height:44px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+.see-own button,.see-nums button{min-height:44px;padding:8px 12px;border:0;border-radius:10px;background:var(--accent);color:var(--on-accent,#fff);font:inherit;cursor:pointer}
+.see-nums{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.see-nums input{width:5em;min-height:44px;text-align:center;font:inherit;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+.see-find{min-height:40px;width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+/* окреме вікно (⧉) — там клік відкриває редактор рядка, як і раніше */
+.popwin .se{cursor:inherit;background:none!important;outline:0!important}
+@media print{.se,.se-empty,.bf.empty.se{background:transparent!important;outline:0!important;background-image:none!important}.see-pop{display:none!important}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.87 від 04.11.2026">v0.9.3.87 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.88 від 04.11.2026">v0.9.3.88 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4433,8 +4453,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.87', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.88', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.88', '04.11.2026', 'імпорт з МІС Health24: на сторінці пацієнта кнопка «→ в Первинний огляд» лише читає екран (ПІБ, дату народження, стать, епізоди, діагнози, алергії й ліки) і кладе JSON у буфер — без натискань «Зберегти», «Підписати», «Надіслати» і без мережі; у програмі «Імпорт з H24» показує, що буде заповнено, і після підтвердження створює картку з діагнозом і кодом МКХ-10. Поруч — спокійніший вигляд МІС на комп’ютері (стиль для Stylus або скрипт). Дані лишаються в браузері'],
   ['0.9.3.87', '04.11.2026', 'шаблони: список своїх шаблонів із пошуком, одна кнопка «Застосувати», «Перейменувати» і підтвердження перед видаленням; «Зберегти як шаблон» — з огляду (меню «⋯» і біля пошуку хвороб) і з щоденника; видалений свій варіант можна додати знову; порожнє поле й саме лише «…» не потрапляють у текст, у обґрунтуванні антибіотика не друкується незаповнений бакпосів і дата перегляду'],
   ['0.9.3.86', '04.11.2026', 'збереження: з PIN у папці не лишається відкритий файл пацієнта; видалений із PIN не повертається; папка не губить останній запис і сама не вважається резервною копією (нагадування гасне лише після денної копії); старіший файл не затирає новішу картку; друге вікно не перезаписує новіший запис; кошик не оживає зі старого сховища; чужа розмітка у файлі пацієнта не виконується; запис у файл не стирає попередній, доки новий не записаний до кінця; без мережі сайт не показує сторінку помилки замість збереженої програми'],
   ['0.9.3.85', '04.11.2026', 'бічне меню: ширину змінюють, перетягуючи праву межу мишкою (180–380 px; стрілками — коли межа у фокусі); стягнули вузько або «« Лише значки» — меню стає смужкою значків (назва розділу — при наведенні, кольорова крапка — стан розділу); подвійний клік по межі — звичайна ширина; запам’ятовується'],
@@ -20427,6 +20448,541 @@ document.querySelectorAll('.more-dd .mmenu').forEach(menu=>{
 });
 { const hs = document.querySelector('.hvsearch');
   if (hs && !hs.querySelector('.tpl-save-doc')) hs.append(h('button', {type:'button', class:'btn tpl-save-doc', title:'Зберегти поточний огляд як шаблон', onclick:()=>tplSaveDialog()}, 'Зберегти як шаблон')); }
+/* ===== Імпорт з H24: JSON з буфера (скрипт «→ в Первинний огляд») → підтвердження → нова картка =====
+   Лише те, що лікар бачить у вікні і підтверджує. У мережу нічого не йде.
+   h24ImportValidate / h24ImportPlan — без DOM, їх перевіряють тести. */
+function h24ImpPad(n){ return String(n).padStart(2, '0'); }
+function h24ImpValidDate(y, m, d){
+  y = +y; m = +m; d = +d;
+  if (!(y >= 1900 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31)) return '';
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) return '';
+  return y + '-' + h24ImpPad(m) + '-' + h24ImpPad(d);
+}
+function h24ImpDate(s){
+  const t = String(s || '').trim();
+  if (!t) return '';
+  let m = t.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (m) return h24ImpValidDate(m[1], m[2], m[3]);
+  m = t.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})$/);
+  if (m) return h24ImpValidDate(m[3], m[2], m[1]);
+  return '';
+}
+function h24ImpFmt(iso){
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? m[3] + '.' + m[2] + '.' + m[1] : '';
+}
+function h24ImpSex(raw, name){
+  const t = String(raw || '').trim().toLowerCase();
+  if (/^(m|male|ч|чол)/.test(t) || /^ч[.,\s]/.test(t)) return 'm';
+  if (/^(f|female|ж|жін)/.test(t) || /^ж[.,\s]/.test(t)) return 'f';
+  const w = String(name || '').trim().split(/\s+/);
+  const p = (w[2] || '').toLowerCase();
+  if (/(івна|ївна|овна|евна|ична)$/.test(p)) return 'f';
+  if (/(ович|евич|йович|ич)$/.test(p)) return 'm';
+  return '';
+}
+function h24ImpIcd(code){
+  const c = String(code || '').toUpperCase().trim();
+  return /^[A-TV-Z]\d{2}(?:\.\d{1,2})?$/.test(c) ? c : '';
+}
+function h24ImpStr(v, max){
+  const s = String(v == null ? '' : v).replace(/\s+/g, ' ').trim();
+  if (!s || /[<>]/.test(s)) return '';
+  return s.slice(0, max || 300);
+}
+function h24ImpDenial(s){
+  return /немає|нема\b|відсутн|не вияв|не обтяжен|заперечу|не зазнач|невідом|без алергі/i.test(String(s || ''));
+}
+function h24ImpActive(ep){
+  const s = String(ep && ep.status || '').toLowerCase();
+  if (/закри|заверш|скасов|помилк/.test(s)) return false;
+  if (/актив|відкри|поточ|триває|в роботі|госпітал/.test(s)) return true;
+  return !ep.end;
+}
+function h24ImportValidate(input){
+  let raw = input;
+  if (typeof raw === 'string'){
+    const t = raw.replace(/^\uFEFF/, '').trim();
+    if (!t) return {ok:false, error:'Буфер порожній. На сторінці пацієнта в МІС натисніть «→ в Первинний огляд».'};
+    try { raw = JSON.parse(t); }
+    catch (e){
+      const a = t.indexOf('{'), b = t.lastIndexOf('}');
+      if (a >= 0 && b > a){ try { raw = JSON.parse(t.slice(a, b + 1)); } catch (e2){ raw = null; } }
+      else raw = null;
+    }
+  }
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {ok:false, error:'У буфері не JSON з H24. Для короткого рядка ПІБ є кнопка «⇩ З МІС».'};
+  if (raw.source !== 'h24') return {ok:false, error:'Це не дані з H24 (немає позначки source: h24).'};
+  if (+raw.version !== 1) return {ok:false, error:'Ця версія програми читає лише формат H24 версії 1.'};
+  const p = raw.patient;
+  if (!p || typeof p !== 'object') return {ok:false, error:'У JSON немає блока пацієнта.'};
+  const fullName = h24ImpStr(p.fullName, 120);
+  if (!fullName || !/[А-ЯІЇЄҐа-яіїєґA-Za-z]{2}/.test(fullName)) return {ok:false, error:'Немає ПІБ — імпорт зупинено, щоб не створити порожню картку.'};
+  let birth = '';
+  if (p.birthDate != null && String(p.birthDate).trim()){
+    birth = h24ImpDate(p.birthDate);
+    if (!birth) return {ok:false, error:'Дата народження не читається: ' + h24ImpStr(p.birthDate, 40)};
+  }
+  const sex = h24ImpSex(p.sex, fullName);
+  const row = (it, withRole) => {
+    if (!it || typeof it !== 'object') return null;
+    const code = h24ImpIcd(it.code);
+    let name = h24ImpStr(it.name, 300);
+    if (code && name) name = name.replace(new RegExp('^' + code + '\\b\\s*', 'i'), '').trim();
+    if (!code && !name) return null;
+    const o = {code, name};
+    if (withRole) o.role = h24ImpStr(it.role, 80);
+    else { o.start = h24ImpDate(it.start); o.end = h24ImpDate(it.end); o.status = h24ImpStr(it.status, 80); }
+    return o;
+  };
+  const list = (arr, withRole) => {
+    if (arr == null) return [];
+    if (!Array.isArray(arr)) return null;
+    return arr.slice(0, 40).map(it => row(it, withRole)).filter(Boolean);
+  };
+  const episodes = list(raw.episodes, false);
+  const diagnoses = list(raw.diagnoses, true);
+  if (!episodes || !diagnoses) return {ok:false, error:'Епізоди або діагнози мають бути списком.'};
+  const strings = arr => {
+    if (arr == null) return [];
+    if (!Array.isArray(arr)) return null;
+    return arr.slice(0, 40).map(s => h24ImpStr(s, 300)).filter(Boolean);
+  };
+  const allergies = strings(raw.allergies);
+  const medications = strings(raw.medications);
+  if (!allergies || !medications) return {ok:false, error:'Алергії або ліки мають бути списком рядків.'};
+  return {ok:true, data:{
+    source:'h24', version:1, capturedAt: typeof raw.capturedAt === 'string' ? raw.capturedAt.slice(0, 40) : '',
+    patient:{fullName, birthDate:birth, sex},
+    episodes, diagnoses, allergies, medications
+  }};
+}
+function h24ImportPick(data){
+  const diags = (data.diagnoses || []).filter(d => d && (d.code || d.name));
+  if (diags.length){
+    const primary = diags.find(d => /основ/i.test(d.role || '')) || diags[0];
+    return {main:primary, rest:diags.filter(d => d !== primary), source:'diagnosis'};
+  }
+  const eps = (data.episodes || []).filter(e => e && (e.code || e.name));
+  const active = eps.filter(h24ImpActive);
+  const pool = active.length ? active : eps;
+  const sorted = pool.slice().sort((a, b) => String(b.start || '').localeCompare(String(a.start || '')));
+  return {main:sorted[0] || null, rest:[], source:sorted[0] ? 'episode' : ''};
+}
+function h24ImpDxText(d){
+  if (!d) return '';
+  if (d.name && d.code) return d.name + ' (' + d.code + ')';
+  return d.name || d.code || '';
+}
+function h24ImportPlan(data){
+  const pick = h24ImportPick(data);
+  const p = data.patient || {};
+  const main = pick.main;
+  const sup = pick.rest.map(h24ImpDxText).filter(Boolean).join('; ');
+  const rawA = data.allergies || [];
+  const realA = rawA.filter(s => !h24ImpDenial(s));
+  let allergyMode = '', allergyText = '';
+  if (realA.length){ allergyMode = 'has'; allergyText = realA.join('; '); }
+  else if (rawA.length) allergyMode = 'none';
+  const meds = data.medications || [];
+  const medsLine = meds.length ? 'Постійно приймає: ' + meds.join('; ') + '.' : '';
+  const dxShown = main ? (h24ImpDxText(main) || 'на екрані не видно') : 'на екрані не видно';
+  const lines = [
+    ['ПІБ', p.fullName || ''],
+    ['Дата народження', p.birthDate ? h24ImpFmt(p.birthDate) : 'на екрані не видно'],
+    ['Стать', p.sex === 'm' ? 'чоловік' : p.sex === 'f' ? 'жінка' : 'на екрані не видно'],
+    ['Діагноз', dxShown + (pick.source === 'episode' ? ' — з активного епізоду' : '')],
+    ['Код МКХ-10', (main && main.code) || 'на екрані не видно'],
+  ];
+  if (sup) lines.push(['Супутні', sup]);
+  if (allergyMode === 'has') lines.push(['Алергії', allergyText]);
+  else if (allergyMode === 'none') lines.push(['Алергії', 'не обтяжений']);
+  else lines.push(['Алергії', 'на екрані не видно — поле не чіпаємо']);
+  lines.push(medsLine ? ['Ліки', medsLine] : ['Ліки', 'на екрані не видно — поле не чіпаємо']);
+  lines.push(['Епізоди на екрані', String((data.episodes || []).length)]);
+  return {
+    ok:true, pib:p.fullName || '', dob:p.birthDate || '', sex:p.sex || '',
+    dxName:(main && main.name) || '', dxCode:(main && main.code) || '', sup, allergyMode, allergyText, medsLine,
+    source:pick.source, lines
+  };
+}
+function h24ImportSame(plan){
+  let sameId = '', sameOpen = false;
+  try {
+    const st = loadStore();
+    sameId = Object.keys(st).find(id => st[id] && st[id].name === plan.pib && (!plan.dob || !st[id].dob || st[id].dob === plan.dob)) || '';
+    sameOpen = mv('pib') === plan.pib && (!plan.dob || !mv('dob') || mv('dob') === plan.dob);
+  } catch (e) {}
+  return {sameId, existing: !!(sameId || sameOpen)};
+}
+function h24ImportDescribe(data){
+  const plan = h24ImportPlan(data);
+  const same = h24ImportSame(plan);
+  plan.mode = same.existing ? 'existing' : 'new';
+  plan.note = same.existing
+    ? 'Такий пацієнт уже є — відкриємо його картку і допишемо лише порожні поля.'
+    : 'Буде створено нового пацієнта й заповнено первинний огляд.';
+  try {
+    if (same.existing){
+      const osn = F('dx.osn');
+      if (osn && osn.el && osn.el.value.trim()){
+        plan.dxLocked = true;
+        plan.lines = plan.lines.map(([k, v]) => k === 'Діагноз' || k === 'Код МКХ-10' ? [k, v + ' — у картці вже є, не замінюємо'] : [k, v]);
+      }
+    }
+  } catch (e) {}
+  return plan;
+}
+function h24SetChoice(fid, text){
+  const f = F(fid);
+  if (!f || f.type !== 'sel' || !f.el || f.el.value !== '') return false;
+  const i = f.opts.findIndex(o => O(o).t === text || O(o).l === text);
+  if (i < 0) return false;
+  f.el.value = String(i);
+  f.autoSet = false;
+  try { mark(f.el, f); } catch (e) {}
+  return true;
+}
+function h24ImportApply(data){
+  const v = data && data.source === 'h24' && data.patient ? {ok:true, data} : h24ImportValidate(data);
+  if (!v.ok) return v;
+  const plan = h24ImportPlan(v.data);
+  const same = h24ImportSame(plan);
+  if (same.sameId && typeof PID !== 'undefined' && same.sameId !== PID){ try { openPatient(same.sameId); } catch (e) {} }
+  else if (!same.existing && (mv('pib') || (typeof PID !== 'undefined' && PID))){ try { newPatient(); } catch (e) {} }
+  else { try { UST.dismissed = true; } catch (e) {} }
+  const put = (id, value, overwrite) => {
+    const e = document.getElementById(id);
+    if (!e || value == null || value === '') return;
+    if (!overwrite && String(e.value || '').trim()) return;
+    e.value = value;
+    e.dispatchEvent(new Event('input', {bubbles:true}));
+  };
+  put('meta_pib', plan.pib, !same.existing);
+  put('meta_dob', plan.dob, !same.existing);
+  if (plan.sex && (!same.existing || !sex)){ try { sexSet(plan.sex, false); } catch (e) {} }
+  try {
+    const osn = F('dx.osn'), mkh = F('dx.mkh'), sup = F('dx.supd');
+    if (osn && plan.dxName && (!same.existing || !osn.el.value.trim())) osn.el.value = plan.dxName;
+    if (mkh && plan.dxCode && (!same.existing || !mkh.el.value.trim())) mkh.el.value = plan.dxCode;
+    if (sup && plan.sup && !sup.el.value.trim()) sup.el.value = plan.sup;
+  } catch (e) {}
+  try {
+    if (plan.allergyMode === 'none') h24SetChoice('vitae.alerg', 'Алергологічний анамнез не обтяжений');
+    else if (plan.allergyMode === 'has'){
+      h24SetChoice('vitae.alerg', 'Алергологічний анамнез обтяжений');
+      const x = F('vitae.alergx');
+      if (x && plan.allergyText && !x.el.value.trim()) x.el.value = plan.allergyText;
+    }
+    if (plan.medsLine){
+      const vx = F('vitae.vx');
+      if (vx && vx.el.value.indexOf(plan.medsLine) < 0){
+        const cur = vx.el.value.trim();
+        vx.el.value = cur ? cur + '\n' + plan.medsLine : plan.medsLine;
+      }
+    }
+  } catch (e) {}
+  try { calcAge(); } catch (e) {}
+  try { update(); } catch (e) {}
+  try { savePatient(true); } catch (e) {}
+  try { renderPtBar(); } catch (e) {}
+  try { const i = TABS.findIndex(t => t.id === 'meta'); if (i >= 0) show(i); } catch (e) {}
+  try { if (typeof UST !== 'undefined'){ UST.dismissed = true; stApply(); } } catch (e) {}
+  try { toast('З H24: ' + plan.pib, 2800); } catch (e) {}
+  return plan;
+}
+function h24ImportDialog(state){
+  const old = document.getElementById('h24ImportDlg'); if (old) old.remove();
+  state = state || {};
+  const close = () => { box.remove(); document.removeEventListener('keydown', onKey); };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  let body, actions;
+  if (state.data){
+    const plan = h24ImportDescribe(state.data);
+    body = h('div', {},
+      h('p', {class:'chips-hint'}, plan.note + ' Дані лишаються в цьому браузері.'),
+      h('div', {}, ...plan.lines.map(([k, v]) => h('div', {style:'display:flex;gap:10px;margin:4px 0;align-items:baseline'},
+        h('b', {style:'min-width:11.5em;flex:none'}, k), h('span', {}, v)))));
+    actions = h('div', {class:'acts2', style:'margin-top:12px'},
+      h('button', {type:'button', class:'btn primary', onclick:()=>{ h24ImportApply(state.data); close(); }}, 'Заповнити'),
+      h('button', {type:'button', class:'btn', onclick:close}, 'Скасувати'));
+  } else {
+    const ta = h('textarea', {id:'h24ImportPaste', rows:'8', style:'width:100%;margin-top:8px', 'aria-label':'JSON з H24', placeholder:'Вставте сюди JSON з кнопки «→ в Первинний огляд»'});
+    if (state.draft) ta.value = state.draft;
+    const err = h('p', {class:'chips-hint', style:'color:var(--warn, #8a5a00)'}, state.error || 'Вставте JSON, скопійований у МІС.');
+    body = h('div', {}, err, ta);
+    actions = h('div', {class:'acts2', style:'margin-top:12px'},
+      h('button', {type:'button', class:'btn primary', onclick:()=>{
+        const v = h24ImportValidate(ta.value);
+        if (!v.ok){ err.textContent = v.error; return; }
+        h24ImportDialog({data:v.data});
+      }}, 'Перевірити'),
+      h('button', {type:'button', class:'btn', onclick:close}, 'Скасувати'));
+  }
+  const box = h('div', {id:'h24ImportDlg', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-label':'Імпорт з H24'},
+    h('div', {class:'mcard'},
+      h('div', {class:'ph'}, h('h2', {}, 'Імпорт з H24'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
+      body, actions));
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  document.addEventListener('keydown', onKey);
+  document.body.append(box);
+  const focus = box.querySelector(state.data ? '.btn.primary' : 'textarea');
+  if (focus) setTimeout(()=>{ try { focus.focus(); } catch (e) {} }, 0);
+}
+function h24ImportOpen(){
+  const paste = msg => h24ImportDialog({error:msg || 'Браузер не дав прочитати буфер. Вставте JSON у поле нижче.'});
+  let read = null;
+  try { read = navigator.clipboard && navigator.clipboard.readText ? navigator.clipboard.readText() : null; } catch (e) { read = null; }
+  if (!read || typeof read.then !== 'function'){ paste(); return; }
+  read.then(text => {
+    const v = h24ImportValidate(text);
+    if (v.ok) h24ImportDialog({data:v.data});
+    else h24ImportDialog({error:v.error, draft:String(text || '').slice(0, 20000)});
+  }, () => paste());
+}
+function h24ImportButton(){
+  return h('button', {type:'button', class:'btn', 'data-h24-import':'1', title:'Вставити JSON, скопійований кнопкою «→ в Первинний огляд» у МІС. Спершу покаже, що буде заповнено.', onclick:h24ImportOpen}, 'Імпорт з H24');
+}
+function h24ImportPlace(){
+  const mis = document.getElementById('misIn');
+  if (mis && !mis.querySelector('[data-h24-import]')) mis.append(h24ImportButton());
+  document.querySelectorAll('.ust-acts').forEach(acts => { if (!acts.querySelector('[data-h24-import]')) acts.append(h24ImportButton()); });
+}
+function h24ImportInstall(){
+  h24ImportPlace();
+  setTimeout(h24ImportPlace, 0);
+  setTimeout(h24ImportPlace, 400);
+  try {
+    if (typeof stBuild === 'function' && !stBuild._h24){
+      const orig = stBuild;
+      const wrapped = function(){ const r = orig.apply(this, arguments); try { h24ImportPlace(); } catch (e) {} return r; };
+      wrapped._h24 = 1;
+      stBuild = wrapped;
+    }
+  } catch (e) {}
+}
+try { if (typeof document !== 'undefined' && document.getElementById && document.getElementById('meta_pib')) h24ImportInstall(); } catch (e) {}
+/* 0.9.3.89 — «Бачу — редагую».
+   Будується на вже наявних qeField/qeOpen (клік по фразі в тексті, 619) і peClick (клік по рядку бланка, 636):
+   віконце лишається біля самого слова і показує варіанти цього поля, а не всю форму й не весь рядок.
+   Свій варіант для списку пишеться в приховане поле *_see і потрапляє в документ через val(). */
+const SE_OWN = new Map();
+/* місця, де вже є свій редактор (щоденник, лабораторія, анестезія тощо) — їх не чіпаємо */
+const SE_SKIP = '.bdi, [data-fld], [data-diary-key], [data-an], .bobk, [contenteditable="true"], .pe-box';
+let SE_LOCK = 0, SE_POP = null, SE_UNDO = null;
+function seSec(f){ return SECTIONS.find(s=>s.fields.includes(f)); }
+function seKey(f){ const s = seSec(f); return s ? s.id + '.' + f.id : ''; }
+function seResolve(key){
+  if (!key) return null;
+  if (String(key).includes('.')){ const f = F(key); if (f && f.wrapEl) return {f}; }
+  const el = document.getElementById(key);
+  if (el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)){
+    const lb = document.querySelector('label[for="' + key + '"]');
+    return {src:el, label: lb ? lb.textContent.trim() : ''};
+  }
+  return null;
+}
+function seOwnBox(f){
+  let t = SE_OWN.get(f); if (t) return t;
+  const s = seSec(f); if (!s || !f.wrapEl) return null;
+  t = h('textarea', {id:s.id + '_' + f.id + '_see', hidden:'', rows:'2', 'aria-label':'Свій варіант: ' + f.label});
+  f.wrapEl.append(t); SE_OWN.set(f, t); return t;
+}
+{ const x0 = val; val = function(f){ const t = SE_OWN.get(f); if (t && String(t.value || '').trim()) return String(t.value).trim(); return x0.apply(this, arguments); }; }
+SECTIONS.forEach(s=>s.fields.forEach(f=>{
+  if (f.type === 'sel' && f.el) f.el.addEventListener('change', ()=>{ if (SE_LOCK || RESTORING) return; const t = SE_OWN.get(f); if (t && f.el.value !== '') t.value = ''; }, true);
+}));
+{ const r0 = restore; restore = function(S){
+  try{
+    if (S && S.f) for (const id in S.f) if (/_see$/.test(id) && S.f[id]){
+      const m = id.match(/^([a-z0-9]+)_([a-z0-9]+)_see$/); const f = m && F(m[1] + '.' + m[2]); if (f) seOwnBox(f);
+    }
+  }catch(e){}
+  return r0.apply(this, arguments);
+}; }
+
+function seOnDoc(f){
+  const s = seSec(f); if (!s) return false;
+  if (s.docs && !s.docs.includes(DOC)) return false;
+  if (f.docs && !f.docs.includes(DOC)) return false;
+  if (f.only && f.only !== MODE) return false;
+  return true;
+}
+function seBits(f){
+  if (!seOnDoc(f)) return [];
+  const out = [];
+  const own = SE_OWN.get(f), ot = own && String(own.value || '').trim();
+  if (ot){ out.push(g(ot)); return out.filter(t=>t && t.length >= 4); }
+  if (f.type === 'sel' && f.el && f.opts && f.el.value !== ''){ const o = O(f.opts[+f.el.value] || ''); out.push(g(o.t), g(o.l)); }
+  else if (f.type === 'multi' && f.opts && f.chips) f.chips.forEach((c,i)=>{ if (c.getAttribute('aria-pressed') === 'true'){ const o = O(f.opts[i]); out.push(g(o.t), g(o.l)); } });
+  else { let v = ''; try{ v = val(f); }catch(e){} v = v ? g(String(v)) : ''; if (v && v.length <= 80) out.push(v); }
+  return out.filter(t=>t && t.length >= 4);
+}
+const SE_W = /[\p{L}\p{N}]/u;
+function seFind(text, t){
+  let i = text.indexOf(t);
+  while (i >= 0){
+    const a = i ? text[i - 1] : '', b = text[i + t.length] || '';
+    if (!(a && SE_W.test(a) && SE_W.test(t[0])) && !(b && SE_W.test(b) && SE_W.test(t[t.length - 1]))) return i;
+    i = text.indexOf(t, i + 1);
+  }
+  return -1;
+}
+function seSplit(node, jobs){
+  const text = node.nodeValue; if (!text) return;
+  let best = null;
+  for (const j of jobs){ const i = seFind(text, j.t); if (i < 0) continue; if (!best || j.t.length > best.t.length || (j.t.length === best.t.length && i < best.i)) best = {t:j.t, id:j.id, i}; }
+  if (!best) return;
+  const frag = document.createDocumentFragment();
+  if (best.i) frag.append(text.slice(0, best.i));
+  const sp = document.createElement('span');
+  sp.className = 'se'; sp.dataset.se = best.id; sp.tabIndex = 0; sp.setAttribute('role', 'button');
+  sp.title = 'Змінити цей фрагмент'; sp.textContent = best.t; frag.append(sp);
+  const rest = text.slice(best.i + best.t.length);
+  const restNode = rest ? document.createTextNode(rest) : null;
+  if (restNode) frag.append(restNode);
+  node.replaceWith(frag);
+  if (restNode) seSplit(restNode, jobs);
+}
+function seMark(root){
+  if (!root) return;
+  const jobs = [];
+  SECTIONS.forEach(s=>s.fields.forEach(f=>{ if (f.type === 'hdr' || f.noOut || f.headOnly || !f.wrapEl) return; seBits(f).forEach(t=>jobs.push({t, id:s.id + '.' + f.id})); }));
+  const ids = new Map(); jobs.forEach(j=>{ if (!ids.has(j.t)) ids.set(j.t, new Set()); ids.get(j.t).add(j.id); });
+  for (let i = jobs.length - 1; i >= 0; i--) if (ids.get(jobs[i].t).size > 1) jobs.splice(i, 1);   /* той самий текст у двох полях — не вгадуємо */
+  jobs.sort((a,b)=>b.t.length - a.t.length);
+  const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes = [];
+  while (tw.nextNode()){ const n = tw.currentNode, p = n.parentElement; if (!n.nodeValue || !n.nodeValue.trim()) continue; if (p && p.closest('.se, .gap, .see-pop, script, style, .gapbar, .blankbar, ' + SE_SKIP)) continue; nodes.push(n); }
+  nodes.forEach(n=>seSplit(n, jobs));
+  root.querySelectorAll('.bf[data-dsel]').forEach(el=>{
+    const key = el.dataset.dsel;
+    if (!seResolve(key) || el.closest(SE_SKIP)) return;
+    if (el.closest('.brow, .bt, .bt2, .blines')) el.classList.add('se');
+    if (!el.dataset.se) el.dataset.se = key;
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+    if (!el.title) el.title = 'Змінити цей фрагмент';
+    if (el.classList.contains('empty') || !el.textContent.replace(/\u00a0/g, '').trim()) el.classList.add('se-empty');
+  });
+}
+{ const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ if (seLive()) seMark(document.getElementById('paper')); }catch(e){} return r; }; }
+
+function seClose(){ if (SE_POP){ SE_POP.remove(); SE_POP = null; } }
+function sePlace(pop, anchor){
+  const r = anchor.getBoundingClientRect();
+  const w = Math.min(340, window.innerWidth - 16);
+  pop.style.position = 'fixed';
+  pop.style.width = w + 'px';
+  let left = r.left;
+  if (left + w > window.innerWidth - 8) left = Math.max(8, window.innerWidth - w - 8);
+  pop.style.left = left + 'px';
+  pop.style.top = '0px';
+  const h = pop.offsetHeight;
+  let top = r.bottom + 6;
+  if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
+  pop.style.top = top + 'px';
+}
+function seOpts(f){
+  if (f.type === 'sel' && f.el && f.opts) return [...f.el.options].filter(o=>o.value !== '').map(o=>({label:o.textContent.trim(), value:o.value, on:o.value === f.el.value}));
+  if (f.type === 'multi' && f.chips) return f.chips.map((c,i)=>({label:g(O(f.opts[i]).l), chip:c, on:c.getAttribute('aria-pressed') === 'true'}));
+  return [];
+}
+function sePick(f, o){
+  if (!SE_UNDO){ undoPush('фраза: ' + (f.label || '')); SE_UNDO = UNDO[UNDO.length - 1]; }
+  if (o.value != null && f.type === 'sel'){
+    SE_LOCK++; const own = SE_OWN.get(f); if (own) own.value = '';
+    f.el.value = o.value; f.el.dispatchEvent(new Event('change', {bubbles:true})); SE_LOCK--;
+    seClose(); return;
+  }
+  if (o.chip){ o.chip.click(); sePaint(); }
+}
+function seApplyOwn(hit, text){
+  const t = String(text || '').trim(); if (!t) return;
+  if (!SE_UNDO){ undoPush('свій варіант: ' + ((hit.f && hit.f.label) || hit.label || '')); SE_UNDO = UNDO[UNDO.length - 1]; }
+  if (hit.src){ hit.src.value = t; hit.src.dispatchEvent(new Event('input', {bubbles:true})); seClose(); return; }
+  const f = hit.f;
+  if (f.type === 'sel'){ const own = seOwnBox(f); if (!own) return; SE_LOCK++; own.value = t; own.dispatchEvent(new Event('input', {bubbles:true})); f.el.dispatchEvent(new Event('change', {bubbles:true})); SE_LOCK--; seClose(); return; }
+  if (f.type === 'multi'){
+    const free = seSec(f) && seSec(f).fields.find(x=>x !== f && x.el && (x.id === 'cx' || x.id === 'dod') && (x.type === 'text' || x.type === 'line'));
+    if (!free){ try{ toast('Тут свій варіант не підставляється — допишіть його у формі, у цьому розділі', 3500); }catch(e){} return; }
+    free.el.value = free.el.value.trim() ? free.el.value.trim() + ' ' + t : t; free.el.dispatchEvent(new Event('input', {bubbles:true}));
+    seClose(); return;
+  }
+  if (f.el){ f.el.value = t; f.el.dispatchEvent(new Event('input', {bubbles:true})); seClose(); }
+}
+function sePaint(){
+  const pop = SE_POP; if (!pop || !pop._hit || !pop._hit.f) return;
+  const f = pop._hit.f, opts = seOpts(f);
+  pop.querySelectorAll('.see-opt').forEach(b=>{ const o = opts[b.dataset.i]; if (!o) return; b.classList.toggle('on', !!o.on); b.setAttribute('aria-selected', o.on ? 'true' : 'false'); });
+  const u = pop.querySelector('.see-undo'); if (u) u.disabled = !SE_UNDO || UNDO[UNDO.length - 1] !== SE_UNDO;
+}
+function seOpen(hit, anchor){
+  if (!hit || !anchor) return false;
+  seClose(); try{ qeClose(); }catch(e){}
+  SE_UNDO = null;
+  const f = hit.f, label = (f && f.label) || hit.label || 'Правка';
+  const pop = h('div', {class:'see-pop', role:'dialog', 'aria-label':'Змінити: ' + label});
+  pop._hit = hit; pop._anchor = anchor;
+  const head = h('div', {class:'see-h'}, label, h('button', {type:'button', class:'see-undo', disabled:'', title:'Скасувати', onclick:()=>{ if (!SE_UNDO || UNDO[UNDO.length - 1] !== SE_UNDO) return; const a = anchor; seClose(); undoLast(); if (a.isConnected) seOpen(hit, a); }}, '↶'), h('button', {type:'button', 'aria-label':'Закрити', title:'Закрити (Esc)', onclick:seClose}, '✕'));
+  pop.append(head);
+  if (f && f.type === 'num' && f.inputs){
+    const row = h('div', {class:'see-nums'});
+    f.inputs.forEach(src=>{
+      const i = h('input', {inputmode:'decimal', value:src.value, 'aria-label':src.getAttribute('aria-label') || f.label});
+      i.addEventListener('input', ()=>{ if (!SE_UNDO){ undoPush('показник: ' + f.label); SE_UNDO = UNDO[UNDO.length - 1]; } src.value = i.value; src.dispatchEvent(new Event('input', {bubbles:true})); });
+      row.append(i, h('span', {}, (src.nextElementSibling && src.nextElementSibling.textContent) || ''));
+    });
+    pop.append(row);
+  } else if (f){
+    const opts = seOpts(f);
+    const many = opts.length > 12;
+    let q = null;
+    if (many){ q = h('input', {type:'search', class:'see-find', placeholder:'Знайти варіант', 'aria-label':'Знайти варіант'}); pop.append(q); }
+    const list = h('div', {class:'see-list', role:'listbox'});
+    opts.forEach((o,i)=>{
+      const b = h('button', {type:'button', class:'see-opt' + (o.on ? ' on' : ''), role:'option', 'aria-selected':o.on ? 'true' : 'false', 'data-i':String(i)});
+      b.textContent = o.label;
+      b.addEventListener('click', ()=>sePick(f, o));
+      list.append(b);
+    });
+    pop.append(list);
+    if (q) q.addEventListener('input', ()=>{ const s = q.value.trim().toLowerCase(); list.querySelectorAll('.see-opt').forEach(b=>{ b.hidden = s && !b.textContent.toLowerCase().includes(s); }); });
+  }
+  const own = h('input', {type:'text', placeholder:'Свій варіант', 'aria-label':'Свій варіант'});
+  const go = ()=>seApplyOwn(hit, own.value);
+  own.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+  pop.append(h('div', {class:'see-own'}, own, h('button', {type:'button', onclick:go}, 'Замінити')));
+  pop.addEventListener('keydown', e=>{
+    const bs = [...pop.querySelectorAll('.see-opt')].filter(b=>!b.hidden);
+    if (e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); seClose(); return; }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); if (!bs.length) return;
+      let i = bs.findIndex(b=>b === pop.ownerDocument.activeElement); i = e.key === 'ArrowDown' ? (i + 1) % bs.length : (i <= 0 ? bs.length - 1 : i - 1); bs[i].focus(); return; }
+    if (e.key === 'Enter' && pop.ownerDocument.activeElement && pop.ownerDocument.activeElement.classList.contains('see-opt')){ e.preventDefault(); pop.ownerDocument.activeElement.click(); }
+  });
+  document.body.append(pop); SE_POP = pop; sePlace(pop, anchor); sePaint();
+  const cur = pop.querySelector('.see-opt.on') || pop.querySelector('.see-opt') || pop.querySelector('input');
+  if (cur) cur.focus({preventScroll:true});
+  return true;
+}
+/* лише в основному вікні; окреме вікно (⧉) і режим «клік → у форму» працюють як раніше */
+function seLive(){ return PE_MODE === 'here' && DOC !== 'anes'; }
+{ const x0 = peClick; peClick = function(w, e){
+  const hit = e.target && e.target.closest && e.target.closest('span.se, .bf.se[data-dsel]');
+  if (w === window && seLive() && hit && hit.dataset.se && !hit.matches('.brow, .bt, .bt2, .blines, .bdx') && hit.closest('#paper') && !hit.closest(SE_SKIP)){
+    const item = seResolve(hit.dataset.se);
+    if (item){ e.preventDefault(); e.stopImmediatePropagation(); seOpen(item, hit); return; }
+  }
+  return x0.apply(this, arguments);
+}; }
+document.addEventListener('keydown', e=>{
+  if (!SE_POP && (e.key === 'Enter' || e.key === ' ') && seLive() && e.target && e.target.classList && e.target.classList.contains('se') && e.target.closest('#paper') && !e.target.closest(SE_SKIP)){
+    const item = seResolve(e.target.dataset.se); if (!item) return; e.preventDefault(); seOpen(item, e.target);
+  }
+}, true);
+document.addEventListener('pointerdown', e=>{ if (!SE_POP) return; if (SE_POP.contains(e.target)) return; if (e.target.closest && e.target.closest('.se')) return; seClose(); }, true);
+window.addEventListener('scroll', ()=>{ if (!SE_POP) return; let a = SE_POP._anchor; if (!a || !a.isConnected){ const k = SE_POP._hit && SE_POP._hit.f ? seKey(SE_POP._hit.f) : ''; a = k ? document.querySelector('#paper .se[data-se="' + k + '"]') : null; if (a) SE_POP._anchor = a; } if (a) sePlace(SE_POP, a); }, true);
+{ const s0 = switchDoc; switchDoc = function(){ seClose(); return s0.apply(this, arguments); }; }
 </script>
 
 </body>
