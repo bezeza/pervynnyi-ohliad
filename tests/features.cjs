@@ -1213,6 +1213,17 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     VIEW.sideFold=false; VIEW.sideW=300; renderSideFold(); const w=document.documentElement.style.getPropertyValue('--sidew')==='300px';
     VIEW.sideFold=kf; VIEW.sideW=kw; saveView(); applyView(); return JSON.stringify([g,ic,f,lab===(document.body.classList.contains('sidefold')?'»':'« Лише значки'),w]); })()`);
   ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true]', r); }
+// Задача 18: спільний результат checkDoc() для всіх підказок одного update().
+{
+  const before = w.eval('PO18_CHECK_CACHE.executions');
+  w.eval('update()');
+  const runs = w.eval('PO18_CHECK_CACHE.executions') - before;
+  ok('Перевірка повноти обчислюється один раз за цикл оновлення', runs === 1, String(runs));
+  const before2 = w.eval('PO18_CHECK_CACHE.executions');
+  w.eval('update()');
+  const runs2 = w.eval('PO18_CHECK_CACHE.executions') - before2;
+  ok('Результат перевірки не кешується між різними оновленнями', runs2 === 1, String(runs2));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
