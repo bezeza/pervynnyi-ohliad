@@ -1183,7 +1183,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const btn=!!document.getElementById('cmdkBtn')&&!document.getElementById('cmdkBtn').hidden; const fit=typeof outFit==='function'&&typeof ptPlace==='function';
     uiStyleSet('classic'); const back=document.getElementById('cmdkBtn').hidden&&!document.documentElement.classList.contains('pt-side')&&!document.querySelector('.addrbox.addr-c'); uiStyleSet('ios');
     return JSON.stringify([ok1,ok2,btn,fit,back]); })()`);
-  ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true]', r); }
+  ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ const kD=DOC, kB=BLANK; switchDoc('kons'); BLANK=true; const ok1=blankOK()&&blankOn();
     const pg=b028(); const t=pg[0].textContent; const items=['№ 028/о','Консультаційний висновок спеціаліста','1. Найменування закладу охорони здоров’я, який направив','2. Прізвище, ім’я, по батькові пацієнта','3. Дата народження','(число, місяць, рік)','4. Спеціальність, прізвище','5. Результати лабораторного','6. Результати функціонального','7. Висновок спеціаліста','8. Рекомендації','М.П.','Лікар-консультант','Завідувач поліклініки або стаціонарного відділення','14 лютого 2012 року'].every(x=>t.includes(x));
     const empty=b028(true)[0]; const noPat=!(mv('pib')&&empty.textContent.includes(mv('pib'))); const inPack=FBLANKS.some(b=>b.k==='k028'&&b.html.includes('028/о'));
@@ -1227,9 +1227,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 // Задача 18: show() не обходить усі вкладки при звичайному перемиканні.
 {
   const r=w.eval(`(()=> {
-    const oldActive=active, oldOn=OPG.on, oldFast=PO18_SHOW_FAST.enabled, oldDismiss=UST.dismissed;
+    const oldActive=active, oldOn=OPG.on, oldFast=PO18_SHOW_FAST.enabled, oldInit=PO18_SHOW_FAST.initialized, oldDismiss=UST.dismissed;
     const a=TABS.findIndex(t=>t.id==='skarhy'), b=TABS.findIndex(t=>t.id==='morbi');
-    UST.dismissed=true; OPG.on=false; PO18_SHOW_FAST.enabled=false; show(a);
+    UST.dismissed=true; OPG.on=false; PO18_SHOW_FAST.enabled=true; PO18_SHOW_FAST.initialized=false; show(a);
+    const initialSync=TABS.filter(t=>!t.panel.hidden).length===1;
     const each0=TABS.forEach;
     const count=()=>{ let n=0; TABS.forEach=function(fn){ return each0.call(this,function(...args){ n++; return fn.apply(this,args); }); }; try{ show(b); } finally{ TABS.forEach=each0; } return n; };
     const baselineVisits=count();
@@ -1238,8 +1239,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const classic=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && TABS[a].panel.hidden && TABS[b].tab.getAttribute('aria-selected')==='true';
     OPG.on=true; show(a); const visible=opSet().every(k=>!TABS[k].panel.hidden);
     OPG.on=false; show(b); const returned=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && !document.body.classList.contains('onepage');
-    OPG.on=oldOn; PO18_SHOW_FAST.enabled=oldFast; UST.dismissed=oldDismiss; show(oldActive);
-    return JSON.stringify([baselineVisits>0,optimizedVisits===0,classic,visible,returned]);
+    OPG.on=oldOn; PO18_SHOW_FAST.enabled=oldFast; PO18_SHOW_FAST.initialized=oldInit; UST.dismissed=oldDismiss; show(oldActive);
+    return JSON.stringify([initialSync,baselineVisits>0,optimizedVisits===0,classic,visible,returned]);
   })()`);
   ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true]', r);
 }
