@@ -166,7 +166,7 @@ const median = values => {
   const showOnePageOptimized = await measureShow(true, true);
   w.eval('PO18_SHOW_FAST.enabled=true; OPG.on=true; show(TABS.findIndex(t=>t.id===\'skarhy\'))');
   const paperProfile = measurePaper();
-  console.log('Порівняння update() (jsdom, синтетичний заповнений пацієнт; без часових порогів):');
+  console.log('Порівняння update(), show() і renderPaper() (jsdom, синтетичний заповнений пацієнт; без часових порогів):');
   console.log(JSON.stringify({baseline, optimized, showBaseline, showOptimized, showOnePageBaseline, showOnePageOptimized, paperProfile, consoleErrors:errors.length}, null, 2));
   if(optimized.checkDocExecutions !== optimized.updateCount) throw new Error('Після оптимізації очікується одна фактична перевірка checkDoc на update');
   if(baseline.checkDocExecutions <= optimized.checkDocExecutions) throw new Error('Контрольний режим не підтвердив усунення повторних обчислень');
