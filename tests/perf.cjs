@@ -63,6 +63,76 @@ const median = values => {
   w.eval('renderDiaries(); renderRes(); renderRx(); update()');
   if (!doc.getElementById('out').textContent.trim()) throw new Error('Не згенеровано тестовий документ');
 
+  // Інклюзивний профіль компонентів: суми вкладених функцій не є незалежними витратами.
+  const componentNames = [
+    'checkDoc','renderCheck','copyPeekRender','progressRequired','progressRender',
+    'entryRender','progressOptional','renderTabNav','renderLive','stApply','exApply',
+    'phtRenderStrip','phtRenderBar','renderPaper','fillSheet','markGaps'
+  ];
+  const componentSamples = Object.create(null);
+  for(const name of componentNames){
+    const original = w[name];
+    if(typeof original !== 'function') continue;
+    componentSamples[name] = [];
+    w[name] = function(){
+      const t = w.performance.now();
+      try{ return original.apply(this, arguments); }
+      finally{ componentSamples[name].push(w.performance.now()-t); }
+    };
+  }
+  const clearComponents = () => Object.values(componentSamples).forEach(values=>values.length=0);
+  const componentSummary = () => {
+    const out = {};
+    for(const [name, values] of Object.entries(componentSamples)){
+      if(!values.length) continue;
+      out[name] = {
+        calls:values.length,
+        medianMs:+median(values).toFixed(2),
+        totalMs:+values.reduce((a,b)=>a+b,0).toFixed(2)
+      };
+    }
+    return out;
+  };
+  const measureShow = async () => {
+    const a = w.eval("TABS.findIndex(t=>t.id==='skarhy')");
+    const b = w.eval("TABS.findIndex(t=>t.id==='morbi')");
+    if(a < 0 || b < 0) throw new Error('Не знайдено вкладки для профілювання show()');
+    clearComponents();
+    const samples = [];
+    for(let i=0;i<8;i++){
+      const t = w.performance.now();
+      w.eval('show(' + (i%2 ? a : b) + ')');
+      samples.push(w.performance.now()-t);
+      await sleep(5); // включити відкладений renderTabNav(), запланований show()
+    }
+    return {
+      samplesMs:samples.map(x=>+x.toFixed(2)),
+      medianMs:+median(samples).toFixed(2),
+      minMs:+Math.min(...samples).toFixed(2),
+      maxMs:+Math.max(...samples).toFixed(2),
+      components:componentSummary()
+    };
+  };
+  const measurePaper = () => {
+    const was = w.eval('PAPER');
+    w.eval('PAPER=true');
+    clearComponents();
+    const samples = [];
+    for(let i=0;i<5;i++){
+      const t = w.performance.now();
+      w.eval('renderPaper()');
+      samples.push(w.performance.now()-t);
+    }
+    w.eval('PAPER=' + (was ? 'true' : 'false'));
+    w.eval('renderPaper()');
+    return {
+      samplesMs:samples.map(x=>+x.toFixed(2)),
+      medianMs:+median(samples).toFixed(2),
+      minMs:+Math.min(...samples).toFixed(2),
+      maxMs:+Math.max(...samples).toFixed(2),
+      components:componentSummary()
+    };
+  };
   const measure = enabled => {
     w.eval('PO18_CHECK_CACHE.enabled = ' + (enabled ? 'true' : 'false'));
     for(let i=0;i<5;i++) w.eval('update()');
@@ -86,8 +156,10 @@ const median = values => {
   };
   const baseline = measure(false);
   const optimized = measure(true);
+  const showProfile = await measureShow();
+  const paperProfile = measurePaper();
   console.log('Порівняння update() (jsdom, синтетичний заповнений пацієнт; без часових порогів):');
-  console.log(JSON.stringify({baseline, optimized, consoleErrors:errors.length}, null, 2));
+  console.log(JSON.stringify({baseline, optimized, showProfile, paperProfile, consoleErrors:errors.length}, null, 2));
   if(optimized.checkDocExecutions !== optimized.updateCount) throw new Error('Після оптимізації очікується одна фактична перевірка checkDoc на update');
   if(baseline.checkDocExecutions <= optimized.checkDocExecutions) throw new Error('Контрольний режим не підтвердив усунення повторних обчислень');
   if(errors.length) throw new Error('Помилки браузера: '+errors.join(' | '));
