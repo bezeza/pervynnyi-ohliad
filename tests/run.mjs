@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url)), root = path.join(here, '..');
 const quick = process.argv.includes('--quick');
-const steps = [['Збирання', 'node', [path.join(root, 'build.mjs')]], ['Основний сценарій', 'node', [path.join(here, 'full.cjs')]], ['Нові функції', 'node', [path.join(here, 'features-part.cjs')]], ['UI-сценарій пацієнта', 'node', [path.join(here, 'workflow.cjs')]], ['Збереження після перезапуску', 'node', [path.join(here, 'idb.cjs')]], ['Захист збереження', 'node', [path.join(here, 'storage-guards.cjs')]]];
+const steps = [['Збирання', 'node', [path.join(root, 'build.mjs')]], ['H24 імпорт', 'node', [path.join(here, 'h24.cjs')]], ['Основний сценарій', 'node', [path.join(here, 'full.cjs')]], ['Нові функції', 'node', [path.join(here, 'features-part.cjs')]], ['UI-сценарій пацієнта', 'node', [path.join(here, 'workflow.cjs')]], ['Збереження після перезапуску', 'node', [path.join(here, 'idb.cjs')]], ['Захист збереження', 'node', [path.join(here, 'storage-guards.cjs')]]];
 if (!quick) steps.push(['Аудит усіх хвороб', 'node', [path.join(here, 'audit.cjs')]], ['Випадкові натискання', 'node', [path.join(here, 'fuzz.cjs'), '1', '6']]);
 let bad = 0;
 for (const [name, cmd, args] of steps){
