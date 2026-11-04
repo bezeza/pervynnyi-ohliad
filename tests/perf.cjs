@@ -63,28 +63,33 @@ const median = values => {
   w.eval('renderDiaries(); renderRes(); renderRx(); update()');
   if (!doc.getElementById('out').textContent.trim()) throw new Error('Не згенеровано тестовий документ');
 
-  for(let i=0;i<5;i++) w.eval('update()');
-  const before = w.eval('PO18_CHECK_CACHE.executions');
-  const samples = [];
-  for(let i=0;i<10;i++){
-    const t = w.performance.now();
-    w.eval('update()');
-    samples.push(w.performance.now()-t);
-  }
-  const checkRuns = w.eval('PO18_CHECK_CACHE.executions') - before;
-  const rounded = samples.map(x=>+x.toFixed(2));
-  console.log('Профіль update() (jsdom, синтетичний заповнений пацієнт):');
-  console.log(JSON.stringify({
-    samplesMs:rounded,
-    medianMs:+median(samples).toFixed(2),
-    minMs:+Math.min(...samples).toFixed(2),
-    maxMs:+Math.max(...samples).toFixed(2),
-    updateCount:samples.length,
-    checkDocExecutions:checkRuns,
-    checkDocExecutionsPerUpdate:+(checkRuns/samples.length).toFixed(2),
-    consoleErrors:errors.length
-  }, null, 2));
-  if(checkRuns!==samples.length) throw new Error('Очікувалась одна фактична перевірка checkDoc на update; отримано '+checkRuns+' на '+samples.length+' оновлень');
+  const measure = enabled => {
+    w.eval('PO18_CHECK_CACHE.enabled = ' + (enabled ? 'true' : 'false'));
+    for(let i=0;i<5;i++) w.eval('update()');
+    const before = w.eval('PO18_CHECK_CACHE.executions');
+    const samples = [];
+    for(let i=0;i<10;i++){
+      const t = w.performance.now();
+      w.eval('update()');
+      samples.push(w.performance.now()-t);
+    }
+    const checkRuns = w.eval('PO18_CHECK_CACHE.executions') - before;
+    return {
+      samplesMs:samples.map(x=>+x.toFixed(2)),
+      medianMs:+median(samples).toFixed(2),
+      minMs:+Math.min(...samples).toFixed(2),
+      maxMs:+Math.max(...samples).toFixed(2),
+      updateCount:samples.length,
+      checkDocExecutions:checkRuns,
+      checkDocExecutionsPerUpdate:+(checkRuns/samples.length).toFixed(2)
+    };
+  };
+  const baseline = measure(false);
+  const optimized = measure(true);
+  console.log('Порівняння update() (jsdom, синтетичний заповнений пацієнт; без часових порогів):');
+  console.log(JSON.stringify({baseline, optimized, consoleErrors:errors.length}, null, 2));
+  if(optimized.checkDocExecutions !== optimized.updateCount) throw new Error('Після оптимізації очікується одна фактична перевірка checkDoc на update');
+  if(baseline.checkDocExecutions <= optimized.checkDocExecutions) throw new Error('Контрольний режим не підтвердив усунення повторних обчислень');
   if(errors.length) throw new Error('Помилки браузера: '+errors.join(' | '));
   dom.window.close();
 })().catch(e=>{
