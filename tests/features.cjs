@@ -1244,6 +1244,25 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   })()`);
   ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true,true]', r);
 }
+// Задача 18: повторне оновлення навігації змінює текст, а не перебудовує DOM.
+{
+  const r=w.eval(`(()=> {
+    const oldNavMode=typeof PHV!=='undefined'?PHV.nav:null;
+    if(typeof PHV!=='undefined') PHV.nav='old';
+    renderTabNav();
+    const nav=document.getElementById('tabnav'), current=nav&&nav.querySelector('.tn-cur'), arrows=nav&&[...nav.querySelectorAll('.tn-arr')];
+    renderTabNav();
+    const reused=!!current&&nav.querySelector('.tn-cur')===current&&arrows.length===2&&[...nav.querySelectorAll('.tn-arr')].every((x,i)=>x===arrows[i]);
+    const each0=TABS.forEach; let visits=0;
+    TABS.forEach=function(fn){ return each0.call(this,function(...args){ visits++; return fn.apply(this,args); }); };
+    try{ renderTabNav(); }finally{ TABS.forEach=each0; }
+    const noSweep=visits===0;
+    if(typeof PHV!=='undefined') PHV.nav=oldNavMode;
+    renderTabNav();
+    return JSON.stringify([reused,noSweep]);
+  })()`);
+  ok('Навігація: повторний рендер перевикористовує кнопки й не обходить усі вкладки', r==='[true,true]', r);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
