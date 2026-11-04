@@ -150,6 +150,7 @@
   "669-blanks-place.js",
   "670-blank-ohl.js",
   "671-ui-entry.js",
-  "672-side-resize.js"
+  "672-side-resize.js",
+  "673-perf-check-cache.js"
  ]
 }
