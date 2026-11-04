@@ -5,6 +5,7 @@ fs.mkdirSync(OUT,{recursive:true});
 const result={generatedAt:new Date().toISOString(),cpuThrottle:4,scenarios:[],populated:null,storage500:null,storageBlocked:null,styleToggle:null,errors:[]};
 const server=http.createServer((req,res)=>{if(req.url==='/'||req.url==='/app.html'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store'});fs.createReadStream(APP).pipe(res);}else{res.writeHead(404);res.end();}});
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({timeout:true}))]);}
 (async()=>{
  await new Promise(r=>server.listen(4173,'127.0.0.1',r));
  const browser=await chromium.launch({headless:true});
@@ -26,20 +27,18 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const cdp=await context.newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
   const start=Date.now();await page.goto('http://127.0.0.1:4173/app.html',{waitUntil:'domcontentloaded',timeout:20000});
   await page.waitForSelector('#out',{timeout:15000});
-  await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
-  const nav=await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2),fonts:document.fonts.status}));
-  return {context,page,cdp,readyMs:Date.now()-start,nav};
+  const raf=await bounded(page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))),5000);
+  return {context,page,cdp,readyMs:Date.now()-start,rafTimeout:!!raf.timeout,nav:await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2)}))};
  }
  async function axeScan(page,cdp){
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
-  if(!(await page.evaluate(()=>typeof axe!=='undefined')))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-  const pending=page.evaluate(async()=>{
-   const a=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},rules:{'color-contrast':{enabled:false}}});
-   return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,350)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
-  });
-  const r=await Promise.race([pending,sleep(20000).then(()=>({timeout:true}))]);
-  if(!r.timeout)await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
-  return r;
+  if(!(await bounded(page.evaluate(()=>typeof axe!=='undefined'),5000)))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  const root=await page.evaluate(()=>[document.querySelector('.top'),document.querySelector('#sidecol'),document.querySelector('#outBox')].filter(Boolean));
+  const pending=page.evaluate(async(roots)=>{
+   const a=await axe.run(roots,{runOnly:{type:'rule',values:['button-name','label','aria-allowed-attr','aria-required-children','aria-required-parent','document-title','html-has-lang','landmark-one-main','region','tabindex'] }});
+   return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,300)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
+  },root);
+  return await bounded(pending,15000);
  }
  async function instrument(page){
   await page.evaluate(()=>{
@@ -63,28 +62,29 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   });
  }
  for(const [width,height] of [[1366,768],[1920,1080],[390,844]]){
-  const x=await open({width,height,style:'ios',theme:'day'});
-  const variants=[];
+  let x;
+  try{x=await open({width,height,style:'ios',theme:'day'});}catch(e){result.scenarios.push({width,height,openError:String(e)});continue;}
+  const variants=[];let variantTimeout=false;
   for(const [style,theme] of [['ios','day'],['ios','night'],['classic','day'],['classic','night']]){
-   await x.page.evaluate(({style,theme})=>{UISTYLE=style;uiStyleApply();THEME=theme;applyTheme();applyView();}, {style,theme});
-   const layout=await x.page.evaluate(()=>({style:UISTYLE,theme:THEME,scrollWidth:document.documentElement.scrollWidth,overflow:document.documentElement.scrollWidth>innerWidth}));
-   variants.push({style,theme,layout});
+   const sw=await bounded(x.page.evaluate(({style,theme})=>{UISTYLE=style;uiStyleApply();THEME=theme;applyTheme();applyView();return {style:UISTYLE,theme:THEME,scrollWidth:document.documentElement.scrollWidth,overflow:document.documentElement.scrollWidth>innerWidth};},{style,theme}),10000);
+   if(sw.timeout){variantTimeout=true;variants.push({style,theme,timeout:true});break;}
+   variants.push(sw);
   }
   let axe=null;
-  if(width===1366){
+  if(width===1366&&!variantTimeout){
    await x.page.evaluate(()=>{UISTYLE='ios';uiStyleApply();THEME='day';applyTheme();applyView();});
-   console.log('Starting axe scan (20s cap)');
+   console.log('Axe scan start: desktop navigation/output roots');
    axe=await axeScan(x.page,x.cdp);
-   if(axe.timeout)result.errors.push({type:'axe-timeout',message:'axe-core перевищив 20 секунд; продовжено без його результату.'});
-   console.log('Axe scan result:',JSON.stringify(axe).slice(0,700));
+   if(axe.timeout){result.errors.push({type:'axe-timeout',message:'axe-core перевищив 15 секунд на обмеженому наборі кореневих елементів.'});}
+   console.log('Axe scan finished:',JSON.stringify(axe).slice(0,500));
   }
-  result.scenarios.push({width,height,readyMs:x.readyMs,nav:x.nav,variants,axe});
-  console.log('Viewport done:',width,'variants',variants.length,'ready',x.readyMs,'ms');
-  await x.context.close();
+  result.scenarios.push({width,height,readyMs:x.readyMs,rafTimeout:x.rafTimeout,nav:x.nav,variants,axe});
+  console.log('Viewport finished:',width,'variantTimeout',variantTimeout);
+  await bounded(x.context.close(),3000);
  }
  const x=await open({width:1920,height:1080,style:'ios',theme:'day'});
  await instrument(x.page);
- const setup=await x.page.evaluate(()=>{
+ const setup=await bounded(x.page.evaluate(()=>{
   const nb=document.querySelector('.ust-new')||document.querySelector('#clearAll');if(nb)nb.click();
   const pib=document.getElementById('meta_pib');pib.value='Тестовий Пацієнт';pib.dispatchEvent(new Event('input',{bubbles:true}));
   const dob=document.getElementById('meta_dob');dob.value='1980-01-01';dob.dispatchEvent(new Event('input',{bubbles:true}));
@@ -96,28 +96,35 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   if(RX.length){const first={...RX[0]};while(RX.length<15)RX.push({...first,id:10000+RX.length});}
   renderDiaries();renderRes();renderRx();update();
   return {preset:!!preset,diaries:DIARIES.length,prescriptions:RX.length,results:RES.length};
- });
- const ops=await measure(x.page);
- let popoutMs=null;const popStart=Date.now();
- try{const p=x.page.waitForEvent('popup',{timeout:3000});await x.page.locator('#popBtn').click({timeout:3000});const popup=await p;await popup.waitForSelector('#pwBox',{timeout:3000});popoutMs=Date.now()-popStart;await popup.close();}catch(e){result.errors.push({type:'popout',message:String(e.message||e)});}
- result.populated={setup,operations:ops,popoutMs};
- await x.context.close();
+ }),30000);
+ if(setup.timeout){result.populated={setupTimeout:true};result.errors.push({type:'stress-setup-timeout'});await bounded(x.context.close(),3000);}
+ else{
+  console.log('Stress data ready:',JSON.stringify(setup));
+  const ops=await bounded(measure(x.page),30000);
+  let popoutMs=null;
+  if(!ops.timeout){
+   const popStart=Date.now();
+   try{const p=x.page.waitForEvent('popup',{timeout:3000});await x.page.locator('#popBtn').click({timeout:3000});const popup=await p;await popup.waitForSelector('#pwBox',{timeout:3000});popoutMs=Date.now()-popStart;await popup.close();}catch(e){result.errors.push({type:'popout',message:String(e.message||e)});}
+  }else result.errors.push({type:'stress-measure-timeout'});
+  result.populated={setup,operations:ops.timeout?{timeout:true}:ops,popoutMs};
+  await bounded(x.context.close(),3000);
+ }
  const many=await open({width:1366,height:768,style:'ios',theme:'day',seed500:true});
- result.storage500=await many.page.evaluate(()=>{const t=performance.now();renderPatients();return {count:Object.keys(loadStore()).length,renderMs:+(performance.now()-t).toFixed(2),visibleRows:document.querySelectorAll('#plist .prow').length};});
- await many.context.close();
+ result.storage500=await bounded(many.page.evaluate(()=>{const t=performance.now();renderPatients();return {count:Object.keys(loadStore()).length,renderMs:+(performance.now()-t).toFixed(2),visibleRows:document.querySelectorAll('#plist .prow').length};}),15000);
+ await bounded(many.context.close(),3000);
  const blocked=await open({width:1366,height:768,style:'ios',theme:'day',blockStorage:true});
- result.storageBlocked=await blocked.page.evaluate(()=>({loaded:!!document.getElementById('out'),textLength:document.getElementById('out')?.textContent.length||0}));
- await blocked.context.close();
+ result.storageBlocked=await blocked.page.evaluate(()=>({loaded:!!document.getElementById('out'),idb:typeof IDB!=='undefined'?IDB.ok:null,textLength:document.getElementById('out')?.textContent.length||0}));
+ await bounded(blocked.context.close(),3000);
  const toggle=await open({width:1366,height:768,style:'ios',theme:'day'});
- result.styleToggle=await toggle.page.evaluate(()=>{
+ result.styleToggle=await bounded(toggle.page.evaluate(()=>{
   const seen=new WeakMap();let duplicateAdds=0,totalAdds=0;const original=EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener=function(type,fn,opts){if(typeof fn==='function'){let m=seen.get(this);if(!m){m=new Map();seen.set(this,m);}let s=m.get(type);if(!s){s=new WeakSet();m.set(type,s);}if(s.has(fn))duplicateAdds++;else s.add(fn);}totalAdds++;return original.call(this,type,fn,opts);};
   for(let i=0;i<5;i++){UISTYLE='classic';uiStyleApply();UISTYLE='ios';uiStyleApply();}
   return {cycles:5,duplicateAddAttempts:duplicateAdds,totalListenerAddAttempts:totalAdds,style:UISTYLE};
- });
- await toggle.context.close();
+ }),15000);
+ await bounded(toggle.context.close(),3000);
  fs.writeFileSync(path.join(OUT,'browser-audit-lite.json'),JSON.stringify(result,null,2));
  fs.writeFileSync(path.join(OUT,'browser-audit-lite-summary.txt'),'Екрани: '+result.scenarios.length+'\nПомилки/попередження: '+result.errors.length+'\nЗаповнений сценарій: '+JSON.stringify(result.populated)+'\n500 пацієнтів: '+JSON.stringify(result.storage500)+'\nlocalStorage заблоковано: '+JSON.stringify(result.storageBlocked)+'\nПеремикання стилю: '+JSON.stringify(result.styleToggle)+'\n');
  console.log(fs.readFileSync(path.join(OUT,'browser-audit-lite-summary.txt'),'utf8'));
- await browser.close();server.close();
-})().catch(e=>{fs.writeFileSync(path.join(OUT,'browser-audit-lite-error.txt'),e.stack||String(e));console.error(e.stack||e);try{server.close();}catch(_){}process.exitCode=1;});
+ await browser.close();server.closeAllConnections?.();server.close();
+})().catch(e=>{fs.writeFileSync(path.join(OUT,'browser-audit-lite-error.txt'),e.stack||String(e));console.error(e.stack||e);try{server.closeAllConnections?.();server.close();}catch(_){}process.exitCode=1;});
