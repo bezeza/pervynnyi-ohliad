@@ -93,17 +93,21 @@ const median = values => {
     }
     return out;
   };
-  const measureShow = async () => {
+  const measureShow = async (enabled, onePage) => {
     const a = w.eval("TABS.findIndex(t=>t.id==='skarhy')");
     const b = w.eval("TABS.findIndex(t=>t.id==='morbi')");
     if(a < 0 || b < 0) throw new Error('Не знайдено вкладки для профілювання show()');
+    w.eval('PO18_SHOW_FAST.enabled=' + (enabled ? 'true' : 'false'));
+    w.eval('OPG.on=' + (onePage ? 'true' : 'false'));
+    w.eval('show(' + a + ')');
+    await sleep(10); // стабілізувати режим і завершити відкладений renderTabNav()
     clearComponents();
     const samples = [];
     for(let i=0;i<8;i++){
       const t = w.performance.now();
       w.eval('show(' + (i%2 ? a : b) + ')');
       samples.push(w.performance.now()-t);
-      await sleep(5); // включити відкладений renderTabNav(), запланований show()
+      await sleep(5);
     }
     return {
       samplesMs:samples.map(x=>+x.toFixed(2)),
@@ -156,10 +160,14 @@ const median = values => {
   };
   const baseline = measure(false);
   const optimized = measure(true);
-  const showProfile = await measureShow();
+  const showBaseline = await measureShow(false, false);
+  const showOptimized = await measureShow(true, false);
+  const showOnePageBaseline = await measureShow(false, true);
+  const showOnePageOptimized = await measureShow(true, true);
+  w.eval('PO18_SHOW_FAST.enabled=true; OPG.on=true; show(TABS.findIndex(t=>t.id===\'skarhy\'))');
   const paperProfile = measurePaper();
   console.log('Порівняння update() (jsdom, синтетичний заповнений пацієнт; без часових порогів):');
-  console.log(JSON.stringify({baseline, optimized, showProfile, paperProfile, consoleErrors:errors.length}, null, 2));
+  console.log(JSON.stringify({baseline, optimized, showBaseline, showOptimized, showOnePageBaseline, showOnePageOptimized, paperProfile, consoleErrors:errors.length}, null, 2));
   if(optimized.checkDocExecutions !== optimized.updateCount) throw new Error('Після оптимізації очікується одна фактична перевірка checkDoc на update');
   if(baseline.checkDocExecutions <= optimized.checkDocExecutions) throw new Error('Контрольний режим не підтвердив усунення повторних обчислень');
   if(errors.length) throw new Error('Помилки браузера: '+errors.join(' | '));
