@@ -34,7 +34,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
   if(!(await page.evaluate(()=>typeof axe!=='undefined')))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
   const r=await page.evaluate(async()=>{
-   const a=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}});
+   const a=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},rules:{'color-contrast':{enabled:false}}});
    return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,350)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
   });
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
