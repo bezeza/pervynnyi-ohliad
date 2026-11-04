@@ -63,9 +63,40 @@ const median = values => {
   w.eval('renderDiaries(); renderRes(); renderRx(); update()');
   if (!doc.getElementById('out').textContent.trim()) throw new Error('Не згенеровано тестовий документ');
 
+  // Внутрішній профіль: допомагає розділити витрати ядра й DOM.
+  const componentNames = [
+    'autosave','runCalcs','applyAuto','generate',
+    'renderCheck','checkDoc','copyPeekRender','progressRequired','progressRender',
+    'renderPtBar','renderRx','renderCtrl','renderScr','renderPlanD','renderQV',
+    'renderLive','renderOrderMarks','progressOptional','stApply','uilApply'
+  ];
+  const componentSamples = Object.create(null);
+  for(const name of componentNames){
+    const original = w[name];
+    if(typeof original !== 'function') continue;
+    componentSamples[name] = [];
+    w[name] = function(){
+      const t = w.performance.now();
+      try{ return original.apply(this, arguments); }
+      finally{ componentSamples[name].push(w.performance.now()-t); }
+    };
+  }
+  const componentSummary = () => {
+    const result = {};
+    for(const [name, values] of Object.entries(componentSamples)){
+      if(!values.length) continue;
+      result[name] = {
+        calls:values.length,
+        medianMs:+median(values).toFixed(2),
+        totalMs:+values.reduce((a,b)=>a+b,0).toFixed(2)
+      };
+    }
+    return result;
+  };
   const measure = enabled => {
     w.eval('PO18_CHECK_CACHE.enabled = ' + (enabled ? 'true' : 'false'));
     for(let i=0;i<5;i++) w.eval('update()');
+    for(const values of Object.values(componentSamples)) values.length = 0;
     const before = w.eval('PO18_CHECK_CACHE.executions');
     const samples = [];
     for(let i=0;i<10;i++){
@@ -81,7 +112,8 @@ const median = values => {
       maxMs:+Math.max(...samples).toFixed(2),
       updateCount:samples.length,
       checkDocExecutions:checkRuns,
-      checkDocExecutionsPerUpdate:+(checkRuns/samples.length).toFixed(2)
+      checkDocExecutionsPerUpdate:+(checkRuns/samples.length).toFixed(2),
+      components:componentSummary()
     };
   };
   const baseline = measure(false);
