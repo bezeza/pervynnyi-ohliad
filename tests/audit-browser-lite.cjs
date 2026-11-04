@@ -88,6 +88,9 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
  }
  const x=await open({width:1920,height:1080,style:'ios',theme:'day'});
  await instrument(x.page);
+ const emptyOps=await bounded(measure(x.page),30000);
+ result.empty={readyMs:x.readyMs,operations:emptyOps.timeout?{timeout:true}:emptyOps};
+ await x.page.evaluate(()=>{window.__audit={totals:{},components:{}};});
  const setup=await bounded(x.page.evaluate(()=>{
   const nb=document.querySelector('.ust-new')||document.querySelector('#clearAll');if(nb)nb.click();
   const pib=document.getElementById('meta_pib');pib.value='Тестовий Пацієнт';pib.dispatchEvent(new Event('input',{bubbles:true}));
@@ -104,6 +107,7 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
  if(setup.timeout){result.populated={setupTimeout:true};result.errors.push({type:'stress-setup-timeout'});await bounded(x.context.close(),3000);}
  else{
   console.log('Stress data ready:',JSON.stringify(setup));
+  await x.page.evaluate(()=>{window.__audit={totals:{},components:{}};});
   const ops=await bounded(measure(x.page),30000);
   let popoutMs=null;
   if(!ops.timeout){
