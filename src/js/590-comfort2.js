@@ -206,10 +206,13 @@ function scrollInto(box, el){
 
 /* ---------- 10. Кошик: видалений пацієнт зберігається 30 днів, «Скасувати» одразу після видалення ---------- */
 const TRASH_DAYS = 30;
-if (!IDB.ok){ try{ TRASH = JSON.parse(lsGet('po.trash', '{}')) || {}; }catch(e){ TRASH = {}; } }
+if (!IDB.ok){
+  let idbTrash = false; try{ idbTrash = localStorage.getItem('po.trash.mode') === 'idb'; }catch(e){}
+  if (!idbTrash){ try{ TRASH = JSON.parse(lsGet('po.trash', '{}')) || {}; }catch(e){ TRASH = {}; } }
+}
 function trashPut(id, p){
   TRASH[id] = p;
-  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) idbPutVal(tx.objectStore('patients'), 'trash:' + id, p); else tx.objectStore('patients').delete('trash:' + id); }catch(e){} }
+  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) idbPutVal(tx.objectStore('patients'), 'trash:' + id, p); else tx.objectStore('patients').delete('trash:' + id); try{ localStorage.removeItem('po.trash'); localStorage.setItem('po.trash.mode', 'idb'); }catch(e){} }catch(e){} }
   else { if (!p) delete TRASH[id]; try{ localStorage.setItem('po.trash', JSON.stringify(TRASH)); }catch(e){} }
   if (!p) delete TRASH[id];
 }

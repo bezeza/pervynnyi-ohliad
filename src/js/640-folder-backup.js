@@ -38,6 +38,7 @@ async function fbkWrite(why){
     const files = await fbkPrune(bd);
     fbkSave({day, at:now, max:Math.max(S.day === day ? (S.max || 0) : 0, n), last:name, n, files});
     FBK.err = ''; try{ logAct('Резервна копія в папці', name); }catch(e){}
+    try{ ORIG_SET.call(localStorage, 'po.backup', String(now)); }catch(e){}
     return name;
   }catch(e){ FBK.err = 'Не вдалося записати копію в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; return null; }
   finally{ FBK.busy = false; try{ fbkRender(); }catch(e){} }

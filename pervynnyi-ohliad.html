@@ -2280,7 +2280,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.85 від 02.11.2026">v0.9.3.85 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.86 від 04.11.2026">v0.9.3.86 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4426,8 +4426,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.85', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.86', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.86', '04.11.2026', 'збереження: з PIN у папці не лишається відкритий файл пацієнта; видалений із PIN не повертається; папка не губить останній запис і сама не вважається резервною копією (нагадування гасне лише після денної копії); старіший файл не затирає новішу картку; друге вікно не перезаписує новіший запис; кошик не оживає зі старого сховища; чужа розмітка у файлі пацієнта не виконується; запис у файл не стирає попередній, доки новий не записаний до кінця; без мережі сайт не показує сторінку помилки замість збереженої програми'],
   ['0.9.3.85', '04.11.2026', 'бічне меню: ширину змінюють, перетягуючи праву межу мишкою (180–380 px; стрілками — коли межа у фокусі); стягнули вузько або «« Лише значки» — меню стає смужкою значків (назва розділу — при наведенні, кольорова крапка — стан розділу); подвійний клік по межі — звичайна ширина; запам’ятовується'],
   ['0.9.3.84', '04.11.2026', 'стиль «Apple» — менше на екрані при вході: екран «Пацієнти» (пошук, «Сьогодні», список, одна кнопка «＋ Новий пацієнт» і «⇩ З МІС»; перенесення й файли — під посиланням), форма — після вибору пацієнта; «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду, рядок дій прилипає вгорі; бічна панель без «Новий пацієнт» двічі, «не обрано» й «0 з 13», кружечки — лише в заповнених розділах; «Стаціонар / Амбулаторно» — у меню «Профіль», тема — у «Вигляді»; виправлено: при вході в змісті було позначено «Скарги» замість «Пацієнт і запис»'],
   ['0.9.3.83', '04.11.2026', 'порожній бланк «Первинний огляд — стаціонар» (003/о, п. 33–40) для ручки: скарги, анамнез, усі системи, неврологічний статус, п. 37–39, діагноз з обґрунтуванням, обґрунтування госпіталізації, план обстеження й лікування — варіанти з форми огляду, потрібне підкреслити, своє — на лінії; 2 сторінки А4. «🖨 Бланки» → першим у списку'],
@@ -5560,7 +5561,9 @@ function importFile(file){
       const o = JSON.parse(rd.result);
       if (!o || o.type !== 'po-patients' || typeof o.items !== 'object') throw 0;
       const st = loadStore(); let n = 0;
-      for (const id in o.items){ const it = o.items[id]; if (it && it.snap && it.snap.f){ st[id] = it; n++; } }
+      for (const id in o.items){ const it = o.items[id]; if (!(it && it.snap && it.snap.f)) continue;
+        if (st[id] && (it.updated || 0) <= (st[id].updated || 0)) continue;
+        st[id] = it; n++; }
       if (!saveStore(st)) throw 1;
       renderPatients(); toast('Імпортовано пацієнтів: ' + n);
     }catch(e){ toast('Це не файл пацієнтів цієї програми або він пошкоджений', 5000); }
@@ -5580,7 +5583,42 @@ function fsIdb(mode, fn){
     r.onsuccess = ()=>{ const tx = r.result.transaction('h', mode), st = tx.objectStore('h'), q = fn(st); tx.oncomplete = ()=>res(q && q.result); tx.onerror = ()=>rej(tx.error); }; r.onerror = ()=>rej(r.error); });
 }
 const fsName = (id, p) => String((p && p.name) || 'Без імені').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, '_').slice(0, 60) + '_' + id + '.json';
-async function fsWriteFile(dir, name, data){ const fh = await dir.getFileHandle(name, {create:true}); const w = await fh.createWritable(); await w.write(data); await w.close(); }
+/* Спершу пишемо в сусідній файл «.writing» і лише після успішного close підміняємо справжній.
+   createWritable() у Chrome одразу очищає файл: збій посеред запису не має стирати попередню копію. */
+async function fsWriteFile(dir, name, data){
+  const tmp = name + '.writing';
+  const fh = await dir.getFileHandle(tmp, {create:true});
+  const w = await fh.createWritable();
+  try{ await w.write(data); await w.close(); }
+  catch(e){ try{ await w.abort(); }catch(x){} try{ await dir.removeEntry(tmp); }catch(x){} throw e; }
+  if (typeof fh.move === 'function'){
+    try{ await dir.removeEntry(name); }catch(e){}
+    try{ await fh.move(name); }
+    catch(e){
+      const body = await (await fh.getFile()).text();
+      const dest = await dir.getFileHandle(name, {create:true});
+      const w2 = await dest.createWritable();
+      await w2.write(body); await w2.close();
+      try{ await dir.removeEntry(tmp); }catch(x){}
+    }
+  } else {
+    const body = await (await fh.getFile()).text();
+    const dest = await dir.getFileHandle(name, {create:true});
+    const w2 = await dest.createWritable();
+    await w2.write(body); await w2.close();
+    try{ await dir.removeEntry(tmp); }catch(e){}
+  }
+  return name;
+}
+async function fsIndexPatients(pd){
+  const map = {}, drop = [];
+  for await (const [n] of pd.entries()){
+    if (/\.writing$/.test(n)){ drop.push(n); continue; }
+    const m = String(n).match(/_(p\d+)\.json$/); if (m) (map[m[1]] = map[m[1]] || []).push(n);
+  }
+  for (const n of drop){ try{ await pd.removeEntry(n); }catch(e){} }
+  return map;
+}
 async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(name); return JSON.parse(await (await fh.getFile()).text()); }catch(e){ return null; } }
 /* які файли пишуться в папку даних — зрозумілими назвами */
 const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
@@ -5592,26 +5630,43 @@ const FS_FILES = (tpl, btn) => [
 function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
 function fsLocal(keys){ const o = {}; keys.forEach(k=>{ try{ const v = localStorage.getItem(k); if (v !== null) o[k] = v; }catch(e){} }); return o; }
 async function fsSync(all){
-  if (!FS.dir || !FS.ok || FS.busy) return; FS.busy = true;
+  if (!FS.dir || !FS.ok) return;
+  if (FS.busy){ FS.again = true; if (all) FS.againAll = true; return; }
+  FS.busy = true;
   try{
     const pd = await FS.dir.getDirectoryHandle('Пацієнти', {create:true});
-    const st = loadStore(), files = {};
-    for await (const [n] of pd.entries()){ const m = n.match(/_(p\d+)\.json$/); if (m) files[m[1]] = n; }
-    for (const id in st){
-      const nm = fsName(id, st[id]);
-      if (!all && FS.written[id] === st[id].updated && files[id] === nm) continue;
-      await fsWriteFile(pd, nm, JSON.stringify({type:'po-patients', items:{[id]: st[id]}}, null, 1));
-      if (files[id] && files[id] !== nm){ try{ await pd.removeEntry(files[id]); }catch(e){} }
-      FS.written[id] = st[id].updated;
+    let listing = await fsIndexPatients(pd);
+    const ids = Object.keys(loadStore());
+    for (const id of ids){
+      const cur = loadStore()[id]; if (!cur) continue;
+      const nm = fsName(id, cur), names = listing[id] || [], sole = names.length === 1 ? names[0] : '';
+      let keep = sole;
+      if (all || FS.written[id] !== cur.updated || sole !== nm){
+        keep = await fsWriteFile(pd, nm, JSON.stringify({type:'po-patients', items:{[id]: cur}}, null, 1)) || nm;
+        FS.written[id] = cur.updated;
+      }
+      for (const n of names) if (n !== keep){ try{ await pd.removeEntry(n); }catch(e){} }
+      if (nm !== keep){ try{ await pd.removeEntry(nm); }catch(e){} }
+    }
+    listing = await fsIndexPatients(pd);
+    const latest = loadStore();
+    for (const id in listing) if (!latest[id]){
+      for (const n of listing[id]){ try{ await pd.removeEntry(n); }catch(e){} }
+      delete FS.written[id];
     }
     { const sv = new Date().toISOString(), cu = fsCustom(), pick = ks => Object.fromEntries(Object.keys(cu).filter(k=>ks.includes(k)).map(k=>[k, cu[k]]));
       const rest = Object.fromEntries(Object.keys(cu).filter(k=>!FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]]));
       for (const [nm, type, help, custom, keys] of FS_FILES(rest, pick(FS_BTN_KEYS)))
         await fsWriteFile(FS.dir, nm, JSON.stringify({type, saved:sv, app:typeof VERSION !== 'undefined' ? VERSION : '', help, custom, data:fsLocal(keys)}, null, 1)); }
     FS.err = ''; FS.last = Date.now();
-    try{ ORIG_SET.call(localStorage, 'po.backup', String(Date.now())); }catch(e){}
   }catch(e){ FS.err = 'Не вдалося записати в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; }
-  FS.busy = false; fsRender();
+  finally{
+    FS.busy = false;
+    const again = FS.again, againAll = !!FS.againAll;
+    FS.again = false; FS.againAll = false;
+    try{ fsRender(); }catch(e){}
+    if (again) await fsSync(againAll);
+  }
 }
 function fsSchedule(all){ if (!FS.dir || !FS.ok) return; clearTimeout(FS.timer); FS.timer = setTimeout(()=>fsSync(all), 1500); }
 const ORIG_SET = Storage.prototype.setItem;
@@ -12452,10 +12507,13 @@ function scrollInto(box, el){
 
 /* ---------- 10. Кошик: видалений пацієнт зберігається 30 днів, «Скасувати» одразу після видалення ---------- */
 const TRASH_DAYS = 30;
-if (!IDB.ok){ try{ TRASH = JSON.parse(lsGet('po.trash', '{}')) || {}; }catch(e){ TRASH = {}; } }
+if (!IDB.ok){
+  let idbTrash = false; try{ idbTrash = localStorage.getItem('po.trash.mode') === 'idb'; }catch(e){}
+  if (!idbTrash){ try{ TRASH = JSON.parse(lsGet('po.trash', '{}')) || {}; }catch(e){ TRASH = {}; } }
+}
 function trashPut(id, p){
   TRASH[id] = p;
-  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) idbPutVal(tx.objectStore('patients'), 'trash:' + id, p); else tx.objectStore('patients').delete('trash:' + id); }catch(e){} }
+  if (IDB.ok){ try{ const tx = IDB.db.transaction('patients', 'readwrite'); if (p) idbPutVal(tx.objectStore('patients'), 'trash:' + id, p); else tx.objectStore('patients').delete('trash:' + id); try{ localStorage.removeItem('po.trash'); localStorage.setItem('po.trash.mode', 'idb'); }catch(e){} }catch(e){} }
   else { if (!p) delete TRASH[id]; try{ localStorage.setItem('po.trash', JSON.stringify(TRASH)); }catch(e){} }
   if (!p) delete TRASH[id];
 }
@@ -17987,6 +18045,7 @@ async function fbkWrite(why){
     const files = await fbkPrune(bd);
     fbkSave({day, at:now, max:Math.max(S.day === day ? (S.max || 0) : 0, n), last:name, n, files});
     FBK.err = ''; try{ logAct('Резервна копія в папці', name); }catch(e){}
+    try{ ORIG_SET.call(localStorage, 'po.backup', String(now)); }catch(e){}
     return name;
   }catch(e){ FBK.err = 'Не вдалося записати копію в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; return null; }
   finally{ FBK.busy = false; try{ fbkRender(); }catch(e){} }
@@ -20011,6 +20070,128 @@ function sideGrip(){
     if (b){ b.title = f ? 'Розгорнути меню — назви розділів, шаблон і прогрес' : 'Згорнути меню до значків'; b.setAttribute('aria-label', b.title); } sideWApply(); }catch(e){}
   return r; }; }
 try{ sideGrip(); sideIcons(); renderSideFold(); }catch(e){}
+/* 0.9.3.86 — захист збереження: гонка PIN при видаленні, два вікна, кошик зі старого сховища, чужий HTML у файлі пацієнта.
+   Наявні функції лише обгортаються. */
+function safeStyle(s){
+  const out = [];
+  String(s || '').split(';').forEach(part=>{
+    const i = part.indexOf(':'); if (i < 0) return;
+    const k = part.slice(0, i).trim().toLowerCase(), v = part.slice(i + 1).trim().toLowerCase();
+    if ((k === 'text-align' && /^(left|right|center|justify)$/.test(v)) || (k === 'font-size' && /^\d+(\.\d+)?(px|pt|%)$/.test(v)) || (k === 'font-weight' && /^(bold|normal|[1-9]00)$/.test(v)) || (k === 'font-style' && /^(italic|normal)$/.test(v)) || (k === 'text-decoration' && /^(underline|none)$/.test(v))) out.push(k + ':' + v);
+  });
+  return out.join(';');
+}
+function safeHtml(s){
+  const raw = String(s == null ? '' : s);
+  let doc; try{ doc = new DOMParser().parseFromString('<div id="po-safe">' + raw + '</div>', 'text/html'); }catch(e){ return ''; }
+  const root = doc.getElementById('po-safe'); if (!root) return '';
+  const OK = new Set(['DIV','B','I','U','BR','SPAN','P','STRONG','EM','SUB','SUP']);
+  const DROP = new Set(['SCRIPT','STYLE','IFRAME','OBJECT','EMBED','LINK','META','IMG','SVG','MATH','VIDEO','AUDIO','FORM','INPUT','BUTTON','TEXTAREA','SELECT']);
+  const walk = node => {
+    [...node.childNodes].forEach(n=>{
+      if (n.nodeType === 3) return;
+      if (n.nodeType !== 1){ n.remove(); return; }
+      if (DROP.has(n.tagName)){ n.remove(); return; }
+      if (!OK.has(n.tagName)){ while (n.firstChild) n.parentNode.insertBefore(n.firstChild, n); n.remove(); return; }
+      [...n.attributes].forEach(a=>{
+        const name = a.name.toLowerCase();
+        if (name === 'data-sec' && n.tagName === 'DIV' && /^[a-z0-9_-]{1,40}$/i.test(a.value)) return;
+        if (name === 'style'){ const safe = safeStyle(a.value); if (safe) n.setAttribute('style', safe); else n.removeAttribute(a.name); return; }
+        n.removeAttribute(a.name);
+      });
+      walk(n);
+    });
+  };
+  walk(root);
+  return root.innerHTML;
+}
+function scrubSnap(S){
+  if (!S || typeof S !== 'object') return;
+  if (S.cache) for (const k in S.cache){ const c = S.cache[k]; if (c && typeof c.html === 'string') c.html = safeHtml(c.html); }
+  if (Array.isArray(S.diaries)) S.diaries.forEach(d=>{ if (d && typeof d.html === 'string') d.html = safeHtml(d.html); });
+}
+{ const r0 = restore; restore = function(S){ try{ scrubSnap(S); }catch(e){} return r0.apply(this, arguments); }; }
+
+/* видалення має скасувати ще не дописаний зашифрований запис, інакше він лягає поверх delete */
+{ const s0 = saveStore; saveStore = function(st){
+  try{
+    if (st && IDB.w && typeof PINC !== 'undefined' && PINC.key && typeof PIN_Q !== 'undefined'){
+      for (const id in IDB.w) if (!(id in st)) PIN_Q[id] = (PIN_Q[id] || 0) + 1;
+    }
+  }catch(e){}
+  return s0.apply(this, arguments);
+}; }
+
+/* не перезаписувати картку, яку вже новіше зберегло інше вікно */
+function rememberSeen(){
+  IDB.seen = IDB.seen || {};
+  if (!IDB.cache) return;
+  for (const id in IDB.cache){ const v = IDB.cache[id]; if (v && !v.enc && v.updated != null) IDB.seen[id] = v.updated; }
+}
+function conflict(id, cur, v){
+  if (!IDB.seen || IDB.seen[id] == null || !cur || !v) return false;
+  const cu = cur.updated || 0, seen = IDB.seen[id];
+  return cu > seen && cu !== (v.updated || 0);
+}
+{ const put0 = idbPutVal; idbPutVal = function(os, id, v){
+  const plain = v && !v.enc;
+  const note = () => { if (plain && IDB.seen && v.updated != null) IDB.seen[id] = v.updated; };
+  const gen = typeof PIN_Q !== 'undefined' ? (PIN_Q[id] || 0) : 0;
+  if (!plain || !IDB.db || !IDB.seen || IDB.seen[id] == null){ const r = put0.apply(this, arguments); note(); return r; }
+  const decide = cur => {
+    if (typeof PIN_Q !== 'undefined' && (PIN_Q[id] || 0) !== gen) return;
+    if (IDB.block && IDB.block[id]) return;
+    if (cur && conflict(id, cur, v)){
+      IDB.block = IDB.block || {}; IDB.block[id] = 1;
+      try{ if (IDB.w) IDB.w[id] = cur.updated; }catch(e){}
+      try{ toast('Цього пацієнта вже змінено в іншому вікні. Оновіть сторінку, щоб не затерти новіший запис.', 6000); }catch(e){}
+      if (typeof PIN_Q !== 'undefined') PIN_Q[id] = (PIN_Q[id] || 0) + 1;
+      return;
+    }
+    put0.call(this, os, id, v); note();
+  };
+  if (typeof PINC !== 'undefined' && PINC.key){
+    let req; try{ req = IDB.db.transaction('patients', 'readonly').objectStore('patients').get(id); }catch(e){ const r = put0.apply(this, arguments); note(); return r; }
+    req.onsuccess = () => { const cur = req.result;
+      if (cur && cur.enc && typeof decObj === 'function'){ decObj(cur).then(p=>decide(p)).catch(()=>decide(null)); return; }
+      decide(cur && cur.enc ? null : cur);
+    };
+    req.onerror = () => { const r = put0.call(this, os, id, v); note(); return r; };
+    return;
+  }
+  let req; try{ req = os.get(id); }catch(e){ const r = put0.apply(this, arguments); note(); return r; }
+  req.onsuccess = () => decide(req.result);
+  req.onerror = () => { put0.call(this, os, id, v); note(); };
+}; }
+{ const i0 = idbInit; idbInit = function(){
+  return Promise.resolve(i0.apply(this, arguments)).then(async ok=>{ try{ rememberSeen(); if (IDB.ok && IDB.db) await reconcileTrash(); }catch(e){} return ok; });
+}; }
+/* idbInit() уже викликано раніше за цей файл — дочекатися тієї бази */
+(function waitDb(k){
+  if (IDB.ok && IDB.db){ rememberSeen(); reconcileTrash(); return; }
+  if (k > 80) return;
+  setTimeout(()=>waitDb(k + 1), 50);
+})(0);
+
+/* кошик: після відкриття бази лишаються лише записи з бази, старий po.trash більше не підмішується */
+async function reconcileTrash(){
+  const raw = await new Promise(res=>{
+    let tx, req; try{ tx = IDB.db.transaction('patients', 'readonly'); req = tx.objectStore('patients').openCursor(); }catch(e){ res({}); return; }
+    const out = {};
+    req.onsuccess = e => { const c = e.target.result; if (c){ if (String(c.key).startsWith('trash:')) out[String(c.key).slice(6)] = c.value; c.continue(); } };
+    tx.oncomplete = () => res(out); tx.onerror = () => res(out);
+  });
+  const T = {};
+  for (const id in raw){
+    let v = raw[id];
+    if (v && v.enc){ if (typeof PINC === 'undefined' || !PINC.key || typeof decObj !== 'function') continue; try{ v = await decObj(v); }catch(e){ continue; } }
+    if (v) T[id] = v;
+  }
+  Object.keys(TRASH).forEach(id=>{ if (!(id in T)) delete TRASH[id]; });
+  Object.assign(TRASH, T);
+  try{ localStorage.removeItem('po.trash'); localStorage.setItem('po.trash.mode', 'idb'); }catch(e){}
+  try{ if (typeof renderTrashLink === 'function') renderTrashLink(); }catch(e){}
+}
 </script>
 
 </body>
