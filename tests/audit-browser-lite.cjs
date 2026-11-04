@@ -28,13 +28,14 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
   const start=Date.now();await page.goto('http://127.0.0.1:4173/app.html',{waitUntil:'domcontentloaded',timeout:20000});
   await page.waitForSelector('#out',{timeout:15000});
   const raf=await bounded(page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))),5000);
-  return {context,page,cdp,readyMs:Date.now()-start,rafTimeout:!!raf.timeout,nav:await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2)}))};
+  return {context,page,cdp,readyMs:Date.now()-start,rafTimeout:!!(raf&&raf.timeout),nav:await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2)}))};
  }
  async function axeScan(page,cdp){
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
-  if(!(await bounded(page.evaluate(()=>typeof axe!=='undefined'),5000)))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-  const root=await page.evaluate(()=>[document.querySelector('.top'),document.querySelector('#sidecol'),document.querySelector('#outBox')].filter(Boolean));
-  const pending=page.evaluate(async(roots)=>{
+  const hasAxe=await bounded(page.evaluate(()=>typeof axe!=='undefined'),5000);
+  if(!hasAxe||hasAxe.timeout)await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  const pending=page.evaluate(async()=>{
+   const roots=[document.querySelector('.top'),document.querySelector('#sidecol'),document.querySelector('#outBox')].filter(Boolean);
    const a=await axe.run(roots,{runOnly:{type:'rule',values:['button-name','label','aria-allowed-attr','aria-required-children','aria-required-parent','document-title','html-has-lang','landmark-one-main','region','tabindex'] }});
    return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,300)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
   },root);
