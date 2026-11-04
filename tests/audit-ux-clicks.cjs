@@ -1,0 +1,78 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const {chromium}=require('playwright');
+const ROOT=path.resolve(__dirname,'..'),APP=path.join(ROOT,'build','app.html');
+const server=http.createServer((req,res)=>{if(req.url==='/'||req.url==='/app.html'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store'});fs.createReadStream(APP).pipe(res);}else{res.writeHead(404);res.end();}});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+(async()=>{
+ await new Promise(r=>server.listen(4174,'127.0.0.1',r));
+ const browser=await chromium.launch({headless:true});
+ const context=await browser.newContext({viewport:{width:1366,height:768},reducedMotion:'reduce'});
+ await context.addInitScript(()=>{
+  localStorage.setItem('po.autogate','0');localStorage.setItem('po.welcome','1');localStorage.setItem('po.profask','1');
+  localStorage.setItem('po.uistyle','ios');localStorage.setItem('po.theme','day');localStorage.setItem('po.mode','hosp');
+  window.print=()=>{window.__printCalls=(window.__printCalls||0)+1;};
+ });
+ const page=await context.newPage(),errors=[];
+ page.on('pageerror',e=>errors.push(String(e)));
+ page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')errors.push(m.type()+': '+m.text());});
+ await page.goto('http://127.0.0.1:4174/app.html',{waitUntil:'domcontentloaded',timeout:20000});
+ await page.waitForSelector('.ust-new',{timeout:15000});
+ await page.evaluate(()=>{
+  window.__auditClicks=[];
+  document.addEventListener('click',e=>{
+   if(!e.isTrusted)return;
+   const el=e.target.closest('button,[role="button"],input,select,a,label');
+   if(!el)return;
+   window.__auditClicks.push({tag:el.tagName,id:el.id||'',text:(el.getAttribute('aria-label')||el.innerText||el.value||'').replace(/\\s+/g,' ').trim().slice(0,80)});
+  },true);
+ });
+ const click=async selector=>{const el=page.locator(selector).first();await el.waitFor({state:'visible',timeout:7000});await el.click({timeout:7000});};
+ const count=()=>page.evaluate(()=>window.__auditClicks.length);
+ const clicks=()=>page.evaluate(()=>window.__auditClicks.slice());
+ const reset=()=>page.evaluate(()=>{window.__auditClicks=[];});
+ const fillField=async(id,value)=>{await click('#'+id);await page.locator('#'+id).fill(value);};
+ const waitDoc=async()=>{await page.waitForFunction(()=>{const e=document.getElementById('out');return e&&e.textContent.trim().length>100;},{timeout:10000});};
+ await click('.ust-new');
+ await fillField('meta_pib','Тестовий Пацієнт');
+ await fillField('meta_dob','1980-01-01');
+ const sex=page.locator('#sexSeg [data-sex="m"]');
+ if(await sex.isVisible())await sex.click();
+ await click('#tab_hv');
+ await click('.dcard');
+ let next=0;
+ while(await page.evaluate(()=>TABS[active]?.id!=='dx')&&next<12){
+  await click('.nb-next:visible');next++;
+ }
+ await waitDoc();
+ const primaryText=await page.locator('#out').innerText();
+ if(primaryText.length<300)throw new Error('Первинний огляд не сформовано: '+primaryText.length);
+ const primaryToReady={clicks:await count(),actions:await clicks(),nextSteps:next,textLength:primaryText.length};
+ await click('#paperBtn');
+ await click('#printBtn');
+ const primaryToPrint={clicks:await count(),actions:await clicks(),printCalls:await page.evaluate(()=>window.__printCalls||0)};
+ if(await page.evaluate(()=>PAPER))await click('#paperBtn');
+ await reset();
+ await click('#docSeg button[data-doc="shch"]');
+ await waitDoc();
+ const diaryText=await page.locator('#out').innerText();
+ if(diaryText.length<100)throw new Error('Щоденник не сформовано: '+diaryText.length);
+ const diaryReady={clicks:await count(),actions:await clicks(),textLength:diaryText.length};
+ await click('#paperBtn');
+ await click('#printBtn');
+ const diaryToPrint={clicks:await count(),actions:await clicks(),printCalls:await page.evaluate(()=>window.__printCalls||0)};
+ if(await page.evaluate(()=>PAPER))await click('#paperBtn');
+ await click('#docSeg button[data-doc="ohl"]');
+ await reset();
+ await click('#docSeg button[data-doc="epi"]');
+ await waitDoc();
+ const epiText=await page.locator('#out').innerText();
+ if(epiText.length<100)throw new Error('Виписний епікриз не сформовано: '+epiText.length);
+ const epiReady={clicks:await count(),actions:await clicks(),textLength:epiText.length};
+ await click('#paperBtn');
+ await click('#printBtn');
+ const epiToPrint={clicks:await count(),actions:await clicks(),printCalls:await page.evaluate(()=>window.__printCalls||0)};
+ const out={viewport:'1366x768',style:'Apple',theme:'день',primaryToReady,primaryToPrint,diaryReady,diaryToPrint,epiReady,epiToPrint,errors};
+ console.log('UX_CLICK_AUDIT '+JSON.stringify(out));
+ if(errors.length)process.exitCode=1;
+ await context.close();await browser.close();server.closeAllConnections?.();server.close();
+})().catch(async e=>{console.error('UX_CLICK_AUDIT_ERROR '+(e.stack||e));try{server.closeAllConnections?.();server.close();}catch(_){}process.exitCode=1;});
