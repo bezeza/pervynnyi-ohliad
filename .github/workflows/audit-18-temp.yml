@@ -1,4 +1,7 @@
 name: Аудит задачі 18 — тимчасові браузерні вимірювання
+concurrency:
+  group: audit-18-lab
+  cancel-in-progress: true
 on:
   push:
     branches: [audit-18-lab]
@@ -7,7 +10,7 @@ permissions:
 jobs:
   browser-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,7 +20,7 @@ jobs:
       - run: npm install --no-save --package-lock=false --no-audit --no-fund playwright axe-core
       - run: npx playwright install --with-deps chromium
       - run: node build.mjs
-      - run: node tests/audit-browser.cjs
+      - run: node tests/audit-browser-lite.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
