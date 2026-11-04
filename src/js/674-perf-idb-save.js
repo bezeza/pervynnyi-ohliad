@@ -42,3 +42,25 @@ const PO18_IDB_FAST = {enabled:true, fastWrites:0};
     return ok;
   };
 }
+
+/* Списки лише читають базу: під час їх рендерингу не створюємо копію всього IDB.cache. */
+{
+  const renderToday0 = renderToday;
+  renderToday = function(){
+    if (!IDB.ok || !IDB.cache) return renderToday0.apply(this, arguments);
+    const loadStore0 = loadStore;
+    loadStore = function(){ return IDB.cache; };
+    try{ return renderToday0.apply(this, arguments); }
+    finally{ loadStore = loadStore0; }
+  };
+}
+{
+  const renderPatients0 = renderPatients;
+  renderPatients = function(){
+    if (!IDB.ok || !IDB.cache) return renderPatients0.apply(this, arguments);
+    const loadStore0 = loadStore;
+    loadStore = function(){ return IDB.cache; };
+    try{ return renderPatients0.apply(this, arguments); }
+    finally{ loadStore = loadStore0; }
+  };
+}
