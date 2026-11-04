@@ -1190,6 +1190,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const hosp=DOCMORE.hosp.some(x=>x[0]==='kons'); BLANK=kB; switchDoc(kD);
     return JSON.stringify([ok1,items,noPat,inPack,hosp]); })()`);
   ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const btn=!!document.getElementById('blanksBtn')&&document.getElementById('blanksBtn').previousElementSibling===document.getElementById('printBtn');
+    layoutTabs(); const nb=document.getElementById('tab_blanks'); const nav=!!nb&&nb.parentElement.querySelector('.tgl').textContent==='Інструменти';
+    const srch=searchItems().some(x=>/Бланки для друку/.test(x.t)&&/щоденник/.test(x.s));
+    lsSet('po.ampsop','1'); blanksDialog(); const d=document.getElementById('fbPick'); const comb=!!d&&[...d.querySelectorAll('input')].some(i=>i.value==='amp1r'); if (d) d.remove();
+    const b=FBLANKS.find(x=>x.k==='amp1r'); const txt=b?b.html:''; const ok2=/Обґрунтування призначення/.test(txt)&&/Перегляд антибактеріальної терапії через 48–72 год/.test(txt)&&/потрібне підкреслити/.test(txt);
+    lsSet('po.ampsop',''); blanksDialog(); const d2=document.getElementById('fbPick'); const off=!!d2&&![...d2.querySelectorAll('input')].some(i=>i.value==='amp1r'); if (d2) d2.remove();
+    return JSON.stringify([btn,nav,srch,comb,ok2,off]); })()`);
+  ok('Бланки там, де шукають: «🖨 Бланки» біля «Друк / PDF», у «Інструментах», у пошуку; «Додаток 1 + перегляд АБТ» — з увімкненим СОП', r==='[true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
