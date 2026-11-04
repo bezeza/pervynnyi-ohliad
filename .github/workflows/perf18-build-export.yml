@@ -1,23 +1,26 @@
 name: Збірка гілки задачі 18
 on:
-  push:
-    branches:
-      - perf-18-1-check-cache
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
 permissions:
   contents: write
 jobs:
   build-and-commit:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - name: Зібрати офлайн-програму
         run: node build.mjs
-      - name: Зберегти зібрані файли в цій гілці
+      - name: Зберегти зібрані файли в гілці PR
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -26,5 +29,5 @@ jobs:
             echo "Зібрані файли вже актуальні"
           else
             git commit -m "build: зібрати версію 0.9.3.86"
-            git push
+            git push origin "HEAD:$BRANCH"
           fi
