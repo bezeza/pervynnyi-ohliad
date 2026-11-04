@@ -1228,7 +1228,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 {
   const r=w.eval(`(()=> {
     const oldActive=active, oldOn=OPG.on, oldFast=PO18_SHOW_FAST.enabled, oldInit=PO18_SHOW_FAST.initialized, oldDismiss=UST.dismissed;
-    const a=TABS.findIndex(t=>t.id==='skarhy'), b=TABS.findIndex(t=>t.id==='morbi');
+    const visibleTabs=opSet(), a=visibleTabs[0], b=visibleTabs[1]; if(a==null||b==null) throw new Error('Для тесту потрібні дві видимі вкладки');
     UST.dismissed=true; OPG.on=false; PO18_SHOW_FAST.enabled=true; PO18_SHOW_FAST.initialized=false; show(a);
     const initialSync=TABS.filter(t=>!t.panel.hidden).length===1;
     const each0=TABS.forEach;
