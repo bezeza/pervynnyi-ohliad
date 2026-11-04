@@ -1183,13 +1183,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const btn=!!document.getElementById('cmdkBtn')&&!document.getElementById('cmdkBtn').hidden; const fit=typeof outFit==='function'&&typeof ptPlace==='function';
     uiStyleSet('classic'); const back=document.getElementById('cmdkBtn').hidden&&!document.documentElement.classList.contains('pt-side')&&!document.querySelector('.addrbox.addr-c'); uiStyleSet('ios');
     return JSON.stringify([ok1,ok2,btn,fit,back]); })()`);
-  ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true,true]', r); }
+  ok('Стиль Apple: адреса одним рядком розкладається на поля (село, громада, район, область, вулиця, індекс), пошук кнопкою в шапці; «Класичний» — як було', r==='[true,true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ const kD=DOC, kB=BLANK; switchDoc('kons'); BLANK=true; const ok1=blankOK()&&blankOn();
     const pg=b028(); const t=pg[0].textContent; const items=['№ 028/о','Консультаційний висновок спеціаліста','1. Найменування закладу охорони здоров’я, який направив','2. Прізвище, ім’я, по батькові пацієнта','3. Дата народження','(число, місяць, рік)','4. Спеціальність, прізвище','5. Результати лабораторного','6. Результати функціонального','7. Висновок спеціаліста','8. Рекомендації','М.П.','Лікар-консультант','Завідувач поліклініки або стаціонарного відділення','14 лютого 2012 року'].every(x=>t.includes(x));
     const empty=b028(true)[0]; const noPat=!(mv('pib')&&empty.textContent.includes(mv('pib'))); const inPack=FBLANKS.some(b=>b.k==='k028'&&b.html.includes('028/о'));
     const hosp=DOCMORE.hosp.some(x=>x[0]==='kons'); BLANK=kB; switchDoc(kD);
     return JSON.stringify([ok1,items,noPat,inPack,hosp]); })()`);
-  ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true,true]', r); }
+  ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ const btn=!!document.getElementById('blanksBtn')&&document.getElementById('blanksBtn').previousElementSibling===document.getElementById('printBtn');
     layoutTabs(); const nb=document.getElementById('tab_blanks'); const nav=!!nb&&nb.parentElement.querySelector('.tgl').textContent==='Інструменти';
     const srch=searchItems().some(x=>/Бланки для друку/.test(x.t)&&/щоденник/.test(x.s));
@@ -1212,7 +1212,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const kf=VIEW.sideFold, kw=VIEW.sideW; VIEW.sideFold=true; renderSideFold(); const f=document.body.classList.contains('sidefold')||layoutNow()!=='B'; const lab=SIDE_FOLD_BUTTON?SIDE_FOLD_BUTTON.textContent:'';
     VIEW.sideFold=false; VIEW.sideW=300; renderSideFold(); const w=document.documentElement.style.getPropertyValue('--sidew')==='300px';
     VIEW.sideFold=kf; VIEW.sideW=kw; saveView(); applyView(); return JSON.stringify([g,ic,f,lab===(document.body.classList.contains('sidefold')?'»':'« Лише значки'),w]); })()`);
-  ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true,true]', r); }
+  ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true]', r); }
 // Задача 18: спільний результат checkDoc() для всіх підказок одного update().
 {
   const before = w.eval('PO18_CHECK_CACHE.executions');
@@ -1242,7 +1242,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     OPG.on=oldOn; PO18_SHOW_FAST.enabled=oldFast; PO18_SHOW_FAST.initialized=oldInit; UST.dismissed=oldDismiss; show(oldActive);
     return JSON.stringify([initialSync,baselineVisits>0,optimizedVisits===0,classic,visible,returned]);
   })()`);
-  ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true]', r);
+  ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true,true]', r);
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
