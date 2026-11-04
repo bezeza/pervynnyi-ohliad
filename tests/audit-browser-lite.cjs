@@ -28,14 +28,17 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   await page.waitForSelector('#out',{timeout:15000});
   await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   const nav=await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2),fonts:document.fonts.status}));
-  return {context,page,readyMs:Date.now()-start,nav};
+  return {context,page,cdp,readyMs:Date.now()-start,nav};
  }
- async function axeScan(page){
-  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-  return await Promise.race([
-   page.evaluate(async()=>{const r=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}});return {violations:r.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,350)}))})),passes:r.passes.length,incomplete:r.incomplete.length};}),
-   sleep(30000).then(()=>({timeout:true}))
-  ]);
+ async function axeScan(page,cdp){
+  await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
+  if(!(await page.evaluate(()=>typeof axe!=='undefined')))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  const r=await page.evaluate(async()=>{
+   const a=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}});
+   return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,350)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
+  });
+  await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
+  return r;
  }
  async function instrument(page){
   await page.evaluate(()=>{
