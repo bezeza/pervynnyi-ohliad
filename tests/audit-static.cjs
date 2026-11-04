@@ -70,7 +70,7 @@ const out={
  largestJs:jsFiles.slice().sort((a,b)=>b.bytes-a.bytes).slice(0,25),
  css:{rules:treeRules.length,selectors:selectorCount.size,duplicateExact,duplicateSelectors,unusedSelectorCandidates:unusedCandidates,printNonBW},
  reliability:{mutationObservers:observers,intervals,scrollResizeListeners:listeners},
- fonts:{families:[...new Set(fontMeta.map(f=>f.family))],files:fontFiles,familyUse,fontGlyphCoverage:familyCoverage,requiredGlyphs:glyphs.map(([glyph,codepoint])=>({glyph,codepoint:'U+'+codepoint.toString(16).toUpperCase().padStart(4,'0')}))}
+ fonts:{families:[...new Set(fontMeta.map(f=>f.family))],files:fontFiles,familyUse:fontFamilyUse,fontGlyphCoverage:familyCoverage,requiredGlyphs:glyphs.map(([glyph,codepoint])=>({glyph,codepoint:'U+'+codepoint.toString(16).toUpperCase().padStart(4,'0')}))}
 };
 fs.writeFileSync(path.join(OUT,'static-audit.json'),JSON.stringify(out,null,2));
 const summary=[
