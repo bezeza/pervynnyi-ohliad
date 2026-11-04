@@ -43,6 +43,28 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
   });
   return await bounded(pending,15000);
  }
+ async function contrastScan(page){
+  const pending=page.evaluate(async()=>{
+   const roots=[document.querySelector('.top'),document.querySelector('#sidecol'),document.querySelector('#outBox')].filter(Boolean);
+   const a=await axe.run(roots,{runOnly:{type:'rule',values:['color-contrast']}});
+   return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.length,examples:v.nodes.slice(0,5).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,250)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
+  });
+  return await bounded(pending,15000);
+ }
+ async function keyboardScan(page){
+  await page.evaluate(()=>{if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();window.scrollTo(0,0);});
+  const steps=[];
+  for(let i=0;i<24;i++){
+   await page.keyboard.press('Tab');
+   const v=await bounded(page.evaluate(()=>{
+    const e=document.activeElement,cs=getComputedStyle(e),r=e.getBoundingClientRect();
+    return {tag:e.tagName,id:e.id||'',role:e.getAttribute('role')||'',label:e.getAttribute('aria-label')||e.getAttribute('title')||'',text:(e.innerText||e.textContent||'').trim().replace(/\\s+/g,' ').slice(0,60),visible:r.width>0&&r.height>0,outline:cs.outlineStyle,outlineWidth:cs.outlineWidth};
+   }),2000);
+   if(v?.timeout){steps.push({timeout:true});break;}
+   steps.push(v);
+  }
+  return {steps,focusWithoutVisibleOutline:steps.filter(x=>x.visible&&x.tag!=='BODY'&&(x.outline==='none'||x.outlineWidth==='0px')).length};
+ }
  async function instrument(page){
   await page.evaluate(()=>{
    window.__audit={totals:{},components:{}};
@@ -80,6 +102,13 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
    axe=await axeScan(x.page,x.cdp);
    if(axe.timeout){result.errors.push({type:'axe-timeout',message:'axe-core перевищив 15 секунд на обмеженому наборі кореневих елементів.'});}
    console.log('Axe scan finished:',JSON.stringify(axe).slice(0,500));
+   const contrast={};
+   contrast.day=await contrastScan(x.page);
+   await x.page.evaluate(()=>{THEME='night';applyTheme();});
+   contrast.night=await contrastScan(x.page);
+   await x.page.evaluate(()=>{THEME='day';applyTheme();});
+   const keyboard=await keyboardScan(x.page);
+   result.accessibility={contrast,keyboard};
   }
   result.scenarios.push({width,height,readyMs:x.readyMs,rafTimeout:x.rafTimeout,nav:x.nav,variants,axe});
   console.log('Viewport finished:',width,'variants',variants.length,'axe',axe?.timeout?'timeout':'done');
