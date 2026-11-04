@@ -81,6 +81,7 @@ const median = values => {
       finally{ componentSamples[name].push(w.performance.now()-t); }
     };
   }
+  // Таймінги вкладені: не підсумовувати їх як незалежні витрати.
   const componentSummary = () => {
     const result = {};
     for(const [name, values] of Object.entries(componentSamples)){
