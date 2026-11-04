@@ -1224,6 +1224,58 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const runs2 = w.eval('PO18_CHECK_CACHE.executions') - before2;
   ok('Результат перевірки не кешується між різними оновленнями', runs2 === 1, String(runs2));
 }
+// Задача 18: прогрес використовує перевірені дані під час звичайного перемикання вкладок.
+{
+  const r=w.eval(`(()=> {
+    const before=PO18_PROGRESS_CACHE.misses;
+    update();
+    const afterUpdate=PO18_PROGRESS_CACHE.misses, hits=PO18_PROGRESS_CACHE.hits;
+    const target=opSet().find(k=>k!==active);
+    if(target==null) throw new Error('Не знайдено іншу видиму вкладку');
+    show(target);
+    return JSON.stringify([afterUpdate>before,PO18_PROGRESS_CACHE.misses===afterUpdate,PO18_PROGRESS_CACHE.hits>hits]);
+  })()`);
+  ok('Прогрес: після оновлення документа перемикання вкладки повторно не запускає checkDoc()', r==='[true,true,true]', r);
+}
+// Задача 18: show() не обходить усі вкладки при звичайному перемиканні.
+{
+  const r=w.eval(`(()=> {
+    const oldActive=active, oldOn=OPG.on, oldFast=PO18_SHOW_FAST.enabled, oldInit=PO18_SHOW_FAST.initialized, oldDismiss=UST.dismissed;
+    const visibleTabs=opSet(), a=visibleTabs[0], b=visibleTabs[1]; if(a==null||b==null) throw new Error('Для тесту потрібні дві видимі вкладки');
+    UST.dismissed=true; OPG.on=false; PO18_SHOW_FAST.enabled=true; PO18_SHOW_FAST.initialized=false; show(a);
+    const initialSync=TABS.filter(t=>!t.panel.hidden).length===1;
+    const each0=TABS.forEach;
+    const count=()=>{ let n=0; TABS.forEach=function(fn){ return each0.call(this,function(...args){ n++; return fn.apply(this,args); }); }; try{ show(b); } finally{ TABS.forEach=each0; } return n; };
+    PO18_SHOW_FAST.enabled=false; const baselineVisits=count();
+    PO18_SHOW_FAST.enabled=true; show(a);
+    const optimizedVisits=count();
+    const classic=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && TABS[a].panel.hidden && TABS[b].tab.getAttribute('aria-selected')==='true';
+    OPG.on=true; show(a); const visible=opSet().every(k=>!TABS[k].panel.hidden);
+    OPG.on=false; show(b); const returned=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && !document.body.classList.contains('onepage');
+    OPG.on=oldOn; PO18_SHOW_FAST.enabled=oldFast; PO18_SHOW_FAST.initialized=oldInit; UST.dismissed=oldDismiss; show(oldActive);
+    return JSON.stringify([initialSync,baselineVisits>0,optimizedVisits===0,classic,visible,returned]);
+  })()`);
+  ok('Перемикання вкладок: без повного обходу в стабільному режимі; «одна сторінка» та повернення працюють', r==='[true,true,true,true,true,true]', r);
+}
+// Задача 18: повторне оновлення навігації змінює текст, а не перебудовує DOM.
+{
+  const r=w.eval(`(()=> {
+    const oldNavMode=typeof PHV!=='undefined'?PHV.nav:null;
+    if(typeof PHV!=='undefined') PHV.nav='old';
+    renderTabNav();
+    const nav=document.getElementById('tabnav'), current=nav&&nav.querySelector('.tn-cur'), arrows=nav&&[...nav.querySelectorAll('.tn-arr')];
+    renderTabNav();
+    const reused=!!current&&nav.querySelector('.tn-cur')===current&&arrows.length===2&&[...nav.querySelectorAll('.tn-arr')].every((x,i)=>x===arrows[i]);
+    const each0=TABS.forEach; let visits=0;
+    TABS.forEach=function(fn){ return each0.call(this,function(...args){ visits++; return fn.apply(this,args); }); };
+    try{ renderTabNav(); }finally{ TABS.forEach=each0; }
+    const noSweep=visits===0;
+    if(typeof PHV!=='undefined') PHV.nav=oldNavMode;
+    renderTabNav();
+    return JSON.stringify([reused,noSweep]);
+  })()`);
+  ok('Навігація: повторний рендер перевикористовує кнопки й не обходить усі вкладки', r==='[true,true]', r);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

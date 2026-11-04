@@ -12,15 +12,31 @@ const HELP = {id:'help', title:'Довідка', short:'Довідка', fields:
 const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
+/* У стабільному режимі вкладок змінюємо лише попередню й нову вкладки.
+   Повний прохід потрібен тільки при виході з режиму «одна сторінка». */
+const PO18_SHOW_FAST = {enabled:true, lastOnePage:false, initialized:false};
 function show(i){
   try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
+  const previous = TABS[active], next = TABS[i];
+  const onePage = document.body.classList.contains('onepage');
   active = i;
-  if (TABS[i] && TABS[i].id === 'dx') dxPanel();
-  TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
-  TABS[i].tab.scrollIntoView({block:'nearest', inline:'center'});
-  if (TABS[i] === CALC){ syncFromForm(false); update(); }
-  if (TABS[i] === RXT){ runCalcs(); renderRx(); }
-  if (TABS[i] === TPL) renderTplLists();
+  if (next && next.id === 'dx') dxPanel();
+  if (!PO18_SHOW_FAST.enabled || !PO18_SHOW_FAST.initialized || (!onePage && PO18_SHOW_FAST.lastOnePage)){
+    TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
+  } else {
+    if (previous && previous !== next){
+      previous.tab.setAttribute('aria-selected', 'false');
+      if (!onePage) previous.panel.hidden = true;
+    }
+    next.panel.hidden = false;
+    next.tab.setAttribute('aria-selected', 'true');
+  }
+  PO18_SHOW_FAST.lastOnePage = onePage;
+  PO18_SHOW_FAST.initialized = true;
+  next.tab.scrollIntoView({block:'nearest', inline:'center'});
+  if (next === CALC){ syncFromForm(false); update(); }
+  if (next === RXT){ runCalcs(); renderRx(); }
+  if (next === TPL) renderTplLists();
   const top = $('.form').getBoundingClientRect().top;
   if (top < 0) window.scrollBy({top: top - 8});
 }
@@ -35,21 +51,42 @@ function goDone(){
   if (window.matchMedia && matchMedia('(max-width:899px)').matches){ $('#outBox').classList.add('open'); return; }
   $('#outBox').scrollIntoView({block:'start', behavior:'smooth'}); toast('Перевірте текст справа й натисніть «Копіювати» або «Друк»', 2500);
 }
+const NAV_RENDER = {tn:null, prev:null, current:null, next:null, group:null, name:null, count:null, foot:null, footReady:false};
 function renderTabNav(){
   const all = tabOrder(), cur = TABS[active]; if (!cur || !cur.panel) return;
   const isTool = TOOL_TABS.includes(cur.id), seq = isTool ? all : all.filter(i=>!TOOL_TABS.includes(TABS[i].id));
   const k = seq.indexOf(active), prev = k > 0 ? seq[k - 1] : -1, next = k >= 0 && k < seq.length - 1 ? seq[k + 1] : -1;
   const nm = i => TABS[i].short || TABS[i].title;
   const tn = $('#tabnav');
-  if (tn){ tn.innerHTML = '';
-    tn.append(h('button', {type:'button', class:'btn tn-arr', disabled:prev < 0 ? '' : null, 'aria-label':'Попередній розділ', onclick:()=>prev >= 0 && show(prev)}, '‹'),
-      h('button', {type:'button', class:'btn tn-cur', 'aria-haspopup':'dialog', title:'Усі розділи', onclick:openNav},
-        h('span', {class:'tn-g'}, tabGroupLabel(active)), h('b', {}, nm(active)), h('span', {class:'tn-n'}, k >= 0 ? `${k + 1}/${seq.length}` : ''), h('span', {class:'tn-dd', 'aria-hidden':'true'}, '▾')),
-      h('button', {type:'button', class:'btn tn-arr', disabled:next < 0 ? '' : null, 'aria-label':'Наступний розділ', onclick:()=>next >= 0 && show(next)}, '›'));
+  if (tn){
+    if (NAV_RENDER.tn !== tn || !NAV_RENDER.current || !tn.contains(NAV_RENDER.current)){
+      const prevBtn = h('button', {type:'button', class:'btn tn-arr', 'aria-label':'Попередній розділ'}, '‹');
+      const group = h('span', {class:'tn-g'});
+      const name = h('b', {});
+      const count = h('span', {class:'tn-n'});
+      const currentBtn = h('button', {type:'button', class:'btn tn-cur', 'aria-haspopup':'dialog', title:'Усі розділи', onclick:openNav},
+        group, name, count, h('span', {class:'tn-dd', 'aria-hidden':'true'}, '▾'));
+      const nextBtn = h('button', {type:'button', class:'btn tn-arr', 'aria-label':'Наступний розділ'}, '›');
+      tn.replaceChildren(prevBtn, currentBtn, nextBtn);
+      Object.assign(NAV_RENDER, {tn, prev:prevBtn, current:currentBtn, next:nextBtn, group, name, count});
+    }
+    NAV_RENDER.prev.disabled = prev < 0;
+    NAV_RENDER.prev.onclick = ()=>prev >= 0 && show(prev);
+    NAV_RENDER.group.textContent = tabGroupLabel(active);
+    NAV_RENDER.name.textContent = nm(active);
+    NAV_RENDER.count.textContent = k >= 0 ? `${k + 1}/${seq.length}` : '';
+    NAV_RENDER.next.disabled = next < 0;
+    NAV_RENDER.next.onclick = ()=>next >= 0 && show(next);
   }
   let bar = cur.foot || cur.panel.querySelector(':scope > .nextbar');
   if (!bar){ bar = h('div', {class:'nextbar'}); cur.panel.append(bar); }
-  TABS.forEach(t=>{ if (t.foot && t !== cur) t.foot.innerHTML = ''; }); bar.classList.add('nextbar'); bar.innerHTML = '';
+  if (!NAV_RENDER.footReady){
+    TABS.forEach(t=>{ if (t.foot && t !== cur) t.foot.replaceChildren(); });
+    NAV_RENDER.footReady = true;
+  }
+  if (NAV_RENDER.foot && NAV_RENDER.foot !== bar) NAV_RENDER.foot.replaceChildren();
+  NAV_RENDER.foot = bar;
+  bar.classList.add('nextbar'); bar.replaceChildren();
   if (isTool) return;
   if (prev >= 0) bar.append(h('button', {type:'button', class:'btn nb-prev', onclick:()=>show(prev)}, '‹ ' + nm(prev)));
   bar.append(next >= 0 ? h('button', {type:'button', class:'btn primary nb-next', onclick:()=>show(next)}, 'Далі: ' + nm(next) + ' ›')
