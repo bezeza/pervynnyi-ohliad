@@ -12,15 +12,30 @@ const HELP = {id:'help', title:'Довідка', short:'Довідка', fields:
 const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
+/* У стабільному режимі вкладок змінюємо лише попередню й нову вкладки.
+   Повний прохід потрібен тільки при виході з режиму «одна сторінка». */
+const PO18_SHOW_FAST = {enabled:true, lastOnePage:false};
 function show(i){
   try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
+  const previous = TABS[active], next = TABS[i];
+  const onePage = document.body.classList.contains('onepage');
   active = i;
-  if (TABS[i] && TABS[i].id === 'dx') dxPanel();
-  TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
-  TABS[i].tab.scrollIntoView({block:'nearest', inline:'center'});
-  if (TABS[i] === CALC){ syncFromForm(false); update(); }
-  if (TABS[i] === RXT){ runCalcs(); renderRx(); }
-  if (TABS[i] === TPL) renderTplLists();
+  if (next && next.id === 'dx') dxPanel();
+  if (!PO18_SHOW_FAST.enabled || (!onePage && PO18_SHOW_FAST.lastOnePage)){
+    TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
+  } else {
+    if (previous && previous !== next){
+      previous.tab.setAttribute('aria-selected', 'false');
+      if (!onePage) previous.panel.hidden = true;
+    }
+    next.panel.hidden = false;
+    next.tab.setAttribute('aria-selected', 'true');
+  }
+  PO18_SHOW_FAST.lastOnePage = onePage;
+  next.tab.scrollIntoView({block:'nearest', inline:'center'});
+  if (next === CALC){ syncFromForm(false); update(); }
+  if (next === RXT){ runCalcs(); renderRx(); }
+  if (next === TPL) renderTplLists();
   const top = $('.form').getBoundingClientRect().top;
   if (top < 0) window.scrollBy({top: top - 8});
 }
