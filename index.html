@@ -2208,6 +2208,43 @@ html.touch .nextbar .btn{padding:12px 16px}
 .b003.b028 .b028n{display:flex;flex-direction:column;align-items:center;min-width:150px}
 .b003.b028 .b028l{display:block;width:100%;border-bottom:1px solid #000;min-height:1.3em;text-align:center}
 .tab.tab-act{color:var(--accent)}
+/* 0.9.3.84 — стиль «Apple»: екран входу «Пацієнти», дії огляду лише в огляді, бічна панель і шапка без зайвого */
+.ust-head,.ust-mtg{display:none}
+:root.ui-start .form .panel:not(.ust-panel){display:none!important}
+:root.ui-start .form .docbar,:root.ui-start .ust-panel>.ph,:root.ui-start .ust-panel .ust-form{display:none!important}
+:root.ui-start .ust-panel .ust-head{display:flex;flex-direction:column;gap:10px;margin:6px 0 14px}
+:root.ui-start .ust-head h2{font:700 26px/1.15 var(--f-head);margin:0}
+:root.ui-start .ust-acts{display:flex;gap:8px;flex-wrap:wrap}
+:root.ui-start .ust-new{font-size:15px;padding:9px 18px}
+:root.ui-start .ust-hint{margin:0}
+:root.ui-start .ust-list .pt{background:var(--surface);border-radius:14px;padding:12px 16px;margin:0 0 12px;border:1px solid var(--line)}
+:root.ui-start .ust-list .pt h3 .btn{display:none}
+:root.ui-start .ust-list #psearch{font-size:15px;min-height:38px}
+:root.ui-start .ust-list .ust-more{display:none}
+:root.ui-start .ust-list.ust-mopen .ust-more{display:flex}
+:root.ui-start .ust-list.ust-mopen p.ust-more{display:block}
+:root.ui-start .ust-mtg{display:inline-block;border:0;background:none;color:var(--accent);font-size:13px;padding:4px 0;cursor:pointer}
+/* дії огляду — лише в розділах огляду; рядок дій прилипає вгорі */
+:root.ui-ios.ui-nonexam #allNorm,:root.ui-ios.ui-nonexam #quickBtn,:root.ui-ios.ui-nonexam .docbar .mkdoc{display:none!important}
+@media (min-width:900px){:root.ui-ios body.shell .form>.docbar{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding-top:6px;padding-bottom:6px}}
+/* бічна панель */
+@media (min-width:900px){
+  :root.ui-ios.ust-empty #sidecol #ptline #clearAll,:root.ui-ios.ust-empty #sidecol #ptline .pcols{display:none}
+  :root.ui-ios body.lay-B #sidecard .stpl:not(.on){display:none}
+  :root.ui-ios body.lay-B #sidecard .sprog.ust-zero{display:none}
+  :root.ui-ios body.shell.lay-B .tab:not(.filled):not(.cw):not(.autof):not([aria-selected="true"]) .dot{visibility:hidden}
+}
+/* шапка */
+:root.ui-ios body.shell .top #modeSeg,:root.ui-ios body.shell .top #themeBtn{display:none!important}
+:root.ui-ios body.shell .top .profbtn .pw{display:none}
+:root.ui-ios body.shell .top .profbtn .pmode{color:var(--accent);font-weight:600}
+:root.ui-ios body.shell .top #viewBtn .vbt{display:inline!important}
+.profpop{position:fixed;z-index:50;display:flex;flex-direction:column;gap:10px;min-width:300px}
+.profpop .btn{text-align:left}
+:root.ui-start .ust-hint{border:0;background:none;padding:0}
+@media (min-width:900px){:root.ui-start #sidecol #ptline{display:none!important}}
+:root.ui-ios.ui-nonexam #undoBtn[disabled]{display:none}
+:root.ui-ios.ui-nonexam body.shell .form>.docbar:not(:has(#docSeg)):has(#undoBtn[disabled]){display:none}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2218,7 +2255,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.83 від 02.11.2026">v0.9.3.83 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.84 від 02.11.2026">v0.9.3.84 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4364,8 +4401,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.83', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.84', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.84', '04.11.2026', 'стиль «Apple» — менше на екрані при вході: екран «Пацієнти» (пошук, «Сьогодні», список, одна кнопка «＋ Новий пацієнт» і «⇩ З МІС»; перенесення й файли — під посиланням), форма — після вибору пацієнта; «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду, рядок дій прилипає вгорі; бічна панель без «Новий пацієнт» двічі, «не обрано» й «0 з 13», кружечки — лише в заповнених розділах; «Стаціонар / Амбулаторно» — у меню «Профіль», тема — у «Вигляді»; виправлено: при вході в змісті було позначено «Скарги» замість «Пацієнт і запис»'],
   ['0.9.3.83', '04.11.2026', 'порожній бланк «Первинний огляд — стаціонар» (003/о, п. 33–40) для ручки: скарги, анамнез, усі системи, неврологічний статус, п. 37–39, діагноз з обґрунтуванням, обґрунтування госпіталізації, план обстеження й лікування — варіанти з форми огляду, потрібне підкреслити, своє — на лінії; 2 сторінки А4. «🖨 Бланки» → першим у списку'],
   ['0.9.3.82', '04.11.2026', 'порожні бланки тепер легко знайти: кнопка «🖨 Бланки» поруч із «Друк / PDF» під текстом документа, «🖨 Бланки для друку» — першим пунктом групи «Інструменти» в бічній панелі, у пошуку (Ctrl+K) — за словами «бланк», «щоденник», «додаток», на телефоні — в аркуші «Документ і дії»; новий бланк СОП «Додаток 1 + перегляд АБТ через 48–72 год» — на одному аркуші А4 (потрібне підкреслити)'],
   ['0.9.3.81', '03.11.2026', 'бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі (наказ МОЗ № 110): «Перед друком» → «Бланк 028/о» на документі «Консультаційний висновок» — пункти 1–8, дата, М.П., підписи лікаря-консультанта й завідувача, заповнено з форми; клік по пункту — правка на бланку; порожній бланк — у «🖨 Порожні бланки»; «Консультаційний висновок (ф. 028/о)» тепер є і в стаціонарі («Інші документи»)'],
@@ -19797,6 +19835,110 @@ try{ blanksNav(); }catch(e){}
    «🖨 Бланки» → «Первинний огляд — стаціонар». Варіанти — ті самі, що у формі «Первинного огляду». Даних пацієнта немає. */
 { const st = document.createElement('style'); st.textContent = ".fbk-ohl{color:#000;font:10.3pt/1.36 \"Times New Roman\",Times,serif}\n:root.pf-zakon .fbk-ohl{font-family:\"Zakon\",\"Times New Roman\",serif}\n.fbk-ohl *{box-sizing:border-box}\n.fbk-ohl p{margin:0 0 1.2mm}\n.fbk-ohl .fo-page{max-width:194mm;margin:0 auto}\n.fbk-ohl .fo-hd{text-align:center;margin:0 0 1.2mm}.fbk-ohl .fo-hd b{font-size:11pt;letter-spacing:.03em;display:block}\n.fbk-ohl .fo-s{font-size:7.8pt}\n.fbk-ohl .fo-top{display:flex;flex-wrap:wrap;gap:.6mm 4mm;border-top:1px solid #000;border-bottom:1px solid #000;padding:1mm 0;margin:0 0 1.2mm}\n.fbk-ohl .fo-sec{border-top:1px solid #000;padding-top:.9mm;margin-top:1.2mm}\n.fbk-ohl .g{display:inline;margin-right:1.6mm}\n.fbk-ohl .g+.g::before{content:\"| \"}\n.fbk-ohl .f{display:inline-block;border-bottom:1px solid #000;height:.95em;vertical-align:baseline;font-style:normal}\n.fbk-ohl .grow{min-width:60mm;width:auto}\n.fbk-ohl .ln{height:1.45em;border-bottom:1px solid #000}\n.fbk-ohl .fo-sign{display:flex;justify-content:space-between;margin-top:3mm}\n.fbk-ohl .w6{width:6mm}.fbk-ohl .w7{width:7mm}.fbk-ohl .w8{width:8mm}.fbk-ohl .w9{width:9mm}.fbk-ohl .w12{width:12mm}.fbk-ohl .w14{width:14mm}.fbk-ohl .w16{width:16mm}.fbk-ohl .w18{width:18mm}.fbk-ohl .w22{width:22mm}.fbk-ohl .w26{width:26mm}.fbk-ohl .w30{width:30mm}.fbk-ohl .w40{width:40mm}.fbk-ohl .w50{width:50mm}.fbk-ohl .w60{width:60mm}\n@media print{@page fbohl{size:A4;margin:8mm 9mm 8mm 14mm}#print .fbk-ohl{page:fbohl}.fbk-ohl .fo-page{max-width:none}}"; document.head.append(st); }
 try{ if (!FBLANKS.some(b=>b.k === 'ohl')) FBLANKS.unshift({k:'ohl', t:'Первинний огляд — стаціонар (003/о, п. 33–40)', cls:'fbk fbk-ohl', html:"<div class=\"fo-page\">\n<div class=\"fo-hd\"><b>ПЕРВИННИЙ ОГЛЯД ЛІКУЮЧОГО ЛІКАРЯ</b> <span class=\"fo-s\">(медична карта стаціонарного хворого, ф. 003/о, п. 33–40) · потрібне підкреслити</span></div>\n<div class=\"fo-top\"><span>ПІБ <i class=\"f w60\"></i></span><span>Вік <i class=\"f w8\"></i></span><span>№ карти <i class=\"f w16\"></i></span><span>Відділення <i class=\"f w30\"></i></span><span>Дата <i class=\"f w18\"></i> час <i class=\"f w9\"></i></span></div>\n\n<p class=\"fo-sec\"><b>33. Скарги</b> <span class=\"g\">на загальну слабкість / підвищену втомлюваність / підвищення температури тіла до <i class=\"f w8\"></i> °C / озноб / пітливість</span>\n<span class=\"g\">кашель сухий / з виділенням харкотиння: слизового / слизово-гнійного / гнійного / з прожилками крові</span>\n<span class=\"g\">задишку при фізичному навантаженні / у спокої / ядуху</span> <span class=\"g\">біль у грудній клітці при диханні / при кашлі</span>\n<span class=\"g\">головний біль / запаморочення / серцебиття / перебої в роботі серця / набряки нижніх кінцівок</span>\n<span class=\"g\">біль у животі / нудоту / блювання / порушення випорожнень / біль при сечовипусканні</span> <i class=\"f grow\"></i></p>\n<div class=\"ln\"></div>\n\n<p class=\"fo-sec\"><b>34. Anamnesis morbi</b> Хворіє <i class=\"f w8\"></i> днів / тижнів / місяців / років. <span class=\"g\">Початок гострий / поступовий</span>\n<span class=\"g\"><i>пов’язує з</i> переохолодженням / контактом з хворим / ГРВІ / фізичним навантаженням / не пов’язує</span>\n<span class=\"g\">захворіло вперше / загострення хронічного захворювання (з <i class=\"f w12\"></i> р.)</span>\n<span class=\"g\"><i>лікувався(-лась)</i> не лікувався / самостійно / амбулаторно: <i class=\"f w40\"></i></span>\n<span class=\"g\">без ефекту / з частковим ефектом</span> <span class=\"g\"><i>госпіталізований(-а)</i> за направленням сімейного лікаря / ЕМД / самозверненням / планово / ургентно</span></p>\n<div class=\"ln\"></div><div class=\"ln\"></div>\n\n<p class=\"fo-sec\"><b>35. Anamnesis vitae</b> <span class=\"g\">Туберкульоз, вірусні гепатити, ВІЛ, венеричні захворювання заперечує / <i class=\"f w30\"></i></span>\n<span class=\"g\"><i>перенесені захворювання</i> <i class=\"f w50\"></i></span>\n<span class=\"g\"><i>операції, травми</i> заперечує / <i class=\"f w30\"></i></span> <span class=\"g\"><i>гемотрансфузії</i> заперечує / були</span></p>\n<p><b>Алергологічний анамнез</b> <span class=\"g\">не обтяжений / обтяжений: <i class=\"f w40\"></i></span>\n<b>Шкідливі звички</b> <span class=\"g\">заперечує / куріння <i class=\"f w8\"></i> пачко-років / зловживання алкоголем</span>\n<b>Спадковість</b> <span class=\"g\">не обтяжена / обтяжена: <i class=\"f w26\"></i></span></p>\n<p><b>Епідемічний анамнез</b> <span class=\"g\">контакт з інфекційними хворими заперечує / був: <i class=\"f w22\"></i></span> <span class=\"g\">за межі області протягом останнього місяця не виїжджав(-ла) / виїжджав(-ла)</span>\n<b>Інвалідність</b> <span class=\"g\">не має / <i class=\"f w8\"></i> група</span> <b>ЕЛН</b> <span class=\"g\">потребує / не потребує / відкритий з <i class=\"f w16\"></i></span></p>\n\n<p class=\"fo-sec\"><b>36. Об’єктивні дані.</b> <b>Загальний стан</b> <span class=\"g\">задовільний / відносно задовільний / середньої тяжкості / тяжкий / дуже тяжкий / критичний</span>\n<b>Свідомість</b> <span class=\"g\">ясна / сплутана / оглушення / сопор / кома</span> <b>Положення</b> <span class=\"g\">активне / пасивне / вимушене</span>\n<b>Статура</b> <span class=\"g\">нормостенічна / гіперстенічна / астенічна</span> <b>Харчування</b> <span class=\"g\">достатнє / надлишкове / ожиріння / знижене / кахексія</span>\nЗріст <i class=\"f w9\"></i> см, маса <i class=\"f w9\"></i> кг, ІМТ <i class=\"f w8\"></i> кг/м²</p>\n<p><b>Шкіра</b> <span class=\"g\">звичайного кольору / бліда / ціанотична / жовтянична / гіперемована / акроціаноз</span> <span class=\"g\">помірної вологості / суха / волога</span> <span class=\"g\">тургор збережений / знижений</span> <span class=\"g\">висипань немає / є: <i class=\"f w22\"></i></span>\n<b>Видимі слизові</b> <span class=\"g\">звичайного кольору / бліді / ціанотичні / іктеричні</span> <b>Зів</b> <span class=\"g\">не гіперемований / гіперемований</span></p>\n<p><b>Набряки</b> <span class=\"g\">немає / є: гомілок / стоп / анасарка</span> <b>Варикозне розширення вен</b> <span class=\"g\">немає / є</span> <b>Периф. лімфатичні вузли</b> <span class=\"g\">не збільшені / збільшені: <i class=\"f w22\"></i></span>\n<b>Щитоподібна залоза</b> <span class=\"g\">не збільшена / збільшена</span> <b>Кістково-суглобова система</b> <span class=\"g\">без видимих деформацій / <i class=\"f w26\"></i></span></p>\n\n<p class=\"fo-sec\"><b>Органи дихання.</b> <span class=\"g\">Дихання через ніс вільне / утруднене</span> <span class=\"g\"><i>грудна клітка</i> правильної форми / емфізематозна / деформована</span>\n<span class=\"g\">симетрично бере участь в акті дихання / відстає права / ліва половина</span> ЧД <i class=\"f w7\"></i> /хв, SpO₂ <i class=\"f w7\"></i> % <span class=\"g\">на повітрі / на кисні <i class=\"f w6\"></i> л/хв</span></p>\n<p><b>Перкуторно</b> <span class=\"g\">ясний легеневий звук / коробковий / вкорочення / притуплення</span> <span class=\"g\"><i>де:</i> справа / зліва / з обох боків; верхні / середні / нижні відділи</span></p>\n<p><b>Аускультативно</b> <span class=\"g\">дихання везикулярне / жорстке / ослаблене / бронхіальне / не вислуховується</span> <span class=\"g\"><i>хрипи</i> не вислуховуються / сухі: свистячі / дзижчачі / вологі: дрібно- / середньо- / великоміхурцеві / крепітація / шум тертя плеври</span>\n<span class=\"g\"><i>де:</i> справа / зліва / з обох боків; верхні / середні / нижні відділи</span></p>\n\n<p class=\"fo-sec\"><b>Серцево-судинна система.</b> Пульс <i class=\"f w8\"></i> /хв, <span class=\"g\">ритмічний / аритмічний</span> <span class=\"g\">задовільного наповнення і напруження / м’який / слабкий / напружений</span> дефіцит пульсу <i class=\"f w6\"></i>\nАТ <i class=\"f w14\"></i> мм рт. ст. (права рука), <i class=\"f w14\"></i> (ліва рука) ЧСС <i class=\"f w8\"></i> /хв</p>\n<p><b>Межі серця</b> <span class=\"g\">не розширені / розширені вліво / вправо</span> <b>Тони серця</b> <span class=\"g\">ясні / приглушені / ослаблені / глухі</span> <span class=\"g\"><i>ритм</i> правильний / неправильний (екстрасистолія / фібриляція передсердь)</span>\n<span class=\"g\"><i>шуми</i> не вислуховуються / систолічний / діастолічний над <i class=\"f w16\"></i></span> <span class=\"g\"><i>акцент II тону</i> немає / над аортою / над легеневою артерією</span></p>\n\n<p class=\"fo-sec\"><b>Органи травлення.</b> <b>Язик</b> <span class=\"g\">вологий / сухий</span> <span class=\"g\">чистий / обкладений нальотом білим / сірим</span>\n<b>Живіт</b> <span class=\"g\">м’який / напружений / здутий</span> <span class=\"g\">симетричний, бере участь в акті дихання</span> <span class=\"g\">при пальпації неболючий / болючий в <i class=\"f w22\"></i></span>\n<span class=\"g\"><i>перистальтика</i> вислуховується / посилена / ослаблена</span></p>\n<p><b>Печінка</b> <span class=\"g\">біля краю реберної дуги / виступає на <i class=\"f w6\"></i> см</span> <span class=\"g\">край гострий / заокруглений, м’який / щільний, неболючий / болючий</span>\n<b>Селезінка</b> <span class=\"g\">не пальпується / пальпується</span> <b>С-м подразнення очеревини</b> <span class=\"g\">немає / позитивний</span> <b>Випорожнення</b> <span class=\"g\">регулярні, оформлені / затримка / діарея / мелена</span></p>\n\n<p class=\"fo-sec\"><b>Сечовидільна система.</b> <b>С-м Пастернацького</b> <span class=\"g\">негативний з обох боків / позитивний справа / зліва</span> <b>Сечовипускання</b> <span class=\"g\">вільне, неболюче / утруднене / часте / болюче</span> <span class=\"g\"><i>діурез</i> достатній / знижений</span></p>\n\n<p class=\"fo-sec\"><b>Неврологічний статус.</b> <span class=\"g\">Свідомість ясна, орієнтований(-а) в часі, місці та власній особі / дезорієнтований(-а)</span>\n<span class=\"g\"><i>менінгеальні знаки</i> негативні / позитивні</span> <span class=\"g\">вогнищевої неврологічної симптоматики не виявлено / є: <i class=\"f w30\"></i></span>\n<span class=\"g\"><i>зіниці</i> D=S / D&gt;S / D&lt;S, фотореакція збережена / знижена</span> <span class=\"g\"><i>у позі Ромберга</i> стійкий(-а) / нестійкий(-а)</span></p>\n\n<p class=\"fo-sec\"><b>37. Огляд на коросту:</b> <span class=\"g\">не виявлено / виявлено</span> <b>38. Огляд на педикульоз:</b> <span class=\"g\">не виявлено / виявлено</span> <b>39. З режимом дня, правилами перебування в стаціонарі ознайомлений(-а):</b> <span class=\"g\">так</span> підпис пацієнта <i class=\"f w22\"></i></p>\n\n<p class=\"fo-sec\"><b>Попередній діагноз:</b> <i class=\"f grow\"></i></p>\n<div class=\"ln\"></div><div class=\"ln\"></div>\n<p>Код за МКХ-10 <i class=\"f w16\"></i> <b>Ускладнення:</b> <i class=\"f grow\"></i></p>\n<p><b>Супутні:</b> <i class=\"f grow\"></i></p>\n\n<p class=\"fo-sec\"><b>Обґрунтування діагнозу:</b> <span class=\"g\">на підставі скарг / анамнезу / об’єктивного обстеження / даних обстежень</span> <i class=\"f grow\"></i></p>\n<div class=\"ln\"></div>\n<p class=\"fo-sec\"><b>Обґрунтування госпіталізації:</b> <span class=\"g\">тяжкість стану / неефективність амбулаторного лікування / потреба в парентеральній терапії / киснева підтримка / ризик ускладнень</span> <i class=\"f grow\"></i></p>\n<p class=\"fo-sec\"><b>План обстеження:</b> <span class=\"g\">ЗАК / ЗАС / глюкоза крові / креатинін / сечовина / білірубін / АЛТ / АСТ / загальний білок / електроліти (K, Na) / СРБ / прокальцитонін / коагулограма / D-димер / ліпідограма / HbA1c</span>\n<span class=\"g\">ЕКГ / рентгенографія ОГК / КТ ОГК / УЗД ОЧП / УЗД плевральних порожнин / ЕхоКГ / спірографія / пульсоксиметрія</span>\n<span class=\"g\">бакпосів харкотиння / сечі / крові на флору і чутливість до антибіотиків / мокротиння на КСП / ПЛР / експрес-тест на COVID-19, грип</span>\n<span class=\"g\"><i>консультації</i> <i class=\"f w40\"></i></span></p>\n<p class=\"fo-sec\"><b>План лікування:</b> <span class=\"g\"><i>режим</i> загальний / напівліжковий / ліжковий</span> <span class=\"g\"><i>дієта</i> № <i class=\"f w6\"></i> / загальний стіл</span> <span class=\"g\"><i>оксигенотерапія</i> не потребує / через назальні канюлі <i class=\"f w6\"></i> л/хв</span></p>\n<div class=\"ln\"></div><div class=\"ln\"></div><div class=\"ln\"></div><div class=\"ln\"></div><div class=\"ln\"></div><div class=\"ln\"></div><div class=\"ln\"></div>\n<p class=\"fo-sign\"><span>Лікуючий лікар <i class=\"f w50\"></i> <span class=\"fo-s\">(ПІБ)</span></span><span>Підпис <i class=\"f w26\"></i></span></p>\n</div>"}); }catch(e){}
+/* ===== 0.9.3.84 — стиль «Apple»: менше на екрані при вході =====
+   • Екран входу «Пацієнти»: поки пацієнта не відкрито й нічого не внесено — лише пошук, «Сьогодні», список пацієнтів
+     і одна кнопка «＋ Новий пацієнт» (а також «⇩ З МІС»). Форма — після вибору пацієнта або «＋ Новий пацієнт».
+     Перенесення телефон ⇄ комп’ютер і файли — під «Перенесення й файли ▾».
+   • «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду; рядок дій — завжди під рукою.
+   • Бічна панель: без «Новий пацієнт» двічі, без «не обрано» й «0 з 13», кружечки — лише в заповнених розділах.
+   • Шапка: «Стаціонар / Амбулаторно» — у меню «Профіль»; тема — у «Вигляді»; «Вигляд» — з підписом.
+   «Класичний» стиль — як було. ===== */
+const UST = {dismissed:false, built:false};
+const NONEXAM = ['meta', 'hv', 'calc', 'tpl', 'set', 'help'];
+const stOnS = () => typeof UISTYLE !== 'undefined' && UISTYLE === 'ios';
+function stEmpty(){
+  try{ return !mv('pib') && !mv('card') && !itext($('#out')).trim() && !(DIARIES || []).length && !(RX || []).length; }catch(e){ return false; }
+}
+function stMeta(){ const t = TABS.find(x=>x.id === 'meta'); return t && t.panel; }
+function stBuild(){
+  if (UST.built) return; const P = stMeta(); if (!P) return;
+  const wrap = [...P.children].find(c=>c.tagName === 'DIV' && !c.classList.contains('ph') && c.querySelector('#meta_pib')); if (!wrap) return;
+  const list = [...wrap.children].find(c=>c.querySelector && c.querySelector('#plist')); if (!list) return;
+  P.classList.add('ust-panel');
+  [...wrap.children].forEach(c=>{ if (c !== list) c.classList.add('ust-form'); });
+  list.classList.add('ust-list');
+  const ptBox = document.getElementById('plist') && document.getElementById('plist').closest('.pt');
+  if (ptBox) [...ptBox.children].forEach(c=>{ if (c.classList.contains('acts2') || c.classList.contains('note')) c.classList.add('ust-more'); });
+  const mis = document.querySelector('#misIn button');
+  const more = h('button', {type:'button', class:'more ust-mtg', 'aria-expanded':'false', onclick:()=>{ const o = !list.classList.contains('ust-mopen'); list.classList.toggle('ust-mopen', o); more.setAttribute('aria-expanded', o ? 'true' : 'false'); more.textContent = o ? 'Сховати перенесення й файли ▴' : 'Перенесення телефон ⇄ комп’ютер і файли ▾'; }}, 'Перенесення телефон ⇄ комп’ютер і файли ▾');
+  const head = h('div', {class:'ust-head'},
+    h('h2', {}, 'Пацієнти'),
+    h('div', {class:'ust-acts'},
+      h('button', {type:'button', class:'btn primary ust-new', onclick:stNew}, '＋ Новий пацієнт'),
+      mis ? h('button', {type:'button', class:'btn ust-mis', title:'Перенести дані пацієнта з МІС через буфер обміну', onclick:()=>mis.click()}, '⇩ З МІС') : ''),
+    h('p', {class:'chips-hint ust-hint'}, 'Знайдіть пацієнта в списку або почніть нового. Форма огляду відкриється після вибору.'));
+  list.prepend(head);
+  if (ptBox) ptBox.append(more);
+  UST.built = true;
+}
+function stNew(){
+  UST.dismissed = true; stApply();
+  const i = TABS.findIndex(t=>t.id === 'meta'); try{ if (i >= 0) show(i); }catch(e){}
+  setTimeout(()=>{ const e = document.getElementById('meta_pib'); if (e){ e.focus(); try{ e.scrollIntoView({block:'center'}); }catch(x){} } }, 30);
+}
+function stApply(){
+  const R = document.documentElement, on = stOnS();
+  if (on) stBuild();
+  const empty = on && stEmpty();
+  const start = empty && !UST.dismissed;
+  const was = R.classList.contains('ui-start');
+  R.classList.toggle('ui-start', start);
+  R.classList.toggle('ust-empty', empty);
+  if (start && !was){ try{ window.scrollTo({top:0}); }catch(e){} }
+  if (start) stSel();
+  if (!start && was && !empty) UST.dismissed = false;   /* пацієнта відкрито — наступний порожній знову почнеться зі списку */
+  try{ const sp = document.querySelector('#sidecard .sprog'), t = sp && sp.querySelector('.sp1'); if (sp) sp.classList.toggle('ust-zero', !!t && /(^|\D)0 з \d/.test(t.textContent)); }catch(e){}
+}
+function exApply(){
+  const id = (TABS[active] || {}).id;
+  document.documentElement.classList.toggle('ui-nonexam', stOnS() && NONEXAM.includes(id));
+}
+/* новий пацієнт з будь-якої кнопки — одразу форма */
+['newPatient'].forEach(nm=>{ const f = window[nm]; if (typeof f === 'function') window[nm] = function(){ UST.dismissed = true; const r = f.apply(this, arguments); try{ stApply(); }catch(e){} return r; }; });
+{ const x0 = show; show = function(i){ const ev = window.event; if (ev && ev.isTrusted && TABS[i] && TABS[i].id !== 'meta') UST.dismissed = true; const r = x0.apply(this, arguments); try{ stApply(); exApply(); }catch(e){} return r; }; }
+function stSel(){ if (!document.documentElement.classList.contains('ui-start')) return; const i = TABS.findIndex(t=>t.id === 'meta'); if (i < 0) return; TABS.forEach((t, k)=>t.tab.setAttribute('aria-selected', k === i ? 'true' : 'false')); }
+{ const x0 = opSpy; opSpy = function(){ if (document.documentElement.classList.contains('ui-start')){ OPG.raf = 0; stSel(); return; } const r = x0.apply(this, arguments); try{ exApply(); }catch(e){} return r; }; }
+{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ stApply(); }catch(e){} return r; }; }
+{ const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ stApply(); exApply(); hdrApply(); }catch(e){} return r; }; }
+/* бічний зміст: при вході підсвічено те, що видно (раніше — «Скарги», хоча на екрані «Пацієнт і запис») */
+function spySync(){ try{ const m = stMeta(); if (document.body.classList.contains('onepage') && m && m.getBoundingClientRect().height > 0){ OPG.lock = 0; opSpy(); } }catch(e){} }
+/* шапка: режим — у меню «Профіль», тема — у «Вигляді» */
+function modeName(){ return MODE === 'amb' ? 'Амбулаторно' : 'Стаціонар'; }
+function hdrApply(){
+  const b = document.getElementById('profBtn'); if (!b) return;
+  let m = b.querySelector('.pmode');
+  const pl = b.querySelector('.pl');
+  if (stOnS()){ if (!m){ m = h('span', {class:'pmode'}); b.append(m); } m.textContent = ' · ' + modeName() + ' ▾'; if (pl) pl.textContent = pl.textContent.replace(/\s*▾\s*$/, ''); }
+  else if (m) m.remove();
+}
+{ const x0 = renderProfBtn; renderProfBtn = function(){ const r = x0.apply(this, arguments); try{ hdrApply(); }catch(e){} return r; }; }
+{ const x0 = applyMode; applyMode = function(){ const r = x0.apply(this, arguments); try{ hdrApply(); }catch(e){} return r; }; }
+function profPop(){
+  const old = document.getElementById('profPop'); if (old){ old.remove(); return; }
+  const b = document.getElementById('profBtn'), seg = document.getElementById('modeSeg');
+  const box = h('div', {id:'profPop', class:'viewpop profpop', role:'dialog', 'aria-label':'Профіль і режим'});
+  const close = () => { box.remove(); document.removeEventListener('pointerdown', out, true); };
+  const out = e => { if (!box.contains(e.target) && e.target !== b && !b.contains(e.target)) close(); };
+  if (seg && !(PROF && (PROF.w === 'hosp' || PROF.w === 'amb'))){
+    box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Режим'), h('div', {class:'vseg', role:'group', 'aria-label':'Режим'},
+      ...[...seg.querySelectorAll('button')].map(src=>h('button', {type:'button', 'aria-pressed':src.dataset.mode === MODE ? 'true' : 'false', onclick:()=>{ src.click(); close(); }}, src.textContent.trim())))));
+  }
+  box.append(h('button', {type:'button', class:'btn', onclick:()=>{ close(); profileDialog(false); }}, '👤 Профіль: спеціальність і місце роботи…'));
+  document.body.append(box);
+  const r = b.getBoundingClientRect(); box.style.top = Math.round(r.bottom + 6) + 'px'; box.style.right = Math.max(8, Math.round(window.innerWidth - r.right)) + 'px';
+  setTimeout(()=>document.addEventListener('pointerdown', out, true), 0);
+}
+{ const b = document.getElementById('profBtn'); if (b){ const o = b.onclick; b.onclick = e => { if (stOnS() && window.innerWidth >= 900){ e.preventDefault(); profPop(); } else if (o) o.call(b, e); }; } }
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  if (stOnS() && typeof THEME_NAMES !== 'undefined'){
+    const row = h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Тема'), h('div', {class:'vseg', role:'group', 'aria-label':'Тема кольорів'},
+      ...[['auto','Авто'],['day','День'],['warm','Папір'],['night','Ніч'],['grey','Кабінет']].map(([k, l])=>h('button', {type:'button', 'aria-pressed':THEME === k ? 'true' : 'false', onclick:()=>{ themeSet(k); try{ renderViewCtl(); }catch(e){} }}, l))));
+    const first = box.querySelector('.vrow'); if (first) first.after(row); else box.prepend(row);
+  }
+  return box; }; }
+try{ stApply(); exApply(); hdrApply(); }catch(e){}
+try{ requestAnimationFrame(()=>{ spySync(); try{ SHELL.placeDocs(); }catch(e){} stApply(); exApply(); }); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
