@@ -1108,7 +1108,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const cnt=P.querySelectorAll('.fbk').length, d2=P.querySelectorAll('.fbk-ter .fb-diary').length, ep=P.querySelectorAll('.fbk-e003 .fb-ep').length;
   const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
   w.eval('blanksDialog()'); const dlg=$('fbPick'), boxes=dlg ? dlg.querySelectorAll('input[type=checkbox]').length : 0; if (dlg) dlg.remove();
-  ok('Порожні бланки: пункт у меню «⋯», вибір 8 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===8, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
+  ok('Порожні бланки: пункт у меню «⋯», вибір 9 бланків, друк обраних кожен окремо (щоденник — 2 на аркуш, епікриз 003/о — 2 сторінки)', !!btn && okp===true && printed===n0+1 && cnt===3 && d2===2 && ep===2 && clean && boxes===9, JSON.stringify([!!btn, okp, printed-n0, cnt, d2, ep, clean, boxes])); }
 { const r=w.eval(`(()=>{ const sw=$('#set_ampsop'); const off0=!ampOn();
     lsSet('po.ampsop','1'); const on=ampOn(); ampBlanksSync(); const nb=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length;
     const it=addRx({drug:'Цефтріаксон'}); renderRx(); const row=document.querySelector('#rxList .rx[data-id="'+it.id+'"]');
@@ -1198,6 +1198,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     lsSet('po.ampsop',''); blanksDialog(); const d2=document.getElementById('fbPick'); const off=!!d2&&![...d2.querySelectorAll('input')].some(i=>i.value==='amp1r'); if (d2) d2.remove();
     return JSON.stringify([btn,nav,srch,comb,ok2,off]); })()`);
   ok('Бланки там, де шукають: «🖨 Бланки» біля «Друк / PDF», у «Інструментах», у пошуку; «Додаток 1 + перегляд АБТ» — з увімкненим СОП', r==='[true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const b=FBLANKS.find(x=>x.k==='ohl'); const t=b?b.html:''; return JSON.stringify([!!b, FBLANKS[0]&&FBLANKS[0].k==='ohl', ['33. Скарги','34. Anamnesis morbi','35. Anamnesis vitae','36. Об’єктивні дані','Органи дихання','Серцево-судинна система','Органи травлення','Сечовидільна система','Неврологічний статус','37. Огляд на коросту','Попередній діагноз','План обстеження','План лікування','потрібне підкреслити'].every(x=>t.includes(x))]); })()`);
+  ok('Порожній бланк «Первинний огляд — стаціонар» (003/о, п. 33–40): усі системи, варіанти — підкреслити', r==='[true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
