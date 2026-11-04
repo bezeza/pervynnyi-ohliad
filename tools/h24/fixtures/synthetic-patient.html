@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Синтетична медкарта | Тестовий Пацієнт Іванович</title>
+  <style>
+    /* Навмисно тісний вигляд, схожий на болі МІС: стиль H24 комфорт має це перекрити. */
+    body { margin: 16px; font: 12px/1.2 Arial, sans-serif; background: #d9ecff; color: #042; }
+    .tabs { display: flex; flex-wrap: nowrap; gap: 2px; overflow: hidden; background: #07c; padding: 2px; }
+    .tabs a { font-size: 11px; color: #fff; text-decoration: none; padding: 1px 3px; white-space: nowrap; }
+    .h24-filters { background: #39f; color: #fff; padding: 2px; }
+    .h24-filters label { display: block; font-size: 11px; line-height: 1.1; }
+    .patient-item { border: 2px solid #07c; margin: 2px 0; padding: 2px; background: #e0f3ff; }
+    table { font-size: 11px; border-collapse: collapse; width: 100%; }
+    td { padding: 1px 2px; border: 1px solid #09c; }
+    .appBtn { font-size: 11px; padding: 0 2px; background: #f40; color: #fff; border: 0; }
+    h1 { font-size: 13px; }
+    .layout { display: grid; grid-template-columns: 280px 1fr; gap: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Синтетична медкарта H24 — вигаданий пацієнт, не для клініки</h1>
+  <nav class="h24-tabs tabs" aria-label="Вкладки медкарти">
+    <a href="/new/profile/doctor/patients/4242/medical-card/patient-summary">Епізоди</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/histories">Історії</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/diagnosis">Діагноз</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/recipes">Рецепти</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/care-plans">Плани</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/orders">Призначення</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/documents">Документи</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/med-reports">Звіти</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/conditions">Стани</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/patient-info/passport">Паспорт</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/patient-info/medical-data">Меддані</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/risk-factors">Ризики</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/observations">Спостереження</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/clinical-impressions">Огляди</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/diagnostic-reports">Діагн. звіти</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/procedures">Процедури</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/immunizations">Щеплення</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/encounters">Візити</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/devices">Пристрої</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/specimens">Зразки</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/service-requests">Скерування</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/medication-statements">Ліки</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/allergy-intolerances">Алергії</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/questionnaire">Анкети</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/approvals">Доступи</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/files">Файли</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/consents">Згоди</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/referrals">Направлення</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/discharges">Виписки</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/temp-disability">Непрацездатність</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/journal">Журнал</a>
+    <a href="/new/profile/doctor/patients/4242/medical-card/compositions">Композиції</a>
+  </nav>
+  <div class="layout">
+    <form class="h24-filters" aria-label="Фільтри журналу">
+      <label><input type="checkbox"> Період</label>
+      <label><input type="checkbox"> Статус епізоду</label>
+      <label><input type="checkbox"> Лікар</label>
+      <label><input type="checkbox"> Відділення</label>
+      <label><input type="checkbox"> Код МКХ-10</label>
+      <label><input type="checkbox"> Тип епізоду</label>
+      <label><input type="checkbox"> ЕСОЗ</label>
+      <label><input type="checkbox"> Стать</label>
+      <label><input type="checkbox"> Вік від</label>
+      <label><input type="checkbox"> Вік до</label>
+      <label><input type="checkbox"> Дата від</label>
+      <label><input type="checkbox"> Дата до</label>
+      <label><input type="checkbox"> Організація</label>
+      <label><input type="checkbox"> Послуга</label>
+      <label><input type="checkbox"> Пакет</label>
+      <label><input type="checkbox"> Ознака</label>
+    </form>
+    <main>
+      <div class="patient-list">
+        <div class="info-patient patient-item">
+          <div class="patient_title"><a href="/new/profile/doctor/patients/999/medical-card/patient-summary"><span>Інший Тест Петрович</span></a></div>
+        </div>
+      </div>
+      <div class="patient-container">
+        <div class="info-patient patient-item">
+          <div class="patient_title"><a href="/new/profile/doctor/patients/4242/medical-card/patient-info/passport"><span data-test="patientFullName">Тестовий Пацієнт Іванович</span></a></div>
+          <h24-patient-short-info>
+            <span data-test="gender">Ч.</span>
+            <span data-test="birthDate">21 квітня 1973 (53 р.)</span>
+          </h24-patient-short-info>
+          <div>
+            <a href="/new/profile/doctor/patients/4242/medical-card/patient-summary">Епізоди</a>
+            <a href="/new/profile/doctor/patients/4242/medical-card/diagnosis">Діагноз</a>
+            <a href="/new/profile/doctor/patients/4242/medical-card/documents">Документи</a>
+          </div>
+        </div>
+      </div>
+      <section class="h24-block">
+        <h2>Епізоди</h2>
+        <table class="h24-table">
+          <tr><td>Назва</td><td>Статус</td><td>Період</td><td>ЕСОЗ</td></tr>
+          <tr><td>J18.1 Часткова пневмонія</td><td>Активний</td><td>01.11.2026 —</td><td>aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee</td></tr>
+          <tr><td>J44.9 Хронічне обструктивне захворювання легень</td><td>Завершений</td><td>02.01.2025 — 20.01.2025</td><td>bbbbbbbb-cccc-dddd-eeee-ffffffffffff</td></tr>
+        </table>
+      </section>
+      <section class="h24-block">
+        <h2>Діагнози</h2>
+        <table>
+          <tr><td>Тип</td><td>Діагноз</td><td>МКХ-10</td></tr>
+          <tr><td>Основний</td><td>Часткова пневмонія</td><td>J18.1</td></tr>
+          <tr><td>Супутній</td><td>Гіпертонічна хвороба</td><td>I10</td></tr>
+        </table>
+      </section>
+      <div class="h24-popover__key-value"><span class="h24-popover__key">Алергії</span><span class="h24-popover__value">Пеніцилін — висип</span></div>
+      <div class="h24-popover__key-value"><span class="h24-popover__key">Лікарські засоби</span><span class="h24-popover__value">Сальбутамол 100 мкг інгаляційно</span></div>
+      <div class="h24-bottom-bar">
+        <button type="button" class="appBtn">Зберегти</button>
+        <button type="button" class="appBtn">Підписати</button>
+        <button type="button" class="appBtn">Надіслати</button>
+        <button type="button" class="appBtn">Отримати доступ до медичних даних</button>
+        <input id="keep" value="не чіпати">
+      </div>
+    </main>
+  </div>
+</body>
+</html>
