@@ -1189,7 +1189,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const empty=b028(true)[0]; const noPat=!(mv('pib')&&empty.textContent.includes(mv('pib'))); const inPack=FBLANKS.some(b=>b.k==='k028'&&b.html.includes('028/о'));
     const hosp=DOCMORE.hosp.some(x=>x[0]==='kons'); BLANK=kB; switchDoc(kD);
     return JSON.stringify([ok1,items,noPat,inPack,hosp]); })()`);
-  ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true]', r); }
+  ok('Бланк 028/о «Консультаційний висновок спеціаліста» — як у закладі: у «Перед друком» на «Консультації», порожній — у «Порожніх бланках», консультація є і в стаціонарі', r==='[true,true,true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ const btn=!!document.getElementById('blanksBtn')&&document.getElementById('blanksBtn').previousElementSibling===document.getElementById('printBtn');
     layoutTabs(); const nb=document.getElementById('tab_blanks'); const nav=!!nb&&nb.parentElement.querySelector('.tgl').textContent==='Інструменти';
     const srch=searchItems().some(x=>/Бланки для друку/.test(x.t)&&/щоденник/.test(x.s));
@@ -1233,7 +1233,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const initialSync=TABS.filter(t=>!t.panel.hidden).length===1;
     const each0=TABS.forEach;
     const count=()=>{ let n=0; TABS.forEach=function(fn){ return each0.call(this,function(...args){ n++; return fn.apply(this,args); }); }; try{ show(b); } finally{ TABS.forEach=each0; } return n; };
-    const baselineVisits=count();
+    PO18_SHOW_FAST.enabled=false; const baselineVisits=count();
     PO18_SHOW_FAST.enabled=true; show(a);
     const optimizedVisits=count();
     const classic=TABS.filter(t=>!t.panel.hidden).length===1 && !TABS[b].panel.hidden && TABS[a].panel.hidden && TABS[b].tab.getAttribute('aria-selected')==='true';
