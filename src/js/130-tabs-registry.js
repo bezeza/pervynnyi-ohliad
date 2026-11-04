@@ -14,14 +14,14 @@ TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показн
 
 /* У стабільному режимі вкладок змінюємо лише попередню й нову вкладки.
    Повний прохід потрібен тільки при виході з режиму «одна сторінка». */
-const PO18_SHOW_FAST = {enabled:true, lastOnePage:false};
+const PO18_SHOW_FAST = {enabled:true, lastOnePage:false, initialized:false};
 function show(i){
   try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
   const previous = TABS[active], next = TABS[i];
   const onePage = document.body.classList.contains('onepage');
   active = i;
   if (next && next.id === 'dx') dxPanel();
-  if (!PO18_SHOW_FAST.enabled || (!onePage && PO18_SHOW_FAST.lastOnePage)){
+  if (!PO18_SHOW_FAST.enabled || !PO18_SHOW_FAST.initialized || (!onePage && PO18_SHOW_FAST.lastOnePage)){
     TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
   } else {
     if (previous && previous !== next){
@@ -32,6 +32,7 @@ function show(i){
     next.tab.setAttribute('aria-selected', 'true');
   }
   PO18_SHOW_FAST.lastOnePage = onePage;
+  PO18_SHOW_FAST.initialized = true;
   next.tab.scrollIntoView({block:'nearest', inline:'center'});
   if (next === CALC){ syncFromForm(false); update(); }
   if (next === RXT){ runCalcs(); renderRx(); }
