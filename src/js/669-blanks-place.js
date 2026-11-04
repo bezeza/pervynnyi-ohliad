@@ -19,7 +19,7 @@ function blanksNav(){
   const g = [...box.querySelectorAll('.tgrp')].find(x=>{ const l = x.querySelector('.tgl'); return l && l.textContent === 'Інструменти'; });
   let b = document.getElementById('tab_blanks');
   if (!g){ if (b) b.remove(); return; }
-  if (!b) b = h('button', {type:'button', class:'tab tab-act', id:'tab_blanks', title:'Порожні бланки для заповнення ручкою', onclick:()=>blanksDialog()}, '🖨 Бланки для друку');
+  if (!b) b = h('button', {type:'button', class:'tab-act', id:'tab_blanks', title:'Порожні бланки для заповнення ручкою', onclick:()=>blanksDialog()}, '🖨 Бланки для друку');
   const lab = g.querySelector('.tgl'); if (b.parentElement !== g || b.previousElementSibling !== lab){ if (lab) lab.after(b); else g.prepend(b); }
 }
 { const x0 = layoutTabs; layoutTabs = function(){ const r = x0.apply(this, arguments); try{ blanksNav(); }catch(e){} return r; }; }

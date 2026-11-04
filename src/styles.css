@@ -2168,7 +2168,8 @@ html.touch .nextbar .btn{padding:12px 16px}
 .b003.b028 .b028sg>div>span:first-child{max-width:55%}
 .b003.b028 .b028n{display:flex;flex-direction:column;align-items:center;min-width:150px}
 .b003.b028 .b028l{display:block;width:100%;border-bottom:1px solid #000;min-height:1.3em;text-align:center}
-.tab.tab-act{color:var(--accent)}
+.tab-act{flex:0 0 auto;border:0;background:none;padding:11px 14px 10px;cursor:pointer;font:500 14px var(--f-head);color:var(--accent);white-space:nowrap;text-align:left}
+@media (min-width:900px){body.shell.lay-B #tabs .tab-act{display:flex;align-items:center;gap:10px;width:100%;border-radius:7px;padding:6px 8px;font:400 14px var(--f-ui)}body.shell.lay-B #tabs .tab-act:hover{background:var(--bg)}:root.ui-ios:not(.touch) #sidecol #tabs .tab-act{padding:5px 9px;font-size:13.5px;border-radius:6px}}
 /* 0.9.3.84 — стиль «Apple»: екран входу «Пацієнти», дії огляду лише в огляді, бічна панель і шапка без зайвого */
 .ust-head,.ust-mtg{display:none}
 :root.ui-start .form .panel:not(.ust-panel){display:none!important}
