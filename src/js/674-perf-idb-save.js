@@ -1,9 +1,10 @@
 /* 0.9.3.87 — адресний запис одного пацієнта в IndexedDB.
    Не змінює формат запису; idbPutVal лишається точкою шифрування PIN. */
+const PO18_IDB_FAST = {enabled:true, fastWrites:0};
 {
   const savePatient0 = savePatient;
   savePatient = function(silent){
-    if (!IDB.ok || !IDB.db || !IDB.cache || (typeof pinBlocked === 'function' && pinBlocked()))
+    if (!PO18_IDB_FAST.enabled || !IDB.ok || !IDB.db || !IDB.cache || (typeof pinBlocked === 'function' && pinBlocked()))
       return savePatient0.apply(this, arguments);
 
     const name = patientName();
@@ -23,6 +24,7 @@
 
     // IDB.cache — внутрішній кеш; оновлюємо лише один запис без копіювання всієї бази.
     IDB.cache[PID] = record;
+    PO18_IDB_FAST.fastWrites++;
     let ok = true;
     try{
       IDB.w[PID] = record.updated;
