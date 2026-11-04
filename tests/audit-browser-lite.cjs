@@ -3,9 +3,9 @@ const {chromium}=require('playwright');
 const ROOT=path.resolve(__dirname,'..'),APP=path.join(ROOT,'build','app.html'),OUT=path.join(ROOT,'audit-output');
 fs.mkdirSync(OUT,{recursive:true});
 const result={generatedAt:new Date().toISOString(),cpuThrottle:4,scenarios:[],populated:null,storage500:null,storageBlocked:null,styleToggle:null,errors:[]};
-server=http.createServer((req,res)=>{if(req.url==='/'||req.url==='/app.html'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store'});fs.createReadStream(APP).pipe(res);}else{res.writeHead(404);res.end();}});
 let browser,server;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+server=http.createServer((req,res)=>{if(req.url==='/'||req.url==='/app.html'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store'});fs.createReadStream(APP).pipe(res);}else{res.writeHead(404);res.end();}});
 async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({timeout:true}))]);}
 (async()=>{
  await new Promise(r=>server.listen(4173,'127.0.0.1',r));
