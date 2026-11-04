@@ -151,6 +151,7 @@
   "670-blank-ohl.js",
   "671-ui-entry.js",
   "672-side-resize.js",
-  "673-storage-guards.js"
+  "673-storage-guards.js",
+  "674-see-edit.js"
  ]
 }
