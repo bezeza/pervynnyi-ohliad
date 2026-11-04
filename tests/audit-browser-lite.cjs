@@ -58,12 +58,17 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
    return {clickMs,showMs,paperMs,total:stats(__audit.totals),components:stats(__audit.components)};
   });
  }
- for(const [width,height,style,theme] of [[1366,768,'ios','day'],[1920,1080,'classic','night'],[390,844,'ios','night']]){
-  const x=await open({width,height,style,theme});
-  const axe=await axeScan(x.page);
-  const layout=await x.page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,overflow:document.documentElement.scrollWidth>innerWidth,style:localStorage.getItem('po.uistyle'),theme:document.documentElement.getAttribute('data-theme')||'auto'}));
-  result.scenarios.push({width,height,style,theme,readyMs:x.readyMs,nav:x.nav,layout,axe});
-  console.log('Scenario done:',width,style,theme,'ready',x.readyMs,'ms');
+ for(const [width,height] of [[1366,768],[1920,1080],[390,844]]){
+  const x=await open({width,height,style:'ios',theme:'day'});
+  const variants=[];
+  for(const [style,theme] of [['ios','day'],['ios','night'],['classic','day'],['classic','night']]){
+   await x.page.evaluate(({style,theme})=>{UISTYLE=style;uiStyleApply();THEME=theme;applyTheme();applyView();}, {style,theme});
+   const layout=await x.page.evaluate(()=>({style:UISTYLE,theme:THEME,scrollWidth:document.documentElement.scrollWidth,overflow:document.documentElement.scrollWidth>innerWidth}));
+   const axe=(style==='ios'&&theme==='day')||(style==='classic'&&theme==='night')?await axeScan(x.page):null;
+   variants.push({style,theme,layout,axe});
+  }
+  result.scenarios.push({width,height,readyMs:x.readyMs,nav:x.nav,variants});
+  console.log('Viewport done:',width,'variants',variants.length,'ready',x.readyMs,'ms');
   await x.context.close();
  }
  const x=await open({width:1920,height:1080,style:'ios',theme:'day'});
