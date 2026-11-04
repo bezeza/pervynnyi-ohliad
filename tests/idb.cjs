@@ -76,6 +76,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   ok([...(DBS.get('po-db') || new Map()).get('patients') || []].length === 1, 'пацієнта немає в базі');
 
   // Профіль одного запису на великому кеші: 10 000 синтетичних записів, без запису їх у тестову БД.
+  w.eval('clearTimeout(saveTimer); saveTimer=null');
   const renderPatients0 = w.renderPatients;
   if (typeof renderPatients0 === 'function') w.renderPatients = () => {};
   w.eval("(()=>{const pad='x'.repeat(2048); for(let i=0;i<10000;i++){const id='pbig'+i, p={name:'Тест '+i,updated:i+1,snap:{v:1,f:{pad},c:{}}}; IDB.cache[id]=p; IDB.w[id]=p.updated;}})()");
