@@ -27,7 +27,7 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
   page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')result.errors.push({type:'console-'+m.type(),message:m.text()});});
   const cdp=await context.newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
   const start=Date.now();await page.goto('http://127.0.0.1:4173/app.html',{waitUntil:'domcontentloaded',timeout:20000});
-  await page.waitForSelector('#out',{timeout:15000});
+  await page.waitForSelector('#out',{state:'attached',timeout:15000});
   const raf=await bounded(page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))),5000);
   return {context,page,cdp,readyMs:Date.now()-start,rafTimeout:!!(raf&&raf.timeout),nav:await page.evaluate(()=>({dcl:+(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0).toFixed(2),load:+(performance.getEntriesByType('navigation')[0]?.loadEventEnd||0).toFixed(2)}))};
  }
