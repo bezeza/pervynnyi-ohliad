@@ -189,7 +189,10 @@ function val(f, any){
     f.hintEl.textContent = n >= 0 ? n + ' ' + plural(n, fm) : 'Перевірте дати';
     return `з ${fmtD(a)} по ${fmtD(b)}` + (n >= 0 ? ` (${n} ${plural(n, fm)})` : '');
   }
-  const tv = f.el.value.trim(); return tv || (f.fallback ? f.fallback() : '');
+  const tv = f.el.value.trim();
+  /* порожнє або самий лише «…» — не текст: у документ не потрапляє (підстановка, якщо вона є) */
+  if (!tv || /^[….]+$/.test(tv)) return f.fallback ? f.fallback() : '';
+  return tv;
 }
 
 const cap = s => /^\[[^|\]]*\|[^\]]*\]/.test(s) ? s.replace(/^\[([^|\]]*)\|([^\]]*)\]/, (m,a,b)=>'[' + a.charAt(0).toUpperCase() + a.slice(1) + '|' + b.charAt(0).toUpperCase() + b.slice(1) + ']') : s.charAt(0).toUpperCase() + s.slice(1);
