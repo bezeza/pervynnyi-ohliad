@@ -1208,6 +1208,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     uiStyleSet('classic'); const cl=!R.classList.contains('ui-start')&&!R.classList.contains('ui-nonexam')&&!document.querySelector('#profBtn .pmode'); uiStyleSet('ios');
     e.value=keepPib; update(); return JSON.stringify([st1,head,st2,ne,ex,pm,th,cl]); })()`);
   ok('Стиль Apple при вході: екран «Пацієнти» з «＋ Новий пацієнт», дії огляду лише в огляді, режим у «Профілі», тема у «Вигляді»; «Класичний» — як було', r==='[true,true,true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const g=!!document.getElementById('sideGrip'); const ic=TABS.filter(t=>t.tab&&t.tab.dataset.ic).length===TABS.length;
+    const kf=VIEW.sideFold, kw=VIEW.sideW; VIEW.sideFold=true; renderSideFold(); const f=document.body.classList.contains('sidefold')||layoutNow()!=='B'; const lab=SIDE_FOLD_BUTTON?SIDE_FOLD_BUTTON.textContent:'';
+    VIEW.sideFold=false; VIEW.sideW=300; renderSideFold(); const w=document.documentElement.style.getPropertyValue('--sidew')==='300px';
+    VIEW.sideFold=kf; VIEW.sideW=kw; saveView(); applyView(); return JSON.stringify([g,ic,f,lab===(document.body.classList.contains('sidefold')?'»':'« Лише значки'),w]); })()`);
+  ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
