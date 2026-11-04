@@ -1212,7 +1212,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const kf=VIEW.sideFold, kw=VIEW.sideW; VIEW.sideFold=true; renderSideFold(); const f=document.body.classList.contains('sidefold')||layoutNow()!=='B'; const lab=SIDE_FOLD_BUTTON?SIDE_FOLD_BUTTON.textContent:'';
     VIEW.sideFold=false; VIEW.sideW=300; renderSideFold(); const w=document.documentElement.style.getPropertyValue('--sidew')==='300px';
     VIEW.sideFold=kf; VIEW.sideW=kw; saveView(); applyView(); return JSON.stringify([g,ic,f,lab===(document.body.classList.contains('sidefold')?'»':'« Лише значки'),w]); })()`);
-  ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true]', r); }
+  ok('Бічне меню: межа для перетягування, значки розділів, згорнуте — «»», ширина зберігається', r==='[true,true,true,true,true,true]', r); }
 // Задача 18: спільний результат checkDoc() для всіх підказок одного update().
 {
   const before = w.eval('PO18_CHECK_CACHE.executions');
