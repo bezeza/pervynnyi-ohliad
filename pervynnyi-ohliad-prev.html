@@ -2246,12 +2246,41 @@ html.touch .nextbar .btn{padding:12px 16px}
 @media (min-width:900px){:root.ui-start #sidecol #ptline{display:none!important}}
 :root.ui-ios.ui-nonexam #undoBtn[disabled]{display:none}
 :root.ui-ios.ui-nonexam body.shell .form>.docbar:not(:has(#docSeg)):has(#undoBtn[disabled]){display:none}
+/* 0.9.3.85 — бічне меню: ширина перетягуванням, згорнуте — лише значки */
+@media (min-width:900px){
+  body.lay-B #sidecol>.sidein{position:sticky}
+  body.lay-B.sidefold #sidecol>.sidein>#sideGrip.side-grip{display:block!important}
+  .side-grip{position:absolute;top:0;right:0;width:9px;height:100%;min-height:100%;cursor:col-resize;z-index:6;touch-action:none}
+  .side-grip::after{content:"";position:absolute;top:0;bottom:0;right:0;width:2px;border-radius:1px;background:transparent;transition:background .15s}
+  .side-grip:hover::after,.side-grip:focus-visible::after,body.side-dragging .side-grip::after{background:var(--accent)}
+  .side-grip:focus-visible{outline:none}
+  body.side-dragging{cursor:col-resize;user-select:none}
+  body.lay-B.side-sized:not(.sidefold) .form{grid-template-columns:var(--sidew,232px) minmax(0,1fr)}
+  /* згорнуте — смужка значків */
+  body.lay-B.sidefold .form{grid-template-columns:60px minmax(0,1fr)}
+  body.lay-B.sidefold #sidecol>.sidein{width:60px;padding:6px 0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+  body.lay-B.sidefold #sidecol>.sidein>:not(.sidefold-btn):not(#tabs):not(#sideGrip){display:none!important}
+  body.lay-B.sidefold #sidecol>.sidein>#tabs{display:flex!important;padding:0 6px 8px}
+  body.lay-B.sidefold .sidefold-btn{width:48px;min-height:32px;margin:0 6px 6px;padding:4px;font-size:15px}
+  body.lay-B.sidefold .sidefold-btn span{writing-mode:horizontal-tb;transform:none}
+  :root body.lay-B.sidefold #sidecol #tabs .tgl{font-size:0;padding:4px 0 2px;height:9px;display:block;border-top:1px solid var(--line);margin:4px 6px 0}
+  :root body.lay-B.sidefold #sidecol #tabs .tgrp:first-child .tgl{border-top:0}
+  :root body.lay-B.sidefold #sidecol #tabs .tab,:root body.lay-B.sidefold #sidecol #tabs .tab-act{font-size:0;justify-content:center;padding:6px 0;gap:0;position:relative;width:48px;min-height:36px}
+  :root body.lay-B.sidefold #sidecol #tabs .tab::before,:root body.lay-B.sidefold #sidecol #tabs .tab-act::before{content:attr(data-ic);display:inline-block;font-size:18px;line-height:1}
+    :root body.lay-B.sidefold #sidecol #tabs .tab .dot{position:absolute;right:5px;top:5px;width:8px!important;height:8px!important;flex:none;margin:0;order:0;border-width:0!important;box-shadow:none!important}
+  :root body.lay-B.sidefold #sidecol #tabs .tab:not(.filled):not(.cw):not(.autof) .dot{visibility:hidden}
+  :root body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"] .dot{visibility:hidden}
+  :root body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"]{background:var(--accent-soft)}
+  :root.ui-ios body.lay-B.sidefold #sidecol #tabs .tab[aria-selected="true"]{background:var(--fill)}
+  :root body.lay-B.sidefold #sidecol #tabs .tab.autof:not(.filled) .dot,:root body.lay-B.sidefold #sidecol #tabs .tab.cw .dot{background:var(--flag)!important}
+  :root body.lay-B.sidefold #sidecol #tabs .tab.filled:not(.cw) .dot{background:var(--ok)!important}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.84 від 02.11.2026">v0.9.3.84 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.85 від 02.11.2026">v0.9.3.85 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4397,8 +4426,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.84', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.85', VDATE = '02.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.85', '04.11.2026', 'бічне меню: ширину змінюють, перетягуючи праву межу мишкою (180–380 px; стрілками — коли межа у фокусі); стягнули вузько або «« Лише значки» — меню стає смужкою значків (назва розділу — при наведенні, кольорова крапка — стан розділу); подвійний клік по межі — звичайна ширина; запам’ятовується'],
   ['0.9.3.84', '04.11.2026', 'стиль «Apple» — менше на екрані при вході: екран «Пацієнти» (пошук, «Сьогодні», список, одна кнопка «＋ Новий пацієнт» і «⇩ З МІС»; перенесення й файли — під посиланням), форма — після вибору пацієнта; «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду, рядок дій прилипає вгорі; бічна панель без «Новий пацієнт» двічі, «не обрано» й «0 з 13», кружечки — лише в заповнених розділах; «Стаціонар / Амбулаторно» — у меню «Профіль», тема — у «Вигляді»; виправлено: при вході в змісті було позначено «Скарги» замість «Пацієнт і запис»'],
   ['0.9.3.83', '04.11.2026', 'порожній бланк «Первинний огляд — стаціонар» (003/о, п. 33–40) для ручки: скарги, анамнез, усі системи, неврологічний статус, п. 37–39, діагноз з обґрунтуванням, обґрунтування госпіталізації, план обстеження й лікування — варіанти з форми огляду, потрібне підкреслити, своє — на лінії; 2 сторінки А4. «🖨 Бланки» → першим у списку'],
   ['0.9.3.82', '04.11.2026', 'порожні бланки тепер легко знайти: кнопка «🖨 Бланки» поруч із «Друк / PDF» під текстом документа, «🖨 Бланки для друку» — першим пунктом групи «Інструменти» в бічній панелі, у пошуку (Ctrl+K) — за словами «бланк», «щоденник», «додаток», на телефоні — в аркуші «Документ і дії»; новий бланк СОП «Додаток 1 + перегляд АБТ через 48–72 год» — на одному аркуші А4 (потрібне підкреслити)'],
@@ -5735,6 +5765,7 @@ const HELPS = [
  ['Копіювання, друк, МІС', [
   '«Перевірка перед підписом» над текстом показує, чого бракує (ПІБ, діагноз, критерії тощо); натисніть пункт — відкриється потрібна вкладка.',
   'Адреса (стиль «Apple»): впишіть одним рядком — «с. …, вул. …, буд., … р-н, … обл.» — програма сама розкладе її на поля для бланків; перевірити чи виправити — «Розбити на поля». Пошук по всьому — кнопка з лупою в шапці або Ctrl+K.',
+  'Бічне меню: тягніть його праву межу мишкою — ширше або вужче; зовсім вузько (або кнопка «« Лише значки») — лише значки розділів, назва — при наведенні. Подвійний клік по межі — як було.',
   'Стиль інтерфейсу: «Вигляд» → «Стиль» — Apple (на комп’ютері як macOS: щільно, під мишку; на телефоні й планшеті як iOS: під палець) або Класичний. Тема кольорів (день / ніч…) вибирається окремо.',
   'Планшет: тримайте горизонтально — розділи, форма й текст поруч, як на комп’ютері; на сенсорному екрані кнопки й поля більші (кнопка «Вигляд» → «Дотик»: Авто / Великі кнопки / Звичайні).',
   'Щоденник без первинки: «Без хвороби» у блоці вибору хвороби; скарги — кнопками (ваші слова з попередніх щоденників пацієнта, загальний список, пошук). Після «Записати в журнал» форма стає чернеткою наступного дня — інтервал (щодня / через день) поруч із датою запису.',
@@ -19935,6 +19966,51 @@ function profPop(){
   return box; }; }
 try{ stApply(); exApply(); hdrApply(); }catch(e){}
 try{ requestAnimationFrame(()=>{ spySync(); try{ SHELL.placeDocs(); }catch(e){} stApply(); exApply(); }); }catch(e){}
+/* ===== 0.9.3.85 — бічне меню: ширина перетягуванням і режим «лише значки» =====
+   • Праву межу бічного меню можна тягнути мишкою (або стрілками, коли межа у фокусі): 180–380 px.
+   • Стягнули вужче за ~130 px — меню стає смужкою значків (назва розділу — при наведенні); «Згорнути зміст» — те саме.
+   • Подвійний клік по межі — звичайна ширина. Ширина й режим зберігаються («Вигляд», файл налаштувань). */
+const SIDE_ICONS = {meta:'👤', hv:'🩺', skarhy:'💬', morbi:'📈', qv:'📊', vitae:'📋', zah:'🧍', shk:'🖐', dyh:'🫁', ssc:'❤️', trav:'🍽', sech:'💧', nevr:'🧠', loc:'🩹', ctrl:'✅',
+  scr:'🛡', dx:'🎯', hosp:'🏥', eln:'📄', d_main:'🙂', d_obj:'🔎', d_lik:'💊', e_per:'🛏', k_main:'🗣', e_obs:'🧪', e_lik:'💊', e_rek:'📝', z_main:'👥', c_main:'👥', c_end:'⚖️',
+  t_main:'🛏', t_lik:'💊', n_main:'📨', n_end:'❓', gs_main:'🏥', p_main:'📃', v_main:'📄', g_main:'✍️', s066:'🗂', an_main:'😷', an_obj:'🫁', an_zak:'✅', an_prot:'📋', an_pun:'💉',
+  rxt:'💊', calc:'🧮', tpl:'📑', set:'⚙️', help:'❔'};
+const SIDE_MIN = 180, SIDE_MAX = 380, SIDE_RAIL = 130;
+function sideIcons(){
+  TABS.forEach(t=>{ const b = t.tab; if (!b) return; if (!b.dataset.ic) b.dataset.ic = SIDE_ICONS[t.id] || '•'; if (!b.title) b.title = t.title || t.short || ''; });
+  const bl = document.getElementById('tab_blanks'); if (bl && !bl.dataset.ic) bl.dataset.ic = '🖨';
+}
+function sideWApply(){
+  const R = document.documentElement, w = +VIEW.sideW || 0;
+  if (w && !document.body.classList.contains('sidefold')) R.style.setProperty('--sidew', w + 'px'); else R.style.removeProperty('--sidew');
+  document.body.classList.toggle('side-sized', !!w);
+  const g = document.getElementById('sideGrip'); if (g) g.hidden = !(layoutNow() === 'B' && !isPhoneW());
+}
+function sideGrip(){
+  const col = document.getElementById('sidecol'), sin = col && col.querySelector(':scope > .sidein'); if (!col || !sin || document.getElementById('sideGrip')) return;
+  const g = h('div', {id:'sideGrip', class:'side-grip', role:'separator', tabindex:'0', 'aria-orientation':'vertical', 'aria-label':'Ширина бічного меню',
+    title:'Тягніть, щоб змінити ширину меню; вузько — лише значки. Подвійний клік — як було'});
+  sin.append(g);
+  let x0 = 0, w0 = 0, drag = false;
+  const cur = () => col.getBoundingClientRect().width;
+  const set = (w, save) => {
+    if (w < SIDE_RAIL){ if (!VIEW.sideFold){ VIEW.sideFold = true; renderSideFold(); } }
+    else { if (VIEW.sideFold){ VIEW.sideFold = false; renderSideFold(); } VIEW.sideW = Math.round(Math.max(SIDE_MIN, Math.min(SIDE_MAX, w))); }
+    sideWApply(); if (save){ saveView(); try{ SHELL.placeDocs(); }catch(e){} }
+  };
+  g.addEventListener('pointerdown', e=>{ if (e.button !== 0) return; e.preventDefault(); drag = true; x0 = e.clientX; w0 = cur(); g.setPointerCapture(e.pointerId); document.body.classList.add('side-dragging'); });
+  g.addEventListener('pointermove', e=>{ if (!drag) return; set(w0 + (e.clientX - x0), false); });
+  const end = e=>{ if (!drag) return; drag = false; document.body.classList.remove('side-dragging'); try{ g.releasePointerCapture(e.pointerId); }catch(x){} set(w0 + (e.clientX - x0), true); };
+  g.addEventListener('pointerup', end); g.addEventListener('pointercancel', end);
+  g.addEventListener('dblclick', ()=>{ VIEW.sideW = 0; VIEW.sideFold = false; saveView(); applyView(); toast('Бічне меню — звичайна ширина'); });
+  g.addEventListener('keydown', e=>{ const d = e.key === 'ArrowLeft' ? -20 : e.key === 'ArrowRight' ? 20 : 0; if (!d) return; e.preventDefault(); set((VIEW.sideFold ? 60 : cur()) + d, true); });
+}
+{ const x0 = layoutTabs; layoutTabs = function(){ const r = x0.apply(this, arguments); try{ sideIcons(); }catch(e){} return r; }; }
+{ const x0 = renderSideFold; renderSideFold = function(){ const r = x0.apply(this, arguments);
+  try{ const b = SIDE_FOLD_BUTTON, l = b && b.querySelector('span'), f = document.body.classList.contains('sidefold');
+    if (l) l.textContent = f ? '»' : '« Лише значки';
+    if (b){ b.title = f ? 'Розгорнути меню — назви розділів, шаблон і прогрес' : 'Згорнути меню до значків'; b.setAttribute('aria-label', b.title); } sideWApply(); }catch(e){}
+  return r; }; }
+try{ sideGrip(); sideIcons(); renderSideFold(); }catch(e){}
 </script>
 
 </body>

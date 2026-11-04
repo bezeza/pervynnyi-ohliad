@@ -10,7 +10,42 @@ function fsIdb(mode, fn){
     r.onsuccess = ()=>{ const tx = r.result.transaction('h', mode), st = tx.objectStore('h'), q = fn(st); tx.oncomplete = ()=>res(q && q.result); tx.onerror = ()=>rej(tx.error); }; r.onerror = ()=>rej(r.error); });
 }
 const fsName = (id, p) => String((p && p.name) || 'Без імені').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, '_').slice(0, 60) + '_' + id + '.json';
-async function fsWriteFile(dir, name, data){ const fh = await dir.getFileHandle(name, {create:true}); const w = await fh.createWritable(); await w.write(data); await w.close(); }
+/* Спершу пишемо в сусідній файл «.writing» і лише після успішного close підміняємо справжній.
+   createWritable() у Chrome одразу очищає файл: збій посеред запису не має стирати попередню копію. */
+async function fsWriteFile(dir, name, data){
+  const tmp = name + '.writing';
+  const fh = await dir.getFileHandle(tmp, {create:true});
+  const w = await fh.createWritable();
+  try{ await w.write(data); await w.close(); }
+  catch(e){ try{ await w.abort(); }catch(x){} try{ await dir.removeEntry(tmp); }catch(x){} throw e; }
+  if (typeof fh.move === 'function'){
+    try{ await dir.removeEntry(name); }catch(e){}
+    try{ await fh.move(name); }
+    catch(e){
+      const body = await (await fh.getFile()).text();
+      const dest = await dir.getFileHandle(name, {create:true});
+      const w2 = await dest.createWritable();
+      await w2.write(body); await w2.close();
+      try{ await dir.removeEntry(tmp); }catch(x){}
+    }
+  } else {
+    const body = await (await fh.getFile()).text();
+    const dest = await dir.getFileHandle(name, {create:true});
+    const w2 = await dest.createWritable();
+    await w2.write(body); await w2.close();
+    try{ await dir.removeEntry(tmp); }catch(e){}
+  }
+  return name;
+}
+async function fsIndexPatients(pd){
+  const map = {}, drop = [];
+  for await (const [n] of pd.entries()){
+    if (/\.writing$/.test(n)){ drop.push(n); continue; }
+    const m = String(n).match(/_(p\d+)\.json$/); if (m) (map[m[1]] = map[m[1]] || []).push(n);
+  }
+  for (const n of drop){ try{ await pd.removeEntry(n); }catch(e){} }
+  return map;
+}
 async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(name); return JSON.parse(await (await fh.getFile()).text()); }catch(e){ return null; } }
 /* які файли пишуться в папку даних — зрозумілими назвами */
 const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
@@ -22,26 +57,43 @@ const FS_FILES = (tpl, btn) => [
 function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
 function fsLocal(keys){ const o = {}; keys.forEach(k=>{ try{ const v = localStorage.getItem(k); if (v !== null) o[k] = v; }catch(e){} }); return o; }
 async function fsSync(all){
-  if (!FS.dir || !FS.ok || FS.busy) return; FS.busy = true;
+  if (!FS.dir || !FS.ok) return;
+  if (FS.busy){ FS.again = true; if (all) FS.againAll = true; return; }
+  FS.busy = true;
   try{
     const pd = await FS.dir.getDirectoryHandle('Пацієнти', {create:true});
-    const st = loadStore(), files = {};
-    for await (const [n] of pd.entries()){ const m = n.match(/_(p\d+)\.json$/); if (m) files[m[1]] = n; }
-    for (const id in st){
-      const nm = fsName(id, st[id]);
-      if (!all && FS.written[id] === st[id].updated && files[id] === nm) continue;
-      await fsWriteFile(pd, nm, JSON.stringify({type:'po-patients', items:{[id]: st[id]}}, null, 1));
-      if (files[id] && files[id] !== nm){ try{ await pd.removeEntry(files[id]); }catch(e){} }
-      FS.written[id] = st[id].updated;
+    let listing = await fsIndexPatients(pd);
+    const ids = Object.keys(loadStore());
+    for (const id of ids){
+      const cur = loadStore()[id]; if (!cur) continue;
+      const nm = fsName(id, cur), names = listing[id] || [], sole = names.length === 1 ? names[0] : '';
+      let keep = sole;
+      if (all || FS.written[id] !== cur.updated || sole !== nm){
+        keep = await fsWriteFile(pd, nm, JSON.stringify({type:'po-patients', items:{[id]: cur}}, null, 1)) || nm;
+        FS.written[id] = cur.updated;
+      }
+      for (const n of names) if (n !== keep){ try{ await pd.removeEntry(n); }catch(e){} }
+      if (nm !== keep){ try{ await pd.removeEntry(nm); }catch(e){} }
+    }
+    listing = await fsIndexPatients(pd);
+    const latest = loadStore();
+    for (const id in listing) if (!latest[id]){
+      for (const n of listing[id]){ try{ await pd.removeEntry(n); }catch(e){} }
+      delete FS.written[id];
     }
     { const sv = new Date().toISOString(), cu = fsCustom(), pick = ks => Object.fromEntries(Object.keys(cu).filter(k=>ks.includes(k)).map(k=>[k, cu[k]]));
       const rest = Object.fromEntries(Object.keys(cu).filter(k=>!FS_BTN_KEYS.includes(k)).map(k=>[k, cu[k]]));
       for (const [nm, type, help, custom, keys] of FS_FILES(rest, pick(FS_BTN_KEYS)))
         await fsWriteFile(FS.dir, nm, JSON.stringify({type, saved:sv, app:typeof VERSION !== 'undefined' ? VERSION : '', help, custom, data:fsLocal(keys)}, null, 1)); }
     FS.err = ''; FS.last = Date.now();
-    try{ ORIG_SET.call(localStorage, 'po.backup', String(Date.now())); }catch(e){}
   }catch(e){ FS.err = 'Не вдалося записати в папку: ' + (e && e.message || e); if (e && e.name === 'NotAllowedError') FS.ok = false; }
-  FS.busy = false; fsRender();
+  finally{
+    FS.busy = false;
+    const again = FS.again, againAll = !!FS.againAll;
+    FS.again = false; FS.againAll = false;
+    try{ fsRender(); }catch(e){}
+    if (again) await fsSync(againAll);
+  }
 }
 function fsSchedule(all){ if (!FS.dir || !FS.ok) return; clearTimeout(FS.timer); FS.timer = setTimeout(()=>fsSync(all), 1500); }
 const ORIG_SET = Storage.prototype.setItem;

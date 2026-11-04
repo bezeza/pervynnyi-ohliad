@@ -19,7 +19,9 @@ function importFile(file){
       const o = JSON.parse(rd.result);
       if (!o || o.type !== 'po-patients' || typeof o.items !== 'object') throw 0;
       const st = loadStore(); let n = 0;
-      for (const id in o.items){ const it = o.items[id]; if (it && it.snap && it.snap.f){ st[id] = it; n++; } }
+      for (const id in o.items){ const it = o.items[id]; if (!(it && it.snap && it.snap.f)) continue;
+        if (st[id] && (it.updated || 0) <= (st[id].updated || 0)) continue;
+        st[id] = it; n++; }
       if (!saveStore(st)) throw 1;
       renderPatients(); toast('Імпортовано пацієнтів: ' + n);
     }catch(e){ toast('Це не файл пацієнтів цієї програми або він пошкоджений', 5000); }
