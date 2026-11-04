@@ -20015,15 +20015,15 @@ try{ sideGrip(); sideIcons(); renderSideFold(); }catch(e){}
 /* 0.9.3.86 — одна перевірка повноти на цикл оновлення.
    renderCheck, copyPeekRender і progressRequired читають той самий результат checkDoc().
    Поза update() кеш не діє: окремі перевірки завжди бачать актуальні поля. */
-const PO18_CHECK_CACHE = {depth:0, result:null, executions:0};
+const PO18_CHECK_CACHE = {depth:0, result:null, executions:0, enabled:true};
 {
   const checkDoc0 = checkDoc;
   checkDoc = function(){
-    if (PO18_CHECK_CACHE.depth && PO18_CHECK_CACHE.result !== null) return PO18_CHECK_CACHE.result;
+    if (PO18_CHECK_CACHE.enabled && PO18_CHECK_CACHE.depth && PO18_CHECK_CACHE.result !== null) return PO18_CHECK_CACHE.result;
     const result = checkDoc0.apply(this, arguments);
     if (PO18_CHECK_CACHE.depth){
-      PO18_CHECK_CACHE.result = result;
       PO18_CHECK_CACHE.executions++;
+      if (PO18_CHECK_CACHE.enabled) PO18_CHECK_CACHE.result = result;
     }
     return result;
   };
