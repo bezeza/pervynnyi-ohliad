@@ -34,7 +34,8 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
  async function axeScan(page,cdp){
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
   const hasAxe=await bounded(page.evaluate(()=>typeof axe!=='undefined'),5000);
-  if(hasAxe?.timeout)return {timeout:true,stage:'axe-global-check'};\n  if(!hasAxe){const add=await bounded(page.addScriptTag({path:require.resolve('axe-core/axe.min.js')}),10000);if(add?.timeout)return {timeout:true,stage:'axe-script-load'};}
+  if(hasAxe?.timeout)return {timeout:true,stage:'axe-global-check'};
+  if(!hasAxe){const add=await bounded(page.addScriptTag({path:require.resolve('axe-core/axe.min.js')}),10000);if(add?.timeout)return {timeout:true,stage:'axe-script-load'};}
   const pending=page.evaluate(async()=>{
    const roots=[document.querySelector('.top'),document.querySelector('#sidecol'),document.querySelector('#outBox')].filter(Boolean);
    const a=await axe.run(roots,{runOnly:{type:'rule',values:['button-name','label','aria-allowed-attr','aria-required-children','aria-required-parent','document-title','html-has-lang','landmark-one-main','region','tabindex'] }});
