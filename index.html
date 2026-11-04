@@ -2285,7 +2285,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.86 від 04.11.2026">v0.9.3.86 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.87 від 04.11.2026">v0.9.3.87 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4431,8 +4431,10 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.86', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.87', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.87', '04.11.2026', 'швидкодія: перемикання вкладок без повторного обходу всіх розділів у стабільному режимі; повний перерахунок — лише при першому показі та виході з режиму однієї сторінки'],
+  ['0.9.3.87', '04.11.2026', 'швидкодія: перемикання вкладок без повторного обходу всіх розділів у стабільному режимі; повний перерахунок — лише при виході з режиму однієї сторінки'],
   ['0.9.3.86', '04.11.2026', 'швидкодія: одна перевірка документа на цикл оновлення замість повторних обчислень для перевірки, короткого попередження та прогресу'],
   ['0.9.3.85', '04.11.2026', 'бічне меню: ширину змінюють, перетягуючи праву межу мишкою (180–380 px; стрілками — коли межа у фокусі); стягнули вузько або «« Лише значки» — меню стає смужкою значків (назва розділу — при наведенні, кольорова крапка — стан розділу); подвійний клік по межі — звичайна ширина; запам’ятовується'],
   ['0.9.3.84', '04.11.2026', 'стиль «Apple» — менше на екрані при вході: екран «Пацієнти» (пошук, «Сьогодні», список, одна кнопка «＋ Новий пацієнт» і «⇩ З МІС»; перенесення й файли — під посиланням), форма — після вибору пацієнта; «Норма в усіх системах», «Швидкий огляд», «Документ з огляду» — лише в розділах огляду, рядок дій прилипає вгорі; бічна панель без «Новий пацієнт» двічі, «не обрано» й «0 з 13», кружечки — лише в заповнених розділах; «Стаціонар / Амбулаторно» — у меню «Профіль», тема — у «Вигляді»; виправлено: при вході в змісті було позначено «Скарги» замість «Пацієнт і запис»'],
@@ -4572,15 +4574,31 @@ const HELP = {id:'help', title:'Довідка', short:'Довідка', fields:
 const TABS = [META, HV, ...SECTIONS, RXT, CALC, TPL, SET, HELP];
 TABS.splice(TABS.findIndex(t=>t.id === 'morbi') + 1, 0, QV);   // «Показники» для швидкого прийому — після анамнезу
 
+/* У стабільному режимі вкладок змінюємо лише попередню й нову вкладки.
+   Повний прохід потрібен тільки при виході з режиму «одна сторінка». */
+const PO18_SHOW_FAST = {enabled:true, lastOnePage:false, initialized:false};
 function show(i){
   try{ setTimeout(()=>renderTabNav(), 0); }catch(e){}
+  const previous = TABS[active], next = TABS[i];
+  const onePage = document.body.classList.contains('onepage');
   active = i;
-  if (TABS[i] && TABS[i].id === 'dx') dxPanel();
-  TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
-  TABS[i].tab.scrollIntoView({block:'nearest', inline:'center'});
-  if (TABS[i] === CALC){ syncFromForm(false); update(); }
-  if (TABS[i] === RXT){ runCalcs(); renderRx(); }
-  if (TABS[i] === TPL) renderTplLists();
+  if (next && next.id === 'dx') dxPanel();
+  if (!PO18_SHOW_FAST.enabled || !PO18_SHOW_FAST.initialized || (!onePage && PO18_SHOW_FAST.lastOnePage)){
+    TABS.forEach((s,k)=>{ s.panel.hidden = k !== i; s.tab.setAttribute('aria-selected', k===i ? 'true':'false'); });
+  } else {
+    if (previous && previous !== next){
+      previous.tab.setAttribute('aria-selected', 'false');
+      if (!onePage) previous.panel.hidden = true;
+    }
+    next.panel.hidden = false;
+    next.tab.setAttribute('aria-selected', 'true');
+  }
+  PO18_SHOW_FAST.lastOnePage = onePage;
+  PO18_SHOW_FAST.initialized = true;
+  next.tab.scrollIntoView({block:'nearest', inline:'center'});
+  if (next === CALC){ syncFromForm(false); update(); }
+  if (next === RXT){ runCalcs(); renderRx(); }
+  if (next === TPL) renderTplLists();
   const top = $('.form').getBoundingClientRect().top;
   if (top < 0) window.scrollBy({top: top - 8});
 }
@@ -15967,6 +15985,7 @@ function opSet(){ return tabOrder().filter(i=>TABS[i] && !OP_SKIP.includes(TABS[
 function opScrollTo(el, off){ OPG.lock = Date.now(); const y = el.getBoundingClientRect().top + window.scrollY - (off || 70); window.scrollTo({top:Math.max(0, y)}); }
 { const s0 = show; show = function(i){
     try{ qeClose(); }catch(e){}
+    const wasOnePage = document.body.classList.contains('onepage');
     const set = OPG.on ? opSet() : [], on = set.includes(i);
     document.body.classList.toggle('onepage', on);
     const r = s0.apply(this, arguments);
@@ -15975,7 +15994,10 @@ function opScrollTo(el, off){ OPG.lock = Date.now(); const y = el.getBoundingCli
       try{ if (set.some(k=>TABS[k].id === 'dx') && TABS[i].id !== 'dx') dxPanel(); }catch(e){}
       try{ if (set.some(k=>TABS[k] === RXT) && TABS[i] !== RXT) renderRx(); }catch(e){}
       if (!OPG.quiet) opScrollTo(TABS[i].panel);
-    } else TABS.forEach(t=>{ t.panel.style.order = ''; });
+    } else if (!PO18_SHOW_FAST.enabled || wasOnePage){
+      // Порядок очищаємо один раз під час виходу з «однієї сторінки», не на кожному кліку.
+      TABS.forEach(t=>{ t.panel.style.order = ''; });
+    }
     return r;
   }; }
 { const gf0 = goField; goField = function(){ OPG.lock = Date.now() + 600; return gf0.apply(this, arguments); }; }
