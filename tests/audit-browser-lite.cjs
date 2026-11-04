@@ -80,7 +80,8 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
    if(axe.timeout){result.errors.push({type:'axe-timeout',message:'axe-core перевищив 15 секунд на обмеженому наборі кореневих елементів.'});}
    console.log('Axe scan finished:',JSON.stringify(axe).slice(0,500));
   }
-  result.scenarios.push({width,height,readyMs:x.readyMs,rafTimeout:x.rafTimeout,nav:x.nav,variants,axe});\n  console.log('Viewport finished:',width,'variants',variants.length,'axe',axe?.timeout?'timeout':'done');
+  result.scenarios.push({width,height,readyMs:x.readyMs,rafTimeout:x.rafTimeout,nav:x.nav,variants,axe});
+  console.log('Viewport finished:',width,'variants',variants.length,'axe',axe?.timeout?'timeout':'done');
   console.log('Viewport finished:',width,'variantTimeout',variantTimeout);
   await bounded(x.context.close(),3000);
  }
@@ -108,14 +109,17 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
    const popStart=Date.now();
    try{const p=x.page.waitForEvent('popup',{timeout:3000});await x.page.locator('#popBtn').click({timeout:3000});const popup=await p;await popup.waitForSelector('#pwBox',{timeout:3000});popoutMs=Date.now()-popStart;await popup.close();}catch(e){result.errors.push({type:'popout',message:String(e.message||e)});}
   }else result.errors.push({type:'stress-measure-timeout'});
-  result.populated={setup,operations:ops.timeout?{timeout:true}:ops,popoutMs};\n  console.log('Stress operations finished:',JSON.stringify(result.populated).slice(0,1200));
+  result.populated={setup,operations:ops.timeout?{timeout:true}:ops,popoutMs};
+  console.log('Stress operations finished:',JSON.stringify(result.populated).slice(0,1200));
   await bounded(x.context.close(),3000);
  }
  const many=await open({width:1366,height:768,style:'ios',theme:'day',seed500:true});
- result.storage500=await bounded(many.page.evaluate(()=>{const t=performance.now();renderPatients();return {count:Object.keys(loadStore()).length,renderMs:+(performance.now()-t).toFixed(2),visibleRows:document.querySelectorAll('#plist .prow').length};}),15000);\n console.log('500 patients:',JSON.stringify(result.storage500));
+ result.storage500=await bounded(many.page.evaluate(()=>{const t=performance.now();renderPatients();return {count:Object.keys(loadStore()).length,renderMs:+(performance.now()-t).toFixed(2),visibleRows:document.querySelectorAll('#plist .prow').length};}),15000);
+ console.log('500 patients:',JSON.stringify(result.storage500));
  await bounded(many.context.close(),3000);
  const blocked=await open({width:1366,height:768,style:'ios',theme:'day',blockStorage:true});
- result.storageBlocked=await bounded(blocked.page.evaluate(()=>({loaded:!!document.getElementById('out'),idb:typeof IDB!=='undefined'?IDB.ok:null,textLength:document.getElementById('out')?.textContent.length||0})),5000);\n console.log('Storage blocked:',JSON.stringify(result.storageBlocked));
+ result.storageBlocked=await bounded(blocked.page.evaluate(()=>({loaded:!!document.getElementById('out'),idb:typeof IDB!=='undefined'?IDB.ok:null,textLength:document.getElementById('out')?.textContent.length||0})),5000);
+ console.log('Storage blocked:',JSON.stringify(result.storageBlocked));
  await bounded(blocked.context.close(),3000);
  const toggle=await open({width:1366,height:768,style:'ios',theme:'day'});
  result.styleToggle=await bounded(toggle.page.evaluate(()=>{
@@ -124,7 +128,8 @@ async function bounded(p,ms){return await Promise.race([p,sleep(ms).then(()=>({t
   for(let i=0;i<5;i++){UISTYLE='classic';uiStyleApply();UISTYLE='ios';uiStyleApply();}
   return {cycles:5,duplicateAddAttempts:duplicateAdds,totalListenerAddAttempts:totalAdds,style:UISTYLE};
  }),15000);
- console.log('Style toggle:',JSON.stringify(result.styleToggle));\n await bounded(toggle.context.close(),3000);
+ console.log('Style toggle:',JSON.stringify(result.styleToggle));
+ await bounded(toggle.context.close(),3000);
  fs.writeFileSync(path.join(OUT,'browser-audit-lite.json'),JSON.stringify(result,null,2));
  fs.writeFileSync(path.join(OUT,'browser-audit-lite-summary.txt'),'Екрани: '+result.scenarios.length+'\nПомилки/попередження: '+result.errors.length+'\nЗаповнений сценарій: '+JSON.stringify(result.populated)+'\n500 пацієнтів: '+JSON.stringify(result.storage500)+'\nlocalStorage заблоковано: '+JSON.stringify(result.storageBlocked)+'\nПеремикання стилю: '+JSON.stringify(result.styleToggle)+'\n');
  console.log(fs.readFileSync(path.join(OUT,'browser-audit-lite-summary.txt'),'utf8'));
