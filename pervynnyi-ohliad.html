@@ -20867,7 +20867,10 @@ function seMark(root){
     if (el.classList.contains('empty') || !el.textContent.replace(/\u00a0/g, '').trim()) el.classList.add('se-empty');
   });
 }
-{ const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ if (seLive()) seMark(document.getElementById('paper')); }catch(e){} return r; }; }
+/* розмітка — лише для відкритого аркуша і раз на «такт»: renderPaper кличуть багато разів підряд (і при старті) */
+let SE_T = 0;
+function seSoon(){ if (SE_T) return; SE_T = setTimeout(()=>{ SE_T = 0; try{ const pp = document.getElementById('paper'); if (PAPER && !RESTORING && seLive() && pp && !pp.hidden) seMark(pp); }catch(e){} }, 0); }
+{ const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); if (PAPER && !RESTORING) seSoon(); return r; }; }
 
 function seClose(){ if (SE_POP){ SE_POP.remove(); SE_POP = null; } }
 function sePlace(pop, anchor){
