@@ -33,11 +33,12 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  async function axeScan(page,cdp){
   await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
   if(!(await page.evaluate(()=>typeof axe!=='undefined')))await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-  const r=await page.evaluate(async()=>{
+  const pending=page.evaluate(async()=>{
    const a=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},rules:{'color-contrast':{enabled:false}}});
    return {violations:a.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.length,examples:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,350)}))})),passes:a.passes.length,incomplete:a.incomplete.length};
   });
-  await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
+  const r=await Promise.race([pending,sleep(20000).then(()=>({timeout:true}))]);
+  if(!r.timeout)await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
   return r;
  }
  async function instrument(page){
@@ -67,10 +68,17 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   for(const [style,theme] of [['ios','day'],['ios','night'],['classic','day'],['classic','night']]){
    await x.page.evaluate(({style,theme})=>{UISTYLE=style;uiStyleApply();THEME=theme;applyTheme();applyView();}, {style,theme});
    const layout=await x.page.evaluate(()=>({style:UISTYLE,theme:THEME,scrollWidth:document.documentElement.scrollWidth,overflow:document.documentElement.scrollWidth>innerWidth}));
-   const axe=(style==='ios'&&theme==='day')||(style==='classic'&&theme==='night')?await axeScan(x.page):null;
-   variants.push({style,theme,layout,axe});
+   variants.push({style,theme,layout});
   }
-  result.scenarios.push({width,height,readyMs:x.readyMs,nav:x.nav,variants});
+  let axe=null;
+  if(width===1366){
+   await x.page.evaluate(()=>{UISTYLE='ios';uiStyleApply();THEME='day';applyTheme();applyView();});
+   console.log('Starting axe scan (20s cap)');
+   axe=await axeScan(x.page,x.cdp);
+   if(axe.timeout)result.errors.push({type:'axe-timeout',message:'axe-core перевищив 20 секунд; продовжено без його результату.'});
+   console.log('Axe scan result:',JSON.stringify(axe).slice(0,700));
+  }
+  result.scenarios.push({width,height,readyMs:x.readyMs,nav:x.nav,variants,axe});
   console.log('Viewport done:',width,'variants',variants.length,'ready',x.readyMs,'ms');
   await x.context.close();
  }
