@@ -12,6 +12,8 @@ function opScrollTo(el, off){ OPG.lock = Date.now(); const y = el.getBoundingCli
 { const s0 = show; show = function(i){
     try{ qeClose(); }catch(e){}
     const wasOnePage = document.body.classList.contains('onepage');
+    // Синхронізуємо кеш режиму з фактичним DOM: налаштування вигляду можуть перемикати клас поза show().
+    PO18_SHOW_FAST.lastOnePage = wasOnePage;
     const set = OPG.on ? opSet() : [], on = set.includes(i);
     document.body.classList.toggle('onepage', on);
     const r = s0.apply(this, arguments);
