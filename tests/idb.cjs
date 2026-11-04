@@ -68,6 +68,11 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   await wait(200);
   ok(w.eval('IDB.cache') === cacheRef, 'збереження одного пацієнта не повинно копіювати весь кеш IndexedDB');
   ok(w.eval('Object.keys(loadStore()).length') === 1, 'пацієнт не збережений у першому запуску');
+  const loadStore0 = w.loadStore; let listStoreReads = 0;
+  w.loadStore = function(){ listStoreReads++; return loadStore0.apply(this, arguments); };
+  w.eval('renderPatients()');
+  w.loadStore = loadStore0;
+  ok(listStoreReads === 0, 'рендер списків читає IDB.cache без копіювання всієї бази');
   ok([...(DBS.get('po-db') || new Map()).get('patients') || []].length === 1, 'пацієнта немає в базі');
 
   // Профіль одного запису на великому кеші: 10 000 синтетичних записів, без запису їх у тестову БД.
