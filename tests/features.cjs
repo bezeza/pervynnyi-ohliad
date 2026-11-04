@@ -1200,6 +1200,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Бланки там, де шукають: «🖨 Бланки» біля «Друк / PDF», у «Інструментах», у пошуку; «Додаток 1 + перегляд АБТ» — з увімкненим СОП', r==='[true,true,true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ const b=FBLANKS.find(x=>x.k==='ohl'); const t=b?b.html:''; return JSON.stringify([!!b, FBLANKS[0]&&FBLANKS[0].k==='ohl', ['33. Скарги','34. Anamnesis morbi','35. Anamnesis vitae','36. Об’єктивні дані','Органи дихання','Серцево-судинна система','Органи травлення','Сечовидільна система','Неврологічний статус','37. Огляд на коросту','Попередній діагноз','План обстеження','План лікування','потрібне підкреслити'].every(x=>t.includes(x))]); })()`);
   ok('Порожній бланк «Первинний огляд — стаціонар» (003/о, п. 33–40): усі системи, варіанти — підкреслити', r==='[true,true,true]', r); }
+{ const r=w.eval(`(()=>{ uiStyleSet('ios'); const R=document.documentElement; const keepPib=mv('pib'); const e=document.getElementById('meta_pib'); e.value=''; UST.dismissed=false; update();
+    const st1=R.classList.contains('ui-start')===stEmpty(); const head=!!document.querySelector('.ust-head .ust-new');
+    stNew(); const st2=!R.classList.contains('ui-start'); const i=TABS.findIndex(t=>t.id==='meta'); show(i); const ne=R.classList.contains('ui-nonexam');
+    const j=TABS.findIndex(t=>t.id==='dyh'); show(j); const ex=!R.classList.contains('ui-nonexam'); show(i);
+    const pm=!!document.querySelector('#profBtn .pmode'); renderViewCtl(); openViewPop(); const th=[...document.querySelectorAll('.viewpop .vrow .vl')].some(x=>x.textContent==='Тема'); closeViewPop();
+    uiStyleSet('classic'); const cl=!R.classList.contains('ui-start')&&!R.classList.contains('ui-nonexam')&&!document.querySelector('#profBtn .pmode'); uiStyleSet('ios');
+    e.value=keepPib; update(); return JSON.stringify([st1,head,st2,ne,ex,pm,th,cl]); })()`);
+  ok('Стиль Apple при вході: екран «Пацієнти» з «＋ Новий пацієнт», дії огляду лише в огляді, режим у «Профілі», тема у «Вигляді»; «Класичний» — як було', r==='[true,true,true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
