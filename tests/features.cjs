@@ -187,18 +187,32 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  { doc.querySelector('[data-mode="hosp"]').click(); ap('pneu'); w.eval("switchDoc('shch')");
    const s=(id,v)=>{const e=$(id); e.value=v; ev(e,'input');};
    w.eval("RX.length=0; addRx({drug:'Цефтріаксон', dose:'2 г', route:'в/в', freq:'1 р/д', start:todayISO()}); renderRx(); update()");
-   s('d_obj_t_0','37,9'); s('d_obj_chss_0','98'); s('d_obj_chd_0','26'); s('d_obj_chd_1','94'); s('d_obj_o2_0','3'); s('d_obj_ad_0','120'); s('d_obj_ad_1','70');
-   ok('Щоденник: кисень поруч із SpO2', /SpO2 94% на кисні 3 л\/хв/.test(out()), out().slice(0,400));
+   s('d_obj_t_0','37,9'); s('d_obj_chss_0','98'); s('d_obj_chd_0','26'); s('d_obj_chd_1','94'); s('d_obj_o2_0','3'); s('d_obj_o2src','1'); s('d_obj_o2dev','0'); s('d_obj_ad_0','120'); s('d_obj_ad_1','70');
+   ok('Щоденник: кисень поруч із SpO₂', /SpO₂ 94 % за допомогою кисневого концентратора через назальну канюлю, потік 3 л\/хв/.test(out()), out().slice(0,400));
    ok('Щоденник: обґрунтованість перебування — кисень і в/в антибіотик з пунктами', /Обґрунтованість перебування в стаціонарі зберігається відповідно до Стандарту «Критерії госпіталізації пацієнтів для надання стаціонарної медичної допомоги», затвердженого наказом МОЗ України від 30\.07\.2026 № 1044: кисневотерапія 3 л\/хв.*розд\. II, п\. 1.*внутрішньовенна антибактеріальна терапія/.test(out()), out());
    ok('Пневмонія: підказка — бракує стабільності для переходу per os', /бракує стабільності: t° > 37,8 °C, ЧД > 24, потреба в кисні/.test(doc.querySelector('.dhints').textContent));
-   s('d_obj_t_0','36,8'); s('d_obj_chd_0','18'); s('d_obj_o2_0',''); s('d_obj_chd_1','95'); s('d_obj_chss_0','80');
+   s('d_obj_t_0','36,8'); s('d_obj_chd_0','18'); s('d_obj_o2_0',''); s('d_obj_o2src',''); s('d_obj_o2dev',''); s('d_obj_chd_1','95'); s('d_obj_chss_0','80');
    ok('Пневмонія: стабільність виконана — підказка про перехід на пероральний антибіотик', /Критерії клінічної стабільності виконано/.test(doc.querySelector('.dhints').textContent));
    w.eval("RX.length=0; renderRx(); update()"); set('d_main_dyn','0');
    ok('Немає підстав — без рядка в тексті, з підказкою і зауваженням перевірки', !/Обґрунтованість перебування/.test(out()) && /підстав для продовження перебування/.test(doc.querySelector('.dhints').textContent) && w.eval("checkDoc().some(x=>/наказ МОЗ № 1044/.test(x.m))"));
    set('d_main_dyn','2'); ok('«Стан покращився» без підстав — «планується виписка»', /Підстав для продовження цілодобового медичного нагляду немає \(Стандарт «Критерії госпіталізації.*», затверджений наказом МОЗ України від 30\.07\.2026 № 1044\) — планується виписка/.test(out()), out());
-   s('d_obj_chd_1','90'); ok('SpO2 ≤ 92% на повітрі — підстава розд. III', /SpO2 90% при диханні атмосферним повітрям \(розд\. III, п\. 1\)/.test(out()));
+   s('d_obj_o2src','0'); s('d_obj_chd_1','90'); ok('SpO2 ≤ 92% на повітрі — підстава розд. III', /SpO2 90% при диханні атмосферним повітрям \(розд\. III, п\. 1\)/.test(out()));
    doc.querySelector('[data-mode="amb"]').click(); ok('Амбулаторно — рядка обґрунтування перебування немає', !/Обґрунтованість перебування/.test(out()));
    doc.querySelector('[data-mode="hosp"]').click(); w.eval("switchDoc('ohl')"); }
+
+
+{ // Завдання 10: ВАШ, SpO₂, киснева підтримка і тривалість курсу
+  const r=JSON.parse(w.eval("(()=> {\n  const oldDoc=DOC, dt=document.getElementById('meta_dt'), oldDt=dt ? dt.value : '', oldRX=RX.map(x=>({...x}));\n  const ids=['d_obj_chd_1','d_obj_o2_0','d_obj_o2src','d_obj_o2dev','d_main_vash_0'], vals=ids.map(id=>{const e=document.getElementById(id);return e?e.value:'';});\n  switchDoc('shch');\n  const setDate=d=>{if(dt){dt.value=d+'T09:00';dt.dispatchEvent(new Event('input'));}};\n  setDate('2026-10-16');\n  RX.length=0;\n  addRx({drug:'Цефтріаксон',dose:'2 г',route:'в/в',freq:'1 р/д',start:'2026-10-14',days:7});\n  addRx({drug:'Бісопролол',dose:'5 мг',route:'per os',freq:'1 р/д',start:'2026-10-14'});\n  const mid=(rxPart()||{}).body||'';\n  const bLine=mid.split(';').find(x=>x.includes('Бісопролол'))||'';\n  const progress=mid.includes('день 3 з 7'), noDuration=!bLine.includes('день ');\n  setDate('2026-10-20');\n  const last=(rxPart()||{}).body||'';\n  const completion=last.includes('Курс Цефтріаксон завершено');\n  document.getElementById('d_obj_chd_1').value='94';\n  document.getElementById('d_obj_o2_0').value='5';\n  document.getElementById('d_obj_o2src').value='1';\n  document.getElementById('d_obj_o2dev').value='0';\n  document.getElementById('d_main_vash_0').value='4';\n  setDate('2026-10-16');\n  update();\n  const text=document.getElementById('out').textContent;\n  const nasal=text.includes('SpO₂ 94 % за допомогою кисневого концентратора через назальну канюлю, потік 5 л/хв');\n  document.getElementById('d_obj_o2dev').value='1';\n  update();\n  const mask=document.getElementById('out').textContent.includes('SpO₂ 94 % за допомогою кисневого концентратора через лицеву маску, потік 5 л/хв');\n  document.getElementById('d_obj_o2src').value='';\n  document.getElementById('d_obj_o2dev').value='';\n  document.getElementById('d_obj_o2_0').value='';\n  update();\n  const unspecifiedText=document.getElementById('out').textContent;\n  const unspecified=unspecifiedText.includes('SpO₂ 94 %') && !unspecifiedText.includes('атмосферному повітрі');\n  document.getElementById('d_obj_o2src').value='0';\n  update();\n  const air=document.getElementById('out').textContent.includes('SpO₂ 94 % на атмосферному повітрі');\n  const printed=bDiaryEntry({dt:'2026-10-16T09:00',f:{d_main_vash_0:'4',d_obj_chd_1:'94',d_obj_o2_0:'5',d_obj_o2src:'1',d_obj_o2dev:'0'},rx:'',osn:''}).textContent;\n  const printO2=printed.includes('SpO₂ 94 % за допомогою кисневого концентратора через назальну канюлю, потік 5 л/хв');\n  const printVash=/Біль за ВАШ:\\s*4\\s*\\/10/.test(printed);\n  RX.length=0; oldRX.forEach(x=>RX.push(x));\n  if(dt){dt.value=oldDt;dt.dispatchEvent(new Event('input'));}\n  ids.forEach((id,i)=>{const e=document.getElementById(id);if(e)e.value=vals[i];});\n  if(DOC!==oldDoc) switchDoc(oldDoc);\n  renderRx(); update();\n  return JSON.stringify([progress,noDuration,completion,nasal,mask,unspecified,air,printO2,printVash]);\n})()"));
+  ok('Щоденник: день N з M показується лише для курсу з заданою тривалістю', r[0] && r[1], JSON.stringify(r));
+  ok('Щоденник: рядок «Курс … завершено» з’являється в останній день курсу', r[2], JSON.stringify(r));
+  ok('Щоденник: кисневий концентратор із назальною канюлею та потоком кисню', r[3], JSON.stringify(r));
+  ok('Щоденник: кисневий концентратор із лицевою маскою та потоком кисню', r[4], JSON.stringify(r));
+  ok('Щоденник: невказана киснева підтримка не підміняється атмосферним повітрям', r[5], JSON.stringify(r));
+  ok('Щоденник: атмосферне повітря зазначається лише після явного вибору', r[6], JSON.stringify(r));
+  ok('Щоденник: SpO₂ і спосіб подачі кисню потрапляють у друкований бланк', r[7], JSON.stringify(r));
+  ok('Щоденник: ВАШ 0–10 потрапляє у друкований бланк', r[8], JSON.stringify(r));
+}
+
  // 0.9.3.5 пропуски на аркуші «Перегляд перед друком»
  { ap('pneu'); w.eval("switchDoc('ohl')"); if (!w.eval('PAPER')) $('paperBtn').click(); w.eval('renderPaper()');
    const sh=doc.querySelector('#paper .sheet'), n=w.eval("checkDoc().filter(x=>!/^Залишилось незаповнених/.test(x.m)).length");
@@ -1351,6 +1365,37 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Бланк: у віконці рядка з нормою є кнопка «Норма»', r[3]);
   ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
   ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
+}
+
+{
+  const r = JSON.parse(w.eval(`(()=>{
+    const oldDoc=DOC, ids=['d_obj_chd_1','d_obj_o2_0','d_obj_o2src','d_obj_o2dev','d_main_vash_0'];
+    const saved=ids.map(id=>document.getElementById(id).value);
+    switchDoc('shch');
+    const set=(id,v)=>document.getElementById(id).value=v;
+    set(ids[0],'94');set(ids[1],'5');set(ids[2],'');set(ids[3],'0');
+    update();
+    const nasal=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні через назальну канюлю, потік 5 л/хв');
+    set(ids[3],'1');update();
+    const mask=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні через лицеву маску, потік 5 л/хв');
+    const printed=bDiaryEntry({dt:'2026-10-16T09:00',f:{d_obj_chd_1:'94',d_obj_o2_0:'5',d_obj_o2dev:'1'},rx:'',osn:''}).textContent;
+    set(ids[3],'');update();
+    const flow=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні 5 л/хв');
+    const pain=F('d_main.vash');
+    const limits=['0','10'].every(v=>{
+      set(ids[4],v);update();
+      return document.getElementById('out').textContent.includes('Біль за ВАШ '+v+'/10') &&
+        bDiaryEntry({dt:'2026-10-16T09:00',f:{d_main_vash_0:v},rx:'',osn:''}).textContent.includes(v+'/10');
+    });
+    set(ids[4],'');update();
+    const empty=!document.getElementById('out').textContent.includes('Біль за ВАШ');
+    const invalid=['-1','11'].every(v=>{set(ids[4],v);update();return entryFieldState(pain)==='check' && pain.inputs[0].classList.contains('bad');});
+    ids.forEach((id,i)=>set(id,saved[i]));switchDoc(oldDoc);update();
+    return JSON.stringify([nasal,mask,printed.includes('через лицеву маску'),flow,limits,empty,invalid]);
+  })()`));
+  ok('Щоденник: канюля/маска без вказаного джерела збережені у тексті й друці', r[0]&&r[1]&&r[2], JSON.stringify(r));
+  ok('Щоденник: лише потік — без вигаданого джерела чи способу подачі',r[3],JSON.stringify(r));
+  ok('Щоденник: ВАШ 0 та 10 у тексті й друці; порожнє поле пропускається',r[4]&&r[5]&&r[6],JSON.stringify(r));
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

@@ -2340,7 +2340,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.92 від 05.11.2026">v0.9.3.92 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.93 від 05.11.2026">v0.9.3.93 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3025,6 +3025,7 @@ const SECTIONS = [
   {id:'svid', type:'sel', norm:0, label:'Свідомість', tpl:'{v}', cont:true, opts:['свідомість ясна','оглушення','сопор']},
   {id:'sk', type:'sel', label:'Скарги', tpl:'{v}', opts:['Скарг активно не пред’являє','Скарги ті самі','Скарги зменшились','Скарги посилились']},
   {id:'skx', type:'text', label:'Уточнення скарг', tpl:'{v}', cont:true, joiner:': '},
+  {id:'vash', type:'num', label:'Біль за ВАШ (0–10)', parts:[{ph:'0',u:'балів',ok:[0,10]}], fmt:v=>{const x=String(v[0] == null ? '' : v[0]).trim(); return x ? 'Біль за ВАШ ' + x + '/10' : ''; }},
   {id:'zal', type:'text', remainFrom:true, label:'Скарги, що зберігаються (натисніть скаргу з первинного огляду, щоб додати чи прибрати)', tpl:'Зберігаються скарги на {v}'},
   {id:'son', type:'sel', norm:0, label:'Сон, апетит', tpl:'{v}', opts:['Сон і апетит збережені','Сон порушений','Апетит знижений','Сон порушений, апетит знижений']}
 ]},
@@ -3032,10 +3033,13 @@ const SECTIONS = [
   {id:'t', type:'num', label:'Температура тіла', parts:[{ph:'36,6',u:'°C',n:[35.9,37],ok:[33,43]}], fmt:v=>v[0]?`Температура тіла ${v[0]} °C`:''},
   {id:'ad', type:'num', label:'АТ', parts:[{ph:'130',u:'/',n:[90,139],ok:[50,300]},{ph:'80',u:'мм рт. ст.',n:[50,89],ok:[20,180]}], fmt:v=>v[0]&&v[1]?`АТ ${v[0]}/${v[1]} мм рт. ст.`:''},
   {id:'chss', type:'num', label:'ЧСС', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`ЧСС ${v[0]} уд./хв`:''},
-  {id:'chd', type:'num', label:'ЧД і SpO2', parts:[{ph:'16',u:'за хв',n:[12,20],ok:[5,60]},{ph:'97',u:'% SpO2',n:[95,100],ok:[50,100]}],
-    fmt:v=>{const p=[]; if(v[0])p.push(`ЧД ${v[0]} за хв`); if(v[1])p.push(`SpO2 ${v[1]}%`); return p.join(', ');}},
-  {id:'o2', type:'num', cont:true, joiner:' ', label:'Кисень (порожньо — повітря)', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
-    fmt:v=>v[0]?`на кисні ${v[0]} л/хв`:''},
+  {id:'chd', type:'num', label:'ЧД і SpO₂', parts:[{ph:'16',u:'за хв',n:[12,20],ok:[5,60]},{ph:'97',u:'% SpO₂',n:[95,100],ok:[50,100]}],
+    fmt:v=>{const p=[]; if(v[0])p.push(`ЧД ${v[0]} за хв`); if(v[1])p.push(`SpO₂ ${v[1]} %`); return p.join(', ');}},
+  {id:'o2src', type:'sel', noOut:true, label:'Киснева підтримка', opts:['Не застосовується (атмосферне повітря)','Кисневий концентратор']},
+  {id:'o2dev', type:'sel', noOut:true, label:'Спосіб подачі кисню', opts:['Назальна канюля','Лицева маска']},
+  {id:'o2', type:'num', cont:true, joiner:' ', label:'Потік кисню', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
+    fmt:v=>diaryOxygenText(document.getElementById('d_obj_o2src')?.value,
+      document.getElementById('d_obj_o2dev')?.value, v[0])},
   {id:'glik', type:'num', dprof:1, label:'Глікемія', parts:[{ph:'6,5',u:'ммоль/л',n:[3.9,10],ok:[1,40]}], fmt:v=>v[0]?`Глікемія ${v[0]} ммоль/л`:''},
   {id:'masa', type:'num', dprof:1, label:'Маса тіла і діурез за добу', parts:[{ph:'78',u:'кг',ok:[20,300]},{ph:'1500',u:'мл діурез',ok:[50,10000]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`маса тіла ${v[0]} кг`); if(v[1])p.push(`діурез ${v[1]} мл/добу`); const t=p.join(', '); return t ? t[0].toUpperCase()+t.slice(1) : '';}},
@@ -4492,8 +4496,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.92', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.93', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.93', '05.11.2026', 'щоденник: SpO₂ і зазначена киснева підтримка одним реченням, ВАШ 0–10, день курсу лише за заданої тривалості та завершення в останній день'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
   ['0.9.3.91', '05.11.2026', 'телефон: межа «документ / варіанти» стає в одне з трьох положень (третина, половина, майже весь екран), подвійний дотик по межі — на весь екран і назад; телефон боком — документ ліворуч, варіанти праворуч на всю висоту; у віконці бланка кнопка «Норма» одним дотиком'],
   ['0.9.3.90', '05.11.2026', 'плаваючі віконця на аркуші («Вносити на бланку», «Бачу — редагую»): перетягуються за заголовок, розмір змінюється за правий нижній кут, місце й розмір запам’ятовуються для лікаря (подвійний клік по заголовку — стандартне місце); молочні залози й кістково-суглобова система — готові варіанти вибору; фраза в листі призначень більше не відкриває скарги чи анамнез'],
@@ -7210,7 +7215,9 @@ function bDiaryEntry(e){
   const what = n('d_main_zal') || n('d_main_skx').replace(/^на /, ''), how = f.d_main_sk && f.d_main_sk !== '0' ? v('d_main.sk').replace(/^Скарги /, '') : '';
   const sk = f.d_main_sk === '0' && !what ? 'активно не пред’являє' : what ? what + (how ? ' (' + how + ')' : '') : how;
   const dyn = (v('d_main.dyn').match(/з позитивною динамікою|покращився|погіршився|без суттєвої динаміки/) || [''])[0], son = f.d_main_son && f.d_main_son !== '0' ? v('d_main.son') : '';
-  const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1');
+  const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1'), vash = n('d_main_vash_0');
+  const spoLine = [spo ? 'SpO₂ ' + spo + ' %' : '',
+    diaryOxygenText(f.d_obj_o2src, f.d_obj_o2dev, o2)].filter(Boolean).join(' ');
   const serce = v('d_obj.serce');
   const lik = [e.rx || '', n('d_lik_obs'), n('d_lik_kor') ? 'Корекція терапії: ' + n('d_lik_kor') : '', e.osn || n('d_lik_osn'), f.d_lik_plan ? v('d_lik.plan') : ''].filter(Boolean).map(end).join(' ');
   const dt = String(e.dt || '');
@@ -7220,12 +7227,13 @@ function bDiaryEntry(e){
       h('div', {}, 'АТ – ', bFF(bFill(n('d_obj_ad_0') && n('d_obj_ad_1') ? n('d_obj_ad_0') + '/' + n('d_obj_ad_1') : '', true), 'd_obj_ad_0 d_obj_ad_1'), ' мм рт. ст.'), h('div', {}, 'ЧДР – ', bFF(bFill(n('d_obj_chd_0')), 'd_obj_chd_0 d_obj_chd_1'), ' /хв.')),
     h('div', {class:'bdr'},
       bRow('Скарги на: ', bFill(bJoin(sk, son), true, true)),
+      vash !== '' ? bRow('Біль за ВАШ: ', bFill(vash, true), '/10') : '',
       bRow('Об’єктивно: загальний стан ', bFill([v('d_main.stan'), dyn ? (/^з /.test(dyn) ? dyn : 'стан ' + dyn) : ''].filter(Boolean).join(', '), true), ', свідомість не порушена.'),
       f.d_main_svid && f.d_main_svid !== '0' ? bRow('Свідомість: ', bFill(v('d_main.svid'))) : '',
       bRow('Реакція на огляд адекватна. Шкірні покриви та видимі слизові ', bFill(v('d_obj.shk').replace(/^Шкірні покриви /, ''), false, true)),
       bRow('Лімфатичні вузли ', bFS(bFill(v('d_obj.lv'), false, true), 'd_obj.lv')), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
       bRow('Дихання через ніс ', bFS(bFill(v('d_obj.nis'), false, true), 'd_obj.nis')), bRow('Перкуторно ', bFS(bFill(v('d_obj.perk'), false, true), 'd_obj.perk')),
-      bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spo ? 'SpO2 ' + spo + '%' + (o2 ? ' на кисні ' + o2 + ' л/хв' : '') : ''), true, true)),
+      bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spoLine), true, true)),
       bRow('Діяльність серця ', bFill(/неправильний/.test(serce) ? 'аритмічна' : /правильний/.test(serce) ? 'ритмічна' : '', false, true)), bRow('Тони ', bFill(serce.replace(/, ритм.*$/, ''), false, true)),
       bRow('Язик ', bFS(bFill(v('d_obj.yaz'), false, true), 'd_obj.yaz')), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
       bRow('рівномірно бере участь в акті дихання ', bFS(bFill(f.d_obj_grk === '0' ? 'так' : v('d_obj.grk'), false, true), 'd_obj.grk')), bRow('Печінка ', bFS(bFill(v('d_obj.pech'), false, true), 'd_obj.pech')),
@@ -8514,10 +8522,12 @@ function rxPart(){
   const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
   if (DOC === 'shch'){
     const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
+    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
     const lines = [];
-    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>rxLine(it)).join('; ') + '.');
-    if (nw.length) lines.push('Призначено: ' + nw.map(it=>rxLine(it)).join('; ') + '.');
+    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
+    if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
     if (off.length) lines.push('Відмінено: ' + off.map(it=>it.drug).join(', ') + '.');
+    if (completed.length) lines.push(completed.map(it=>'Курс ' + it.drug + ' завершено').join('; ') + '.');
     return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;
   }
   const amb = MODE === 'amb' && DOC === 'ohl';
@@ -8534,7 +8544,6 @@ function rxPart(){
   if (DOC === 'rx'){ const k = crclVal(); if (!isNaN(k)) body += '\nКліренс креатиніну (Кокрофт–Голт): ' + k + ' мл/хв.'; }
   return {head: amb ? 'Рекомендовано:' : DOC === 'rx' ? '' : 'Призначено:', body, sep:'\n'};
 }
-
 
 /* ===== Листи призначень за найдоказовішими настановами (0.9.3.22) =====
    Пульмонологія: негоспітальна пневмонія, ХОЗЛ (загострення й стабільна за GOLD), бронхіальна астма (загострення й кроки GINA),
@@ -21227,6 +21236,29 @@ function phpNormSecs(items){
 }; }
 /* лише при відкритті й «Далі ›», щоб не заважати гортати аркуш пальцем */
 { const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ if (r && document.body.classList.contains('ph-land')) requestAnimationFrame(()=>{ try{ phsKeep(); }catch(e){} }); }catch(e){} return r; }; }
+// Щоденник: лише явно внесені відомості про кисень і тривалість курсу.
+// Function declarations доступні також під час початкового формування полів.
+function diaryOxygenText(source, method, flow){
+  source = String(source ?? ''); method = String(method ?? '');
+  flow = String(flow ?? '').trim();
+  if (source === '0') return 'на атмосферному повітрі';
+  const device = method === '0' ? ' через назальну канюлю' : method === '1' ? ' через лицеву маску' : '';
+  if (source === '1') return 'за допомогою кисневого концентратора' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
+  if (device) return 'на кисні' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
+  return flow ? 'на кисні ' + flow + ' л/хв' : '';
+}
+function diaryCourseLine(it, date){
+  const total = Number(it.days);
+  if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
+  const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
+  return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total
+    ? rxLine(it) + ' (день ' + elapsed + ' з ' + total + ')' : rxLine(it);
+}
+function diaryCourseCompleted(it, date){
+  const total = Number(it.days);
+  if ((typeof rxKind === 'function' && rxKind(it) !== 'drug') || !it.start || !Number.isInteger(total) || total <= 0) return false;
+  return date === addDays(it.start, total - 1) && (!it.stop || it.stop > date);
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

@@ -121,10 +121,12 @@ function rxPart(){
   const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
   if (DOC === 'shch'){
     const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
+    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
     const lines = [];
-    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>rxLine(it)).join('; ') + '.');
-    if (nw.length) lines.push('Призначено: ' + nw.map(it=>rxLine(it)).join('; ') + '.');
+    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
+    if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
     if (off.length) lines.push('Відмінено: ' + off.map(it=>it.drug).join(', ') + '.');
+    if (completed.length) lines.push(completed.map(it=>'Курс ' + it.drug + ' завершено').join('; ') + '.');
     return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;
   }
   const amb = MODE === 'amb' && DOC === 'ohl';
@@ -141,5 +143,4 @@ function rxPart(){
   if (DOC === 'rx'){ const k = crclVal(); if (!isNaN(k)) body += '\nКліренс креатиніну (Кокрофт–Голт): ' + k + ' мл/хв.'; }
   return {head: amb ? 'Рекомендовано:' : DOC === 'rx' ? '' : 'Призначено:', body, sep:'\n'};
 }
-
 
