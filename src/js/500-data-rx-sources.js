@@ -121,21 +121,10 @@ function rxPart(){
   const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
   if (DOC === 'shch'){
     const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
-    const diaryLine = it => {
-      const total = Number(it.days);
-      if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
-      const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
-      return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total ? rxLine(it) + ' (день ' + elapsed + ' з ' + total + ')' : rxLine(it);
-    };
-    const completed = RXF().filter(it=>{
-      const total = Number(it.days);
-      if ((typeof rxKind === 'function' && rxKind(it) !== 'drug') || !it.start || !Number.isInteger(total) || total <= 0) return false;
-      const end = addDays(it.start, total - 1);
-      return date === end && (!it.stop || it.stop > date);
-    });
+    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
     const lines = [];
-    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(diaryLine).join('; ') + '.');
-    if (nw.length) lines.push('Призначено: ' + nw.map(diaryLine).join('; ') + '.');
+    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
+    if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
     if (off.length) lines.push('Відмінено: ' + off.map(it=>it.drug).join(', ') + '.');
     if (completed.length) lines.push(completed.map(it=>'Курс ' + it.drug + ' завершено').join('; ') + '.');
     return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;

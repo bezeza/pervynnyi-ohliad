@@ -1366,6 +1366,37 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
   ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
 }
+
+{
+  const r = JSON.parse(w.eval(`(()=>{
+    const oldDoc=DOC, ids=['d_obj_chd_1','d_obj_o2_0','d_obj_o2src','d_obj_o2dev','d_main_vash_0'];
+    const saved=ids.map(id=>document.getElementById(id).value);
+    switchDoc('shch');
+    const set=(id,v)=>document.getElementById(id).value=v;
+    set(ids[0],'94');set(ids[1],'5');set(ids[2],'');set(ids[3],'0');
+    update();
+    const nasal=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні через назальну канюлю, потік 5 л/хв');
+    set(ids[3],'1');update();
+    const mask=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні через лицеву маску, потік 5 л/хв');
+    const printed=bDiaryEntry({dt:'2026-10-16T09:00',f:{d_obj_chd_1:'94',d_obj_o2_0:'5',d_obj_o2dev:'1'},rx:'',osn:''}).textContent;
+    set(ids[3],'');update();
+    const flow=document.getElementById('out').textContent.includes('SpO₂ 94 % на кисні 5 л/хв');
+    const pain=F('d_main.vash');
+    const limits=['0','10'].every(v=>{
+      set(ids[4],v);update();
+      return document.getElementById('out').textContent.includes('Біль за ВАШ '+v+'/10') &&
+        bDiaryEntry({dt:'2026-10-16T09:00',f:{d_main_vash_0:v},rx:'',osn:''}).textContent.includes(v+'/10');
+    });
+    set(ids[4],'');update();
+    const empty=!document.getElementById('out').textContent.includes('Біль за ВАШ');
+    const invalid=['-1','11'].every(v=>{set(ids[4],v);update();return entryFieldState(pain)==='check' && pain.inputs[0].classList.contains('bad');});
+    ids.forEach((id,i)=>set(id,saved[i]));switchDoc(oldDoc);update();
+    return JSON.stringify([nasal,mask,printed.includes('через лицеву маску'),flow,limits,empty,invalid]);
+  })()`));
+  ok('Щоденник: канюля/маска без вказаного джерела збережені у тексті й друці', r[0]&&r[1]&&r[2], JSON.stringify(r));
+  ok('Щоденник: лише потік — без вигаданого джерела чи способу подачі',r[3],JSON.stringify(r));
+  ok('Щоденник: ВАШ 0 та 10 у тексті й друці; порожнє поле пропускається',r[4]&&r[5]&&r[6],JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

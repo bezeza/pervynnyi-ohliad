@@ -112,14 +112,8 @@
   {id:'o2src', type:'sel', noOut:true, label:'Киснева підтримка', opts:['Не застосовується (атмосферне повітря)','Кисневий концентратор']},
   {id:'o2dev', type:'sel', noOut:true, label:'Спосіб подачі кисню', opts:['Назальна канюля','Лицева маска']},
   {id:'o2', type:'num', cont:true, joiner:' ', label:'Потік кисню', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
-    fmt:v=>{
-      const src = document.getElementById('d_obj_o2src')?.value || '';
-      const method = document.getElementById('d_obj_o2dev')?.value || '';
-      const flow = v[0] ? ', потік ' + v[0] + ' л/хв' : '';
-      if (src === '0') return 'на атмосферному повітрі';
-      if (src === '1') return 'за допомогою кисневого концентратора' + (method === '0' ? ' через назальну канюлю' : method === '1' ? ' через лицеву маску' : '') + flow;
-      return v[0] ? 'потік кисню ' + v[0] + ' л/хв (спосіб подачі не вказано)' : '';
-    }},
+    fmt:v=>diaryOxygenText(document.getElementById('d_obj_o2src')?.value,
+      document.getElementById('d_obj_o2dev')?.value, v[0])},
   {id:'glik', type:'num', dprof:1, label:'Глікемія', parts:[{ph:'6,5',u:'ммоль/л',n:[3.9,10],ok:[1,40]}], fmt:v=>v[0]?`Глікемія ${v[0]} ммоль/л`:''},
   {id:'masa', type:'num', dprof:1, label:'Маса тіла і діурез за добу', parts:[{ph:'78',u:'кг',ok:[20,300]},{ph:'1500',u:'мл діурез',ok:[50,10000]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`маса тіла ${v[0]} кг`); if(v[1])p.push(`діурез ${v[1]} мл/добу`); const t=p.join(', '); return t ? t[0].toUpperCase()+t.slice(1) : '';}},
