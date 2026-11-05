@@ -2291,3 +2291,20 @@ html.touch .nextbar .btn{padding:12px 16px}
   /* поки відкрито варіанти — лише заголовок і аркуш, без вкладок і нижніх кнопок */
   body.ph-land.ph-split #outBox .otabs,body.ph-land.ph-split #outBox .ofoot,body.ph-land.ph-split #outBox #paper>.phzbar,body.ph-land.ph-split #outBox #paper>.blankbar,body.ph-land.ph-split #outBox #paper>.chips-hint{display:none!important}
 }
+
+
+/* ===== 0.9.3.92 — контекстні дії документа (лише стиль Apple) ===== */
+:root.ui-ios .doc-actions{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--line);
+}
+:root.ui-ios .doc-actions[hidden]{display:none!important}
+:root.ui-ios .doc-actions .da-meta{display:flex;flex-direction:column;gap:1px;min-width:118px}
+:root.ui-ios .doc-actions .da-kicker{font:600 10px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+:root.ui-ios .doc-actions .da-document{font:500 13px var(--f-head);color:var(--ink)}
+:root.ui-ios .doc-actions .da-list{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+:root.ui-ios .doc-actions .btn{padding:6px 11px;min-height:34px;border-radius:8px;font-size:13px;white-space:nowrap}
+:root.ui-ios .doc-actions .btn:disabled{opacity:.48;cursor:not-allowed}
+.actsheet .da-mobile-list .btn:disabled{opacity:.48;cursor:not-allowed}
+@media (max-width:899px){.doc-actions{display:none!important}}
+@media print{.doc-actions{display:none!important}}
