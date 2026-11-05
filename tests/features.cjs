@@ -1308,6 +1308,29 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Бланк: «Кістково-суглобова система» — готові варіанти', r[4]);
   ok('«Бачу — редагую»: текстове поле з фразами дає варіанти', r[5]);
 }
+// 0.9.3.91 — телефон: межа стає в три положення; «Норма» у віконці бланка
+{ const r=JSON.parse(w.eval(`(()=>{ const kP=PAPER, kB=BLANK, kD=DOC, kh=PHS.h, a=[];
+    PHS.h=0.62; phpSnap(); a.push(PHS.h===0.5);
+    PHS.h=0.3; phpSnap(); a.push(PHS.h===0.33);
+    phpToggleFull(); const full=PHS.h; phpToggleFull(); a.push(full===0.85 && PHS.h===0.33);
+    if (DOC!=='ohl') switchDoc('ohl'); peSetMode('here'); PAPER=true; BLANK=true; BLP.exam=true; renderPaper();
+    const row=re=>[...document.querySelectorAll('#paper .b003 .pe-row')].find(x=>re.test(x.textContent.trim()));
+    const ck=el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+    const kol=F('shk.kol'), k0=kol.el.value;
+    kol.el.value='2'; kol.el.dispatchEvent(new Event('change',{bubbles:true}));
+    ck(row(/^Шкіра/)); let nb=document.querySelector('.pe-box .pe-norm');
+    a.push(!!nb && nb.textContent==='Норма');
+    nb.click(); a.push(kol.el.value===String(kol.norm) && !document.querySelector('.pe-box .pe-undo').disabled);
+    document.querySelector('.pe-box .pe-undo').click(); a.push(kol.el.value==='2');
+    peClose(); ck(row(/^Молочні залози/)); a.push(!document.querySelector('.pe-box .pe-norm'));
+    peClose(); kol.el.value=k0; update(); PHS.h=kh; DOC!==kD && switchDoc(kD); PAPER=kP; BLANK=kB; renderPaper();
+    return JSON.stringify(a); })()`));
+  ok('Телефон: межа після відпускання стає на найближче з трьох положень', r[0] && r[1]);
+  ok('Телефон: подвійний дотик по межі — на весь екран і назад', r[2]);
+  ok('Бланк: у віконці рядка з нормою є кнопка «Норма»', r[3]);
+  ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
+  ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
