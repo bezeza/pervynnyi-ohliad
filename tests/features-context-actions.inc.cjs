@@ -1,3 +1,4 @@
+{
 const oldMode = w.eval('MODE'), oldDoc = w.eval('DOC');
   w.eval("uiStyleSet('ios'); MODE='hosp'; applyMode(); switchDoc('ohl')");
   const bar = $('docActions');
