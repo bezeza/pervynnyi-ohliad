@@ -12,7 +12,7 @@ const RANGES = {1: [iPrep + 1, i2], 2: [i2, i3], 3: [i3, iEnd]};
 function make(k){
   const [a, b] = RANGES[k], f = path.join(__dirname, `.features-part-${k}.cjs`);
   // Додаткові UI-тести PR #108 виконуються в частині 3 у спільному тестовому контексті.
-  const extra = k === 3 ? fs.readFileSync(path.join(__dirname, 'features-context-actions.inc.cjs'), 'utf8').split('\n') : [];
+  const extra = k === '3' ? fs.readFileSync(path.join(__dirname, 'features-context-actions.inc.cjs'), 'utf8').split('\n') : [];
   fs.writeFileSync(f, [...src.slice(0, iPrep + 1), ...src.slice(a, b), ...extra, ...src.slice(iEnd)].join('\n'));
   return f;
 }
