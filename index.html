@@ -2298,6 +2298,20 @@ html.touch .nextbar .btn{padding:12px 16px}
 /* окреме вікно (⧉) — там клік відкриває редактор рядка, як і раніше */
 .popwin .se{cursor:inherit;background:none!important;outline:0!important}
 @media print{.se,.se-empty,.bf.empty.se{background:transparent!important;outline:0!important;background-image:none!important}.see-pop{display:none!important}}
+
+/* 0.9.3.90 — плаваючі віконця: перенос за заголовок, розмір за кут */
+@media (min-width:900px){
+  .pe-head.fw-drag,.see-pop .see-h.fw-drag{cursor:move;touch-action:none;user-select:none}
+  .fw-grip{position:absolute;right:1px;bottom:1px;width:18px;height:18px;cursor:nwse-resize;touch-action:none;opacity:.5;border-radius:0 0 10px 0;
+    background:linear-gradient(135deg,transparent 0 50%,var(--line,#b9bfca) 50% 58%,transparent 58% 68%,var(--line,#b9bfca) 68% 76%,transparent 76%)}
+  .fw-grip:hover{opacity:1}
+  .pe-box.fw-on,.see-pop.fw-on{max-height:calc(100vh - 16px);max-width:calc(100vw - 16px)}
+  .pe-box.fw-on .pe-body{flex:1 1 auto;min-height:0}
+  .see-pop.fw-on .see-list{flex:1 1 auto}
+  .fw-busy{opacity:.94;transition:none!important}
+}
+@media (max-width:899px){.fw-grip{display:none}}
+@media print{.fw-grip{display:none!important}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2308,7 +2322,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.89 від 04.11.2026">v0.9.3.89 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.90 від 05.11.2026">v0.9.3.90 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -2781,8 +2795,10 @@ const SECTIONS = [
     fmt:v=>{const p=[], h=cm(v[0]), w=num(v[1]); if(h>0)p.push(`Зріст ${dec(h)} см`); if(v[1])p.push(`вага ${v[1]} кг`);
       if(h>0&&w>0)p.push('ІМТ '+dec((w/((h/100)**2)).toFixed(1))+' кг/м²'); return p.join(', ');}},
   {id:'dod', type:'text', rows:2, wide:true, label:'Додатково (своїми словами або своїми кнопками)', tpl:'{v}', sep:' '},
-  {id:'moloch', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'},
-  {id:'opora', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду'}
+  {id:'moloch', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], sep:', ', label:'Молочні залози (форма 003/о)', placeholder:'Внесіть фактичні дані огляду', quick:[
+    'симетричні, м’які, безболісні','ущільнень не пальпується','виділень із сосків немає','не збільшені','гінекомастія','пальпується ущільнення …']},
+  {id:'opora', type:'text', rows:2, wide:true, noOut:true, docs:['ohl'], sep:', ', label:'Кістково-суглобова система (форма 003/о)', placeholder:'Внесіть фактичні дані огляду', quick:[
+    'без видимих деформацій','рухи в суглобах у повному обсязі, безболісні','болючості при пальпації хребта та суглобів немає','суглоби не набряклі, шкіра над ними не змінена','обмеження рухів у … суглобі','деформація …']}
 ]},
 { id:'shk', title:'Шкіра, зів, лімфовузли', short:'Шкіра', head:'', objective:true, fields:[
   {id:'bo', type:'sel', bo:true, wide:true, label:'Якщо змін немає — одним рядком (детальний опис нижче має пріоритет)', tpl:'{v}', opts:['Шкірні покриви та видимі слизові без особливостей, периферичних набряків немає, лімфовузли не збільшені','Шкірні покриви та видимі слизові без патологічних змін']},
@@ -4458,8 +4474,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.89', VDATE = '04.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.90', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.90', '05.11.2026', 'плаваючі віконця на аркуші («Вносити на бланку», «Бачу — редагую»): перетягуються за заголовок, розмір змінюється за правий нижній кут, місце й розмір запам’ятовуються для лікаря (подвійний клік по заголовку — стандартне місце); молочні залози й кістково-суглобова система — готові варіанти вибору; фраза в листі призначень більше не відкриває скарги чи анамнез'],
   ['0.9.3.89', '04.11.2026', '«Бачу — редагую»: у перегляді перед друком і на бланку клік по фразі (стан, скарга, показник, діагноз, порожнє місце) відкриває варіанти цього поля просто біля слова — клік або стрілки й Enter замінюють текст у документі й у формі; свій варіант (поле у формі не порожніє), Esc закриває, ↶ скасовує; наведені місця підсвічуються, порожні — жовті; щоденник, лабораторія, анестезія й окреме вікно ⧉ працюють як раніше; фраза позначається лише цілим словом і лише коли однозначно належить одному полю; у режимі «клік → у форму» вимкнено'],
   ['0.9.3.88', '04.11.2026', 'імпорт з МІС Health24: на сторінці пацієнта кнопка «→ в Первинний огляд» лише читає екран (ПІБ, дату народження, стать, епізоди, діагнози, алергії й ліки) і кладе JSON у буфер — без натискань «Зберегти», «Підписати», «Надіслати» і без мережі; у програмі «Імпорт з H24» показує, що буде заповнено, і після підтвердження створює картку з діагнозом і кодом МКХ-10. Поруч — спокійніший вигляд МІС на комп’ютері (стиль для Stylus або скрипт). Дані лишаються в браузері'],
   ['0.9.3.87', '04.11.2026', 'шаблони: список своїх шаблонів із пошуком, одна кнопка «Застосувати», «Перейменувати» і підтвердження перед видаленням; «Зберегти як шаблон» — з огляду (меню «⋯» і біля пошуку хвороб) і з щоденника; видалений свій варіант можна додати знову; порожнє поле й саме лише «…» не потрапляють у текст, у обґрунтуванні антибіотика не друкується незаповнений бакпосів і дата перегляду'],
@@ -20992,6 +21009,123 @@ document.addEventListener('keydown', e=>{
 document.addEventListener('pointerdown', e=>{ if (!SE_POP) return; if (SE_POP.contains(e.target)) return; if (e.target.closest && e.target.closest('.se')) return; seClose(); }, true);
 window.addEventListener('scroll', ()=>{ if (!SE_POP) return; let a = SE_POP._anchor; if (!a || !a.isConnected){ const k = SE_POP._hit && SE_POP._hit.f ? seKey(SE_POP._hit.f) : ''; a = k ? document.querySelector('#paper .se[data-se="' + k + '"]') : null; if (a) SE_POP._anchor = a; } if (a) sePlace(SE_POP, a); }, true);
 { const s0 = switchDoc; switchDoc = function(){ seClose(); return s0.apply(this, arguments); }; }
+/* ===== 0.9.3.90 — плаваючі віконця на аркуші =====
+   1. «Вносити на бланку» (636) і «Бачу — редагую» (675): віконце перетягується за заголовок,
+      розмір змінюється за правий нижній кут. Місце й розмір запам’ятовуються окремо для кожного лікаря
+      (за ПІБ лікаря на цьому ПК). Подвійний клік по заголовку — повернути віконце на стандартне місце.
+      На телефоні (до 899 px) — як було: нижня панель.
+   2. «Бачу — редагую»: текстові поля з готовими фразами (молочні залози, кістково-суглобова система тощо)
+      показують ці фрази як варіанти; повторний клік прибирає фразу.
+   3. «Бачу — редагую»: фраза в блоці одного розділу не відкриває поле іншого розділу
+      (раніше, наприклад, «5 днів» у листі призначень відкривало анамнез, слова скарг — скарги). */
+
+/* ---- 2–3. варіанти фраз і прив’язка до свого розділу ---- */
+{ const o0 = seOpts; seOpts = function(f){
+  const r = o0.apply(this, arguments);
+  if (r.length || !f || f.type !== 'text' || !f.el || !f.quick || !f.quick.length) return r;
+  const sep = f.sep || '\n', parts = String(f.el.value || '').split(sep).map(x=>x.trim()).filter(Boolean);
+  return f.quick.map(q=>{ const t = g(q); return {label:t, quickT:t, on:parts.includes(t)}; });
+}; }
+{ const p0 = sePick; sePick = function(f, o){
+  if (!o || o.quickT == null) return p0.apply(this, arguments);
+  const pop = SE_POP, own = pop && pop.querySelector('.see-own input');
+  const sep = f.sep || '\n', parts = String(f.el.value || '').split(sep).map(x=>x.trim()).filter(Boolean);
+  /* фраза з «…» — у «Свій варіант», щоб дописати місце чи суглоб */
+  if (/…/.test(o.quickT) && own){
+    own.value = parts.concat(o.quickT).join(sep); own.focus();
+    const k = own.value.lastIndexOf('…'); try{ own.setSelectionRange(k, k + 1); }catch(e){}
+    return;
+  }
+  if (!SE_UNDO){ undoPush('фраза: ' + (f.label || '')); SE_UNDO = UNDO[UNDO.length - 1]; }
+  const i = parts.indexOf(o.quickT); if (i >= 0) parts.splice(i, 1); else parts.push(o.quickT);
+  f.el.value = parts.join(sep); f.el.dispatchEvent(new Event('input', {bubbles:true}));
+  sePaint();
+}; }
+{ const m0 = seMark; seMark = function(root){
+  const r = m0.apply(this, arguments);
+  try{ if (root) root.querySelectorAll('[data-sec] span.se[data-se]').forEach(sp=>{
+    const blk = sp.closest('[data-sec]'), sec = String(sp.dataset.se).split('.')[0];
+    if (blk && sec !== blk.dataset.sec){ const p = sp.parentNode; sp.replaceWith(document.createTextNode(sp.textContent)); if (p) p.normalize(); }
+  }); }catch(e){}
+  return r;
+}; }
+
+/* ---- 1. перетягування, розмір, збереження під лікаря ---- */
+const FW_KEY = 'po.floatwin';
+try{ if (!FS_SET_KEYS.includes(FW_KEY)) FS_SET_KEYS.push(FW_KEY); }catch(e){}
+function fwDoc(){ try{ const e = document.getElementById('meta_doc'); return (e && e.value.trim()) || '—'; }catch(e){ return '—'; } }
+function fwAll(){ try{ const a = JSON.parse(localStorage.getItem(FW_KEY) || '{}'); return a && typeof a === 'object' ? a : {}; }catch(e){ return {}; } }
+function fwGet(kind){ const a = fwAll()[fwDoc()]; return (a && a[kind]) || null; }
+function fwSet(kind, geo){
+  const a = fwAll(), d = fwDoc(); a[d] = Object.assign({}, a[d]);
+  if (geo) a[d][kind] = geo; else delete a[d][kind];
+  try{ localStorage.setItem(FW_KEY, JSON.stringify(a)); }catch(e){}
+}
+function fwPhone(w){ try{ return w.matchMedia('(max-width:899px)').matches; }catch(e){ return false; } }
+function fwApply(box, kind, w){
+  w = w || window;
+  const geo = fwPhone(w) ? null : fwGet(kind);
+  if (!geo){ if (box.classList.contains('fw-on')){ box.classList.remove('fw-on'); box.style.height = ''; } return false; }
+  const vw = w.innerWidth, vh = w.innerHeight;
+  const width = Math.max(260, Math.min(geo.w || box.offsetWidth || 340, vw - 16));
+  box.classList.add('fw-on');
+  box.style.width = width + 'px';
+  if (geo.h) box.style.height = Math.max(160, Math.min(geo.h, vh - 16)) + 'px'; else box.style.height = '';
+  const bh = Math.min(box.getBoundingClientRect().height || 200, vh - 16);
+  box.style.left = Math.max(8, Math.min(vw - width - 8, geo.x)) + 'px';
+  box.style.top = Math.max(8, Math.min(vh - bh - 8, geo.y)) + 'px';
+  return true;
+}
+function fwReset(box, kind){
+  fwSet(kind, null); box.classList.remove('fw-on'); box.style.height = '';
+  try{ if (kind === 'pe') pePlace(); else if (box._anchor) sePlace(box, box._anchor); }catch(e){}
+}
+function fwWire(box, kind, w){
+  if (!box || box._fw) return; box._fw = 1;
+  const d = box.ownerDocument, head = box.querySelector(kind === 'pe' ? '.pe-head' : '.see-h');
+  const grip = d.createElement('div'); grip.className = 'fw-grip'; grip.title = 'Потягніть, щоб змінити розмір віконця'; grip.setAttribute('aria-hidden', 'true');
+  box.append(grip);
+  if (head){ head.classList.add('fw-drag'); head.title = 'Перетягніть, щоб перемістити віконце. Подвійний клік — на стандартне місце'; }
+  const start = (e, mode)=>{
+    if (fwPhone(w) || (e.button !== undefined && e.button > 0)) return;
+    if (mode === 'move' && e.target.closest && e.target.closest('button, input, select, textarea, a')) return;
+    e.preventDefault();
+    const r = box.getBoundingClientRect(), x0 = e.clientX, y0 = e.clientY;
+    box.classList.add('fw-on', 'fw-busy');
+    const mv = ev=>{
+      const dx = ev.clientX - x0, dy = ev.clientY - y0, vw = w.innerWidth, vh = w.innerHeight;
+      if (mode === 'move'){
+        box.style.left = Math.max(8, Math.min(vw - r.width - 8, r.left + dx)) + 'px';
+        box.style.top = Math.max(8, Math.min(vh - 48, r.top + dy)) + 'px';
+      } else {
+        box.style.width = Math.max(260, Math.min(vw - r.left - 8, r.width + dx)) + 'px';
+        box.style.height = Math.max(160, Math.min(vh - r.top - 8, r.height + dy)) + 'px';
+      }
+    };
+    const up = ()=>{
+      d.removeEventListener('pointermove', mv); d.removeEventListener('pointerup', up); d.removeEventListener('pointercancel', up);
+      box.classList.remove('fw-busy');
+      const b = box.getBoundingClientRect(), prev = fwGet(kind) || {};
+      fwSet(kind, {x:Math.round(b.left), y:Math.round(b.top), w:Math.round(b.width), h:mode === 'size' ? Math.round(b.height) : (prev.h || 0)});
+    };
+    d.addEventListener('pointermove', mv); d.addEventListener('pointerup', up); d.addEventListener('pointercancel', up);
+  };
+  if (head){
+    head.addEventListener('pointerdown', e=>start(e, 'move'));
+    head.addEventListener('dblclick', e=>{ if (e.target.closest && e.target.closest('button, input')) return; fwReset(box, kind); });
+  }
+  grip.addEventListener('pointerdown', e=>start(e, 'size'));
+}
+{ const x0 = pePlace; pePlace = function(){
+  const r = x0.apply(this, arguments);
+  try{ if (PE.box && PE.w && !PE.w.closed){ fwWire(PE.box, 'pe', PE.w); fwApply(PE.box, 'pe', PE.w); } }catch(e){}
+  return r;
+}; }
+{ const x0 = sePlace; sePlace = function(pop){
+  const r = x0.apply(this, arguments);
+  try{ if (pop){ fwWire(pop, 'see', window); fwApply(pop, 'see', window); } }catch(e){}
+  return r;
+}; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

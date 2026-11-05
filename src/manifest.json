@@ -154,6 +154,7 @@
   "673-storage-guards.js",
   "674-templates-ux.js",
   "674-h24-import.js",
-  "675-see-edit.js"
+  "675-see-edit.js",
+  "676-float-win.js"
  ]
 }

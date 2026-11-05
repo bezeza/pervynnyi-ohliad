@@ -2259,3 +2259,17 @@ html.touch .nextbar .btn{padding:12px 16px}
 /* окреме вікно (⧉) — там клік відкриває редактор рядка, як і раніше */
 .popwin .se{cursor:inherit;background:none!important;outline:0!important}
 @media print{.se,.se-empty,.bf.empty.se{background:transparent!important;outline:0!important;background-image:none!important}.see-pop{display:none!important}}
+
+/* 0.9.3.90 — плаваючі віконця: перенос за заголовок, розмір за кут */
+@media (min-width:900px){
+  .pe-head.fw-drag,.see-pop .see-h.fw-drag{cursor:move;touch-action:none;user-select:none}
+  .fw-grip{position:absolute;right:1px;bottom:1px;width:18px;height:18px;cursor:nwse-resize;touch-action:none;opacity:.5;border-radius:0 0 10px 0;
+    background:linear-gradient(135deg,transparent 0 50%,var(--line,#b9bfca) 50% 58%,transparent 58% 68%,var(--line,#b9bfca) 68% 76%,transparent 76%)}
+  .fw-grip:hover{opacity:1}
+  .pe-box.fw-on,.see-pop.fw-on{max-height:calc(100vh - 16px);max-width:calc(100vw - 16px)}
+  .pe-box.fw-on .pe-body{flex:1 1 auto;min-height:0}
+  .see-pop.fw-on .see-list{flex:1 1 auto}
+  .fw-busy{opacity:.94;transition:none!important}
+}
+@media (max-width:899px){.fw-grip{display:none}}
+@media print{.fw-grip{display:none!important}}
