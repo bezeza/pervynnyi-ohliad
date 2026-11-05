@@ -466,6 +466,7 @@ details.box[open]{padding-bottom:12px}
 }
 .src{font-size:12.5px;color:var(--muted);margin:14px 0 0}
 .src a{color:var(--accent)}
+/* Монохромний друк для старих лазерних принтерів: у #print — лише #000/#fff; градієнти дозволені тільки для чорного розлінування .blines. */
 #print{display:none}
 @media print{
   @page{size:A4;margin:18mm 15mm 18mm 25mm}
