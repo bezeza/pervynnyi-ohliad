@@ -1087,9 +1087,30 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Дотик: «Великі кнопки» вмикає сенсорний режим, «Звичайні» — вимикає, перемикач у «Вигляді»', on && off && ctl, JSON.stringify([on, off, ctl]));
    w.eval("VIEW.touch='auto'; saveView(); applyView()"); }
  { const css=fs.readFileSync(path.join(__dirname,'..','src','styles.css'),'utf8');
-  const pr=(css.match(/#print[^{]*\{[^}]*\}/g)||[]).join(' ');
-  const cols=pr.match(/#[0-9a-fA-F]{3,6}\b|rgba?\(/g)||[];
-  ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий', cols.every(c=>/^#(000|fff|000000|ffffff)$/i.test(c)) && !/rgba?\(/.test(pr), [...new Set(cols)].join(' ')); }
+  const src=css.replace(/\/\*[\s\S]*?\*\//g,'');
+  const pr=(src.match(/#print[^{]*\{[^}]*\}/g)||[]).join(' ');
+  const cols=pr.match(/#[0-9a-fA-F]{3,8}\b/g)||[];
+  ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий', cols.every(c=>/^#(000|fff|000000|ffffff)$/i.test(c)) && !/(?:rgba?|hsla?)\s*\(/i.test(pr), [...new Set(cols)].join(' '));
+  const blockEnd=(s,start)=>{let depth=0,q='',esc=false,comment=false;for(let i=start;i<s.length;i++){const c=s[i],n=s[i+1];if(comment){if(c==='*'&&n==='/'){comment=false;i++;}continue;}if(q){if(esc){esc=false;continue;}if(c==='\\'){esc=true;continue;}if(c===q)q='';continue;}if(c==='/'&&n==='*'){comment=true;i++;continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='{')depth++;else if(c==='}'&&--depth===0)return i;}return -1;};
+  const media=[];let pos=0;while((pos=src.indexOf('@media print',pos))>=0){const open=src.indexOf('{',pos),end=blockEnd(src,open);if(end<0)break;media.push(src.slice(open+1,end));pos=end+1;}
+  const bad=[];
+  media.forEach(body=>{for(const m of body.matchAll(/([^{}]+)\{([^{}]*)\}/g)){const sel=m[1].trim(),d=m[2],lines=/\.blines\b/.test(sel);
+    const colors=d.match(/#[0-9a-fA-F]{3,8}\b/g)||[];
+    if(colors.some(c=>!/^#(000|fff|000000|ffffff)$/i.test(c)))bad.push(sel+': колір');
+    if(/(?:rgba?|hsla?)\s*\(/i.test(d))bad.push(sel+': прозорий/сірий колір');
+    if(/\b(?:box|text)-shadow\s*:\s*(?!none\b)[^;]+/i.test(d))bad.push(sel+': тінь');
+    if(/\bfilter\s*:\s*(?!none\b)[^;]+/i.test(d))bad.push(sel+': фільтр');
+    if(/gradient/i.test(d)&&!lines)bad.push(sel+': градієнт поза .blines');
+    const bg=[...d.matchAll(/\bbackground(?:-color)?\s*:\s*([^;]+)/gi)].map(x=>x[1].trim());
+    if(bg.some(v=>! /^(?:none|transparent|#(?:000|fff|000000|ffffff)|black|white)\b/i.test(v)))bad.push(sel+': блідий фон');
+    const bi=[...d.matchAll(/\bbackground-image\s*:\s*([^;]+)/gi)].map(x=>x[1].trim());
+    if(bi.some(v=>!/^none\b/i.test(v)&&!(lines&&/gradient/i.test(v))))bad.push(sel+': фонове зображення');
+  }});
+  ok('Друк на старих принтерах: усі @media print без сірого, rgba, тіней і блідих фонів; градієнт лише на .blines', media.length>0 && bad.length===0, JSON.stringify({media:media.length,bad}));
+  const legacyBlack = /#print\s+\.pr-free\s+\.crow,#print\s+\.pr-free\s+\.prow\{[^}]*border-top:1px solid #000/i.test(src)
+    && /#print\s+\.memo\s+td\{[^}]*border-bottom:1px solid #000/i.test(src)
+    && /#print\s+\.memo\s+\.ms\{[^}]*color:#000/i.test(src);
+  ok('Друк: лінії призначень і пам’яток, дрібний текст — чорні', legacyBlack); }
 { const ff=/@font-face\{font-family:"Zakon"/.test(html);
   const od=!!$('set_fdoc') && [...$('set_fdoc').options].some(o=>o.value==='Zakon'), ou=!!$('set_fui') && [...$('set_fui').options].some(o=>o.value==='Zakon');
   const sp=$('set_fprint'), R0=doc.documentElement; let on=false, off=false, def=false;
