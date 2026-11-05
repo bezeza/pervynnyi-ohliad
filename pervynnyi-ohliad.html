@@ -3071,7 +3071,7 @@ const SECTIONS = [
   {id:'dzah', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата захворювання (якщо порожньо — з анамнезу)'},
   {id:'dnapr', type:'line', itype:'date', noOut:true, label:'027/о, п. 5а: дата направлення в стаціонар'},
   {id:'vs', type:'sel', noOut:true, def:0, label:'027/о, п. 5б', opts:['виписки','смерті']},
-  {id:'per', type:'period', label:'Період лікування', tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
+  {id:'per', type:'period', label:'Період перебування у стаціонарі', dateLabels:['Поступив/Поступила','Виписаний/Виписана'], dateAriaLabels:['Дата, коли пацієнт поступив/поступила до стаціонару','Дата виписки'], tpl:'[Перебував|Перебувала] на стаціонарному лікуванні {v}'},
   {id:'tvyp', type:'line', noOut:true, label:'Час виписки (бланк 003/о, п. 20)', placeholder:'год:хв, напр. 10:30', inputmode:'numeric'},
   {id:'nadh', type:'sel', label:'Госпіталізація (якщо не вибрано — береться з первинного огляду)', tpl:'{v}', cont:true,
     fallback:()=>{ const a = val(F('morbi.hosp'), true); if (!a) return ''; const b = val(F('morbi.hospd'), true); return a.replace(/^\[([^|]*)\|([^\]]*)\]/, (m,x,y)=>'[' + x.toLowerCase() + '|' + y.toLowerCase() + ']').replace(/^[А-ЯІЇЄҐ]/, c=>c.toLowerCase()) + (b ? ' ' + b : ''); },
@@ -3897,10 +3897,11 @@ function buildField(s, f){
     refreshChips(f);
   } else if (f.type === 'period'){
     wrap.append(h('div', {class:'lbl'}, f.label));
-    f.d1 = h('input', {type:'date', id:`${id}_1`, 'aria-label':'Дата надходження', oninput:update, style:'width:auto'});
-    f.d2 = h('input', {type:'date', id:`${id}_2`, 'aria-label':'Дата виписки', oninput:update, style:'width:auto'});
+    const dateLabels = f.dateLabels || ['з','по'], dateAriaLabels = f.dateAriaLabels || ['Дата надходження','Дата виписки'];
+    f.d1 = h('input', {type:'date', id:`${id}_1`, 'aria-label':dateAriaLabels[0], oninput:update, style:'width:auto'});
+    f.d2 = h('input', {type:'date', id:`${id}_2`, 'aria-label':dateAriaLabels[1], oninput:update, style:'width:auto'});
     f.hintEl = h('span', {class:'hint'});
-    wrap.append(h('div', {class:'nums'}, h('span', {class:'u'}, 'з'), f.d1, h('span', {class:'u'}, 'по'), f.d2, f.hintEl));
+    wrap.append(h('div', {class:'nums'}, h('span', {class:'u'}, dateLabels[0]), f.d1, h('span', {class:'u'}, dateLabels[1]), f.d2, f.hintEl));
   } else if (f.type === 'auto'){
     wrap.append(h('div', {class:'lbl'}, f.label));
     f.abox = h('div', {class:'autobox', id, 'aria-live':'polite'}); wrap.append(f.abox);
