@@ -8515,7 +8515,7 @@ function rxPart(){
     const diaryLine = it => {
       const total = Number(it.days);
       if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
-      const elapsed = Math.floor((Date.parse(date + 'T00:00') - Date.parse(it.start + 'T00:00')) / 864e5) + 1;
+      const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
       return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total ? rxLine(it) + ' (день ' + elapsed + ' з ' + total + ')' : rxLine(it);
     };
     const completed = RXF().filter(it=>{
