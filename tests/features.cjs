@@ -1331,6 +1331,32 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
   ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
 }
+{
+  const oldMode = w.eval('MODE'), oldDoc = w.eval('DOC');
+  w.eval("uiStyleSet('ios'); MODE='hosp'; applyMode(); switchDoc('ohl')");
+  const bar = $('docActions');
+  const ids = () => [...bar.querySelectorAll('[data-action]')].map(x=>x.dataset.action);
+  ok('Контекстні дії: первинний огляд', !bar.hidden && ids().includes('disease') && ids().includes('quick') && ids().includes('check'), ids().join(','));
+  w.eval("switchDoc('shch')");
+  ok('Контекстні дії: щоденник', !bar.hidden && ids().includes('diary-previous') && ids().includes('diary-save') && ids().includes('check'), ids().join(','));
+  w.eval("switchDoc('rx')");
+  ok('Контекстні дії: призначення', !bar.hidden && ids().includes('rx-add') && ids().includes('rx-print'), ids().join(','));
+  w.eval("switchDoc('epi')");
+  ok('Контекстні дії: виписний епікриз', !bar.hidden && ids().includes('epi-build') && ids().includes('epi-field'), ids().join(','));
+  w.eval("uiStyleSet('classic')");
+  ok('Контекстна панель не змінює Classic', bar.hidden);
+  w.eval("uiStyleSet('ios'); switchDoc('rx')");
+  const mm0 = w.matchMedia;
+  w.matchMedia = q=>({matches:/max-width:899px/.test(q), addEventListener(){}, addListener(){}});
+  w.eval('openActs()');
+  const sheet = doc.querySelector('.actsheet');
+  ok('Телефон: дії призначень у наявному меню', !!sheet && !!sheet.querySelector('[data-action="rx-add"]') && !!sheet.querySelector('[data-action="rx-print"]'));
+  if (sheet) sheet.remove();
+  doc.body.style.overflow = '';
+  if (mm0 === undefined) delete w.matchMedia; else w.matchMedia = mm0;
+  w.eval("MODE=" + JSON.stringify(oldMode) + "; applyMode(); switchDoc(" + JSON.stringify(oldDoc) + ")");
+}
+
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
