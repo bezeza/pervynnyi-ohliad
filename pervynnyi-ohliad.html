@@ -2330,12 +2330,28 @@ html.touch .nextbar .btn{padding:12px 16px}
   /* поки відкрито варіанти — лише заголовок і аркуш, без вкладок і нижніх кнопок */
   body.ph-land.ph-split #outBox .otabs,body.ph-land.ph-split #outBox .ofoot,body.ph-land.ph-split #outBox #paper>.phzbar,body.ph-land.ph-split #outBox #paper>.blankbar,body.ph-land.ph-split #outBox #paper>.chips-hint{display:none!important}
 }
+/* ===== 0.9.3.92 — контекстні дії документа (лише стиль Apple) ===== */
+:root.ui-ios .doc-actions{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--line);
+}
+:root.ui-ios .doc-actions[hidden]{display:none!important}
+:root.ui-ios .doc-actions .da-meta{display:flex;flex-direction:column;gap:1px;min-width:118px}
+:root.ui-ios .doc-actions .da-kicker{font:600 10px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+:root.ui-ios .doc-actions .da-document{font:500 13px var(--f-head);color:var(--ink)}
+:root.ui-ios .doc-actions .da-list{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+:root.ui-ios .doc-actions .btn{padding:6px 11px;min-height:34px;border-radius:8px;font-size:13px;white-space:nowrap}
+:root.ui-ios .doc-actions .btn:disabled{opacity:.48;cursor:not-allowed}
+.actsheet .da-mobile-list .btn:disabled{opacity:.48;cursor:not-allowed}
+@media (max-width:899px){.doc-actions{display:none!important}}
+@media print{.doc-actions{display:none!important}}
+
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.91 від 05.11.2026">v0.9.3.91 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.92 від 05.11.2026" title="Версія 0.9.3.91 від 05.11.2026">v0.9.3.92 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -21221,6 +21237,139 @@ function phpNormSecs(items){
 }; }
 /* лише при відкритті й «Далі ›», щоб не заважати гортати аркуш пальцем */
 { const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ if (r && document.body.classList.contains('ph-land')) requestAnimationFrame(()=>{ try{ phsKeep(); }catch(e){} }); }catch(e){} return r; }; }
+/* ===== 0.9.3.92 — контекстні дії поточного документа (Apple) =====
+   Комп’ютер: окрема компактна панель під вибором документа.
+   Телефон: ті самі потрібні дії в наявному меню «Документ і дії».
+   Усі кнопки викликають наявні функції; Classic і медична логіка не змінюються. */
+
+const CTX_DOC_NAMES = {
+  ohl:'Первинний огляд',
+  shch:()=>MODE === 'amb' ? 'Повторний огляд' : 'Щоденник',
+  rx:'Лист призначень',
+  epi:'Виписний епікриз'
+};
+const CTX_BAR = h('nav', {id:'docActions', class:'doc-actions', role:'toolbar', 'aria-orientation':'horizontal', 'aria-label':'Швидкі дії документа'});
+const CTX_META = h('div', {class:'da-meta'});
+const CTX_TITLE = h('span', {class:'da-kicker'}, 'Швидкі дії');
+const CTX_DOC = h('span', {class:'da-document'});
+const CTX_LIST = h('div', {class:'da-list'});
+CTX_META.append(CTX_TITLE, CTX_DOC);
+CTX_BAR.append(CTX_META, CTX_LIST);
+{
+  const anchor = document.querySelector('.form .docbar');
+  if (anchor) anchor.after(CTX_BAR);
+  else { const form = document.querySelector('.form'); if (form) form.prepend(CTX_BAR); }
+}
+
+function ctxApple(){ return typeof UISTYLE !== 'undefined' && UISTYLE === 'ios'; }
+function ctxPhone(){ return !!(window.matchMedia && matchMedia('(max-width:899px)').matches); }
+function ctxDocName(){
+  const v = CTX_DOC_NAMES[DOC];
+  return typeof v === 'function' ? v() : v || '';
+}
+function ctxOpenCheck(){
+  if (ctxPhone()) $('#outBox').classList.add('open');
+  if (typeof SHELL !== 'undefined' && SHELL && typeof SHELL.setOV === 'function') SHELL.setOV('chk');
+  else { const c = $('#chk'); if (c){ c.open = true; if (typeof renderCheck === 'function') renderCheck(); } }
+}
+function ctxOpenPaper(){
+  if (ctxPhone()) $('#outBox').classList.add('open');
+  if (typeof SHELL !== 'undefined' && SHELL && typeof SHELL.setOV === 'function') SHELL.setOV('paper');
+  else { const b = $('#paperBtn'); if (b && b.getAttribute('aria-pressed') !== 'true') b.click(); }
+}
+function ctxFocusRx(){
+  goTab('rxt');
+  setTimeout(()=>{ const x = $('#rxAdd'); if (x) x.focus(); }, 0);
+}
+function ctxPrintRx(){
+  if (typeof f0034Print === 'function') f0034Print();
+  else toast('Друк листка призначень недоступний');
+}
+function ctxBuildEpi(){
+  goTab('e_per');
+  if (typeof epiAuto === 'function') epiAuto();
+}
+function ctxActionItems(){
+  const check = {id:'check', label:'Перевірка', run:ctxOpenCheck};
+  if (DOC === 'ohl') return [
+    {id:'disease', label:'За хворобою', run:()=>show(TABS.indexOf(HV))},
+    {id:'quick', label:QUICK ? 'Повний огляд' : (MODE === 'amb' ? 'Швидкий прийом' : 'Швидкий огляд'), primary:true, run:()=>{ const b = $('#quickBtn'); if (b && !b.hidden) b.click(); }},
+    check
+  ];
+  if (DOC === 'shch') return [
+    {id:'diary-previous', label:'Без змін (як учора)', disabled:!DIARIES.length, run:()=>{ if (typeof diaryNoChange === 'function') diaryNoChange(); }},
+    {id:'diary-save', label:'Записати в журнал', primary:true, run:()=>{ if (typeof saveDiary === 'function') saveDiary(); }},
+    check
+  ];
+  if (DOC === 'rx') return [
+    {id:'rx-add', label:'Додати препарат', primary:true, run:ctxFocusRx},
+    {id:'rx-print', label:'Друк листка 003-4/о', run:ctxPrintRx},
+    check
+  ];
+  if (DOC === 'epi') return [
+    {id:'epi-build', label:'Зібрати виписку', primary:true, run:ctxBuildEpi},
+    {id:'epi-field', label:'До періоду виписки', run:()=>goTab('e_per', 'e_per.per')},
+    check
+  ];
+  return [];
+}
+function ctxMobileItems(){
+  const all = ctxActionItems();
+  if (DOC === 'ohl') return all.filter(x=>x.id === 'check').concat([{id:'paper', label:'Перед друком', run:ctxOpenPaper}]);
+  return all;
+}
+function ctxMakeButton(item, onRun){
+  return h('button', {
+    type:'button',
+    class:'btn' + (item.primary ? ' primary' : ''),
+    'data-action':item.id,
+    title:item.title || item.label,
+    disabled:item.disabled ? '' : null,
+    onclick:()=>{ if (!item.disabled){ if (onRun) onRun(item); else item.run(); } }
+  }, item.label);
+}
+function ctxSync(){
+  const items = ctxActionItems(), name = ctxDocName();
+  const visible = ctxApple() && !ctxPhone() && !document.documentElement.classList.contains('ui-start') && items.length > 0;
+  CTX_BAR.hidden = !visible;
+  if (!visible) return;
+  CTX_BAR.dataset.document = DOC;
+  CTX_BAR.setAttribute('aria-label', 'Швидкі дії: ' + name);
+  CTX_DOC.textContent = name;
+  CTX_LIST.innerHTML = '';
+  items.forEach(item=>CTX_LIST.append(ctxMakeButton(item)));
+}
+function ctxCloseSheet(sh){
+  const close = sh.querySelector('.nshead button');
+  if (close) close.click();
+  else { sh.remove(); document.body.style.overflow = ''; }
+}
+function ctxAddMobile(){
+  if (!ctxApple()) return;
+  const sheets = document.querySelectorAll('.actsheet');
+  const sh = sheets[sheets.length - 1];
+  if (!sh || sh.dataset.ctxActions === '1') return;
+  const items = ctxMobileItems();
+  if (!items.length) return;
+  const title = h('h3', {class:'as-h'}, 'Дії документа');
+  const list = h('div', {class:'as-list da-mobile-list'});
+  items.forEach(item=>list.append(ctxMakeButton(item, x=>{ ctxCloseSheet(sh); x.run(); })));
+  const before = [...sh.querySelectorAll('.as-h')].find(x=>x.textContent.trim() === 'Заповнення');
+  if (before) before.before(title, list); else sh.append(title, list);
+  sh.dataset.ctxActions = '1';
+}
+
+/* Оновлюємо панель лише при зміні документа, стилю або стану щоденника. */
+{ const x0 = switchDoc; switchDoc = function(){ const r = x0.apply(this, arguments); try{ ctxSync(); }catch(e){} return r; }; }
+{ const x0 = applyDoc; applyDoc = function(){ const r = x0.apply(this, arguments); try{ ctxSync(); }catch(e){} return r; }; }
+{ const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ ctxSync(); }catch(e){} return r; }; }
+{ const x0 = stApply; stApply = function(){ const r = x0.apply(this, arguments); try{ ctxSync(); }catch(e){} return r; }; }
+{ const x0 = saveDiary; saveDiary = function(){ const r = x0.apply(this, arguments); try{ ctxSync(); }catch(e){} return r; }; }
+if (typeof openActs === 'function'){
+  const x0 = openActs;
+  openActs = function(){ const r = x0.apply(this, arguments); try{ ctxAddMobile(); }catch(e){} return r; };
+}
+ctxSync();
 </script>
 
 </body>
