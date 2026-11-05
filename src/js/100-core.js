@@ -94,10 +94,11 @@ function buildField(s, f){
     refreshChips(f);
   } else if (f.type === 'period'){
     wrap.append(h('div', {class:'lbl'}, f.label));
-    f.d1 = h('input', {type:'date', id:`${id}_1`, 'aria-label':'Дата надходження', oninput:update, style:'width:auto'});
-    f.d2 = h('input', {type:'date', id:`${id}_2`, 'aria-label':'Дата виписки', oninput:update, style:'width:auto'});
+    const dateLabels = f.dateLabels || ['з','по'], dateAriaLabels = f.dateAriaLabels || ['Дата надходження','Дата виписки'];
+    f.d1 = h('input', {type:'date', id:`${id}_1`, 'aria-label':dateAriaLabels[0], oninput:update, style:'width:auto'});
+    f.d2 = h('input', {type:'date', id:`${id}_2`, 'aria-label':dateAriaLabels[1], oninput:update, style:'width:auto'});
     f.hintEl = h('span', {class:'hint'});
-    wrap.append(h('div', {class:'nums'}, h('span', {class:'u'}, 'з'), f.d1, h('span', {class:'u'}, 'по'), f.d2, f.hintEl));
+    wrap.append(h('div', {class:'nums'}, h('span', {class:'u'}, dateLabels[0]), f.d1, h('span', {class:'u'}, dateLabels[1]), f.d2, f.hintEl));
   } else if (f.type === 'auto'){
     wrap.append(h('div', {class:'lbl'}, f.label));
     f.abox = h('div', {class:'autobox', id, 'aria-live':'polite'}); wrap.append(f.abox);
