@@ -2312,6 +2312,24 @@ html.touch .nextbar .btn{padding:12px 16px}
 }
 @media (max-width:899px){.fw-grip{display:none}}
 @media print{.fw-grip{display:none!important}}
+
+/* 0.9.3.91 — телефон боком: документ ліворуч, варіанти праворуч на всю висоту; кнопка «Норма» у віконці бланка */
+.pe-acts .pe-btn{white-space:nowrap}
+.pe-acts .pe-norm{color:var(--ok,#1f7a4d);border-color:color-mix(in srgb,var(--ok,#1f7a4d) 45%,transparent)}
+@media (orientation:landscape) and (max-height:540px){
+  body.ph-land{--phw:min(46vw,440px)}
+  body.ph-land .pe-box,body.ph-land .diary-inline-editor,body.ph-land .qe{position:fixed!important;top:0!important;bottom:0!important;left:auto!important;right:0!important;width:var(--phw)!important;height:auto!important;max-height:none!important;max-width:none!important;border-radius:14px 0 0 14px!important;box-shadow:-6px 0 24px rgba(0,0,0,.18)!important;z-index:60;display:flex;flex-direction:column;overflow:hidden}
+  body.ph-land-wide .pe-box,body.ph-land-wide .diary-inline-editor,body.ph-land-wide .qe{left:0!important;right:auto!important;border-radius:0 14px 14px 0!important;box-shadow:6px 0 24px rgba(0,0,0,.18)!important}
+  body.ph-land .pe-box .pe-body,body.ph-land .diary-inline-editor .diary-editor-body,body.ph-land .qe>.f{flex:1 1 auto;overflow:auto;min-height:0}
+  body.ph-land .phs-grip,body.ph-land .fw-grip{display:none!important}
+  body.ph-land .pe-head{padding:6px 10px}
+  body.ph-land .pe-acts{padding:6px 8px;gap:6px}
+  body.ph-land:not(.ph-land-wide) #outBox{padding-right:var(--phw)!important;box-sizing:border-box}
+  body.ph-land.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phtop,160px) - 6px)!important;min-height:120px!important}
+  body.ph-land.ph-split #outBox #out{max-height:calc(100dvh - var(--phtop,160px) - 6px)}
+  /* поки відкрито варіанти — лише заголовок і аркуш, без вкладок і нижніх кнопок */
+  body.ph-land.ph-split #outBox .otabs,body.ph-land.ph-split #outBox .ofoot,body.ph-land.ph-split #outBox #paper>.phzbar,body.ph-land.ph-split #outBox #paper>.blankbar,body.ph-land.ph-split #outBox #paper>.chips-hint{display:none!important}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2322,7 +2340,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.90 від 05.11.2026">v0.9.3.90 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.91 від 05.11.2026">v0.9.3.91 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4474,8 +4492,9 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.90', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.91', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.91', '05.11.2026', 'телефон: межа «документ / варіанти» стає в одне з трьох положень (третина, половина, майже весь екран), подвійний дотик по межі — на весь екран і назад; телефон боком — документ ліворуч, варіанти праворуч на всю висоту; у віконці бланка кнопка «Норма» одним дотиком'],
   ['0.9.3.90', '05.11.2026', 'плаваючі віконця на аркуші («Вносити на бланку», «Бачу — редагую»): перетягуються за заголовок, розмір змінюється за правий нижній кут, місце й розмір запам’ятовуються для лікаря (подвійний клік по заголовку — стандартне місце); молочні залози й кістково-суглобова система — готові варіанти вибору; фраза в листі призначень більше не відкриває скарги чи анамнез'],
   ['0.9.3.89', '04.11.2026', '«Бачу — редагую»: у перегляді перед друком і на бланку клік по фразі (стан, скарга, показник, діагноз, порожнє місце) відкриває варіанти цього поля просто біля слова — клік або стрілки й Enter замінюють текст у документі й у формі; свій варіант (поле у формі не порожніє), Esc закриває, ↶ скасовує; наведені місця підсвічуються, порожні — жовті; щоденник, лабораторія, анестезія й окреме вікно ⧉ працюють як раніше; фраза позначається лише цілим словом і лише коли однозначно належить одному полю; у режимі «клік → у форму» вимкнено'],
   ['0.9.3.88', '04.11.2026', 'імпорт з МІС Health24: на сторінці пацієнта кнопка «→ в Первинний огляд» лише читає екран (ПІБ, дату народження, стать, епізоди, діагнози, алергії й ліки) і кладе JSON у буфер — без натискань «Зберегти», «Підписати», «Надіслати» і без мережі; у програмі «Імпорт з H24» показує, що буде заповнено, і після підтвердження створює картку з діагнозом і кодом МКХ-10. Поруч — спокійніший вигляд МІС на комп’ютері (стиль для Stylus або скрипт). Дані лишаються в браузері'],
@@ -21126,6 +21145,87 @@ function fwWire(box, kind, w){
   try{ if (pop){ fwWire(pop, 'see', window); fwApply(pop, 'see', window); } }catch(e){}
   return r;
 }; }
+/* ===== 0.9.3.91 — панель варіантів на телефоні =====
+   1. Межа «документ / варіанти» (648) після відпускання стає в одне з трьох положень:
+      третина, половина або майже весь екран. Подвійний дотик по межі — майже весь екран і назад.
+   2. Телефон боком (невисокий екран): документ ліворуч, варіанти праворуч на всю висоту.
+      На широкому телефоні (понад 899 px, де форма й аркуш стоять поруч) — варіанти ліворуч, поверх форми.
+   3. Віконце «Вносити на бланку»: кнопка «Норма» — норма в розділі одним дотиком,
+      якщо в цьому рядку є пункти з нормою; «↶ Скасувати» у віконці її повертає. */
+const PHP_SNAP = [0.33, 0.5, 0.85];
+const PHPN = { prev:0.5, down:null, lastTap:0 };
+const phpLandMQ = window.matchMedia ? matchMedia('(orientation:landscape) and (max-height:540px)') : null;
+function phpLand(){ return !!(phpLandMQ && phpLandMQ.matches); }
+function phpSave(){ try{ localStorage.setItem('po.phsplit', PHS.h.toFixed(3)); }catch(e){} }
+function phpSnap(){
+  let best = PHP_SNAP[0]; PHP_SNAP.forEach(v=>{ if (Math.abs(v - PHS.h) < Math.abs(best - PHS.h)) best = v; });
+  PHS.h = best; phsApply(); phpSave(); try{ phsKeep(); }catch(e){}
+}
+function phpToggleFull(){
+  if (PHS.h >= 0.8){ PHS.h = PHPN.prev >= 0.8 ? 0.5 : PHPN.prev; } else { PHPN.prev = PHS.h; PHS.h = 0.85; }
+  phsApply(); phpSave(); try{ phsKeep(); }catch(e){}
+}
+function phpWireGrip(g){
+  if (!g || g._php) return; g._php = 1;
+  g.title = 'Тягніть межу або торкніться двічі — на весь екран і назад';
+  g.addEventListener('pointerdown', e=>{ PHPN.down = {y:e.clientY, t:Date.now()}; });
+  const end = e=>{
+    const d = PHPN.down; PHPN.down = null; if (!d) return;
+    const moved = Math.abs((e.clientY || d.y) - d.y) > 8;
+    if (moved){ PHPN.lastTap = 0; phpSnap(); return; }
+    const now = Date.now();
+    if (now - PHPN.lastTap < 350){ PHPN.lastTap = 0; phpToggleFull(); } else PHPN.lastTap = now;
+  };
+  g.addEventListener('pointerup', end); g.addEventListener('pointercancel', ()=>{ PHPN.down = null; });
+  g.addEventListener('dblclick', e=>{ e.preventDefault(); if (!PHPN.lastTap) return; PHPN.lastTap = 0; phpToggleFull(); });
+}
+{ const x0 = phsApply; phsApply = function(){
+  const r = x0.apply(this, arguments);
+  try{
+    const open = !!document.querySelector(PHS_SEL), land = phpLand() && open;
+    document.body.classList.toggle('ph-land', land);
+    document.body.classList.toggle('ph-land-wide', land && !isPhone());
+    if (land){ const p = document.querySelector('#outBox[data-ov="paper"] #paper') || document.querySelector('#outBox #out');
+      if (p) document.documentElement.style.setProperty('--phtop', Math.max(0, Math.round(p.getBoundingClientRect().top)) + 'px'); }
+    document.querySelectorAll(PHS_SEL + ' > .phs-grip').forEach(phpWireGrip);
+  }catch(e){}
+  return r;
+}; }
+try{ if (phpLandMQ) phpLandMQ.addEventListener('change', ()=>{ try{ phsApply(); phsKeep(); }catch(e){} }); }catch(e){}
+
+/* ---- «Норма» у віконці бланка ---- */
+function phpNormSecs(items){
+  const out = [];
+  (items || []).forEach(it=>{ const f = it.f; if (!f || f.type !== 'sel' || f.norm === undefined) return;
+    const s = SECTIONS.find(x=>x.fields.includes(f)); if (s && !out.includes(s)) out.push(s); });
+  return out.slice(0, 2);
+}
+{ const x0 = peOpen; peOpen = function(w, row){
+  const r = x0.apply(this, arguments);
+  try{
+    if (r && PE.box){
+      const secs = phpNormSecs(peItems(peRowKeys(row) || [])), acts = PE.box.querySelector('.pe-acts'), undoB = acts && acts.querySelector('.pe-undo');
+      secs.forEach(s=>{
+        const d = PE.box.ownerDocument;
+        const b = peEl(d, 'button', {type:'button', class:'pe-btn pe-norm', title:'Норма в усьому розділі «' + (s.title || s.short) + '»', onclick:()=>{
+          applyNorm(s); PE.undo = UNDO.at(-1); if (typeof POP_INSERT !== 'undefined') POP_INSERT.undo = PE.undo;
+          try{ update(); }catch(e){} peAfter(); }}, secs.length > 1 ? 'Норма: ' + (s.short || s.title) : 'Норма');
+        if (undoB) undoB.before(b); else if (acts) acts.append(b);
+      });
+    }
+  }catch(e){}
+  return r;
+}; }
+/* боком панель займає всю висоту — рядок, який правимо, тримаємо у верхній третині видимого аркуша */
+{ const x0 = phsKeep; phsKeep = function(){
+  if (!document.body.classList.contains('ph-land') || document.body.classList.contains('ph-land-wide')) return x0.apply(this, arguments);
+  const row = document.querySelector('#paper .pe-active, #paper .diary-edit-active'), sc = document.getElementById('paper');
+  if (!row || !sc) return;
+  const r = row.getBoundingClientRect(), pr = sc.getBoundingClientRect();
+  if (r.top < pr.top + 8 || r.bottom > pr.bottom - 8) sc.scrollTop += r.top - pr.top - Math.max(8, pr.height / 3);
+}; }
+/* лише при відкритті й «Далі ›», щоб не заважати гортати аркуш пальцем */
+{ const x0 = peOpen; peOpen = function(){ const r = x0.apply(this, arguments); try{ if (r && document.body.classList.contains('ph-land')) requestAnimationFrame(()=>{ try{ phsKeep(); }catch(e){} }); }catch(e){} return r; }; }
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

@@ -2273,3 +2273,21 @@ html.touch .nextbar .btn{padding:12px 16px}
 }
 @media (max-width:899px){.fw-grip{display:none}}
 @media print{.fw-grip{display:none!important}}
+
+/* 0.9.3.91 — телефон боком: документ ліворуч, варіанти праворуч на всю висоту; кнопка «Норма» у віконці бланка */
+.pe-acts .pe-btn{white-space:nowrap}
+.pe-acts .pe-norm{color:var(--ok,#1f7a4d);border-color:color-mix(in srgb,var(--ok,#1f7a4d) 45%,transparent)}
+@media (orientation:landscape) and (max-height:540px){
+  body.ph-land{--phw:min(46vw,440px)}
+  body.ph-land .pe-box,body.ph-land .diary-inline-editor,body.ph-land .qe{position:fixed!important;top:0!important;bottom:0!important;left:auto!important;right:0!important;width:var(--phw)!important;height:auto!important;max-height:none!important;max-width:none!important;border-radius:14px 0 0 14px!important;box-shadow:-6px 0 24px rgba(0,0,0,.18)!important;z-index:60;display:flex;flex-direction:column;overflow:hidden}
+  body.ph-land-wide .pe-box,body.ph-land-wide .diary-inline-editor,body.ph-land-wide .qe{left:0!important;right:auto!important;border-radius:0 14px 14px 0!important;box-shadow:6px 0 24px rgba(0,0,0,.18)!important}
+  body.ph-land .pe-box .pe-body,body.ph-land .diary-inline-editor .diary-editor-body,body.ph-land .qe>.f{flex:1 1 auto;overflow:auto;min-height:0}
+  body.ph-land .phs-grip,body.ph-land .fw-grip{display:none!important}
+  body.ph-land .pe-head{padding:6px 10px}
+  body.ph-land .pe-acts{padding:6px 8px;gap:6px}
+  body.ph-land:not(.ph-land-wide) #outBox{padding-right:var(--phw)!important;box-sizing:border-box}
+  body.ph-land.ph-split #outBox[data-ov="paper"] #paper{height:calc(100dvh - var(--phtop,160px) - 6px)!important;min-height:120px!important}
+  body.ph-land.ph-split #outBox #out{max-height:calc(100dvh - var(--phtop,160px) - 6px)}
+  /* поки відкрито варіанти — лише заголовок і аркуш, без вкладок і нижніх кнопок */
+  body.ph-land.ph-split #outBox .otabs,body.ph-land.ph-split #outBox .ofoot,body.ph-land.ph-split #outBox #paper>.phzbar,body.ph-land.ph-split #outBox #paper>.blankbar,body.ph-land.ph-split #outBox #paper>.chips-hint{display:none!important}
+}
