@@ -109,8 +109,17 @@
   {id:'chss', type:'num', label:'ЧСС', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`ЧСС ${v[0]} уд./хв`:''},
   {id:'chd', type:'num', label:'ЧД і SpO₂', parts:[{ph:'16',u:'за хв',n:[12,20],ok:[5,60]},{ph:'97',u:'% SpO₂',n:[95,100],ok:[50,100]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`ЧД ${v[0]} за хв`); if(v[1])p.push(`SpO₂ ${v[1]} %`); return p.join(', ');}},
-  {id:'o2', type:'num', cont:true, joiner:' ', label:'Кисень (порожньо — атмосферне повітря)', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
-    fmt:v=>{if(v[0])return `на кисні ${v[0]} л/хв`; const s=document.getElementById('d_obj_chd_1'); return s && s.value.trim() ? 'на атмосферному повітрі' : ''; }},
+  {id:'o2src', type:'sel', noOut:true, label:'Киснева підтримка', opts:['Не застосовується (атмосферне повітря)','Кисневий концентратор']},
+  {id:'o2dev', type:'sel', noOut:true, label:'Спосіб подачі кисню', opts:['Назальна канюля','Лицева маска']},
+  {id:'o2', type:'num', cont:true, joiner:' ', label:'Потік кисню', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
+    fmt:v=>{
+      const src = document.getElementById('d_obj_o2src')?.value || '';
+      const method = document.getElementById('d_obj_o2dev')?.value || '';
+      const flow = v[0] ? ', потік ' + v[0] + ' л/хв' : '';
+      if (src === '0') return 'на атмосферному повітрі';
+      if (src === '1') return 'за допомогою кисневого концентратора' + (method === '0' ? ' через назальну канюлю' : method === '1' ? ' через лицеву маску' : '') + flow;
+      return v[0] ? 'потік кисню ' + v[0] + ' л/хв (спосіб подачі не вказано)' : '';
+    }},
   {id:'glik', type:'num', dprof:1, label:'Глікемія', parts:[{ph:'6,5',u:'ммоль/л',n:[3.9,10],ok:[1,40]}], fmt:v=>v[0]?`Глікемія ${v[0]} ммоль/л`:''},
   {id:'masa', type:'num', dprof:1, label:'Маса тіла і діурез за добу', parts:[{ph:'78',u:'кг',ok:[20,300]},{ph:'1500',u:'мл діурез',ok:[50,10000]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`маса тіла ${v[0]} кг`); if(v[1])p.push(`діурез ${v[1]} мл/добу`); const t=p.join(', '); return t ? t[0].toUpperCase()+t.slice(1) : '';}},

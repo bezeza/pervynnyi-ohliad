@@ -187,7 +187,11 @@ function bDiaryEntry(e){
   const sk = f.d_main_sk === '0' && !what ? 'активно не пред’являє' : what ? what + (how ? ' (' + how + ')' : '') : how;
   const dyn = (v('d_main.dyn').match(/з позитивною динамікою|покращився|погіршився|без суттєвої динаміки/) || [''])[0], son = f.d_main_son && f.d_main_son !== '0' ? v('d_main.son') : '';
   const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1'), vash = n('d_main_vash_0');
-  const spoLine = spo ? 'SpO₂ ' + spo + ' % ' + (o2 ? 'на кисні ' + o2 + ' л/хв' : 'на атмосферному повітрі') : '';
+  const oxygenSource = f.d_obj_o2src || '', oxygenMethod = f.d_obj_o2dev || '';
+  const oxygenLine = oxygenSource === '0' ? 'на атмосферному повітрі'
+    : oxygenSource === '1' ? 'за допомогою кисневого концентратора' + (oxygenMethod === '0' ? ' через назальну канюлю' : oxygenMethod === '1' ? ' через лицеву маску' : '') + (o2 ? ', потік ' + o2 + ' л/хв' : '')
+    : o2 ? 'потік кисню ' + o2 + ' л/хв (спосіб подачі не вказано)' : '';
+  const spoLine = [spo ? 'SpO₂ ' + spo + ' %' : '', oxygenLine].filter(Boolean).join(' ');
   const serce = v('d_obj.serce');
   const lik = [e.rx || '', n('d_lik_obs'), n('d_lik_kor') ? 'Корекція терапії: ' + n('d_lik_kor') : '', e.osn || n('d_lik_osn'), f.d_lik_plan ? v('d_lik.plan') : ''].filter(Boolean).map(end).join(' ');
   const dt = String(e.dt || '');
