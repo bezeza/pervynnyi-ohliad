@@ -2239,3 +2239,23 @@ html.touch .nextbar .btn{padding:12px 16px}
   :root body.lay-B.sidefold #sidecol #tabs .tab.autof:not(.filled) .dot,:root body.lay-B.sidefold #sidecol #tabs .tab.cw .dot{background:var(--flag)!important}
   :root body.lay-B.sidefold #sidecol #tabs .tab.filled:not(.cw) .dot{background:var(--ok)!important}
 }
+
+/* 0.9.3.89 — «бачу-редагую»: фраза в документі клікабельна, віконце біля слова */
+.se{cursor:pointer;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;background-image:linear-gradient(transparent 92%, var(--accent) 92%);background-repeat:no-repeat}
+.se:hover,.se:focus-visible{background-color:var(--accent-soft);outline:1px dashed var(--accent);outline-offset:1px}
+.se-empty,.bf.empty.se,.gap.se{background-color:#FFE58A;background-image:none}
+.see-pop{position:fixed;z-index:70;background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.18);padding:8px;max-width:min(340px,calc(100vw - 16px));max-height:min(320px,calc(100vh - 16px));display:flex;flex-direction:column;gap:6px;font:15px/1.35 var(--f-ui,system-ui,sans-serif)}
+.see-pop .see-h{display:flex;align-items:center;gap:8px;font-weight:650;font-size:13px}
+.see-pop .see-h button{margin-left:auto;border:0;background:transparent;color:inherit;cursor:pointer;min-width:44px;min-height:36px}
+.see-list{overflow:auto;display:flex;flex-direction:column;gap:4px;min-height:0}
+.see-opt{text-align:left;border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:10px;padding:8px 10px;min-height:44px;font:inherit;cursor:pointer;touch-action:manipulation}
+.see-opt.on,.see-opt[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.see-own{display:flex;gap:6px}
+.see-own input{flex:1;min-width:0;min-height:44px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+.see-own button,.see-nums button{min-height:44px;padding:8px 12px;border:0;border-radius:10px;background:var(--accent);color:var(--on-accent,#fff);font:inherit;cursor:pointer}
+.see-nums{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.see-nums input{width:5em;min-height:44px;text-align:center;font:inherit;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+.see-find{min-height:40px;width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit}
+/* окреме вікно (⧉) — там клік відкриває редактор рядка, як і раніше */
+.popwin .se{cursor:inherit;background:none!important;outline:0!important}
+@media print{.se,.se-empty,.bf.empty.se{background:transparent!important;outline:0!important;background-image:none!important}.see-pop{display:none!important}}

@@ -71,7 +71,7 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   w.eval("CUSTOM.labs=[{t:'Свій аналіз тест', g:'other', p:[{n:'показник', u:'', m:[1,2], f:[1,2]}]}]; saveCustom();");
   keepLS(w); w.close();
   ({d, w, errs} = boot());
-  ok(await until(() => w.eval('IDB.ok')), 'база не відкрилась після перезапуску');
+  ok(await until(() => w.eval('IDB.ok'), 10000), 'база не відкрилась після перезапуску');   /* старт із пацієнтом на повільній машині — до ~4,5 с і на чистому main */
   await wait(300);
   ok(w.eval('Object.keys(loadStore()).length') === 1, 'після перезапуску (без PIN) пацієнтів: ' + w.eval('Object.keys(loadStore()).length') + ' замість 1');
   await until(() => w.eval("document.getElementById('meta_pib').value"), 2000);
