@@ -1282,6 +1282,32 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Порожнє «…» і незаповнений бакпосів не друкуються; «Зберегти як шаблон» є в документі', r.slice(10).every(Boolean), JSON.stringify(r));
   w.eval('restore('+JSON.stringify(saved)+')');
 }
+// 0.9.3.90 — плаваючі віконця: варіанти молочних залоз і кісткової системи, фрази листа призначень, перенос і розмір
+{ const r=JSON.parse(w.eval(`(()=>{ const kP=PAPER, kB=BLANK, kD=DOC, a=[];
+    const mol=F('zah.moloch'), op=F('zah.opora'), m0=mol.el.value, o0=op.el.value;
+    if (DOC!=='ohl') switchDoc('ohl'); peSetMode('here'); PAPER=true; BLANK=false; renderPaper(); seMark(document.getElementById('paper'));
+    a.push([...document.querySelectorAll('#paper [data-sec] .se')].every(s=>s.dataset.se.split('.')[0]===s.closest('[data-sec]').dataset.sec));
+    BLANK=true; BLP.exam=true; renderPaper();
+    const row=re=>[...document.querySelectorAll('#paper .b003 .pe-row')].find(x=>re.test(x.textContent.trim()));
+    const ck=el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+    ck(row(/^Молочні залози/)); let box=document.querySelector('.pe-box');
+    const mb=box ? [...box.querySelectorAll('.pw-choices button')] : [];
+    a.push(mb.length>=4 && mb.some(b=>/ущільнень не пальпується/.test(b.textContent)));
+    a.push(!!box.querySelector('.fw-grip') && !!box.querySelector('.pe-head.fw-drag'));
+    mb[0].click(); a.push(/симетричні/.test(mol.el.value));
+    peClose(); ck(row(/^Кістково-суглобова/)); box=document.querySelector('.pe-box');
+    a.push(!!box && [...box.querySelectorAll('.pw-choices button')].some(b=>/без видимих деформацій/.test(b.textContent)));
+    peClose();
+    const o=seOpts(op); a.push(o.length>=4 && o.every(x=>x.quickT));
+    mol.el.value=m0; op.el.value=o0; update(); DOC!==kD && switchDoc(kD); PAPER=kP; BLANK=kB; renderPaper();
+    return JSON.stringify(a); })()`));
+  ok('Лист призначень та інші блоки: фраза не відкриває поле чужого розділу', r[0]);
+  ok('Бланк: «Молочні залози» — готові варіанти у віконці', r[1]);
+  ok('Віконце бланка: заголовок перетягується, кут змінює розмір', r[2]);
+  ok('Варіант молочних залоз записується в поле', r[3]);
+  ok('Бланк: «Кістково-суглобова система» — готові варіанти', r[4]);
+  ok('«Бачу — редагую»: текстове поле з фразами дає варіанти', r[5]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
