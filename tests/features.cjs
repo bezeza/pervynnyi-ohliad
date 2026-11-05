@@ -1086,10 +1086,55 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    w.eval("openViewPop()"); const ctl=[...doc.querySelectorAll('.viewpop .vrow .vl')].some(e=>e.textContent==='Дотик'); w.eval("closeViewPop()");
    ok('Дотик: «Великі кнопки» вмикає сенсорний режим, «Звичайні» — вимикає, перемикач у «Вигляді»', on && off && ctl, JSON.stringify([on, off, ctl]));
    w.eval("VIEW.touch='auto'; saveView(); applyView()"); }
- { const css=fs.readFileSync(path.join(__dirname,'..','src','styles.css'),'utf8');
-  const pr=(css.match(/#print[^{]*\{[^}]*\}/g)||[]).join(' ');
-  const cols=pr.match(/#[0-9a-fA-F]{3,6}\b|rgba?\(/g)||[];
-  ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий', cols.every(c=>/^#(000|fff|000000|ffffff)$/i.test(c)) && !/rgba?\(/.test(pr), [...new Set(cols)].join(' ')); }
+ {
+  const css=fs.readFileSync(path.join(__dirname,'..','src','styles.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+  const printRules=(css.match(/#print[^{]*\{[^}]*\}/g)||[]);
+  const pr=printRules.join(' ');
+  const colorTokens=pr.match(/#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\s*\(/gi)||[];
+  const colorsOk=colorTokens.every(c=>/^#(?:000|fff|000000|ffffff)$/i.test(c));
+  function printBraceEnd(source,open){
+    let depth=0,quote='',escaped=false,comment=false;
+    for(let i=open;i<source.length;i++){
+      const c=source[i],n=source[i+1];
+      if(comment){if(c==='*'&&n==='/'){comment=false;i++;}continue;}
+      if(quote){if(escaped){escaped=false;continue;}if(c==='\\'){escaped=true;continue;}if(c===quote)quote='';continue;}
+      if(c==='/'&&n==='*'){comment=true;i++;continue;}
+      if(c==='"'||c==="'"){quote=c;continue;}
+      if(c==='{')depth++;
+      else if(c==='}'&&--depth===0)return i;
+    }
+    return -1;
+  }
+  const printMedia=[];
+  let scan=0;
+  while((scan=css.indexOf('@media print',scan))!==-1){
+    const open=css.indexOf('{',scan);
+    if(open<0)break;
+    const end=printBraceEnd(css,open);
+    if(end<0){printMedia.push(css.slice(open+1));break;}
+    printMedia.push(css.slice(open+1,end));
+    scan=end+1;
+  }
+  const printCss=printMedia.join('\n');
+  const alphaColors=printCss.match(/\b(?:rgba?|hsla?)\s*\(/gi)||[];
+  const shadows=[...printCss.matchAll(/\b(?:box|text)-shadow\s*:\s*([^;}]+)/gi)].map(m=>m[1].trim());
+  const backgrounds=[...printCss.matchAll(/(?<![-\w])background(?:-color)?\s*:\s*([^;}]+)/gi)].map(m=>m[1].trim());
+  const gradients=[...printCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)].filter(m=>/\bbackground(?:-image|-color)?\s*:[^;]*gradient\(/i.test(m[2]));
+  const gradientsOk=gradients.length>0&&gradients.every(m=>
+    /\.blines\b/.test(m[1])&&/repeating-linear-gradient/i.test(m[2])&&/#000\b/i.test(m[2])&&
+    [...m[2].matchAll(/#[0-9a-fA-F]{3,8}\b/g)].every(c=>/^#000$/i.test(c))
+  );
+  const neutralBackgrounds=backgrounds.every(v=>/^(?:none|transparent|#(?:000|fff|000000|ffffff))(?:\s*!important)?$/i.test(v));
+  const noShadows=shadows.every(v=>/^none(?:\s*!important)?$/i.test(v));
+  const rows=(css.match(/#print \.pr-free \.crow,#print \.pr-free \.prow\s*\{([^}]*)\}/)||[])[1]||'';
+  const memoTd=(css.match(/#print \.memo td\s*\{([^}]*)\}/)||[])[1]||'';
+  const memoMs=(css.match(/#print \.memo \.ms\s*\{([^}]*)\}/)||[])[1]||'';
+  const legacyRulesOk=/border-top:\s*1px solid #000/i.test(rows)&&/border-bottom:\s*1px solid #000/i.test(memoTd)&&/color:\s*#000/i.test(memoMs);
+  ok('Друк на старих принтерах: у правилах #print лише чорний (#000) і білий (#fff)',colorsOk,[...new Set(colorTokens)].join(' '));
+  ok('Друк на старих принтерах: @media print без прозорих кольорів, тіней і блідих фонів',printMedia.length>0&&alphaColors.length===0&&noShadows&&neutralBackgrounds,JSON.stringify({media:printMedia.length,alphaColors,shadows,backgrounds}));
+  ok('Друк на старих принтерах: градієнти лише в .blines і тільки чорні',gradientsOk,gradients.map(m=>m[1].trim()).join(' | '));
+  ok('Друк на старих принтерах: лінії 1 px і текст пам’ятки чорні',legacyRulesOk,JSON.stringify({rows,memoTd,memoMs}));
+}
 { const ff=/@font-face\{font-family:"Zakon"/.test(html);
   const od=!!$('set_fdoc') && [...$('set_fdoc').options].some(o=>o.value==='Zakon'), ou=!!$('set_fui') && [...$('set_fui').options].some(o=>o.value==='Zakon');
   const sp=$('set_fprint'), R0=doc.documentElement; let on=false, off=false, def=false;
