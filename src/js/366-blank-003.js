@@ -186,7 +186,8 @@ function bDiaryEntry(e){
   const what = n('d_main_zal') || n('d_main_skx').replace(/^на /, ''), how = f.d_main_sk && f.d_main_sk !== '0' ? v('d_main.sk').replace(/^Скарги /, '') : '';
   const sk = f.d_main_sk === '0' && !what ? 'активно не пред’являє' : what ? what + (how ? ' (' + how + ')' : '') : how;
   const dyn = (v('d_main.dyn').match(/з позитивною динамікою|покращився|погіршився|без суттєвої динаміки/) || [''])[0], son = f.d_main_son && f.d_main_son !== '0' ? v('d_main.son') : '';
-  const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1');
+  const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1'), vash = n('d_main_vash_0');
+  const spoLine = spo ? 'SpO₂ ' + spo + ' % ' + (o2 ? 'на кисні ' + o2 + ' л/хв' : 'на атмосферному повітрі') : '';
   const serce = v('d_obj.serce');
   const lik = [e.rx || '', n('d_lik_obs'), n('d_lik_kor') ? 'Корекція терапії: ' + n('d_lik_kor') : '', e.osn || n('d_lik_osn'), f.d_lik_plan ? v('d_lik.plan') : ''].filter(Boolean).map(end).join(' ');
   const dt = String(e.dt || '');
@@ -196,12 +197,13 @@ function bDiaryEntry(e){
       h('div', {}, 'АТ – ', bFF(bFill(n('d_obj_ad_0') && n('d_obj_ad_1') ? n('d_obj_ad_0') + '/' + n('d_obj_ad_1') : '', true), 'd_obj_ad_0 d_obj_ad_1'), ' мм рт. ст.'), h('div', {}, 'ЧДР – ', bFF(bFill(n('d_obj_chd_0')), 'd_obj_chd_0 d_obj_chd_1'), ' /хв.')),
     h('div', {class:'bdr'},
       bRow('Скарги на: ', bFill(bJoin(sk, son), true, true)),
+      vash !== '' ? bRow('Біль за ВАШ: ', bFill(vash, true), '/10') : '',
       bRow('Об’єктивно: загальний стан ', bFill([v('d_main.stan'), dyn ? (/^з /.test(dyn) ? dyn : 'стан ' + dyn) : ''].filter(Boolean).join(', '), true), ', свідомість не порушена.'),
       f.d_main_svid && f.d_main_svid !== '0' ? bRow('Свідомість: ', bFill(v('d_main.svid'))) : '',
       bRow('Реакція на огляд адекватна. Шкірні покриви та видимі слизові ', bFill(v('d_obj.shk').replace(/^Шкірні покриви /, ''), false, true)),
       bRow('Лімфатичні вузли ', bFS(bFill(v('d_obj.lv'), false, true), 'd_obj.lv')), bRow('Набряки ', bFill(f.d_obj_nab === '0' ? 'немає' : v('d_obj.nab'), false, true)),
       bRow('Дихання через ніс ', bFS(bFill(v('d_obj.nis'), false, true), 'd_obj.nis')), bRow('Перкуторно ', bFS(bFill(v('d_obj.perk'), false, true), 'd_obj.perk')),
-      bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spo ? 'SpO2 ' + spo + '%' + (o2 ? ' на кисні ' + o2 + ' л/хв' : '') : ''), true, true)),
+      bRow('Аускультативно в легенях ', bFill(bJoin(v('d_obj.dyh'), spoLine), true, true)),
       bRow('Діяльність серця ', bFill(/неправильний/.test(serce) ? 'аритмічна' : /правильний/.test(serce) ? 'ритмічна' : '', false, true)), bRow('Тони ', bFill(serce.replace(/, ритм.*$/, ''), false, true)),
       bRow('Язик ', bFS(bFill(v('d_obj.yaz'), false, true), 'd_obj.yaz')), bRow('Живіт м’який, при пальпації ', bFill(v('d_obj.zhyv').replace(/^м’який, ?/, ''), false, true)),
       bRow('рівномірно бере участь в акті дихання ', bFS(bFill(f.d_obj_grk === '0' ? 'так' : v('d_obj.grk'), false, true), 'd_obj.grk')), bRow('Печінка ', bFS(bFill(v('d_obj.pech'), false, true), 'd_obj.pech')),
