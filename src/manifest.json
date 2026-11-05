@@ -156,6 +156,7 @@
   "674-h24-import.js",
   "675-see-edit.js",
   "676-float-win.js",
-  "677-phone-panel.js"
+  "677-phone-panel.js",
+  "678-context-actions.js"
  ]
 }
