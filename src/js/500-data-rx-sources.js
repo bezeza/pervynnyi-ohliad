@@ -147,7 +147,7 @@ function rxPart(){
   const regs = shown.filter(it=>['reg','diet'].includes(kd(it))), drugs = shown.filter(it=>kd(it) === 'drug'), procs = shown.filter(it=>['man','phys','loc'].includes(kd(it)));
   const lines = [];
   if (regs.length) lines.push('Режим, дієта: ' + regs.map(one).join('; ') + '.');
-  drugs.forEach((it,k)=>lines.push((k+1) + '. ' + one(it) + '.'));
+  drugs.forEach((it,k)=>lines.push(`${k+1}. ${one(it)}.`));
   if (procs.length) lines.push('Процедури: ' + procs.map(one).join('; ') + '.');
   let body = lines.join('\n');
   const ab = abLines(); if (ab) body += '\n' + AB_HEAD + '\n' + ab;
