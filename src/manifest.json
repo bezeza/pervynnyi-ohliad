@@ -151,6 +151,7 @@
   "670-blank-ohl.js",
   "671-ui-entry.js",
   "672-side-resize.js",
-  "673-perf-check-cache.js"
+  "673-perf-check-cache.js",
+  "674-perf-idb-save.js"
  ]
 }

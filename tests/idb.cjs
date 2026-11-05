@@ -63,10 +63,38 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
   // 1. без PIN: створити пацієнта → «перезапуск» → пацієнт на місці
   let {d, w, errs} = boot();
   ok(await until(() => w.eval('IDB.ok')), 'база не відкрилась');
+  const cacheRef = w.eval('IDB.cache');
   w.eval("document.getElementById('meta_pib').value='Тест Перший'; document.getElementById('meta_pib').dispatchEvent(new Event('input')); savePatient(true);");
   await wait(200);
+  ok(w.eval('IDB.cache') === cacheRef, 'збереження одного пацієнта не повинно копіювати весь кеш IndexedDB');
   ok(w.eval('Object.keys(loadStore()).length') === 1, 'пацієнт не збережений у першому запуску');
+  const loadStore0 = w.loadStore; let listStoreReads = 0;
+  w.loadStore = function(){ listStoreReads++; return loadStore0.apply(this, arguments); };
+  w.eval('renderPatients()');
+  w.loadStore = loadStore0;
+  ok(listStoreReads === 0, 'рендер списків читає IDB.cache без копіювання всієї бази');
   ok([...(DBS.get('po-db') || new Map()).get('patients') || []].length === 1, 'пацієнта немає в базі');
+
+  // Профіль одного запису на великому кеші: 10 000 синтетичних записів, без запису їх у тестову БД.
+  w.eval('clearTimeout(saveTimer); saveTimer=null');
+  const renderPatients0 = w.renderPatients;
+  if (typeof renderPatients0 === 'function') w.renderPatients = () => {};
+  w.eval("(()=>{const pad='x'.repeat(2048); for(let i=0;i<10000;i++){const id='pbig'+i, p={name:'Тест '+i,updated:i+1,snap:{v:1,f:{pad},c:{}}}; IDB.cache[id]=p; IDB.w[id]=p.updated;}})()");
+  const median = xs => { const a=[...xs].sort((x,y)=>x-y); return a[Math.floor(a.length/2)] || 0; };
+  const measureSave = async enabled => {
+    w.eval('PO18_IDB_FAST.enabled=' + (enabled ? 'true' : 'false'));
+    const times=[];
+    for(let i=0;i<8;i++){ const t=w.performance.now(); w.eval('savePatient(true)'); times.push(w.performance.now()-t); await wait(3); }
+    return +median(times).toFixed(2);
+  };
+  const oldSaveMs = await measureSave(false);
+  const cacheBeforeFast = w.eval('IDB.cache');
+  const writesBeforeFast = w.eval('PO18_IDB_FAST.fastWrites');
+  const fastSaveMs = await measureSave(true);
+  ok(w.eval('IDB.cache') === cacheBeforeFast, 'швидкий запис змінює кеш на місці, без копії 10 000 записів');
+  ok(w.eval('PO18_IDB_FAST.fastWrites') - writesBeforeFast === 8, 'кожне збереження пройшло адресним шляхом');
+  if (typeof renderPatients0 === 'function') w.renderPatients = renderPatients0;
+  console.log('IndexedDB savePatient, 10 000 синтетичних записів (медіана 8 викликів, мс):', JSON.stringify({before:oldSaveMs, after:fastSaveMs}));
   await until(() => w.localStorage.getItem('po.last'), 3000);
   w.eval("CUSTOM.labs=[{t:'Свій аналіз тест', g:'other', p:[{n:'показник', u:'', m:[1,2], f:[1,2]}]}]; saveCustom();");
   keepLS(w); w.close();
@@ -83,6 +111,10 @@ const prob = []; const ok = (c, m) => { if (!c) prob.push(m); };
       if (!await pinEnable(key, cfg)) return 'enable false'; return true; })()`).catch(e => 'ERR ' + e.message);
     ok(on === true, 'PIN не ввімкнувся: ' + on);
     await wait(300);
+    const pinCacheRef = w.eval('IDB.cache');
+    w.eval("document.getElementById('meta_pib').value='Тест Перший'; document.getElementById('meta_pib').dispatchEvent(new Event('input')); savePatient(true);");
+    await wait(300);
+    ok(w.eval('IDB.cache') === pinCacheRef, 'адресне збереження з PIN не повинно копіювати весь кеш');
     const raw = [...DBS.get('po-db').get('patients').values()][0];
     ok(raw && raw.enc === 1 && !JSON.stringify(raw).includes('Тест Перший'), 'з PIN запис у базі не зашифрований');
     keepLS(w); w.close();
