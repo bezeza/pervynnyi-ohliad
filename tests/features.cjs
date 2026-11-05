@@ -1352,6 +1352,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
   ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
 }
+
+{ // Завдання 11: дата підпису, власне бажання, ліжко-дні
+  const r=JSON.parse(w.eval("(()=> {\n  const oldDoc=DOC, p=F('e_per.per'), old1=p.d1.value, old2=p.d2.value, v=F('e_per.vyg'), oldV=v.el.value, rez=F('e_lik.rez'), oldR=rez.el.value;\n  const dt=document.getElementById('meta_dt'), oldDt=dt ? dt.value : '';\n  switchDoc('epi');\n  p.d1.value='2026-10-02'; p.d2.value='2026-10-06';\n  const sig=[];\n  ['0','2','1','3'].forEach(k=>{\n    v.el.value=k;\n    const foot=metaLines().foot.join(' ');\n    sig.push(k==='1' ? foot.includes('Дата: 06.10.2026') : foot.includes('«06» жовтня 2026 року'));\n  });\n  const ownIndex=rez.opts.findIndex(o=>O(o).t==='Виписується за власним бажанням');\n  if(ownIndex>=0) rez.el.value=String(ownIndex);\n  update();\n  const phrase=document.getElementById('out').textContent.includes('Виписується за власним бажанням');\n  const oldOut=document.getElementById('out').innerHTML;\n  document.getElementById('out').textContent='Епікриз';\n  const warning=checkDoc().some(x=>x.m.includes('письмову відмову'));\n  document.getElementById('out').innerHTML=oldOut;\n  const beds=bedDays('2026-10-02','2026-10-06')===4 &&\n    bedDays('2026-10-06','2026-10-06')===1 &&\n    bedDays('2026-10-06','2026-10-02')==='';\n  p.d1.value=old1; p.d2.value=old2; v.el.value=oldV; rez.el.value=oldR;\n  if(dt) dt.value=oldDt;\n  if(DOC!==oldDoc) switchDoc(oldDoc);\n  update();\n  return JSON.stringify([sig.every(Boolean),ownIndex>=0,phrase,warning,beds]);\n})()"));
+  ok('Епікриз: дата підпису береться не раніше дати виписки у формах 027/о, 003/о та довільному епікризі', r[0], JSON.stringify(r));
+  ok('Епікриз: результат «Виписується за власним бажанням» доступний і потрапляє в текст', r[1] && r[2], JSON.stringify(r));
+  ok('Епікриз: за власним бажанням є нагадування про письмову відмову', r[3], JSON.stringify(r));
+  ok('Епікриз: ліжко-дні дорівнюють різниці дат; той самий день — 1', r[4], JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
