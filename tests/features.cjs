@@ -1366,6 +1366,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Аркуш: вибір масштабу запам’ятовується', r[1]);
   ok('Аркуш: невідомий масштаб — «По ширині»', r[2]);
   ok('Аркуш: масштаб зберігається в Налаштування.json', r[3]);
+}
 // 0.9.3.95 — новий вигляд, етап 1: кнопка «Текст» з лічильником, «Старий вигляд»
 { const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
     uiV2Set(true); a.push(document.documentElement.classList.contains('ui-v2') && !!document.querySelector('#txtBtn'));
@@ -1380,6 +1381,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Текст» відкриває й закриває панель тексту', r[2] && r[3]);
   ok('«Старий вигляд» знімає новий вигляд і не відкриває панель', r[4]);
   ok('Інструменти в меню розділів — без кружка стану', r[5]);
+}
+// 0.9.3.95 — фундамент: шкала шрифтів екрана (7 розмірів)
+{ const r=JSON.parse(w.eval(`(()=>{ const cs=getComputedStyle(document.documentElement); return JSON.stringify([1,2,3,4,5,6,7].map(i=>cs.getPropertyValue('--fs-'+i).trim())); })()`));
+  ok('Шкала шрифтів: 7 розмірів --fs-1…--fs-7', r.length===7 && r.every(Boolean), r.join(' '));
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
