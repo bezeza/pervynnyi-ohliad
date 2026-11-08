@@ -172,6 +172,7 @@
   "686-ui-fixes.js",
   "687-ui-status.js",
   "688-print-own.js",
+  "689-ui-a11y.js",
   "699-boot-end.js"
  ]
 }
