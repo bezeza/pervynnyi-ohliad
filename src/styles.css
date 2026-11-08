@@ -2384,3 +2384,14 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .si-s{font-size:var(--fs-1);color:var(--muted);white-space:nowrap}
 .si-i.on .si-s{font-family:var(--f-num);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface)}
 @media print{.si-pop{display:none!important}}
+/* скарги в новому вигляді на ПК: поле першим, кнопки згорнуті (обрані й їх уточнення — видно) */
+.si-tgl{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .si-tgl{display:inline-flex;align-self:flex-start;margin:4px 0 8px}
+  :root.ui-v2 .grid>.si-first{order:-1}
+  :root.ui-v2 .si-chips:not(.si-open) .cg:not(:has(.chip[aria-pressed="true"])),
+  :root.ui-v2 .si-chips:not(.si-open) .cg>.chips>.chip[aria-pressed="false"],
+  :root.ui-v2 .si-chips:not(.si-open) input[type="search"],
+  :root.ui-v2 .si-chips:not(.si-open) .si-more,
+  :root.ui-v2 .si-chips:not(.si-open)>label{display:none}
+}

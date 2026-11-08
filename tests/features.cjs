@@ -1444,6 +1444,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Розумна клавіатура: «.взд» лишається скороченням', r[4]);
   ok('Розумна клавіатура: часті фрази лікаря — у підказках', r[5]);
 }
+// 0.9.3.95 — скарги: підказка-кнопка натискає кнопку; поле першим, кнопки згорнуті
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const c=F('skarhy.c'), cx=F('skarhy.cx'), el=cx.el, v0=el.value, i=c.opts.findIndex(o=>/^сухий кашель$/.test(O(o).t)), was=c.chips[i].getAttribute('aria-pressed');
+    if (was==='true') c.chips[i].click();
+    el.value='Біль, сухий ка'; el.setSelectionRange(el.value.length, el.value.length);
+    const sec=SECTIONS.find(x=>x.id==='skarhy'); SI.f=cx; SI.sec=sec; SI.frag=siFrag(el, sec); SI.list=SI.frag.list; SI.sel=SI.list.findIndex(x=>x.t==='сухий кашель'); siAccept();
+    a.push(c.chips[i].getAttribute('aria-pressed')==='true' && el.value==='Біль');
+    a.push(c.wrapEl.classList.contains('si-chips') && el.closest('.f').classList.contains('si-first'));
+    c.chips[i].click(); el.value=v0; update(); uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Скарги: підказка, що є кнопкою, натискає кнопку (критерії, щоденник бачать скаргу)', r[0]);
+  ok('Скарги на ПК: поле першим, кнопки згорнуті під ним', r[1]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

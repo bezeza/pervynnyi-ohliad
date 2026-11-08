@@ -19,7 +19,9 @@ function siBase(sec){
   if (SI.cache[sec.id]) return SI.cache[sec.id];
   const set = new Set();
   const add = t => { t = String(t || '').replace(/\[([^|\]]*)\|([^\]]*)\]/g, '$1').replace(/\s+/g, ' ').trim(); if (t.length >= 4 && t.length <= 120 && !/[{}]/.test(t)) set.add(t); };
-  (sec.fields || []).forEach(f=>{ (f.opts || []).forEach(o=>add(O(o).t)); (f.quick || []).forEach(q=>add(q)); });
+  const map = new Map();
+  (sec.fields || []).forEach(f=>{ (f.opts || []).forEach((o, i)=>{ add(O(o).t); if (f.type === 'multi' && f.chips && f.chips[i]) map.set(siNorm(O(o).t.replace(/\[([^|\]]*)\|([^\]]*)\]/g, '$1').replace(/\s+/g, ' ').trim()), f.chips[i]); }); (f.quick || []).forEach(q=>add(q)); });
+  SI.chipMap = SI.chipMap || {}; SI.chipMap[sec.id] = map;
   return (SI.cache[sec.id] = [...set]);
 }
 function siPreset(sec){
@@ -34,6 +36,7 @@ function siCands(sec, frag){
   const take = (arr, src) => { for (const t of arr){ const n = siNorm(t); if (seen.has(n) || n === q) continue;
     const at = n.startsWith(q) ? 0 : n.indexOf(' ' + q) >= 0 ? 1 : -1; if (at < 0) continue; seen.add(n); res.push({t, src, at}); if (res.length >= 24) return; } };
   take(own, 'ваше'); take(siPreset(sec), 'хвороба'); take(siBase(sec), 'кнопки');
+  const cm = SI.chipMap && SI.chipMap[sec.id]; if (cm) res.forEach(r=>{ if (cm.has(siNorm(r.t))) r.src = 'кнопка'; });
   return res.sort((a, b)=>a.at - b.at).slice(0, 6);
 }
 /* фрагмент перед курсором: останні 1–4 слова після коми / крапки / нового рядка (кома в числі «38,5» — не межа);
@@ -72,6 +75,15 @@ function siDraw(){
 }
 function siAccept(){
   const c = SI.list[SI.sel], el = SI.f && SI.f.el, fr = SI.frag; if (!c || !el || !fr) return siClose();
+  const chip = SI.sec && SI.chipMap && SI.chipMap[SI.sec.id] && SI.chipMap[SI.sec.id].get(siNorm(c.t));
+  if (chip){   /* скарга є серед кнопок — натискаємо кнопку (її бачать критерії, щоденник, «Перевірка»), а набране прибираємо */
+    let before = el.value.slice(0, fr.start).replace(/[,;]?\s*$/, ''); const after = el.value.slice(fr.end).replace(/^\s*[,;]?\s*/, '');
+    if (before && after) before += ', ';
+    el.value = before + after; const p = before.length; try{ el.setSelectionRange(p, p); }catch(e){}
+    siClose(); if (chip.getAttribute('aria-pressed') !== 'true') chip.click();
+    el.dispatchEvent(new Event('input', {bubbles:true}));
+    toast('Додано кнопкою: ' + c.t, 1800); return;
+  }
   const lead = (/^\s*/.exec(fr.text) || [''])[0], typed = fr.text.slice(lead.length);
   let t = c.t; if (/^\p{Lu}/u.test(typed) && !/^\p{Lu}/u.test(t)) t = t.charAt(0).toUpperCase() + t.slice(1);
   else if (/^\p{Ll}/u.test(typed) && /^\p{Lu}\p{Ll}/u.test(t)) t = t.charAt(0).toLowerCase() + t.slice(1);
@@ -125,3 +137,21 @@ document.addEventListener('focusout', e=>{
 window.addEventListener('scroll', ()=>{ if (SI.pop) siDraw(); }, {passive:true, capture:true});
 { const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (!UIV2) siClose(); return r; }; }
 { const p0 = applyPreset; applyPreset = function(p){ SI.preset = p; return p0.apply(this, arguments); }; }
+/* ---- скарги на ПК: «Додатково (своїми словами)» — першим, кнопки згорнуті під ним; обрані кнопки видно завжди ---- */
+function siComplaintsLayout(){
+  const c = F('skarhy.c'), cx = F('skarhy.cx'); if (!c || !cx || !c.wrapEl || !cx.el) return;
+  const cw = c.wrapEl, xw = cx.el.closest('.f');
+  if (!SI.tgl){
+    SI.tgl = h('button', {type:'button', class:'more si-tgl', 'aria-expanded':'false', onclick:()=>{ const o = !cw.classList.contains('si-open'); cw.classList.toggle('si-open', o); SI.tgl.setAttribute('aria-expanded', o ? 'true' : 'false'); siTglText(); }});
+    cw.prepend(SI.tgl);
+  }
+  if (xw) xw.classList.add('si-first');
+  if (c.moreB) c.moreB.classList.add('si-more');
+  cw.classList.add('si-chips');
+  if (!cx.el.placeholder) cx.el.placeholder = 'Пишіть скарги своїми словами — з 3 літер підкаже, Tab прийме; скарга з кнопок натисне кнопку';
+  siTglText();
+}
+function siTglText(){ const c = F('skarhy.c'); if (!SI.tgl || !c) return; const n = c.chips.filter(b=>b.getAttribute('aria-pressed') === 'true').length, o = c.wrapEl.classList.contains('si-open');
+  SI.tgl.textContent = (o ? '▾ Сховати кнопки скарг' : '▸ Кнопки скарг (' + c.chips.length + ')') + (n ? ' · обрано ' + n : ''); }
+{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); }catch(e){} return r; }; }
+siComplaintsLayout();
