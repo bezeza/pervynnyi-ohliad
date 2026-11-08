@@ -2428,3 +2428,9 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .poegg-l svg{width:100%;height:100%;fill:currentColor;margin:0}
 @keyframes poegg-br{0%,100%{transform:scale(.88)}45%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.poegg-l{animation:none}}
+/* 0.9.3.95 — вади з плану (686-ui-fixes.js) */
+@media screen and (min-width:900px){
+  :root.ui-v2 .docbar #quickBtn{display:none}
+  :root.ui-v2 body.v2-txt-open .toast{left:auto;right:calc(min(560px,100vw - 24px) + 28px);transform:none}
+}
+:root.ui-v2 .otabs .v2-empty .otc{display:none}

@@ -1484,6 +1484,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 { const v=doc.querySelector('.pofoot > span:nth-child(2)'); for (let i=0;i<7;i++) v.dispatchEvent(new w.MouseEvent('click',{bubbles:true}));
   const e=doc.querySelector('.poegg'); ok('Пасхалка: 7 клацань по версії — відкривається і закривається', !!e && (e.querySelector('button').click(), !doc.querySelector('.poegg')));
 }
+// 0.9.3.95 — вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд», старий вигляд відновлює
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const s=SECTIONS.find(x=>x.id==='morbi'); a.push(s.tab.textContent.includes('Анамнез хвороби'));
+    a.push(document.querySelector('#docSeg button[data-doc="ohl"]').textContent==='Огляд');
+    const out=document.getElementById('out'), o0=out.innerHTML; out.innerHTML=''; renderCheck(); const tC=document.querySelector('.otabs [data-ov="chk"]');
+    a.push(!!tC && !tC.classList.contains('done') && tC.classList.contains('v2-empty')); out.innerHTML=o0; update();
+    uiV2Set(false); a.push(s.tab.textContent.includes('Анамнез хв.') && document.querySelector('#docSeg button[data-doc="ohl"]').textContent!=='Огляд');
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Розділи в меню — повними назвами', r[0]);
+  ok('Документ у шапці — «Огляд» (без повтору назви програми)', r[1]);
+  ok('«Перевірка» без зеленого ✓ на порожньому документі', r[2]);
+  ok('«Старий вигляд» повертає короткі назви', r[3]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

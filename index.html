@@ -2467,6 +2467,12 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .poegg-l svg{width:100%;height:100%;fill:currentColor;margin:0}
 @keyframes poegg-br{0%,100%{transform:scale(.88)}45%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.poegg-l{animation:none}}
+/* 0.9.3.95 — вади з плану (686-ui-fixes.js) */
+@media screen and (min-width:900px){
+  :root.ui-v2 .docbar #quickBtn{display:none}
+  :root.ui-v2 body.v2-txt-open .toast{left:auto;right:calc(min(560px,100vw - 24px) + 28px);transform:none}
+}
+:root.ui-v2 .otabs .v2-empty .otc{display:none}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -4631,7 +4637,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.95', VDATE = '08.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код'],
+  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»'],
   ['0.9.3.94', '08.11.2026', '«Перед друком»: аркуш А4 одразу підлаштовується під панель, коли перетягуєте межу форми й тексту, бокове меню чи змінюєте вигляд (раніше — лише при зміні вікна браузера). Масштаб як у Word: «По ширині» (може бути більше 100 %), «Весь аркуш», «100 %». Телефон і друк не змінено'],
   ['0.9.3.93', '05.11.2026', 'контекстні дії документа: на комп’ютері — компактна панель для первинного огляду, щоденника, призначень і виписки; на телефоні — відповідні дії в наявному меню «Документ і дії»; Classic без змін'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
@@ -22029,6 +22035,36 @@ function footEgg(){
 }
 { const v = document.querySelector('.pofoot > span:nth-child(2)'); let k = 0, t = 0;
   if (v) v.addEventListener('click', e=>{ if (e.target.closest('button')) return; clearTimeout(t); t = setTimeout(()=>{ k = 0; }, 1500); if (++k >= 7){ k = 0; footEgg(); } }); }
+/* ===== 0.9.3.95 — вади з PLAN-UI-0.10 («Знайдені вади») — новий вигляд на ПК =====
+   • «Перевірка» на порожньому документі — без позначки (ні зеленого ✓, ні лічильника): перевіряти ще нічого.
+   • Розділи в меню — повними назвами («Анамнез хвороби», а не «Анамнез хв.»): місця вистачає.
+   • У шапці документ «Первинний огляд» — коротко «Огляд» (назва програми поруч у логотипі).
+   • «Швидкий огляд» — один раз (у «Швидких діях»), без повтору в рядку над формою.
+   • Сповіщення не перекривають панель «Текст»: коли вона відкрита — зліва від неї.
+   «Старий вигляд» — як було. */
+const v2fOn = () => typeof UIV2 !== 'undefined' && UIV2;
+{ const rc = renderCheck; renderCheck = function(){
+  const n = rc.apply(this, arguments);
+  try{ const tC = document.querySelector('.otabs [data-ov="chk"]'), cc = tC && tC.querySelector('.otc');
+    const empty = !((document.getElementById('out') || {}).textContent || '').trim();
+    if (tC && cc && v2fOn() && empty){ cc.textContent = ''; tC.classList.remove('done', 'warn'); tC.classList.add('v2-empty'); }
+    else if (tC) tC.classList.remove('v2-empty');
+  }catch(e){}
+  return n;
+}; }
+const V2F = {short:new Map(), doc:null};
+function v2fNames(){
+  const on = v2fOn();
+  SECTIONS.forEach(s=>{ if (!s.tab || !s.short || s.short === s.title) return;
+    const t = [...s.tab.childNodes].find(n=>n.nodeType === 3 && n.nodeValue.trim()); if (!t) return;
+    if (!V2F.short.has(s.id)) V2F.short.set(s.id, t.nodeValue);
+    t.nodeValue = on ? s.title : V2F.short.get(s.id); });
+  const d = document.querySelector('#docSeg button[data-doc="ohl"]');
+  if (d){ if (V2F.doc == null) V2F.doc = d.textContent; d.textContent = on ? 'Огляд' : V2F.doc; d.title = 'Первинний огляд'; }
+}
+{ const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); try{ v2fNames(); renderCheck(); }catch(e){} return r; }; }
+{ const s0 = switchDoc; switchDoc = function(){ const r = s0.apply(this, arguments); try{ v2fNames(); }catch(e){} return r; }; }
+try{ v2fNames(); renderCheck(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
