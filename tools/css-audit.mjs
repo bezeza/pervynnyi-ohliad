@@ -30,13 +30,17 @@ const R = rules(css);
 const isPrint = r => r.ctx.some(c=>/@media[^{]*\bprint\b/.test(c) && !/\bscreen\b/.test(c)) || /#print\b|\.b003|\.bA4|\.sheet\b|\.paper\b|\.b028|\.fb-|\.f0034|@page/.test(r.sel);
 
 const sizes = {screen:new Map(), print:new Map()};
-const colors = new Map(); let important = 0; const z = new Map();
+const colors = new Map(); let important = 0; const z = new Map(); let screenLit = 0;
 const add = (m, k) => m.set(k, (m.get(k) || 0) + 1);
 for (const r of R){
   const where = isPrint(r) ? 'print' : 'screen';
   for (const m of r.body.matchAll(/font-size\s*:\s*([^;!}]+)/g)) add(sizes[where], m[1].trim());
   for (const m of r.body.matchAll(/(?:^|;)\s*font\s*:\s*([^;!}]+)/g)){ const s = m[1].match(/(?:^|\s)(\d*\.?\d+(?:px|pt|rem|em|%))(?:\/|\s)/); if (s) add(sizes[where], s[1]); }
   for (const m of r.body.matchAll(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/g)) add(colors, m[0].toLowerCase().replace(/\s+/g, ''));
+  if (!isPrint(r)){   // кольори «мимо змінних» на екрані: без оголошень --токенів, запасних значень var() і тіней
+    const decl = r.body.replace(/var\(--[\w-]+,[^()]*(\([^)]*\))?[^()]*\)/g, 'var()').split(';').filter(d=>!/^\s*--|shadow|mask/.test(d)).join(';');
+    screenLit += (decl.match(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g) || []).length;
+  }
   important += (r.body.match(/!important/g) || []).length;
   for (const m of r.body.matchAll(/z-index\s*:\s*([^;!}]+)/g)) add(z, m[1].trim());
 }
@@ -49,14 +53,14 @@ for (const f of fs.readdirSync(jsDir)){
 }
 const res = {
   fontSizesScreen: sizes.screen.size, fontSizesPrint: sizes.print.size,
-  colors: colors.size, important, zIndexLevels: z.size, emojiUses: emoji, emojiKinds: emSet.size,
+  colors: colors.size, screenColorLiterals: screenLit, important, zIndexLevels: z.size, emojiUses: emoji, emojiKinds: emSet.size,
   topScreenSizes: [...sizes.screen].sort((a, b)=>b[1] - a[1]).slice(0, 40),
   zIndex: [...z].sort((a, b)=>(parseFloat(a[0]) || 0) - (parseFloat(b[0]) || 0)),
 };
 if (process.argv.includes('--json')) console.log(JSON.stringify(res, null, 1));
 else {
   console.log(`Розмірів шрифту (екран): ${res.fontSizesScreen}; друк і бланки: ${res.fontSizesPrint}`);
-  console.log(`Кольорів (різних значень): ${res.colors}`);
+  console.log(`Кольорів (різних значень): ${res.colors}; на екрані мимо змінних: ${res.screenColorLiterals}`);
   console.log(`!important: ${res.important}`);
   console.log(`Рівнів z-index: ${res.zIndexLevels}`);
   console.log(`Емодзі у коді інтерфейсу: ${res.emojiUses} (різних: ${res.emojiKinds})`);
