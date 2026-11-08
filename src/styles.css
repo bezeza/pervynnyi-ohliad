@@ -2434,3 +2434,5 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body.v2-txt-open .toast{left:auto;right:calc(min(560px,100vw - 24px) + 28px);transform:none}
 }
 :root.ui-v2 .otabs .v2-empty .otc{display:none}
+/* 0.9.3.95 — «Листок лікарських призначень»: один спосіб додати — поле «+ Додати препарат…» (кнопка в «Швидких діях» його лише дублювала) */
+@media screen and (min-width:900px){ :root.ui-v2 .doc-actions [data-action="rx-add"]{display:none} }

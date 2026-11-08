@@ -4,7 +4,7 @@ const HV = {id:'hv', title:'За хворобою', fields:[], special:'hv'};
 const CALC = {id:'calc', title:'Калькулятори', short:'Шкали', fields:[], special:'calc'};
 SECTIONS.forEach(s=>{ s.docs = s.docs || ['ohl']; });
 META.docs = ['ohl','shch','epi','kons','rx','zav','konc','etap','per','napr','dov','zgoda','gosp','pam','f066','anes']; HV.docs = ['ohl']; CALC.docs = META.docs.slice();
-const RXT = {id:'rxt', title:'Лист призначень', short:'Призначення', fields:[], special:'rx', docs:['ohl','shch','rx','epi','zav','konc','etap','per','napr','gosp','pam']};
+const RXT = {id:'rxt', title:'Листок призначень', short:'Призначення', fields:[], special:'rx', docs:['ohl','shch','rx','epi','zav','konc','etap','per','napr','gosp','pam']};
 const TPL = {id:'tpl', title:'Мої шаблони', short:'Мої шаблони', fields:[], special:'tpl', docs:['ohl','shch','epi','kons','rx','zav','konc','etap','per','napr','dov','zgoda','gosp','pam','anes']};
 const SET = {id:'set', title:'Налаштування', short:'Налаштування', fields:[], special:'set', docs:['ohl','shch','epi','kons','rx','zav','konc','etap','per','napr','dov','zgoda','gosp','pam','anes']};
 const QV = {id:'qv', title:'Показники і системи', short:'Показники', fields:[], special:'qv', docs:['ohl']};

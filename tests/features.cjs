@@ -1323,7 +1323,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const o=seOpts(op); a.push(o.length>=4 && o.every(x=>x.quickT));
     mol.el.value=m0; op.el.value=o0; update(); DOC!==kD && switchDoc(kD); PAPER=kP; BLANK=kB; renderPaper();
     return JSON.stringify(a); })()`));
-  ok('Лист призначень та інші блоки: фраза не відкриває поле чужого розділу', r[0]);
+  ok('Листок призначень та інші блоки: фраза не відкриває поле чужого розділу', r[0]);
   ok('Бланк: «Молочні залози» — готові варіанти у віконці', r[1]);
   ok('Віконце бланка: заголовок перетягується, кут змінює розмір', r[2]);
   ok('Варіант молочних залоз записується в поле', r[3]);
@@ -1506,6 +1506,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     window.confirm=c0; uiV2Set(k); return JSON.stringify(a); })()`));
   ok('Очищення документа — одразу, «Скасувати» повертає', r[0] && r[1]);
   ok('«Оновити з форми» при ручних правках — без системного вікна', r[2]);
+}
+// 0.9.3.95 — «Листок призначень»: одна назва (як у ф. 003-4/о)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[]; a.push(RXT.title==='Листок призначень' && DOCTITLES.rx==='ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ');
+    a.push(![...document.querySelectorAll('h2, .tab')].some(e=>/\bЛист призначень/.test(e.textContent))); return JSON.stringify(a); })()`));
+  ok('Листок призначень: одна назва в інтерфейсі й у друці', r[0] && r[1]);
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

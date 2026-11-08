@@ -18,7 +18,7 @@ const v2fOn = () => typeof UIV2 !== 'undefined' && UIV2;
 const V2F = {short:new Map(), doc:null};
 function v2fNames(){
   const on = v2fOn();
-  SECTIONS.forEach(s=>{ if (!s.tab || !s.short || s.short === s.title) return;
+  TABS.forEach(s=>{ if (!s || !s.tab || !s.short || s.short === s.title || (typeof TOOL_TABS !== 'undefined' && TOOL_TABS.includes(s.id))) return;
     const t = [...s.tab.childNodes].find(n=>n.nodeType === 3 && n.nodeValue.trim()); if (!t) return;
     if (!V2F.short.has(s.id)) V2F.short.set(s.id, t.nodeValue);
     t.nodeValue = on ? s.title : V2F.short.get(s.id); });
