@@ -162,6 +162,7 @@
   "680-ui-v2.js",
   "681-ui-icons.js",
   "682-ui-keys.js",
-  "683-ui-patient.js"
+  "683-ui-patient.js",
+  "684-smart-input.js"
  ]
 }

@@ -2376,3 +2376,11 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .v2imp-i span{font-size:var(--fs-1);color:var(--muted)}
 .v2imp-note{font-size:var(--fs-1);color:var(--muted);padding:8px 10px 4px;border-top:1px solid var(--line);margin-top:4px}
 .v2imp-bm{margin:0 10px 8px;align-self:flex-start}
+/* 0.9.3.95 — «розумна клавіатура» (684-smart-input.js): список підказок під полем */
+.si-pop{position:fixed;z-index:50;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.16);padding:4px;display:flex;flex-direction:column;gap:1px}
+.si-i{display:flex;align-items:center;gap:10px;justify-content:space-between;text-align:left;border:0;background:transparent;color:inherit;font:inherit;font-size:var(--fs-3);padding:6px 10px;border-radius:7px;min-height:32px;cursor:pointer}
+.si-i.on{background:var(--accent-soft)}
+.si-i b{font-weight:700}
+.si-s{font-size:var(--fs-1);color:var(--muted);white-space:nowrap}
+.si-i.on .si-s{font-family:var(--f-num);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface)}
+@media print{.si-pop{display:none!important}}

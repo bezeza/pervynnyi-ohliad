@@ -1428,6 +1428,22 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Дата народження: відкритий пацієнт показується в масці', r[3]);
   ok('Імпорт — одна кнопка «Імпорт ▾»', r[4]);
 }
+// 0.9.3.95 — «розумна клавіатура»: підказки, «38.5 С» → «38,5 °C», часті фрази
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], sec=SECTIONS.find(x=>x.id==='skarhy'), el=F('skarhy.cx').el, v0=el.value, ph=JSON.stringify(SI_PHR);
+    a.push(siCands(sec,'каш').some(c=>/кашель/.test(c.t)));
+    el.value='Температура 38.5 С'; el.setSelectionRange(el.value.length, el.value.length); siFormat(el); a.push(el.value==='Температура 38,5 °C');
+    el.value='Скарги, біль'; siFormat(el); a.push(el.value==='Скарги, біль');
+    el.value='підвищення температури, каш'; el.setSelectionRange(el.value.length, el.value.length); const fr=siFrag(el, sec); a.push(!!fr && fr.text.trim()==='каш' && fr.list.length>0);
+    el.value='Щось .взд'; el.setSelectionRange(el.value.length, el.value.length); a.push(!siFrag(el, sec));
+    el.value='Важкість у правому підребер’ї після жирної їжі'; siLearn(sec, el); a.push(siCands(sec,'важк').some(c=>c.src==='ваше'));
+    el.value=v0; SI_PHR=JSON.parse(ph); lsSet('po.phr', ph); update(); return JSON.stringify(a); })()`));
+  ok('Розумна клавіатура: підказка з кнопок розділу (каш → кашель…)', r[0]);
+  ok('Розумна клавіатура: «38.5 С» → «38,5 °C»', r[1]);
+  ok('Розумна клавіатура: слова не змінюються без дії лікаря', r[2]);
+  ok('Розумна клавіатура: підказка після коми (кома в числі — не межа)', r[3]);
+  ok('Розумна клавіатура: «.взд» лишається скороченням', r[4]);
+  ok('Розумна клавіатура: часті фрази лікаря — у підказках', r[5]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
