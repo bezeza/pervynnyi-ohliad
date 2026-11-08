@@ -52,13 +52,13 @@ function f0034Sheets(start, n){
   return sheets;
 }
 function f0034Print(){
-  if (!RXF().length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
+  if (!RXF().length){ toast('Листок призначень порожній — спершу додайте препарати'); return; }
   if (printBlocked()) return;
   const P = $('#print'); P.innerHTML = ''; f0034Sheets(null, F0034_DAYS).forEach(s=>P.append(s)); P.append(f0034Back());
   toast('Друк: лицьовий бік і зворот (альбомна орієнтація). На двосторонньому принтері — один аркуш', 3500); window.print();
 }
 function f0034Preview(){
-  if (!RXF().length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
+  if (!RXF().length){ toast('Листок призначень порожній — спершу додайте препарати'); return; }
   const box = h('div', {class:'f0034-prev'}); f0034Sheets(null, F0034_DAYS).forEach(s=>box.append(s)); box.append(f0034Back());
   const dlg = h('div', {class:'navsheet packsheet f0034-dlg', role:'dialog', 'aria-label':'Листок лікарських призначень'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, 'Листок лікарських призначень (ф. 003-4/о)'), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),

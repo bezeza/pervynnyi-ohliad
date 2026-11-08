@@ -6,7 +6,7 @@
 const CTX_DOC_NAMES = {
   ohl:'Первинний огляд',
   shch:()=>MODE === 'amb' ? 'Повторний огляд' : 'Щоденник',
-  rx:'Лист призначень',
+  rx:'Листок призначень',
   epi:'Виписний епікриз'
 };
 const CTX_BAR = h('nav', {id:'docActions', class:'doc-actions', role:'toolbar', 'aria-orientation':'horizontal', 'aria-label':'Швидкі дії документа'});

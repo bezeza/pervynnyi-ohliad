@@ -18,7 +18,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  // 1 старт
  ok('1. Старт: порожній текст, без помилок', out()==='' && d.errs.length===0);
  // 2 режими/документи
- ok('2. Стаціонар: документи', [...doc.querySelectorAll('#docSeg button')].map(b=>b.textContent).join('|')==='Первинний огляд|Щоденник|Призначення|Виписний епікриз');
+ ok('2. Стаціонар: документи', /^(Первинний огляд|Огляд)\|Щоденник\|Призначення\|Виписний епікриз$/.test([...doc.querySelectorAll('#docSeg button')].map(b=>b.textContent).join('|')));   // новий вигляд (0.9.3.95): «Огляд»
  doc.querySelector('[data-mode="amb"]').click();
  ok('2. Амбулаторно: документи', [...doc.querySelectorAll('#docSeg button')].map(b=>b.textContent).join('|')==='Первинний огляд|Повторний огляд|Призначення|Консультаційний висновок');
  ok('2. Амбулаторно: вкладка «Направлення»', tabs().includes('Направлення'));
@@ -74,7 +74,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  w.__printed=0; $('printBtn').click(); ok('12. Друк запускається (офлайн)', w.__printed===1 && $('print').textContent.includes('ЄДРПОУ 12345678'));
  const files=w.eval('[makeDocx().length, makeOdt().length]'); ok('12. Word і LibreOffice створюються', files[0]>5000 && files[1]>5000);
  // 13 щоденник
- docBtn('shch').click(); ok('13. Щоденник: свої вкладки', tabs().join('|')==='Запис|Самопочуття|Об’єктивно|Лікування|Призначення|Шкали|Мої шаблони|Налаштування|Довідка');
+ docBtn('shch').click(); { const sh=w.eval("TABS.reduce((m,s)=>(s&&(m[s.title]=s.short||s.title),m),{})"); ok('13. Щоденник: свої вкладки', tabs().map(t=>sh[t]||t).join('|')==='Запис|Самопочуття|Об’єктивно|Лікування|Призначення|Шкали|Мої шаблони|Налаштування|Довідка'); }   // новий вигляд показує повні назви
  $('allNorm').click(); set('d_main_sk','2'); set('d_obj_ad_0','125'); set('d_obj_ad_1','75'); set('d_obj_t_0','36,6'); set('d_obj_chss_0','78'); set('d_obj_chd_0','17'); set('d_obj_chd_1','96');
  ok('13. Щоденник формується', out().includes('Щоденник спостереження') && out().includes('АТ 125/75 мм рт. ст.'));
  btn('Записати в журнал').click(); ok('13. Запис у журнал', doc.querySelectorAll('#dlist .prow').length===1);
@@ -100,7 +100,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  doc.querySelector('[data-mode="hosp"]').click(); docBtn('ohl').click();
  ok('20. Схема призначень додана з хворобою', w.eval('RX.length')>=3);
  ok('20. Обґрунтування антибіотиків (наказ № 1328) у тексті', out().includes('наказ МОЗ України від 09.09.2026 № 1328'));
- docBtn('rx').click(); ok('20. Документ «Лист призначень»', out().includes('ЛИСТ ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ'));
+ docBtn('rx').click(); ok('20. Документ «Листок призначень»', out().includes('ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ'));
  // 21 нові документи
  const goM=k=>{ set('docMore',k); };
  let docsOk=true; for(const [k,t] of [['zav','Огляд завідувача'],['etap','ЕТАПНИЙ ЕПІКРИЗ'],['per','ПЕРЕКАЗНИЙ ЕПІКРИЗ'],['napr','НАПРАВЛЕННЯ НА КОНСУЛЬТАЦІЮ'],['dov','ДОВІДКА'],['zgoda','ІНФОРМОВАНА ДОБРОВІЛЬНА ЗГОДА']]){ goM(k); if(!out().includes(t)) {docsOk=false; console.log('doc fail',k);} }

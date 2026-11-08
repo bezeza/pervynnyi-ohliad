@@ -12,7 +12,9 @@
   "080-data-presets.js",
   "090-custom-templates-store.js",
   "100-core.js",
+  "101-boot.js",
   "110-hosp-criteria-auto.js",
+  "111-boot-update.js",
   "120-version-changelog.js",
   "130-tabs-registry.js",
   "140-calculators.js",
@@ -78,6 +80,7 @@
   "595-ai.js",
   "596-ptline.js",
   "597-shell.js",
+  "598-boot-shell.js",
   "598-diary-quick.js",
   "599-links.js",
   "600-skia.js",
@@ -158,6 +161,18 @@
   "676-float-win.js",
   "677-phone-panel.js",
   "678-context-actions.js",
-  "679-sheet-fit.js"
+  "679-sheet-fit.js",
+  "680-ui-v2.js",
+  "681-ui-icons.js",
+  "682-ui-keys.js",
+  "683-ui-patient.js",
+  "684-data-syndromes.js",
+  "684-smart-input.js",
+  "685-footer.js",
+  "686-ui-fixes.js",
+  "687-ui-status.js",
+  "688-print-own.js",
+  "689-ui-a11y.js",
+  "699-boot-end.js"
  ]
 }

@@ -59,7 +59,7 @@ TABS.forEach((s,i)=>{
     sideSeg.append(h('span', {class:'chips-hint hide-m'}, 'з обох боків — пневмонія, пієлонефрит, радикулопатія, тромбоз, переломи ребер'));
     grid.append(gt, sideSeg, cards, s.emptyMy, h('div', {class:'tips', id:'hvTips', hidden:''}), h('div', {class:'pt rxvarbox', hidden:''})); filter();
   } else if (s.special === 'rx'){
-    head = h('div', {class:'ph'}, h('h2', {}, 'Лист призначень'));
+    head = h('div', {class:'ph'}, h('h2', {}, 'Листок призначень'));
     grid = rxPanel();
   } else if (s.special === 'tpl'){
     head = h('div', {class:'ph'}, h('h2', {}, 'Мої шаблони'));
@@ -218,7 +218,7 @@ function switchDoc(nd){
   applyDoc(false);
   if (CACHE[DOC] && CACHE[DOC].dirty){ $('#out').innerHTML = CACHE[DOC].html; dirty = true; }
   else if (DOC === 'shch' && !DIARIES.length && diaryUntouched() && examFilled()){ diaryFromExam(0); return; }   // перший щоденник — з первинного огляду, а не «норма»
-  toast({konc:'Консиліум: склад, мета, висновок і рішення; підписи всіх членів — внизу документа', gosp:'Направлення на госпіталізацію: критерії — на вкладці «Направлення» (рішення)', pam:'Пам’ятка пацієнту: ліки — з листа призначень, поради й тривожні ознаки — за хворобою', zav:'Огляд завідувача', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка: оберіть вид і період', zgoda:'Інформована згода: відмітьте втручання', rx:'Лист призначень', ohl:'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник спостереження', epi:'Виписний епікриз: діагноз і скарги беруться з первинного огляду', kons:'Консультаційний висновок: скарги, діагноз і огляд беруться з первинного огляду'}[DOC]);
+  toast({konc:'Консиліум: склад, мета, висновок і рішення; підписи всіх членів — внизу документа', gosp:'Направлення на госпіталізацію: критерії — на вкладці «Направлення» (рішення)', pam:'Пам’ятка пацієнту: ліки — з листа призначень, поради й тривожні ознаки — за хворобою', zav:'Огляд завідувача', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка: оберіть вид і період', zgoda:'Інформована згода: відмітьте втручання', rx:'Листок призначень', ohl:'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник спостереження', epi:'Виписний епікриз: діагноз і скарги беруться з первинного огляду', kons:'Консультаційний висновок: скарги, діагноз і огляд беруться з первинного огляду'}[DOC]);
 }
 function applyDoc(first){
   if (!applyDoc.bound){ applyDoc.bound = true; $('#docMore').addEventListener('change', e=>{ if (e.target.value) switchDoc(e.target.value); }); if (window.matchMedia){ const mq = matchMedia('(max-width:899px)'); const f = ()=>applyDoc(true); if (mq.addEventListener) mq.addEventListener('change', f); } }

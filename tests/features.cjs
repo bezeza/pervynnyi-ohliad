@@ -164,7 +164,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  // 0.9.2 «Вигляд»
  { const r=w.eval("VIEW.layout='C'; applyView(); [document.body.classList.contains('lay-C'), JSON.parse(localStorage.getItem('po.view')||'{}').layout]");
    ok('Вигляд: «Дзеркальне» вмикається і запам’ятовується', r[0]===true || w.innerWidth<900, JSON.stringify(r));
-   w.eval("VIEW.layout='auto'; VIEW.fold=true; applyView()"); ok('Вигляд: текст згортається в смужку', w.innerWidth<900 || doc.body.classList.contains('outfold'));
+   w.eval("uiV2Set(false); VIEW.layout='auto'; VIEW.fold=true; applyView()"); ok('Вигляд: текст згортається в смужку', w.innerWidth<900 || doc.body.classList.contains('outfold'));
+   w.eval("uiV2Set(true)"); ok('Новий вигляд: «Згорнути текст» не діє — текст за кнопкою «Текст»', !doc.body.classList.contains('outfold'));
    w.eval("VIEW.fold=false; saveView(); applyView()");
    ok('Меню «Вигляд» з 5 варіантами розташування', (w.eval('openViewPop()'), doc.querySelectorAll('.viewpop .vlays button').length===5) && (w.eval('closeViewPop()'), true)); }
  // 0.9.3 профілі, нирки, QR, повтор дії
@@ -740,12 +741,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Коротка перевірка: порожній документ не показує зауважень', r[4]===true);
  }
  { // 0.9.3.39: ручні правки зберігаються, заміна підтверджується й скасовується.
-   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(), q0=QUICK, cf=window.confirm; CACHE={}; dirty=false; switchDoc('ohl'); const out=document.getElementById('out'), manual='<p><b>Ручні правки</b></p>', a=[];
+   const r=JSON.parse(w.eval(`(()=>{ const __v=UIV2; uiV2Set(false); try{ return (()=>{ const saved=snap(), q0=QUICK, cf=window.confirm; CACHE={}; dirty=false; switchDoc('ohl'); const out=document.getElementById('out'), manual='<p><b>Ручні правки</b></p>', a=[];
      out.innerHTML=manual; out.dispatchEvent(new Event('input')); a.push(!document.getElementById('banner').hidden && /Є ручні зміни/.test(document.getElementById('banner').textContent));
      document.getElementById('quickBtn').click(); a.push(out.innerHTML===manual && dirty); document.getElementById('allNorm').click(); a.push(out.innerHTML===manual);
      applyPreset(PRESETS[0],HV.cards[0]); a.push(out.innerHTML===manual); switchDoc('rx'); const other='<p>Інший документ</p>'; out.innerHTML=other; out.dispatchEvent(new Event('input')); switchDoc('ohl'); a.push(out.innerHTML===manual); switchDoc('rx'); a.push(out.innerHTML===other); switchDoc('ohl');
      window.confirm=()=>false; document.getElementById('regen').click(); a.push(out.innerHTML===manual && dirty); window.confirm=()=>true; document.getElementById('regen').click(); a.push(out.innerHTML!==manual && !dirty); undoLast(); a.push(out.innerHTML===manual && dirty); applyDoc(true); a.push(out.innerHTML===manual && dirty);
-     window.confirm=cf; QUICK=q0; localStorage.setItem('po.quick',q0?'1':'0'); restore(saved); return JSON.stringify(a); })()`));
+     window.confirm=cf; QUICK=q0; localStorage.setItem('po.quick',q0?'1':'0'); restore(saved); return JSON.stringify(a); })(); } finally { uiV2Set(__v); } })()`));
    ok('Ручний текст: статус, швидкий режим, норма й шаблон не стирають правки',r.slice(0,4).every(Boolean),JSON.stringify(r));
    ok('Ручний текст: документи зберігають окремі правки',r.slice(4,6).every(Boolean),JSON.stringify(r));
    ok('Ручний текст: відмова, підтвердження, скасування й перебудова',r.slice(6).every(Boolean),JSON.stringify(r));
@@ -844,7 +845,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Зміст: збій localStorage не блокує згортання',r[3]);
  }
  { // 0.9.3.46: зрозумілі назви небезпечних дій і швидке скасування масових змін.
-   const r=JSON.parse(w.eval("(()=>{ const oldDoc=DOC; switchDoc('ohl'); const clearAll=$('#clearAll'), norm=$('#allNorm'); " +
+   const r=JSON.parse(w.eval("(()=>{ const __v=UIV2; uiV2Set(false); try{ return (()=>{ const oldDoc=DOC; switchDoc('ohl'); const clearAll=$('#clearAll'), norm=$('#allNorm'); " +
      "const clearLabel=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].some(b=>b.getAttribute('aria-label')==='Очистити поточний документ'&&b.textContent.trim()==='Очистити поточний документ'); " +
      "const labels=clearLabel&&norm.getAttribute('aria-label')==='Норма в усіх системах огляду'&&clearAll.getAttribute('aria-label')==='Новий пацієнт (поточний збережено)'&&clearAll.title==='Новий пацієнт (поточний збережено)'&&clearAll.textContent.includes('Новий пацієнт (поточний збережено)'); " +
      "const undoBefore=UNDO.length, beforeNorm=JSON.stringify(snap()); norm.click(); const normToast=$('#toast'), normAction=normToast.querySelector('button'), normToastOk=DANGER_UNDO_MS===8000&&normToast.classList.contains('undo-toast')&&normAction&&normAction.textContent==='Скасувати'; " +
@@ -852,7 +853,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      "const clear=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].find(b=>b.getAttribute('aria-label')==='Очистити поточний документ'); const undoBeforeClear=UNDO.length, beforeClear=JSON.stringify(snap()); clear.click(); " +
      "const firstClick=clear.dataset.arm==='1'&&!$('#toast').classList.contains('undo-toast')&&UNDO.length===undoBeforeClear; clear.click(); const clearToast=$('#toast'), clearAction=clearToast.querySelector('button'), clearToastOk=clearToast.classList.contains('undo-toast')&&clearAction&&clearAction.textContent==='Скасувати'; " +
      "if(clearAction) clearAction.click(); const clearUndo=UNDO.length===undoBeforeClear&&JSON.stringify(snap())===beforeClear; UNDO.length=undoBefore; REDO.length=0; undoBtn(); switchDoc(oldDoc); " +
-     "return JSON.stringify([labels,normToastOk,normUndo,firstClick,clearToastOk,clearUndo]); })()"));
+     "return JSON.stringify([labels,normToastOk,normUndo,firstClick,clearToastOk,clearUndo]); })(); } finally { uiV2Set(__v); } })()"));
    ok('Масові дії мають точні назви, а назва нового пацієнта пояснює збереження поточного',r[0],JSON.stringify(r));
    ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
    ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
@@ -1124,7 +1125,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const k=(DMAP['декскетопрофен'].renal||[]).some(x=>x.lt===50);
     return JSON.stringify([a,n,l,k]); })()`);
   ok('Декскетопрофен і Кедол: у переліку препаратів, у підказках доз, НПЗП у перевірці взаємодій, корекція за КК', r==='[true,true,true,true]', r); }
-{ const btn=doc.querySelector('.more-dd .mmenu .fbbtn'); const n0=printed;
+{ w.print=()=>{printed++};   // попередні перевірки підміняють window.print своїм лічильником
+  const btn=doc.querySelector('.more-dd .mmenu .fbbtn'); const n0=printed;
   const okp=w.eval("printBlanks(['ter','amb','e003'])"); const P=$('print');
   const cnt=P.querySelectorAll('.fbk').length, d2=P.querySelectorAll('.fbk-ter .fb-diary').length, ep=P.querySelectorAll('.fbk-e003 .fb-ep').length;
   const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
@@ -1322,7 +1324,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const o=seOpts(op); a.push(o.length>=4 && o.every(x=>x.quickT));
     mol.el.value=m0; op.el.value=o0; update(); DOC!==kD && switchDoc(kD); PAPER=kP; BLANK=kB; renderPaper();
     return JSON.stringify(a); })()`));
-  ok('Лист призначень та інші блоки: фраза не відкриває поле чужого розділу', r[0]);
+  ok('Листок призначень та інші блоки: фраза не відкриває поле чужого розділу', r[0]);
   ok('Бланк: «Молочні залози» — готові варіанти у віконці', r[1]);
   ok('Віконце бланка: заголовок перетягується, кут змінює розмір', r[2]);
   ok('Варіант молочних залоз записується в поле', r[3]);
@@ -1366,6 +1368,184 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Аркуш: невідомий масштаб — «По ширині»', r[2]);
   ok('Аркуш: масштаб зберігається в Налаштування.json', r[3]);
 }
+// 0.9.3.95 — новий вигляд, етап 1: кнопка «Текст» з лічильником, «Старий вигляд»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    uiV2Set(true); a.push(document.documentElement.classList.contains('ui-v2') && !!document.querySelector('#txtBtn'));
+    v2Count(); const n=itext(document.querySelector('#out')).trim().length; a.push(document.querySelector('.v2cnt').textContent===n.toLocaleString('uk-UA'));
+    txtOpen(true); a.push(document.body.classList.contains('v2-txt-open') && document.querySelector('#txtBtn').getAttribute('aria-expanded')==='true');
+    txtOpen(false); a.push(!document.body.classList.contains('v2-txt-open'));
+    uiV2Set(false); txtOpen(true); a.push(!document.documentElement.classList.contains('ui-v2') && !document.body.classList.contains('v2-txt-open'));
+    a.push(TABS.filter(t=>TOOL_TABS.includes(t.id)).every(t=>t.tab.classList.contains('v2tool')));
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Новий вигляд: клас ui-v2 і кнопка «Текст» у шапці', r[0]);
+  ok('Кнопка «Текст» показує кількість знаків документа', r[1]);
+  ok('«Текст» відкриває й закриває панель тексту', r[2] && r[3]);
+  ok('«Старий вигляд» знімає новий вигляд і не відкриває панель', r[4]);
+  ok('Інструменти в меню розділів — без кружка стану', r[5]);
+}
+// 0.9.3.95 — фундамент: шкала шрифтів екрана (7 розмірів)
+{ const r=JSON.parse(w.eval(`(()=>{ const cs=getComputedStyle(document.documentElement); return JSON.stringify([1,2,3,4,5,6,7].map(i=>cs.getPropertyValue('--fs-'+i).trim())); })()`));
+  ok('Шкала шрифтів: 7 розмірів --fs-1…--fs-7', r.length===7 && r.every(Boolean), r.join(' '));
+}
+// 0.9.3.95 — фундамент: SVG-значки замість емодзі; «Старий вигляд» повертає емодзі
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    uiV2Set(true); v2IcFix(document.body); const n=document.querySelectorAll('svg.v2ic').length; a.push(n>0);
+    a.push(!document.querySelector('#out svg.v2ic, #print svg.v2ic'));
+    uiV2Set(false); a.push(document.querySelectorAll('svg.v2ic').length===0);
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Новий вигляд: емодзі на кнопках замінено SVG-значками', r[0]);
+  ok('Значки не потрапляють у текст документа й друк', r[1]);
+  ok('«Старий вигляд» повертає емодзі', r[2]);
+}
+// 0.9.3.95 — каркас: Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter показує «Текст»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    const e=document.getElementById('meta_pib'); const v0=e.value; e.value='Тестовий Пошук Пацієнтович'; e.dispatchEvent(new Event('input')); savePatient(true); const id=PID;
+    a.push(searchItems().some(x=>x.k==='Пацієнт' && /Тестовий Пошук/.test(x.t)));
+    a.push(searchItems().some(x=>x.t==='Новий пацієнт' && x.s==='Alt+N'));
+    document.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyN',key:'n',altKey:true,bubbles:true}));
+    a.push(PID!==id && !document.getElementById('meta_pib').value);
+    openPatient(id); a.push(PID===id);
+    uiV2Set(true); txtOpen(false);
+    return JSON.stringify(a); })()`));
+  ok('Ctrl+K знаходить пацієнта за ПІБ', r[0]);
+  ok('У пошуку «Новий пацієнт» з підказкою Alt+N', r[1]);
+  ok('Alt+N — новий пацієнт (поточний збережено)', r[2] && r[3]);
+}
+// 0.9.3.95 — введення пацієнта: дата народження з маскою, «Імпорт ▾»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const t=document.getElementById('meta_dob_t'), d=document.getElementById('meta_dob'), d0=d.value;
+    a.push(!!t);
+    t.value='12031962'; t.dispatchEvent(new Event('input',{bubbles:true}));
+    a.push(t.value==='12.03.1962' && d.value==='1962-03-12');
+    t.value='31.02.1962'; t.dispatchEvent(new Event('input',{bubbles:true}));
+    a.push(t.classList.contains('bad') && d.value==='');
+    t.value=''; t.dispatchEvent(new Event('input',{bubbles:true}));
+    d.value='1970-05-01'; t.blur(); v2pSync(); a.push(t.value==='01.05.1970');
+    d.value=d0; d.dispatchEvent(new Event('input',{bubbles:true})); v2pSync();
+    a.push(!!document.querySelector('#misIn .v2imp'));
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Дата народження: поле з маскою дд.мм.рррр', r[0] && r[1]);
+  ok('Дата народження: неіснуюча дата позначається і не записується', r[2]);
+  ok('Дата народження: відкритий пацієнт показується в масці', r[3]);
+  ok('Імпорт — одна кнопка «Імпорт ▾»', r[4]);
+}
+// 0.9.3.95 — «розумна клавіатура»: підказки, «38.5 С» → «38,5 °C», часті фрази
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], sec=SECTIONS.find(x=>x.id==='skarhy'), el=F('skarhy.cx').el, v0=el.value, ph=JSON.stringify(SI_PHR);
+    a.push(siCands(sec,'каш').some(c=>/кашель/.test(c.t)));
+    el.value='Температура 38.5 С'; el.setSelectionRange(el.value.length, el.value.length); siFormat(el); a.push(el.value==='Температура 38,5 °C');
+    el.value='Скарги, біль'; siFormat(el); a.push(el.value==='Скарги, біль');
+    el.value='підвищення температури, каш'; el.setSelectionRange(el.value.length, el.value.length); const fr=siFrag(el, sec); a.push(!!fr && fr.text.trim()==='каш' && fr.list.length>0);
+    el.value='Щось .взд'; el.setSelectionRange(el.value.length, el.value.length); a.push(!siFrag(el, sec));
+    el.value='Важкість у правому підребер’ї після жирної їжі'; siLearn(sec, el); a.push(siCands(sec,'важк').some(c=>c.src==='ваше'));
+    el.value=v0; SI_PHR=JSON.parse(ph); lsSet('po.phr', ph); update(); return JSON.stringify(a); })()`));
+  ok('Розумна клавіатура: підказка з кнопок розділу (каш → кашель…)', r[0]);
+  ok('Розумна клавіатура: «38.5 С» → «38,5 °C»', r[1]);
+  ok('Розумна клавіатура: слова не змінюються без дії лікаря', r[2]);
+  ok('Розумна клавіатура: підказка після коми (кома в числі — не межа)', r[3]);
+  ok('Розумна клавіатура: «.взд» лишається скороченням', r[4]);
+  ok('Розумна клавіатура: інша фраза не підміняється («дискомфорт у правому…» ≠ «важкість у правому…»)', w.eval(`(()=>{ const sec=SECTIONS.find(x=>x.id==='skarhy'), el=F('skarhy.cx').el, v0=el.value; el.value="дискомфорт у правому підребер'ї"; el.setSelectionRange(el.value.length, el.value.length); const f=siFrag(el, sec); el.value=v0; return !f || !f.list.some(x=>/важкість/.test(x.t)); })()`));
+  ok('Розумна клавіатура: часті фрази лікаря — у підказках', r[5]);
+}
+// 0.9.3.95 — скарги: підказка-кнопка натискає кнопку; поле першим, кнопки згорнуті
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const c=F('skarhy.c'), cx=F('skarhy.cx'), el=cx.el, v0=el.value, i=c.opts.findIndex(o=>/^сухий кашель$/.test(O(o).t)), was=c.chips[i].getAttribute('aria-pressed');
+    if (was==='true') c.chips[i].click();
+    el.value='Біль, сухий ка'; el.setSelectionRange(el.value.length, el.value.length);
+    const sec=SECTIONS.find(x=>x.id==='skarhy'); SI.f=cx; SI.sec=sec; SI.frag=siFrag(el, sec); SI.list=SI.frag.list; SI.sel=SI.list.findIndex(x=>x.t==='сухий кашель'); siAccept();
+    a.push(c.chips[i].getAttribute('aria-pressed')==='true' && el.value==='Біль');
+    a.push(c.wrapEl.classList.contains('si-chips') && el.closest('.f').classList.contains('si-first'));
+    c.chips[i].click(); el.value=v0; update(); uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Скарги: підказка, що є кнопкою, натискає кнопку (критерії, щоденник бачать скаргу)', r[0]);
+  ok('Скарги на ПК: поле першим, кнопки згорнуті під ним', r[1]);
+}
+// 0.9.3.95 — скарги посиндромно; «Обрано кнопками» в порядку натискання
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); const c=F('skarhy.c');
+    const pre=c.chips.filter(b=>b.getAttribute('aria-pressed')==='true'); pre.forEach(b=>b.click()); update();
+    const sb=[...document.querySelectorAll('.si-sb')].find(b=>b.textContent==='Бронхообструктивний'); a.push(!!sb && SYND.every(s=>s[1].every(t=>c.opts.some(o=>O(o).t===t))));
+    sb.click(); const idx=sb.dataset.idx.split(',').map(Number);
+    a.push(idx.every(i=>c.chips[i].getAttribute('aria-pressed')==='true') && sb.getAttribute('aria-pressed')==='true');
+    a.push([...document.querySelectorAll('.si-tok')].map(b=>b.textContent.replace(' ✕','')).join('|')===idx.map(i=>O(c.opts[i]).t).join('|'));
+    sb.click(); a.push(idx.every(i=>c.chips[i].getAttribute('aria-pressed')!=='true') && !document.querySelector('.si-tok'));
+    pre.forEach(b=>b.click()); update(); uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Посиндромно: усі скарги синдромів — серед кнопок', r[0]);
+  ok('Посиндромно: синдром обирає свої скарги', r[1]);
+  ok('«Обрано кнопками» — у порядку натискання', r[2]);
+  ok('Повторне натискання синдрому знімає його скарги', r[3]);
+  ok('Синдром підсвічується сам: частина скарг — «k/n», усі — натиснутий', w.eval(`(()=>{ const c=F('skarhy.c'), sb=[...document.querySelectorAll('.si-sb')].find(b=>b.textContent.startsWith('Плевральний')), idx=sb.dataset.idx.split(',').map(Number);
+    const pre=idx.map(i=>c.chips[i].getAttribute('aria-pressed')==='true'); idx.forEach((i,k)=>{ if (pre[k]) c.chips[i].click(); }); update();
+    c.chips[idx[0]].click(); update(); const part=sb.classList.contains('part') && sb.textContent.includes('1/'+idx.length);
+    idx.slice(1).forEach(i=>c.chips[i].click()); update(); const full=sb.getAttribute('aria-pressed')==='true' && !sb.classList.contains('part');
+    idx.forEach((i,k)=>{ if ((c.chips[i].getAttribute('aria-pressed')==='true')!==pre[k]) c.chips[i].click(); }); update(); return part && full; })()`));
+}
+// 0.9.3.95 — рядок унизу: Telegram, версія, «що нового», код і ліцензія
+{ const f=doc.querySelector('.pofoot');
+  ok('Унизу сторінки: Telegram, версія, відкритий код', !!f && /t\.me\/bezeza/.test(f.innerHTML) && f.textContent.includes(w.eval('VERSION')) && /github\.com\/bezeza\/pervynnyi-ohliad/.test(f.innerHTML));
+}
+// 0.9.3.95 — пасхалка: 7 клацань по версії внизу
+{ const v=doc.querySelector('.pofoot > span:nth-child(2)'); for (let i=0;i<7;i++) v.dispatchEvent(new w.MouseEvent('click',{bubbles:true}));
+  const e=doc.querySelector('.poegg'); ok('Пасхалка: 7 клацань по версії — відкривається і закривається', !!e && (e.querySelector('button').click(), !doc.querySelector('.poegg')));
+}
+// 0.9.3.95 — вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд», старий вигляд відновлює
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const s=SECTIONS.find(x=>x.id==='morbi'); a.push(s.tab.textContent.includes('Анамнез хвороби'));
+    a.push(document.querySelector('#docSeg button[data-doc="ohl"]').textContent==='Огляд');
+    const out=document.getElementById('out'), o0=out.innerHTML; out.innerHTML=''; renderCheck(); const tC=document.querySelector('.otabs [data-ov="chk"]');
+    a.push(!!tC && !tC.classList.contains('done') && tC.classList.contains('v2-empty')); out.innerHTML=o0; update();
+    uiV2Set(false); a.push(s.tab.textContent.includes('Анамнез хв.') && document.querySelector('#docSeg button[data-doc="ohl"]').textContent!=='Огляд');
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Розділи в меню — повними назвами', r[0]);
+  ok('Документ у шапці — «Огляд» (без повтору назви програми)', r[1]);
+  ok('«Перевірка» без зеленого ✓ на порожньому документі', r[2]);
+  ok('«Старий вигляд» повертає короткі назви', r[3]);
+}
+// 0.9.3.95 — «Скасувати» замість «Ви впевнені?»: очищення документа одним натисканням, оновлення з форми без вікна
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); let asked=0; const c0=window.confirm; window.confirm=()=>{ asked++; return false; };
+    const o=document.getElementById('out'); F('skarhy.c').chips[0].getAttribute('aria-pressed')!=='true' && F('skarhy.c').chips[0].click(); update();
+    const n0=UNDO.length; const cb=document.createElement('button'); clearDoc(cb); a.push(!o.textContent.trim() && UNDO.length>n0 && !cb.dataset.arm);
+    undoLast(); a.push(!!o.textContent.trim());
+    o.append(' ПРАВКА'); dirty=true; document.getElementById('regen').click(); a.push(asked===0 && !o.textContent.includes('ПРАВКА'));
+    window.confirm=c0; uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Очищення документа — одразу, «Скасувати» повертає', r[0] && r[1]);
+  ok('«Оновити з форми» при ручних правках — без системного вікна', r[2]);
+}
+// 0.9.3.95 — «Листок призначень»: одна назва (як у ф. 003-4/о)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[]; a.push(RXT.title==='Листок призначень' && DOCTITLES.rx==='ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ');
+    a.push(![...document.querySelectorAll('h2, .tab')].some(e=>/\bЛист призначень/.test(e.textContent))); return JSON.stringify(a); })()`));
+  ok('Листок призначень: одна назва в інтерфейсі й у друці', r[0] && r[1]);
+}
+// 0.9.3.95 — рядок стану внизу, «Збережено ✓» у картці пацієнта, один показник заповнення
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); const pi=document.getElementById('meta_pib'), p0=pi.value; pi.value='Тест';
+    V2ST.state=''; v2stDraw(); const b=document.getElementById('v2stat');
+    a.push(!b.hidden && b.textContent.includes('Тест'));
+    const go=b.querySelector('.st-miss .st-go');
+    if (go){ const t=TABS.find(x=>(x.title||x.short)===go.textContent); go.click(); a.push(!!t && t.tab.getAttribute('aria-selected')==='true' && !t.panel.hidden); }
+    else a.push(b.textContent.includes('Усі розділи заповнено'));
+    markSaved(true); const sv=document.getElementById('v2saved'); a.push(!sv.hidden && sv.textContent==='Збережено ✓');
+    markSaved(false); a.push(sv.classList.contains('bad') && /Не збережено/.test(sv.textContent)); markSaved(true);
+    uiV2Set(false); v2stDraw(); a.push(b.hidden);
+    pi.value=p0; uiV2Set(k); V2ST.state=''; v2stDraw(); return JSON.stringify(a); })()`));
+  ok('Рядок стану: пацієнт і що не заповнено', r[0]);
+  ok('Рядок стану: клік по розділу — перехід до нього', r[1]);
+  ok('«Збережено ✓» і «Не збережено» видно', r[2] && r[3]);
+  ok('«Старий вигляд» — без рядка стану', r[4]);
+}
+// 0.9.3.95 — власне оформлення друку вільних документів; бланки й форми — без змін
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k0=PRSTYLE, d0=DOC, bl0=BLANK; BLANK=false; const c=F('skarhy.c'); if (c.chips[0].getAttribute('aria-pressed')!=='true') c.chips[0].click(); switchDoc('ohl'); update();
+    const norm=t=>t.replace(/[:\\s]+/g,'');
+    prStyleSet('classic'); const A=document.createElement('div'); fillSheet(A); a.push(!A.classList.contains('pr-own') && !A.querySelector('.po-r'));
+    prStyleSet('own'); const B=document.createElement('div'); fillSheet(B);
+    a.push(B.classList.contains('pr-own') && !!B.querySelector('.po-title .po-t') && B.querySelectorAll('.pr-body .po-r .po-k').length>0);
+    const tA=norm(A.querySelector('.pr-body').textContent), tB=norm(B.querySelector('.pr-body').textContent); a.push(tA.endsWith(tB) && tB.length>10);
+    switchDoc('epi'); update(); const E=document.createElement('div'); fillSheet(E); a.push(!E.classList.contains('pr-own'));
+    BLANK=bl0; prStyleSet(k0); switchDoc(d0); update(); return JSON.stringify(a); })()`));
+  ok('Друк «Класичне» — як було', r[0]);
+  ok('Друк «Власне»: назва, розділи двома колонками', r[1]);
+  ok('Друк «Власне»: той самий текст документа', r[2]);
+  ok('Друк «Власне» не змінює форми МОЗ (епікриз)', r[3]);
+}
+// 0.9.3.95 — швидший старт: після побудови сторінка показана, відкладені оновлення виконано
+{ const r=JSON.parse(w.eval(`JSON.stringify([PO_BOOT===false, !PO_BOOT_CSS.isConnected, ![...document.querySelectorAll('style')].some(s=>/^html\\{display:none/.test(s.textContent))])`));
+  ok('Швидкий старт: сторінка показана після побудови', r.every(Boolean), JSON.stringify(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

@@ -55,7 +55,7 @@ function rxSetsBox(){
       });
       const nm = h('input', {placeholder:'Назва набору, напр., «Мій стандарт ГХ»', 'aria-label':'Назва набору', style:'flex:1 1 220px'});
       const save = h('button', {type:'button', class:'btn', onclick:()=>{
-        if (!RX.length){ toast('Лист призначень порожній — спершу додайте препарати'); return; }
+        if (!RX.length){ toast('Листок призначень порожній — спершу додайте препарати'); return; }
         const name = nm.value.trim() || 'Набір ' + ((CUSTOM.rxsets || []).length + 1);
         CUSTOM.rxsets = CUSTOM.rxsets || []; CUSTOM.rxsets.push({name, rows:RX.filter(it=>it.drug).map(it=>[it.drug, it.dose, it.route, it.freq, it.days || '', it.note || ''])});
         saveCustom(); toast('Збережено набір «' + name + '»'); draw(); }}, 'Зберегти поточний лист як набір');

@@ -47,7 +47,7 @@ function rxReplace(rows, name){
   RX_PREV = RX.map(it=>Object.assign({}, it)); RX_PREV_A = RX_AUTO;
   RX.length = 0; rows.forEach(r=>addRx({drug:r[0], dose:r[1], route:r[2], freq:r[3], days:r[4] || '', note:r[5]}));
   RX_AUTO = rxSig(); RX_VAR = name; renderRx(); update(); rxVarRedraw();
-  toast(`Лист призначень: «${name}». Перевірте дози під пацієнта`, 3000);
+  toast(`Листок призначень: «${name}». Перевірте дози під пацієнта`, 3000);
 }
 function rxUndo(){ if (!RX_PREV) return; RX.length = 0; RX_PREV.forEach(it=>RX.push(it)); RX_PREV = null; RX_AUTO = RX_PREV_A; renderRx(); update(); rxVarRedraw(); toast('Повернуто попередній лист'); }
 function rxVarBlock(){
