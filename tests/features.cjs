@@ -1480,6 +1480,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 { const f=doc.querySelector('.pofoot');
   ok('Унизу сторінки: Telegram, версія, відкритий код', !!f && /t\.me\/bezeza/.test(f.innerHTML) && f.textContent.includes(w.eval('VERSION')) && /github\.com\/bezeza\/pervynnyi-ohliad/.test(f.innerHTML));
 }
+// 0.9.3.95 — пасхалка: 7 клацань по версії внизу
+{ const v=doc.querySelector('.pofoot > span:nth-child(2)'); for (let i=0;i<7;i++) v.dispatchEvent(new w.MouseEvent('click',{bubbles:true}));
+  const e=doc.querySelector('.poegg'); ok('Пасхалка: 7 клацань по версії — відкривається і закривається', !!e && (e.querySelector('button').click(), !doc.querySelector('.poegg')));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
