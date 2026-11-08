@@ -2436,3 +2436,22 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 :root.ui-v2 .otabs .v2-empty .otc{display:none}
 /* 0.9.3.95 — «Листок лікарських призначень»: один спосіб додати — поле «+ Додати препарат…» (кнопка в «Швидких діях» його лише дублювала) */
 @media screen and (min-width:900px){ :root.ui-v2 .doc-actions [data-action="rx-add"]{display:none} }
+/* 0.9.3.95 — рядок стану внизу, «Збережено ✓» у шапці, один показник заповнення (кружки) — новий вигляд, широкий екран */
+.v2stat,.v2saved{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .v2stat:not([hidden]){display:flex;align-items:center;gap:16px;position:fixed;left:0;right:0;bottom:0;z-index:30;min-height:36px;padding:0 16px;background:var(--surface,var(--bg));border-top:1px solid var(--line);font-size:var(--fs-2);color:var(--muted);white-space:nowrap;overflow:hidden}
+  :root.ui-v2 body.v2-stat{padding-bottom:40px}
+  :root.ui-v2 .v2stat .st-who b{color:var(--ink);font-weight:600}
+  :root.ui-v2 .v2stat .st-miss{display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow:hidden}
+  :root.ui-v2 .v2stat .st-go{background:none;border:0;padding:0 4px;min-height:32px;color:var(--accent-ink,var(--accent));font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  :root.ui-v2 .v2stat .st-go:hover{text-decoration-thickness:2px}
+  :root.ui-v2 .v2stat .st-ok{color:var(--ok-ink,var(--ok))}
+  :root.ui-v2 .v2stat .st-bk{display:flex;align-items:center;gap:4px;color:var(--warn-ink2)}
+  :root.ui-v2 .v2saved:not([hidden]){display:inline-flex;align-items:center;margin-left:8px;font-size:var(--fs-2);color:var(--ok-ink,var(--ok));white-space:nowrap}
+  :root.ui-v2 .v2saved.wait{color:var(--muted)}
+  :root.ui-v2 .v2saved.bad{color:var(--bad)}
+  :root.ui-v2 .sprog,:root.ui-v2 body.lay-B .sprog{display:none}
+  :root.ui-v2 body.v2-stat.lay-B #sidecol>.sidein{max-height:calc(100vh - var(--pbh,0px) - 56px)}
+  :root.ui-v2 body #ptbar .pt-saved,:root.ui-v2 #ptline .pt-saved{display:none}
+}
+@media print{.v2stat,.v2saved{display:none!important}}

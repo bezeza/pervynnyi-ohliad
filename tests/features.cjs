@@ -1512,6 +1512,22 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     a.push(![...document.querySelectorAll('h2, .tab')].some(e=>/\bЛист призначень/.test(e.textContent))); return JSON.stringify(a); })()`));
   ok('Листок призначень: одна назва в інтерфейсі й у друці', r[0] && r[1]);
 }
+// 0.9.3.95 — рядок стану внизу, «Збережено ✓» у картці пацієнта, один показник заповнення
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); const pi=document.getElementById('meta_pib'), p0=pi.value; pi.value='Тест';
+    V2ST.state=''; v2stDraw(); const b=document.getElementById('v2stat');
+    a.push(!b.hidden && b.textContent.includes('Тест'));
+    const go=b.querySelector('.st-miss .st-go');
+    if (go){ const t=TABS.find(x=>(x.title||x.short)===go.textContent); go.click(); a.push(!!t && t.tab.getAttribute('aria-selected')==='true' && !t.panel.hidden); }
+    else a.push(b.textContent.includes('Усі розділи заповнено'));
+    markSaved(true); const sv=document.getElementById('v2saved'); a.push(!sv.hidden && sv.textContent==='Збережено ✓');
+    markSaved(false); a.push(sv.classList.contains('bad') && /Не збережено/.test(sv.textContent)); markSaved(true);
+    uiV2Set(false); v2stDraw(); a.push(b.hidden);
+    pi.value=p0; uiV2Set(k); V2ST.state=''; v2stDraw(); return JSON.stringify(a); })()`));
+  ok('Рядок стану: пацієнт і що не заповнено', r[0]);
+  ok('Рядок стану: клік по розділу — перехід до нього', r[1]);
+  ok('«Збережено ✓» і «Не збережено» видно', r[2] && r[3]);
+  ok('«Старий вигляд» — без рядка стану', r[4]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

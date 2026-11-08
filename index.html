@@ -2475,6 +2475,25 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 :root.ui-v2 .otabs .v2-empty .otc{display:none}
 /* 0.9.3.95 — «Листок лікарських призначень»: один спосіб додати — поле «+ Додати препарат…» (кнопка в «Швидких діях» його лише дублювала) */
 @media screen and (min-width:900px){ :root.ui-v2 .doc-actions [data-action="rx-add"]{display:none} }
+/* 0.9.3.95 — рядок стану внизу, «Збережено ✓» у шапці, один показник заповнення (кружки) — новий вигляд, широкий екран */
+.v2stat,.v2saved{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .v2stat:not([hidden]){display:flex;align-items:center;gap:16px;position:fixed;left:0;right:0;bottom:0;z-index:30;min-height:36px;padding:0 16px;background:var(--surface,var(--bg));border-top:1px solid var(--line);font-size:var(--fs-2);color:var(--muted);white-space:nowrap;overflow:hidden}
+  :root.ui-v2 body.v2-stat{padding-bottom:40px}
+  :root.ui-v2 .v2stat .st-who b{color:var(--ink);font-weight:600}
+  :root.ui-v2 .v2stat .st-miss{display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow:hidden}
+  :root.ui-v2 .v2stat .st-go{background:none;border:0;padding:0 4px;min-height:32px;color:var(--accent-ink,var(--accent));font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  :root.ui-v2 .v2stat .st-go:hover{text-decoration-thickness:2px}
+  :root.ui-v2 .v2stat .st-ok{color:var(--ok-ink,var(--ok))}
+  :root.ui-v2 .v2stat .st-bk{display:flex;align-items:center;gap:4px;color:var(--warn-ink2)}
+  :root.ui-v2 .v2saved:not([hidden]){display:inline-flex;align-items:center;margin-left:8px;font-size:var(--fs-2);color:var(--ok-ink,var(--ok));white-space:nowrap}
+  :root.ui-v2 .v2saved.wait{color:var(--muted)}
+  :root.ui-v2 .v2saved.bad{color:var(--bad)}
+  :root.ui-v2 .sprog,:root.ui-v2 body.lay-B .sprog{display:none}
+  :root.ui-v2 body.v2-stat.lay-B #sidecol>.sidein{max-height:calc(100vh - var(--pbh,0px) - 56px)}
+  :root.ui-v2 body #ptbar .pt-saved,:root.ui-v2 #ptline .pt-saved{display:none}
+}
+@media print{.v2stat,.v2saved{display:none!important}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -4639,7 +4658,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.95', VDATE = '08.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»; «Скасувати» замість «Ви впевнені?» (очищення документа, оновлення тексту з форми); «Листок лікарських призначень» — одна назва, як у формі 003-4/о (раніше «Лист» і «Листок»), один спосіб додати'],
+  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»; «Скасувати» замість «Ви впевнені?» (очищення документа, оновлення тексту з форми); «Листок лікарських призначень» — одна назва, як у формі 003-4/о (раніше «Лист» і «Листок»), один спосіб додати; рядок стану внизу екрана: пацієнт, день лікування, які розділи ще не заповнено (клік — перехід до розділу), нагадування про резервну копію; «Збережено ✓» / «Зберігається…» / «Не збережено» — у картці пацієнта; стан заповнення показано одним способом — кружками біля розділів (смужку «Заповнено N з M» прибрано)'],
   ['0.9.3.94', '08.11.2026', '«Перед друком»: аркуш А4 одразу підлаштовується під панель, коли перетягуєте межу форми й тексту, бокове меню чи змінюєте вигляд (раніше — лише при зміні вікна браузера). Масштаб як у Word: «По ширині» (може бути більше 100 %), «Весь аркуш», «100 %». Телефон і друк не змінено'],
   ['0.9.3.93', '05.11.2026', 'контекстні дії документа: на комп’ютері — компактна панель для первинного огляду, щоденника, призначень і виписки; на телефоні — відповідні дії в наявному меню «Документ і дії»; Classic без змін'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
@@ -22083,6 +22102,66 @@ try{ v2fNames(); renderCheck(); }catch(e){}
     return r;
   }; }
 { const c0 = clearDoc; clearDoc = function(btn){ if (v2fOn() && btn && !btn.dataset.arm) btn.dataset.arm = '1'; return c0.apply(this, arguments); }; }
+/* ===== 0.10, етап 4: рядок стану внизу, «Збережено ✓», один показник заповнення (лише новий вигляд, широкий екран) =====
+   «Збережено ✓» — у картці пацієнта.
+   Рядок стану: пацієнт · день · що не заповнено (клік — до розділу) · нагадування про резервну копію.
+   Показник заповнення лишається один — кружки біля розділів; смужку «Заповнено N з M» сховано стилями. */
+const V2ST = {bar:null, saved:null, raf:0, state:''};
+function v2stSeq(){ try{ return tabOrder().filter(i=>!TOOL_TABS.includes(TABS[i].id) && TABS[i] !== HV && TABS[i] !== META); }catch(e){ return []; } }
+function v2stName(i){ const t = TABS[i]; return t.title || t.short || (t.tab ? t.tab.textContent.trim() : ''); }
+function v2stDay(){ try{ const n = typeof stayDay === 'function' ? stayDay() : 0; return n ? n + (MODE === 'amb' ? '-й день лікування' : '-й день') : ''; }catch(e){ return ''; } }
+function v2stDraw(){
+  V2ST.raf = 0;
+  const on = document.documentElement.classList.contains('ui-v2');
+  if (!V2ST.bar) return;
+  V2ST.bar.hidden = !on; document.body.classList.toggle('v2-stat', on);
+  if (!on) return;
+  const pib = mv('pib'), seq = v2stSeq(), miss = seq.filter(i=>!TABS[i].tab.classList.contains('filled'));
+  let bk = null; try{ bk = backupInfo(); }catch(e){}
+  const key = [pib, v2stDay(), DOC, miss.join(','), seq.length, bk && bk.due, bk && bk.days].join('|');
+  if (key === V2ST.state) return; V2ST.state = key;
+  const b = V2ST.bar; b.innerHTML = '';
+  const who = h('span', {class:'st-who'}, h('b', {}, pib || 'Пацієнт без ПІБ'));
+  const d = v2stDay(); if (d) who.append(h('span', {}, ' · ' + d));
+  b.append(who);
+  const m = h('span', {class:'st-miss'});
+  if (!seq.length) m.append('');
+  else if (!miss.length) m.append(h('span', {class:'st-ok'}, 'Усі розділи заповнено'));
+  else {
+    m.append(h('span', {class:'st-l'}, 'Не заповнено:'));
+    miss.slice(0, 4).forEach(i=>m.append(h('button', {type:'button', class:'st-go', title:'Перейти до розділу', onclick:()=>show(i)}, v2stName(i))));
+    if (miss.length > 4) m.append(h('span', {class:'st-more', title:miss.slice(4).map(v2stName).join(', ')}, '+' + (miss.length - 4)));
+  }
+  b.append(m);
+  if (bk && bk.due){
+    b.append(h('span', {class:'st-bk'}, h('span', {}, bk.t ? `Резервна копія: ${bk.days} дн. тому` : 'Резервної копії ще немає'),
+      h('button', {type:'button', class:'st-go', onclick:()=>{ exportAll(); v2stLater(); }}, 'Зберегти у файл')));
+  }
+}
+function v2stLater(){ if (!V2ST.raf) V2ST.raf = requestAnimationFrame(v2stDraw); }
+/* «Збережено ✓» — у картці пацієнта (вона завжди на екрані, на відміну від шапки, що гортається) */
+function v2stSaved(s){
+  const e = V2ST.saved; if (!e) return;
+  const has = !!(PID || mv('pib'));
+  e.hidden = !has || !s;
+  e.classList.toggle('bad', s === 'bad'); e.classList.toggle('wait', s === 'wait');
+  e.textContent = s === 'bad' ? '⚠ Не збережено' : s === 'wait' ? 'Зберігається…' : 'Збережено ✓';
+  e.title = s === 'ok' ? 'Пацієнта збережено в ' + new Date().toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'}) : s === 'bad' ? 'Браузер не дав зберегти — збережіть копію у файл' : '';
+}
+{
+  V2ST.bar = h('div', {id:'v2stat', class:'v2stat', role:'status', 'aria-live':'off', hidden:''});
+  document.body.append(V2ST.bar);
+  V2ST.saved = h('span', {id:'v2saved', class:'v2saved', role:'status', hidden:''});
+  const v2stPlace = () => { const b = $('#ptbar .pt1'); if (b && V2ST.saved.parentElement !== b.parentElement) b.parentElement.append(V2ST.saved); };
+  v2stPlace(); { const rp0 = renderPtBar; renderPtBar = function(){ const r = rp0.apply(this, arguments); v2stPlace(); return r; }; }
+  const ms0 = markSaved; markSaved = function(ok){ const r = ms0.apply(this, arguments); v2stSaved(ok ? 'ok' : 'bad'); v2stLater(); return r; };
+  const as0 = autosave; autosave = function(){ const r = as0.apply(this, arguments); if (!RESTORING && (PID || mv('pib'))) v2stSaved('wait'); return r; };
+  const np0 = newPatient; newPatient = function(){ const r = np0.apply(this, arguments); v2stSaved(''); v2stLater(); return r; };
+  const up0 = update; update = function(){ const r = up0.apply(this, arguments); v2stLater(); return r; };
+  const sd0 = switchDoc; switchDoc = function(){ const r = sd0.apply(this, arguments); v2stLater(); return r; };
+  const ua0 = uiV2Apply; uiV2Apply = function(){ const r = ua0.apply(this, arguments); V2ST.state = ''; v2stLater(); return r; };
+  v2stDraw();
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
