@@ -2308,3 +2308,7 @@ html.touch .nextbar .btn{padding:12px 16px}
 .actsheet .da-mobile-list .btn:disabled{opacity:.48;cursor:not-allowed}
 @media (max-width:899px){.doc-actions{display:none!important}}
 @media print{.doc-actions{display:none!important}}
+
+/* 0.9.3.94 — масштаб аркуша під панель (679-sheet-fit.js): «По ширині» може бути більше 100 % */
+.paper .sheet.blankmode.sfit-w{max-width:none}
+.sfit-seg button{min-height:32px}
