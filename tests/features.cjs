@@ -1396,6 +1396,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Значки не потрапляють у текст документа й друк', r[1]);
   ok('«Старий вигляд» повертає емодзі', r[2]);
 }
+// 0.9.3.95 — каркас: Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter показує «Текст»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    const e=document.getElementById('meta_pib'); const v0=e.value; e.value='Тестовий Пошук Пацієнтович'; e.dispatchEvent(new Event('input')); savePatient(true); const id=PID;
+    a.push(searchItems().some(x=>x.k==='Пацієнт' && /Тестовий Пошук/.test(x.t)));
+    a.push(searchItems().some(x=>x.t==='Новий пацієнт' && x.s==='Alt+N'));
+    document.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyN',key:'n',altKey:true,bubbles:true}));
+    a.push(PID!==id && !document.getElementById('meta_pib').value);
+    openPatient(id); a.push(PID===id);
+    uiV2Set(true); txtOpen(false);
+    return JSON.stringify(a); })()`));
+  ok('Ctrl+K знаходить пацієнта за ПІБ', r[0]);
+  ok('У пошуку «Новий пацієнт» з підказкою Alt+N', r[1]);
+  ok('Alt+N — новий пацієнт (поточний збережено)', r[2] && r[3]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
