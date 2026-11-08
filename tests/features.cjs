@@ -1352,6 +1352,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Норма» у віконці ставить норму розділу, «Скасувати» її повертає', r[4] && r[5]);
   ok('Рядок без пунктів із нормою — без кнопки «Норма»', r[6]);
 }
+// 0.9.3.94 — масштаб аркуша під панель: «По ширині / Весь аркуш / 100 %»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=SFIT, kP=PAPER, kB=BLANK, kD=DOC;
+    if (DOC!=='ohl') switchDoc('ohl'); PAPER=true; BLANK=true; renderPaper();
+    const seg=document.querySelector('#paper .sfit-seg');
+    a.push(!!seg && [...seg.querySelectorAll('button')].map(b=>b.textContent).join('|')==='По ширині|Весь аркуш|100 %');
+    sfitSet('page'); a.push(SFIT==='page' && localStorage.getItem('po.sheetfit')==='page' && seg.querySelector('[data-k="page"]').getAttribute('aria-pressed')==='true');
+    sfitSet('нема'); a.push(SFIT==='width');
+    a.push(FS_SET_KEYS.includes('po.sheetfit'));
+    sfitSet(k); PAPER=kP; BLANK=kB; DOC!==kD && switchDoc(kD); renderPaper(); return JSON.stringify(a); })()`));
+  ok('Аркуш: перемикач масштабу «По ширині / Весь аркуш / 100 %»', r[0]);
+  ok('Аркуш: вибір масштабу запам’ятовується', r[1]);
+  ok('Аркуш: невідомий масштаб — «По ширині»', r[2]);
+  ok('Аркуш: масштаб зберігається в Налаштування.json', r[3]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
