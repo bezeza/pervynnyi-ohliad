@@ -43,7 +43,7 @@ for (const r of R){
 const jsDir = path.join(root, 'src', 'js');
 let emoji = 0; const emSet = new Map();
 for (const f of fs.readdirSync(jsDir)){
-  if (!f.endsWith('.js') || /data-/.test(f)) continue;
+  if (!f.endsWith('.js') || /data-|ui-icons/.test(f)) continue;   // ui-icons — таблиця заміни емодзі, не значки
   const s = fs.readFileSync(path.join(jsDir, f), 'utf8');
   for (const m of s.matchAll(/\p{Extended_Pictographic}/gu)){ emoji++; add(emSet, m[0]); }
 }

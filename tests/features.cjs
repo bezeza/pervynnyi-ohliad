@@ -1386,6 +1386,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 { const r=JSON.parse(w.eval(`(()=>{ const cs=getComputedStyle(document.documentElement); return JSON.stringify([1,2,3,4,5,6,7].map(i=>cs.getPropertyValue('--fs-'+i).trim())); })()`));
   ok('Шкала шрифтів: 7 розмірів --fs-1…--fs-7', r.length===7 && r.every(Boolean), r.join(' '));
 }
+// 0.9.3.95 — фундамент: SVG-значки замість емодзі; «Старий вигляд» повертає емодзі
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    uiV2Set(true); v2IcFix(document.body); const n=document.querySelectorAll('svg.v2ic').length; a.push(n>0);
+    a.push(!document.querySelector('#out svg.v2ic, #print svg.v2ic'));
+    uiV2Set(false); a.push(document.querySelectorAll('svg.v2ic').length===0);
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Новий вигляд: емодзі на кнопках замінено SVG-значками', r[0]);
+  ok('Значки не потрапляють у текст документа й друк', r[1]);
+  ok('«Старий вигляд» повертає емодзі', r[2]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

@@ -2315,9 +2315,10 @@ html.touch .nextbar .btn{padding:12px 16px}
 .paper .sheet.blankmode.sfit-w{max-width:none}
 .sfit-seg button{min-height:32px}
 /* 0.9.3.95 — новий вигляд, етап 1 (680-ui-v2.js). Лише з класом ui-v2; «Старий вигляд» його знімає. Телефон і друк не змінюються. */
-:root.ui-v2.ui-ios:not([data-tone]){--accent:#1D5B8A;--accent-soft:#E2ECF5;--on-accent:#FFFFFF}
-@media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]){--accent:#2F78B5;--accent-soft:#1C2E3D;--on-accent:#FFFFFF}}
-:root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"]{--accent:#2F78B5;--accent-soft:#1C2E3D;--on-accent:#FFFFFF}
+:root.ui-v2{--accent-ink:var(--accent);--ok-ink:var(--ok)}
+:root.ui-v2.ui-ios:not([data-tone]){--accent:#1D5B8A;--accent-soft:#E2ECF5;--on-accent:#FFFFFF;--accent-ink:#1D5B8A;--ok-ink:#1B6B2F;--muted:#5E5E63}
+@media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]){--accent:#2F78B5;--accent-soft:#1C2E3D;--on-accent:#FFFFFF;--accent-ink:#7DB3E0;--ok-ink:var(--ok);--muted:#A5A5AC}}
+:root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"]{--accent:#2F78B5;--accent-soft:#1C2E3D;--on-accent:#FFFFFF;--accent-ink:#7DB3E0;--ok-ink:var(--ok);--muted:#A5A5AC}
 .v2txt,.v2close{display:none}
 :root.ui-v2.ui-ios .btn.primary{color:var(--on-accent)}
 .v2cnt{font:500 var(--fs-1)/1 var(--f-mono,"IBM Plex Mono",monospace);opacity:.8;font-variant-numeric:tabular-nums}
@@ -2343,3 +2344,19 @@ html.touch .nextbar .btn{padding:12px 16px}
 }
 @media (prefers-reduced-motion:reduce){:root.ui-v2 #outBox{transition:none!important}}
 @media print{.v2txt,.v2close{display:none!important}:root.ui-v2 #outBox{position:static;transform:none;visibility:visible}}
+/* 0.9.3.95 — критерій 6 SPEC-UI-0.10: контраст тексту ≥ 4,5:1 і кнопки на ПК ≥ 32 px (лише новий вигляд).
+   --accent-ink / --ok-ink — колір тексту-посилання й «норми»: у нічній темі світліший за заливку кнопок. */
+:root.ui-v2 :is(button.more,.tab-act){color:var(--accent-ink)}
+:root.ui-v2.ui-ios body.shell .top .profbtn .pmode{color:var(--accent-ink)}
+:root.ui-v2.ui-ios body.shell .topdocs #docSeg button[aria-pressed="true"]{color:var(--accent-ink);border-bottom-color:var(--accent-ink)}
+:root.ui-v2 .btn.norm,:root.ui-v2 .otabs .done .otc{color:var(--ok-ink)}
+:root.ui-v2 .pava.none{color:var(--ink)}
+@media screen and (min-width:900px){
+  :root.ui-v2 :is(button.btn,a.btn,button.tab,button.tab-act,button.chip,button.more,.seg>button,.vseg>button,.otabs>button){min-height:32px}
+  :root.ui-v2.ui-ios #sidecol .sidefold-btn{min-height:32px}
+}
+/* вада з PLAN-UI-0.10: «Новий пацієнт» — звичайний стан, не попередження (без помаранчевого) */
+:root.ui-v2 #ptbar .pt1 .warn{color:var(--ink);font-weight:600}
+/* SVG-значки нового вигляду (681-ui-icons.js): колір тексту, без емодзі */
+svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margin-right:.4em;flex:none}
+@media print{svg.v2ic{display:none}}
