@@ -28,3 +28,19 @@ function v2fNames(){
 { const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); try{ v2fNames(); renderCheck(); }catch(e){} return r; }; }
 { const s0 = switchDoc; switchDoc = function(){ const r = s0.apply(this, arguments); try{ v2fNames(); }catch(e){} return r; }; }
 try{ v2fNames(); renderCheck(); }catch(e){}
+
+/* ===== «Скасувати» замість «Ви впевнені?» (PLAN-UI-0.10, зручність 5) — новий вигляд =====
+   • «Оновити з форми» при ручних правках тексту: без системного вікна — текст оновлюється одразу,
+     знизу «Скасувати» (знімок робить 623-manual-text.js через undoPush).
+   • «Очистити поточний документ»: без другого натискання «Точно очистити?» — очищує одразу, «Скасувати» (632).
+   Підтвердження лишаються лише там, де дію не повернути: видалення назавжди з кошика, файл без пароля,
+   закладка в МІС (працює на сторінці МІС, де вікон програми немає). */
+{ const b = document.getElementById('regen'), x0 = b && b.onclick;
+  if (b && x0) b.onclick = function(){
+    if (!v2fOn() || !dirty) return x0.apply(this, arguments);
+    const c0 = window.confirm; window.confirm = () => true;
+    let r; try{ r = x0.apply(this, arguments); } finally { window.confirm = c0; }
+    try{ if (typeof dangerShowUndo === 'function') dangerShowUndo('Текст оновлено з форми — ручні правки замінено', b); }catch(e){}
+    return r;
+  }; }
+{ const c0 = clearDoc; clearDoc = function(btn){ if (v2fOn() && btn && !btn.dataset.arm) btn.dataset.arm = '1'; return c0.apply(this, arguments); }; }

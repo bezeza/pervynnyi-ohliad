@@ -741,12 +741,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Коротка перевірка: порожній документ не показує зауважень', r[4]===true);
  }
  { // 0.9.3.39: ручні правки зберігаються, заміна підтверджується й скасовується.
-   const r=JSON.parse(w.eval(`(()=>{ const saved=snap(), q0=QUICK, cf=window.confirm; CACHE={}; dirty=false; switchDoc('ohl'); const out=document.getElementById('out'), manual='<p><b>Ручні правки</b></p>', a=[];
+   const r=JSON.parse(w.eval(`(()=>{ const __v=UIV2; uiV2Set(false); try{ return (()=>{ const saved=snap(), q0=QUICK, cf=window.confirm; CACHE={}; dirty=false; switchDoc('ohl'); const out=document.getElementById('out'), manual='<p><b>Ручні правки</b></p>', a=[];
      out.innerHTML=manual; out.dispatchEvent(new Event('input')); a.push(!document.getElementById('banner').hidden && /Є ручні зміни/.test(document.getElementById('banner').textContent));
      document.getElementById('quickBtn').click(); a.push(out.innerHTML===manual && dirty); document.getElementById('allNorm').click(); a.push(out.innerHTML===manual);
      applyPreset(PRESETS[0],HV.cards[0]); a.push(out.innerHTML===manual); switchDoc('rx'); const other='<p>Інший документ</p>'; out.innerHTML=other; out.dispatchEvent(new Event('input')); switchDoc('ohl'); a.push(out.innerHTML===manual); switchDoc('rx'); a.push(out.innerHTML===other); switchDoc('ohl');
      window.confirm=()=>false; document.getElementById('regen').click(); a.push(out.innerHTML===manual && dirty); window.confirm=()=>true; document.getElementById('regen').click(); a.push(out.innerHTML!==manual && !dirty); undoLast(); a.push(out.innerHTML===manual && dirty); applyDoc(true); a.push(out.innerHTML===manual && dirty);
-     window.confirm=cf; QUICK=q0; localStorage.setItem('po.quick',q0?'1':'0'); restore(saved); return JSON.stringify(a); })()`));
+     window.confirm=cf; QUICK=q0; localStorage.setItem('po.quick',q0?'1':'0'); restore(saved); return JSON.stringify(a); })(); } finally { uiV2Set(__v); } })()`));
    ok('Ручний текст: статус, швидкий режим, норма й шаблон не стирають правки',r.slice(0,4).every(Boolean),JSON.stringify(r));
    ok('Ручний текст: документи зберігають окремі правки',r.slice(4,6).every(Boolean),JSON.stringify(r));
    ok('Ручний текст: відмова, підтвердження, скасування й перебудова',r.slice(6).every(Boolean),JSON.stringify(r));
@@ -845,7 +845,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Зміст: збій localStorage не блокує згортання',r[3]);
  }
  { // 0.9.3.46: зрозумілі назви небезпечних дій і швидке скасування масових змін.
-   const r=JSON.parse(w.eval("(()=>{ const oldDoc=DOC; switchDoc('ohl'); const clearAll=$('#clearAll'), norm=$('#allNorm'); " +
+   const r=JSON.parse(w.eval("(()=>{ const __v=UIV2; uiV2Set(false); try{ return (()=>{ const oldDoc=DOC; switchDoc('ohl'); const clearAll=$('#clearAll'), norm=$('#allNorm'); " +
      "const clearLabel=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].some(b=>b.getAttribute('aria-label')==='Очистити поточний документ'&&b.textContent.trim()==='Очистити поточний документ'); " +
      "const labels=clearLabel&&norm.getAttribute('aria-label')==='Норма в усіх системах огляду'&&clearAll.getAttribute('aria-label')==='Новий пацієнт (поточний збережено)'&&clearAll.title==='Новий пацієнт (поточний збережено)'&&clearAll.textContent.includes('Новий пацієнт (поточний збережено)'); " +
      "const undoBefore=UNDO.length, beforeNorm=JSON.stringify(snap()); norm.click(); const normToast=$('#toast'), normAction=normToast.querySelector('button'), normToastOk=DANGER_UNDO_MS===8000&&normToast.classList.contains('undo-toast')&&normAction&&normAction.textContent==='Скасувати'; " +
@@ -853,7 +853,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      "const clear=[...TABS[active].panel.querySelectorAll('.more-dd .mmenu button')].find(b=>b.getAttribute('aria-label')==='Очистити поточний документ'); const undoBeforeClear=UNDO.length, beforeClear=JSON.stringify(snap()); clear.click(); " +
      "const firstClick=clear.dataset.arm==='1'&&!$('#toast').classList.contains('undo-toast')&&UNDO.length===undoBeforeClear; clear.click(); const clearToast=$('#toast'), clearAction=clearToast.querySelector('button'), clearToastOk=clearToast.classList.contains('undo-toast')&&clearAction&&clearAction.textContent==='Скасувати'; " +
      "if(clearAction) clearAction.click(); const clearUndo=UNDO.length===undoBeforeClear&&JSON.stringify(snap())===beforeClear; UNDO.length=undoBefore; REDO.length=0; undoBtn(); switchDoc(oldDoc); " +
-     "return JSON.stringify([labels,normToastOk,normUndo,firstClick,clearToastOk,clearUndo]); })()"));
+     "return JSON.stringify([labels,normToastOk,normUndo,firstClick,clearToastOk,clearUndo]); })(); } finally { uiV2Set(__v); } })()"));
    ok('Масові дії мають точні назви, а назва нового пацієнта пояснює збереження поточного',r[0],JSON.stringify(r));
    ok('«Норма» показує тост «Скасувати» на 8 секунд і повертає попередній стан',r[1]&&r[2],JSON.stringify(r));
    ok('Очищення: перше натискання лише підтверджує; друге можна скасувати з тосту',r[3]&&r[4]&&r[5],JSON.stringify(r));
@@ -1496,6 +1496,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Документ у шапці — «Огляд» (без повтору назви програми)', r[1]);
   ok('«Перевірка» без зеленого ✓ на порожньому документі', r[2]);
   ok('«Старий вигляд» повертає короткі назви', r[3]);
+}
+// 0.9.3.95 — «Скасувати» замість «Ви впевнені?»: очищення документа одним натисканням, оновлення з форми без вікна
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); let asked=0; const c0=window.confirm; window.confirm=()=>{ asked++; return false; };
+    const o=document.getElementById('out'); F('skarhy.c').chips[0].getAttribute('aria-pressed')!=='true' && F('skarhy.c').chips[0].click(); update();
+    const n0=UNDO.length; const cb=document.createElement('button'); clearDoc(cb); a.push(!o.textContent.trim() && UNDO.length>n0 && !cb.dataset.arm);
+    undoLast(); a.push(!!o.textContent.trim());
+    o.append(' ПРАВКА'); dirty=true; document.getElementById('regen').click(); a.push(asked===0 && !o.textContent.includes('ПРАВКА'));
+    window.confirm=c0; uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Очищення документа — одразу, «Скасувати» повертає', r[0] && r[1]);
+  ok('«Оновити з форми» при ручних правках — без системного вікна', r[2]);
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
