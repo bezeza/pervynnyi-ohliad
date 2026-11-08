@@ -1125,7 +1125,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const k=(DMAP['декскетопрофен'].renal||[]).some(x=>x.lt===50);
     return JSON.stringify([a,n,l,k]); })()`);
   ok('Декскетопрофен і Кедол: у переліку препаратів, у підказках доз, НПЗП у перевірці взаємодій, корекція за КК', r==='[true,true,true,true]', r); }
-{ const btn=doc.querySelector('.more-dd .mmenu .fbbtn'); const n0=printed;
+{ w.print=()=>{printed++};   // попередні перевірки підміняють window.print своїм лічильником
+  const btn=doc.querySelector('.more-dd .mmenu .fbbtn'); const n0=printed;
   const okp=w.eval("printBlanks(['ter','amb','e003'])"); const P=$('print');
   const cnt=P.querySelectorAll('.fbk').length, d2=P.querySelectorAll('.fbk-ter .fb-diary').length, ep=P.querySelectorAll('.fbk-e003 .fb-ep').length;
   const clean=!/undefined|null/.test(P.textContent) && !P.querySelector('[class=""]');
@@ -1527,6 +1528,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Рядок стану: клік по розділу — перехід до нього', r[1]);
   ok('«Збережено ✓» і «Не збережено» видно', r[2] && r[3]);
   ok('«Старий вигляд» — без рядка стану', r[4]);
+}
+// 0.9.3.95 — власне оформлення друку вільних документів; бланки й форми — без змін
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k0=PRSTYLE, d0=DOC, bl0=BLANK; BLANK=false; const c=F('skarhy.c'); if (c.chips[0].getAttribute('aria-pressed')!=='true') c.chips[0].click(); switchDoc('ohl'); update();
+    const norm=t=>t.replace(/[:\\s]+/g,'');
+    prStyleSet('classic'); const A=document.createElement('div'); fillSheet(A); a.push(!A.classList.contains('pr-own') && !A.querySelector('.po-r'));
+    prStyleSet('own'); const B=document.createElement('div'); fillSheet(B);
+    a.push(B.classList.contains('pr-own') && !!B.querySelector('.po-title .po-t') && B.querySelectorAll('.pr-body .po-r .po-k').length>0);
+    const tA=norm(A.querySelector('.pr-body').textContent), tB=norm(B.querySelector('.pr-body').textContent); a.push(tA.endsWith(tB) && tB.length>10);
+    switchDoc('epi'); update(); const E=document.createElement('div'); fillSheet(E); a.push(!E.classList.contains('pr-own'));
+    BLANK=bl0; prStyleSet(k0); switchDoc(d0); update(); return JSON.stringify(a); })()`));
+  ok('Друк «Класичне» — як було', r[0]);
+  ok('Друк «Власне»: назва, розділи двома колонками', r[1]);
+  ok('Друк «Власне»: той самий текст документа', r[2]);
+  ok('Друк «Власне» не змінює форми МОЗ (епікриз)', r[3]);
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

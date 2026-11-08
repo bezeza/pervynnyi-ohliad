@@ -2494,6 +2494,33 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body #ptbar .pt-saved,:root.ui-v2 #ptline .pt-saved{display:none}
 }
 @media print{.v2stat,.v2saved{display:none!important}}
+/* 0.9.3.95 — власне оформлення друку вільних документів («Класичне / Власне»); бланки МОЗ без змін */
+.prs-seg{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 auto 10px;max-width:794px;font-size:var(--fs-2);color:var(--muted)}
+.prs-seg .btn{min-height:32px}.prs-seg .btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-status,#fff)}
+.pr-own .pr-top,.pr-own .pr-card,.pr-own .pr-pat,.pr-own .po-title,.pr-own .pr-body{font-family:"Golos Text","Segoe UI",system-ui,Arial,sans-serif}
+.pr-own .pr-top{font-size:9pt;color:#4A4A50;border-bottom:2px solid #1D5B8A;padding-bottom:10px;margin-bottom:0;line-height:1.35}
+.pr-own .po-title{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:12px 0 2px}
+.pr-own .po-t{font-size:16pt;font-weight:600;color:#1D5B8A;line-height:1.2}
+.pr-own .po-d{font-size:10pt;color:#4A4A50;white-space:nowrap}
+.pr-own .pr-card{text-align:left;font-size:9.5pt;color:#4A4A50;margin:0 0 2px}
+.pr-own .pr-pat{font-size:10.5pt;font-weight:600;margin:0 0 10px;padding-bottom:8px}
+.pr-own .pr-body{font-size:11pt;line-height:1.5}
+.pr-own .pr-body .po-r{display:grid;grid-template-columns:25% minmax(0,1fr);gap:0 14px;padding:7px 0;border-top:1px solid #D5D5DB;text-align:left}
+.pr-own .pr-body .po-r.po-cont{border-top:0;padding-top:0}
+.pr-own .pr-body .po-k{font-size:8.5pt;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#4A4A50;padding-top:3px;line-height:1.3}
+.pr-own .pr-body .po-v{text-align:left}
+.pr-own .pr-body .po-dxbox{border:1.5px solid #1D5B8A;border-radius:6px;padding:4px 12px;margin:8px 0;break-inside:avoid}
+.pr-own .pr-body .po-dxbox .po-r{border-top:0;padding:4px 0;grid-template-columns:calc(25% - 3px) minmax(0,1fr)}
+.pr-own .pr-body .po-dxbox .po-k{color:#1D5B8A}
+.pr-own .pr-body .po-dxbox+.po-r{border-top:0}
+@media print{
+  #print.pr-own .pr-top,#print .pr-own .pr-top{font-size:9pt}
+  #print.pr-own .pr-card,#print .pr-own .pr-card{text-align:left;font-size:9.5pt}
+  #print.pr-own .pr-pat,#print .pr-own .pr-pat{font-size:10.5pt}
+  #print.pr-own .pr-body,#print .pr-own .pr-body{font-size:11pt;line-height:1.5}
+  #print.pr-own .pr-body div,#print .pr-own .pr-body div{min-height:0;text-align:left}
+  .pr-own .po-t,.pr-own .pr-top,.pr-own .pr-body .po-dxbox{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
@@ -4653,7 +4680,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.95', VDATE = '08.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»; «Скасувати» замість «Ви впевнені?» (очищення документа, оновлення тексту з форми); «Листок лікарських призначень» — одна назва, як у формі 003-4/о (раніше «Лист» і «Листок»), один спосіб додати; рядок стану внизу екрана: пацієнт, день лікування, які розділи ще не заповнено (клік — перехід до розділу), нагадування про резервну копію; «Збережено ✓» / «Зберігається…» / «Не збережено» — у картці пацієнта; стан заповнення показано одним способом — кружками біля розділів (смужку «Заповнено N з M» прибрано)'],
+  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»; «Скасувати» замість «Ви впевнені?» (очищення документа, оновлення тексту з форми); «Листок лікарських призначень» — одна назва, як у формі 003-4/о (раніше «Лист» і «Листок»), один спосіб додати; рядок стану внизу екрана: пацієнт, день лікування, які розділи ще не заповнено (клік — перехід до розділу), нагадування про резервну копію; «Збережено ✓» / «Зберігається…» / «Не збережено» — у картці пацієнта; стан заповнення показано одним способом — кружками біля розділів (смужку «Заповнено N з M» прибрано); друк вільних документів (огляд, щоденник, огляд завідувача) — на вибір «Класичне» (як було) або «Власне»: назва документа кольором, розділи двома колонками, діагноз у рамці; перемикач — у «Перед друком» над аркушем, вибір запам’ятовується. Бланки й форми МОЗ (003/о, 027/о, 028/о, листок призначень) не змінюються'],
   ['0.9.3.94', '08.11.2026', '«Перед друком»: аркуш А4 одразу підлаштовується під панель, коли перетягуєте межу форми й тексту, бокове меню чи змінюєте вигляд (раніше — лише при зміні вікна браузера). Масштаб як у Word: «По ширині» (може бути більше 100 %), «Весь аркуш», «100 %». Телефон і друк не змінено'],
   ['0.9.3.93', '05.11.2026', 'контекстні дії документа: на комп’ютері — компактна панель для первинного огляду, щоденника, призначень і виписки; на телефоні — відповідні дії в наявному меню «Документ і дії»; Classic без змін'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
@@ -21637,9 +21664,12 @@ function uiV2Set(on){
   const oh = $('#outBox .oh'); if (oh) oh.append(txtClose); }
 txtBtn.onclick = e => { e.stopPropagation(); txtOpen(!TXTOPEN, e.detail === 0); };   // detail 0 — натиснуто з клавіатури
 txtClose.onclick = () => { txtOpen(false); try{ txtBtn.focus(); }catch(e){} };
+/* чи був відкритий діалог ДО того, як інші обробники Escape його закрили (перехоплення на window спрацьовує першим) */
+let V2ESC_DLG = false;
+window.addEventListener('keydown', e=>{ if (e.key === 'Escape') V2ESC_DLG = !!document.querySelector('[role="dialog"]:not([hidden])'); }, true);
 document.addEventListener('keydown', e=>{
   if (e.key !== 'Escape' || !TXTOPEN || !v2Wide()) return;
-  if (document.querySelector('[role="dialog"]:not([hidden])') && !e.target.closest('#outBox')) return;   // спершу закриваються діалоги
+  if ((V2ESC_DLG || document.querySelector('[role="dialog"]:not([hidden])')) && !(e.target.closest && e.target.closest('#outBox'))) return;   // спершу закриваються діалоги
   txtOpen(false); try{ txtBtn.focus(); }catch(x){}
 });
 
@@ -22157,6 +22187,60 @@ function v2stSaved(s){
   const ua0 = uiV2Apply; uiV2Apply = function(){ const r = ua0.apply(this, arguments); V2ST.state = ''; v2stLater(); return r; };
   v2stDraw();
 }
+/* ===== 0.10, етап 5: власне оформлення друку вільних документів («Класичне / Власне») =====
+   Стосується лише документів, що починаються рядком «дата, час. Назва.» (первинний огляд, щоденник, огляд завідувача тощо).
+   Бланки МОЗ (003/о, 027/о, 028/о, листок призначень, епікриз за формою) і нумеровані форми не змінюються.
+   «Класичне» — як було (за замовчуванням). «Власне» — назва документа кольором, розділи двома колонками
+   (назва розділу ліворуч, текст праворуч), діагноз у рамці. Текст документа той самий — змінюється лише вигляд аркуша. */
+let PRSTYLE = lsGet('po.prstyle', 'classic'); if (PRSTYLE !== 'own') PRSTYLE = 'classic';
+try{ if (!FS_SET_KEYS.includes('po.prstyle')) FS_SET_KEYS.push('po.prstyle'); }catch(e){}
+const PROWN_RE = /^(\d{2}\.\d{2}\.\d{4}(?:,\s*\d{1,2}:\d{2})?)\.\s*(.+?)\.?$/;
+function prOwnHead(){
+  const o = $('#out'), d = o && o.firstElementChild;
+  if (!d || d.tagName !== 'DIV') return null;
+  const m = d.textContent.trim().match(PROWN_RE); return m ? {date:m[1], title:m[2]} : null;
+}
+function prOwnOK(){ return !(typeof blankOn === 'function' && blankOn()) && !!prOwnHead(); }
+function prOwnApply(P){
+  const body = P.querySelector('.pr-body'), hd = prOwnHead(); if (!body || !hd) return;
+  const first = [...body.children].find(e=>e.tagName === 'DIV' && PROWN_RE.test(e.textContent.trim()));
+  if (first){ const t = h('div', {class:'po-title'}, h('span', {class:'po-t'}, hd.title), h('span', {class:'po-d'}, hd.date)); first.remove();
+    const at = P.querySelector(':scope > .pr-card, :scope > .pr-pat'); if (at) at.before(t); else body.before(t); }
+  [...body.children].forEach(d=>{
+    if (d.tagName !== 'DIV' || d.classList.contains('po-title') || d.classList.contains('gaplist')) return;
+    const b = d.firstElementChild, lead = d.firstChild;
+    const labeled = b && b.tagName === 'B' && lead === b && /:\s*$/.test(b.textContent) && b.textContent.length < 80;
+    const k = h('span', {class:'po-k'}, labeled ? b.textContent.replace(/:\s*$/, '') : ''), v = h('span', {class:'po-v'});
+    if (labeled) b.remove();
+    while (d.firstChild) v.append(d.firstChild);
+    if (v.firstChild && v.firstChild.nodeType === 3) v.firstChild.nodeValue = v.firstChild.nodeValue.replace(/^\s+/, '');
+    d.append(k, v); d.classList.add('po-r');
+    if (!labeled) d.classList.add('po-cont');
+    if (labeled && /^(Клінічний |Попередній |Заключний |Остаточний )?[Дд]іагноз/.test(k.textContent)) d.classList.add('po-dx');
+  });
+  /* діагноз разом з підпунктами (а) основний, б) ускладнення, в) супутні…) — в одній рамці */
+  body.querySelectorAll(':scope > .po-dx').forEach(d=>{
+    const box = h('div', {class:'po-dxbox'}); d.before(box); box.append(d);
+    let n = box.nextElementSibling;
+    while (n && n.classList.contains('po-r') && (n.classList.contains('po-cont') || /^([а-ґ]\)|Основн|Ускладн|Супутн|Код)/i.test(n.querySelector('.po-k').textContent))){ const nx = n.nextElementSibling; box.append(n); n = nx; }
+  });
+}
+{ const fs0 = fillSheet; fillSheet = function(P){
+    const r = fs0.apply(this, arguments);
+    try{ P.classList.remove('pr-own'); if (PRSTYLE === 'own' && prOwnOK()){ P.classList.add('pr-own'); prOwnApply(P); } }catch(e){}
+    return r; }; }
+function prStyleSet(k){ PRSTYLE = k === 'own' ? 'own' : 'classic'; lsSet('po.prstyle', PRSTYLE); try{ renderPaper(); }catch(e){} }
+function prStyleSeg(){
+  const seg = h('div', {class:'prs-seg', role:'group', 'aria-label':'Оформлення друку'}, h('span', {class:'prs-l'}, 'Оформлення:'));
+  [['classic', 'Класичне', 'Як у звичайному друкованому документі: шрифт Times, суцільний текст'], ['own', 'Власне', 'Сучасний вигляд: розділи двома колонками, діагноз у рамці. Текст той самий']].forEach(([k, t, tt])=>
+    seg.append(h('button', {type:'button', class:'btn', 'data-k':k, title:tt, 'aria-pressed':PRSTYLE === k ? 'true' : 'false', onclick:()=>prStyleSet(k)}, t)));
+  return seg;
+}
+{ const rp0 = renderPaper; renderPaper = function(){
+    const r = rp0.apply(this, arguments);
+    try{ const pp = $('#paper'); if (pp){ const old = pp.querySelector('.prs-seg'); if (old) old.remove();
+      const sh = pp.querySelector('.sheet'); if (PAPER && sh && prOwnOK()) pp.insertBefore(prStyleSeg(), sh); } }catch(e){}
+    return r; }; }
 </script>
 
 </body>

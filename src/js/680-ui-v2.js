@@ -54,9 +54,12 @@ function uiV2Set(on){
   const oh = $('#outBox .oh'); if (oh) oh.append(txtClose); }
 txtBtn.onclick = e => { e.stopPropagation(); txtOpen(!TXTOPEN, e.detail === 0); };   // detail 0 — натиснуто з клавіатури
 txtClose.onclick = () => { txtOpen(false); try{ txtBtn.focus(); }catch(e){} };
+/* чи був відкритий діалог ДО того, як інші обробники Escape його закрили (перехоплення на window спрацьовує першим) */
+let V2ESC_DLG = false;
+window.addEventListener('keydown', e=>{ if (e.key === 'Escape') V2ESC_DLG = !!document.querySelector('[role="dialog"]:not([hidden])'); }, true);
 document.addEventListener('keydown', e=>{
   if (e.key !== 'Escape' || !TXTOPEN || !v2Wide()) return;
-  if (document.querySelector('[role="dialog"]:not([hidden])') && !e.target.closest('#outBox')) return;   // спершу закриваються діалоги
+  if ((V2ESC_DLG || document.querySelector('[role="dialog"]:not([hidden])')) && !(e.target.closest && e.target.closest('#outBox'))) return;   // спершу закриваються діалоги
   txtOpen(false); try{ txtBtn.focus(); }catch(x){}
 });
 
