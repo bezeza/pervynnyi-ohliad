@@ -4,8 +4,17 @@ const O = o => Array.isArray(o) ? {l:o[0], t:o[1]} : {l:o, t:o};
 /* власні зміни формулювань (вкладка «Мої шаблони»): заготовки шукають варіант за початковим текстом, а в документ іде змінений */
 const OT = (f, o) => { const t = O(o).t; return (f.ovr && f.ovr[t]) || t; };
 const OTM = (f, i) => { const b = O(f.opts[i]).t, t = f.detBox ? detText(f, i, b) : b; return t === b && f.ovr && f.ovr[b] ? f.ovr[b] : t; };
+/* 0.9.3.96: текст документа (#out) запам’ятовується, доки не змінився його вміст — раніше кожне оновлення
+   кілька разів змушувало браузер заново розкладати весь текст (≈ 0,25 с на кожне натискання кнопки скарги) */
+const ITEXT_MEMO = {k:null, v:''};
 const itext = el => {
   if (!el) return '';
+  if (el.id === 'out'){ const k = el.innerHTML + '\u0001' + document.documentElement.className + '\u0001' + (el.hidden ? 1 : 0);
+    if (k === ITEXT_MEMO.k) return ITEXT_MEMO.v;
+    const v = itext0(el); ITEXT_MEMO.k = k; ITEXT_MEMO.v = v; return v; }
+  return itext0(el);
+};
+const itext0 = el => {
   const text = el.innerText;
   if (text !== undefined && (text.trim() || el.id !== 'out' || !el.textContent.trim())) return text;
   if (el.id !== 'out' || !document.body) return text !== undefined ? text : el.textContent;
@@ -309,3 +318,16 @@ function autoKrit(){
 /* ліжко-дні: день госпіталізації і день виписки (смерті) рахуються як один день (наказ МОЗ № 110, інструкція до ф. 003/о, п. 16);
    госпіталізація й виписка того самого дня — 1 ліжко-день */
 function bedDays(d1, d2){ if (!d1 || !d2) return ''; const n = Math.round((Date.parse(d2.slice(0,10)) - Date.parse(d1.slice(0,10))) / 864e5); return isNaN(n) || n < 0 ? '' : Math.max(1, n); }
+/* прокрутити лише власний контейнер елемента (список розділів, смужку вкладок) — без прокрутки всієї сторінки.
+   scrollIntoView({block:'nearest'}) під час гортання сторінки смикав її назад (0.9.3.95). */
+function scrollInBox(el, inline){
+  if (!el) return;
+  for (let p = el.parentElement; p && p !== document.body && p !== document.documentElement; p = p.parentElement){
+    const cs = getComputedStyle(p), oy = /(auto|scroll)/.test(cs.overflowY) && p.scrollHeight > p.clientHeight + 1, ox = /(auto|scroll)/.test(cs.overflowX) && p.scrollWidth > p.clientWidth + 1;
+    if (!oy && !ox) continue;
+    const r = el.getBoundingClientRect(), b = p.getBoundingClientRect();
+    if (oy){ if (r.top < b.top) p.scrollTop += r.top - b.top; else if (r.bottom > b.bottom) p.scrollTop += r.bottom - b.bottom; }
+    if (ox){ if (inline === 'center') p.scrollLeft += (r.left + r.width / 2) - (b.left + b.width / 2); else if (r.left < b.left) p.scrollLeft += r.left - b.left; else if (r.right > b.right) p.scrollLeft += r.right - b.right; }
+    return;
+  }
+}

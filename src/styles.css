@@ -2494,3 +2494,5 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 #ptline #clearAll .new-patient-label,:root.ui-v2 #ptline #clearAll .hide-m{display:none}
   :root.ui-v2 #ptline #clearAll{min-width:40px;min-height:40px;padding:0 10px;justify-content:center;font-size:var(--fs-5)}
 }
+/* 0.9.3.95 — телефон: низ сторінки (підвал з версією й контактами) більше не ховається під нижніми смужками */
+@media (max-width:899px){ :root body.pht{padding-bottom:calc(var(--v2bot,84px) + 12px)} :root body.pht.live-on .wrap{padding-bottom:0} }
