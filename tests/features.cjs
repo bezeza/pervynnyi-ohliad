@@ -1472,8 +1472,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Повторне натискання синдрому знімає його скарги', r[3]);
   ok('Синдром підсвічується сам: частина скарг — «k/n», усі — натиснутий', w.eval(`(()=>{ const c=F('skarhy.c'), sb=[...document.querySelectorAll('.si-sb')].find(b=>b.textContent.startsWith('Плевральний')), idx=sb.dataset.idx.split(',').map(Number);
     const pre=idx.map(i=>c.chips[i].getAttribute('aria-pressed')==='true'); idx.forEach((i,k)=>{ if (pre[k]) c.chips[i].click(); }); update();
-    c.chips[idx[0]].click(); update(); const part=sb.classList.contains('part') && /1\\/2/.test(sb.textContent);
-    c.chips[idx[1]].click(); update(); const full=sb.getAttribute('aria-pressed')==='true' && !sb.classList.contains('part');
+    c.chips[idx[0]].click(); update(); const part=sb.classList.contains('part') && sb.textContent.includes('1/'+idx.length);
+    idx.slice(1).forEach(i=>c.chips[i].click()); update(); const full=sb.getAttribute('aria-pressed')==='true' && !sb.classList.contains('part');
     idx.forEach((i,k)=>{ if ((c.chips[i].getAttribute('aria-pressed')==='true')!==pre[k]) c.chips[i].click(); }); update(); return part && full; })()`));
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
