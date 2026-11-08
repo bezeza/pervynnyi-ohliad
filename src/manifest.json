@@ -12,7 +12,9 @@
   "080-data-presets.js",
   "090-custom-templates-store.js",
   "100-core.js",
+  "101-boot.js",
   "110-hosp-criteria-auto.js",
+  "111-boot-update.js",
   "120-version-changelog.js",
   "130-tabs-registry.js",
   "140-calculators.js",
@@ -78,6 +80,7 @@
   "595-ai.js",
   "596-ptline.js",
   "597-shell.js",
+  "598-boot-shell.js",
   "598-diary-quick.js",
   "599-links.js",
   "600-skia.js",
@@ -168,6 +171,7 @@
   "685-footer.js",
   "686-ui-fixes.js",
   "687-ui-status.js",
-  "688-print-own.js"
+  "688-print-own.js",
+  "699-boot-end.js"
  ]
 }

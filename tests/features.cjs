@@ -1543,6 +1543,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Друк «Власне»: той самий текст документа', r[2]);
   ok('Друк «Власне» не змінює форми МОЗ (епікриз)', r[3]);
 }
+// 0.9.3.95 — швидший старт: після побудови сторінка показана, відкладені оновлення виконано
+{ const r=JSON.parse(w.eval(`JSON.stringify([PO_BOOT===false, !PO_BOOT_CSS.isConnected, ![...document.querySelectorAll('style')].some(s=>/^html\\{display:none/.test(s.textContent))])`));
+  ok('Швидкий старт: сторінка показана після побудови', r.every(Boolean), JSON.stringify(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
