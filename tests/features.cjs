@@ -164,7 +164,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  // 0.9.2 «Вигляд»
  { const r=w.eval("VIEW.layout='C'; applyView(); [document.body.classList.contains('lay-C'), JSON.parse(localStorage.getItem('po.view')||'{}').layout]");
    ok('Вигляд: «Дзеркальне» вмикається і запам’ятовується', r[0]===true || w.innerWidth<900, JSON.stringify(r));
-   w.eval("VIEW.layout='auto'; VIEW.fold=true; applyView()"); ok('Вигляд: текст згортається в смужку', w.innerWidth<900 || doc.body.classList.contains('outfold'));
+   w.eval("uiV2Set(false); VIEW.layout='auto'; VIEW.fold=true; applyView()"); ok('Вигляд: текст згортається в смужку', w.innerWidth<900 || doc.body.classList.contains('outfold'));
+   w.eval("uiV2Set(true)"); ok('Новий вигляд: «Згорнути текст» не діє — текст за кнопкою «Текст»', !doc.body.classList.contains('outfold'));
    w.eval("VIEW.fold=false; saveView(); applyView()");
    ok('Меню «Вигляд» з 5 варіантами розташування', (w.eval('openViewPop()'), doc.querySelectorAll('.viewpop .vlays button').length===5) && (w.eval('closeViewPop()'), true)); }
  // 0.9.3 профілі, нирки, QR, повтор дії
