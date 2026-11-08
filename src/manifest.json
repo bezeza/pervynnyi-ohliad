@@ -158,6 +158,7 @@
   "676-float-win.js",
   "677-phone-panel.js",
   "678-context-actions.js",
-  "679-sheet-fit.js"
+  "679-sheet-fit.js",
+  "680-ui-v2.js"
  ]
 }

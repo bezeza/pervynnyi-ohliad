@@ -1365,6 +1365,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Аркуш: вибір масштабу запам’ятовується', r[1]);
   ok('Аркуш: невідомий масштаб — «По ширині»', r[2]);
   ok('Аркуш: масштаб зберігається в Налаштування.json', r[3]);
+// 0.9.3.95 — новий вигляд, етап 1: кнопка «Текст» з лічильником, «Старий вигляд»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2;
+    uiV2Set(true); a.push(document.documentElement.classList.contains('ui-v2') && !!document.querySelector('#txtBtn'));
+    v2Count(); const n=itext(document.querySelector('#out')).trim().length; a.push(document.querySelector('.v2cnt').textContent===n.toLocaleString('uk-UA'));
+    txtOpen(true); a.push(document.body.classList.contains('v2-txt-open') && document.querySelector('#txtBtn').getAttribute('aria-expanded')==='true');
+    txtOpen(false); a.push(!document.body.classList.contains('v2-txt-open'));
+    uiV2Set(false); txtOpen(true); a.push(!document.documentElement.classList.contains('ui-v2') && !document.body.classList.contains('v2-txt-open'));
+    a.push(TABS.filter(t=>TOOL_TABS.includes(t.id)).every(t=>t.tab.classList.contains('v2tool')));
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Новий вигляд: клас ui-v2 і кнопка «Текст» у шапці', r[0]);
+  ok('Кнопка «Текст» показує кількість знаків документа', r[1]);
+  ok('«Текст» відкриває й закриває панель тексту', r[2] && r[3]);
+  ok('«Старий вигляд» знімає новий вигляд і не відкриває панель', r[4]);
+  ok('Інструменти в меню розділів — без кружка стану', r[5]);
 }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);

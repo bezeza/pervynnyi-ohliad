@@ -2347,12 +2347,48 @@ html.touch .nextbar .btn{padding:12px 16px}
 .actsheet .da-mobile-list .btn:disabled{opacity:.48;cursor:not-allowed}
 @media (max-width:899px){.doc-actions{display:none!important}}
 @media print{.doc-actions{display:none!important}}
+
+<<<<<<< HEAD
+/* 0.9.3.94 — масштаб аркуша під панель (679-sheet-fit.js): «По ширині» може бути більше 100 % */
+.paper .sheet.blankmode.sfit-w{max-width:none}
+.sfit-seg button{min-height:32px}
+=======
+/* 0.9.3.94 — новий вигляд, етап 1 (679-ui-v2.js). Лише з класом ui-v2; «Старий вигляд» його знімає. Телефон і друк не змінюються. */
+:root.ui-v2.ui-ios:not([data-tone]){--accent:#1D5B8A;--accent-soft:#E2ECF5;--on-accent:#FFFFFF}
+@media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]){--accent:#3A7FBA;--accent-soft:#1C2E3D;--on-accent:#FFFFFF}}
+:root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"]{--accent:#3A7FBA;--accent-soft:#1C2E3D;--on-accent:#FFFFFF}
+.v2txt,.v2close{display:none}
+:root.ui-v2.ui-ios .btn.primary{color:var(--on-accent)}
+.v2cnt{font:500 12px/1 var(--f-mono,"IBM Plex Mono",monospace);opacity:.8;font-variant-numeric:tabular-nums}
+@media screen and (min-width:900px){
+  :root.ui-v2 .v2txt{display:inline-flex;align-items:center;gap:8px}
+  :root.ui-v2 .v2close{display:inline-flex;align-items:center;justify-content:center;min-width:36px;margin-left:4px}
+  /* форма на всю ширину, текст — панеллю справа */
+  :root.ui-v2 body .wrap{grid-template-columns:minmax(0,1fr)!important;column-gap:0}
+  :root.ui-v2 body .wrap>.vgrip{display:none!important}
+  :root.ui-v2 #outBox{position:fixed;z-index:60;top:var(--v2top,12px);right:12px;bottom:12px;width:min(560px,calc(100vw - 24px));max-width:none;height:auto;max-height:none;align-self:auto;margin:0;
+    overflow:auto;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.18);background:var(--surface);
+    transform:translateX(calc(100% + 24px));visibility:hidden;transition:transform .14s ease-out,visibility 0s linear .14s}
+  :root.ui-v2 body.v2-txt-open #outBox{transform:none;visibility:visible;transition:transform .14s ease-out}
+  :root.ui-v2 body.outfold #outBox{width:min(560px,calc(100vw - 24px));padding:16px;overflow:auto}
+  :root.ui-v2 #outBox>#out{flex:1 1 auto;min-height:160px;overflow:auto}
+  :root.ui-v2 #outBox .ofold{display:none!important}
+  /* кружки стану розділів у лівому меню */
+  :root.ui-v2 #sidecol #tabs .tab .dot{visibility:visible;order:-1;width:12px;height:12px;flex:0 0 12px;margin:0 2px 0 0;border-radius:50%;
+    background:transparent;border:1.5px solid color-mix(in srgb,var(--muted) 60%,transparent);box-sizing:border-box;vertical-align:-1px}
+  :root.ui-v2 #sidecol #tabs .tab.filled .dot{background:var(--accent);border-color:var(--accent)}
+  :root.ui-v2 #sidecol #tabs .tab.v2tool .dot{display:none}
+  :root.ui-v2 #sidecol #tabs .tab{display:flex;align-items:center;gap:10px}
+}
+@media (prefers-reduced-motion:reduce){:root.ui-v2 #outBox{transition:none!important}}
+@media print{.v2txt,.v2close{display:none!important}:root.ui-v2 #outBox{position:static;transform:none;visibility:visible}}
+>>>>>>> 9cc801f (0.9.3.94 — новий вигляд, етап 1: «Текст» у шапці, форма на всю ширину, кружки стану)
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.93 від 05.11.2026">v0.9.3.93 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.94 від 08.11.2026">v0.9.3.94 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4504,8 +4540,13 @@ function clearAll(forRestore){
   if (!forRestore) update();
 }
 
-const VERSION = '0.9.3.93', VDATE = '05.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.94', VDATE = '08.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+<<<<<<< HEAD
+  ['0.9.3.94', '08.11.2026', '«Перед друком»: аркуш А4 одразу підлаштовується під панель, коли перетягуєте межу форми й тексту, бокове меню чи змінюєте вигляд (раніше — лише при зміні вікна браузера). Масштаб як у Word: «По ширині» (може бути більше 100 %), «Весь аркуш», «100 %». Телефон і друк не змінено'],
+=======
+  ['0.9.3.94', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено'],
+>>>>>>> 9cc801f (0.9.3.94 — новий вигляд, етап 1: «Текст» у шапці, форма на всю ширину, кружки стану)
   ['0.9.3.93', '05.11.2026', 'контекстні дії документа: на комп’ютері — компактна панель для первинного огляду, щоденника, призначень і виписки; на телефоні — відповідні дії в наявному меню «Документ і дії»; Classic без змін'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
   ['0.9.3.91', '05.11.2026', 'телефон: межа «документ / варіанти» стає в одне з трьох положень (третина, половина, майже весь екран), подвійний дотик по межі — на весь екран і назад; телефон боком — документ ліворуч, варіанти праворуч на всю висоту; у віконці бланка кнопка «Норма» одним дотиком'],
@@ -21373,6 +21414,139 @@ if (typeof openActs === 'function'){
   openActs = function(){ const r = x0.apply(this, arguments); try{ ctxAddMobile(); }catch(e){} return r; };
 }
 ctxSync();
+<<<<<<< HEAD
+/* ===== 0.9.3.94 — масштаб аркуша А4 у «Перед друком» підлаштовується під панель =====
+   Раніше масштаб рахувався лише при зміні розміру вікна браузера (window.resize) і не більше 100 %.
+   Тож коли перетягували межу форми й тексту, бокове меню чи віконце, аркуш лишався в старому масштабі.
+   Тепер:
+   • ResizeObserver стежить за самою панеллю аркуша — масштаб змінюється одразу, без перебудови сторінки;
+   • вибір як у Word: «По ширині» (за замовчуванням; може бути й більше 100 %), «Весь аркуш», «100 %» (поточний відсоток — у підказці кнопки);
+     вибір запам’ятовується (Налаштування.json).
+   Телефон (до 899 px) — як було: свій масштаб двома пальцями (645-phone-preview.js). Друк не змінюється. */
+const SFIT_MODES = {width:'По ширині', page:'Весь аркуш', one:'100 %'};
+const SFIT_ORDER = ['width', 'page', 'one'];
+let SFIT = lsGet('po.sheetfit', 'width'); if (!SFIT_MODES[SFIT]) SFIT = 'width';
+const SFIT_A4 = {w:793.7, h:1122.5};   // 210 × 297 мм у CSS-пікселях
+const sfitPhone = () => typeof phIs === 'function' && phIs();
+
+function sfitZoom(){
+  const p = document.getElementById('paper'), sh = p && p.querySelector('.sheet.blankmode');
+  if (!sh || p.hidden || sfitPhone()) return null;
+  sh.classList.toggle('sfit-w', SFIT === 'width');
+  const cs = getComputedStyle(p), padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0), padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+  const w = p.clientWidth - padX - 4, hh = p.clientHeight - padY - 4;
+  if (w <= 0) return null;
+  let z = 1;
+  if (SFIT === 'width') z = w / SFIT_A4.w;
+  else if (SFIT === 'page') z = Math.min(w / SFIT_A4.w, hh > 100 ? hh / SFIT_A4.h : 1);
+  z = Math.max(0.25, Math.min(2.5, z));
+  const v = z.toFixed(3);
+  if (sh.style.getPropertyValue('--bz') !== v) sh.style.setProperty('--bz', v);
+  p.querySelectorAll('.sfit-seg button').forEach(b=>{ b.title = b.dataset.t + (b.dataset.k === SFIT ? ' · зараз ' + Math.round(z * 100) + ' %' : ''); });
+  return z;
+}
+function sfitSet(k){
+  SFIT = SFIT_MODES[k] ? k : 'width'; lsSet('po.sheetfit', SFIT);
+  const p = document.getElementById('paper');
+  if (p) p.querySelectorAll('.sfit-seg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.k === SFIT ? 'true' : 'false'));
+  sfitZoom();
+}
+
+/* після кожної перебудови аркуша — свій масштаб замість «не більше 100 %» */
+{ const rp0 = renderPaper; renderPaper = function(){ const r = rp0.apply(this, arguments); try{ sfitZoom(); }catch(e){} return r; }; }
+
+/* перемикач масштабу — у рядку «Аркуш А4» */
+{ const bb0 = blankBar; blankBar = function(){
+  const bar = bb0.apply(this, arguments);
+  if (!bar || sfitPhone() || !BLANK || (typeof blankOK === 'function' && !blankOK())) return bar;
+  const row = bar.querySelector('.bctl') || bar;
+  row.append(h('span', {class:'bcl'}, 'Масштаб:'),
+    h('span', {class:'seg sfit-seg', role:'group', 'aria-label':'Масштаб аркуша'},
+      ...SFIT_ORDER.map(k=>{ const b = h('button', {type:'button', 'aria-pressed':SFIT === k ? 'true' : 'false', onclick:()=>sfitSet(k)}, SFIT_MODES[k]);
+        b.dataset.k = k; b.dataset.t = {width:'Аркуш на всю ширину панелі — може бути більше 100 %', page:'Увесь аркуш видно без прокрутки', one:'Справжній розмір'}[k]; b.title = b.dataset.t; return b; })));
+  return bar;
+}; }
+
+/* стеження за розміром панелі: межа форми й тексту, бокове меню, віконце, «Вигляд» */
+{ const p = document.getElementById('paper');
+  if (p && typeof ResizeObserver === 'function'){
+    let q = 0;
+    new ResizeObserver(()=>{ if (q) return; q = requestAnimationFrame(()=>{ q = 0; if (PAPER) sfitZoom(); }); }).observe(p);
+  } }
+try{ if (!FS_SET_KEYS.includes('po.sheetfit')) FS_SET_KEYS.push('po.sheetfit'); }catch(e){}
+=======
+/* ===== 0.9.3.94 — новий вигляд, етап 1 глобального оновлення інтерфейсу (макети: полотно «Первинний огляд — нові макети») =====
+   На комп’ютері (від 900 px):
+   • текст документа схований за кнопкою «Текст N» у шапці (N — кількість знаків) і відкривається панеллю справа; Esc закриває;
+   • форма займає всю ширину, ліві розділи з кружками стану (заповнено — суцільний, ні — контур);
+   • акцент — темно-синій #1D5B8A (у нічних темах — #3A7FBA, щоб білий текст на кнопках лишався читабельним).
+   «Вигляд» → «Старий вигляд» повертає все як було (на час переходу). Телефон не змінюється.
+   Друк, «Аркуш», бланки й файли Word/LibreOffice не змінюються. */
+let UIV2 = lsGet('po.uiv2', '1') !== '0';
+let TXTOPEN = false;
+const v2Wide = () => window.matchMedia('(min-width: 900px)').matches;
+
+const txtCnt = h('span', {class:'v2cnt', 'aria-hidden':'true'}, '0');
+const txtBtn = h('button', {type:'button', class:'btn v2txt', id:'txtBtn', 'aria-expanded':'false', 'aria-controls':'outBox', title:'Текст документа: копіювати, перевірка, друк (Esc — закрити)'},
+  h('span', {}, 'Текст'), txtCnt);
+const txtClose = h('button', {type:'button', class:'btn v2close', 'aria-label':'Закрити панель тексту', title:'Закрити (Esc)'}, '✕');
+
+function v2Count(){
+  const o = $('#out'); let n = 0; try{ n = o ? itext(o).trim().length : 0; }catch(e){}
+  txtCnt.textContent = n.toLocaleString('uk-UA');
+  txtBtn.setAttribute('aria-label', 'Текст документа, ' + n + ' знаків');
+}
+/* панель — під шапкою, щоб кнопка «Текст» лишалась видимою */
+function v2Top(){ const t = $('.top'); const b = t ? Math.round(t.getBoundingClientRect().bottom) : 0; document.documentElement.style.setProperty('--v2top', Math.max(12, b + 8) + 'px'); }
+window.addEventListener('resize', ()=>{ if (TXTOPEN) v2Top(); });
+window.addEventListener('scroll', ()=>{ if (TXTOPEN) v2Top(); }, {passive:true});
+function txtOpen(on){
+  TXTOPEN = !!on && UIV2;
+  document.body.classList.toggle('v2-txt-open', TXTOPEN);
+  txtBtn.setAttribute('aria-expanded', TXTOPEN ? 'true' : 'false');
+  txtBtn.classList.toggle('primary', TXTOPEN);
+  if (TXTOPEN){ v2Top(); v2Count(); const c = $('#copy'); setTimeout(()=>{ try{ (c || txtClose).focus({preventScroll:true}); }catch(e){} }, 30); }
+}
+function uiV2Apply(){
+  document.documentElement.classList.toggle('ui-v2', UIV2);
+  if (!UIV2) txtOpen(false);
+  v2Count();
+}
+function uiV2Set(on){
+  UIV2 = !!on; lsSet('po.uiv2', UIV2 ? '1' : '0'); uiV2Apply();
+  try{ renderViewCtl(); }catch(e){}
+  toast(UIV2 ? 'Новий вигляд' : 'Старий вигляд — як було до оновлення');
+}
+
+/* кнопка в шапці — перед «Вигляд»; кнопка закриття — у заголовку панелі тексту */
+{ const vb = $('#viewBtn'), top = $('.top');
+  if (vb && vb.parentElement) vb.before(txtBtn); else if (top) top.append(txtBtn);
+  const oh = $('#outBox .oh'); if (oh) oh.append(txtClose); }
+txtBtn.onclick = e => { e.stopPropagation(); txtOpen(!TXTOPEN); };
+txtClose.onclick = () => { txtOpen(false); try{ txtBtn.focus(); }catch(e){} };
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Escape' || !TXTOPEN || !v2Wide()) return;
+  if (document.querySelector('[role="dialog"]:not([hidden])') && !e.target.closest('#outBox')) return;   // спершу закриваються діалоги
+  txtOpen(false); try{ txtBtn.focus(); }catch(x){}
+});
+
+/* лічильник знаків — за змінами тексту документа (без зміни update()) */
+{ const o = $('#out'); let q = 0;
+  if (o){ new MutationObserver(()=>{ if (q) return; q = requestAnimationFrame(()=>{ q = 0; v2Count(); }); }).observe(o, {childList:true, subtree:true, characterData:true}); } }
+
+/* «Вигляд» → «Старий вигляд» */
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  const row = h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Старий вигляд'), h('div', {class:'vseg', role:'group', 'aria-label':'Старий вигляд на час переходу'},
+    ...[[false, 'Вимкнено', 'Новий вигляд: текст за кнопкою «Текст», форма на всю ширину'], [true, 'Увімкнено', 'Як було до оновлення: текст документа завжди поруч із формою']].map(([old, l, t])=>
+      h('button', {type:'button', 'aria-pressed':(!UIV2) === old ? 'true' : 'false', title:t, onclick:()=>uiV2Set(!old)}, l))));
+  box.prepend(row); return box; }; }
+/* інструменти (шкали, шаблони, налаштування, довідка) — без кружка стану */
+try{ TABS.forEach(t=>{ if (t && t.tab && TOOL_TABS.includes(t.id)) t.tab.classList.add('v2tool'); }); }catch(e){}
+try{ if (!FS_SET_KEYS.includes('po.uiv2')) FS_SET_KEYS.push('po.uiv2'); }catch(e){}
+uiV2Apply();
+try{ renderViewCtl(); }catch(e){}
+>>>>>>> 9cc801f (0.9.3.94 — новий вигляд, етап 1: «Текст» у шапці, форма на всю ширину, кружки стану)
 </script>
 
 </body>
