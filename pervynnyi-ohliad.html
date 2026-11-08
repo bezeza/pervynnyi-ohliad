@@ -2434,6 +2434,24 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 .si-chips:not(.si-open) .si-more,
   :root.ui-v2 .si-chips:not(.si-open)>label{display:none}
 }
+/* скарги: «Обрано кнопками:» і «Посиндромно:» під полем (новий вигляд, ПК) */
+.si-bar{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .si-bar{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  :root.ui-v2 .si-sel:empty{display:none}
+  :root.ui-v2 .si-sel,:root.ui-v2 .si-synw{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  :root.ui-v2 .si-syn{display:flex;flex-wrap:wrap;gap:6px}
+  :root.ui-v2 .si-l{font-size:var(--fs-1);color:var(--muted);margin-right:2px}
+  :root.ui-v2 .si-tok{border:1px solid var(--accent);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:0 10px;min-height:32px;font:inherit;font-size:var(--fs-2);cursor:pointer}
+  :root.ui-v2 .si-tok span{color:var(--muted)}
+  :root.ui-v2 .si-tok:hover span{color:var(--bad)}
+}
+@media screen and (min-width:900px){
+  :root.ui-v2 .si-sb.part{border-color:var(--accent);background:var(--accent-soft)}
+  :root.ui-v2 .si-cnt{font-size:var(--fs-1);color:var(--muted);font-variant-numeric:tabular-nums}
+  :root.ui-v2 .si-sb[aria-pressed="true"] .si-cnt{color:inherit}
+  :root.ui-v2 .si-hint{flex-basis:100%;font-size:var(--fs-1);color:var(--muted);min-height:1.4em}
+}
 </style>
 </head>
 <body>
@@ -4593,7 +4611,7 @@ function clearAll(forRestore){
 
 const VERSION = '0.9.3.95', VDATE = '08.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку'],
+  ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (12 синдромів, чернетка)'],
   ['0.9.3.94', '08.11.2026', '«Перед друком»: аркуш А4 одразу підлаштовується під панель, коли перетягуєте межу форми й тексту, бокове меню чи змінюєте вигляд (раніше — лише при зміні вікна браузера). Масштаб як у Word: «По ширині» (може бути більше 100 %), «Весь аркуш», «100 %». Телефон і друк не змінено'],
   ['0.9.3.93', '05.11.2026', 'контекстні дії документа: на комп’ютері — компактна панель для первинного огляду, щоденника, призначень і виписки; на телефоні — відповідні дії в наявному меню «Документ і дії»; Classic без змін'],
   ['0.9.3.92', '05.11.2026', 'друк на старих лазерних принтерах: закріплено чорно-білий режим; регресійні тести перевіряють усі @media print на сірі кольори, rgba, тіні й бліді фони; градієнт дозволений лише для чорного розлінування .blines'],
@@ -21734,6 +21752,23 @@ v2pDob(); v2pPlace(); setTimeout(v2pPlace, 450);   // кнопка H24 з’яв
 { const l = document.querySelector('label[for="meta_dob"]');
   const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (l) l.htmlFor = UIV2 ? 'meta_dob_t' : 'meta_dob'; v2pSync(); return r; };
   if (l && UIV2) l.htmlFor = 'meta_dob_t'; }
+/* ===== 0.9.3.95 — скарги посиндромно: одна кнопка-синдром обирає кілька кнопок скарг =====
+   ЧЕРНЕТКА для перевірки лікарем: склад синдромів — лише з наявних кнопок скарг (SKG, 040).
+   Кожну скаргу потім можна зняти окремо. Змінювати список — тут. */
+const SYND = [
+  ['Інтоксикаційний', ['загальну слабкість', 'підвищення температури тіла', 'озноб', 'пітливість', 'підвищену втомлюваність']],
+  ['Катаральний', ['біль у горлі', 'нежить', 'закладеність носа', 'біль при ковтанні']],
+  ['Бронхітичний', ['кашель з виділенням харкотиння', 'задишку при фізичному навантаженні']],
+  ['Бронхообструктивний', ['напади ядухи з утрудненим видихом', 'свистяче дихання', 'сухий кашель', 'задишку при фізичному навантаженні']],
+  ['Плевральний', ['біль у грудній клітці при глибокому диханні', 'сухий кашель']],
+  ['Серцевої недостатності', ['задишку при фізичному навантаженні', 'утруднене дихання в положенні лежачи', 'набряки нижніх кінцівок', 'підвищену втомлюваність']],
+  ['Ангінозний', ['стискаючий біль за грудиною при навантаженні', 'задишку при фізичному навантаженні']],
+  ['Аритмічний', ['серцебиття', 'перебої в роботі серця', 'запаморочення']],
+  ['Гіпертензивний', ['головний біль', 'запаморочення', 'шум у вухах', 'мерехтіння «мушок» перед очима']],
+  ['Диспептичний', ['біль в епігастрії', 'нудоту', 'печію', 'відрижку', 'здуття живота']],
+  ['Біліарний', ['гіркоту в роті', 'важкість у правому підребер’ї', 'біль у правому підребер’ї з іррадіацією в праву лопатку']],
+  ['Дизуричний', ['часте сечовипускання', 'біль і печіння при сечовипусканні', 'біль над лобком']]
+];
 /* ===== 0.9.3.95 — «розумна клавіатура», етап 1 (PLAN-UI-0.10, «Скарги — розумна клавіатура») — новий вигляд, ПК =====
    У текстових полях розділів (і «Додатково своїми словами» у скаргах):
    • з 3 літер — підказки: перша виділена, Tab приймає; ↑↓ — вибір, Enter — прийняти, Esc — сховати;
@@ -21875,8 +21910,9 @@ document.addEventListener('focusout', e=>{
   const f = SI.f && SI.f.el === e.target ? SI.f : null, sec = SI.sec; if (!f) return;
   setTimeout(()=>{ if (document.activeElement !== f.el){ siClose(); if (siOn()){ siFormat(f.el); siLearn(sec, f.el); } } }, 120);
 }, true);
-window.addEventListener('scroll', ()=>{ if (SI.pop) siDraw(); }, {passive:true, capture:true});
-{ const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (!UIV2) siClose(); return r; }; }
+window.addEventListener('scroll', ()=>{ if (!SI.pop || !SI.f) return; const r = SI.f.el.getBoundingClientRect(); if (r.bottom < 0 || r.top > window.innerHeight || document.activeElement !== SI.f.el) siClose(); else siDraw(); }, {passive:true, capture:true});
+function siLbl(){ if (SI.lbl) SI.lbl.textContent = UIV2 && (typeof v2Wide !== 'function' || v2Wide()) ? 'Скарги — своїми словами' : SI.lbl0; }
+{ const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (!UIV2) siClose(); siLbl(); return r; }; }
 { const p0 = applyPreset; applyPreset = function(p){ SI.preset = p; return p0.apply(this, arguments); }; }
 /* ---- скарги на ПК: «Додатково (своїми словами)» — першим, кнопки згорнуті під ним; обрані кнопки видно завжди ---- */
 function siComplaintsLayout(){
@@ -21889,13 +21925,48 @@ function siComplaintsLayout(){
   if (xw) xw.classList.add('si-first');
   if (c.moreB) c.moreB.classList.add('si-more');
   cw.classList.add('si-chips');
+  if (xw && !SI.bar){
+    SI.sel2 = h('div', {class:'si-sel', 'aria-live':'polite'});
+    SI.syn = h('div', {class:'si-syn', role:'group', 'aria-label':'Скарги посиндромно'});
+    (typeof SYND !== 'undefined' ? SYND : []).forEach(([name, list])=>{
+      const idx = list.map(t=>c.opts.findIndex(o=>O(o).t === t)).filter(i=>i >= 0); if (!idx.length) return;
+      const b = h('button', {type:'button', class:'chip si-sb', 'aria-pressed':'false', 'aria-describedby':'siSynHint', title:'Обрати: ' + list.join(', ') + '. Повторне натискання — зняти'}, name, h('span', {class:'si-cnt'}));
+      const hint = () => { if (SI.hint) SI.hint.textContent = name + ': ' + list.join(', ') + '.'; };
+      b.addEventListener('mouseenter', hint); b.addEventListener('focus', hint);
+      b.dataset.idx = idx.join(',');
+      b.onclick = () => {
+        const all = idx.every(i=>c.chips[i].getAttribute('aria-pressed') === 'true');
+        const run = () => { idx.forEach(i=>{ const on = c.chips[i].getAttribute('aria-pressed') === 'true'; if (all ? on : !on) c.chips[i].click(); }); update(); };
+        if (typeof undoable === 'function') undoable((all ? 'зняти' : 'обрати') + ' синдром: ' + name, run)(); else run();
+        siSelDraw();
+      };
+      SI.syn.append(b);
+    });
+    SI.hint = h('div', {class:'si-hint', id:'siSynHint'}, 'Наведіть на синдром — покаже, які скарги він обере. Обрані скарги самі підсвічують свій синдром.');
+    SI.syn.addEventListener('mouseleave', ()=>{ SI.hint.textContent = 'Наведіть на синдром — покаже, які скарги він обере. Обрані скарги самі підсвічують свій синдром.'; });
+    SI.bar = h('div', {class:'si-bar'}, SI.sel2, SI.syn.children.length ? h('div', {class:'si-synw'}, h('span', {class:'si-l'}, 'Посиндромно:'), SI.syn, SI.hint) : '');
+    xw.append(SI.bar);
+  }
+  { const lb = xw && xw.querySelector('label'); if (lb && !SI.lbl0){ SI.lbl0 = lb.textContent; SI.lbl = lb; } }
   if (!cx.el.placeholder) cx.el.placeholder = 'Пишіть скарги своїми словами — з 3 літер підкаже, Tab прийме; скарга з кнопок натисне кнопку';
   siTglText();
 }
 function siTglText(){ const c = F('skarhy.c'); if (!SI.tgl || !c) return; const n = c.chips.filter(b=>b.getAttribute('aria-pressed') === 'true').length, o = c.wrapEl.classList.contains('si-open');
   SI.tgl.textContent = (o ? '▾ Сховати кнопки скарг' : '▸ Кнопки скарг (' + c.chips.length + ')') + (n ? ' · обрано ' + n : ''); }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); }catch(e){} return r; }; }
-siComplaintsLayout();
+/* «Обрано:» — скарги-кнопки одразу під полем (порядок — як у тексті), ✕ — зняти */
+function siSelDraw(){
+  const c = F('skarhy.c'); if (!SI.sel2 || !c) return;
+  const on = c.chips.map((b, i)=>({b, i, n:+(b.getAttribute('data-n') || 1)})).filter(x=>x.b.getAttribute('aria-pressed') === 'true').sort((a, b)=>a.n - b.n);   /* порядок — як натиснуто */
+  const key = on.map(x=>x.i + ':' + x.n).join(','); if (SI.selKey === key) return; SI.selKey = key;
+  SI.sel2.innerHTML = '';
+  if (on.length){ SI.sel2.append(h('span', {class:'si-l'}, 'Обрано кнопками:'));
+    on.forEach(x=>SI.sel2.append(h('button', {type:'button', class:'si-tok', title:'Зняти скаргу', onclick:()=>{ x.b.click(); update(); }}, O(c.opts[x.i]).t.replace(/\[([^|\]]*)\|([^\]]*)\]/g, '$1'), h('span', {'aria-hidden':'true'}, ' ✕')))); }
+  if (SI.syn) SI.syn.querySelectorAll('.si-sb').forEach(b=>{ const idx = b.dataset.idx.split(',').map(Number), k = idx.filter(i=>c.chips[i].getAttribute('aria-pressed') === 'true').length;
+    b.setAttribute('aria-pressed', k === idx.length ? 'true' : 'false'); b.classList.toggle('part', k > 0 && k < idx.length);
+    const cnt = b.querySelector('.si-cnt'); cnt.textContent = k > 0 && k < idx.length ? ' ' + k + '/' + idx.length : ''; });
+}
+{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); siSelDraw(); }catch(e){} return r; }; }
+siComplaintsLayout(); siSelDraw(); siLbl();
 </script>
 
 </body>

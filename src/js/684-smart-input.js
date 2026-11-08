@@ -139,8 +139,9 @@ document.addEventListener('focusout', e=>{
   const f = SI.f && SI.f.el === e.target ? SI.f : null, sec = SI.sec; if (!f) return;
   setTimeout(()=>{ if (document.activeElement !== f.el){ siClose(); if (siOn()){ siFormat(f.el); siLearn(sec, f.el); } } }, 120);
 }, true);
-window.addEventListener('scroll', ()=>{ if (SI.pop) siDraw(); }, {passive:true, capture:true});
-{ const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (!UIV2) siClose(); return r; }; }
+window.addEventListener('scroll', ()=>{ if (!SI.pop || !SI.f) return; const r = SI.f.el.getBoundingClientRect(); if (r.bottom < 0 || r.top > window.innerHeight || document.activeElement !== SI.f.el) siClose(); else siDraw(); }, {passive:true, capture:true});
+function siLbl(){ if (SI.lbl) SI.lbl.textContent = UIV2 && (typeof v2Wide !== 'function' || v2Wide()) ? 'Скарги — своїми словами' : SI.lbl0; }
+{ const a0 = uiV2Apply; uiV2Apply = function(){ const r = a0.apply(this, arguments); if (!UIV2) siClose(); siLbl(); return r; }; }
 { const p0 = applyPreset; applyPreset = function(p){ SI.preset = p; return p0.apply(this, arguments); }; }
 /* ---- скарги на ПК: «Додатково (своїми словами)» — першим, кнопки згорнуті під ним; обрані кнопки видно завжди ---- */
 function siComplaintsLayout(){
@@ -153,10 +154,45 @@ function siComplaintsLayout(){
   if (xw) xw.classList.add('si-first');
   if (c.moreB) c.moreB.classList.add('si-more');
   cw.classList.add('si-chips');
+  if (xw && !SI.bar){
+    SI.sel2 = h('div', {class:'si-sel', 'aria-live':'polite'});
+    SI.syn = h('div', {class:'si-syn', role:'group', 'aria-label':'Скарги посиндромно'});
+    (typeof SYND !== 'undefined' ? SYND : []).forEach(([name, list])=>{
+      const idx = list.map(t=>c.opts.findIndex(o=>O(o).t === t)).filter(i=>i >= 0); if (!idx.length) return;
+      const b = h('button', {type:'button', class:'chip si-sb', 'aria-pressed':'false', 'aria-describedby':'siSynHint', title:'Обрати: ' + list.join(', ') + '. Повторне натискання — зняти'}, name, h('span', {class:'si-cnt'}));
+      const hint = () => { if (SI.hint) SI.hint.textContent = name + ': ' + list.join(', ') + '.'; };
+      b.addEventListener('mouseenter', hint); b.addEventListener('focus', hint);
+      b.dataset.idx = idx.join(',');
+      b.onclick = () => {
+        const all = idx.every(i=>c.chips[i].getAttribute('aria-pressed') === 'true');
+        const run = () => { idx.forEach(i=>{ const on = c.chips[i].getAttribute('aria-pressed') === 'true'; if (all ? on : !on) c.chips[i].click(); }); update(); };
+        if (typeof undoable === 'function') undoable((all ? 'зняти' : 'обрати') + ' синдром: ' + name, run)(); else run();
+        siSelDraw();
+      };
+      SI.syn.append(b);
+    });
+    SI.hint = h('div', {class:'si-hint', id:'siSynHint'}, 'Наведіть на синдром — покаже, які скарги він обере. Обрані скарги самі підсвічують свій синдром.');
+    SI.syn.addEventListener('mouseleave', ()=>{ SI.hint.textContent = 'Наведіть на синдром — покаже, які скарги він обере. Обрані скарги самі підсвічують свій синдром.'; });
+    SI.bar = h('div', {class:'si-bar'}, SI.sel2, SI.syn.children.length ? h('div', {class:'si-synw'}, h('span', {class:'si-l'}, 'Посиндромно:'), SI.syn, SI.hint) : '');
+    xw.append(SI.bar);
+  }
+  { const lb = xw && xw.querySelector('label'); if (lb && !SI.lbl0){ SI.lbl0 = lb.textContent; SI.lbl = lb; } }
   if (!cx.el.placeholder) cx.el.placeholder = 'Пишіть скарги своїми словами — з 3 літер підкаже, Tab прийме; скарга з кнопок натисне кнопку';
   siTglText();
 }
 function siTglText(){ const c = F('skarhy.c'); if (!SI.tgl || !c) return; const n = c.chips.filter(b=>b.getAttribute('aria-pressed') === 'true').length, o = c.wrapEl.classList.contains('si-open');
   SI.tgl.textContent = (o ? '▾ Сховати кнопки скарг' : '▸ Кнопки скарг (' + c.chips.length + ')') + (n ? ' · обрано ' + n : ''); }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); }catch(e){} return r; }; }
-siComplaintsLayout();
+/* «Обрано:» — скарги-кнопки одразу під полем (порядок — як у тексті), ✕ — зняти */
+function siSelDraw(){
+  const c = F('skarhy.c'); if (!SI.sel2 || !c) return;
+  const on = c.chips.map((b, i)=>({b, i, n:+(b.getAttribute('data-n') || 1)})).filter(x=>x.b.getAttribute('aria-pressed') === 'true').sort((a, b)=>a.n - b.n);   /* порядок — як натиснуто */
+  const key = on.map(x=>x.i + ':' + x.n).join(','); if (SI.selKey === key) return; SI.selKey = key;
+  SI.sel2.innerHTML = '';
+  if (on.length){ SI.sel2.append(h('span', {class:'si-l'}, 'Обрано кнопками:'));
+    on.forEach(x=>SI.sel2.append(h('button', {type:'button', class:'si-tok', title:'Зняти скаргу', onclick:()=>{ x.b.click(); update(); }}, O(c.opts[x.i]).t.replace(/\[([^|\]]*)\|([^\]]*)\]/g, '$1'), h('span', {'aria-hidden':'true'}, ' ✕')))); }
+  if (SI.syn) SI.syn.querySelectorAll('.si-sb').forEach(b=>{ const idx = b.dataset.idx.split(',').map(Number), k = idx.filter(i=>c.chips[i].getAttribute('aria-pressed') === 'true').length;
+    b.setAttribute('aria-pressed', k === idx.length ? 'true' : 'false'); b.classList.toggle('part', k > 0 && k < idx.length);
+    const cnt = b.querySelector('.si-cnt'); cnt.textContent = k > 0 && k < idx.length ? ' ' + k + '/' + idx.length : ''; });
+}
+{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); siSelDraw(); }catch(e){} return r; }; }
+siComplaintsLayout(); siSelDraw(); siLbl();

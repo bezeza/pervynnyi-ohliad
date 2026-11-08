@@ -2395,3 +2395,21 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 .si-chips:not(.si-open) .si-more,
   :root.ui-v2 .si-chips:not(.si-open)>label{display:none}
 }
+/* скарги: «Обрано кнопками:» і «Посиндромно:» під полем (новий вигляд, ПК) */
+.si-bar{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .si-bar{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  :root.ui-v2 .si-sel:empty{display:none}
+  :root.ui-v2 .si-sel,:root.ui-v2 .si-synw{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  :root.ui-v2 .si-syn{display:flex;flex-wrap:wrap;gap:6px}
+  :root.ui-v2 .si-l{font-size:var(--fs-1);color:var(--muted);margin-right:2px}
+  :root.ui-v2 .si-tok{border:1px solid var(--accent);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:0 10px;min-height:32px;font:inherit;font-size:var(--fs-2);cursor:pointer}
+  :root.ui-v2 .si-tok span{color:var(--muted)}
+  :root.ui-v2 .si-tok:hover span{color:var(--bad)}
+}
+@media screen and (min-width:900px){
+  :root.ui-v2 .si-sb.part{border-color:var(--accent);background:var(--accent-soft)}
+  :root.ui-v2 .si-cnt{font-size:var(--fs-1);color:var(--muted);font-variant-numeric:tabular-nums}
+  :root.ui-v2 .si-sb[aria-pressed="true"] .si-cnt{color:inherit}
+  :root.ui-v2 .si-hint{flex-basis:100%;font-size:var(--fs-1);color:var(--muted);min-height:1.4em}
+}

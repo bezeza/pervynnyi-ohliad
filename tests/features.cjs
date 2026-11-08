@@ -1457,6 +1457,25 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Скарги: підказка, що є кнопкою, натискає кнопку (критерії, щоденник бачать скаргу)', r[0]);
   ok('Скарги на ПК: поле першим, кнопки згорнуті під ним', r[1]);
 }
+// 0.9.3.95 — скарги посиндромно; «Обрано кнопками» в порядку натискання
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true); const c=F('skarhy.c');
+    const pre=c.chips.filter(b=>b.getAttribute('aria-pressed')==='true'); pre.forEach(b=>b.click()); update();
+    const sb=[...document.querySelectorAll('.si-sb')].find(b=>b.textContent==='Бронхообструктивний'); a.push(!!sb && SYND.every(s=>s[1].every(t=>c.opts.some(o=>O(o).t===t))));
+    sb.click(); const idx=sb.dataset.idx.split(',').map(Number);
+    a.push(idx.every(i=>c.chips[i].getAttribute('aria-pressed')==='true') && sb.getAttribute('aria-pressed')==='true');
+    a.push([...document.querySelectorAll('.si-tok')].map(b=>b.textContent.replace(' ✕','')).join('|')===idx.map(i=>O(c.opts[i]).t).join('|'));
+    sb.click(); a.push(idx.every(i=>c.chips[i].getAttribute('aria-pressed')!=='true') && !document.querySelector('.si-tok'));
+    pre.forEach(b=>b.click()); update(); uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Посиндромно: усі скарги синдромів — серед кнопок', r[0]);
+  ok('Посиндромно: синдром обирає свої скарги', r[1]);
+  ok('«Обрано кнопками» — у порядку натискання', r[2]);
+  ok('Повторне натискання синдрому знімає його скарги', r[3]);
+  ok('Синдром підсвічується сам: частина скарг — «k/n», усі — натиснутий', w.eval(`(()=>{ const c=F('skarhy.c'), sb=[...document.querySelectorAll('.si-sb')].find(b=>b.textContent.startsWith('Плевральний')), idx=sb.dataset.idx.split(',').map(Number);
+    const pre=idx.map(i=>c.chips[i].getAttribute('aria-pressed')==='true'); idx.forEach((i,k)=>{ if (pre[k]) c.chips[i].click(); }); update();
+    c.chips[idx[0]].click(); update(); const part=sb.classList.contains('part') && /1\\/2/.test(sb.textContent);
+    c.chips[idx[1]].click(); update(); const full=sb.getAttribute('aria-pressed')==='true' && !sb.classList.contains('part');
+    idx.forEach((i,k)=>{ if ((c.chips[i].getAttribute('aria-pressed')==='true')!==pre[k]) c.chips[i].click(); }); update(); return part && full; })()`));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
