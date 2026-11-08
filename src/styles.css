@@ -2413,3 +2413,10 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 .si-sb[aria-pressed="true"] .si-cnt{color:inherit}
   :root.ui-v2 .si-hint{flex-basis:100%;font-size:var(--fs-1);color:var(--muted);min-height:1.4em}
 }
+/* 0.9.3.95 — рядок унизу сторінки (685-footer.js) */
+.pofoot{max-width:1400px;margin:28px auto 8px;padding:14px 4px 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px 22px;font-size:var(--fs-1);color:var(--muted)}
+.pofoot a,.pofoot .more{color:var(--accent-ink,var(--accent))}
+.pofoot .more{font-size:inherit;min-height:0;padding:0}
+@media print{.pofoot{display:none!important}}
+.pofoot{align-items:baseline}
+:root.ui-v2 .pofoot button.more{min-height:0}

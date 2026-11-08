@@ -164,6 +164,7 @@
   "682-ui-keys.js",
   "683-ui-patient.js",
   "684-data-syndromes.js",
-  "684-smart-input.js"
+  "684-smart-input.js",
+  "685-footer.js"
  ]
 }

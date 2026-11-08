@@ -1476,6 +1476,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     idx.slice(1).forEach(i=>c.chips[i].click()); update(); const full=sb.getAttribute('aria-pressed')==='true' && !sb.classList.contains('part');
     idx.forEach((i,k)=>{ if ((c.chips[i].getAttribute('aria-pressed')==='true')!==pre[k]) c.chips[i].click(); }); update(); return part && full; })()`));
 }
+// 0.9.3.95 — рядок унизу: Telegram, версія, «що нового», код і ліцензія
+{ const f=doc.querySelector('.pofoot');
+  ok('Унизу сторінки: Telegram, версія, відкритий код', !!f && /t\.me\/bezeza/.test(f.innerHTML) && f.textContent.includes(w.eval('VERSION')) && /github\.com\/bezeza\/pervynnyi-ohliad/.test(f.innerHTML));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
