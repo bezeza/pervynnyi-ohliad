@@ -1546,6 +1546,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 // 0.9.3.95 — швидший старт: після побудови сторінка показана, відкладені оновлення виконано
 { const r=JSON.parse(w.eval(`JSON.stringify([PO_BOOT===false, !PO_BOOT_CSS.isConnected, ![...document.querySelectorAll('style')].some(s=>/^html\\{display:none/.test(s.textContent))])`));
   ok('Швидкий старт: сторінка показана після побудови', r.every(Boolean), JSON.stringify(r)); }
+// 0.9.3.96 — телефон: гортання до кінця сторінки; прокрутка лише списку розділів, не всієї сторінки
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[typeof scrollInBox==='function']; let pg=0; const s0=window.scrollTo, b0=window.scrollBy; window.scrollTo=()=>{pg++}; window.scrollBy=()=>{pg++};
+    const e=TABS.find(t=>t.id==='skarhy').tab; const iv=Element.prototype.scrollIntoView; let n=0; Element.prototype.scrollIntoView=function(){ n++; };
+    scrollInBox(e); scrollInBox(e,'center'); a.push(n===0 && pg===0); Element.prototype.scrollIntoView=iv; window.scrollTo=s0; window.scrollBy=b0;
+    a.push(!/scrollIntoView/.test(String(opSpy))); return JSON.stringify(a); })()`));
+  ok('Телефон: гортання сторінки не смикається назад (прокручується лише список розділів)', r.every(Boolean), JSON.stringify(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

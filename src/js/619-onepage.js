@@ -34,7 +34,7 @@ function opSpy(){
   if (cur === active) return;
   active = cur;
   TABS.forEach((t, k)=>t.tab.setAttribute('aria-selected', k === cur ? 'true' : 'false'));
-  try{ TABS[cur].tab.scrollIntoView({block:'nearest'}); }catch(e){}
+  try{ scrollInBox(TABS[cur].tab); }catch(e){}
   try{ renderTabNav(); renderLive(); }catch(e){}
 }
 window.addEventListener('scroll', ()=>{
