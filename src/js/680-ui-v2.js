@@ -71,6 +71,7 @@ document.addEventListener('keydown', e=>{
     ...[[false, 'Вимкнено', 'Новий вигляд: текст за кнопкою «Текст», форма на всю ширину'], [true, 'Увімкнено', 'Як було до оновлення: текст документа завжди поруч із формою']].map(([old, l, t])=>
       h('button', {type:'button', 'aria-pressed':(!UIV2) === old ? 'true' : 'false', title:t, onclick:()=>uiV2Set(!old)}, l))));
   box.prepend(row);
+  box.append(h('p', {class:'chips-hint v2ver'}, 'Версія ' + VERSION + (STAGE ? ' ' + STAGE : '') + ' від ' + VDATE + ' · що нового — «Налаштування» → «Про програму»'));
   if (UIV2){ const tr = [...box.querySelectorAll('.vrow')].find(r=>/^Текст документа/.test((r.querySelector('.vl') || {}).textContent || '')); if (tr) tr.remove();
     box.querySelectorAll('.vnote').forEach(n=>{ if (/Межу між формою/.test(n.textContent)) n.remove(); }); }
   return box; }; }
@@ -79,3 +80,5 @@ try{ TABS.forEach(t=>{ if (t && t.tab && TOOL_TABS.includes(t.id)) t.tab.classLi
 try{ if (!FS_SET_KEYS.includes('po.uiv2')) FS_SET_KEYS.push('po.uiv2'); }catch(e){}
 uiV2Apply();
 try{ renderViewCtl(); }catch(e){}
+/* версія — у підказці на назві програми (у шапці її сховано з 0.9.3.78) */
+{ const b = document.querySelector('.top .brand, .top h1'); if (b) b.title = 'Первинний огляд · версія ' + VERSION + (STAGE ? ' ' + STAGE : '') + ' від ' + VDATE; }
