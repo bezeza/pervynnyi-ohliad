@@ -38,6 +38,9 @@ jobs:
             label: features 3/3
           - suite: workflow
             args: ''
+          # огляд від нового пацієнта до друку — кількість дій (план 0.10, «огляд за 5 хвилин»)
+          - suite: scenario-5min
+            args: ''
           - suite: idb
             args: ''
           - suite: audit

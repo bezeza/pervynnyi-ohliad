@@ -1552,6 +1552,17 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     scrollInBox(e); scrollInBox(e,'center'); a.push(n===0 && pg===0); Element.prototype.scrollIntoView=iv; window.scrollTo=s0; window.scrollBy=b0;
     a.push(!/scrollIntoView/.test(String(opSpy))); return JSON.stringify(a); })()`));
   ok('Телефон: гортання сторінки не смикається назад (прокручується лише список розділів)', r.every(Boolean), JSON.stringify(r)); }
+// 0.9.3.96 — підказки при першому відкритті розділу, зрозумілі помилки, текст документа без зайвих перерахунків
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[]; const off=V2HOFF, seen=V2HSEEN.slice(); V2HOFF=false; V2HSEEN=[];
+    const i=TABS.findIndex(t=>t.id==='skarhy'); v2Hint(i); a.push(V2HSEEN.includes('skarhy')); const n=V2HSEEN.length; v2Hint(i); a.push(V2HSEEN.length===n);
+    V2HOFF=off; V2HSEEN=seen; lsSet('po.hints', JSON.stringify(seen));
+    a.push(/закінчилось місце/.test(v2PlainErr('Помилка сховища: QuotaExceededError: quota exceeded')) && /пошкоджений/.test(v2PlainErr('Не вдалося прочитати файл: Unexpected token < in JSON')) && v2PlainErr('Пацієнта збережено')==='Пацієнта збережено');
+    const o=document.getElementById('out'), h0=o.innerHTML; o.innerHTML='<div>Перший</div>'; const t1=itext(o); o.innerHTML='<div>Другий</div>'; const t2=itext(o); a.push(/Перший/.test(t1) && /Другий/.test(t2)); o.innerHTML=h0; update();
+    return JSON.stringify(a); })()`));
+  ok('Підказка розділу — лише раз', r[0] && r[1]);
+  ok('Помилки — зрозумілим текстом, звичайні повідомлення без змін', r[2]);
+  ok('Текст документа оновлюється, коли змінився вміст', r[3]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

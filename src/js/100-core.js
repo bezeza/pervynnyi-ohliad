@@ -4,8 +4,17 @@ const O = o => Array.isArray(o) ? {l:o[0], t:o[1]} : {l:o, t:o};
 /* власні зміни формулювань (вкладка «Мої шаблони»): заготовки шукають варіант за початковим текстом, а в документ іде змінений */
 const OT = (f, o) => { const t = O(o).t; return (f.ovr && f.ovr[t]) || t; };
 const OTM = (f, i) => { const b = O(f.opts[i]).t, t = f.detBox ? detText(f, i, b) : b; return t === b && f.ovr && f.ovr[b] ? f.ovr[b] : t; };
+/* 0.9.3.96: текст документа (#out) запам’ятовується, доки не змінився його вміст — раніше кожне оновлення
+   кілька разів змушувало браузер заново розкладати весь текст (≈ 0,25 с на кожне натискання кнопки скарги) */
+const ITEXT_MEMO = {k:null, v:''};
 const itext = el => {
   if (!el) return '';
+  if (el.id === 'out'){ const k = el.innerHTML + '\u0001' + document.documentElement.className + '\u0001' + (el.hidden ? 1 : 0);
+    if (k === ITEXT_MEMO.k) return ITEXT_MEMO.v;
+    const v = itext0(el); ITEXT_MEMO.k = k; ITEXT_MEMO.v = v; return v; }
+  return itext0(el);
+};
+const itext0 = el => {
   const text = el.innerText;
   if (text !== undefined && (text.trim() || el.id !== 'out' || !el.textContent.trim())) return text;
   if (el.id !== 'out' || !document.body) return text !== undefined ? text : el.textContent;
