@@ -161,6 +161,7 @@
   "679-sheet-fit.js",
   "680-ui-v2.js",
   "681-ui-icons.js",
-  "682-ui-keys.js"
+  "682-ui-keys.js",
+  "683-ui-patient.js"
  ]
 }

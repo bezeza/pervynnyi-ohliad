@@ -2362,3 +2362,17 @@ html.touch .nextbar .btn{padding:12px 16px}
 /* SVG-значки нового вигляду (681-ui-icons.js): колір тексту, без емодзі */
 svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margin-right:.4em;flex:none}
 @media print{svg.v2ic{display:none}}
+/* 0.9.3.95 — введення пацієнта в новому вигляді (683-ui-patient.js): дата з маскою, вік текстом, «Імпорт ▾» */
+.v2dob,.v2imp{display:none}
+:root.ui-v2 .v2dob{display:block;width:100%;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+:root.ui-v2 .v2dob.bad{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+:root.ui-v2 #meta_dob{display:none}
+:root.ui-v2 #meta_age{border-color:transparent;background:transparent;box-shadow:none;padding-left:0;font-weight:600;pointer-events:none}
+:root.ui-v2 .v2imp{display:inline-flex}
+:root.ui-v2 #misIn>:not(.v2imp),:root.ui-v2 .ust-acts .ust-mis,:root.ui-v2 .ust-acts [data-h24-import]{display:none}
+.v2imp-pop{position:fixed;z-index:50;width:min(340px,calc(100vw - 16px));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:flex;flex-direction:column;gap:2px}
+.v2imp-i{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:0;background:transparent;color:inherit;font:inherit;padding:8px 10px;border-radius:8px;cursor:pointer;min-height:44px}
+.v2imp-i:hover,.v2imp-i:focus-visible{background:var(--accent-soft)}
+.v2imp-i span{font-size:var(--fs-1);color:var(--muted)}
+.v2imp-note{font-size:var(--fs-1);color:var(--muted);padding:8px 10px 4px;border-top:1px solid var(--line);margin-top:4px}
+.v2imp-bm{margin:0 10px 8px;align-self:flex-start}

@@ -1410,6 +1410,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('У пошуку «Новий пацієнт» з підказкою Alt+N', r[1]);
   ok('Alt+N — новий пацієнт (поточний збережено)', r[2] && r[3]);
 }
+// 0.9.3.95 — введення пацієнта: дата народження з маскою, «Імпорт ▾»
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[], k=UIV2; uiV2Set(true);
+    const t=document.getElementById('meta_dob_t'), d=document.getElementById('meta_dob'), d0=d.value;
+    a.push(!!t);
+    t.value='12031962'; t.dispatchEvent(new Event('input',{bubbles:true}));
+    a.push(t.value==='12.03.1962' && d.value==='1962-03-12');
+    t.value='31.02.1962'; t.dispatchEvent(new Event('input',{bubbles:true}));
+    a.push(t.classList.contains('bad') && d.value==='');
+    t.value=''; t.dispatchEvent(new Event('input',{bubbles:true}));
+    d.value='1970-05-01'; t.blur(); v2pSync(); a.push(t.value==='01.05.1970');
+    d.value=d0; d.dispatchEvent(new Event('input',{bubbles:true})); v2pSync();
+    a.push(!!document.querySelector('#misIn .v2imp'));
+    uiV2Set(k); return JSON.stringify(a); })()`));
+  ok('Дата народження: поле з маскою дд.мм.рррр', r[0] && r[1]);
+  ok('Дата народження: неіснуюча дата позначається і не записується', r[2]);
+  ok('Дата народження: відкритий пацієнт показується в масці', r[3]);
+  ok('Імпорт — одна кнопка «Імпорт ▾»', r[4]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
