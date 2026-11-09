@@ -8,11 +8,12 @@ function v2stName(i){ const t = TABS[i]; return t.title || t.short || (t.tab ? t
 function v2stDay(){ try{ const n = typeof stayDay === 'function' ? stayDay() : 0; return n ? n + (MODE === 'amb' ? '-й день лікування' : '-й день') : ''; }catch(e){ return ''; } }
 function v2stDraw(){
   V2ST.raf = 0;
-  const on = document.documentElement.classList.contains('ui-v2');
+  let on = document.documentElement.classList.contains('ui-v2');
   if (!V2ST.bar) return;
+  const pib = mv('pib'); if (on && !pib && !PID) on = false;   // стартовий екран без пацієнта — рядок стану не потрібен (0.9.3.97)
   V2ST.bar.hidden = !on; document.body.classList.toggle('v2-stat', on);
-  if (!on) return;
-  const pib = mv('pib'), seq = v2stSeq(), miss = seq.filter(i=>!TABS[i].tab.classList.contains('filled'));
+  if (!on){ V2ST.state = ''; return; }
+  const seq = v2stSeq(), miss = seq.filter(i=>!TABS[i].tab.classList.contains('filled'));
   let bk = null; try{ bk = backupInfo(); }catch(e){}
   const key = [pib, v2stDay(), DOC, miss.join(','), seq.length, bk && bk.due, bk && bk.days].join('|');
   if (key === V2ST.state) return; V2ST.state = key;

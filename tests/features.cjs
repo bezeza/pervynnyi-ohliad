@@ -1563,6 +1563,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Помилки — зрозумілим текстом, звичайні повідомлення без змін', r[2]);
   ok('Текст документа оновлюється, коли змінився вміст', r[3]);
 }
+// 0.9.3.97 — знахідки аудиту: «Профіль» одним натисканням, ролі вкладок, «Друк» у шапці
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[];
+    { const bad=[...document.querySelectorAll('#tabs button')].filter(b=>b.getAttribute('role')!=='tab').map(b=>b.className+':'+b.textContent.trim().slice(0,20)); a.push(bad.length ? bad : true); }
+    const pb=document.getElementById('v2printBtn'); let n0=0; const pr=document.getElementById('printBtn'), c0=pr.onclick; const hits=[]; const lis=()=>hits.push(1); pr.addEventListener('click', lis, true); pb.click(); pr.removeEventListener('click', lis, true); a.push(!!pb && hits.length===1);
+    const st0=UISTYLE; UISTYLE='ios'; document.querySelectorAll('.profdlg,#profPop').forEach(x=>x.remove());
+    document.getElementById('profBtn').click(); a.push(document.querySelectorAll('.profdlg').length + document.querySelectorAll('#profPop').length === 1);
+    document.querySelectorAll('.profdlg,#profPop').forEach(x=>x.remove()); UISTYLE=st0; lsSet('po.profask','1');
+    return JSON.stringify(a); })()`));
+  ok('Список розділів: усі кнопки — вкладки (для екранного читача)', r[0]===true, JSON.stringify(r[0]));
+  ok('«Друк» у шапці друкує поточний документ', r[1]);
+  ok('«Профіль»: одне натискання — одне вікно', r[2]);
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
