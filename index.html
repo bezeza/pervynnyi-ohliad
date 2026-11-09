@@ -2539,6 +2539,11 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .v2print{display:none}
 @media screen and (min-width:900px){ :root.ui-v2 .v2print{display:inline-flex;align-items:center} }
 @media print{.v2print{display:none!important}}
+/* 0.9.3.104 — журнал обстежень: кнопки варіантів під клітинкою */
+.ljqb{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ljqb .chip.s{padding:2px 8px;font-size:.85em;min-height:28px}
+.ljcell:has(.ljqb){grid-column:span 2}
+@media print{.ljqb{display:none}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2549,7 +2554,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.103 від 09.11.2026">v0.9.3.103 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.104 від 09.11.2026">v0.9.3.104 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4736,8 +4741,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.103', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.104', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.104', '09.11.2026', 'журнал обстежень: у ЗАС і копрограмі якісні пункти — кнопками (колір, прозорість, білок «не виявлено / немає / сліди», кетони й бактерії «+ / ++ / +++», солі, циліндри…); ЕхоКГ — ФВ ЛШ, КДР ЛШ, ЛП, МШП, ЗСЛШ з нормою за статтю (ASE/EACVI 2015), СТЛА, клапани, висновок і необов’язковий повний текст протоколу'],
   ['0.9.3.103', '09.11.2026', 'план обстеження: «✓ Внести результат» відкриває клітинки журналу обстежень (для ЗАК — Hb, ер., лейк., тр., ШОЕ тощо, з нормою й ↑↓) з датою з плану, замість рядка з «…»; консультації — як раніше'],
   ['0.9.3.102', '09.11.2026', 'швидкодія: картка «Обстеження» в шапці пацієнта не перемальовується, якщо кількість записів не змінилась (двічі за кожне оновлення тексту)'],
   ['0.9.3.101', '09.11.2026', 'епікриз: поле «Період перебування у стаціонарі» з підписами «Поступив/Поступила до стаціонару» і «Виписаний/Виписана» (для екранного читача — «Дата госпіталізації», «Дата виписки»); текст і бланки без змін'],
@@ -22548,6 +22554,58 @@ document.addEventListener('click', e=>{
   const d = dlg && dlg.querySelector('.ljed input[type=date]');
   if (d){ d.value = planResultDate(name); d.dispatchEvent(new Event('change')); }
 }, true);
+/* 0.9.3.104 — журнал обстежень: якісні пункти кнопками, ЕхоКГ — основні числа (погоджено лікарем 09.11.2026).
+   • ЗАС і копрограма: під клітинкою — кнопки варіантів; натискання вписує варіант, клітинку можна правити й далі.
+     Для «немає» лікар пише і «немає», і «не виявлено» — є обидві кнопки.
+   • ЕхоКГ: ФВ ЛШ, КДР ЛШ, ЛП, МШП, ЗСЛШ — з нормою за статтю за рекомендаціями ASE/EACVI 2015
+     (Lang RM et al. J Am Soc Echocardiogr 2015;28:1–39): ФВ 52–72 % (ч) / 54–74 % (ж); КДР 42–58 / 38–52 мм;
+     ЛП (передньо-задній) 30–40 / 27–38 мм; МШП і ЗСЛШ 6–10 / 6–9 мм. СТЛА — без позначки ↑↓
+     (ESC/ERS 2022 оцінюють ймовірність ЛГ за швидкістю трикуспідальної регургітації, не за СТЛА).
+     Далі «клапани», «висновок», «повний текст протоколу» (необов’язково).
+   Наявні функції журналу не змінено: каталог доповнюється при завантаженні, кнопки додаються до готових клітинок. */
+const LQB_ABS = ['не виявлено', 'немає'];
+const LQB = {
+  'ЗАС':{
+    'колір':['солом’яно-жовтий','жовтий','насичено-жовтий','червонуватий'],
+    'прозорість':['прозора','слабко каламутна','каламутна'],
+    'білок':[...LQB_ABS,'сліди'], 'глюкоза':LQB_ABS,
+    'кетонові тіла':[...LQB_ABS,'+','++','+++'], 'реакція на кров':[...LQB_ABS,'+','++','+++'], 'білірубін':[...LQB_ABS,'+','++','+++'],
+    'нітрити':['негативні','позитивні'], 'уробіліноген':['в нормі','підвищений'],
+    'епітелій':['плоский поодинокий','плоский, помірна кількість','плоский, значна кількість'],
+    'циліндри':[...LQB_ABS,'гіалінові поодинокі','зернисті'], 'солі':[...LQB_ABS,'урати','оксалати','фосфати'],
+    'бактерії':[...LQB_ABS,'+','++','+++'], 'слиз':[...LQB_ABS,'+','++']
+  },
+  'копрограма':{
+    'консистенція':['оформлений','кашкоподібний','рідкий'], 'колір':['коричневий','світло-коричневий','темний'],
+    'лейкоцити':[...LQB_ABS,'поодинокі в п/з'], 'еритроцити':[...LQB_ABS,'поодинокі в п/з'], 'яйця глистів':['не виявлено','виявлено: ']
+  }
+};
+['м’язові волокна','нейтральний жир','жирні кислоти','крохмаль','клітковина','слиз'].forEach(n=>{ LQB['копрограма'][n] = [...LQB_ABS,'поодинокі','незначна кількість','помірна кількість','значна кількість']; });
+/* ЕхоКГ: нові показники в каталозі */
+const LQB_ECHO_OLD = 2;   // було: [ФВ ЛШ, висновок]
+{ const e = LABCAT.find(x=>x.t === 'ЕхоКГ');
+  if (e) e.p = [P_('ФВ ЛШ','%',[52,72],[54,74]), P_('КДР ЛШ','мм',[42,58],[38,52]), P_('ЛП','мм',[30,40],[27,38]), P_('МШП','мм',[6,10],[6,9]), P_('ЗСЛШ','мм',[6,10],[6,9]),
+    P_('СТЛА','мм рт. ст.'), T_('клапани',''), T_('висновок',''), T_('повний текст протоколу','')]; }
+/* старі записи ЕхоКГ [ФВ, висновок] → нові місця, щоб висновок не став «КДР» */
+function lqbMigrate(){ (RES || []).forEach(r=>{ if (r.t === 'ЕхоКГ' && Array.isArray(r.vals) && r.vals.length === LQB_ECHO_OLD){ const [ef, z] = r.vals; r.vals = [ef, '', '', '', '', '', '', z, '']; } }); }
+{ const r0 = restore; restore = function(){ const r = r0.apply(this, arguments); try{ lqbMigrate(); }catch(e){} return r; }; }
+/* кнопки під клітинками */
+function lqbEnhance(grid){
+  const ed = grid.closest('.ljed'), sel = ed && ed.querySelector('select'), opts = sel && LQB[sel.value]; if (!opts) return;
+  [...grid.querySelectorAll('.ljcell')].forEach(cell=>{
+    if (cell.querySelector('.ljqb')) return;
+    const inp = cell.querySelector('input'), list = inp && opts[inp.getAttribute('aria-label')]; if (!list) return;
+    const box = h('span', {class:'ljqb', role:'group', 'aria-label':'Варіанти: ' + inp.getAttribute('aria-label')});
+    const mark = () => box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', inp.value.trim() === b.dataset.v.trim() ? 'true' : 'false'));
+    list.forEach(v=>box.append(h('button', {type:'button', class:'chip s', 'data-v':v, 'aria-pressed':'false', onclick:e=>{ e.preventDefault();
+      inp.value = v; inp.dispatchEvent(new Event('input')); mark(); if (/: $/.test(v)){ inp.focus(); inp.setSelectionRange(v.length, v.length); } }}, v.replace(/: $/, '…'))));
+    inp.addEventListener('input', mark); mark();
+    const hint = cell.querySelector(':scope > small.chips-hint'); if (hint) hint.before(box); else cell.append(box);
+  });
+}
+new MutationObserver(ms=>{ ms.forEach(m=>m.addedNodes.forEach(n=>{ if (n.nodeType !== 1) return;
+  const g = n.classList && n.classList.contains('ljgrid') ? n : n.closest && n.closest('.ljgrid') || (n.querySelector && n.querySelector('.ljgrid'));
+  if (g) lqbEnhance(g); })); }).observe(document.body, {childList:true, subtree:true});
 /* 0.10, етап 6: кінець побудови — відкладені оновлення виконуються один раз (див. 101-boot.js).
    Порядок важливий: спершу шапка й банер (SHELL.sync очищає колонки банера), потім update(), що їх доповнює. */
 PO_BOOT = false; PO_BOOT_CSS.remove();
