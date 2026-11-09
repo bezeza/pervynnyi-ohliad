@@ -2505,3 +2505,13 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .ljqb .chip.s{padding:2px 8px;font-size:.85em;min-height:28px}
 .ljcell:has(.ljqb){grid-column:span 2}
 @media print{.ljqb{display:none}}
+/* 0.9.3.105 — журнал обстежень на ПК щільніше: клітинки однакової ширини в порядку бланка (без перестановок і порожніх місць),
+   кнопки варіантів менші й переносяться всередині клітинки; англійська підказка («Color — колір») у клітинках
+   із кнопками — лише при наведенні (title). Телефон без змін. */
+@media (min-width:900px){
+  .ljgrid:has(.ljqb){grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px 10px}
+  .ljgrid .ljcell:has(.ljqb),.ljgrid:has(.ljqb) .ljcell.txt{grid-column:auto}
+  .ljcell:has(.ljqb) .ljd{display:none}
+  .ljqb{gap:3px;margin-top:3px}
+  .ljqb .chip.s{padding:1px 7px;min-height:24px;font-size:.8em;line-height:1.3}
+}
