@@ -1575,6 +1575,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('«Друк» у шапці друкує поточний документ', r[1]);
   ok('«Профіль»: одне натискання — одне вікно', r[2]);
 }
+// 0.9.3.98 — одна перевірка повноти на цикл оновлення (кеш checkDoc, 692-perf-check-cache.js)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[];
+    PO18_CHECK_CACHE.executions=0; update(); a.push(PO18_CHECK_CACHE.executions);
+    const pib=document.getElementById('meta_pib'), old=pib.value;
+    pib.value=''; const z1=checkDoc().some(x=>/ПІБ/.test(x.m)); pib.value='Тест Тестовий'; const z2=checkDoc().some(x=>/ПІБ/.test(x.m)); pib.value=old;
+    a.push(z1 && !z2);
+    a.push(PO18_CHECK_CACHE.result===null && PO18_CHECK_CACHE.depth===0);
+    return JSON.stringify(a); })()`));
+  ok('Оновлення виконує перевірку повноти один раз', r[0]===1, JSON.stringify(r));
+  ok('Поза оновленням кожна перевірка бачить нові поля', r[1]===true, JSON.stringify(r));
+  ok('Після оновлення кеш очищено', r[2]===true, JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
