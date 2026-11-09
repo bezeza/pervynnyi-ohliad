@@ -1624,6 +1624,36 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Епікриз: період перебування з підписами «Поступив/Поступила» і «Виписаний/Виписана»', r[0].startsWith('Період перебування у стаціонарі') && r[1]==='Поступив/Поступила до стаціонару' && r[2]==='Виписаний/Виписана', JSON.stringify(r));
   ok('Епікриз: дати періоду мають назви для екранного читача', r[3]==='Дата госпіталізації' && r[4]==='Дата виписки', JSON.stringify(r));
 }
+// 0.9.3.102 — labsCol без зайвого перезапису (697-perf-labs-col.js)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[];
+    const v=document.querySelector('#ptline .pcols .pcol.labs .pval'); RES.push({id:99901,d:todayISO(),t:'Тест',v:'1'}); labsCol(); const t1=v ? v.textContent : '1 запис';
+    RES.pop(); labsCol(); const t2=v ? v.textContent : 'вписати'; a.push(/^1 запис/.test(t1) && t2==='вписати');
+    return JSON.stringify(a); })()`));
+  ok('Картка «Обстеження» оновлюється при зміні журналу', r[0]===true, JSON.stringify(r));
+}
+// 0.9.3.103 — план обстеження: «✓» відкриває клітинки журналу (698-plan-result-cells.js)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[]; const res0=RES.slice(); const f=F('dx.plan'), i=f.opts.findIndex(o=>O(o).t==='ЗАК'), was=f.chips[i].getAttribute('aria-pressed')==='true';
+    if (!was) f.chips[i].click();
+    const row=[...document.querySelectorAll('#planDList .pdrow')].find(r=>r.querySelector('.pd-n').textContent.trim()==='ЗАК');
+    row.querySelector('button[title="Внести результат"]').click();
+    const dlg=document.querySelector('.ljdlg'), ed=dlg && dlg.querySelector('.ljed');
+    a.push(!!ed && !ed.hidden && ed.querySelector('select').value==='ЗАК');
+    const ins=ed ? [...ed.querySelectorAll('.ljgrid input')] : []; a.push(ins.map(x=>x.getAttribute('aria-label')).slice(0,3).join(','));
+    a.push(ed && ed.querySelector('input[type=date]').value===todayISO());
+    if (ins[0]){ ins[0].value='112'; ins[0].dispatchEvent(new Event('input')); [...ed.querySelectorAll('button')].find(x=>x.textContent==='Записати').click(); }
+    const rec=RES.find(x=>x.t==='ЗАК' && x.vals && x.vals[0]==='112'); a.push(!!rec && /Hb 112/.test(rec.v));
+    { const j=f.opts.findIndex(o=>/^консультація/.test(O(o).t)); if (j>=0){ const w2=f.chips[j].getAttribute('aria-pressed')==='true'; if (!w2) f.chips[j].click();
+      const nm=O(f.opts[j]).t, rw=[...document.querySelectorAll('#planDList .pdrow')].find(r=>r.querySelector('.pd-n').textContent.trim()===nm);
+      document.querySelectorAll('.ljdlg').forEach(x=>x.remove()); rw.querySelector('button[title="Внести результат"]').click();
+      a.push(!document.querySelector('.ljdlg') && !!rw.parentElement.querySelector('.pd-res textarea')); if (!w2) f.chips[j].click(); } else a.push(true); }
+    dlg && dlg.remove(); RES.length=0; res0.forEach(x=>RES.push(x)); if (!was) f.chips[i].click(); update();
+    return JSON.stringify(a); })()`));
+  ok('План обстеження: «✓» для ЗАК відкриває форму журналу', r[0]===true, JSON.stringify(r));
+  ok('План обстеження: у формі клітинки Hb, ер., КП', r[1]==='Hb,ер.,КП', JSON.stringify(r));
+  ok('План обстеження: дата форми — з плану', r[2]===true, JSON.stringify(r));
+  ok('План обстеження: число з клітинки записано в журнал', r[3]===true, JSON.stringify(r));
+  ok('План обстеження: консультація — як раніше, текстом', r[4]===true, JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

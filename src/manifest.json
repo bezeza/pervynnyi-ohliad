@@ -180,6 +180,8 @@
   "694-diary-print-vas-o2.js",
   "695-rx-course-days.js",
   "696-epi-period-labels.js",
+  "697-perf-labs-col.js",
+  "698-plan-result-cells.js",
   "699-boot-end.js"
  ]
 }
