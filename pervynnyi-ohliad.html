@@ -2544,7 +2544,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.101 від 09.11.2026">v0.9.3.101 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.102 від 09.11.2026">v0.9.3.102 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4731,8 +4731,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.101', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.102', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.102', '09.11.2026', 'швидкодія: картка «Обстеження» в шапці пацієнта не перемальовується, якщо кількість записів не змінилась (двічі за кожне оновлення тексту)'],
   ['0.9.3.101', '09.11.2026', 'епікриз: поле «Період перебування у стаціонарі» з підписами «Поступив/Поступила до стаціонару» і «Виписаний/Виписана» (для екранного читача — «Дата госпіталізації», «Дата виписки»); текст і бланки без змін'],
   ['0.9.3.100', '09.11.2026', 'щоденник: сатурація пишеться «SpO₂ 94 %» — у полі, тексті щоденника й на бланку 003/о (рішення лікаря); первинний огляд без змін'],
   ['0.9.3.99', '09.11.2026', 'щоденник: ВАШ 0–10 у рядку «Скарги» на бланку 003/о; киснева підтримка (концентратор / атмосферне повітря, канюля / маска) лише за явного вибору, SpO₂ — одним реченням; «день N з M» за заданої тривалості курсу і «Курс … завершено» в останній день'],
@@ -22511,6 +22512,17 @@ function epiPeriodLabels(){
   f.d2.setAttribute('aria-label', 'Дата виписки');
 }
 try{ epiPeriodLabels(); }catch(e){ console.warn(e); }
+/* 0.9.3.102 — швидкодія (план 18).
+   labsCol(): картка «Обстеження» в шапці пацієнта не перезаписується, якщо текст уже той самий
+      (виклик з renderPtBar і з update() за одне оновлення — другий тепер майже безкоштовний). */
+{
+  const labsCol0 = labsCol;
+  labsCol = function(){
+    const v = document.querySelector('#ptline .pcols .pcol.labs .pval');
+    if (v){ const n = RES.length, t = n ? `${n} ${plural(n, ['запис','записи','записів'])}` : 'вписати'; if (v.textContent === t) return; }
+    return labsCol0.apply(this, arguments);
+  };
+}
 /* 0.10, етап 6: кінець побудови — відкладені оновлення виконуються один раз (див. 101-boot.js).
    Порядок важливий: спершу шапка й банер (SHELL.sync очищає колонки банера), потім update(), що їх доповнює. */
 PO_BOOT = false; PO_BOOT_CSS.remove();

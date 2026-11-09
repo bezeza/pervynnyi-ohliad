@@ -1624,6 +1624,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Епікриз: період перебування з підписами «Поступив/Поступила» і «Виписаний/Виписана»', r[0].startsWith('Період перебування у стаціонарі') && r[1]==='Поступив/Поступила до стаціонару' && r[2]==='Виписаний/Виписана', JSON.stringify(r));
   ok('Епікриз: дати періоду мають назви для екранного читача', r[3]==='Дата госпіталізації' && r[4]==='Дата виписки', JSON.stringify(r));
 }
+// 0.9.3.102 — labsCol без зайвого перезапису (697-perf-labs-col.js)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[];
+    const v=document.querySelector('#ptline .pcols .pcol.labs .pval'); RES.push({id:99901,d:todayISO(),t:'Тест',v:'1'}); labsCol(); const t1=v ? v.textContent : '1 запис';
+    RES.pop(); labsCol(); const t2=v ? v.textContent : 'вписати'; a.push(/^1 запис/.test(t1) && t2==='вписати');
+    return JSON.stringify(a); })()`));
+  ok('Картка «Обстеження» оновлюється при зміні журналу', r[0]===true, JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
