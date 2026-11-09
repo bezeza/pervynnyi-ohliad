@@ -2500,3 +2500,8 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .v2print{display:none}
 @media screen and (min-width:900px){ :root.ui-v2 .v2print{display:inline-flex;align-items:center} }
 @media print{.v2print{display:none!important}}
+/* 0.9.3.104 — журнал обстежень: кнопки варіантів під клітинкою */
+.ljqb{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ljqb .chip.s{padding:2px 8px;font-size:.85em;min-height:28px}
+.ljcell:has(.ljqb){grid-column:span 2}
+@media print{.ljqb{display:none}}
