@@ -176,6 +176,9 @@
   "690-ui-hints.js",
   "691-audit-fixes.js",
   "692-perf-check-cache.js",
+  "693-diary-details.js",
+  "694-diary-print-vas-o2.js",
+  "695-rx-course-days.js",
   "699-boot-end.js"
  ]
 }
