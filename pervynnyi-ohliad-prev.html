@@ -2544,7 +2544,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.97 від 09.11.2026">v0.9.3.97 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.99 від 09.11.2026">v0.9.3.99 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3229,6 +3229,7 @@ const SECTIONS = [
   {id:'svid', type:'sel', norm:0, label:'Свідомість', tpl:'{v}', cont:true, opts:['свідомість ясна','оглушення','сопор']},
   {id:'sk', type:'sel', label:'Скарги', tpl:'{v}', opts:['Скарг активно не пред’являє','Скарги ті самі','Скарги зменшились','Скарги посилились']},
   {id:'skx', type:'text', label:'Уточнення скарг', tpl:'{v}', cont:true, joiner:': '},
+  {id:'vash', type:'num', label:'Біль за ВАШ (0–10)', parts:[{ph:'0',u:'балів',ok:[0,10]}], fmt:v=>{const x=String(v[0] == null ? '' : v[0]).trim(); return x ? 'Біль за ВАШ ' + x + '/10' : ''; }},
   {id:'zal', type:'text', remainFrom:true, label:'Скарги, що зберігаються (натисніть скаргу з первинного огляду, щоб додати чи прибрати)', tpl:'Зберігаються скарги на {v}'},
   {id:'son', type:'sel', norm:0, label:'Сон, апетит', tpl:'{v}', opts:['Сон і апетит збережені','Сон порушений','Апетит знижений','Сон порушений, апетит знижений']}
 ]},
@@ -3238,8 +3239,11 @@ const SECTIONS = [
   {id:'chss', type:'num', label:'ЧСС', parts:[{ph:'76',u:'уд./хв',n:[60,90],ok:[20,250]}], fmt:v=>v[0]?`ЧСС ${v[0]} уд./хв`:''},
   {id:'chd', type:'num', label:'ЧД і SpO2', parts:[{ph:'16',u:'за хв',n:[12,20],ok:[5,60]},{ph:'97',u:'% SpO2',n:[95,100],ok:[50,100]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`ЧД ${v[0]} за хв`); if(v[1])p.push(`SpO2 ${v[1]}%`); return p.join(', ');}},
-  {id:'o2', type:'num', cont:true, joiner:' ', label:'Кисень (порожньо — повітря)', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
-    fmt:v=>v[0]?`на кисні ${v[0]} л/хв`:''},
+  {id:'o2src', type:'sel', noOut:true, label:'Киснева підтримка', opts:['Не застосовується (атмосферне повітря)','Кисневий концентратор']},
+  {id:'o2dev', type:'sel', noOut:true, label:'Спосіб подачі кисню', opts:['Назальна канюля','Лицева маска']},
+  {id:'o2', type:'num', cont:true, joiner:' ', label:'Потік кисню', parts:[{ph:'—',u:'л/хв О₂',ok:[0.5,15]}],
+    fmt:v=>diaryOxygenText(document.getElementById('d_obj_o2src')?.value,
+      document.getElementById('d_obj_o2dev')?.value, v[0])},
   {id:'glik', type:'num', dprof:1, label:'Глікемія', parts:[{ph:'6,5',u:'ммоль/л',n:[3.9,10],ok:[1,40]}], fmt:v=>v[0]?`Глікемія ${v[0]} ммоль/л`:''},
   {id:'masa', type:'num', dprof:1, label:'Маса тіла і діурез за добу', parts:[{ph:'78',u:'кг',ok:[20,300]},{ph:'1500',u:'мл діурез',ok:[50,10000]}],
     fmt:v=>{const p=[]; if(v[0])p.push(`маса тіла ${v[0]} кг`); if(v[1])p.push(`діурез ${v[1]} мл/добу`); const t=p.join(', '); return t ? t[0].toUpperCase()+t.slice(1) : '';}},
@@ -4727,8 +4731,10 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.97', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.99', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.99', '09.11.2026', 'щоденник: ВАШ 0–10 у рядку «Скарги» на бланку 003/о; киснева підтримка (концентратор / атмосферне повітря, канюля / маска) лише за явного вибору, SpO₂ — одним реченням; «день N з M» за заданої тривалості курсу і «Курс … завершено» в останній день'],
+  ['0.9.3.98', '09.11.2026', 'швидкодія: перевірка повноти документа виконується один раз на оновлення замість чотирьох (зауваження біля «Копіювати», короткий список, прогрес і вкладка «Перевірка» читають один результат); поза оновленням перевірка як і раніше завжди актуальна'],
   ['0.9.3.97', '09.11.2026', 'за аудитом: кнопка «Друк» у шапці — друк поточного документа з будь-якого розділу, без відкриття панелі «Текст» (до друку огляду, щоденника й епікризу — на 2–3 натискання менше); «Профіль» відкривається одним натисканням (раніше разом з’являлися і меню, і вікно), курсор переходить у вікно, Escape закриває його й повертає курсор на кнопку; список розділів правильно читається програмами для незрячих; рядок стану не показується на стартовому екрані без пацієнта'],
   ['0.9.3.96', '08.11.2026', 'телефон: сторінку знову можна догортати до кінця — під час гортання програма більше не смикає її назад (підсвічування поточного розділу прокручувало всю сторінку замість списку розділів); підвал з версією, контактами й ліцензією більше не ховається під нижніми смужками (текст розділу й вкладки) — відступ знизу рахується за їхньою справжньою висотою; швидше натискання кнопок: текст документа більше не перераховується кілька разів на кожне натискання — кнопка скарги відповідає за ≈ 0,06 с замість ≈ 0,27 с (на слабкому планшеті ≈ 0,2 с замість ≈ 1 с), заповнення за хворобою — утричі швидше; короткі підказки при першому відкритті розділу (один раз; вимкнути — «Налаштування» → «Підказки»); зрозумілі повідомлення про помилки збереження й читання файлів — що сталося і що зробити, без технічного тексту браузера'],
   ['0.9.3.95', '08.11.2026', 'новий вигляд, етап 1: на комп’ютері текст документа схований за кнопкою «Текст» у шапці (з кількістю знаків) і відкривається панеллю справа, Esc закриває; форма на всю ширину; ліві розділи з кружками стану; акцент — темно-синій. «Вигляд» → «Старий вигляд» повертає все як було. Телефон і друк не змінено; фундамент: 7 розмірів шрифту на екрані замість 37 (друк і бланки без змін), контраст тексту ≥ 4,5:1 і кнопки ≥ 32 px на ПК, «Новий пацієнт» без помаранчевого, SVG-значки з набору автора замість емодзі (дві партії, 37 значків), кольори екрана через змінні (у нічній темі виділені зміни в тексті тепер читабельні), 57 зайвих !important прибрано; Ctrl+K знаходить пацієнтів, Alt+N — новий пацієнт, Ctrl+Enter копіює й показує «Текст»; дата народження цифрами дд.мм.рррр, вік текстом, одна кнопка «Імпорт ▾»; «розумна клавіатура»: підказки з 3 літер (Tab — прийняти; ваші часті фрази, кнопки розділу, обрана хвороба), «38.5 С» → «38,5 °C»; скарги на ПК — поле першим, кнопки згорнуті під ним, підказка-кнопка натискає кнопку, «Обрано кнопками» під полем, скарги посиндромно (13 синдромів); унизу сторінки — зв’язок з автором у Telegram, версія, «що нового», відкритий код; вади: «Перевірка» без ✓ на порожньому документі, повні назви розділів, «Огляд» у шапці, «Швидкий огляд» один раз, сповіщення не перекривають панель «Текст»; «Скасувати» замість «Ви впевнені?» (очищення документа, оновлення тексту з форми); «Листок лікарських призначень» — одна назва, як у формі 003-4/о (раніше «Лист» і «Листок»), один спосіб додати; рядок стану внизу екрана: пацієнт, день лікування, які розділи ще не заповнено (клік — перехід до розділу), нагадування про резервну копію; «Збережено ✓» / «Зберігається…» / «Не збережено» — у картці пацієнта; стан заповнення показано одним способом — кружками біля розділів (смужку «Заповнено N з M» прибрано); друк вільних документів (огляд, щоденник, огляд завідувача) — на вибір «Класичне» (як було) або «Власне»: назва документа кольором, розділи двома колонками, діагноз у рамці; перемикач — у «Перед друком» над аркушем, вибір запам’ятовується. Бланки й форми МОЗ (003/о, 027/о, 028/о, листок призначень) не змінюються; швидший старт: поки програма будується, сторінка не перераховується після кожного кроку, а повторні оновлення тексту й шапки виконуються один раз у кінці — запуск приблизно на третину швидший (на звичайному комп’ютері ≈ 0,45 с замість ≈ 0,7 с, на слабкому планшеті ≈ 2,2 с замість ≈ 3,3 с); вади: значок списку пацієнтів — «▾» замість незрозумілого «⇅»; видима рамка фокусу для роботи з клавіатури; на телефоні «Новий пацієнт» у шапці — кнопка «＋», щоб не стискати ім’я пацієнта; поле пошуку пацієнтів підписане для екранного читача'],
@@ -22396,6 +22402,100 @@ try{ v2TabRoles(); const t = document.getElementById('tabs'); if (t) new Mutatio
   const tb = document.getElementById('txtBtn'); if (tb && tb.parentElement) tb.after(pb); }
 { const x0 = blanksNav; blanksNav = function(){ const r = x0.apply(this, arguments); try{ v2TabRoles(); }catch(e){} return r; }; }
 { const x0 = layoutTabs; layoutTabs = function(){ const r = x0.apply(this, arguments); try{ v2TabRoles(); }catch(e){} return r; }; }
+/* 0.9.3.98 — одна перевірка повноти на цикл оновлення (перенесено з неосновної гілки 0.9.3.86).
+   renderCheck, copyPeekRender, progressRequired і перевірка перед друком читають той самий результат checkDoc().
+   Поза update() кеш не діє: окремі перевірки завжди бачать актуальні поля. */
+const PO18_CHECK_CACHE = {depth:0, result:null, executions:0, enabled:true};
+{
+  const checkDoc0 = checkDoc;
+  checkDoc = function(){
+    if (PO18_CHECK_CACHE.enabled && PO18_CHECK_CACHE.depth && PO18_CHECK_CACHE.result !== null) return PO18_CHECK_CACHE.result;
+    const result = checkDoc0.apply(this, arguments);
+    if (PO18_CHECK_CACHE.depth){
+      PO18_CHECK_CACHE.executions++;
+      if (PO18_CHECK_CACHE.enabled) PO18_CHECK_CACHE.result = result;
+    }
+    return result;
+  };
+}
+{
+  const update0 = update;
+  update = function(){
+    const nested = PO18_CHECK_CACHE.depth > 0;
+    PO18_CHECK_CACHE.result = null;
+    PO18_CHECK_CACHE.depth++;
+    try{ return update0.apply(this, arguments); }
+    finally{
+      PO18_CHECK_CACHE.depth--;
+      if (!PO18_CHECK_CACHE.depth || nested) PO18_CHECK_CACHE.result = null;
+    }
+  };
+}
+/* 0.9.3.99 — щоденник: лише явно внесені відомості про кисень і тривалість курсу (перенесено з #111).
+   Функції оголошені через function: доступні й під час початкового формування полів. */
+function diaryOxygenText(source, method, flow){
+  source = String(source ?? ''); method = String(method ?? '');
+  flow = String(flow ?? '').trim();
+  if (source === '0') return 'на атмосферному повітрі';
+  const device = method === '0' ? ' через назальну канюлю' : method === '1' ? ' через лицеву маску' : '';
+  if (source === '1') return 'за допомогою кисневого концентратора' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
+  if (device) return 'на кисні' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
+  return flow ? 'на кисні ' + flow + ' л/хв' : '';
+}
+function diaryCourseLine(it, date){
+  const total = Number(it.days);
+  if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
+  const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
+  return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total
+    ? rxLine(it) + ' (день ' + elapsed + ' з ' + total + ')' : rxLine(it);
+}
+function diaryCourseCompleted(it, date){
+  const total = Number(it.days);
+  if ((typeof rxKind === 'function' && rxKind(it) !== 'drug') || !it.start || !Number.isInteger(total) || total <= 0) return false;
+  return date === addDays(it.start, total - 1) && (!it.stop || it.stop > date);
+}
+/* 0.9.3.99 — бланк щоденника (003/о): ВАШ і спосіб подачі кисню. Наявну bDiaryEntry не змінено — лише обгортка.
+   Без нових полів рядки не додаються, і друк збігається з попередньою версією (порожній і старі записи). */
+{
+  const bDiaryEntry0 = bDiaryEntry;
+  bDiaryEntry = function(e){
+    const el = bDiaryEntry0.apply(this, arguments);
+    try{ diaryPrintExtras(el, e); }catch(err){ console.warn(err); }
+    return el;
+  };
+}
+function diaryPrintExtras(el, e){
+  const f = (e && e.f) || {}, n = id => (f[id] || '').trim();
+  const vash = n('d_main_vash_0'), src = String(f.d_obj_o2src || ''), dev = String(f.d_obj_o2dev || '');
+  const o2 = n('d_obj_o2_0'), spo = n('d_obj_chd_1');
+  const rows = [...el.querySelectorAll('.brow')];
+  const rowOf = t => rows.find(r => r.firstElementChild && r.firstElementChild.textContent.trim().startsWith(t));
+  if (vash !== ''){ const skr = rowOf('Скарги на'); if (skr) skr.after(bRow('Біль за ВАШ: ', bFill(vash, true), '/10')); }
+  if (src !== ''){   // без явного вибору джерела кисню рядок лишається як раніше (друк старих записів не змінюється)
+    const span = (rowOf('Аускультативно в легенях') || {}).lastElementChild;
+    if (span){
+      const spoLine = [spo ? 'SpO2 ' + spo + '%' : '', diaryOxygenText(src, dev, o2)].filter(Boolean).join(' ');
+      span.replaceWith(bFill(bJoin(bDv(f, 'd_obj.dyh'), spoLine), true, true));
+    }
+  }
+}
+/* 0.9.3.99 — щоденник: «(день N з M)» і «Курс … завершено» у блоці «Лікування». Лише для щоденника (DOC === 'shch'). */
+{
+  const rxPart0 = rxPart;
+  rxPart = function(){
+    if (DOC !== 'shch') return rxPart0.apply(this, arguments);
+    if (!RXF().length) return null;
+    const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
+    const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
+    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
+    const lines = [];
+    if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
+    if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
+    if (off.length) lines.push('Відмінено: ' + off.map(it=>it.drug).join(', ') + '.');
+    if (completed.length) lines.push(completed.map(it=>'Курс ' + it.drug + ' завершено').join('; ') + '.');
+    return lines.length ? {head:'Лікування:', body:lines.join(' '), sep:' '} : null;
+  };
+}
 /* 0.10, етап 6: кінець побудови — відкладені оновлення виконуються один раз (див. 101-boot.js).
    Порядок важливий: спершу шапка й банер (SHELL.sync очищає колонки банера), потім update(), що їх доповнює. */
 PO_BOOT = false; PO_BOOT_CSS.remove();
