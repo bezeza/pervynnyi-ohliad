@@ -126,7 +126,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  ok('17. Експорт у файл', (w2.__dl||[]).some(n=>/\.json$/.test(n)));
  const blob=JSON.stringify({type:'po-patients',items:JSON.parse(w2.localStorage.getItem('po.patients'))});
  w2.importFile(new w2.File([blob],'p.json')); { const t0=Date.now(); let b=null; while(Date.now()-t0<3000 && !(b=doc2.querySelector('.packsheet button.btn.primary'))) await sleep(25); if(b) b.click(); await sleep(50); } ok('17. Імпорт з файлу (з підтвердженням, без дублів)', /Перенесено: нових \d+, оновлено \d+/.test(doc2.querySelector('#toast').textContent), doc2.querySelector('#toast').textContent);
- w2.importFile(new w2.File(['{"a":1}'],'x.json')); await sleep(80); ok('17. Чужий файл відхиляється', doc2.querySelector('#toast').textContent.includes('не файл пацієнтів'));
+ w2.importFile(new w2.File(['{"a":1}'],'x.json')); { const t0=Date.now(); while(Date.now()-t0<1000 && !doc2.querySelector('#toast').textContent.includes('не файл пацієнтів')) await sleep(20); } ok('17. Чужий файл відхиляється', doc2.querySelector('#toast').textContent.includes('не файл пацієнтів'), doc2.querySelector('#toast').textContent);
  // 18 тема
  const tb=doc2.getElementById('themeBtn'), th=()=>(doc2.documentElement.getAttribute('data-theme')||'')+'/'+(doc2.documentElement.getAttribute('data-tone')||''), seen=[]; for(let i=0;i<5;i++){ tb.click(); seen.push(th()); }
  ok('18. Тема: день → теплий папір → ніч → кабінет → авто', seen.join(' ')==='light/ light/warm dark/ dark/grey /', seen.join(' '));
