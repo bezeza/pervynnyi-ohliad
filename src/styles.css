@@ -2496,3 +2496,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 }
 /* 0.9.3.95 — телефон: низ сторінки (підвал з версією й контактами) більше не ховається під нижніми смужками */
 @media (max-width:899px){ :root body.pht{padding-bottom:calc(var(--v2bot,84px) + 12px)} :root body.pht.live-on .wrap{padding-bottom:0} }
+/* 0.9.3.97 — «Друк» у шапці (новий вигляд, ПК) */
+.v2print{display:none}
+@media screen and (min-width:900px){ :root.ui-v2 .v2print{display:inline-flex;align-items:center} }
+@media print{.v2print{display:none!important}}
