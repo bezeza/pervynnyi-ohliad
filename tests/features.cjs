@@ -1687,6 +1687,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('ЕхоКГ: чоловік — КДР 55 і ФВ 53 у нормі; СТЛА без позначки', r[7]===true, JSON.stringify(r));
   ok('ЕхоКГ: старий запис (ФВ, висновок) переноситься без зсуву', r[8]===true, JSON.stringify(r));
 }
+{ const r=w.eval(`(()=>{ const keep=RX.slice(), keepR=RES.slice(); RX.length=0; RES.length=0; lsSet('po.ampsop','0'); const off=amp3Warnings().length===0; lsSet('po.ampsop','1');
+    const t=todayISO(); const f=addRx({drug:'Флуконазол', dose:'150 мг', freq:'1 р/д', route:'per os', start:t}); const ab=addRx({drug:'Цефтріаксон', start:t, route:'в/в', cult:'взято'});
+    const n=addRx({drug:'Ністатин', dose:'500000 ОД', freq:'4 р/д', route:'per os', start:t}); const v=addRx({drug:'Ацикловір', route:'в/в', start:t}); const p=addRx({drug:'Альбендазол', start:t});
+    const old=addRx({drug:'Осельтамівір', start:addDays(t,-3)}); old.rev='';
+    const W=rxWarnings().map(x=>x.t).join(' | ');
+    const rev=f.rev===addDays(t,2)&&p.rev===addDays(t,2), af=/СОП № 213: Флуконазол — лише за лабораторно підтвердженого/.test(W)&&/біоматеріалу/.test(W)&&/чинників ризику інвазивного кандидозу/.test(W);
+    const d400=/флуконазол 150 мг\\/добу/.test(W), nys=/Ністатин не всмоктується/.test(W), ivv=/СОП № 215: Ацикловір в\\/в/.test(W)&&/експрес-тесту чи ПЛР у журналі немає/.test(W);
+    const ap=/СОП № 212: Альбендазол/.test(W), rv2=/перегляд призначення Осельтамівір через 48–72 год/.test(W), oldNew=!/СОП № 215: Осельтамівір — за підтвердженого/.test(W);
+    RES.push({id:998,d:t,t:'ПЛР',v:'грип A — виявлено'}); const W2=rxWarnings().map(x=>x.t).join(' | '); const pcr=!/експрес-тесту чи ПЛР у журналі немає/.test(W2);
+    RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
+    return JSON.stringify([off,rev,af,d400,nys,ivv,ap,rv2,oldNew,pcr,amp3DayMg({dose:'0,2 г',freq:'2 р/д'})]); })()`);
+  ok('СОП № 213, 215, 212: показання й біоматеріал, флуконазол < 400 мг/добу, ністатин, противірусні в/в і ПЛР, протипаразитарні, дата перегляду 48–72 год; без СОП — нічого', r==='[true,true,true,true,true,true,true,true,true,true,400]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

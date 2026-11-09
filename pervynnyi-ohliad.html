@@ -2559,7 +2559,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.105 від 09.11.2026">v0.9.3.105 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.106 від 09.11.2026">v0.9.3.106 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4746,8 +4746,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.105', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.106', VDATE = '09.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.106', '09.11.2026', 'СОП закладу, перевірки за СОП № 213, 215, 212: антифунгальні — показання й біоматеріал до призначення, профілактика під час АБТ лише за чинників ризику, азоли — за стабільного стану й Candida albicans, ністатин і флуконазол < 400 мг/добу не для профілактики інвазивного мікозу, деескалація з парентеральних; противірусні — експрес-тест чи ПЛР, в/в лише при тяжкому перебігу; протипаразитарні — підтвердження й обмеження профілактики. Дата перегляду через 48–72 год ставиться й для цих препаратів. Лише з увімкненим «СОП закладу»'],
   ['0.9.3.105', '09.11.2026', 'журнал обстежень на ПК щільніше: клітинки ЗАС і копрограми без порожніх місць, менші кнопки варіантів; на телефоні без змін'],
   ['0.9.3.104', '09.11.2026', 'журнал обстежень: у ЗАС і копрограмі якісні пункти — кнопками (колір, прозорість, білок «не виявлено / немає / сліди», кетони й бактерії «+ / ++ / +++», солі, циліндри…); ЕхоКГ — ФВ ЛШ, КДР ЛШ, ЛП, МШП, ЗСЛШ з нормою за статтю (ASE/EACVI 2015), СТЛА, клапани, висновок і необов’язковий повний текст протоколу'],
   ['0.9.3.103', '09.11.2026', 'план обстеження: «✓ Внести результат» відкриває клітинки журналу обстежень (для ЗАК — Hb, ер., лейк., тр., ШОЕ тощо, з нормою й ↑↓) з датою з плану, замість рядка з «…»; консультації — як раніше'],
@@ -22612,6 +22613,76 @@ function lqbEnhance(grid){
 new MutationObserver(ms=>{ ms.forEach(m=>m.addedNodes.forEach(n=>{ if (n.nodeType !== 1) return;
   const g = n.classList && n.classList.contains('ljgrid') ? n : n.closest && n.closest('.ljgrid') || (n.querySelector && n.querySelector('.ljgrid'));
   if (g) lqbEnhance(g); })); }).observe(document.body, {childList:true, subtree:true});
+/* ===== 0.9.3.106 — СОП закладу, етап 3: перевірки за СОП № 213 (антифунгальні), № 215 (противірусні), № 212 (протипаразитарні) =====
+   Діють лише з увімкненим «СОП закладу» (659-amp-sop.js). Нічого не блокують — попередження в листі призначень
+   і в «Перевірці», як у 661-amp-checks.js. Щоб не було «перфекціонізму», нагадування про обґрунтування —
+   одне на препарат і лише на початку курсу (день призначення й наступний).
+   • усі три види: дата перегляду через 48–72 год ставиться сама (як для антибіотиків) і нагадує, коли настала;
+   • СОП № 213: показання (лабораторно підтверджений / обґрунтовано підозрюваний мікоз), біоматеріал до призначення,
+     профілактично під час АБТ — лише за чинників ризику (п. 7–8); азоли — за стабільного стану й підтвердженої
+     Candida albicans (п. 4.3); ністатин/натаміцин і флуконазол < 400 мг/добу — не для профілактики інвазивного мікозу (п. 12);
+     парентеральний засіб без пероральної форми — передбачити деескалацію (п. 13);
+   • СОП № 215: підтвердження (експрес-тест, ПЛР) або клінічні показання (п. 3.2); в/в — лише при тяжкому перебігу
+     чи неможливості прийому через рот (п. 3.4); профілактично — лише за показань з інструкції (п. 3.6);
+   • СОП № 212: підтверджене паразитарне захворювання або клінічні показання, діагностика до лікування (п. 3.2–3.3);
+     профілактично — лише як в інструкції / стандартах, напр. хіміопрофілактика малярії (п. 3.5). */
+const AMP3 = {
+  azole:/^(флуконазол|вориконазол|ітраконазол|позаконазол|ізавуконазол|кетоконазол)/i,
+  poly:/^(ністатин|натаміцин)/i, fluc:/^флуконазол/i,
+  ivOnly:/^(каспофунгін|мікафунгін|анідулафунгін|амфотерицин)/i
+};
+/* добова доза в мг з полів «доза» і «кратність»; '' — якщо не розпізнано */
+function amp3DayMg(it){
+  const m = /([\d]+(?:[.,]\d+)?)\s*(мг|г)(?![а-яіїєґa-z])/i.exec(String(it.dose || '')); if (!m) return '';
+  const one = parseFloat(m[1].replace(',', '.')) * (/^г$/i.test(m[2]) ? 1000 : 1);
+  const f = String(it.freq || ''), r = /(\d+)\s*р\s*\/\s*д/i.exec(f), q = /кожні\s*(\d+)\s*год/i.exec(f);
+  const n = r ? +r[1] : q ? Math.round(24 / +q[1]) : /1\s*р|раз на добу|на ніч|вранці/i.test(f) || !f.trim() ? 1 : 0;
+  return n ? one * n : '';
+}
+function amp3Severe(){ try{ const a = F('d_main.stan').el.value, b = F('zah.stan').el.value; return +(a !== '' ? a : b) >= 2; }catch(e){ return false; } }
+function amp3Res(re){ try{ return (RES || []).some(r=>re.test(String(r.t || '') + ' ' + String(r.v || ''))); }catch(e){ return false; } }
+
+/* дата перегляду 48–72 год — і для антифунгальних, противірусних, протипаразитарних */
+{ const x0 = addRx; addRx = function(){ const it = x0.apply(this, arguments);
+    try{ if (it && !it.rev && ampOn() && /^(af|av|ap)$/.test(ampKind(it.drug))) it.rev = addDays(it.start, 2); }catch(e){} return it; }; }
+
+function amp3Warnings(){
+  if (typeof ampOn !== 'function' || !ampOn()) return [];
+  const t = todayISO(), W = [], nm = it => String(it.drug || '').trim();
+  const act = RXF().filter(it=>/^(af|av|ap)$/.test(ampKind(it.drug)) && !(it.stop && it.stop <= t) && !(rxEnd(it) && rxEnd(it) < t) && (!it.start || it.start <= t));
+  const isNew = it => !it.start || it.start >= addDays(t, -1);
+  const onAB = RXF().some(it=>ampKind(it.drug) === 'ab' && !(it.stop && it.stop <= t) && !(rxEnd(it) && rxEnd(it) < t));
+  act.forEach(it=>{
+    const k = ampKind(it.drug), S = AMP_SOP[k] + ': ', n = nm(it);
+    /* перегляд, якщо дату не задано (препарат додано до вмикання СОП) — 661 перевіряє задану it.rev */
+    if (!it.rev && it.start){ const rv = addDays(it.start, 2);
+      if (rv <= t) W.push({c:'warn', t:`${S}перегляд призначення ${n} через 48–72 год (з ${fmtD(it.start)}) — оцінка ефективності, рішення щодо продовження чи припинення.`}); }
+    if (k === 'af'){
+      if (isNew(it)){
+        const why = [];
+        if (!amp3Res(/гриб|candida|кандид|aspergill|аспергіл|міко/i) && !/взято/i.test(it.cult || '')) why.push('до призначення — зразок біоматеріалу на мікробіологічне дослідження (п. 4.2)');
+        if (onAB) why.push('профілактично під час антибіотикотерапії — лише за чинників ризику інвазивного кандидозу (п. 7–8)');
+        W.push({c:'warn', t:`${S}${n} — лише за лабораторно підтвердженого або обґрунтовано підозрюваного мікозу; колонізація без ознак інфекції не є показанням. Запишіть критерії`
+          + (why.length ? '; ' + why.join('; ') : '') + '.'});
+        if (AMP3.poly.test(n)) W.push({c:'warn', t:`${S}${n} не всмоктується в ШКТ — для профілактики інвазивного мікозу не рекомендований (п. 12).`});
+        const mg = amp3DayMg(it);
+        if (AMP3.fluc.test(n) && mg && mg < 400) W.push({c:'warn', t:`${S}флуконазол ${mg} мг/добу: для профілактики інвазивного мікозу доза менше 400 мг/добу не рекомендована (п. 12).`});
+        if (AMP3.ivOnly.test(n)) W.push({c:'warn', t:`${S}${n} має лише парентеральну форму — передбачте деескалацію на засіб із пероральною формою (п. 13).`});
+      }
+      if (AMP3.azole.test(n) && amp3Severe()) W.push({c:'warn', t:`${S}${n} (азол) при важкому стані: за СОП азоли — за стабільного стану й мікробіологічно підтвердженої Candida albicans; інакше — ехінокандини (п. 4.3).`});
+      else if (AMP3.azole.test(n) && isNew(it) && amp3Res(/candida|кандид/i) && !amp3Res(/albicans|альбіканс/i)) W.push({c:'warn', t:`${S}${n}: виділено Candida не albicans — азоли за СОП лише при Candida albicans; перевірте чутливість, розгляньте ехінокандин (п. 4.3).`});
+    }
+    if (k === 'av'){
+      if (isNew(it)) W.push({c:'warn', t:`${S}${n} — за підтвердженого вірусного захворювання (експрес-тест, ПЛР) або клінічних показань; запишіть показання, дозу, кратність і тривалість`
+        + (amp3Res(/ПЛР|PCR|експрес|антиген/i) ? '' : '; результату експрес-тесту чи ПЛР у журналі немає') + '. Профілактично — лише за показань з інструкції (п. 3.2, 3.6).'});
+      if (/в\/в|внутрішньовенн/i.test(it.route || '') && !amp3Severe()) W.push({c:'warn', t:`${S}${n} в/в — за СОП лише при тяжкому перебігу або неможливості прийому через рот; пріоритет — пероральна форма (п. 3.4).`});
+    }
+    if (k === 'ap' && isNew(it)) W.push({c:'warn', t:`${S}${n} — за підтвердженого паразитарного захворювання або клінічних показань, після діагностичних досліджень; запишіть показання, дозу, кратність і тривалість. Профілактично — лише як передбачено інструкцією чи стандартами (напр. хіміопрофілактика малярії) (п. 3.2–3.5).`});
+  });
+  return W;
+}
+{ const x0 = rxWarnings; rxWarnings = function(){ const r = x0.apply(this, arguments); try{ return r.concat(amp3Warnings()); }catch(e){ return r; } }; }
+try{ renderRx(); }catch(e){}
 /* 0.10, етап 6: кінець побудови — відкладені оновлення виконуються один раз (див. 101-boot.js).
    Порядок важливий: спершу шапка й банер (SHELL.sync очищає колонки банера), потім update(), що їх доповнює. */
 PO_BOOT = false; PO_BOOT_CSS.remove();
