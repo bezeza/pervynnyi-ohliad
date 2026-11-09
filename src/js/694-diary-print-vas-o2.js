@@ -15,10 +15,10 @@ function diaryPrintExtras(el, e){
   const rows = [...el.querySelectorAll('.brow')];
   const rowOf = t => rows.find(r => r.firstElementChild && r.firstElementChild.textContent.trim().startsWith(t));
   if (vash !== ''){ const skr = rowOf('Скарги на'); if (skr) skr.after(bRow('Біль за ВАШ: ', bFill(vash, true), '/10')); }
-  if (src !== ''){   // без явного вибору джерела кисню рядок лишається як раніше (друк старих записів не змінюється)
+  if (spo || src !== ''){   // 0.9.3.100: SpO₂ у форматі «SpO₂ 94 %» (рішення лікаря)
     const span = (rowOf('Аускультативно в легенях') || {}).lastElementChild;
     if (span){
-      const spoLine = [spo ? 'SpO2 ' + spo + '%' : '', diaryOxygenText(src, dev, o2)].filter(Boolean).join(' ');
+      const spoLine = [spo ? 'SpO₂ ' + spo + ' %' : '', diaryOxygenText(src, dev, o2)].filter(Boolean).join(' ');
       span.replaceWith(bFill(bJoin(bDv(f, 'd_obj.dyh'), spoLine), true, true));
     }
   }
