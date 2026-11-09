@@ -175,6 +175,7 @@
   "689-ui-a11y.js",
   "690-ui-hints.js",
   "691-audit-fixes.js",
+  "692-perf-check-cache.js",
   "699-boot-end.js"
  ]
 }
