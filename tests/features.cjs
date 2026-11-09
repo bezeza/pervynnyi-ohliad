@@ -1140,7 +1140,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const kinds=[ampKind('Флуконазол'),ampKind('Осельтамівір'),ampKind('Альбендазол'),ampKind('Цефтріаксон'),ampKind('Парацетамол')].join(',');
     RX.splice(RX.indexOf(it),1); renderRx(); lsSet('po.ampsop','0'); ampBlanksSync(); const nb0=FBLANKS.filter(b=>/^amp\\d$/.test(b.k)).length; lsSet('po.ampsop','');
     return JSON.stringify([!!sw, off0, on, nb, btns, badge, ok1, /Додаток 1/.test(t1)&&/Цефтріаксон/.test(t1)&&/спостереження/.test(t1), ok4, /Додаток 4/.test(t4)&&/СОП № 214/.test(t4), kinds, nb0]); })()`);
-  ok('СОП закладу: вмикач у «Налаштуваннях» (за замовчуванням вимкнено), Додатки 1–5 у порожніх бланках, у листі призначень — вид і друк заповнених Додатків 1 і 4', r==='[true,true,true,5,2,true,true,true,true,true,"af,av,ap,ab,",0]', r); }
+  ok('СОП закладу: вмикач у «Налаштуваннях» (за замовчуванням вимкнено), Додатки 1–5 у порожніх бланках, у листі призначень — вид і друк заповнених Додатків 1 і 4', r==='[true,true,true,5,3,true,true,true,true,true,"af,av,ap,ab,",0]', r); }
 { const r=w.eval(`(()=>{ const n=['Метамізол натрію','Мелоксикам','Німесулід','Кетопрофен','Лорноксикам','Ацеклофенак','Целекоксиб','Еторикоксиб','Трамадол','Морфін'];
     const inCat=n.every(x=>!!DMAP[x.toLowerCase()]&&!!rxLib()[x.toLowerCase()]); const ns=['Мелоксикам','Німесулід','Кетопрофен','Лорноксикам','Ацеклофенак','Целекоксиб','Еторикоксиб'].every(x=>DCLS.nsaid.includes(x));
     const notOp=!DCLS.nsaid.includes('Трамадол')&&!DCLS.nsaid.includes('Метамізол натрію'); const noTr=!DMAP['тримеперидин'];
@@ -1687,6 +1687,32 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('ЕхоКГ: чоловік — КДР 55 і ФВ 53 у нормі; СТЛА без позначки', r[7]===true, JSON.stringify(r));
   ok('ЕхоКГ: старий запис (ФВ, висновок) переноситься без зсуву', r[8]===true, JSON.stringify(r));
 }
+{ const r=w.eval(`(()=>{ const keep=RX.slice(), keepR=RES.slice(); RX.length=0; RES.length=0; lsSet('po.ampsop','0'); const off=amp3Warnings().length===0; lsSet('po.ampsop','1');
+    const t=todayISO(); const f=addRx({drug:'Флуконазол', dose:'150 мг', freq:'1 р/д', route:'per os', start:t}); const ab=addRx({drug:'Цефтріаксон', start:t, route:'в/в', cult:'взято'});
+    const n=addRx({drug:'Ністатин', dose:'500000 ОД', freq:'4 р/д', route:'per os', start:t}); const v=addRx({drug:'Ацикловір', route:'в/в', start:t}); const p=addRx({drug:'Альбендазол', start:t});
+    const old=addRx({drug:'Осельтамівір', start:addDays(t,-3)}); old.rev='';
+    const W=rxWarnings().map(x=>x.t).join(' | ');
+    const rev=f.rev===addDays(t,2)&&p.rev===addDays(t,2), af=/СОП № 213: Флуконазол — лише за лабораторно підтвердженого/.test(W)&&/біоматеріалу/.test(W)&&/чинників ризику інвазивного кандидозу/.test(W);
+    const d400=/флуконазол 150 мг\\/добу/.test(W), nys=/Ністатин не всмоктується/.test(W), ivv=/СОП № 215: Ацикловір в\\/в/.test(W)&&/експрес-тесту чи ПЛР у журналі немає/.test(W);
+    const ap=/СОП № 212: Альбендазол/.test(W), rv2=/перегляд призначення Осельтамівір через 48–72 год/.test(W), oldNew=!/СОП № 215: Осельтамівір — за підтвердженого/.test(W);
+    RES.push({id:998,d:t,t:'ПЛР',v:'грип A — виявлено'}); const W2=rxWarnings().map(x=>x.t).join(' | '); const pcr=!/експрес-тесту чи ПЛР у журналі немає/.test(W2);
+    RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
+    return JSON.stringify([off,rev,af,d400,nys,ivv,ap,rv2,oldNew,pcr,amp3DayMg({dose:'0,2 г',freq:'2 р/д'})]); })()`);
+  ok('СОП № 213, 215, 212: показання й біоматеріал, флуконазол < 400 мг/добу, ністатин, противірусні в/в і ПЛР, протипаразитарні, дата перегляду 48–72 год; без СОП — нічого', r==='[true,true,true,true,true,true,true,true,true,true,400]', r); }
+{ const r=w.eval(`(()=>{ const keep=RX.slice(), keepR=RES.slice(), doc0=DOC; RX.length=0; RES.length=0; lsSet('po.ampsop','1');
+    const t=todayISO(), s=addDays(t,-2); const it=addRx({drug:'Цефтріаксон', dose:'2 г', route:'в/в', freq:'1 р/д', start:s, cult:'взято'});
+    RES.push({id:991,d:s,t:'ЗАК',v:'лейкоцити 14,2'}); RES.push({id:992,d:t,t:'ЗАК',v:'лейкоцити 8,1'}); RES.push({id:993,d:s,t:'С-реактивний білок',v:'СРБ 96'}); RES.push({id:994,d:t,t:'С-реактивний білок',v:'СРБ 24'});
+    renderRx(); const btn=document.querySelector('#rxList .rx[data-id="'+it.id+'"] .amp-rev'); const hasBtn=!!btn; amp4Dialog(it); const box=document.getElementById('ampRev');
+    const lab=box.querySelector('#arv_lab').value, effAuto=box.querySelector('.chips .chip[aria-pressed="true"]')?.textContent;
+    [...box.querySelectorAll('.chip')].find(c=>c.textContent==='продовжити').click(); box.querySelector('.btn.primary').click();
+    const saved=(it.revLog||[]).length===1&&it.rev===addDays(t,2)&&!document.getElementById('ampRev');
+    DOC='shch'; const p=rxPart(); const txt=p?p.body:''; DOC=doc0;
+    const inDiary=/Перегляд антибактеріальної терапії через 48 год \\(СОП № 214\\): Цефтріаксон/.test(txt)&&/лейкоцити 14,2 → 8,1/.test(txt)&&/Рішення: продовжити/.test(txt);
+    amp4Dialog(it); const b2=document.getElementById('ampRev'); [...b2.querySelectorAll('.chip')].find(c=>c.textContent==='припинити').click(); b2.querySelector('.btn.primary').click();
+    const stopped=it.stop===t&&it.revLog.length===1&&it.revLog[0].dec==='stop';
+    RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
+    return JSON.stringify([hasBtn,/лейкоцити 14,2 → 8,1/.test(lab),effAuto,saved,inDiary,stopped]); })()`);
+  ok('СОП: перегляд 48–72 год — кнопка, дані день 0 → зараз, ефективність підказана, запис у щоденник, «припинити» відміняє', r==='[true,true,"позитивна динаміка",true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
