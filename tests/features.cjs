@@ -1618,6 +1618,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Курс: «Курс … завершено» у день закінчення', r[10] === true, JSON.stringify(r));
   ok('Курс без тривалості не змінюється', r[11] === true, JSON.stringify(r));
 }
+// 0.9.3.101 — епікриз: підписи дат періоду (696-epi-period-labels.js)
+{ const r=JSON.parse(w.eval(`(()=>{ const f=F('e_per.per'), u=[...f.wrapEl.querySelectorAll('.nums > .u')].map(x=>x.textContent);
+    return JSON.stringify([f.wrapEl.querySelector('.lbl').textContent, u[0], u[1], f.d1.getAttribute('aria-label'), f.d2.getAttribute('aria-label')]); })()`));
+  ok('Епікриз: період перебування з підписами «Поступив/Поступила» і «Виписаний/Виписана»', r[0].startsWith('Період перебування у стаціонарі') && r[1]==='Поступив/Поступила до стаціонару' && r[2]==='Виписаний/Виписана', JSON.stringify(r));
+  ok('Епікриз: дати періоду мають назви для екранного читача', r[3]==='Дата госпіталізації' && r[4]==='Дата виписки', JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
