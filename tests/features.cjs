@@ -1587,6 +1587,37 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Поза оновленням кожна перевірка бачить нові поля', r[1]===true, JSON.stringify(r));
   ok('Після оновлення кеш очищено', r[2]===true, JSON.stringify(r));
 }
+// 0.9.3.99 — щоденник: ВАШ, кисень із явним джерелом, «день N з M», «Курс … завершено» (693–695)
+{ const r=JSON.parse(w.eval(`(()=>{ const a=[];
+    a.push(diaryOxygenText('1','0','5'), diaryOxygenText('0','',''), diaryOxygenText('','','5'), diaryOxygenText('','1','8'), diaryOxygenText('',''));
+    const x=bDiaryEntry({dt:'2026-11-09T09:00', f:{d_obj_chd_1:'94', d_obj_o2src:'1', d_obj_o2dev:'0', d_obj_o2_0:'5', d_main_vash_0:'6'}}).outerHTML.replace(/<[^>]+>/g,'').replace(/\u00a0/g,' ');
+    a.push(x.includes('Біль за ВАШ') && x.includes('6/10'));
+    a.push(x.includes('SpO2 94% за допомогою кисневого концентратора через назальну канюлю, потік 5 л/хв'));
+    const z=bDiaryEntry({dt:'2026-11-09T09:00', f:{}}).outerHTML.replace(/<[^>]+>/g,'');
+    a.push(!z.includes('Біль за ВАШ') && !z.includes('SpO'));
+    const legacy=bDiaryEntry({dt:'2026-11-09T09:00', f:{d_obj_chd_1:'94', d_obj_o2_0:'5'}}).outerHTML.replace(/<[^>]+>/g,'');
+    a.push(legacy.includes('SpO2 94% на кисні 5 л/хв'));
+    const rx0=JSON.parse(JSON.stringify(RX)), d0=DOC; RX.length=0;
+    switchDoc('shch');
+    const today=todayISO(); RX.push({id:901,drug:'Тест-А',dose:'1',route:'в/в',freq:'1 р/д',days:'3',start:addDays(today,-1),stop:'',note:''});
+    RX.push({id:902,drug:'Тест-Б',dose:'1',route:'в/в',freq:'1 р/д',days:'2',start:addDays(today,-1),stop:'',note:''});
+    const body=(rxPart()||{}).body||'';
+    a.push(body.includes('Тест-А 1 в/в 1 р/д, 3 дні (день 2 з 3)'));
+    a.push(body.includes('Курс Тест-Б завершено') && !body.includes('Курс Тест-А завершено'));
+    switchDoc(d0); RX.length=0; rx0.forEach(it=>RX.push(it));
+    const nd={start:'2026-11-01',days:'',drug:'x',dose:'',route:'',freq:''};
+    a.push(diaryCourseLine(nd,'2026-11-02') === rxLine(nd));
+    return JSON.stringify(a); })()`));
+  ok('Кисень: концентратор + канюля — у тексті з потоком', r[0] === 'за допомогою кисневого концентратора через назальну канюлю, потік 5 л/хв', JSON.stringify(r));
+  ok('Кисень: атмосферне повітря і маска без джерела — як задано, без підстановки', r[1] === 'на атмосферному повітрі' && r[2] === 'на кисні 5 л/хв' && r[3] === 'на кисні через лицеву маску, потік 8 л/хв' && r[4] === '', JSON.stringify(r));
+  ok('ВАШ 6 з 10 друкується в рядку скарг', r[5] === true, JSON.stringify(r));
+  ok('SpO2 і джерело кисню друкуються одним реченням', r[6] === true, JSON.stringify(r));
+  ok('Порожній запис: без рядків ВАШ і SpO', r[7] === true, JSON.stringify(r));
+  ok('Старий запис (без джерела кисню) друкується як раніше', r[8] === true, JSON.stringify(r));
+  ok('Курс: «день N з M» лише за заданої тривалості', r[9] === true, JSON.stringify(r));
+  ok('Курс: «Курс … завершено» у день закінчення', r[10] === true, JSON.stringify(r));
+  ok('Курс без тривалості не змінюється', r[11] === true, JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
