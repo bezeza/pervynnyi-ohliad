@@ -6,7 +6,7 @@
    Чому саме тут, а не одразу після 111: поля форми (540-ui-build) запам’ятовують update на час побудови —
    як і раніше, вони викликають лише основну частину. Змінювати це — окреме рішення (див. ZAVDANNIA.md).
    692-perf-check-cache лишається обгорткою навколо всього (кеш перевірки на один цикл). updStats() — час кожної дії. */
-const UPD = {before:[], after:[], st:{}};
+const UPD = {before:[], after:[], st:{}, seq:0, tm:0};
 function onUpdate(name, fn, when){ (when === 'before' ? UPD.before : UPD.after).push({name, fn}); }
 function updRun(x){
     const t = performance.now();
@@ -14,9 +14,26 @@ function updRun(x){
     const s = UPD.st[x.name] || (UPD.st[x.name] = {n:0, ms:0, max:0}), d = performance.now() - t; s.n++; s.ms += d; if (d > s.max) s.max = d;
 }
 { const core = update; update = function(){
+  UPD.seq++; clearTimeout(UPD.tm); UPD.tm = 0;
   for (let i = UPD.before.length - 1; i >= 0; i--) updRun(UPD.before[i]);
   const r = core.apply(this, arguments);
   for (const x of UPD.after) updRun(x);
   return r;
 }; }
 function updStats(){ return Object.entries(UPD.st).map(([k, s])=>({дія:k, викликів:s.n, 'сер., мс':+(s.ms / s.n).toFixed(2), 'макс., мс':+s.max.toFixed(1)})).sort((a, b)=>b['сер., мс'] - a['сер., мс']); }
+/* друк у полях форми: основна частина вже відпрацювала (540-ui-build), дій «після» не було — догнати після паузи */
+function updHooksOnly(){
+  UPD.tm = 0; let boot = false; try{ boot = PO_BOOT; }catch(e){} if (boot) return;
+  const c = typeof PO18_CHECK_CACHE === 'object' ? PO18_CHECK_CACHE : null;   // той самий кеш перевірки, що й у update() (692)
+  if (c){ c.result = null; c.depth++; }
+  try{ for (const x of UPD.after) updRun(x); }
+  finally{ if (c){ c.depth--; if (!c.depth) c.result = null; } }
+}
+['input', 'change'].forEach(type=>{
+  let seq0 = 0;
+  document.addEventListener(type, ()=>{ seq0 = UPD.seq; }, true);
+  document.addEventListener(type, e=>{
+    const t = e.target; if (!t || !/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || UPD.seq !== seq0 || t.closest('#out')) return;
+    clearTimeout(UPD.tm); UPD.tm = setTimeout(updHooksOnly, 120);
+  });
+});

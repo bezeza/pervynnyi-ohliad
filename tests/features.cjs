@@ -1727,6 +1727,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const wrappers=(update.toString().match(/PO18_CHECK_CACHE/)||[]).length;
     return JSON.stringify([seen.join(''),threw,logged,nA>=28,UPD.st['597-shell'].n>0,wrappers]); })()`);
   ok('Реєстр onUpdate: «перед» → основне → «після» по порядку; збій однієї дії не зупиняє інших і пишеться в журнал', r==='["012",false,true,true,true,1]', r); }
+{ w.eval(`window.__tq={n0:(UPD.st['621-progress-next']||{n:0}).n}; switchDoc('ohl'); show(TABS.findIndex(t=>t.id==='skarhy'));
+    const t=document.getElementById('skarhy_cx'); window.__tq.v0=t.value; window.__tq.n1=(UPD.st['621-progress-next']||{n:0}).n; t.value=(t.value+' тест друку').trim(); t.dispatchEvent(new Event('input',{bubbles:true}));
+    window.__tq.sync=(UPD.st['621-progress-next']||{n:0}).n-window.__tq.n1;`);
+  await sleep(220);
+  const r=w.eval(`(()=>{ const q=__tq, after=(UPD.st['621-progress-next']||{n:0}).n-q.n1; const t=document.getElementById('skarhy_cx');
+    const outOk=/тест друку/.test(document.getElementById('out').textContent); t.value=q.v0; update(); return JSON.stringify([q.sync,after,outOk]); })()`);
+  ok('Друк у текстовому полі: дії після оновлення (прогрес, стан) запускаються один раз після паузи, не на кожну клавішу', r==='[0,1,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

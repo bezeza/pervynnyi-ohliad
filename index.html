@@ -2599,7 +2599,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.110 від 10.11.2026">v0.9.3.110 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.111 від 10.11.2026">v0.9.3.111 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4786,8 +4786,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.110', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.111', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.111', '10.11.2026', 'швидкодія: оновлення документа ≈ у 3,5 раза швидше (на ПК 22 → 6 мс): шапка пацієнта більше не перераховує розкладку всієї сторінки на кожне оновлення й не перебудовується, якщо діагноз, день і алергії ті самі. Друк у текстових полях (скарги, анамнез): прогрес «Заповнено N з M», рядок стану, лічильник зауважень і позначки перевірки тепер оновлюються самі після короткої паузи — раніше відставали до наступного натискання кнопки'],
   ['0.9.3.110', '10.11.2026', 'внутрішнє: 29 обгорток навколо оновлення документа замінено одним реєстром дій (onUpdate). Для лікаря нічого не змінюється — порядок і результат ті самі (перевірено порівнянням сторінки до й після на ПК і телефоні). Тепер помилка в одній дії не зупиняє решту, а пишеться в журнал помилок; час кожної дії видно (updStats() у консолі)'],
   ['0.9.3.109', '10.11.2026', 'дрібниці інтерфейсу з аудиту: на комп’ютері підказки й повідомлення — внизу праворуч, а не поверх кнопок документа вгорі; щоденник — прапорець «Після запису — чернетка наступного дня» знову поруч зі своїм підписом; банер «Папку даних не підключено» в бічній панелі — короткий, без абзацу тексту (повний — у підказці; на телефоні без змін); «Імпорт ▾» — підпис по центру кнопки'],
   ['0.9.3.108', '10.11.2026', 'надійність: журнал помилок. Внутрішні помилки програми записуються («Налаштування» → «Журнал помилок»: перегляд, «Копіювати для автора», «Очистити»), про першу за сеанс — коротке повідомлення. Якщо запуск обірвався, програма більше не лишається білим екраном: сторінка показується з червоним рядком «Програма запустилась з помилкою» і кнопкою копіювання тексту помилки. Для нових модулів — poErr(e, де) замість порожнього catch'],
@@ -13599,7 +13600,7 @@ function aiDialog(){
    Чому саме тут, а не одразу після 111: поля форми (540-ui-build) запам’ятовують update на час побудови —
    як і раніше, вони викликають лише основну частину. Змінювати це — окреме рішення (див. ZAVDANNIA.md).
    692-perf-check-cache лишається обгорткою навколо всього (кеш перевірки на один цикл). updStats() — час кожної дії. */
-const UPD = {before:[], after:[], st:{}};
+const UPD = {before:[], after:[], st:{}, seq:0, tm:0};
 function onUpdate(name, fn, when){ (when === 'before' ? UPD.before : UPD.after).push({name, fn}); }
 function updRun(x){
     const t = performance.now();
@@ -13607,12 +13608,29 @@ function updRun(x){
     const s = UPD.st[x.name] || (UPD.st[x.name] = {n:0, ms:0, max:0}), d = performance.now() - t; s.n++; s.ms += d; if (d > s.max) s.max = d;
 }
 { const core = update; update = function(){
+  UPD.seq++; clearTimeout(UPD.tm); UPD.tm = 0;
   for (let i = UPD.before.length - 1; i >= 0; i--) updRun(UPD.before[i]);
   const r = core.apply(this, arguments);
   for (const x of UPD.after) updRun(x);
   return r;
 }; }
 function updStats(){ return Object.entries(UPD.st).map(([k, s])=>({дія:k, викликів:s.n, 'сер., мс':+(s.ms / s.n).toFixed(2), 'макс., мс':+s.max.toFixed(1)})).sort((a, b)=>b['сер., мс'] - a['сер., мс']); }
+/* друк у полях форми: основна частина вже відпрацювала (540-ui-build), дій «після» не було — догнати після паузи */
+function updHooksOnly(){
+  UPD.tm = 0; let boot = false; try{ boot = PO_BOOT; }catch(e){} if (boot) return;
+  const c = typeof PO18_CHECK_CACHE === 'object' ? PO18_CHECK_CACHE : null;   // той самий кеш перевірки, що й у update() (692)
+  if (c){ c.result = null; c.depth++; }
+  try{ for (const x of UPD.after) updRun(x); }
+  finally{ if (c){ c.depth--; if (!c.depth) c.result = null; } }
+}
+['input', 'change'].forEach(type=>{
+  let seq0 = 0;
+  document.addEventListener(type, ()=>{ seq0 = UPD.seq; }, true);
+  document.addEventListener(type, e=>{
+    const t = e.target; if (!t || !/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || UPD.seq !== seq0 || t.closest('#out')) return;
+    clearTimeout(UPD.tm); UPD.tm = setTimeout(updHooksOnly, 120);
+  });
+});
 /* ===== Оформлення 0.9.4 (варіант «Д»): темна шапка з документами, банер пацієнта, бічна панель з прогресом і шаблоном ===== */
 const SHELL = {};
 { const top = $('header.top'), wrap = $('main.wrap'), line = $('#ptline'), form = $('.form'), dbar = $('.docbar');
@@ -13644,6 +13662,10 @@ const SHELL = {};
     const pib = mv('pib');
     ava.textContent = pib ? pib.split(/\s+/).filter(Boolean).slice(0, 2).map(w=>w[0]).join('').toUpperCase() : '?';
     ava.classList.toggle('none', !pib);
+    /* 0.9.3.111: перебудова й вимір висоти — лише коли щось змінилось (було ~8 мс на кожне оновлення) */
+    let key = MODE;
+    try{ const a = F('vitae.alerg'); key += '|' + val(F('dx.mkh'), true) + '|' + val(F('dx.osn'), true) + '|' + (MODE === 'hosp' ? stayDay() + '|' + F('e_per.per').d1.value : '') + '|' + (a && a.el ? a.el.value + '|' + a.norm + '|' + val(F('vitae.alergx'), true) : ''); }catch(e){ key = Math.random(); }
+    if (key === drawBanner.key) return; drawBanner.key = key;
     cols.innerHTML = '';
     const col = (l, go, ...v) => cols.append(h('button', {type:'button', class:'pcol', title:'Відкрити: ' + l.toLowerCase(), onclick:go}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
     try{
@@ -13657,7 +13679,14 @@ const SHELL = {};
       }
     }catch(e){}
     line.classList.toggle('hascols', !!cols.firstChild);
-    document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
+    pbhSet();
+  }
+  /* висота банера → --pbh: ResizeObserver спрацьовує після розкладки, без примусового перерахунку всієї сторінки */
+  let pbhRO = null;
+  function pbhSet(){
+    if (pbhRO) return;
+    if (typeof ResizeObserver === 'function'){ pbhRO = new ResizeObserver(()=>document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px')); pbhRO.observe(line); }
+    else document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
   }
   /* клік по банеру: поле в первинному огляді (з іншого документа — перейти в огляд) */
   SHELL.goExam = (tab, fld) => { const t = TABS.find(x=>x.id === tab); if (t && !t.docs.includes(DOC)) switchDoc('ohl'); goTab(tab, fld); };
