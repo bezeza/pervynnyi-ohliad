@@ -2521,3 +2521,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 #ampRev .arv-grid input{width:100%}
 #ampRev p.b{margin:10px 0 4px;font-weight:600}
 #ampRev .arv-pv{background:var(--bg2,rgba(127,127,127,.08));border-radius:8px;padding:8px 10px;margin:4px 0 10px;line-height:1.45}
+/* 0.9.3.108 · журнал помилок у налаштуваннях */
+.errlog{max-height:220px;overflow:auto;font-size:var(--fs-6,13px);margin:6px 0}
+.errlog li{word-break:break-word}
+.errlog-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
