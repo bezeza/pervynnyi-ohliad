@@ -188,6 +188,7 @@
   "698-amp-review.js",
   "699-boot-end.js",
   "700-error-log.js",
-  "701-ui-audit-fixes.js"
+  "701-ui-audit-fixes.js",
+  "702-sticky-dock.js"
  ]
 }

@@ -2544,3 +2544,23 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   /* підказки й повідомлення — внизу праворуч над рядком стану, а не поверх кнопок документа вгорі */
   :root.ui-ios .toast{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px))}
 }
+/* 0.9.3.114 · закріплена шапка й панель «Текст» колонкою (702-sticky-dock.js) */
+@media screen and (min-width:900px){
+  :root.ui-v2 body.shell header.top{position:sticky;top:0;z-index:40}
+  :root.ui-v2.ui-ios body.shell .form>.docbar{top:var(--v2hdr,52px)}
+  :root.ui-v2 body.lay-B #sidecol>.sidein{top:calc(var(--v2hdr,52px) + var(--pbh,0px) + 8px);max-height:calc(100vh - var(--v2hdr,52px) - var(--pbh,0px) - 16px)}
+  :root.ui-v2{scroll-padding-top:calc(var(--v2hdr,52px) + 64px)}
+  :root.ui-v2 #outBox{top:calc(var(--v2hdr,52px) + 8px);width:min(var(--v2txtw,560px),calc(100vw - 24px))}
+  .v2grip{display:none}
+}
+@media screen and (min-width:1280px){
+  /* відкрита панель — колонка справа: форма звужується, нічого не перекрито */
+  :root.ui-v2 body.v2-txt-open .wrap{margin-right:calc(var(--v2txtw,560px) + 12px);transition:margin-right .14s ease-out}
+  :root.ui-v2 body.v2-txt-open #outBox{box-shadow:0 1px 3px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+  :root.ui-v2 body.v2-txt-open .toast{right:calc(var(--v2txtw,560px) + 28px)}
+  :root.ui-v2 #outBox>.v2grip{display:block;position:absolute;left:0;top:0;bottom:0;width:8px;cursor:ew-resize;z-index:2;touch-action:none}
+  :root.ui-v2 #outBox>.v2grip::after{content:"";position:absolute;left:2px;top:50%;width:4px;height:44px;margin-top:-22px;border-radius:var(--r-xs);background:var(--line-strong,#B4B4BC);opacity:.6}
+  :root.ui-v2 #outBox>.v2grip:hover::after,:root.ui-v2 #outBox>.v2grip:focus-visible::after{opacity:1;background:var(--accent)}
+  body.v2-resizing,body.v2-resizing *{cursor:ew-resize!important;user-select:none!important}
+  body.v2-resizing .wrap{transition:none!important}
+}
