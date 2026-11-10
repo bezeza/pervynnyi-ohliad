@@ -54,7 +54,7 @@ function v2stSaved(s){
   const ms0 = markSaved; markSaved = function(ok){ const r = ms0.apply(this, arguments); v2stSaved(ok ? 'ok' : 'bad'); v2stLater(); return r; };
   const as0 = autosave; autosave = function(){ const r = as0.apply(this, arguments); if (!RESTORING && (PID || mv('pib'))) v2stSaved('wait'); return r; };
   const np0 = newPatient; newPatient = function(){ const r = np0.apply(this, arguments); v2stSaved(''); v2stLater(); return r; };
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); v2stLater(); return r; };
+  onUpdate('687-ui-status', ()=>{ v2stLater(); });
   const sd0 = switchDoc; switchDoc = function(){ const r = sd0.apply(this, arguments); v2stLater(); return r; };
   const ua0 = uiV2Apply; uiV2Apply = function(){ const r = ua0.apply(this, arguments); V2ST.state = ''; v2stLater(); return r; };
   v2stDraw();

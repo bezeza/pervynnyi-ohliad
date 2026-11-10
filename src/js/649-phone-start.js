@@ -54,7 +54,7 @@ function phstRender(){
   cur.panel.prepend(phstCard());
 }
 { const x0 = renderTabNav; renderTabNav = function(){ const r = x0.apply(this, arguments); try{ phstRender(); }catch(e){} return r; }; }
-{ let t = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(t); t = setTimeout(()=>{ try{ if (document.querySelector('.phstart')) phstRender(); }catch(e){} }, 400); return r; }; }
+{ let t = 0; onUpdate('649-phone-start', ()=>{ clearTimeout(t); t = setTimeout(()=>{ try{ if (document.querySelector('.phstart')) phstRender(); }catch(e){} }, 400); }); }
 /* у «⋯ Документ і дії» — повернути картку */
 { const x0 = openActs; openActs = function(){ const r = x0.apply(this, arguments);
   const lists = document.querySelectorAll('.actsheet .as-list'), l = lists[lists.length - 1];

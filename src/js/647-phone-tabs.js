@@ -48,7 +48,7 @@ function phtRenderStrip(){
   const a = strip.querySelector('[aria-selected="true"]'); if (a) try{ scrollInBox(a, 'center'); }catch(e){}
 }
 { const x0 = renderTabNav; renderTabNav = function(){ const r = x0.apply(this, arguments); try{ phtRenderStrip(); phtRenderBar(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ phtRenderBar(); }catch(e){} return r; }; }
+{ onUpdate('647-phone-tabs', ()=>{ try{ phtRenderBar(); }catch(e){} }); }
 /* «Закрити» текст документа — оновити нижню панель */
 new MutationObserver(()=>{ try{ phtRenderBar(); }catch(e){} }).observe($('#outBox'), {attributes:true, attributeFilter:['class']});
 if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ renderTabNav(); }catch(e){} });

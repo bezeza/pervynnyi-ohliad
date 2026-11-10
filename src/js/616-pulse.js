@@ -10,7 +10,7 @@
     Pf.fmt = v => cv() ? '' : (v[0] ? `Пульс ${v[0]} уд./хв` : '');
     const lb = C.wrapEl && C.wrapEl.querySelector('label'); if (lb) lb.firstChild && (lb.firstChild.textContent = 'ЧСС (= пульс, якщо ритм правильний)');
     const pl = Pf.wrapEl && Pf.wrapEl.querySelector('label'); if (pl) pl.firstChild && (pl.firstChild.textContent = 'Пульс на променевій артерії (при аритмії)');
-    const up = update; update = function(){ const r = up.apply(this, arguments);
+    onUpdate('616-pulse', ()=>{ 
       try{ if (Pf.wrapEl && Pf.wrapEl.dataset.only === undefined){ const show = arr() || (!!pv() && !cv()); Pf.wrapEl.hidden = !show || !(SECTIONS.find(x=>x.id === 'ssc').docs.includes(DOC)); } }catch(e){}
-      return r; };
+      });
   } }

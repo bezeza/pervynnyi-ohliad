@@ -91,14 +91,7 @@ function dangerShowUndo(message, returnFocus){
 }
 
 /* Підпис «Норма» в 540-ui-build.js залежить від документа та ширини екрана. */
-{
-  const update0 = update;
-  update = function(){
-    const result = update0.apply(this, arguments);
-    dangerSyncNormLabel();
-    return result;
-  };
-}
+onUpdate('632-dangerous-actions', ()=>{ dangerSyncNormLabel(); });
 
 /* Скасування відкривається лише після фактичного застосування масової дії. */
 {

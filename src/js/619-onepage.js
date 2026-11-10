@@ -126,7 +126,7 @@ document.addEventListener('mousedown', e=>{ if (QE.box && !QE.box.contains(e.tar
 document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && QE.box) qeClose(); });
 { const sd0 = switchDoc; switchDoc = function(){ qeClose(); return sd0.apply(this, arguments); }; }
 
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ ghostSync(); }catch(e){} return r; }; }
+{ onUpdate('619-onepage', ()=>{ try{ ghostSync(); }catch(e){} }); }
 
 /* ---- налаштування ---- */
 if (SETTINGS_EL){

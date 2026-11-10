@@ -97,7 +97,7 @@ const SHELL = {};
   }
 
   SHELL.sync = () => { drawBanner(); drawSide(); drawTplBtns(); if (SHELL.docsKey !== MODE + DOC + !$('#modeSeg').hidden){ SHELL.docsKey = MODE + DOC + !$('#modeSeg').hidden; SHELL.placeDocs(); } };
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); try{ SHELL.sync(); }catch(e){} return r; };
+  onUpdate('597-shell', ()=>{ try{ SHELL.sync(); }catch(e){} });
   { const s0 = show; show = function(i){ const r = s0.apply(this, arguments); try{ drawSide(); }catch(e){} return r; }; }
   window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px'); clearTimeout(SHELL.rz); SHELL.rz = setTimeout(()=>{ if (seg.parentElement === dbar && wideTop()) docs.append(seg, more); SHELL.placeDocs(); }, 150); });
   SHELL.sync();

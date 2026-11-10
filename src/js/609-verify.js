@@ -143,7 +143,7 @@ function vMarks(){
   CALCS.forEach(c=>{ const s = document.querySelector('#calc_' + c.id + ' > summary'); if (!s) return; let m = s.querySelector('.vdot'); if (!m){ m = h('span', {class:'vdot'}); s.firstChild.after(m); }
     const r = V['calc:' + c.id]; m.textContent = r ? ' ✓' : ''; m.title = r ? 'Шкалу перевірено: ' + r.by : 'Шкалу ще не перевірено фахівцем'; });
 }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); clearTimeout(vMarks.t); vMarks.t = setTimeout(()=>{ try{ vMarks(); }catch(e){} }, 120); return r; }; }
+{ onUpdate('609-verify', ()=>{ clearTimeout(vMarks.t); vMarks.t = setTimeout(()=>{ try{ vMarks(); }catch(e){} }, 120); }); }
 /* Налаштування: блок перевірки */
 { const box = h('div', {class:'vset'},
     h('p', {class:'chips-hint'}, 'Шаблони хвороб, схеми лікування й дози, критерії госпіталізації (№ 1044), норми аналізів і шкали — чернетка, доки їх не перевірить профільний фахівець. Тут їх можна переглянути, позначити перевіреними й надрукувати документ для звірки з підписом.'),

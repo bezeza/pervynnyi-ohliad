@@ -224,9 +224,9 @@ FORMS['003-3/о'] = 'Передопераційний огляд анестез�
 { const fc = formCode; formCode = function(){ return DOC === 'anes' ? (MODE === 'amb' ? '028/о' : '003-3/о') : fc.apply(this, arguments); };
   const dt = docTitle; docTitle = function(){ return DOC === 'anes' ? (MODE === 'amb' ? 'Консультація анестезіолога' : 'Огляд анестезіолога (ф. 003-3/о)') : dt.apply(this, arguments); };
   const fh = formHeader; formHeader = function(){ const r = fh.apply(this, arguments); if (DOC === 'anes') r.card = FORMS[formCode()] + ' (мед. карта № ' + (mv('card') || '______') + ')' + (mv('vidd') ? ' · ' + mv('vidd') : ''); return r; }; }
-{ const up = update; update = function(){ const r = up.apply(this, arguments);
+{ onUpdate('614-anest', ()=>{ 
     try{ const f = F('an_obj.hint'); if (f && f.abox){ const t = DOC === 'anes' ? anesHints() : ''; f.abox.textContent = t || 'Підказок немає.'; if (f.wrapEl) f.wrapEl.classList.toggle('anhint', !!t); } }catch(e){}
-    return r; }; }
+    }); }
 /* клік по клітинці бланка — до поля */
 document.addEventListener('click', e=>{
   const c = e.target.closest && e.target.closest('#paper .b333 [data-an]'); if (!c) return;

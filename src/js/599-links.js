@@ -108,7 +108,7 @@ document.addEventListener('click', e=>{
   if (g){ e.preventDefault(); bQuickEdit(g, g.dataset.fld.split(' ')); return; }
   const q = document.querySelector('.bqe'); if (q && !q.contains(e.target)) q.remove();
 });
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ SHELL.syncLinks(); if (DOC === 'shch' && SHELL.drawStay) SHELL.drawStay(); }catch(e){} return r; }; }
+{ onUpdate('599-links', ()=>{ try{ SHELL.syncLinks(); if (DOC === 'shch' && SHELL.drawStay) SHELL.drawStay(); }catch(e){} }); }
 /* дата і час запису щоденника — вибирається тут (за нею рахується день перебування); можна вести історію за минулі дні */
 let DDPIN = false;
 { const md = document.getElementById('meta_dt');
@@ -136,7 +136,7 @@ let DDPIN = false;
       return r; };
   }
 }
-{ const u1 = update; update = function(){ const r = u1.apply(this, arguments); try{ if (DOC === 'shch' && SHELL.syncDDT) SHELL.syncDDT(); }catch(e){} return r; }; }
+{ onUpdate('599-links #2', ()=>{ try{ if (DOC === 'shch' && SHELL.syncDDT) SHELL.syncDDT(); }catch(e){} }); }
 /* ===== Клік по пункту на аркуші «Перед друком» → відкрити розділ і поле у формі, курсор — на початок, поле блимає ===== */
 const BMAP = [
   [/^Хворий/, 'meta_pib'], [/^1\. Дата госпіталізації/, 'meta_dt'], [/^3\. Прізвище/, 'meta_pib'], [/^4\. Дата народження/, 'meta_dob'], [/^7\. Постійне місце/, 'meta_addr'],

@@ -36,5 +36,5 @@ function uilApply(){
 }
 { const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ uilApply(); }catch(e){} return r; }; }
 /* поле, перебудоване іншим модулем (напр., «Результат лікування» з новим варіантом), — ще раз за правилом */
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} return r; }; }
+{ onUpdate('666-ui-lists', ()=>{ try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} }); }
 try{ uilApply(); }catch(e){}

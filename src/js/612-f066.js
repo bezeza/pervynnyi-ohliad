@@ -103,12 +103,12 @@ Object.defineProperty(DOCTITLES, 'f066', {get:()=>F066ED === '2016' ? 'КАРТ�
 { const fc = formCode; formCode = function(){ return DOC === 'f066' ? '066/о' : fc.apply(this, arguments); };
   const dt = docTitle; docTitle = function(){ return DOC === 'f066' ? 'Карта вибулого (ф. 066/о)' : dt.apply(this, arguments); }; }
 /* п. 18 і 17б — лише коли «помер»; підказки з журналу обстежень */
-{ const up = update; update = function(){ const r = up.apply(this, arguments);
+{ onUpdate('612-f066', ()=>{ 
     try{ const s = SECTIONS.find(x=>x.id === 's066'); if (s){ const dd = dead66();
         s.fields.forEach(f=>{ if (f.dead && f.wrapEl) f.wrapEl.hidden = !dd; });
         [['rw', d66.rw], ['vil', d66.vil], ['flg', d66.flg]].forEach(([k, fn])=>{ const f = F('s066.' + k); if (f && f.el && !f.el.value){ const v = fn(); f.el.title = v ? 'З журналу обстежень: ' + isoDMY(v) : ''; f.wrapEl && f.wrapEl.classList.toggle('fromres', !!v); } });
         } }catch(e){}
-    return r; }; }
+    }); }
 /* профіль ліжок — запам'ятовується для наступних пацієнтів */
 /* титул 003/о: порожні пункти — із цих даних */
 { const bt = bTitle; bTitle = function(){ const pg = bt.apply(this, arguments);

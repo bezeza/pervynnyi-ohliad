@@ -42,5 +42,5 @@ const SEX_ASK = h('span', {id:'sexAsk', class:'sexask', hidden:''}, h('span', {}
   ...[['m','Ч','Чоловік'],['f','Ж','Жінка']].map(([v, t, l])=>h('button', {type:'button', title:l, 'aria-label':'Стать: ' + l, onclick:()=>{ const b = document.querySelector(`#sexSeg button[data-sex="${v}"]`); if (b) b.click(); }}, t)));
 { const line = document.getElementById('ptline'), bar = document.getElementById('ptbar'); if (line && bar) bar.after(SEX_ASK); else if (line) line.append(SEX_ASK); }
 function sexAsk(){ SEX_ASK.hidden = !!sex || !mv('pib'); }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ sexAsk(); }catch(e){} return r; }; }
+{ onUpdate('641-sex-auto', ()=>{ try{ sexAsk(); }catch(e){} }); }
 try{ sexAuto(); sexAsk(); }catch(e){}

@@ -103,6 +103,6 @@ function vqBuild(){
   });
 }
 function vqVis(){ Object.keys(VQ).forEach(doc=>{ const s = SECTIONS.find(x=>x.id === VQ[doc].host); if (s && s.vqEl) s.vqEl.hidden = DOC !== doc; }); }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ vqVis(); }catch(e){} return r; }; }
+{ onUpdate('617-ergo', ()=>{ try{ vqVis(); }catch(e){} }); }
 
 try{ ergoActs(); vqBuild(); vqVis(); fsIcon(); }catch(e){ console.warn('ergo', e); }

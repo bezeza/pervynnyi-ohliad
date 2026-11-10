@@ -7,7 +7,7 @@ function manualTextStatus(){
   if (text.textContent !== message) text.textContent = message;
 }
 // Синхронізація після наявних обробників і відновлення кешу документа.
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); manualTextStatus(); return r; }; }
+{ onUpdate('623-manual-text', ()=>{ manualTextStatus(); }); }
 let MANUAL_SWITCHING = 0;
 { const x0 = switchDoc; switchDoc = function(){
   const previous = DOC; MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
