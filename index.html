@@ -2572,6 +2572,23 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .errlog{max-height:220px;overflow:auto;font-size:var(--fs-6,13px);margin:6px 0}
 .errlog li{word-break:break-word}
 .errlog-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+/* 0.9.3.109 · дрібниці інтерфейсу з аудиту 11.2026 */
+/* щоденник: прапорець «Після запису — чернетка наступного дня» розтягувався правилом .res-form input на 220 px і відривався від підпису */
+.dnext-row>label{flex:0 0 auto;white-space:nowrap}
+.dnext-row input[type=checkbox]{flex:0 0 auto;width:auto;min-width:0}
+/* «Імпорт ▾» біля «+ Новий пацієнт»: підпис по центру кнопки, а не вгорі */
+.ust-acts>.btn{align-items:center}
+/* банер папки даних: на телефоні — як було; на комп’ютері — короткий рядок, кнопки поруч */
+.fsb-s{display:none}
+@media (min-width:900px){
+  .fsbanner.fsb-short{padding:6px 10px;gap:4px 8px;font-size:var(--fs-2)}
+  .fsbanner.fsb-short .fsb-t{display:none}
+  .fsbanner.fsb-short .fsb-s{display:block;flex:1 1 100%;line-height:1.3}
+  .fsbanner.fsb-short .btn{min-height:0;padding:3px 9px;font-size:var(--fs-1)}
+  .fsbanner.fsb-short .btn:not(.primary){background:none;border-color:transparent;box-shadow:none;color:var(--muted);padding:3px 4px}
+  /* підказки й повідомлення — внизу праворуч над рядком стану, а не поверх кнопок документа вгорі */
+  :root.ui-ios .toast{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px))}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2582,7 +2599,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.108 від 10.11.2026">v0.9.3.108 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.109 від 10.11.2026">v0.9.3.109 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4769,8 +4786,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.108', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.109', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.109', '10.11.2026', 'дрібниці інтерфейсу з аудиту: на комп’ютері підказки й повідомлення — внизу праворуч, а не поверх кнопок документа вгорі; щоденник — прапорець «Після запису — чернетка наступного дня» знову поруч зі своїм підписом; банер «Папку даних не підключено» в бічній панелі — короткий, без абзацу тексту (повний — у підказці; на телефоні без змін); «Імпорт ▾» — підпис по центру кнопки'],
   ['0.9.3.108', '10.11.2026', 'надійність: журнал помилок. Внутрішні помилки програми записуються («Налаштування» → «Журнал помилок»: перегляд, «Копіювати для автора», «Очистити»), про першу за сеанс — коротке повідомлення. Якщо запуск обірвався, програма більше не лишається білим екраном: сторінка показується з червоним рядком «Програма запустилась з помилкою» і кнопкою копіювання тексту помилки. Для нових модулів — poErr(e, де) замість порожнього catch'],
   ['0.9.3.107', '09.11.2026', 'СОП закладу: перегляд протимікробної терапії через 48–72 год. У листі призначень біля препарату — «📝 Перегляд 48–72 год»: ефективність і рішення (продовжити, деескалація, ескалація, перевести на per os, припинити) кнопками; t°, ЧД, SpO₂, АТ, лейкоцити, СРБ, ПКТ (день 0 → зараз) і посів підставляються самі. Запис іде в щоденник за дату перегляду (і на бланк 003/о), дата наступного перегляду переноситься, «припинити» відміняє препарат. «🖨 Дод. 1 + перегляд» — заповнений Додаток 1 і запис перегляду з підписом'],
   ['0.9.3.106', '09.11.2026', 'СОП закладу, перевірки за СОП № 213, 215, 212: антифунгальні — показання й біоматеріал до призначення, профілактика під час АБТ лише за чинників ризику, азоли — за стабільного стану й Candida albicans, ністатин і флуконазол < 400 мг/добу не для профілактики інвазивного мікозу, деескалація з парентеральних; противірусні — експрес-тест чи ПЛР, в/в лише при тяжкому перебігу; протипаразитарні — підтвердження й обмеження профілактики. Дата перегляду через 48–72 год ставиться й для цих препаратів. Лише з увімкненим «СОП закладу»'],
@@ -22871,6 +22889,20 @@ try{ if (SETTINGS_EL){
   errLogRender();
   const about = SETTINGS_EL.querySelector(':scope > details.about'); if (about) about.before(sec); else SETTINGS_EL.append(sec);
 } }catch(e){ poErr(e, 'журнал помилок: налаштування'); }
+/* ===== 0.9.3.109 · дрібниці інтерфейсу з аудиту 11.2026 =====
+   Банер «Папка даних не підключена» на комп’ютері — один короткий рядок замість абзацу на пів бічної панелі;
+   повний текст лишається в підказці (title) і на телефоні. Стилі — у кінці styles.css (0.9.3.109). */
+{ const f0 = fsBanner; fsBanner = function(){
+  const r = f0.apply(this, arguments);
+  try{
+    const b = document.getElementById('fsBanner'); if (!b || b.hidden) return r;
+    const t = b.querySelector('.fsb-t'); if (!t) return r;
+    b.classList.toggle('fsb-short', !FS.dir);
+    if (!FS.dir) t.after(h('span', {class:'fsb-s', title:t.textContent}, 'Папку даних не підключено — пацієнти лише в цьому браузері'));
+  }catch(e){ poErr(e, 'банер папки даних'); }
+  return r;
+}; }
+try{ fsBanner(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
