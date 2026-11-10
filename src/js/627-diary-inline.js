@@ -210,7 +210,7 @@ document.addEventListener('pointerdown',e=>{
   return x0.apply(this,arguments);
 }; }
 { const x0=renderPaper; renderPaper=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
-{ const x0=update; update=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
+{ onUpdate('627-diary-inline', ()=>{ diaryInlineSync(); }); }
 { const x0=switchDoc; switchDoc=function(next){ if (next!==DOC) DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
 { const x0=restore; restore=function(){ DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
 window.addEventListener('scroll',()=>{ if (!DIARY_INLINE.box || DIARY_INLINE.frame) return; DIARY_INLINE.frame=requestAnimationFrame(()=>{ DIARY_INLINE.frame=0; diaryInlinePosition(); }); },true);

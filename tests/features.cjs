@@ -1720,6 +1720,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     [...sec.querySelectorAll('button')].find(b=>b.textContent==='Очистити').click(); const cleared=errLogRead().length===0; sec.open=false;
     return JSON.stringify([boot,a.length,a[1]&&a[1].n,a[0].m,shown,/Первинний огляд/.test(txt)&&/друга · тест/.test(txt),cleared]); })()`);
   ok('Журнал помилок: запуск без аварії, повтори злито (×2), видно в налаштуваннях, текст для автора, очищення', r==='[true,2,2,"друга",true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const seen=[]; const nB=UPD.before.length, nA=UPD.after.length;
+    onUpdate('тест-1',()=>seen.push(1)); onUpdate('тест-збій',()=>{ throw new Error('збій тестової дії'); }); onUpdate('тест-2',()=>seen.push(2)); onUpdate('тест-перед',()=>seen.push(0),'before');
+    localStorage.removeItem('po.errlog'); let threw=false; try{ update(); }catch(e){ threw=true; }
+    const logged=errLogRead().some(x=>/збій тестової дії/.test(x.m)&&/тест-збій/.test(x.w)); UPD.before.length=nB; UPD.after.length=nA; localStorage.removeItem('po.errlog');
+    const wrappers=(update.toString().match(/PO18_CHECK_CACHE/)||[]).length;
+    return JSON.stringify([seen.join(''),threw,logged,nA>=28,UPD.st['597-shell'].n>0,wrappers]); })()`);
+  ok('Реєстр onUpdate: «перед» → основне → «після» по порядку; збій однієї дії не зупиняє інших і пишеться в журнал', r==='["012",false,true,true,true,1]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

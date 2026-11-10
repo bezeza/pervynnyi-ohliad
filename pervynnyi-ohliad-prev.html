@@ -2572,12 +2572,29 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .errlog{max-height:220px;overflow:auto;font-size:var(--fs-6,13px);margin:6px 0}
 .errlog li{word-break:break-word}
 .errlog-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+/* 0.9.3.109 · дрібниці інтерфейсу з аудиту 11.2026 */
+/* щоденник: прапорець «Після запису — чернетка наступного дня» розтягувався правилом .res-form input на 220 px і відривався від підпису */
+.dnext-row>label{flex:0 0 auto;white-space:nowrap}
+.dnext-row input[type=checkbox]{flex:0 0 auto;width:auto;min-width:0}
+/* «Імпорт ▾» біля «+ Новий пацієнт»: підпис по центру кнопки, а не вгорі */
+.ust-acts>.btn{align-items:center}
+/* банер папки даних: на телефоні — як було; на комп’ютері — короткий рядок, кнопки поруч */
+.fsb-s{display:none}
+@media (min-width:900px){
+  .fsbanner.fsb-short{padding:6px 10px;gap:4px 8px;font-size:var(--fs-2)}
+  .fsbanner.fsb-short .fsb-t{display:none}
+  .fsbanner.fsb-short .fsb-s{display:block;flex:1 1 100%;line-height:1.3}
+  .fsbanner.fsb-short .btn{min-height:0;padding:3px 9px;font-size:var(--fs-1)}
+  .fsbanner.fsb-short .btn:not(.primary){background:none;border-color:transparent;box-shadow:none;color:var(--muted);padding:3px 4px}
+  /* підказки й повідомлення — внизу праворуч над рядком стану, а не поверх кнопок документа вгорі */
+  :root.ui-ios .toast{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px))}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.108 від 10.11.2026">v0.9.3.108 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.109 від 10.11.2026">v0.9.3.109 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4764,8 +4781,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.108', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.109', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.109', '10.11.2026', 'дрібниці інтерфейсу з аудиту: на комп’ютері підказки й повідомлення — внизу праворуч, а не поверх кнопок документа вгорі; щоденник — прапорець «Після запису — чернетка наступного дня» знову поруч зі своїм підписом; банер «Папку даних не підключено» в бічній панелі — короткий, без абзацу тексту (повний — у підказці; на телефоні без змін); «Імпорт ▾» — підпис по центру кнопки'],
   ['0.9.3.108', '10.11.2026', 'надійність: журнал помилок. Внутрішні помилки програми записуються («Налаштування» → «Журнал помилок»: перегляд, «Копіювати для автора», «Очистити»), про першу за сеанс — коротке повідомлення. Якщо запуск обірвався, програма більше не лишається білим екраном: сторінка показується з червоним рядком «Програма запустилась з помилкою» і кнопкою копіювання тексту помилки. Для нових модулів — poErr(e, де) замість порожнього catch'],
   ['0.9.3.107', '09.11.2026', 'СОП закладу: перегляд протимікробної терапії через 48–72 год. У листі призначень біля препарату — «📝 Перегляд 48–72 год»: ефективність і рішення (продовжити, деескалація, ескалація, перевести на per os, припинити) кнопками; t°, ЧД, SpO₂, АТ, лейкоцити, СРБ, ПКТ (день 0 → зараз) і посів підставляються самі. Запис іде в щоденник за дату перегляду (і на бланк 003/о), дата наступного перегляду переноситься, «припинити» відміняє препарат. «🖨 Дод. 1 + перегляд» — заповнений Додаток 1 і запис перегляду з підписом'],
   ['0.9.3.106', '09.11.2026', 'СОП закладу, перевірки за СОП № 213, 215, 212: антифунгальні — показання й біоматеріал до призначення, профілактика під час АБТ лише за чинників ризику, азоли — за стабільного стану й Candida albicans, ністатин і флуконазол < 400 мг/добу не для профілактики інвазивного мікозу, деескалація з парентеральних; противірусні — експрес-тест чи ПЛР, в/в лише при тяжкому перебігу; протипаразитарні — підтвердження й обмеження профілактики. Дата перегляду через 48–72 год ставиться й для цих препаратів. Лише з увімкненим «СОП закладу»'],
@@ -13567,6 +13585,28 @@ function aiDialog(){
   };
   renderPtBar();
 }
+/* ===== 0.9.3.110 · реєстр дій після оновлення (аудит 11.2026) =====
+   Раніше кожен модуль обгортав update() ще раз (31 обгортка): порядок важко простежити, помилка в одній обриває решту.
+   Тепер: onUpdate('назва', fn) — після основного update(); onUpdate('назва', fn, 'before') — перед ним.
+   Порядок той самий, що й був: «перед» — у зворотному порядку підключення (зовнішня обгортка спрацьовувала першою),
+   «після» — у порядку модулів. Помилка однієї дії записується в журнал і не зупиняє інші.
+   Чому саме тут, а не одразу після 111: поля форми (540-ui-build) запам’ятовують update на час побудови —
+   як і раніше, вони викликають лише основну частину. Змінювати це — окреме рішення (див. ZAVDANNIA.md).
+   692-perf-check-cache лишається обгорткою навколо всього (кеш перевірки на один цикл). updStats() — час кожної дії. */
+const UPD = {before:[], after:[], st:{}};
+function onUpdate(name, fn, when){ (when === 'before' ? UPD.before : UPD.after).push({name, fn}); }
+function updRun(x){
+    const t = performance.now();
+    try{ x.fn(); }catch(e){ try{ window.poErrAdd && window.poErrAdd(e && e.message || e, 'після оновлення: ' + x.name, e && e.stack); }catch(_){} }
+    const s = UPD.st[x.name] || (UPD.st[x.name] = {n:0, ms:0, max:0}), d = performance.now() - t; s.n++; s.ms += d; if (d > s.max) s.max = d;
+}
+{ const core = update; update = function(){
+  for (let i = UPD.before.length - 1; i >= 0; i--) updRun(UPD.before[i]);
+  const r = core.apply(this, arguments);
+  for (const x of UPD.after) updRun(x);
+  return r;
+}; }
+function updStats(){ return Object.entries(UPD.st).map(([k, s])=>({дія:k, викликів:s.n, 'сер., мс':+(s.ms / s.n).toFixed(2), 'макс., мс':+s.max.toFixed(1)})).sort((a, b)=>b['сер., мс'] - a['сер., мс']); }
 /* ===== Оформлення 0.9.4 (варіант «Д»): темна шапка з документами, банер пацієнта, бічна панель з прогресом і шаблоном ===== */
 const SHELL = {};
 { const top = $('header.top'), wrap = $('main.wrap'), line = $('#ptline'), form = $('.form'), dbar = $('.docbar');
@@ -13666,7 +13706,7 @@ const SHELL = {};
   }
 
   SHELL.sync = () => { drawBanner(); drawSide(); drawTplBtns(); if (SHELL.docsKey !== MODE + DOC + !$('#modeSeg').hidden){ SHELL.docsKey = MODE + DOC + !$('#modeSeg').hidden; SHELL.placeDocs(); } };
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); try{ SHELL.sync(); }catch(e){} return r; };
+  onUpdate('597-shell', ()=>{ try{ SHELL.sync(); }catch(e){} });
   { const s0 = show; show = function(i){ const r = s0.apply(this, arguments); try{ drawSide(); }catch(e){} return r; }; }
   window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px'); clearTimeout(SHELL.rz); SHELL.rz = setTimeout(()=>{ if (seg.parentElement === dbar && wideTop()) docs.append(seg, more); SHELL.placeDocs(); }, 150); });
   SHELL.sync();
@@ -13837,7 +13877,7 @@ function drawDSrc(){
     }
     return L.filter(x=>x && (typeof x !== 'string' || x.trim()));
   };
-  const up0 = update; update = function(){ try{ applyDProfile(); }catch(e){} return up0.apply(this, arguments); };
+  onUpdate('598-diary-quick', ()=>{ applyDProfile(); }, 'before');
   /* перший щоденник без огляду й без хвороби — одразу питаємо хворобу */
   const sd0 = switchDoc; switchDoc = function(k){
     const r = sd0.apply(this, arguments);
@@ -13957,7 +13997,7 @@ document.addEventListener('click', e=>{
   if (g){ e.preventDefault(); bQuickEdit(g, g.dataset.fld.split(' ')); return; }
   const q = document.querySelector('.bqe'); if (q && !q.contains(e.target)) q.remove();
 });
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ SHELL.syncLinks(); if (DOC === 'shch' && SHELL.drawStay) SHELL.drawStay(); }catch(e){} return r; }; }
+{ onUpdate('599-links', ()=>{ try{ SHELL.syncLinks(); if (DOC === 'shch' && SHELL.drawStay) SHELL.drawStay(); }catch(e){} }); }
 /* дата і час запису щоденника — вибирається тут (за нею рахується день перебування); можна вести історію за минулі дні */
 let DDPIN = false;
 { const md = document.getElementById('meta_dt');
@@ -13985,7 +14025,7 @@ let DDPIN = false;
       return r; };
   }
 }
-{ const u1 = update; update = function(){ const r = u1.apply(this, arguments); try{ if (DOC === 'shch' && SHELL.syncDDT) SHELL.syncDDT(); }catch(e){} return r; }; }
+{ onUpdate('599-links #2', ()=>{ try{ if (DOC === 'shch' && SHELL.syncDDT) SHELL.syncDDT(); }catch(e){} }); }
 /* ===== Клік по пункту на аркуші «Перед друком» → відкрити розділ і поле у формі, курсор — на початок, поле блимає ===== */
 const BMAP = [
   [/^Хворий/, 'meta_pib'], [/^1\. Дата госпіталізації/, 'meta_dt'], [/^3\. Прізвище/, 'meta_pib'], [/^4\. Дата народження/, 'meta_dob'], [/^7\. Постійне місце/, 'meta_addr'],
@@ -14701,7 +14741,7 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
   if (!c){ c = h('button', {type:'button', class:'pcol labs', title:'Журнал обстежень розділами', onclick:()=>labsOpen()}, h('span', {class:'plab'}, 'Обстеження'), h('span', {class:'pval'})); cols.append(c); }
   c.querySelector('.pval').textContent = n ? `${n} ${plural(n, ['запис','записи','записів'])}` : 'вписати'; }
 { const rp = renderPtBar; renderPtBar = function(){ const r = rp.apply(this, arguments); try{ labsCol(); }catch(e){} return r; }; }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ labsCol(); }catch(e){} return r; }; }
+{ onUpdate('602-labs', ()=>{ try{ labsCol(); }catch(e){} }); }
 /* свої аналізи — у файл шаблонів і пакети */
 { const dj = downloadJSON; downloadJSON = function(obj){ if (obj && obj.type === 'po-templates' && !obj.labs) obj.labs = CUSTOM.labs || []; return dj.apply(this, arguments); }; }
 { const i1 = importTpl; importTpl = function(file){ const rd = new FileReader(); rd.onload = () => { try{ const o = JSON.parse(rd.result); if (o && o.type === 'po-templates' && Array.isArray(o.labs)){ let n = 0; o.labs.forEach(x=>{ if (x && x.t && Array.isArray(x.p) && !(CUSTOM.labs = CUSTOM.labs || []).some(y=>y.t === x.t)){ CUSTOM.labs.push(x); n++; } }); if (n){ saveCustom(); toast(`Своїх аналізів додано: ${n}`, 2500); } } }catch(e){} }; rd.readAsText(file); return i1.apply(this, arguments); }; }
@@ -14714,7 +14754,7 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
   const mb = $('.mbar'); const mbb = h('button', {type:'button', class:'btn', id:'mbLabs', 'aria-label':'Журнал обстежень', onclick:()=>labsOpen()}, '🧪 Аналізи');
   if (mb){ const tt = $('#toText'); if (tt) tt.before(mbb); else mb.prepend(mbb); }
   const sync = () => { const n = RES.length; lb.querySelector('.ljs-n').textContent = n ? ' · ' + n : ''; };
-  const up = update; update = function(){ const r = up.apply(this, arguments); try{ sync(); }catch(e){} return r; };
+  onUpdate('602-labs #2', ()=>{ try{ sync(); }catch(e){} });
   sync();
 }
 /* ===== Безпечне автозаповнення (0.9.3.15): усе, що заповнила програма (заготовка хвороби, «Норма всюди», «За шаблоном»,
@@ -15414,7 +15454,7 @@ function vMarks(){
   CALCS.forEach(c=>{ const s = document.querySelector('#calc_' + c.id + ' > summary'); if (!s) return; let m = s.querySelector('.vdot'); if (!m){ m = h('span', {class:'vdot'}); s.firstChild.after(m); }
     const r = V['calc:' + c.id]; m.textContent = r ? ' ✓' : ''; m.title = r ? 'Шкалу перевірено: ' + r.by : 'Шкалу ще не перевірено фахівцем'; });
 }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); clearTimeout(vMarks.t); vMarks.t = setTimeout(()=>{ try{ vMarks(); }catch(e){} }, 120); return r; }; }
+{ onUpdate('609-verify', ()=>{ clearTimeout(vMarks.t); vMarks.t = setTimeout(()=>{ try{ vMarks(); }catch(e){} }, 120); }); }
 /* Налаштування: блок перевірки */
 { const box = h('div', {class:'vset'},
     h('p', {class:'chips-hint'}, 'Шаблони хвороб, схеми лікування й дози, критерії госпіталізації (№ 1044), норми аналізів і шкали — чернетка, доки їх не перевірить профільний фахівець. Тут їх можна переглянути, позначити перевіреними й надрукувати документ для звірки з підписом.'),
@@ -15667,12 +15707,12 @@ Object.defineProperty(DOCTITLES, 'f066', {get:()=>F066ED === '2016' ? 'КАРТ�
 { const fc = formCode; formCode = function(){ return DOC === 'f066' ? '066/о' : fc.apply(this, arguments); };
   const dt = docTitle; docTitle = function(){ return DOC === 'f066' ? 'Карта вибулого (ф. 066/о)' : dt.apply(this, arguments); }; }
 /* п. 18 і 17б — лише коли «помер»; підказки з журналу обстежень */
-{ const up = update; update = function(){ const r = up.apply(this, arguments);
+{ onUpdate('612-f066', ()=>{ 
     try{ const s = SECTIONS.find(x=>x.id === 's066'); if (s){ const dd = dead66();
         s.fields.forEach(f=>{ if (f.dead && f.wrapEl) f.wrapEl.hidden = !dd; });
         [['rw', d66.rw], ['vil', d66.vil], ['flg', d66.flg]].forEach(([k, fn])=>{ const f = F('s066.' + k); if (f && f.el && !f.el.value){ const v = fn(); f.el.title = v ? 'З журналу обстежень: ' + isoDMY(v) : ''; f.wrapEl && f.wrapEl.classList.toggle('fromres', !!v); } });
         } }catch(e){}
-    return r; }; }
+    }); }
 /* профіль ліжок — запам'ятовується для наступних пацієнтів */
 /* титул 003/о: порожні пункти — із цих даних */
 { const bt = bTitle; bTitle = function(){ const pg = bt.apply(this, arguments);
@@ -16057,9 +16097,9 @@ FORMS['003-3/о'] = 'Передопераційний огляд анестез�
 { const fc = formCode; formCode = function(){ return DOC === 'anes' ? (MODE === 'amb' ? '028/о' : '003-3/о') : fc.apply(this, arguments); };
   const dt = docTitle; docTitle = function(){ return DOC === 'anes' ? (MODE === 'amb' ? 'Консультація анестезіолога' : 'Огляд анестезіолога (ф. 003-3/о)') : dt.apply(this, arguments); };
   const fh = formHeader; formHeader = function(){ const r = fh.apply(this, arguments); if (DOC === 'anes') r.card = FORMS[formCode()] + ' (мед. карта № ' + (mv('card') || '______') + ')' + (mv('vidd') ? ' · ' + mv('vidd') : ''); return r; }; }
-{ const up = update; update = function(){ const r = up.apply(this, arguments);
+{ onUpdate('614-anest', ()=>{ 
     try{ const f = F('an_obj.hint'); if (f && f.abox){ const t = DOC === 'anes' ? anesHints() : ''; f.abox.textContent = t || 'Підказок немає.'; if (f.wrapEl) f.wrapEl.classList.toggle('anhint', !!t); } }catch(e){}
-    return r; }; }
+    }); }
 /* клік по клітинці бланка — до поля */
 document.addEventListener('click', e=>{
   const c = e.target.closest && e.target.closest('#paper .b333 [data-an]'); if (!c) return;
@@ -16203,9 +16243,9 @@ function epiHospParts(){
     Pf.fmt = v => cv() ? '' : (v[0] ? `Пульс ${v[0]} уд./хв` : '');
     const lb = C.wrapEl && C.wrapEl.querySelector('label'); if (lb) lb.firstChild && (lb.firstChild.textContent = 'ЧСС (= пульс, якщо ритм правильний)');
     const pl = Pf.wrapEl && Pf.wrapEl.querySelector('label'); if (pl) pl.firstChild && (pl.firstChild.textContent = 'Пульс на променевій артерії (при аритмії)');
-    const up = update; update = function(){ const r = up.apply(this, arguments);
+    onUpdate('616-pulse', ()=>{ 
       try{ if (Pf.wrapEl && Pf.wrapEl.dataset.only === undefined){ const show = arr() || (!!pv() && !cv()); Pf.wrapEl.hidden = !show || !(SECTIONS.find(x=>x.id === 'ssc').docs.includes(DOC)); } }catch(e){}
-      return r; };
+      });
   } }
 /* ===== Ергономіка, крок 1 (0.9.3.31) =====
    1) Кнопки замість списків (segFor, 549) — тепер до 6 варіантів і довші підписи; відхилення від норми — жовтим.
@@ -16312,7 +16352,7 @@ function vqBuild(){
   });
 }
 function vqVis(){ Object.keys(VQ).forEach(doc=>{ const s = SECTIONS.find(x=>x.id === VQ[doc].host); if (s && s.vqEl) s.vqEl.hidden = DOC !== doc; }); }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ vqVis(); }catch(e){} return r; }; }
+{ onUpdate('617-ergo', ()=>{ try{ vqVis(); }catch(e){} }); }
 
 try{ ergoActs(); vqBuild(); vqVis(); fsIcon(); }catch(e){ console.warn('ergo', e); }
 /* ===== Документ в окремому вікні — для другого монітора (0.9.3.32) =====
@@ -16430,7 +16470,7 @@ function popClick(e){
   if (typeof active === 'undefined' || active !== before) go();
 }
 function popSoon(){ if (!POP.w || POP.w.closed) return; if (POP.mode === 'text' && Date.now() - (POP.edit || 0) < 1500) return; clearTimeout(POP.t); POP.t = setTimeout(()=>{ try{ popRender(); }catch(e){} }, 200); }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); popSoon(); return r; }; }
+{ onUpdate('618-popout', ()=>{ popSoon(); }); }
 document.addEventListener('input', e=>{ if (e.target && e.target.id === 'out') popSoon(); });
 window.addEventListener('beforeunload', ()=>{ try{ if (POP.w && !POP.w.closed) POP.w.close(); }catch(e){} });
 
@@ -16567,7 +16607,7 @@ document.addEventListener('mousedown', e=>{ if (QE.box && !QE.box.contains(e.tar
 document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && QE.box) qeClose(); });
 { const sd0 = switchDoc; switchDoc = function(){ qeClose(); return sd0.apply(this, arguments); }; }
 
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ ghostSync(); }catch(e){} return r; }; }
+{ onUpdate('619-onepage', ()=>{ try{ ghostSync(); }catch(e){} }); }
 
 /* ---- налаштування ---- */
 if (SETTINGS_EL){
@@ -16677,7 +16717,7 @@ function entryRender(){
     entrySet(proxy, badge.dataset.state);
   });
 }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
+{ onUpdate('620-field-states', ()=>{ entryRender(); }); }
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 { const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 entryRender();
@@ -16726,7 +16766,7 @@ function progressOptional(){
   });
 }
 { const x0 = entryRender; entryRender = function(){ const r = x0.apply(this, arguments); progressOptional(); return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
+{ onUpdate('621-progress-next', ()=>{ progressRender(); }); }
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
 progressOptional(); progressRender();
 /* 0.9.3.37 — короткий виклад наявної перевірки біля копіювання. */
@@ -16773,7 +16813,7 @@ function manualTextStatus(){
   if (text.textContent !== message) text.textContent = message;
 }
 // Синхронізація після наявних обробників і відновлення кешу документа.
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); manualTextStatus(); return r; }; }
+{ onUpdate('623-manual-text', ()=>{ manualTextStatus(); }); }
 let MANUAL_SWITCHING = 0;
 { const x0 = switchDoc; switchDoc = function(){
   const previous = DOC; MANUAL_SWITCHING++; try{ return x0.apply(this, arguments); }
@@ -17013,7 +17053,7 @@ document.addEventListener('pointerdown',e=>{
   return x0.apply(this,arguments);
 }; }
 { const x0=renderPaper; renderPaper=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
-{ const x0=update; update=function(){ const r=x0.apply(this,arguments); diaryInlineSync(); return r; }; }
+{ onUpdate('627-diary-inline', ()=>{ diaryInlineSync(); }); }
 { const x0=switchDoc; switchDoc=function(next){ if (next!==DOC) DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
 { const x0=restore; restore=function(){ DIARY_INLINE.manual=false; diaryInlineClose(); return x0.apply(this,arguments); }; }
 window.addEventListener('scroll',()=>{ if (!DIARY_INLINE.box || DIARY_INLINE.frame) return; DIARY_INLINE.frame=requestAnimationFrame(()=>{ DIARY_INLINE.frame=0; diaryInlinePosition(); }); },true);
@@ -17520,14 +17560,7 @@ function dangerShowUndo(message, returnFocus){
 }
 
 /* Підпис «Норма» в 540-ui-build.js залежить від документа та ширини екрана. */
-{
-  const update0 = update;
-  update = function(){
-    const result = update0.apply(this, arguments);
-    dangerSyncNormLabel();
-    return result;
-  };
-}
+onUpdate('632-dangerous-actions', ()=>{ dangerSyncNormLabel(); });
 
 /* Скасування відкривається лише після фактичного застосування масової дії. */
 {
@@ -18091,7 +18124,7 @@ function peMarkRows(w){
 { const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ peMarkRows(window); peSoon(); }catch(e){} return r; }; }
 { const x0 = popRender; popRender = function(){ const r = x0.apply(this, arguments); try{ if (POP.w && !POP.w.closed){ peMarkRows(POP.w);
     const hh = POP.w.document.getElementById('pwH'); if (hh && POP.mode === 'paper' && PE_MODE === 'here' && DOC !== 'anes') hh.textContent = 'клік по рядку — пункти рядка відкриються тут'; } peSoon(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ peSoon(); }catch(e){} return r; }; }
+{ onUpdate('636-paper-edit', ()=>{ try{ peSoon(); }catch(e){} }); }
 { const x0 = switchDoc; switchDoc = function(){ peClose(); return x0.apply(this, arguments); }; }
 { const x0 = restore; restore = function(){ peClose(); return x0.apply(this, arguments); }; }
 
@@ -18555,7 +18588,7 @@ const SEX_ASK = h('span', {id:'sexAsk', class:'sexask', hidden:''}, h('span', {}
   ...[['m','Ч','Чоловік'],['f','Ж','Жінка']].map(([v, t, l])=>h('button', {type:'button', title:l, 'aria-label':'Стать: ' + l, onclick:()=>{ const b = document.querySelector(`#sexSeg button[data-sex="${v}"]`); if (b) b.click(); }}, t)));
 { const line = document.getElementById('ptline'), bar = document.getElementById('ptbar'); if (line && bar) bar.after(SEX_ASK); else if (line) line.append(SEX_ASK); }
 function sexAsk(){ SEX_ASK.hidden = !!sex || !mv('pib'); }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ sexAsk(); }catch(e){} return r; }; }
+{ onUpdate('641-sex-auto', ()=>{ try{ sexAsk(); }catch(e){} }); }
 try{ sexAuto(); sexAsk(); }catch(e){}
 /* ===== 0.9.3.56 — щоденник: «Без змін (як учора)», «Порівняти з учора», пункти за хворобою =====
    Рішення лікаря (25.10.2026):
@@ -18903,7 +18936,7 @@ function phtRenderStrip(){
   const a = strip.querySelector('[aria-selected="true"]'); if (a) try{ scrollInBox(a, 'center'); }catch(e){}
 }
 { const x0 = renderTabNav; renderTabNav = function(){ const r = x0.apply(this, arguments); try{ phtRenderStrip(); phtRenderBar(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ phtRenderBar(); }catch(e){} return r; }; }
+{ onUpdate('647-phone-tabs', ()=>{ try{ phtRenderBar(); }catch(e){} }); }
 /* «Закрити» текст документа — оновити нижню панель */
 new MutationObserver(()=>{ try{ phtRenderBar(); }catch(e){} }).observe($('#outBox'), {attributes:true, attributeFilter:['class']});
 if (window.matchMedia) matchMedia('(max-width:899px)').addEventListener('change', ()=>{ try{ renderTabNav(); }catch(e){} });
@@ -19012,7 +19045,7 @@ function phstRender(){
   cur.panel.prepend(phstCard());
 }
 { const x0 = renderTabNav; renderTabNav = function(){ const r = x0.apply(this, arguments); try{ phstRender(); }catch(e){} return r; }; }
-{ let t = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(t); t = setTimeout(()=>{ try{ if (document.querySelector('.phstart')) phstRender(); }catch(e){} }, 400); return r; }; }
+{ let t = 0; onUpdate('649-phone-start', ()=>{ clearTimeout(t); t = setTimeout(()=>{ try{ if (document.querySelector('.phstart')) phstRender(); }catch(e){} }, 400); }); }
 /* у «⋯ Документ і дії» — повернути картку */
 { const x0 = openActs; openActs = function(){ const r = x0.apply(this, arguments);
   const lists = document.querySelectorAll('.actsheet .as-list'), l = lists[lists.length - 1];
@@ -19179,7 +19212,7 @@ function stHintRender(){
     ...G.map(g=>h('button', {type:'button', class:'btn st-g', title:'Заповнити за шаблоном «' + g.p.name + '» — ви оберете, що взяти', onclick:()=>{ const c = HV.cards && HV.cards[g.k]; if (c) c.click(); else applyPreset(g.p); }}, g.p.name)),
     h('span', {class:'st-hn'}, '— за бажанням: шаблон підставить діагноз, план і лікування'));
 }
-{ let tm = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(tm); tm = setTimeout(()=>{ try{ stHintRender(); }catch(e){} }, 250); return r; }; }
+{ let tm = 0; onUpdate('651-soft-template', ()=>{ clearTimeout(tm); tm = setTimeout(()=>{ try{ stHintRender(); }catch(e){} }, 250); }); }
 /* «За хворобою» — м’якше: за бажанням */
 { const lead = HV.panel && HV.panel.querySelector('p.lead');
   if (lead) lead.textContent = 'За бажанням. Спершу опитайте й огляньте пацієнта — тоді шаблон допоможе з діагнозом, планом обстеження й лікуванням. Якщо щось уже заповнено, програма спитає, що взяти з шаблону; ваші записи без вашого вибору не зміняться.'; }
@@ -20167,7 +20200,7 @@ function uilApply(){
 }
 { const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ uilApply(); }catch(e){} return r; }; }
 /* поле, перебудоване іншим модулем (напр., «Результат лікування» з новим варіантом), — ще раз за правилом */
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} return r; }; }
+{ onUpdate('666-ui-lists', ()=>{ try{ if (UISTYLE === 'ios') uilApply(); }catch(e){} }); }
 try{ uilApply(); }catch(e){}
 /* ===== 0.9.3.80 — стиль «Apple», далі:
    • шапка в один рядок: картка пацієнта (ПІБ, діагноз, алергії, обстеження, «＋ Новий») — угорі бічної панелі
@@ -20417,7 +20450,7 @@ function exApply(){
 { const x0 = show; show = function(i){ const ev = window.event; if (ev && ev.isTrusted && TABS[i] && TABS[i].id !== 'meta') UST.dismissed = true; const r = x0.apply(this, arguments); try{ stApply(); exApply(); }catch(e){} return r; }; }
 function stSel(){ if (!document.documentElement.classList.contains('ui-start')) return; const i = TABS.findIndex(t=>t.id === 'meta'); if (i < 0) return; TABS.forEach((t, k)=>t.tab.setAttribute('aria-selected', k === i ? 'true' : 'false')); }
 { const x0 = opSpy; opSpy = function(){ if (document.documentElement.classList.contains('ui-start')){ OPG.raf = 0; stSel(); return; } const r = x0.apply(this, arguments); try{ exApply(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ stApply(); }catch(e){} return r; }; }
+{ onUpdate('671-ui-entry', ()=>{ try{ stApply(); }catch(e){} }); }
 { const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ stApply(); exApply(); hdrApply(); }catch(e){} return r; }; }
 /* бічний зміст: при вході підсвічено те, що видно (раніше — «Скарги», хоча на екрані «Пацієнт і запис») */
 function spySync(){ try{ const m = stMeta(); if (document.body.classList.contains('onepage') && m && m.getBoundingClientRect().height > 0){ OPG.lock = 0; opSpy(); } }catch(e){} }
@@ -21897,7 +21930,7 @@ function v2pDob(){
 /* поле з маскою йде за справжнім полем дати (відкриття пацієнта, очищення, імпорт) */
 function v2pSync(){ const d = document.getElementById('meta_dob'), t = V2P.t; if (!d || !t || document.activeElement === t) return;
   if (t.classList.contains('bad') && !d.value) return; /* неправильну дату лишаємо на екрані, щоб лікар її виправив */ const v = v2pFmt(d.value); if (t.value !== v){ t.value = v; t.classList.remove('bad'); } }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ v2pSync(); }catch(e){} return r; }; }
+{ onUpdate('683-ui-patient', ()=>{ try{ v2pSync(); }catch(e){} }); }
 
 /* «Імпорт ▾»: одне меню; пункти викликають ті самі кнопки, що й раніше */
 function v2pImportMenu(anchor){
@@ -22144,7 +22177,7 @@ function siSelDraw(){
     b.setAttribute('aria-pressed', k === idx.length ? 'true' : 'false'); b.classList.toggle('part', k > 0 && k < idx.length);
     const cnt = b.querySelector('.si-cnt'); cnt.textContent = k > 0 && k < idx.length ? ' ' + k + '/' + idx.length : ''; });
 }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); siSelDraw(); }catch(e){} return r; }; }
+{ onUpdate('684-smart-input', ()=>{ try{ siTglText(); siSelDraw(); }catch(e){} }); }
 siComplaintsLayout(); siSelDraw(); siLbl();
 /* ===== 0.9.3.95 — рядок унизу сторінки: автор і зв’язок, версія, «що нового», код і ліцензія, де дані =====
    Видно в обох виглядах; у друк і файли не потрапляє. */
@@ -22284,7 +22317,7 @@ function v2stSaved(s){
   const ms0 = markSaved; markSaved = function(ok){ const r = ms0.apply(this, arguments); v2stSaved(ok ? 'ok' : 'bad'); v2stLater(); return r; };
   const as0 = autosave; autosave = function(){ const r = as0.apply(this, arguments); if (!RESTORING && (PID || mv('pib'))) v2stSaved('wait'); return r; };
   const np0 = newPatient; newPatient = function(){ const r = np0.apply(this, arguments); v2stSaved(''); v2stLater(); return r; };
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); v2stLater(); return r; };
+  onUpdate('687-ui-status', ()=>{ v2stLater(); });
   const sd0 = switchDoc; switchDoc = function(){ const r = sd0.apply(this, arguments); v2stLater(); return r; };
   const ua0 = uiV2Apply; uiV2Apply = function(){ const r = ua0.apply(this, arguments); V2ST.state = ''; v2stLater(); return r; };
   v2stDraw();
@@ -22364,7 +22397,7 @@ function v2BotPad(){
 }
 { let q = 0; const later = () => { if (!q) q = requestAnimationFrame(()=>{ q = 0; try{ v2BotPad(); }catch(e){} }); };
   window.addEventListener('resize', later); try{ const ro = new ResizeObserver(later); ['#liveBar', '.phtabs'].forEach(s=>{ const e = document.querySelector(s); if (e) ro.observe(e); }); }catch(e){}
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); later(); return r; }; later(); }
+  onUpdate('689-ui-a11y', ()=>{ later(); }); later(); }
 /* ===== 0.10, надійність: короткі підказки при першому відкритті розділу + зрозумілі тексти помилок =====
    Підказка — одне речення внизу екрана, лише раз для кожного розділу (новий вигляд). Вимкнути — «Налаштування» → «Підказки».
    Технічні повідомлення браузера (англійською, «QuotaExceededError», «Unexpected token»…) замінюються на зрозумілі, з тим, що зробити. */
@@ -22866,6 +22899,20 @@ try{ if (SETTINGS_EL){
   errLogRender();
   const about = SETTINGS_EL.querySelector(':scope > details.about'); if (about) about.before(sec); else SETTINGS_EL.append(sec);
 } }catch(e){ poErr(e, 'журнал помилок: налаштування'); }
+/* ===== 0.9.3.109 · дрібниці інтерфейсу з аудиту 11.2026 =====
+   Банер «Папка даних не підключена» на комп’ютері — один короткий рядок замість абзацу на пів бічної панелі;
+   повний текст лишається в підказці (title) і на телефоні. Стилі — у кінці styles.css (0.9.3.109). */
+{ const f0 = fsBanner; fsBanner = function(){
+  const r = f0.apply(this, arguments);
+  try{
+    const b = document.getElementById('fsBanner'); if (!b || b.hidden) return r;
+    const t = b.querySelector('.fsb-t'); if (!t) return r;
+    b.classList.toggle('fsb-short', !FS.dir);
+    if (!FS.dir) t.after(h('span', {class:'fsb-s', title:t.textContent}, 'Папку даних не підключено — пацієнти лише в цьому браузері'));
+  }catch(e){ poErr(e, 'банер папки даних'); }
+  return r;
+}; }
+try{ fsBanner(); }catch(e){}
 </script>
 
 </body>

@@ -43,6 +43,6 @@ function progressOptional(){
   });
 }
 { const x0 = entryRender; entryRender = function(){ const r = x0.apply(this, arguments); progressOptional(); return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
+{ onUpdate('621-progress-next', ()=>{ progressRender(); }); }
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); progressRender(); return r; }; }
 progressOptional(); progressRender();

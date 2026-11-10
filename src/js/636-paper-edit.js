@@ -348,7 +348,7 @@ function peMarkRows(w){
 { const x0 = renderPaper; renderPaper = function(){ const r = x0.apply(this, arguments); try{ peMarkRows(window); peSoon(); }catch(e){} return r; }; }
 { const x0 = popRender; popRender = function(){ const r = x0.apply(this, arguments); try{ if (POP.w && !POP.w.closed){ peMarkRows(POP.w);
     const hh = POP.w.document.getElementById('pwH'); if (hh && POP.mode === 'paper' && PE_MODE === 'here' && DOC !== 'anes') hh.textContent = 'клік по рядку — пункти рядка відкриються тут'; } peSoon(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ peSoon(); }catch(e){} return r; }; }
+{ onUpdate('636-paper-edit', ()=>{ try{ peSoon(); }catch(e){} }); }
 { const x0 = switchDoc; switchDoc = function(){ peClose(); return x0.apply(this, arguments); }; }
 { const x0 = restore; restore = function(){ peClose(); return x0.apply(this, arguments); }; }
 

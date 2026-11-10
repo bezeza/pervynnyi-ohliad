@@ -29,7 +29,7 @@ function v2pDob(){
 /* поле з маскою йде за справжнім полем дати (відкриття пацієнта, очищення, імпорт) */
 function v2pSync(){ const d = document.getElementById('meta_dob'), t = V2P.t; if (!d || !t || document.activeElement === t) return;
   if (t.classList.contains('bad') && !d.value) return; /* неправильну дату лишаємо на екрані, щоб лікар її виправив */ const v = v2pFmt(d.value); if (t.value !== v){ t.value = v; t.classList.remove('bad'); } }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ v2pSync(); }catch(e){} return r; }; }
+{ onUpdate('683-ui-patient', ()=>{ try{ v2pSync(); }catch(e){} }); }
 
 /* «Імпорт ▾»: одне меню; пункти викликають ті самі кнопки, що й раніше */
 function v2pImportMenu(anchor){

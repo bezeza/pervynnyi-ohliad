@@ -19,4 +19,4 @@ function v2BotPad(){
 }
 { let q = 0; const later = () => { if (!q) q = requestAnimationFrame(()=>{ q = 0; try{ v2BotPad(); }catch(e){} }); };
   window.addEventListener('resize', later); try{ const ro = new ResizeObserver(later); ['#liveBar', '.phtabs'].forEach(s=>{ const e = document.querySelector(s); if (e) ro.observe(e); }); }catch(e){}
-  const up0 = update; update = function(){ const r = up0.apply(this, arguments); later(); return r; }; later(); }
+  onUpdate('689-ui-a11y', ()=>{ later(); }); later(); }

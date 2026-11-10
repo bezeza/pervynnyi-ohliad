@@ -129,7 +129,7 @@ function drawDSrc(){
     }
     return L.filter(x=>x && (typeof x !== 'string' || x.trim()));
   };
-  const up0 = update; update = function(){ try{ applyDProfile(); }catch(e){} return up0.apply(this, arguments); };
+  onUpdate('598-diary-quick', ()=>{ applyDProfile(); }, 'before');
   /* перший щоденник без огляду й без хвороби — одразу питаємо хворобу */
   const sd0 = switchDoc; switchDoc = function(k){
     const r = sd0.apply(this, arguments);

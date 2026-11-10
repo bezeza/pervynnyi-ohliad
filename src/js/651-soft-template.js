@@ -92,7 +92,7 @@ function stHintRender(){
     ...G.map(g=>h('button', {type:'button', class:'btn st-g', title:'Заповнити за шаблоном «' + g.p.name + '» — ви оберете, що взяти', onclick:()=>{ const c = HV.cards && HV.cards[g.k]; if (c) c.click(); else applyPreset(g.p); }}, g.p.name)),
     h('span', {class:'st-hn'}, '— за бажанням: шаблон підставить діагноз, план і лікування'));
 }
-{ let tm = 0; const x0 = update; update = function(){ const r = x0.apply(this, arguments); clearTimeout(tm); tm = setTimeout(()=>{ try{ stHintRender(); }catch(e){} }, 250); return r; }; }
+{ let tm = 0; onUpdate('651-soft-template', ()=>{ clearTimeout(tm); tm = setTimeout(()=>{ try{ stHintRender(); }catch(e){} }, 250); }); }
 /* «За хворобою» — м’якше: за бажанням */
 { const lead = HV.panel && HV.panel.querySelector('p.lead');
   if (lead) lead.textContent = 'За бажанням. Спершу опитайте й огляньте пацієнта — тоді шаблон допоможе з діагнозом, планом обстеження й лікуванням. Якщо щось уже заповнено, програма спитає, що взяти з шаблону; ваші записи без вашого вибору не зміняться.'; }

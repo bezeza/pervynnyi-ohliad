@@ -264,7 +264,7 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
   if (!c){ c = h('button', {type:'button', class:'pcol labs', title:'Журнал обстежень розділами', onclick:()=>labsOpen()}, h('span', {class:'plab'}, 'Обстеження'), h('span', {class:'pval'})); cols.append(c); }
   c.querySelector('.pval').textContent = n ? `${n} ${plural(n, ['запис','записи','записів'])}` : 'вписати'; }
 { const rp = renderPtBar; renderPtBar = function(){ const r = rp.apply(this, arguments); try{ labsCol(); }catch(e){} return r; }; }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); try{ labsCol(); }catch(e){} return r; }; }
+{ onUpdate('602-labs', ()=>{ try{ labsCol(); }catch(e){} }); }
 /* свої аналізи — у файл шаблонів і пакети */
 { const dj = downloadJSON; downloadJSON = function(obj){ if (obj && obj.type === 'po-templates' && !obj.labs) obj.labs = CUSTOM.labs || []; return dj.apply(this, arguments); }; }
 { const i1 = importTpl; importTpl = function(file){ const rd = new FileReader(); rd.onload = () => { try{ const o = JSON.parse(rd.result); if (o && o.type === 'po-templates' && Array.isArray(o.labs)){ let n = 0; o.labs.forEach(x=>{ if (x && x.t && Array.isArray(x.p) && !(CUSTOM.labs = CUSTOM.labs || []).some(y=>y.t === x.t)){ CUSTOM.labs.push(x); n++; } }); if (n){ saveCustom(); toast(`Своїх аналізів додано: ${n}`, 2500); } } }catch(e){} }; rd.readAsText(file); return i1.apply(this, arguments); }; }
@@ -277,6 +277,6 @@ function labsCol(){ const cols = document.querySelector('#ptline .pcols'); if (!
   const mb = $('.mbar'); const mbb = h('button', {type:'button', class:'btn', id:'mbLabs', 'aria-label':'Журнал обстежень', onclick:()=>labsOpen()}, '🧪 Аналізи');
   if (mb){ const tt = $('#toText'); if (tt) tt.before(mbb); else mb.prepend(mbb); }
   const sync = () => { const n = RES.length; lb.querySelector('.ljs-n').textContent = n ? ' · ' + n : ''; };
-  const up = update; update = function(){ const r = up.apply(this, arguments); try{ sync(); }catch(e){} return r; };
+  onUpdate('602-labs #2', ()=>{ try{ sync(); }catch(e){} });
   sync();
 }

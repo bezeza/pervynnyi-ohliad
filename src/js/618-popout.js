@@ -113,7 +113,7 @@ function popClick(e){
   if (typeof active === 'undefined' || active !== before) go();
 }
 function popSoon(){ if (!POP.w || POP.w.closed) return; if (POP.mode === 'text' && Date.now() - (POP.edit || 0) < 1500) return; clearTimeout(POP.t); POP.t = setTimeout(()=>{ try{ popRender(); }catch(e){} }, 200); }
-{ const up = update; update = function(){ const r = up.apply(this, arguments); popSoon(); return r; }; }
+{ onUpdate('618-popout', ()=>{ popSoon(); }); }
 document.addEventListener('input', e=>{ if (e.target && e.target.id === 'out') popSoon(); });
 window.addEventListener('beforeunload', ()=>{ try{ if (POP.w && !POP.w.closed) POP.w.close(); }catch(e){} });
 

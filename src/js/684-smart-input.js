@@ -194,5 +194,5 @@ function siSelDraw(){
     b.setAttribute('aria-pressed', k === idx.length ? 'true' : 'false'); b.classList.toggle('part', k > 0 && k < idx.length);
     const cnt = b.querySelector('.si-cnt'); cnt.textContent = k > 0 && k < idx.length ? ' ' + k + '/' + idx.length : ''; });
 }
-{ const u0 = update; update = function(){ const r = u0.apply(this, arguments); try{ siTglText(); siSelDraw(); }catch(e){} return r; }; }
+{ onUpdate('684-smart-input', ()=>{ try{ siTglText(); siSelDraw(); }catch(e){} }); }
 siComplaintsLayout(); siSelDraw(); siLbl();

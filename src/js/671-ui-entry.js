@@ -61,7 +61,7 @@ function exApply(){
 { const x0 = show; show = function(i){ const ev = window.event; if (ev && ev.isTrusted && TABS[i] && TABS[i].id !== 'meta') UST.dismissed = true; const r = x0.apply(this, arguments); try{ stApply(); exApply(); }catch(e){} return r; }; }
 function stSel(){ if (!document.documentElement.classList.contains('ui-start')) return; const i = TABS.findIndex(t=>t.id === 'meta'); if (i < 0) return; TABS.forEach((t, k)=>t.tab.setAttribute('aria-selected', k === i ? 'true' : 'false')); }
 { const x0 = opSpy; opSpy = function(){ if (document.documentElement.classList.contains('ui-start')){ OPG.raf = 0; stSel(); return; } const r = x0.apply(this, arguments); try{ exApply(); }catch(e){} return r; }; }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); try{ stApply(); }catch(e){} return r; }; }
+{ onUpdate('671-ui-entry', ()=>{ try{ stApply(); }catch(e){} }); }
 { const x0 = uiStyleApply; uiStyleApply = function(){ const r = x0.apply(this, arguments); try{ stApply(); exApply(); hdrApply(); }catch(e){} return r; }; }
 /* бічний зміст: при вході підсвічено те, що видно (раніше — «Скарги», хоча на екрані «Пацієнт і запис») */
 function spySync(){ try{ const m = stMeta(); if (document.body.classList.contains('onepage') && m && m.getBoundingClientRect().height > 0){ OPG.lock = 0; opSpy(); } }catch(e){} }

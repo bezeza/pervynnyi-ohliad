@@ -92,7 +92,7 @@ function entryRender(){
     entrySet(proxy, badge.dataset.state);
   });
 }
-{ const x0 = update; update = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
+{ onUpdate('620-field-states', ()=>{ entryRender(); }); }
 { const x0 = show; show = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 { const x0 = restore; restore = function(){ const r = x0.apply(this, arguments); entryRender(); return r; }; }
 entryRender();
