@@ -29,6 +29,10 @@ const SHELL = {};
     const pib = mv('pib');
     ava.textContent = pib ? pib.split(/\s+/).filter(Boolean).slice(0, 2).map(w=>w[0]).join('').toUpperCase() : '?';
     ava.classList.toggle('none', !pib);
+    /* 0.9.3.111: перебудова й вимір висоти — лише коли щось змінилось (було ~8 мс на кожне оновлення) */
+    let key = MODE;
+    try{ const a = F('vitae.alerg'); key += '|' + val(F('dx.mkh'), true) + '|' + val(F('dx.osn'), true) + '|' + (MODE === 'hosp' ? stayDay() + '|' + F('e_per.per').d1.value : '') + '|' + (a && a.el ? a.el.value + '|' + a.norm + '|' + val(F('vitae.alergx'), true) : ''); }catch(e){ key = Math.random(); }
+    if (key === drawBanner.key) return; drawBanner.key = key;
     cols.innerHTML = '';
     const col = (l, go, ...v) => cols.append(h('button', {type:'button', class:'pcol', title:'Відкрити: ' + l.toLowerCase(), onclick:go}, h('span', {class:'plab'}, l), h('span', {class:'pval'}, ...v)));
     try{
@@ -42,7 +46,14 @@ const SHELL = {};
       }
     }catch(e){}
     line.classList.toggle('hascols', !!cols.firstChild);
-    document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
+    pbhSet();
+  }
+  /* висота банера → --pbh: ResizeObserver спрацьовує після розкладки, без примусового перерахунку всієї сторінки */
+  let pbhRO = null;
+  function pbhSet(){
+    if (pbhRO) return;
+    if (typeof ResizeObserver === 'function'){ pbhRO = new ResizeObserver(()=>document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px')); pbhRO.observe(line); }
+    else document.documentElement.style.setProperty('--pbh', line.offsetHeight + 'px');
   }
   /* клік по банеру: поле в первинному огляді (з іншого документа — перейти в огляд) */
   SHELL.goExam = (tab, fld) => { const t = TABS.find(x=>x.id === tab); if (t && !t.docs.includes(DOC)) switchDoc('ohl'); goTab(tab, fld); };
