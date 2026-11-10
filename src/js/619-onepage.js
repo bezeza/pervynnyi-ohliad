@@ -4,8 +4,9 @@
    2) Порожнє поле з підстановкою (скарги, об’єктивно, анамнез…) показує сірим, що саме підтягнеться,
       і кнопку «Взяти й правити».
    3) Клік по фразі в тексті документа — маленьке вікно правки саме цього поля, без переходу на вкладку. */
-const OPG = { on:true, qe:true, lock:0, raf:0 };
-try{ OPG.on = localStorage.getItem('po.onepage') !== '0'; OPG.qe = localStorage.getItem('po.qedit') !== '0'; }catch(e){}
+const OPG = { on:false, qe:true, lock:0, raf:0 };
+/* 0.9.3.116: за замовчуванням — по одному розділу (лікар: «дуже довгі гортання»); однією сторінкою — лише якщо обрано */
+try{ OPG.on = localStorage.getItem('po.onepage') === '1'; OPG.qe = localStorage.getItem('po.qedit') !== '0'; }catch(e){}
 const OP_SKIP = ['hv', 'calc', 'tpl', 'set', 'help'];
 function opSet(){ return tabOrder().filter(i=>TABS[i] && !OP_SKIP.includes(TABS[i].id)); }
 function opScrollTo(el, off){ OPG.lock = Date.now(); const y = el.getBoundingClientRect().top + window.scrollY - (off || 70); window.scrollTo({top:Math.max(0, y)}); }

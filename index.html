@@ -2621,7 +2621,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.115 від 10.11.2026">v0.9.3.115 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.116 від 10.11.2026">v0.9.3.116 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4810,8 +4810,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.115', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.116', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.116', '10.11.2026', 'менше гортання: розділи огляду тепер показуються по одному (раніше весь огляд — однією сторінкою, ~20 екранів). Унизу — «‹ попередній» і «Далі ›», клавіші Alt+↓ / Alt+↑; бічне меню — як і раніше. Повернути «однією сторінкою» — «Вигляд» → «Розділи» (або «Налаштування» → «Розділи форми»); хто вже обрав це в налаштуваннях, у того без змін'],
   ['0.9.3.115', '10.11.2026', 'нові шаблони «За хворобою» (терапевтичні): «Синдром відміни алкоголю» (F10.3) і «Алкогольний делірій» (F10.4) — скарги, огляд, діагноз, план обстеження й стартова схема лікування за Стандартом МОЗ «Психічні та поведінкові розлади внаслідок вживання алкоголю» (наказ від 16.12.2025 № 1897): діазепам за навантажувальною схемою зі зниженням, тіамін до глюкози, рідина, магній; варіант для літніх і при ураженні печінки — лоразепам; підказки CIWA-Ar і коли переводити. Нові скарги: тремтіння рук і тіла, тривога, дратівливість. У «Призначення» → «Набори» (терапія) — «Дезінтоксикаційна терапія» до будь-якої хвороби'],
   ['0.9.3.114', '10.11.2026', 'навігація на комп’ютері: шапка (Огляд / Щоденник / … / Текст / Друк / Профіль) більше не прокручується — документ і текст можна змінити з будь-якого місця сторінки; рядок «Норма / ↶ / Документ з огляду» і бічне меню — під нею. На широкому екрані (від 1280 px) панель «Текст» — колонка справа: форма звужується й не ховається під панеллю; ширину панелі можна тягнути за її ліву межу (або стрілками ← →, подвійний клік — як було), вона запам’ятовується. На вужчому екрані й телефоні — як раніше'],
   ['0.9.3.113', '10.11.2026', 'бланк 003/о: алергія тепер «Алергологічний анамнез не обтяжений» повністю (було «Алергічні реакції: не обтяжений»), «Алергічні реакції на НПЗП» → «на НПЗП». Анестезіологічний огляд: без дубля «Алергологічний анамнез Алергологічний анамнез». План обстеження: нові кнопки RW і ВІЛ (група «Кров»); RW позначається на бланку 003/о в «ОБСТЕЖЕННЯ», клік по RW на бланку додає/прибирає його з плану'],
@@ -16628,8 +16629,9 @@ function popBtnSync(){ const b = $('#popBtn'); if (b) b.setAttribute('aria-press
    2) Порожнє поле з підстановкою (скарги, об’єктивно, анамнез…) показує сірим, що саме підтягнеться,
       і кнопку «Взяти й правити».
    3) Клік по фразі в тексті документа — маленьке вікно правки саме цього поля, без переходу на вкладку. */
-const OPG = { on:true, qe:true, lock:0, raf:0 };
-try{ OPG.on = localStorage.getItem('po.onepage') !== '0'; OPG.qe = localStorage.getItem('po.qedit') !== '0'; }catch(e){}
+const OPG = { on:false, qe:true, lock:0, raf:0 };
+/* 0.9.3.116: за замовчуванням — по одному розділу (лікар: «дуже довгі гортання»); однією сторінкою — лише якщо обрано */
+try{ OPG.on = localStorage.getItem('po.onepage') === '1'; OPG.qe = localStorage.getItem('po.qedit') !== '0'; }catch(e){}
 const OP_SKIP = ['hv', 'calc', 'tpl', 'set', 'help'];
 function opSet(){ return tabOrder().filter(i=>TABS[i] && !OP_SKIP.includes(TABS[i].id)); }
 function opScrollTo(el, off){ OPG.lock = Date.now(); const y = el.getBoundingClientRect().top + window.scrollY - (off || 70); window.scrollTo({top:Math.max(0, y)}); }
@@ -23087,6 +23089,32 @@ try{ fsBanner(); }catch(e){}
   }
   window.addEventListener('resize', ()=>{ try{ setW(parseInt(getComputedStyle(root).getPropertyValue('--v2txtw'), 10) || w0); }catch(e){} });
 }
+/* ===== 0.9.3.116 · розділи по одному на екрані (зауваження лікаря 10.11.2026) =====
+   Огляд однією сторінкою займав ~20 екранів. Тепер за замовчуванням видно лише обраний розділ
+   (619-onepage.js, OPG.on = false), унизу «‹ попередній» і «Далі ›». Перемикач — «Вигляд» → «Розділи»
+   (і, як і раніше, «Налаштування» → «Розділи форми»). Alt+↓ / Alt+↑ — наступний / попередній розділ. */
+function oneSecSet(on){
+  OPG.on = !!on; try{ localStorage.setItem('po.onepage', on ? '1' : '0'); }catch(e){}
+  const sel = document.getElementById('set_onepage'); if (sel) sel.value = on ? '1' : '0';
+  try{ opApply(); }catch(e){ poErr(e, 'розділи: перемикання'); }
+  try{ renderViewCtl(); }catch(e){}
+}
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  try{ box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Розділи'), h('div', {class:'vseg', role:'group', 'aria-label':'Як показувати розділи форми'},
+    ...[[false, 'По одному', 'Лише обраний розділ, унизу «Далі ›» (Alt+↓)'], [true, 'Однією сторінкою', 'Усі розділи підряд, прокручуванням']].map(([on, l, t])=>
+      h('button', {type:'button', 'aria-pressed':OPG.on === on ? 'true' : 'false', title:t, onclick:()=>oneSecSet(on)}, l))))); }catch(e){ poErr(e, 'розділи: меню «Вигляд»'); }
+  return box; }; }
+try{ const sel = document.getElementById('set_onepage'); if (sel) sel.addEventListener('change', ()=>{ try{ renderViewCtl(); }catch(e){} }); }catch(e){}
+try{ if (typeof FS_SET_KEYS !== 'undefined' && !FS_SET_KEYS.includes('po.onepage')) FS_SET_KEYS.push('po.onepage'); }catch(e){}
+document.addEventListener('keydown', e=>{
+  if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || (e.key !== 'ArrowDown' && e.key !== 'ArrowUp')) return;
+  if (e.target && e.target.tagName === 'SELECT') return;
+  const seq = tabOrder().filter(i=>!TOOL_TABS.includes(TABS[i].id)), k = seq.indexOf(active);
+  const n = seq[k + (e.key === 'ArrowDown' ? 1 : -1)]; if (k < 0 || n === undefined) return;
+  e.preventDefault(); show(n);
+});
+try{ renderViewCtl(); }catch(e){}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
