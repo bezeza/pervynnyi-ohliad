@@ -1713,6 +1713,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     RX.length=0; keep.forEach(x=>RX.push(x)); RES.length=0; keepR.forEach(x=>RES.push(x)); lsSet('po.ampsop',''); renderRx();
     return JSON.stringify([hasBtn,/лейкоцити 14,2 → 8,1/.test(lab),effAuto,saved,inDiary,stopped]); })()`);
   ok('СОП: перегляд 48–72 год — кнопка, дані день 0 → зараз, ефективність підказана, запис у щоденник, «припинити» відміняє', r==='[true,true,"позитивна динаміка",true,true,true]', r); }
+{ const r=w.eval(`(()=>{ localStorage.removeItem('po.errlog'); const boot=PO_BOOT===false&&!document.getElementById('poCrash');
+    window.poErrAdd('тестова помилка','рядок 1',''); window.poErrAdd('тестова помилка','рядок 1',''); poErr(new Error('друга'),'тест');
+    const a=errLogRead(); const sec=document.getElementById('errLogSec'); sec.open=true; errLogRender();
+    const shown=/тестова помилка/.test(sec.textContent)&&/×2/.test(sec.textContent); const txt=errLogText();
+    [...sec.querySelectorAll('button')].find(b=>b.textContent==='Очистити').click(); const cleared=errLogRead().length===0; sec.open=false;
+    return JSON.stringify([boot,a.length,a[1]&&a[1].n,a[0].m,shown,/Первинний огляд/.test(txt)&&/друга · тест/.test(txt),cleared]); })()`);
+  ok('Журнал помилок: запуск без аварії, повтори злито (×2), видно в налаштуваннях, текст для автора, очищення', r==='[true,2,2,"друга",true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
