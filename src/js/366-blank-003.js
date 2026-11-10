@@ -18,10 +18,13 @@ const bTpl = arr => arr.map((t,i)=>`{${i}|${t}}`).join(', ');
 function bSec(id){ const s = SECTIONS.find(x=>x.id === id); if (!s) return ''; const keep = DOC; DOC = s.docs.includes(keep) ? keep : s.docs[0]; let t = null; try{ t = sectionText(s); } finally { DOC = keep; } return t ? g(t.body) : ''; }
 /* «Ким направлений»: заклад і лікар; інакше — спосіб госпіталізації */
 function bNapr(){ const z = BV('morbi.hospz').replace(/^\(|\)$/g, ''), d = BV('morbi.hospd'); if (z || d) return [z, d ? 'лікар ' + d : ''].filter(Boolean).join(', '); return BI('morbi.hosp') >= 0 ? BV('morbi.hosp').replace(/^(Госпіталізований|Госпіталізована) /, '') : ''; }
+/* 0.9.3.113: алергія на бланку — «Алергологічний анамнез не обтяжений» повністю (було «Алергічні реакції: не обтяжений»);
+   «Алергічні реакції на НПЗП» → «на НПЗП», бо підпис бланка вже «Алергічні реакції» */
+const bAlg = v => String(v || '').replace(/^Алергічні реакції /, '');
 const bU3 = (on, t) => h('span', {class:'bl' + (on ? ' bsel' : '')}, t);
 /* пункти «ОБСТЕЖЕННЯ» бланка 003/о ↔ план обстеження */
 const B003OB = ['Загальний аналіз крові','Загальний аналіз сечі','RW','Глюкоза крові','Цукор крові','ЕКГ','Креатинін, сечовина','Проби печінки','Загальний білок','Залізо','Кальцій','ПТІ','ГГТП','Фібриноген','Гематокрит','Група крові, резус-фактор','Hbs Ag','СРБ','Холестерин, В-ЛП','УЗО ОЧП, нирок, ОМСС, щитоподібної залози','Ro-гр. ОГК','ФГДС','Кал на я/глист','Сеча на діастазу'];
-const B003MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
+const B003MAP = [[/^ЗАК$/,[1]],[/^ЗАС$/,[2]],[/^RW$/,[3]],[/^глюкоза крові$/,[4]],[/^ЕКГ$/,[6]],[/^біохімічний аналіз крові$/,[7,8,9]],[/^коагулограма$/,[12,14]],[/^група крові/,[16]],[/маркери вірусних гепатитів/,[17]],[/^С-реактивний білок$/,[18]],[/^ліпідограма$/,[19]],[/^УЗД (ОЧП|нирок)$/,[20]],[/^рентгенографія ОГК$/,[21]],[/^ФГДС$/,[22]]];
 function bFill(v, req, wide){ v = String(v || '').trim(); return h('span', {class:'bf' + (v ? '' : ' empty') + (wide ? ' wide' : '') + (!v && req && BGAP ? ' bgap' : '')}, v || ' '); }
 function bRow(...kids){ return h('div', {class:'brow'}, ...kids.map(k=>typeof k === 'string' ? h('span', {class:'bl'}, k.replace(/^ +| +$/g, m=>'\u00a0'.repeat(m.length))) : k)); }   /* пробіли між клітинками не злипаються */
 /* дата клітинками ДД.ММ.РР і час «__ год __ хв» */
@@ -57,7 +60,7 @@ function bHead(){
 function bTitle(){
   const P = F('e_per.per'), d1 = P.d1.value || (mv('dt') || '').split('T')[0], tm = (mv('dt') || '').split('T')[1] || '', d2 = P.d2.value;
   const days = bedDays(d1, d2);
-  const vyd = BI('hosp.vyd'), alg = [BV('vitae.alerg').replace(/^Алергологічний анамнез /, ''), BV('vitae.alergx')].filter(Boolean).join(', ');
+  const vyd = BI('hosp.vyd'), alg = [bAlg(BV('vitae.alerg')), BV('vitae.alergx')].filter(Boolean).join(', ');
   const napr = bNapr();
   return bPage('btitle', bHead(),
     h('div', {class:'bt'}, 'МЕДИЧНА КАРТА СТАЦІОНАРНОГО ХВОРОГО № ', bFill(mv('card'), true)),
@@ -84,7 +87,7 @@ function bExam(){
   const tbh = BI('vitae.tbh'), kol = BI('shk.kol'), svid = BI('zah.svid'), st = BI('zah.stan');
   const botk = tbh === 0 || tbh === 3 ? 'заперечує' : tbh === 1 ? 'вірусний гепатит В в анамнезі' : tbh === 2 ? 'вірусний гепатит С в анамнезі' : '';
   const tb = tbh === 3 ? 'перенесений туберкульоз' : tbh >= 0 ? 'заперечує' : '';
-  const alg = [BV('vitae.alerg').replace(/^Алергологічний анамнез /, ''), BV('vitae.alergx')].filter(Boolean).join(', ');
+  const alg = [bAlg(BV('vitae.alerg')), BV('vitae.alergx')].filter(Boolean).join(', ');
   const vt = ['sup','oper','operx','gem','zv','spad','epid','vyizd','strah','inv','vx'].map(k=>{ const f = F('vitae.' + k), v = f ? val(f, true) : ''; return v ? g(cap((f.tpl || '{v}').replace('{v}', v))) : ''; }).filter(Boolean).map(end).join(' ');
   const hw = [cm(BN('zah_hw_0')), num(BN('zah_hw_1'))], bmi = hw[0] > 0 && hw[1] > 0 ? hw[1] / Math.pow(hw[0] / 100, 2) : NaN;
   const bmiCls = isNaN(bmi) ? '' : bmi < 18.5 ? 'недостатня маса тіла' : bmi < 25 ? 'нормальна маса тіла' : bmi < 30 ? 'надлишкова маса тіла' : bmi < 35 ? 'ожиріння I ступеня' : bmi < 40 ? 'ожиріння II ступеня' : 'ожиріння III ступеня';
