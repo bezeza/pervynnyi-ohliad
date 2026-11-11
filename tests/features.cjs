@@ -1734,6 +1734,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const r=w.eval(`(()=>{ const q=__tq, after=(UPD.st['621-progress-next']||{n:0}).n-q.n1; const t=document.getElementById('skarhy_cx');
     const outOk=/тест друку/.test(document.getElementById('out').textContent); t.value=q.v0; update(); return JSON.stringify([q.sync,after,outOk]); })()`);
   ok('Друк у текстовому полі: дії після оновлення (прогрес, стан) запускаються один раз після паузи, не на кожну клавішу', r==='[0,1,true]', r); }
+{ const r=w.eval(`(()=>{ const g=document.querySelector('#outBox>.v2grip'); const R=document.documentElement; const w0=R.style.getPropertyValue('--v2txtw');
+    const ev=k=>g.dispatchEvent(new KeyboardEvent('keydown',{key:k,bubbles:true})); ev('ArrowLeft'); const w1=parseInt(R.style.getPropertyValue('--v2txtw'),10);
+    for(let i=0;i<40;i++) ev('ArrowLeft'); const wMax=parseInt(R.style.getPropertyValue('--v2txtw'),10); g.dispatchEvent(new MouseEvent('dblclick',{bubbles:true}));
+    const back=R.style.getPropertyValue('--v2txtw'); return JSON.stringify([!!g, g.getAttribute('role'), w1>parseInt(w0,10), wMax<=900, back, localStorage.getItem('po.txtw')]); })()`);
+  ok('Панель «Текст»: межа для зміни ширини (стрілки, межа 900 px, подвійний клік — 560 px, запам’ятовується)', /^\[true,"separator",true,true,"560px","560"\]$/.test(r), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

@@ -2591,12 +2591,32 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   /* підказки й повідомлення — внизу праворуч над рядком стану, а не поверх кнопок документа вгорі */
   :root.ui-ios .toast{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px))}
 }
+/* 0.9.3.114 · закріплена шапка й панель «Текст» колонкою (702-sticky-dock.js) */
+@media screen and (min-width:900px){
+  :root.ui-v2 body.shell header.top{position:sticky;top:0;z-index:40}
+  :root.ui-v2.ui-ios body.shell .form>.docbar{top:var(--v2hdr,52px)}
+  :root.ui-v2 body.lay-B #sidecol>.sidein{top:calc(var(--v2hdr,52px) + var(--pbh,0px) + 8px);max-height:calc(100vh - var(--v2hdr,52px) - var(--pbh,0px) - 16px)}
+  :root.ui-v2{scroll-padding-top:calc(var(--v2hdr,52px) + 64px)}
+  :root.ui-v2 #outBox{top:calc(var(--v2hdr,52px) + 8px);width:min(var(--v2txtw,560px),calc(100vw - 24px))}
+  .v2grip{display:none}
+}
+@media screen and (min-width:1280px){
+  /* відкрита панель — колонка справа: форма звужується, нічого не перекрито */
+  :root.ui-v2 body.v2-txt-open .wrap{margin-right:calc(var(--v2txtw,560px) + 12px);transition:margin-right .14s ease-out}
+  :root.ui-v2 body.v2-txt-open #outBox{box-shadow:0 1px 3px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+  :root.ui-v2 body.v2-txt-open .toast{right:calc(var(--v2txtw,560px) + 28px)}
+  :root.ui-v2 #outBox>.v2grip{display:block;position:absolute;left:0;top:0;bottom:0;width:8px;cursor:ew-resize;z-index:2;touch-action:none}
+  :root.ui-v2 #outBox>.v2grip::after{content:"";position:absolute;left:2px;top:50%;width:4px;height:44px;margin-top:-22px;border-radius:var(--r-xs);background:var(--line-strong,#B4B4BC);opacity:.6}
+  :root.ui-v2 #outBox>.v2grip:hover::after,:root.ui-v2 #outBox>.v2grip:focus-visible::after{opacity:1;background:var(--accent)}
+  body.v2-resizing,body.v2-resizing *{cursor:ew-resize!important;user-select:none!important}
+  body.v2-resizing .wrap{transition:none!important}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.112 від 10.11.2026">v0.9.3.112 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.113 від 10.11.2026">v0.9.3.113 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4785,8 +4805,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.112', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.113', VDATE = '10.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.113', '10.11.2026', 'бланк 003/о: алергія тепер «Алергологічний анамнез не обтяжений» повністю (було «Алергічні реакції: не обтяжений»), «Алергічні реакції на НПЗП» → «на НПЗП». Анестезіологічний огляд: без дубля «Алергологічний анамнез Алергологічний анамнез». План обстеження: нові кнопки RW і ВІЛ (група «Кров»); RW позначається на бланку 003/о в «ОБСТЕЖЕННЯ», клік по RW на бланку додає/прибирає його з плану'],
   ['0.9.3.112', '10.11.2026', 'оформлення: заокруглення кутів зведено до п’яти однакових значень (мітки 4 px, кнопки й поля 8 px, картки 12 px, великі панелі 16 px, «капсули»), замість 25 різних. На вигляд майже не змінилось — кути стали однаковими по всій програмі. Аркуш, бланки МОЗ і друк не зачеплені. Журнал помилок — звичайний дрібний шрифт замість завеликого'],
   ['0.9.3.111', '10.11.2026', 'швидкодія: оновлення документа ≈ у 3,5 раза швидше (на ПК 22 → 6 мс): шапка пацієнта більше не перераховує розкладку всієї сторінки на кожне оновлення й не перебудовується, якщо діагноз, день і алергії ті самі. Друк у текстових полях (скарги, анамнез): прогрес «Заповнено N з M», рядок стану, лічильник зауважень і позначки перевірки тепер оновлюються самі після короткої паузи — раніше відставали до наступного натискання кнопки'],
   ['0.9.3.110', '10.11.2026', 'внутрішнє: 29 обгорток навколо оновлення документа замінено одним реєстром дій (onUpdate). Для лікаря нічого не змінюється — порядок і результат ті самі (перевірено порівнянням сторінки до й після на ПК і телефоні). Тепер помилка в одній дії не зупиняє решту, а пишеться в журнал помилок; час кожної дії видно (updStats() у консолі)'],
@@ -22951,6 +22972,37 @@ try{ if (SETTINGS_EL){
   return r;
 }; }
 try{ fsBanner(); }catch(e){}
+/* ===== 0.9.3.114 · закріплена шапка й панель «Текст» колонкою (зауваження лікаря 10.11.2026) =====
+   ПК (≥ 900 px): шапка з документами, «Текст», «Друк» і профілем більше не прокручується; рядок «Норма / ↶ / Документ з огляду»
+   і бічне меню стоять під нею (--v2hdr — висота шапки, міряє ResizeObserver).
+   Широкий екран (≥ 1280 px): відкрита панель «Текст» — колонка справа, форма звужується, нічого не перекриває;
+   ширину тягнуть за ліву межу панелі (360–900 px), вона запам’ятовується (po.txtw). Вужче — панель поверх, як і раніше.
+   Стилі — у кінці styles.css (0.9.3.114). */
+{
+  const root = document.documentElement, KW = 'po.txtw';
+  const hdr = document.querySelector('header.top'), box = document.getElementById('outBox');
+  const clampW = w => Math.round(Math.max(360, Math.min(900, Math.min(w, window.innerWidth * 0.6))));
+  const setW = w => root.style.setProperty('--v2txtw', clampW(w) + 'px');
+  let w0 = 560; try{ w0 = +localStorage.getItem(KW) || 560; }catch(e){}
+  setW(w0);
+  if (hdr && typeof ResizeObserver === 'function')
+    new ResizeObserver(()=>root.style.setProperty('--v2hdr', Math.round(hdr.getBoundingClientRect().height) + 'px')).observe(hdr);
+  if (box){
+    const grip = h('div', {class:'v2grip', role:'separator', 'aria-orientation':'vertical', 'aria-label':'Ширина панелі «Текст» (стрілки ← →)', tabindex:'0',
+      title:'Потягніть, щоб змінити ширину панелі'});
+    let drag = false;
+    const save = ()=>{ try{ localStorage.setItem(KW, parseInt(getComputedStyle(root).getPropertyValue('--v2txtw'), 10) || 560); }catch(e){} };
+    grip.addEventListener('pointerdown', e=>{ drag = true; grip.setPointerCapture(e.pointerId); document.body.classList.add('v2-resizing'); e.preventDefault(); });
+    grip.addEventListener('pointermove', e=>{ if (drag) setW(window.innerWidth - e.clientX - 12); });
+    const end = ()=>{ if (!drag) return; drag = false; document.body.classList.remove('v2-resizing'); save(); };
+    grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end);
+    grip.addEventListener('keydown', e=>{ if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault();
+      const cur = parseInt(getComputedStyle(root).getPropertyValue('--v2txtw'), 10) || 560; setW(cur + (e.key === 'ArrowLeft' ? 40 : -40)); save(); });
+    grip.addEventListener('dblclick', ()=>{ setW(560); save(); });
+    box.prepend(grip);
+  }
+  window.addEventListener('resize', ()=>{ try{ setW(parseInt(getComputedStyle(root).getPropertyValue('--v2txtw'), 10) || w0); }catch(e){} });
+}
 </script>
 
 </body>
