@@ -1,12 +1,16 @@
 /* ===== 0.9.3.121 · індикатор госпіталізації одним рядком (задача 20) =====
-   Над списком критеріїв — один підсумок з результату autoRules().
-   Логіку autoRules не змінює: лише обгортає і читає spec / gen.
+   Над списком критеріїв — скільки критеріїв зараз відмічено (aria-pressed).
+   autoRules лишається як є: він і далі підказує критерії за даними.
+   Якщо лікар зняв підказку (dataset.off), у рахунок вона не входить —
+   інакше червоний рядок лишався «(1)», хоча жоден ургентний критерій не відмічено.
+   Малює після applyAuto, коли кнопки вже синхронізовані з правилами.
    Клік розгортає або згортає списки критеріїв. У текст документа нічого не додає.
    Слова «амбулаторно» і рекомендацій тут немає — рішення за лікарем.
 */
 (function(){
   const KEY = '711-hosp';
-  function paint(r){
+  const pressed = f => f && f.chips ? f.chips.filter(c=>c.getAttribute('aria-pressed') === 'true').length : 0;
+  function paint(){
     const spec = (typeof F === 'function') && F('hosp.spec');
     const gen = (typeof F === 'function') && F('hosp.gen');
     if (!spec || !spec.wrapEl || !spec.cbox) return;
@@ -22,8 +26,9 @@
       spec.wrapEl.classList.add('hosp-fold');
       if (gen && gen.wrapEl) gen.wrapEl.classList.add('hosp-fold');
     }
-    const specN = r && r.spec && typeof r.spec.size === 'number' ? r.spec.size : 0;
-    const genN = r && r.gen && typeof r.gen.size === 'number' ? r.gen.size : 0;
+    const specN = pressed(spec);
+    const genN = pressed(gen);
+    const open = b.getAttribute('aria-expanded') === 'true';
     if (specN){
       b.textContent = 'Є критерії ургентної госпіталізації (' + specN + ')';
       b.className = 'hosp-ind bad';
@@ -34,14 +39,15 @@
       b.textContent = 'Критеріїв за введеними даними не знайдено';
       b.className = 'hosp-ind grey';
     }
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
-  if (typeof autoRules === 'function'){
-    const orig = autoRules;
-    autoRules = function(){
+  if (typeof applyAuto === 'function'){
+    const orig = applyAuto;
+    applyAuto = function(){
       const r = orig.apply(this, arguments);
-      try { paint(r); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
+      try { paint(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
       return r;
     };
-    try { autoRules(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
   }
+  try { paint(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
 })();
