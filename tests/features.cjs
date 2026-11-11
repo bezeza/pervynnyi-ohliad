@@ -1866,6 +1866,24 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Індикатор госпіталізації: знятий ургентний критерій не тримає червоний «(1)», правило за даними лишається', o.wasOn && o.ruleBefore && o.ruleAfter && o.indOk && o.lineNow && o.back, r);
   ok('Інсульт не підставляє норму Ромберга й інших систем; знахідки шаблону лишаються', o.stBad.length===0 && o.stKeep && o.stSec, r);
   ok('Стать у заголовку огляду: хворої / хворого; інші шаблони й далі ставлять норму', o.pneuNorm && o.male, r); }
+{ const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); switchDoc('ohl');
+    const ap=k=>{ const i=PRESETS.findIndex(p=>p.key===k); applyPreset(PRESETS[i], HV.cards[i]); };
+    const T=()=>document.getElementById('out').textContent;
+    ap('gout'); const g=T();
+    const gout=/плюснефалангов/.test(g) && !/плесно/.test(g) && !/суглоба першого плюснефалангового суглоба/.test(g);
+    ap('bell'); const b=T();
+    const bell=/Парезів кінцівок немає/.test(b) && /парез мімічних/.test(b) && /рогівков/.test(b) && !/корнеальн/.test(b) && !/Парезів немає(?! кінцівок)/.test(b);
+    ap('tia'); const tia=/G45\\.1/.test(T()) && !/G45\\.9/.test(T());
+    ap('otit'); const ot=/H66\\.0/.test(T()) && /гнійний середній отит/.test(T());
+    ap('gastr'); const ga=/K29\\.3/.test(T()) && /неатрофічний/.test(T());
+    ap('tspine'); const sp=/S32\\.0/.test(T()) && /рівень L1/.test(T()) && !/Th12/.test(T());
+    const ecg=/уд\\.\\/хв/.test(TESTS['ЕКГ']) && !/ЧСС … за хв/.test(TESTS['ЕКГ']);
+    return JSON.stringify({gout, bell, tia, ot, ga, sp, ecg}); })()`);
+  const o=JSON.parse(r);
+  ok('Подагра: плюснефаланговий, без «суглоба суглоба»', o.gout, r);
+  ok('Параліч Белла: рогівковий рефлекс і парез кінцівок не заперечує обличчя', o.bell, r);
+  ok('Коди за текстом: ТІА G45.1, отит H66.0, гастрит K29.3, перелом L1 без Th12', o.tia && o.ot && o.ga && o.sp, r);
+  ok('ЧСС в шаблоні ЕКГ — уд./хв', o.ecg, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
