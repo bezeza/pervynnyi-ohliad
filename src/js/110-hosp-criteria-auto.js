@@ -349,6 +349,13 @@ function applyNorm(s){
     if (f.type === 'multi' && s.objective) f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; });
   }
 }
+/* шаблон з noNorm: не стверджувати «норму» огляду, якого не було — поля лишаються порожніми, у текст іде лише set */
+function clearExam(s){
+  for (const f of s.fields){
+    if (f.type === 'sel'){ f.el.value = ''; mark(f.el, f); }
+    if (f.type === 'multi'){ f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; delete c.dataset.tpl; }); refreshChips(f); }
+  }
+}
 
 function clearAll(forRestore){
   for (const s of SECTIONS) for (const f of s.fields){

@@ -83,7 +83,7 @@ const SHELL = {};
   function presetSection(s){
     const p0 = PRESETS.find(x=>x.key === curKey); if (!p0) return;
     const p = sidePreset(p0);
-    if (s.objective && !DSEC.includes(s.id)) applyNorm(s);
+    if (s.objective && !DSEC.includes(s.id)){ if (p0.noNorm) clearExam(s); else applyNorm(s); }
     if (s.id === 'skarhy'){ pick(F('skarhy.c'), p.skarhy); detPick(F('skarhy.c'), p.det); }
     if (s.id === 'morbi') anPreset(p0);
     for (const k in (p.set || {})){

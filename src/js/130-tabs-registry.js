@@ -110,7 +110,7 @@ const ANH = {
   app:[1,0,0,[],0,0], chol:[2,0,0,['порушенням дієти'],0,3], panc:[1,0,0,['вживанням алкоголю','порушенням дієти'],0,0], gib:[1,0,0,[],0,0],
   obstr:[2,0,0,[],0,0], hern:[1,0,0,['підйомом важкого'],0,0], dvt:[4,0,1,[],0,0], perf:[1,0,0,[],0,0], colic:[1,0,0,['фізичним навантаженням'],0,3], absc:[5,0,1,[],0,3],
   arvi:[3,0,0,['переохолодженням','контактом з хворим'],0,3], flu:[2,0,0,['контактом з хворим'],0,3], covid:[4,0,0,['контактом з хворим'],0,3],
-  food:[1,0,0,['вживанням неякісної їжі'],0,3], tons:[2,0,0,['переохолодженням'],0,3], hep:[7,0,1,['контактом з хворим'],0,0], ery:[2,0,0,[],0,0],
+  food:[1,0,0,[],0,-1], tons:[2,0,0,['переохолодженням'],0,3], hep:[7,0,1,['контактом з хворим'],0,0], ery:[2,0,0,[],0,0],
   mening:[1,0,0,['перенесеною ГРВІ'],0,0], mono:[7,0,1,[],0,1], varic:[3,0,0,['контактом з хворим'],0,0],
   cyst:[2,0,0,['переохолодженням'],0,3], otit:[2,0,0,['перенесеною ГРВІ'],0,3], sinus:[10,0,1,['перенесеною ГРВІ'],0,3], bronch:[5,0,0,['перенесеною ГРВІ'],0,3],
   lbp:[5,0,0,['підйомом важкого'],0,3], anem:[3,2,1,[],0,0], hypot:[6,2,1,[],0,0], gerd:[6,2,1,['порушенням дієти'],0,3], urtic:[1,0,0,[],0,0],
@@ -139,7 +139,7 @@ function anPreset(p){
     autoSet(F('morbi.likuv'), a ? a[5] : -1);
     autoSet(F('morbi.ax'), a && a[6] ? a[6] : '');
   }
-  autoSet(F('morbi.hosp'), p.key && ANH_EMD.includes(p.key) ? 2 : p.hosp === 'p' ? 3 : 0);
+  autoSet(F('morbi.hosp'), p.hospHow != null ? p.hospHow : (p.key && ANH_EMD.includes(p.key) ? 2 : p.hosp === 'p' ? 3 : 0));
   autoSet(F('morbi.zvern'), 0);
   if (!(p.skarhy || []).length) autoSet(F('skarhy.none'), 2); else autoSet(F('skarhy.none'), -1);
   // анамнез життя — типові «не обтяжено», лише в порожні поля
@@ -169,7 +169,7 @@ function nevrShort(p){
 }
 function applyPreset(p0, btn){
   const p = sidePreset(p0); dxPanel.sel = null; dxPanel.key = undefined;
-  SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id)).forEach(applyNorm);   // щоденник не чіпаємо: перший запис заповниться з огляду
+  SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id)).forEach(p0.noNorm ? clearExam : applyNorm);   // noNorm — не вписувати норму огляду, якого не було; щоденник не чіпаємо
   { const L = SECTIONS.find(x=>x.id === 'loc'); if (L) clearSection(L); }
   nevrShort(p0);
   pick(F('skarhy.c'), p.skarhy); detPick(F('skarhy.c'), p.det);

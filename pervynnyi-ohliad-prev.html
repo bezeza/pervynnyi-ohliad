@@ -2671,12 +2671,15 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 .tn-card.tn-free.fold{height:auto!important;resize:none}
 }
 @media print{.tn-card{display:none!important}}
+
+/* 0.9.3.126 · другий монітор (708-second-screen.js) */
+body.pop-ext .tn-card{display:none!important}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.125 від 11.11.2026">v0.9.3.125 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.126 від 11.11.2026">v0.9.3.126 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4865,8 +4868,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.125', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.126', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.126', '11.11.2026', 'другий монітор: у вікні «⧉» клік по пункту прибирає його, по назві поля — відкриває поле у формі; поки вікно відкрите, форма на всю ширину; вікно саме прокручується до розділу, з яким працюєте; «По ширині» лишається увімкненим при зміні розміру; «Вигляд» → «Текст» → «На другому моніторі» й «Розмір тексту: Росте з вікном»; після Ctrl + / − та зміни розміру вікна плаваючі вікна лишаються біля свого краю й не зменшуються самі'],
   ['0.9.3.125', '11.11.2026', 'текст огляду: клік по окремому пункту (ЗАК, ЕКГ, скарга…) одразу прибирає саме його — з «Скасувати»; клік по назві поля відкриває віконце з варіантами, щоб додати; віконця правки з тексту й на бланку перетягуються за заголовок будь-куди (місце запам’ятовується, подвійний клік — назад); смугу «У тексті огляду» можна відкріпити, рухати, змінювати розмір і шрифт'],
   ['0.9.3.124', '11.11.2026', 'направлення — у вкладці «Пацієнт і лікар», одразу після «Місця роботи», як на титулі карти стаціонарного хворого (п. 9 «Ким направлений»): як госпіталізовано, лікар, заклад, код ЄДРПОУ, № електронного направлення. Раніше ці поля були в «Анамнезі хвороби». У тексті огляду фраза про направлення лишається в анамнезі хвороби, бланки 003/о, 066/о й h24 — без змін; збережені пацієнти не зачеплені'],
   ['0.9.3.123', '11.11.2026', 'NEWS2: якщо в калькуляторі свідомість не вибрано, вона береться з огляду (ясна — 0 балів; оглушення, сопор, кома — 3, як у шкалі), тож бейдж «NEWS2 · N» біля показників тепер рахується одразу, а не показує «—». Ручний вибір у калькуляторі має перевагу. Бейдж — у кольорах теми (і в темних)'],
@@ -23359,12 +23363,12 @@ function tiSave(k, v){ try{ if (v === null) localStorage.removeItem(k); else loc
 
 /* ---- 1. пункт під курсором ---- */
 function tiOffset(div, e){
-  let r = null;
-  try{ if (document.caretRangeFromPoint) r = document.caretRangeFromPoint(e.clientX, e.clientY);
-    else if (document.caretPositionFromPoint){ const p = document.caretPositionFromPoint(e.clientX, e.clientY); if (p){ r = document.createRange(); r.setStart(p.offsetNode, p.offset); } } }catch(x){}
-  if (!r){ const s = window.getSelection(); if (s && s.rangeCount) r = s.getRangeAt(0); }
+  let r = null; const doc = div.ownerDocument || document, win = doc.defaultView || window;
+  try{ if (doc.caretRangeFromPoint) r = doc.caretRangeFromPoint(e.clientX, e.clientY);
+    else if (doc.caretPositionFromPoint){ const p = doc.caretPositionFromPoint(e.clientX, e.clientY); if (p){ r = doc.createRange(); r.setStart(p.offsetNode, p.offset); } } }catch(x){}
+  if (!r){ const s = win.getSelection(); if (s && s.rangeCount) r = s.getRangeAt(0); }
   if (!r || !div.contains(r.startContainer)) return -1;
-  const pre = document.createRange(); pre.selectNodeContents(div); pre.setEnd(r.startContainer, r.startOffset);
+  const pre = doc.createRange(); pre.selectNodeContents(div); pre.setEnd(r.startContainer, r.startOffset);
   return pre.toString().length;
 }
 /* який увімкнений чіп поля f стоїть у тексті line на позиції off */
@@ -23383,41 +23387,53 @@ function tiChipAt(f, line, off){
   });
   return best;
 }
-function tiRemove(f, hit){
+function tiRemove(f, hit, doc){
   const c = f.chips[hit.i]; if (!c || c.getAttribute('aria-pressed') !== 'true') return false;
   const ord = c.dataset.ord; c.click();
   if (c.getAttribute('aria-pressed') === 'true') return false;
-  snack('Прибрано «' + hit.t + '»', 'Скасувати', ()=>{
-    if (c.getAttribute('aria-pressed') === 'true') return;
-    c.click(); if (ord){ c.dataset.ord = ord; try{ update(); }catch(e){} }
-  }, 8000);
+  const back = ()=>{ if (c.getAttribute('aria-pressed') === 'true') return; c.click(); if (ord){ c.dataset.ord = ord; try{ update(); }catch(e){} } };
+  snack('Прибрано «' + hit.t + '»', 'Скасувати', back, 8000);
+  if (doc && doc !== document) tiSnackIn(doc, 'Прибрано «' + hit.t + '»', back);
   return true;
+}
+/* те саме «Скасувати» у вікні на другому моніторі */
+function tiSnackIn(doc, msg, fn){
+  let s = doc.getElementById('tiSnack');
+  if (!s){ s = doc.createElement('div'); s.id = 'tiSnack'; s.className = 'snack'; s.setAttribute('role', 'status'); doc.body.append(s); }
+  s.textContent = ''; const sp = doc.createElement('span'); sp.textContent = msg; const b = doc.createElement('button'); b.type = 'button'; b.className = 'btn sm'; b.textContent = 'Скасувати';
+  b.onclick = ()=>{ s.classList.remove('on'); fn(); }; s.append(sp, b); s.classList.add('on');
+  clearTimeout(tiSnackIn.t); tiSnackIn.t = setTimeout(()=>s.classList.remove('on'), 8000);
 }
 function tiHit(e){
   if (!tiPc() || e.button || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return null;
   if (typeof OPG === 'object' && !OPG.qe) return null;
   const t = e.target; if (!t || !t.closest) return null;
-  let div = t.closest('#out [data-sec]'), sid = div && div.dataset.sec, card = null;
+  let div = t.closest('#out [data-sec], .pw-text [data-sec]'), sid = div && div.dataset.sec, card = null, pop = !!(div && div.closest('.pw-text'));
   if (!div){ const b = t.closest('.tn-body .tn-ln'); card = b && b.closest('.tn-card'); if (!card) return null;
     div = b; sid = [...TN.cards].find(([, c])=>c === card); sid = sid && sid[0]; }
   if (!div || !sid) return null;
-  const sel = window.getSelection(); if (sel && sel.rangeCount && !sel.isCollapsed && div.contains(sel.anchorNode)) return null;
+  const sel = (div.ownerDocument.defaultView || window).getSelection(); if (sel && sel.rangeCount && !sel.isCollapsed && div.contains(sel.anchorNode)) return null;
   const S = SECTIONS.find(x=>x.id === sid); if (!S) return null;
   const line = div.textContent, off = tiOffset(div, e); if (off < 0) return null;
-  const f = qeField(S, line, off); if (!f) return null;
-  return {S, sid, f, line, off, div, card};
+  const f = qeField(S, line, off); if (!f && !pop) return null;   /* у другому вікні клік по назві розділу — до розділу */
+  return {S, sid, f, line, off, div, card, pop};
 }
-document.addEventListener('click', e=>{
+function tiClick(e){
   let x = null; try{ x = tiHit(e); }catch(err){ poErr(err, 'текст: клік по пункту'); }
   if (!x) return;
   const hit = tiChipAt(x.f, x.line, x.off);
-  if (hit){ e.preventDefault(); e.stopImmediatePropagation(); try{ qeClose(); }catch(er){} try{ tiRemove(x.f, hit); }catch(er){ poErr(er, 'текст: прибрати пункт'); } return; }
+  if (hit){ e.preventDefault(); e.stopImmediatePropagation(); try{ qeClose(); }catch(er){} try{ tiRemove(x.f, hit, x.div.ownerDocument); }catch(er){ poErr(er, 'текст: прибрати пункт'); } return; }
+  if (x.pop){   /* другий монітор: назва поля — форма в основному вікні відкривається саме на цьому полі */
+    e.preventDefault(); e.stopImmediatePropagation();
+    try{ if (x.f) goTab(x.sid, x.sid + '.' + x.f.id); else goTab(x.sid); window.focus(); }catch(er){ poErr(er, 'текст: перехід із другого вікна'); } return;
+  }
   if (x.card){   /* смуга «У тексті огляду»: назва поля — віконце з варіантами поруч зі смугою */
     e.preventDefault(); e.stopImmediatePropagation();
     if (QE.f === x.f && QE.box) return;
     try{ qeOpen(x.f, x.sid, x.card); tiQeNear(x.card); }catch(er){ poErr(er, 'текст: віконце зі смуги'); }
   }
-}, true);
+}
+document.addEventListener('click', tiClick, true);
 function tiQeNear(card){
   const b = QE.box; if (!b || b.dataset.moved) return;
   const r = card.getBoundingClientRect(), w = Math.min(560, Math.max(300, r.width));
@@ -23427,10 +23443,14 @@ function tiQeNear(card){
 }
 
 /* ---- 2. перетягування віконець за заголовок ---- */
+/* місце запам’ятовується від найближчого краю: після Ctrl + / − чи зміни розміру вікно лишається біля «свого» краю */
+function tiAnch(r){ const W = window.innerWidth, H = window.innerHeight, p = {l:Math.round(r.left), t:Math.round(r.top)};
+  const rr = Math.round(W - r.right), bb = Math.round(H - r.bottom); if (rr < p.l) p.r = rr; if (bb < p.t) p.b = bb; return p; }
+function tiUnAnch(p, w, hh){ if (!p) return p; const q = Object.assign({}, p); if (p.r !== undefined) q.l = window.innerWidth - w - p.r; if (p.b !== undefined) q.t = window.innerHeight - hh - p.b; return q; }
 function tiClampPos(p, w, hh){ return {l:Math.max(0, Math.min(p.l, window.innerWidth - Math.min(w, 120))), t:Math.max(0, Math.min(p.t, window.innerHeight - 40))}; }
 function tiPlace(box, key){
   const p = tiLoad(key); if (!p || !tiPc()) return false;
-  const r = box.getBoundingClientRect(), q = tiClampPos(p, r.width, r.height);
+  const r = box.getBoundingClientRect(), q = tiClampPos(tiUnAnch(p, r.width, r.height), r.width, r.height);
   box.style.position = 'fixed'; box.style.left = q.l + 'px'; box.style.top = q.t + 'px'; box.dataset.moved = '1'; return true;
 }
 function tiDrag(box, handle, key, onEnd, can){
@@ -23443,7 +23463,7 @@ function tiDrag(box, handle, key, onEnd, can){
     box.dataset.moved = '1'; try{ handle.setPointerCapture(e.pointerId); }catch(x){} document.body.classList.add('v2-resizing'); e.preventDefault();
   });
   handle.addEventListener('pointermove', e=>{ if (!d) return; const r = box.getBoundingClientRect(), q = tiClampPos({l:e.clientX - d.x, t:e.clientY - d.y}, r.width, r.height); box.style.left = q.l + 'px'; box.style.top = q.t + 'px'; });
-  const end = ()=>{ if (!d) return; d = null; document.body.classList.remove('v2-resizing'); const r = box.getBoundingClientRect(); if (key) tiSave(key, {l:Math.round(r.left), t:Math.round(r.top)}); if (onEnd) onEnd(r); };
+  const end = ()=>{ if (!d) return; d = null; document.body.classList.remove('v2-resizing'); const r = box.getBoundingClientRect(); if (key) tiSave(key, tiAnch(r)); if (onEnd) onEnd(r); };
   handle.addEventListener('pointerup', end); handle.addEventListener('pointercancel', end);
 }
 { const q0 = qeOpen; qeOpen = function(f, sid, anchor){
@@ -23472,7 +23492,8 @@ function tnxApply(){
     if (c.pin){ c.pin.textContent = TNX.free ? '⇲' : '⇱'; c.pin.title = TNX.free ? 'Закріпити знову внизу розділу' : 'Відкріпити: перетягувати за заголовок, розмір — за кут'; c.pin.setAttribute('aria-pressed', TNX.free ? 'true' : 'false'); }
     if (!TNX.free){ ['left', 'top', 'width', 'height', 'position', 'right', 'bottom'].forEach(k=>c.style.removeProperty(k)); delete c.dataset.moved; return; }
     const w = Math.max(280, Math.min(TNX.w || 560, W - 16)), hh = Math.max(110, Math.min(TNX.h || 220, H - 16));
-    const l = TNX.l === undefined ? W - w - 24 : Math.max(0, Math.min(TNX.l, W - 120)), t = TNX.t === undefined ? H - hh - 24 : Math.max(0, Math.min(TNX.t, H - 40));
+    const a = tiUnAnch(TNX, w, hh) || {};
+    const l = a.l === undefined ? W - w - 24 : Math.max(0, Math.min(a.l, W - 120)), t = a.t === undefined ? H - hh - 24 : Math.max(0, Math.min(a.t, H - 40));
     Object.assign(c.style, {position:'fixed', left:l + 'px', top:t + 'px', width:w + 'px', height:hh + 'px'});
   });
 }
@@ -23484,12 +23505,125 @@ function tnxDecorate(c){
     else TNX.free = false;
     tnxSave(); tnxApply(); });
   head.querySelector('.tn-all').before(b('A−', 'Менший шрифт', ()=>tnxFont(-1)), b('A+', 'Більший шрифт', ()=>tnxFont(1)), c.pin);
-  tiDrag(c, head, null, r=>{ if (!TNX.free) return; TNX.l = Math.round(r.left); TNX.t = Math.round(r.top); tnxSave(); TN.cards.forEach(x=>{ if (x !== c){ x.style.left = TNX.l + 'px'; x.style.top = TNX.t + 'px'; } }); }, ()=>TNX.free);
-  if (typeof ResizeObserver === 'function'){ let tm = 0; new ResizeObserver(()=>{ if (!TNX.free || c.hidden || !c.offsetWidth) return; clearTimeout(tm); tm = setTimeout(()=>{ const r = c.getBoundingClientRect(); if (Math.abs(r.width - (TNX.w || 0)) < 2 && Math.abs(r.height - (TNX.h || 0)) < 2) return; TNX.w = Math.round(r.width); TNX.h = Math.round(r.height); tnxSave(); TN.cards.forEach(x=>{ if (x !== c){ x.style.width = TNX.w + 'px'; x.style.height = TNX.h + 'px'; } }); }, 300); }).observe(c); }
+  tiDrag(c, head, null, r=>{ if (!TNX.free) return; const a = tiAnch(r); delete TNX.r; delete TNX.b; Object.assign(TNX, a); tnxSave(); TN.cards.forEach(x=>{ if (x !== c){ x.style.left = TNX.l + 'px'; x.style.top = TNX.t + 'px'; } }); }, ()=>TNX.free);
+  if (typeof ResizeObserver === 'function'){ let tm = 0; new ResizeObserver(()=>{ if (!TNX.free || c.hidden || !c.offsetWidth) return; clearTimeout(tm); tm = setTimeout(()=>{ const r = c.getBoundingClientRect(); if (Math.abs(r.width - (TNX.w || 0)) < 2 && Math.abs(r.height - (TNX.h || 0)) < 2) return; TNX.w = Math.round(r.width); TNX.h = Math.round(r.height); delete TNX.r; delete TNX.b; Object.assign(TNX, tiAnch(r)); tnxSave(); TN.cards.forEach(x=>{ if (x !== c){ x.style.width = TNX.w + 'px'; x.style.height = TNX.h + 'px'; } }); }, 300); }).observe(c); }
 }
 { const c0 = tnCard; tnCard = function(t){ const had = TN.cards.has(t.id), c = c0.apply(this, arguments); if (!had){ try{ tnxDecorate(c); tnxApply(); }catch(e){ poErr(e, 'текст: смуга'); } } return c; }; }
 TN.cards.forEach(tnxDecorate); tnxApply();
-window.addEventListener('resize', ()=>{ if (TNX.free) tnxApply(); });
+window.addEventListener('resize', ()=>{ if (TNX.free) tnxApply();
+  [QE.box, SE_POP].forEach(b=>{ if (!b || !b.dataset.moved) return; const r = b.getBoundingClientRect(), q = tiClampPos({l:r.left, t:r.top}, r.width, r.height); b.style.left = q.l + 'px'; b.style.top = q.t + 'px'; }); });
+/* ===== 0.9.3.126 · другий монітор і масштаб вікон (обговорення з лікарем 11.11.2026) =====
+   Вікно «⧉» (618) вже вміло ставати на другий монітор і оновлюватися наживо. Тепер:
+   1) У ньому, як і в основному тексті (707): клік по пункту прибирає його («Скасувати» — і там, і тут),
+      клік по назві поля — форма в основному вікні відкривається на цьому полі. Alt+клік — поставити курсор і правити.
+   2) Поки вікно відкрите, колонка «Текст» і смуга «У тексті огляду» в основному вікні ховаються — форма на всю ширину.
+      Закрили вікно — усе як було.
+   3) Перейшли на інший розділ форми — вікно саме прокручується до цього розділу й коротко його підсвічує.
+   4) «⇔ По ширині» тепер залишається увімкненим: розгорнули чи звузили вікно — текст сам підлаштовується. «−/+» — вручну.
+   5) «Вигляд» → «Текст»: третій варіант «На другому моніторі». «Розмір тексту: Сталий / Росте з вікном» —
+      шрифт у плаваючому вікні й у відкріпленій смузі збільшується разом із їхнім розміром.
+   6) Масштаб браузера (Ctrl + / −) і зміна розміру вікна: плаваюче вікно, віконця правки й смуга лишаються біля
+      свого краю й не зменшуються самі (розмір не перезаписується, поки браузер змінює розмір). */
+const TXG = {on:false, wr:0};
+try{ TXG.on = localStorage.getItem('po.txtgrow') === '1'; POP.fit = localStorage.getItem('po.popfit') === '1'; }catch(e){}
+window.addEventListener('resize', ()=>{ TXG.wr = Date.now(); }, true);
+const txgBusy = () => Date.now() - TXG.wr < 700;
+
+/* ---- 6. плаваюче вікно «Текст»: місце — від найближчого краю, розмір не «з’їдається» ---- */
+{ const a0 = tnFloatApply; tnFloatApply = function(){
+  const p = TN.pos;
+  if (TN.float && p && (p.r !== undefined || p.b !== undefined)){
+    const W = window.innerWidth, H = window.innerHeight, w = Math.max(320, Math.min(p.w || 480, W - 16)), hh = Math.max(220, Math.min(p.h || 400, H - 16));
+    const q = tiUnAnch(p, w, hh); p.l = q.l; p.t = q.t; }
+  return a0.apply(this, arguments); }; }
+{ const s0 = tnFloatSave; tnFloatSave = function(){
+  if (txgBusy()) return;
+  s0.apply(this, arguments);
+  const box = document.getElementById('outBox'); if (!box || !TN.float) return;
+  const r = box.getBoundingClientRect(); TN.pos = Object.assign({w:Math.round(r.width), h:Math.round(r.height)}, tiAnch(r));
+  try{ localStorage.setItem('po.txtpos', JSON.stringify(TN.pos)); }catch(e){} }; }
+
+/* ---- 5. текст росте разом із вікном ---- */
+function txgApply(){
+  const out = document.getElementById('out'), box = document.getElementById('outBox');
+  if (out){ if (TXG.on && TN.float && box && box.offsetWidth){ out.style.fontSize = Math.round(Math.max(14, Math.min(28, box.offsetWidth / 30))) + 'px'; out.dataset.txg = '1'; }
+    else if (out.dataset.txg){ out.style.removeProperty('font-size'); delete out.dataset.txg; } }
+  TN.cards.forEach(c=>{ const b = c.querySelector('.tn-body'); if (!b) return;
+    if (TXG.on && TNX.free && !TNX.fs && c.offsetWidth){ b.style.fontSize = Math.round(Math.max(12, Math.min(26, c.offsetWidth / 36))) + 'px'; b.dataset.txg = '1'; }
+    else if (b.dataset.txg){ b.style.removeProperty('font-size'); delete b.dataset.txg; } });
+}
+function txgSet(on){ TXG.on = !!on; if (on){ TNX.fs = 0; tnxSave(); tnxApply(); } try{ localStorage.setItem('po.txtgrow', on ? '1' : '0'); }catch(e){} txgApply(); try{ renderViewCtl(); }catch(e){} }
+TXG.ro = typeof ResizeObserver === 'function' ? new ResizeObserver(()=>{ cancelAnimationFrame(TXG.raf); TXG.raf = requestAnimationFrame(txgApply); }) : null;
+function txgWatch(){ if (!TXG.ro) return; const b = document.getElementById('outBox'); if (b) TXG.ro.observe(b); TN.cards.forEach(c=>TXG.ro.observe(c)); }
+{ const f0 = tnxFont; tnxFont = function(){ const r = f0.apply(this, arguments); txgApply(); return r; }; }
+{ const f0 = tnFloatSet; tnFloatSet = function(){ const r = f0.apply(this, arguments); txgApply(); return r; }; }
+onUpdate('708-text-grow', ()=>{ txgWatch(); if (TXG.on) txgApply(); });
+
+/* ---- 1–4. вікно на другому моніторі ---- */
+const POPX = {timer:0, was:null, last:''};
+function popOn(){ return !!(POP.w && !POP.w.closed); }
+function popExt(on){
+  if (on === document.body.classList.contains('pop-ext')) return;
+  document.body.classList.toggle('pop-ext', on);
+  try{
+    if (on){ POPX.was = typeof TXTOPEN !== 'undefined' ? TXTOPEN : null; if (POPX.was) txtOpen(false);
+      clearInterval(POPX.timer); POPX.timer = setInterval(()=>{ if (!popOn()){ popExt(false); popBtnSync(); } }, 1000); }
+    else { clearInterval(POPX.timer); if (POPX.was) txtOpen(true); POPX.was = null; }
+  }catch(e){ poErr(e, 'другий монітор: колонка'); }
+  try{ renderViewCtl(); }catch(e){}
+}
+{ const o0 = popOpen; popOpen = async function(){ const r = await o0.apply(this, arguments); if (popOn()) popExt(true); return r; }; }
+{ const i0 = popInit; popInit = function(w){
+  const r = i0.apply(this, arguments);
+  try{
+    const d = w.document;
+    d.addEventListener('click', e=>{ if (POP.mode === 'text') tiClick(e); }, true);
+    const st = d.createElement('style');
+    st.textContent = '.pw-text [data-sec].ti-here{background:var(--accent-soft,#e3edf8);border-radius:6px;transition:background 1.6s}.pw-text [data-sec]{transition:background 1.6s}' +
+      '#tiSnack{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:30}' +
+      '.pw-bar button[data-z="fit"][aria-pressed="true"]{background:var(--accent-soft,#e3edf8);color:var(--accent,#1f5a8a);font-weight:600}';
+    d.head.append(st);
+    w.addEventListener('resize', ()=>{ if (!POP.fit) return; clearTimeout(POPX.rz); POPX.rz = setTimeout(()=>popZoom(1, true), 120); });
+    w.addEventListener('pagehide', ()=>setTimeout(()=>{ if (!popOn()) popExt(false); }, 80));
+  }catch(e){ poErr(e, 'другий монітор: вікно'); }
+  return r; }; }
+/* «⇔ По ширині» лишається увімкненим, поки не натиснули −/+/100% */
+{ const z0 = popZoom; popZoom = function(z, fit){
+  POP.fit = !!fit; try{ localStorage.setItem('po.popfit', POP.fit ? '1' : '0'); }catch(e){}
+  const r = z0.apply(this, arguments);
+  try{ const b = POP.w && POP.w.document.querySelector('.pw-bar button[data-z="fit"]'); if (b) b.setAttribute('aria-pressed', POP.fit ? 'true' : 'false'); }catch(e){}
+  return r; }; }
+{ const r0 = popRender; popRender = function(){
+  const r = r0.apply(this, arguments);
+  try{ if (!popOn()) return r; const d = POP.w.document;
+    const hh = d.getElementById('pwH'); if (hh && POP.mode === 'text') hh.textContent = 'клік по пункту — прибрати · по назві поля — до поля у формі · Alt+клік — правити тут';
+    if (POP.fit) popZoom(1, true); }catch(e){}
+  return r; }; }
+/* прокрутка до розділу, з яким працюють у формі */
+function popFollow(){
+  if (!popOn() || POP.mode !== 'text') return;
+  const t = TABS[active], id = t && t.id; if (!id || id === POPX.last) return; POPX.last = id;
+  const w = POP.w, el = w.document.querySelector('.pw-text [data-sec="' + id + '"]'); if (!el) return;
+  const r = el.getBoundingClientRect(); if (r.top < 60 || r.top > w.innerHeight * .7) w.scrollTo({top:Math.max(0, w.scrollY + r.top - 80), behavior:'smooth'});
+  w.document.querySelectorAll('.pw-text [data-sec="' + id + '"]').forEach(x=>{ x.classList.add('ti-here'); setTimeout(()=>x.classList.remove('ti-here'), 1400); });
+}
+{ const s0 = show; show = function(){ const r = s0.apply(this, arguments); try{ popFollow(); }catch(e){} return r; }; }
+
+/* ---- «Вигляд» → «Текст»: третій варіант і розмір тексту ---- */
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  try{
+    const seg = box.querySelector('.vseg[aria-label="Як показувати панель «Текст»"]');
+    if (seg){ const on = popOn();
+      if (on) seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', 'false'));
+      seg.append(h('button', {type:'button', 'aria-pressed':on ? 'true' : 'false', title:'Окреме вікно — перетягніть на другий монітор; оновлюється наживо', onclick:()=>{ if (on) POP.w.focus(); else popOpen(); }}, 'На другому моніторі')); }
+    box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Розмір тексту'), h('div', {class:'vseg', role:'group', 'aria-label':'Розмір тексту у вікнах'},
+      ...[[false, 'Сталий', 'Як вибрано (Aa, A− / A+)'], [true, 'Росте з вікном', 'У плаваючому вікні й відкріпленій смузі шрифт більшає разом із вікном']].map(([on, l, t])=>
+        h('button', {type:'button', 'aria-pressed':TXG.on === on ? 'true' : 'false', title:t, onclick:()=>txgSet(on)}, l)))));
+  }catch(e){ poErr(e, 'другий монітор: меню «Вигляд»'); }
+  return box; }; }
+{ const b = document.getElementById('popBtn'); if (b) b.title = 'На другий монітор: окреме вікно з текстом або аркушем, оновлюється наживо. Поки воно відкрите, форма — на всю ширину.'; }
+txgWatch(); txgApply(); try{ renderViewCtl(); }catch(e){}
 /* ===== 0.9.3.120 · NEWS2 біля показників огляду (задача 19) =====
    Малий бейдж «NEWS2 · N» поруч із рядком «Показники одним рядком»
    (не в картці «У тексті огляду» з 705-text-near.js).
