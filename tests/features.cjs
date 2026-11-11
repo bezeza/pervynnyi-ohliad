@@ -1752,6 +1752,26 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     tnFloatSet(true); a.push(document.body.classList.contains('txt-float'), localStorage.getItem('po.txtfloat')); tnFloatSet(false); a.push(document.body.classList.contains('txt-float'));
     a.push(document.addEventListener && typeof siFieldOf==='function'); f.el.value=v0; update(); return JSON.stringify(a); })()`);
   ok('Текст поруч: картка «У тексті огляду» з абзацом розділу; «Плаваючим вікном» вмикається й вимикається', r==='[true,true,true,"1",false,true]', r); }
+{ const r=w.eval(`(()=>{ switchDoc('ohl'); clearAll(true); update();
+    const b=document.querySelector('.hosp-ind'); const out=()=>document.getElementById('out').textContent;
+    const setv=(id,v)=>{ const e=document.getElementById(id); e.value=v; e.dispatchEvent(new Event(e.tagName==='SELECT'?'change':'input',{bubbles:true})); };
+    const grey=!!b && b.classList.contains('grey') && b.textContent==='Критеріїв за введеними даними не знайдено';
+    const folded=b.getAttribute('aria-expanded')==='false' && F('hosp.spec').wrapEl.classList.contains('hosp-fold') && F('hosp.gen').wrapEl.classList.contains('hosp-fold');
+    const noDoc0=!/Є критерії ургентної госпіталізації|Є загальні критерії|Критеріїв за введеними даними не знайдено/.test(out());
+    setv('dyh_chd_1','90'); update();
+    const r1=autoRules();
+    const red=r1.spec.size>0 && b.classList.contains('bad') && b.textContent==='Є критерії ургентної госпіталізації ('+r1.spec.size+')';
+    const noAmb=!/амбулаторно/i.test(b.textContent);
+    b.click();
+    const open=b.getAttribute('aria-expanded')==='true' && !F('hosp.spec').wrapEl.classList.contains('hosp-fold') && !F('hosp.gen').wrapEl.classList.contains('hosp-fold');
+    setv('dyh_chd_1','94'); setv('dyh_chd_0','24'); setv('ssc_ad_0','120'); setv('ssc_ad_1','80'); setv('ssc_chss_0','120'); setv('zah_temp_0','36,6'); setv('c_news_avpu','0');
+    update();
+    const r2=autoRules(); const news=CALCS.find(c=>c.id==='news').last;
+    const yel=r2.spec.size===0 && r2.gen.size>0 && b.classList.contains('warn') && b.textContent==='Є загальні критерії ('+r2.gen.size+')';
+    const noDoc1=!/Є критерії ургентної госпіталізації|Є загальні критерії \\(/.test(out());
+    return JSON.stringify({grey,folded,noDoc0,red,noAmb,open,yel,noDoc1,spec:r2.spec.size,gen:r2.gen.size,txt:b.textContent,score:news&&news.score,msg:news&&news.msg}); })()`);
+  const o=JSON.parse(r);
+  ok('Індикатор госпіталізації: сірий без даних, червоний за SpO₂, жовтий за загальними; клік розгортає; у текст і «амбулаторно» не пише', o.grey&&o.folded&&o.noDoc0&&o.red&&o.noAmb&&o.open&&o.yel&&o.noDoc1, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
