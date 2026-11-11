@@ -21,11 +21,11 @@ function tnSync(){
   const open = document.body.classList.contains('v2-txt-open');
   TABS.forEach(t=>{
     if (!t.panel || t.panel.hidden || TOOL_TABS.includes(t.id) || !SECTIONS.some(s=>s.id === t.id)){ const c = TN.cards.get(t.id); if (c) c.hidden = true; return; }
-    const src = document.querySelector('#out [data-sec="' + t.id + '"]'), txt = src ? src.textContent.trim() : '';
+    const lines = [...document.querySelectorAll('#out [data-sec="' + t.id + '"]')].map(d=>d.textContent.trim()).filter(Boolean), txt = lines.join('\n');   /* 0.9.3.125: усі рядки розділу (діагноз, призначення — кілька рядків) */
     const c = tnCard(t); c.hidden = open || !txt || !UIV2;
     if (c.hidden) return;
     c.classList.toggle('fold', !TN.on); c.fold.setAttribute('aria-expanded', TN.on ? 'true' : 'false'); c.fold.textContent = TN.on ? '▾' : '▸';
-    if (TN.on && c.body.textContent !== txt) c.body.textContent = txt;
+    if (TN.on && c.body._t !== txt){ c.body._t = txt; c.body.replaceChildren(...lines.map(l=>h('div', {class:'tn-ln'}, l))); }
   });
 }
 onUpdate('705-text-near', tnSync);

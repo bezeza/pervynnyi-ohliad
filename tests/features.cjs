@@ -1810,6 +1810,17 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const ks=['hosp','hospd','hospz','hospe','hospn'], inMeta=ks.every(k=>meta.panel.contains(F('morbi.'+k).wrapEl));
     const next=work.nextElementSibling; return JSON.stringify([inMeta, !!next && next.classList.contains('ref-h'), next.nextElementSibling===F('morbi.hosp').wrapEl]); })()`);
   ok('Направлення у «Пацієнт і лікар» одразу після «Місця роботи» (п. 9 ф. 003/о)', r==='[true,true,true]', r); }
+{ const r=w.eval(`(()=>{ switchDoc('ohl'); const k=PRESETS.findIndex(p=>p.key==='pneu'); applyPreset(PRESETS[k], HV.cards[k]); update();
+    const S=SECTIONS.find(x=>x.id==='dx'), f=F('dx.plan'), line=[...document.querySelectorAll('#out [data-sec="dx"]')].map(d=>d.textContent).find(t=>/План обстеження/.test(t));
+    const i=f.opts.findIndex(o=>O(o).t==='ЕКГ'), on=()=>f.chips[i].getAttribute('aria-pressed')==='true', a=[on()];
+    const off=line.toLowerCase().indexOf('екг')+1; a.push(qeField(S,line,off)===f); const hit=tiChipAt(f,line,off); a.push(!!hit && hit.i===i);
+    a.push(tiChipAt(f,line,line.indexOf('План')+1)===null);
+    tiRemove(f,hit); a.push(!on(), !/ЕКГ/.test(document.getElementById('out').textContent.split('План обстеження')[1]||''));
+    document.querySelector('#snack button').click(); a.push(on());
+    TNX.free=true; TNX.fs=18; tnxApply(); const c=[...TN.cards.values()][0]; a.push(!!c && c.classList.contains('tn-free') && !!c.pin && getComputedStyle(document.documentElement).getPropertyValue('--tnfs').trim()==='18px');
+    TNX.free=false; TNX.fs=0; tnxApply(); a.push(!c.classList.contains('tn-free') && !c.style.left);
+    clearAll(); update(); return JSON.stringify(a); })()`);
+  ok('Текст: клік по пункту прибирає саме його (з «Скасувати»), назва поля — віконце; смуга «У тексті огляду» відкріплюється, шрифт', r==='[true,true,true,true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

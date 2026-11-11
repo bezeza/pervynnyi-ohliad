@@ -2608,3 +2608,19 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .mp-name{flex:1;font-weight:600}
 .mp-key{font-size:12px;color:#616161;white-space:nowrap}
 .mp-list{max-height:240px;overflow:auto;margin:8px 0}
+
+/* 0.9.3.125 · пункти в тексті та вікна, що рухаються (707-text-items.js) */
+@media screen and (min-width:900px){
+  .ti-grab{cursor:move;user-select:none}
+  .qe{resize:both}
+  .tn-body{font-size:var(--tnfs,var(--fs-3));cursor:pointer}
+  .tn-b{font:inherit;font-size:var(--fs-2);background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 6px;border-radius:var(--r-xs);min-width:28px}
+  .tn-b:hover{background:var(--fill,#ECECF0)}
+  .tn-b[aria-pressed="true"]{background:var(--accent-soft)}
+  :root.ui-v2 .tn-card.tn-free{position:fixed;z-index:58;margin:0;display:flex;flex-direction:column;resize:both;overflow:hidden;min-width:280px;min-height:110px;box-shadow:0 12px 40px rgba(0,0,0,.22)}
+  :root.ui-v2 .tn-card.tn-free[hidden]{display:none}
+  :root.ui-v2 .tn-card.tn-free .tn-head{cursor:move;user-select:none}
+  :root.ui-v2 .tn-card.tn-free .tn-body{flex:1 1 auto;max-height:none;min-height:0}
+  :root.ui-v2 .tn-card.tn-free.fold{height:auto!important;resize:none}
+}
+@media print{.tn-card{display:none!important}}
