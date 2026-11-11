@@ -1741,6 +1741,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     for(let i=0;i<40;i++) ev('ArrowLeft'); const wMax=parseInt(R.style.getPropertyValue('--v2txtw'),10); g.dispatchEvent(new MouseEvent('dblclick',{bubbles:true}));
     const back=R.style.getPropertyValue('--v2txtw'); return JSON.stringify([!!g, g.getAttribute('role'), w1>parseInt(w0,10), wMax<=900, back, localStorage.getItem('po.txtw')]); })()`);
   ok('Панель «Текст»: межа для зміни ширини (стрілки, межа 900 px, подвійний клік — 560 px, запам’ятовується)', /^\[true,"separator",true,true,"560px","560"\]$/.test(r), r); }
+{ const r=w.eval(`(()=>{ switchDoc('ohl'); const k=PRESETS.findIndex(p=>p.key==='pneu'); applyPreset(PRESETS[k], HV.cards[k]); update(); const T=()=>document.getElementById('out').textContent;
+    const f=F('dyh.hr'); const a=[!f.alsoBtn.hidden]; const i=f.opts.findIndex(o=>O(o).t==='сухі розсіяні свистячі хрипи'); alsoSet(f,[i]); update();
+    a.push(/вологі дрібнопухирчасті хрипи в нижніх відділах справа, сухі розсіяні свистячі хрипи/.test(T()));
+    const s=snap(); a.push(s.f['dyh_hr_x']===String(i)); clearAll(); update(); a.push(f.alsoInp.value===''); restore(s); update(); a.push(/сухі розсіяні свистячі хрипи/.test(T()));
+    f.el.value='0'; update(); a.push(f.alsoInp.value==='' && f.alsoBtn.hidden && !/сухі розсіяні свистячі хрипи/.test(T())); clearAll(); update(); return JSON.stringify(a); })()`);
+  ok('«+ ще»: друга знахідка в полі — у тексті, зберігається, норма й очищення знімають', r==='[true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

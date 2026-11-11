@@ -192,6 +192,7 @@
   "700-error-log.js",
   "701-ui-audit-fixes.js",
   "702-sticky-dock.js",
-  "703-one-section.js"
+  "703-one-section.js",
+  "704-sel-also.js"
  ]
 }
