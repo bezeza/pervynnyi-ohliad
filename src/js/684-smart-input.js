@@ -120,7 +120,7 @@ function siFieldOf(el){
   return null;
 }
 document.addEventListener('input', e=>{
-  if (!siOn()) return; const el = e.target; if (!el || !el.matches || !el.matches('#panels textarea, #panels input[type="text"]')) return;
+  if (!siOn()) return; const el = e.target; if (!el || !el.matches || !el.matches('#panels textarea, #panels input[type="text"], .qe textarea, .qe input[type="text"]')) return;   /* 0.9.3.119: і у віконці правки з тексту («Бачу — редагую») */
   const hit = (SI.f && SI.f.el === el) ? {sec:SI.sec, f:SI.f} : siFieldOf(el); if (!hit){ siClose(); return; }
   SI.f = hit.f; SI.sec = hit.sec;
   if (e.data === ' ' || e.inputType === 'insertLineBreak') siFormat(el);
