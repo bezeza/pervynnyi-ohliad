@@ -1821,6 +1821,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     TNX.free=false; TNX.fs=0; tnxApply(); a.push(!c.classList.contains('tn-free') && !c.style.left);
     clearAll(); update(); return JSON.stringify(a); })()`);
   ok('Текст: клік по пункту прибирає саме його (з «Скасувати»), назва поля — віконце; смуга «У тексті огляду» відкріплюється, шрифт', r==='[true,true,true,true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ const a=[]; const W=innerWidth,H=innerHeight;
+    const p=tiAnch({left:W-316,top:H-264,right:W-16,bottom:H-64}); a.push(p.r===16 && p.b===64);
+    const q=tiUnAnch(p,300,200); a.push(q.l===W-316 && q.t===H-264);
+    popExt(true); a.push(document.body.classList.contains('pop-ext')); popExt(false); a.push(!document.body.classList.contains('pop-ext'));
+    txgSet(true); a.push(localStorage.getItem('po.txtgrow')==='1'); txgSet(false); a.push(localStorage.getItem('po.txtgrow')==='0');
+    const vc=viewCtl(); a.push([...vc.querySelectorAll('button')].some(b=>b.textContent==='На другому моніторі') && [...vc.querySelectorAll('button')].some(b=>b.textContent==='Росте з вікном'));
+    return JSON.stringify(a); })()`);
+  ok('Другий монітор: форма на всю ширину, поки вікно відкрите; текст росте з вікном; місце вікон — від найближчого краю', r==='[true,true,true,true,true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
