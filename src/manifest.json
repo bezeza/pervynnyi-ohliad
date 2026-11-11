@@ -61,6 +61,7 @@
   "501-rx-evidence.js",
   "505-rx-kinds.js",
   "510-rx-sets.js",
+  "512-presets-alcohol.js",
   "515-rx-form.js",
   "520-my-templates.js",
   "530-check.js",
