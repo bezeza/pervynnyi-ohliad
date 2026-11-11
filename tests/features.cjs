@@ -1747,6 +1747,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const s=snap(); a.push(s.f['dyh_hr_x']===String(i)); clearAll(); update(); a.push(f.alsoInp.value===''); restore(s); update(); a.push(/сухі розсіяні свистячі хрипи/.test(T()));
     f.el.value='0'; update(); a.push(f.alsoInp.value==='' && f.alsoBtn.hidden && !/сухі розсіяні свистячі хрипи/.test(T())); clearAll(); update(); return JSON.stringify(a); })()`);
   ok('«+ ще»: друга знахідка в полі — у тексті, зберігається, норма й очищення знімають', r==='[true,true,true,true,true,true]', r); }
+{ const r=w.eval(`(()=>{ switchDoc('ohl'); goTab('skarhy','skarhy.cx'); const f=F('skarhy.cx'); const v0=f.el.value; f.el.value='тест картки поруч'; update();
+    const c=document.querySelector('#panels .tn-card'); const a=[!!c, !!c && /тест картки поруч/.test(c.textContent)];
+    tnFloatSet(true); a.push(document.body.classList.contains('txt-float'), localStorage.getItem('po.txtfloat')); tnFloatSet(false); a.push(document.body.classList.contains('txt-float'));
+    a.push(document.addEventListener && typeof siFieldOf==='function'); f.el.value=v0; update(); return JSON.stringify(a); })()`);
+  ok('Текст поруч: картка «У тексті огляду» з абзацом розділу; «Плаваючим вікном» вмикається й вимикається', r==='[true,true,true,"1",false,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

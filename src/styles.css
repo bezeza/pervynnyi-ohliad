@@ -2568,3 +2568,25 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .also-btn{align-self:flex-start;margin-top:6px;font-size:var(--fs-2)}
 .also-box{margin-top:6px;gap:6px}
 .also-box .chip{font-size:var(--fs-2)}
+/* 0.9.3.119 · текст поруч із набором (705-text-near.js) */
+.si-pop{z-index:120}
+.tn-card{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .tn-card{display:block;position:sticky;bottom:8px;z-index:5;margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 4px 16px rgba(0,0,0,.08);padding:10px 14px}
+  :root.ui-v2 .tn-card[hidden]{display:none}
+  .tn-head{display:flex;align-items:center;gap:8px}
+  .tn-t{font-size:var(--fs-1);font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .tn-sp{flex:1}
+  .tn-all,.tn-fold{font:inherit;font-size:var(--fs-2);background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 6px;border-radius:var(--r-xs)}
+  .tn-all:hover,.tn-fold:hover{background:var(--fill,#ECECF0)}
+  .tn-body{margin-top:6px;font-size:var(--fs-3);line-height:1.55;max-height:132px;overflow:auto;white-space:pre-line}
+  .tn-card.fold .tn-body{display:none}
+}
+@media screen and (min-width:900px){
+  /* плаваюче вікно «Текст»: без колонки, перетягується за заголовок, розмір — за кут */
+  :root.ui-v2 body.txt-float #outBox{right:auto;bottom:auto;resize:both;overflow:hidden;min-width:320px;min-height:220px;box-shadow:0 12px 40px rgba(0,0,0,.22);border-radius:var(--r-m)}
+  :root.ui-v2 body.txt-float #outBox>.oh{cursor:move;user-select:none}
+  :root.ui-v2 body.txt-float.v2-txt-open .wrap{margin-right:0}
+  :root.ui-v2 body.txt-float #outBox>.v2grip{display:none}
+  :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
+}
