@@ -2638,12 +2638,11 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
 }
 <<<<<<< HEAD
-/* 0.9.3.120 · індикатор госпіталізації (711-hosp-indicator.js) */
-.hosp-ind{display:block;width:100%;box-sizing:border-box;text-align:left;margin:0 0 8px;padding:8px 12px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;line-height:1.35;border:1px solid #ccc;background:#f5f5f5;color:#424242;cursor:pointer}
-.hosp-ind.bad{background:#ffebee;border-color:#e57373;color:#c62828}
-.hosp-ind.warn{background:#fff8e1;border-color:#ffb300;color:#e65100}
-.hosp-ind.grey{background:#f5f5f5;border-color:#ccc;color:#616161}
-.f.hosp-fold > .chips,.f.hosp-fold > .acts2,.f.hosp-fold > .chips-hint{display:none}
+/* 0.9.3.120 · «Мої фрази» (712-my-phrases.js) */
+.mp-row{display:flex;align-items:center;gap:8px;margin:6px 0}
+.mp-name{flex:1;font-weight:600}
+.mp-key{font-size:12px;color:#616161;white-space:nowrap}
+.mp-list{max-height:240px;overflow:auto;margin:8px 0}
 =======
 
 /* 0.9.3.120 · NEWS2 badge біля показників */
@@ -2652,13 +2651,23 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .news2-badge.warn{ background:#fff8e1; border-color:#ffb300; color:#e65100; }
 .news2-badge.bad{ background:#ffebee; border-color:#e57373; color:#c62828; }
 .news2-badge.grey{ background:#f5f5f5; color:#757575; }
+/* 0.9.3.121 · індикатор госпіталізації (711-hosp-indicator.js) */
+.hosp-ind{display:block;width:100%;box-sizing:border-box;text-align:left;margin:0 0 8px;padding:8px 12px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;line-height:1.35;border:1px solid #ccc;background:#f5f5f5;color:#424242;cursor:pointer}
+.hosp-ind.bad{background:#ffebee;border-color:#e57373;color:#c62828}
+.hosp-ind.warn{background:#fff8e1;border-color:#ffb300;color:#e65100}
+.hosp-ind.grey{background:#f5f5f5;border-color:#ccc;color:#616161}
+.f.hosp-fold > .chips,.f.hosp-fold > .acts2,.f.hosp-fold > .chips-hint{display:none}
 >>>>>>> origin/main
 </style>
 </head>
 <body>
 
 <header class="top">
+<<<<<<< HEAD
   <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.120 від 11.11.2026">v0.9.3.120 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+=======
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.121 від 11.11.2026">v0.9.3.121 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+>>>>>>> origin/main
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4847,11 +4856,14 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
+<<<<<<< HEAD
 const VERSION = '0.9.3.120', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-<<<<<<< HEAD
-  ['0.9.3.120', '11.11.2026', 'індикатор госпіталізації: над списком критеріїв один рядок — червоний «Є критерії ургентної госпіталізації (N)», жовтий «Є загальні критерії (N)» або сірий «Критеріїв за введеними даними не знайдено». Клік розгортає критерії. Рекомендацій немає — рішення за лікарем. У текст документа не додає.'],
+  ['0.9.3.120', '11.11.2026', '«Мої фрази»: короткі фрази лікаря (назва і текст) вставляються в поточне поле або в курсор тексту з меню «⋯» чи клавішами Alt+Shift+1…9. Зберігаються окремо в цьому браузері, є експорт і імпорт JSON. Дані пацієнта туди не потрапляють.'],
 =======
+const VERSION = '0.9.3.121', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const CHANGELOG = [
+  ['0.9.3.121', '11.11.2026', 'індикатор госпіталізації: над списком критеріїв один рядок — червоний «Є критерії ургентної госпіталізації (N)», жовтий «Є загальні критерії (N)» або сірий «Критеріїв за введеними даними не знайдено». Клік розгортає критерії. Рекомендацій немає — рішення за лікарем. У текст документа не додає.'],
   ['0.9.3.120', '11.11.2026', 'NEWS2 біля показників огляду і щоденника: бейдж «NEWS2 · N» поруч із рядком вітальних показників (колір з наявного калькулятора). Клік відкриває шкалу. У текст документа не додає.'],
 >>>>>>> origin/main
   ['0.9.3.119', '11.11.2026', 'текст поруч із набором (ПК): внизу розділу — картка «У тексті огляду» з абзацом саме цього розділу, оновлюється, поки друкуєте; «Увесь текст» відкриває панель, ▾ — згорнути. «Вигляд» → «Текст»: «Колонкою» або «Плаваючим вікном» (перетягується за заголовок, розмір — за правий нижній кут, запам’ятовується). Розумна клавіатура тепер працює й у віконці правки, що відкривається кліком по фразі в тексті'],
@@ -23304,52 +23316,193 @@ function tnFloatSet(on){ TN.float = !!on; try{ localStorage.setItem('po.txtfloat
   return box; }; }
 tnFloatApply(); try{ renderViewCtl(); }catch(e){}
 <<<<<<< HEAD
-/* ===== 0.9.3.120 · індикатор госпіталізації одним рядком (задача 20) =====
-   Над списком критеріїв — один підсумок з результату autoRules().
-   Логіку autoRules не змінює: лише обгортає і читає spec / gen.
-   Клік розгортає або згортає списки критеріїв. У текст документа нічого не додає.
-   Слова «амбулаторно» і рекомендацій тут немає — рішення за лікарем.
+/* ===== 0.9.3.120 · «Мої фрази» (задача 22) =====
+   Короткі фрази лікаря: назва + текст. Вставка в поточне поле або в курсор #out.
+   Сховище — лише localStorage, ключ po.myphrases, try/catch. Експорт/імпорт JSON.
+   Пакети фраз (po.packs) — це чужі шаблони з підписом автора, не список для курсора.
+   «Мої кнопки» прив’язані до одного розділу і живуть у po.custom. Тут окремий ключ.
+   Клавіші Alt+Shift+1…9. Alt+1…9 уже відкривають розділи і в браузері конфліктують.
+   У сховище потрапляє лише те, що лікар вписав у цьому діалозі.
 */
-(function(){
-  const KEY = '711-hosp';
-  function paint(r){
-    const spec = (typeof F === 'function') && F('hosp.spec');
-    const gen = (typeof F === 'function') && F('hosp.gen');
-    if (!spec || !spec.wrapEl || !spec.cbox) return;
-    let b = spec.wrapEl.querySelector('.hosp-ind');
-    if (!b){
-      b = h('button', {type:'button', class:'hosp-ind grey', 'aria-expanded':'false'});
-      b.addEventListener('click', () => {
-        const open = b.getAttribute('aria-expanded') !== 'true';
-        b.setAttribute('aria-expanded', open ? 'true' : 'false');
-        [spec, gen].forEach(f => { if (f && f.wrapEl) f.wrapEl.classList.toggle('hosp-fold', !open); });
-      });
-      spec.cbox.before(b);
-      spec.wrapEl.classList.add('hosp-fold');
-      if (gen && gen.wrapEl) gen.wrapEl.classList.add('hosp-fold');
+const MP_KEY = 'po.myphrases';
+const MP_MAX = 200;
+let mpLast = null;
+
+function mpLoad(){
+  try {
+    const raw = localStorage.getItem(MP_KEY);
+    const a = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(a)) return [];
+    const out = [];
+    for (const x of a){
+      if (!x || typeof x.name !== 'string' || typeof x.text !== 'string') continue;
+      const name = x.name.trim().slice(0, 80), text = x.text.trim().slice(0, 2000);
+      if (!name || !text) continue;
+      out.push({name, text});
+      if (out.length >= MP_MAX) break;
     }
-    const specN = r && r.spec && typeof r.spec.size === 'number' ? r.spec.size : 0;
-    const genN = r && r.gen && typeof r.gen.size === 'number' ? r.gen.size : 0;
-    if (specN){
-      b.textContent = 'Є критерії ургентної госпіталізації (' + specN + ')';
-      b.className = 'hosp-ind bad';
-    } else if (genN){
-      b.textContent = 'Є загальні критерії (' + genN + ')';
-      b.className = 'hosp-ind warn';
-    } else {
-      b.textContent = 'Критеріїв за введеними даними не знайдено';
-      b.className = 'hosp-ind grey';
-    }
+    return out;
+  } catch (e) { return []; }
+}
+function mpSave(list){
+  try {
+    localStorage.setItem(MP_KEY, JSON.stringify(list.map(p => ({name: p.name, text: p.text}))));
+    return true;
+  } catch (e) {
+    if (typeof toast === 'function') toast('Не вдалося зберегти «Мої фрази»');
+    return false;
   }
-  if (typeof autoRules === 'function'){
-    const orig = autoRules;
-    autoRules = function(){
-      const r = orig.apply(this, arguments);
-      try { paint(r); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
-      return r;
+}
+function mpIsField(el){
+  return !!(el && el.matches && (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && (el.type === 'text' || el.type === ''))));
+}
+function mpInsertOut(text){
+  const out = document.getElementById('out'); if (!out) return false;
+  const phrase = typeof g === 'function' ? g(text) : text;
+  out.focus();
+  const sel = getSelection();
+  let placed = false;
+  if (sel && sel.rangeCount && out.contains(sel.anchorNode)){
+    const r = sel.getRangeAt(0);
+    r.deleteContents();
+    const n = document.createTextNode(phrase);
+    r.insertNode(n);
+    r.setStartAfter(n); r.collapse(true);
+    sel.removeAllRanges(); sel.addRange(r);
+    placed = true;
+  }
+  if (!placed){
+    let ok = false;
+    try { ok = document.execCommand('insertText', false, phrase); } catch (e) {}
+    if (!ok) out.append(document.createTextNode(phrase));
+  }
+  out.dispatchEvent(new Event('input', {bubbles: true}));
+  return true;
+}
+function mpInsertField(el, text){
+  const a = el.selectionStart, b = el.selectionEnd;
+  if (a == null) el.value = (el.value ? el.value.replace(/\s*$/, ' ') : '') + text;
+  else el.setRangeText(text, a, b, 'end');
+  el.dispatchEvent(new Event('input', {bubbles: true}));
+  el.focus();
+  return true;
+}
+function mpInsert(text){
+  const phrase = String(text || '');
+  if (!phrase) return false;
+  const ae = document.activeElement;
+  if (mpIsField(ae)) return mpInsertField(ae, phrase);
+  const sel = getSelection();
+  const inOut = ae && ae.id === 'out' || (sel && sel.rangeCount && sel.anchorNode && document.getElementById('out') && document.getElementById('out').contains(sel.anchorNode));
+  if (inOut) return mpInsertOut(phrase);
+  if (mpIsField(mpLast)) return mpInsertField(mpLast, phrase);
+  if (mpLast && mpLast.id === 'out') return mpInsertOut(phrase);
+  if (typeof toast === 'function') toast('Поставте курсор у поле або в текст документа');
+  return false;
+}
+function mpImportObj(o){
+  if (!o || o.type !== 'po-my-phrases' || !Array.isArray(o.phrases)) return {ok: false, n: 0};
+  const cur = mpLoad();
+  let n = 0;
+  for (const p of o.phrases){
+    if (!p || typeof p.name !== 'string' || typeof p.text !== 'string') continue;
+    const name = p.name.trim().slice(0, 80), text = p.text.trim().slice(0, 2000);
+    if (!name || !text || cur.length >= MP_MAX) continue;
+    if (cur.some(x => x.name === name && x.text === text)) continue;
+    cur.push({name, text}); n++;
+  }
+  if (!mpSave(cur)) return {ok: false, n: 0};
+  return {ok: true, n};
+}
+function mpExport(){
+  const phrases = mpLoad().map(p => ({name: p.name, text: p.text}));
+  downloadJSON({type: 'po-my-phrases', phrases}, 'moi-frazy.json');
+}
+
+let mpDlg = null;
+function mpRender(box, list){
+  box.innerHTML = '';
+  if (!list.length){ box.append(h('p', {class: 'chips-hint'}, 'Немає збережених фраз')); return; }
+  list.forEach((p, i) => {
+    const del = h('button', {type: 'button', class: 'more', title: 'Видалити'}, 'Видалити');
+    del.addEventListener('click', () => {
+      if (!del.dataset.arm){ del.dataset.arm = '1'; del.textContent = 'Точно?'; setTimeout(() => { delete del.dataset.arm; del.textContent = 'Видалити'; }, 3000); return; }
+      const next = mpLoad().filter((x, k) => k !== i);
+      mpSave(next); mpRender(box, next);
+    });
+    const ins = h('button', {type: 'button', class: 'btn', onclick: () => { mpInsert(p.text); if (mpDlg) mpDlg.remove(); mpDlg = null; }}, 'Вставити');
+    const key = i < 9 ? h('span', {class: 'mp-key'}, 'Alt+Shift+' + (i + 1)) : '';
+    box.append(h('div', {class: 'mp-row'}, h('span', {class: 'mp-name', title: p.text}, p.name), key, ins, del));
+  });
+}
+function mpOpen(){
+  if (mpDlg){ mpDlg.remove(); mpDlg = null; }
+  const listBox = h('div', {class: 'mp-list'});
+  const name = h('input', {type: 'text', 'aria-label': 'Назва', placeholder: 'Назва', maxlength: '80'});
+  const text = h('textarea', {rows: 3, 'aria-label': 'Текст фрази', placeholder: 'Текст фрази', maxlength: '2000'});
+  const file = h('input', {type: 'file', accept: 'application/json,.json', hidden: ''});
+  file.addEventListener('change', () => {
+    const f = file.files && file.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      let o = null; try { o = JSON.parse(rd.result); } catch (e) {}
+      const r = mpImportObj(o);
+      if (!r.ok){ toast('Файл не є списком «Мої фрази»'); return; }
+      toast('Імпортовано фраз: ' + r.n);
+      mpRender(listBox, mpLoad());
     };
-    try { autoRules(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
-  }
+    rd.readAsText(f);
+    file.value = '';
+  });
+  const save = () => {
+    const nm = name.value.trim(), tx = text.value.trim();
+    if (!nm || !tx){ toast('Впишіть назву і текст'); return; }
+    const list = mpLoad();
+    if (list.length >= MP_MAX){ toast('Вже ' + MP_MAX + ' фраз — видаліть зайву'); return; }
+    list.push({name: nm.slice(0, 80), text: tx.slice(0, 2000)});
+    if (!mpSave(list)) return;
+    name.value = ''; text.value = '';
+    mpRender(listBox, list);
+    toast('Фразу збережено');
+  };
+  mpDlg = h('div', {class: 'navsheet packsheet mp-dlg', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Мої фрази'},
+    h('div', {class: 'nvbox'},
+      h('div', {class: 'nshead'}, h('b', {}, 'Мої фрази'), h('button', {type: 'button', class: 'btn', onclick: () => { mpDlg.remove(); mpDlg = null; }}, 'Закрити')),
+      h('p', {class: 'chips-hint'}, 'Alt+Shift+1…9 вставляє перші дев’ять. Сюди потрапляє лише те, що ви впишете, не дані пацієнта.'),
+      listBox,
+      h('div', {class: 'wgrid'}, h('label', {class: 'wl'}, 'Назва', name), h('label', {class: 'wl'}, 'Текст фрази', text)),
+      h('div', {class: 'acts2', style: 'margin-top:8px'},
+        h('button', {type: 'button', class: 'btn primary', onclick: save}, 'Зберегти'),
+        h('button', {type: 'button', class: 'btn', onclick: mpExport}, 'Експорт JSON'),
+        h('button', {type: 'button', class: 'btn', onclick: () => file.click()}, 'Імпорт JSON'),
+        file)));
+  document.body.append(mpDlg);
+  mpRender(listBox, mpLoad());
+  name.focus();
+}
+function mpMenus(){
+  document.querySelectorAll('#panels .ph .acts2').forEach(a => {
+    const menu = a.querySelector('.mmenu'); if (!menu || menu.querySelector('.mp-item')) return;
+    const dd = a.querySelector('details.more-dd');
+    const b = h('button', {type: 'button', class: 'more mp-item', role: 'menuitem'}, 'Мої фрази');
+    b.addEventListener('click', () => { if (dd) dd.open = false; mpOpen(); });
+    menu.append(b);
+  });
+}
+document.addEventListener('focusin', e => {
+  const t = e.target;
+  if (t && (t.id === 'out' || mpIsField(t))) mpLast = t;
+}, true);
+document.addEventListener('keydown', e => {
+  if (!e.altKey || !e.shiftKey || e.ctrlKey || e.metaKey || !/^Digit[1-9]$/.test(e.code)) return;
+  if (e.target && e.target.closest && e.target.closest('.mp-dlg')) return;
+  const list = mpLoad();
+  const i = +e.code.slice(5) - 1;
+  if (!list[i]) return;
+  e.preventDefault();
+  mpInsert(list[i].text);
+}, true);
+mpMenus();
 =======
 /* ===== 0.9.3.120 · NEWS2 біля показників огляду (задача 19) =====
    Малий бейдж «NEWS2 · N» поруч із рядком «Показники одним рядком»
@@ -23399,8 +23552,55 @@ tnFloatApply(); try{ renderViewCtl(); }catch(e){}
   }
   if (typeof onUpdate === 'function') onUpdate(KEY, () => { try{ refresh(); }catch(e){ if (typeof poErr === 'function') poErr(e, KEY); } });
   setTimeout(refresh, 150);
->>>>>>> origin/main
 })();
+/* ===== 0.9.3.121 · індикатор госпіталізації одним рядком (задача 20) =====
+   Над списком критеріїв — один підсумок з результату autoRules().
+   Логіку autoRules не змінює: лише обгортає і читає spec / gen.
+   Клік розгортає або згортає списки критеріїв. У текст документа нічого не додає.
+   Слова «амбулаторно» і рекомендацій тут немає — рішення за лікарем.
+*/
+(function(){
+  const KEY = '711-hosp';
+  function paint(r){
+    const spec = (typeof F === 'function') && F('hosp.spec');
+    const gen = (typeof F === 'function') && F('hosp.gen');
+    if (!spec || !spec.wrapEl || !spec.cbox) return;
+    let b = spec.wrapEl.querySelector('.hosp-ind');
+    if (!b){
+      b = h('button', {type:'button', class:'hosp-ind grey', 'aria-expanded':'false'});
+      b.addEventListener('click', () => {
+        const open = b.getAttribute('aria-expanded') !== 'true';
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        [spec, gen].forEach(f => { if (f && f.wrapEl) f.wrapEl.classList.toggle('hosp-fold', !open); });
+      });
+      spec.cbox.before(b);
+      spec.wrapEl.classList.add('hosp-fold');
+      if (gen && gen.wrapEl) gen.wrapEl.classList.add('hosp-fold');
+    }
+    const specN = r && r.spec && typeof r.spec.size === 'number' ? r.spec.size : 0;
+    const genN = r && r.gen && typeof r.gen.size === 'number' ? r.gen.size : 0;
+    if (specN){
+      b.textContent = 'Є критерії ургентної госпіталізації (' + specN + ')';
+      b.className = 'hosp-ind bad';
+    } else if (genN){
+      b.textContent = 'Є загальні критерії (' + genN + ')';
+      b.className = 'hosp-ind warn';
+    } else {
+      b.textContent = 'Критеріїв за введеними даними не знайдено';
+      b.className = 'hosp-ind grey';
+    }
+  }
+  if (typeof autoRules === 'function'){
+    const orig = autoRules;
+    autoRules = function(){
+      const r = orig.apply(this, arguments);
+      try { paint(r); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
+      return r;
+    };
+    try { autoRules(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
+  }
+})();
+>>>>>>> origin/main
 </script>
 
 </body>

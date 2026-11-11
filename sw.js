@@ -1,5 +1,9 @@
 /* Офлайн-робота: при наявності інтернету береться свіжа версія (оновлення), без інтернету — збережена копія. */
+<<<<<<< HEAD
+const CACHE = 'pervynnyi-ohliad-v0.9.3.122';
+=======
 const CACHE = 'pervynnyi-ohliad-v0.9.3.121';
+>>>>>>> origin/main
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

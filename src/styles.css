@@ -2603,3 +2603,8 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .hosp-ind.warn{background:#fff8e1;border-color:#ffb300;color:#e65100}
 .hosp-ind.grey{background:#f5f5f5;border-color:#ccc;color:#616161}
 .f.hosp-fold > .chips,.f.hosp-fold > .acts2,.f.hosp-fold > .chips-hint{display:none}
+/* 0.9.3.122 · «Мої фрази» (712-my-phrases.js) */
+.mp-row{display:flex;align-items:center;gap:8px;margin:6px 0}
+.mp-name{flex:1;font-weight:600}
+.mp-key{font-size:12px;color:#616161;white-space:nowrap}
+.mp-list{max-height:240px;overflow:auto;margin:8px 0}
