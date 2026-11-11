@@ -25,7 +25,7 @@ const dtNow = () => { const v = mv('dt') || ''; return [v.split('T')[0] || today
 function b333a(){
   const [d, tm] = dtNow();
   const tip = AI_('an_main.tip'), gem = AI_('vitae.gem'), zv = AI_('vitae.zv');
-  const alg = [BV('vitae.alerg'), BV('vitae.alergx')].filter(Boolean).join(', ');
+  const alg = [BV('vitae.alerg').replace(/^Алергологічний анамнез /, ''), BV('vitae.alergx')].filter(Boolean).join(', ');   /* 0.9.3.113: підпис рядка вже «Алергологічний анамнез» — без дубля */
   const narc = [BV('an_main.nark'), BV('an_main.narkx')].filter(Boolean).join(': ');
   const ops = [BV('vitae.oper') && AI_('vitae.oper') !== 0 ? BV('vitae.oper') : '', BV('vitae.operx')].filter(Boolean).join('; ');
   const yn = (v, yesIdx, noIdx) => i => i === 0 ? yesIdx.includes(v) : noIdx.includes(v);
