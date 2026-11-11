@@ -2638,12 +2638,12 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
 }
 
-/* 0.9.3.120 · NEWS2 badge біля показників */
-.news2-badge{ margin-left:8px; padding:2px 8px; border-radius:8px; font-size:13px; font-weight:600; border:1px solid #ccc; background:#f5f5f5; cursor:pointer; }
-.news2-badge.ok{ background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
-.news2-badge.warn{ background:#fff8e1; border-color:#ffb300; color:#e65100; }
-.news2-badge.bad{ background:#ffebee; border-color:#e57373; color:#c62828; }
-.news2-badge.grey{ background:#f5f5f5; color:#757575; }
+/* 0.9.3.120 · NEWS2 badge біля показників (0.9.3.123 — кольори теми, працює в темних темах) */
+.news2-badge{margin-left:8px;padding:2px 8px;border-radius:var(--r-s);font:600 var(--fs-2)/1.4 inherit;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.news2-badge.ok{color:var(--ok);border-color:var(--ok)}
+.news2-badge.warn{color:var(--warn-ink,var(--flag));border-color:var(--warn-line,var(--flag));background:var(--warn-bg,var(--surface))}
+.news2-badge.bad{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.news2-badge.grey{color:var(--muted)}
 /* 0.9.3.121 · індикатор госпіталізації (711-hosp-indicator.js) */
 .hosp-ind{display:block;width:100%;box-sizing:border-box;text-align:left;margin:0 0 8px;padding:8px 12px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;line-height:1.35;border:1px solid #ccc;background:#f5f5f5;color:#424242;cursor:pointer}
 .hosp-ind.bad{background:#ffebee;border-color:#e57373;color:#c62828}
@@ -2660,7 +2660,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.122 від 11.11.2026">v0.9.3.122 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.123 від 11.11.2026">v0.9.3.123 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4849,8 +4849,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.122', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.123', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.123', '11.11.2026', 'NEWS2: якщо в калькуляторі свідомість не вибрано, вона береться з огляду (ясна — 0 балів; оглушення, сопор, кома — 3, як у шкалі), тож бейдж «NEWS2 · N» біля показників тепер рахується одразу, а не показує «—». Ручний вибір у калькуляторі має перевагу. Бейдж — у кольорах теми (і в темних)'],
   ['0.9.3.122', '11.11.2026', '«Мої фрази»: короткі фрази лікаря (назва і текст) вставляються в поточне поле або в курсор тексту з меню «⋯» чи клавішами Alt+Shift+1…9. Зберігаються окремо в цьому браузері, є експорт і імпорт JSON. Дані пацієнта туди не потрапляють.'],
   ['0.9.3.121', '11.11.2026', 'індикатор госпіталізації: над списком критеріїв один рядок — червоний «Є критерії ургентної госпіталізації (N)», жовтий «Є загальні критерії (N)» або сірий «Критеріїв за введеними даними не знайдено». Клік розгортає критерії. Рекомендацій немає — рішення за лікарем. У текст документа не додає.'],
   ['0.9.3.120', '11.11.2026', 'NEWS2 біля показників огляду і щоденника: бейдж «NEWS2 · N» поруч із рядком вітальних показників (колір з наявного калькулятора). Клік відкриває шкалу. У текст документа не додає.'],
@@ -5389,12 +5390,15 @@ const CALCS = [
       text:`PESI ${s} б., клас ${cl} (30-денна летальність ${mort}); sPESI ${sp1} (${sp1 ? 'летальність ≈ 10,9%' : 'летальність ≈ 1,0%'}). Ризик ранньої смерті за ESC 2019 — ${risk}: ${adv}`,
       line:`PESI ${s} б., клас ${cl}; sPESI ${sp1} б. Ризик ранньої смерті при ТЕЛА (ESC 2019) — ${risk}`};
   }},
-{ id:'news', title:'NEWS2 (раннє попередження погіршення)', desc:'Для моніторингу стану у відділенні. Показники беруться з даних пацієнта.',
+{ id:'news', title:'NEWS2 (раннє попередження погіршення)', desc:'Для моніторингу стану у відділенні. Показники беруться з даних пацієнта; свідомість — з огляду, якщо тут не вибрано.',
   items:[['o2','Отримує кисень',2]],
   sel:[['avpu','Свідомість',[['Ясна',0],['Нова сплутаність / реагує на голос / на біль / не реагує',3]]]],
   run(c){
     const m = missing(['rr','spo','sbp','hr','t']); if (m.length) return {msg:'Введіть: ' + m.join(', ')};
-    const avpu = c.selv('avpu'); if (avpu === null) return {msg:'Оберіть рівень свідомості'};
+    /* 0.9.3.123: якщо в калькуляторі не вибрано — свідомість з огляду (ACVPU: ясна — 0; оглушення, сопор, кома — 3) */
+    let avpu = c.selv('avpu');
+    if (avpu === null){ try{ const v = F('zah.svid').el.value; if (v !== '') avpu = +v === 0 ? 0 : 3; }catch(e){} }
+    if (avpu === null) return {msg:'Оберіть рівень свідомості'};
     const rr=pv('rr'), sp=pv('spo'), sb=pv('sbp'), hr=pv('hr'), t=pv('t');
     const p = [
       rr<=8?3:rr<=11?1:rr<=20?0:rr<=24?2:3,
