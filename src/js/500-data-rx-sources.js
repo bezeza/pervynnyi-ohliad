@@ -111,16 +111,30 @@ function abLines(){
   }).join('\n');
 }
 const AB_HEAD = 'Обґрунтування антибактеріальної терапії (наказ МОЗ України від 09.09.2026 № 1328):';
+/* умовний рядок ще не призначено: кисень «при SpO2…», дексаметазон «лише при кисні», профілактичний еноксапарин «якщо Падуа», рідина «при неможливості пиття», аспірин інсульту до КТ і ковтання */
+function rxHeld(it){
+  if (!it || it.hold === false) return false;
+  if (it.hold === true) return true;
+  const d = String(it.drug || ''), n = String(it.note || '');
+  if (/^Оксигенотерапія/.test(d) && /(?:^|лише )при SpO2\s*[<≤]/.test(n)) return true;
+  if (/^Дексаметазон/.test(d) && /при потребі в кисні/.test(n)) return true;
+  if (/^Еноксапарин/.test(d) && /40 мг/.test(String(it.dose || '')) && /Падуа|за шкалою|за оцінкою ризику/.test(n)) return true;
+  if (/^Положення на животі/.test(d) && /при потребі/.test(n)) return true;
+  if (/натрію хлорид/i.test(d) && /неможливості пиття/.test(n)) return true;
+  if (/^Ацетилсаліцилова кислота/.test(d) && /скринінг ковтання/.test(n)) return true;
+  return false;
+}
 const RXF = () => RX.filter(it=>String(it.drug || '').trim());   // порожні рядки не потрапляють у документ
-function rxSummary(){ // для епікризів
-  if (!RXF().length) return '';
-  return RXF().map(it=>rxLine(it, true)).join('; ');
+const RXACT = () => RXF().filter(it=>!rxHeld(it));
+function rxSummary(){ // для епікризів — лише те, що справді призначено
+  if (!RXACT().length) return '';
+  return RXACT().map(it=>rxLine(it, true)).join('; ');
 }
 function rxPart(){
   if (!RXF().length) return null;
   const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
   if (DOC === 'shch'){
-    const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
+    const cont = RXACT().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXACT().filter(it=>it.start === date && act(it)), off = RXACT().filter(it=>it.stop === date);
     const lines = [];
     if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>rxLine(it)).join('; ') + '.');
     if (nw.length) lines.push('Призначено: ' + nw.map(it=>rxLine(it)).join('; ') + '.');
@@ -131,11 +145,13 @@ function rxPart(){
   // режим і дієта — першим рядком, далі препарати з номерами, потім процедури
   const shown = RXF().filter(it=>!it.stop || it.stop >= date || DOC === 'rx'), kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug';
   const one = it => rxLine(it, DOC === 'rx') + (DOC === 'rx' && it.stop ? ' — відмінено ' + fmtS(it.stop) : '');
-  const regs = shown.filter(it=>['reg','diet'].includes(kd(it))), drugs = shown.filter(it=>kd(it) === 'drug'), procs = shown.filter(it=>['man','phys','loc'].includes(kd(it)));
+  const actShown = shown.filter(it=>!rxHeld(it)), held = shown.filter(rxHeld);
+  const regs = actShown.filter(it=>['reg','diet'].includes(kd(it))), drugs = actShown.filter(it=>kd(it) === 'drug'), procs = actShown.filter(it=>['man','phys','loc'].includes(kd(it)));
   const lines = [];
   if (regs.length) lines.push('Режим, дієта: ' + regs.map(one).join('; ') + '.');
   drugs.forEach((it,k)=>lines.push(`${k+1}. ${one(it)}.`));
   if (procs.length) lines.push('Процедури: ' + procs.map(one).join('; ') + '.');
+  if (held.length) lines.push('За показаннями (не призначено, доки не підтвердите): ' + held.map(one).join('; ') + '.');
   let body = lines.join('\n');
   const ab = abLines(); if (ab) body += '\n' + AB_HEAD + '\n' + ab;
   if (DOC === 'rx'){ const k = crclVal(); if (!isNaN(k)) body += '\nКліренс креатиніну (Кокрофт–Голт): ' + k + ' мл/хв.'; }
