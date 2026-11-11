@@ -2624,3 +2624,6 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 .tn-card.tn-free.fold{height:auto!important;resize:none}
 }
 @media print{.tn-card{display:none!important}}
+
+/* 0.9.3.126 · другий монітор (708-second-screen.js) */
+body.pop-ext .tn-card{display:none!important}
