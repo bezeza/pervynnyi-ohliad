@@ -1800,6 +1800,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     return JSON.stringify({menu:!!menu, dlg:!!dlg, noPatient, hot, mid, bad:bad.ok===false, good:good.ok&&good.n===1, n:list.length, inOut, noAlt, packsSame:localStorage.getItem('po.packs')===packs}); })()`);
   const o=JSON.parse(r);
   ok('Мої фрази: меню, збереження без даних пацієнта, Alt+Shift+1, імпорт лише свого JSON, курсор у тексті', o.menu&&o.dlg&&o.noPatient&&o.hot&&o.mid&&o.bad&&o.good&&o.n===2&&o.inOut&&o.noAlt&&o.packsSame, r); }
+{ const r=w.eval(`(()=>{ switchDoc('ohl'); clearAll(true); const s=(id,v)=>{ const e=document.getElementById(id); e.value=v; }; const c=CALCS.find(x=>x.id==='news'); c.sels.avpu.value='';
+    s('zah_temp_0','36,8'); s('dyh_chd_0','18'); s('dyh_chd_1','97'); s('ssc_ad_0','130'); s('ssc_ad_1','80'); s('ssc_chss_0','76'); update(); const b=()=>document.querySelector('.news2-badge');
+    const noSvid=b().textContent; const svid=F('zah.svid'); svid.el.value='0'; update(); const clear=b().textContent;
+    svid.el.value='2'; update(); const sopor=b().textContent+' '+b().className; c.sels.avpu.value='0'; update(); const manual=b().textContent;
+    c.sels.avpu.value=''; clearAll(true); update(); return JSON.stringify([noSvid,clear,sopor,manual]); })()`);
+  ok('NEWS2 (0.9.3.123): свідомість з огляду — без вибору «—», ясна 0, сопор +3 (рівень — як у калькуляторі), ручний вибір у калькуляторі має перевагу', r==='["NEWS2 · —","NEWS2 · 0","NEWS2 · 3 news2-badge warn","NEWS2 · 0"]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
