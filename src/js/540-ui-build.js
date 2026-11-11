@@ -159,7 +159,7 @@ $('#fsize').addEventListener('change', e=>{
   dirty = true; out.focus();
 });
 $('#regen').onclick = ()=>{ dirty = false; $('#banner').hidden = true; update(); };
-$('#allNorm').onclick = ()=>{ SECTIONS.filter(s=>s.objective && s.docs.includes(DOC)).forEach(applyNorm); update(); toast('Норму виставлено в усіх системах'); };
+$('#allNorm').onclick = ()=>{ SECTIONS.filter(s=>(s.objective || s.id === 'vitae') && s.docs.includes(DOC)).forEach(applyNorm); update(); toast('Норму виставлено в усіх системах'); };
 $('#clearAll').onclick = newPatient;
 $('#printBtn').onclick = doPrint;
 addPrintBtns();
