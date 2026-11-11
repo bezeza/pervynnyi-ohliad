@@ -1,6 +1,6 @@
 /* Офлайн-робота: при наявності інтернету береться свіжа версія (оновлення), без інтернету — збережена копія. */
 <<<<<<< HEAD
-const CACHE = 'pervynnyi-ohliad-v0.9.3.127';
+const CACHE = 'pervynnyi-ohliad-v0.9.3.128';
 =======
 const CACHE = 'pervynnyi-ohliad-v0.9.3.121';
 >>>>>>> origin/main

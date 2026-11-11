@@ -2684,7 +2684,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.127 від 11.11.2026">v0.9.3.127 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.128 від 11.11.2026">v0.9.3.128 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4880,8 +4880,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.127', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.128', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.128', '11.11.2026', 'огляд не стверджує нормальний неврологічний статус (зокрема позу Ромберга, нюх і корнеальні рефлекси), якщо свідомість не ясна, положення вимушене чи пасивне, або в скаргах є післянападова сонливість і сплутаність — тоді не пишеться і «свідомість ясна». Алкогольний делірій: свідомість «оглушення», без норми координації. Епілепсія більше не підставляє самовільну відміну препаратів і нерегулярний прийом. ТІА не заперечує в неврологічному статусі ті самі слабкість і порушення мови, що стоять у скаргах; в анамнезі — що вогнищева симптоматика на момент огляду регресувала. Менінгіт: якщо вік понад 50 років, до цефтріаксону додається ампіцилін 2 г в/в кожні 4 год (Listeria); без віку або до 50 років рядок не з’являється'],
   ['0.9.3.127', '11.11.2026', 'індикатор госпіталізації рахує відмічені критерії: зняли останній ургентний — червоний рядок «Є критерії ургентної госпіталізації (1)» зникає (лишається те, що справді відмічено). Правила за даними огляду не змінені: знята підказка просто не тримає бейдж. Шаблони «Харчова токсикоінфекція» і «Ішемічний інсульт» більше не вписують у текст огляд, якого не було: норму неврологічного статусу (зокрема стійкість у позі Ромберга, корнеальні й черевні рефлекси), «Діурез адекватний», «Язик сухий, обкладений білим нальотом» та норми інших систем. У харчової токсикоінфекції також не підставляються невказані факти: багаторазове блювання з’їденою їжею, вживання неякісної їжі, самолікування, направлення сімейного лікаря. Заголовок стаціонарного огляду узгоджується зі статтю: «Об’єктивний стан хворої» або «хворого»'],
   ['0.9.3.126', '11.11.2026', 'другий монітор: у вікні «⧉» клік по пункту прибирає його, по назві поля — відкриває поле у формі; поки вікно відкрите, форма на всю ширину; вікно саме прокручується до розділу, з яким працюєте; «По ширині» лишається увімкненим при зміні розміру; «Вигляд» → «Текст» → «На другому моніторі» й «Розмір тексту: Росте з вікном»; після Ctrl + / − та зміни розміру вікна плаваючі вікна лишаються біля свого краю й не зменшуються самі'],
   ['0.9.3.125', '11.11.2026', 'текст огляду: клік по окремому пункту (ЗАК, ЕКГ, скарга…) одразу прибирає саме його — з «Скасувати»; клік по назві поля відкриває віконце з варіантами, щоб додати; віконця правки з тексту й на бланку перетягуються за заголовок будь-куди (місце запам’ятовується, подвійний клік — назад); смугу «У тексті огляду» можна відкріпити, рухати, змінювати розмір і шрифт'],
@@ -5154,9 +5155,9 @@ function sidePreset(p){
 const ANH = {
   pneu:[5,0,0,['переохолодженням'],0,3], gh:[10,3,-1,['психоемоційним стресом'],3,5], ihd:[3,3,2,['фізичним навантаженням'],1,4], hf:[5,3,2,[],3,5],
   gastr:[5,3,-1,['порушенням дієти'],1,3], copd:[10,3,-1,['переохолодженням'],2,2], dm:[5,3,-1,['порушенням дієти'],3,5], af:[2,3,0,[],1,4],
-  asthma:[10,3,0,['перенесеною ГРВІ'],1,2], pyelo:[3,0,0,['переохолодженням'],0,0], stroke:[1,0,0,['підвищенням АТ'],0,0], tia:[1,0,0,['підвищенням АТ'],0,0],
+  asthma:[10,3,0,['перенесеною ГРВІ'],1,2], pyelo:[3,0,0,['переохолодженням'],0,0], stroke:[1,0,0,['підвищенням АТ'],0,0], tia:[1,0,0,['підвищенням АТ'],0,0,'На момент огляду вогнищева симптоматика регресувала.'],
   de:[3,3,1,[],1,5], rad:[7,0,0,['підйомом важкого'],1,2], dpn:[2,3,1,[],2,4], migr:[1,0,0,['психоемоційним стресом'],1,2], bell:[2,0,0,['переохолодженням'],0,0],
-  epi:[1,0,0,['самовільною відміною препаратів'],1,5], cerv:[7,0,0,['фізичним навантаженням'],1,3], bppv:[3,0,0,[],0,3],
+  epi:[1,0,0,[],1,-1], cerv:[7,0,0,['фізичним навантаженням'],1,3], bppv:[3,0,0,[],0,3],
   app:[1,0,0,[],0,0], chol:[2,0,0,['порушенням дієти'],0,3], panc:[1,0,0,['вживанням алкоголю','порушенням дієти'],0,0], gib:[1,0,0,[],0,0],
   obstr:[2,0,0,[],0,0], hern:[1,0,0,['підйомом важкого'],0,0], dvt:[4,0,1,[],0,0], perf:[1,0,0,[],0,0], colic:[1,0,0,['фізичним навантаженням'],0,3], absc:[5,0,1,[],0,3],
   arvi:[3,0,0,['переохолодженням','контактом з хворим'],0,3], flu:[2,0,0,['контактом з хворим'],0,3], covid:[4,0,0,['контактом з хворим'],0,3],
@@ -5210,7 +5211,35 @@ function sexPlan(){   // стать змінили вже після вибор�
     if (on && c.getAttribute('aria-pressed') !== 'true'){ c.setAttribute('aria-pressed','true'); c.dataset.ord = ++ORD; }
     if (!on && c.getAttribute('aria-pressed') === 'true'){ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; } });
   refreshChips(f); }
-/* неврологічний статус одним рядком для хірургії та сімейної медицини, якщо заготовка його не описує */
+/* не стверджувати повну «норму» неврології, якої не було: свідомість не ясна, вимушене чи пасивне положення,
+   післянападова сплутаність у скаргах, або ТІА (скарги ще про дефіцит, а діагноз — про регрес) */
+function clearSelNorms(id){
+  const s = SECTIONS.find(x=>x.id === id); if (!s) return;
+  s.fields.forEach(f=>{
+    if (f.type === 'sel' && !f.bo && f.norm !== undefined && f.el && f.el.value !== '' && +f.el.value === f.norm){ f.el.value = ''; mark(f.el, f); }
+  });
+}
+function consciousnessImpaired(){
+  const f = F('zah.svid'); if (!f || !f.el || f.el.value === '' || f.norm === undefined) return false;
+  return +f.el.value !== f.norm;
+}
+function positionBlocksNeuro(){
+  const f = F('zah.pol'); if (!f || !f.el || f.el.value === '' || (f.norm !== undefined && +f.el.value === f.norm)) return false;
+  return /вимушене|пасивне/.test(val(f));
+}
+function postictalComplaints(){
+  const t = val(F('skarhy.c'), true);
+  return /сплутан|сонлив/.test(t);
+}
+function guardNeuro(p){
+  if (postictalComplaints()){
+    const svid = F('zah.svid');
+    if (svid && svid.el && svid.norm !== undefined && svid.el.value !== '' && +svid.el.value === svid.norm){ svid.el.value = ''; mark(svid.el, svid); }
+    const stan = F('zah.stan');
+    if (stan && stan.el && stan.norm !== undefined && stan.el.value !== '' && +stan.el.value === stan.norm){ stan.el.value = ''; mark(stan.el, stan); }
+  }
+  if ((p && p.key === 'tia') || consciousnessImpaired() || positionBlocksNeuro() || postictalComplaints()) clearSelNorms('nevr');
+}
 function nevrShort(p){
   if (!['hir','fam'].includes(p.group) || Object.keys(p.set || {}).some(k=>k.startsWith('nevr.'))) return;
   const s = SECTIONS.find(x=>x.id === 'nevr'), b = s.fields.find(f=>f.bo); if (!b) return;
@@ -5233,6 +5262,7 @@ function applyPreset(p0, btn){
     f.el.value = i; mark(f.el, f);
   }
   anPreset(p0);
+  guardNeuro(p0);
   F('dx.osn').el.value = p.osn || '';
   F('dx.mkh').el.value = p.mkh || '';
   F('dx.uskl').el.value = p.uskl || '';
@@ -8409,6 +8439,7 @@ const DRUGS = [
   {n:'Амоксицилін', d:'1000 мг', r:'per os', f:'3 р/д', ab:'A', renal:[{lt:30, m:'збільшити інтервал до кожних 12 год'}]},
   {n:'Амоксицилін/клавуланат', d:'1,2 г', r:'в/в крапельно', f:'3 р/д', ab:'A', renal:[{lt:30, m:'корекція дози за інструкцією; форма 875/125 мг не застосовується'}]},
   {n:'Ампіцилін/сульбактам', d:'1,5 г', r:'в/в', f:'4 р/д', ab:'A', renal:[{lt:15, m:'кожні 24 год'}, {lt:30, m:'кожні 12 год'}]},
+  {n:'Ампіцилін', d:'2 г', r:'в/в', f:'кожні 4 год', ab:'A', note:'менінгіт, вік понад 50 років: Listeria', renal:[{lt:30, m:'збільшити інтервал за інструкцією'}]},
   {n:'Бензилпеніцилін', d:'2 млн ОД', r:'в/в', f:'кожні 4 год', ab:'A', renal:[{lt:10, m:'зменшити дозу'}]},
   {n:'Цефазолін', d:'1 г', r:'в/в', f:'3 р/д', ab:'A', renal:[{lt:35, m:'зменшити дозу або збільшити інтервал за інструкцією'}]},
   {n:'Доксициклін', d:'100 мг', r:'per os', f:'2 р/д', ab:'A'},
@@ -8636,6 +8667,23 @@ const RXA = {
   af:[['Бісопролол','5 мг','per os','1 р/д',0,'контроль частоти: ЧСС у спокої < 110/хв'],['Апіксабан','5 мг','per os','2 р/д',0,'при CHA₂DS₂-VA ≥ 2 (≥ 1 — розглянути)']]
 };
 function rxFor(p){ return MODE === 'amb' && p && RXA[p.key] !== undefined ? RXA[p.key] : (p && p.rx) || []; }   /* 501-rx-evidence.js доповнює: режим, дієта, моніторинг */
+/* менінгіт: ампіцилін лише якщо вік уже відомий і понад 50 років (Listeria). Без віку рядок не додається */
+function meningAmpRows(rows, key){
+  if (key !== 'mening' || !rows) return rows;
+  const age = parseInt(mv('age'), 10), rest = rows.filter(r=>r[0] !== 'Ампіцилін');
+  if (!(age > 50)) return rest;
+  const row = ['Ампіцилін','2 г','в/в','кожні 4 год',10,'вік понад 50 років: емпірично Listeria monocytogenes, разом із цефтріаксоном; до 50 років не додавати'];
+  const i = rest.findIndex(r=>/Цефтріаксон/.test(r[0]));
+  return i < 0 ? rest.concat([row]) : rest.slice(0, i + 1).concat([row], rest.slice(i + 1));
+}
+{ const rfAmp = rxFor; rxFor = function(p){ return meningAmpRows(rfAmp.apply(this, arguments), p && p.key); }; }
+function syncMeningAge(){
+  if (curKey !== 'mening' || !(RX_AUTO && rxSig() === RX_AUTO)) return;
+  const p = PRESETS.find(x=>x.key === 'mening'); if (!p) return;
+  RX.length = 0; rxFor(p).forEach(r=>addRx({drug:r[0], dose:r[1], route:r[2], freq:r[3], days:r[4] || '', note:r[5]})); RX_AUTO = rxSig();
+  try{ renderRx(); }catch(e){}
+}
+{ const cAge = calcAge; calcAge = function(){ const r = cAge.apply(this, arguments); try{ syncMeningAge(); }catch(e){} return r; }; }
 
 /* Підказки за стандартами МОЗ і клінічними настановами (коротко; звіряйте з чинною редакцією) */
 const TIPS = {
@@ -9470,7 +9518,7 @@ PRESETS.forEach(p=>{ if (RXS[p.key]) p.rx = RXS[p.key]; if (TIPS[p.key]) p.tips 
     plan:[...BASE, 'біохімічний аналіз крові', 'коагулограма', 'маркери вірусних гепатитів', 'RW', 'ВІЛ', 'УЗД ОЧП']},
   { group:'ter', name:'Алкогольний делірій', key:'awd', hosp:'e',
     skarhy:['тремтіння рук і тіла', 'порушення сну', 'тривогу, внутрішній неспокій', 'пітливість'],
-    set:{'zah.stan':'тяжкий', 'shk.vol':'вологі', 'shk.kol':'гіперемовані', 'ssc.rytm':'тахікардія', 'trav.yaz':'сухий, обкладений'},
+    set:{'zah.stan':'тяжкий', 'zah.svid':'оглушення', 'shk.vol':'вологі', 'shk.kol':'гіперемовані', 'ssc.rytm':'тахікардія', 'trav.yaz':'сухий, обкладений'},
     osn:'Психічні та поведінкові розлади внаслідок вживання алкоголю: стан відміни з делірієм', mkh:'F10.4', uskl:'',
     plan:[...BASE, 'біохімічний аналіз крові', 'коагулограма', 'маркери вірусних гепатитів', 'RW', 'ВІЛ', 'УЗД ОЧП', 'рентгенографія ОГК', 'консультація невролога']}
   );
