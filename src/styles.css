@@ -2590,3 +2590,8 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body.txt-float #outBox>.v2grip{display:none}
   :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
 }
+/* 0.9.3.120 · «Мої фрази» (712-my-phrases.js) */
+.mp-row{display:flex;align-items:center;gap:8px;margin:6px 0}
+.mp-name{flex:1;font-weight:600}
+.mp-key{font-size:12px;color:#616161;white-space:nowrap}
+.mp-list{max-height:240px;overflow:auto;margin:8px 0}
