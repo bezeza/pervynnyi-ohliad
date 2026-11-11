@@ -39,9 +39,12 @@ function h(tag, a = {}, ...kids){
   return e;
 }
 
+const PLAN_ABBR = {'ЗАК':'загальний аналіз крові', 'ЗАС':'загальний аналіз сечі', 'ОВД':'основний варіант стандартної дієти', 'ЛН':'легенева недостатність', 'ЕМД':'екстрена медична допомога'};
+function abbrTitle(t){ const s = String(t || ''), hits = Object.keys(PLAN_ABBR).filter(k=>new RegExp('(?:^|[^А-ЯІЇЄҐA-Z])' + k + '(?:$|[^А-ЯІЇЄҐA-Z])').test(s)); return hits.map(k=>k + ' — ' + PLAN_ABBR[k]).join('. '); }
 function makeChip(f, i){
   const o = f.opts[i];
-  const c = h('button', {type:'button', class:'chip', 'aria-pressed':'false', id:`${f.cid}_${i}`,
+  const tip = abbrTitle(O(o).t || O(o).l);
+  const c = h('button', {type:'button', class:'chip', 'aria-pressed':'false', id:`${f.cid}_${i}`, title: tip || undefined,
     onclick:()=>{ const on = c.getAttribute('aria-pressed') !== 'true';
       c.setAttribute('aria-pressed', on ? 'true' : 'false'); if (on) c.dataset.ord = ++ORD; else delete c.dataset.ord;
       if (c.dataset.auto){ delete c.dataset.auto; if (!on) c.dataset.off = '1'; }
@@ -51,7 +54,8 @@ function makeChip(f, i){
 }
 function makeQuick(f, q){
   const t = f.el;
-  const c = h('button', {type:'button', class:'chip q', onclick:()=>{
+  const tip = abbrTitle(q);
+  const c = h('button', {type:'button', class:'chip q', title: tip || undefined, onclick:()=>{
     const ins = g(q), old = t.value.trim();
     const start = old ? old.length + 1 : 0;
     t.value = old ? old + (f.sep || '\n') + ins : ins;

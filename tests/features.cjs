@@ -37,7 +37,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  ok('Зміна статі на чоловічу прибирає ХГЛ', !/ХГЛ/.test(plan()), plan());
  set('meta_pib','Тест Іван'); set('meta_pos','Лікар-хірург'); ap('app');
  ok('Лікар-хірург: без «консультації хірурга»', !/консультація хірурга/.test(plan()), plan());
- ok('З ПІБ — показується перший розділ огляду', w.eval('TABS[active].id')==='skarhy');
+ ok('З ПІБ — курсор у показниках одним рядком', w.eval("TABS[active].id==='zah' && document.activeElement.id==='vq_ohl'"));
  // схеми призначень
  const box=()=>[...doc.querySelectorAll('.rxvarbox')].find(b=>!b.hidden);
  ok('Схеми для апендициту видно', box() && box().querySelectorAll('.chip').length>=4);
@@ -1866,6 +1866,31 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Індикатор госпіталізації: знятий ургентний критерій не тримає червоний «(1)», правило за даними лишається', o.wasOn && o.ruleBefore && o.ruleAfter && o.indOk && o.lineNow && o.back, r);
   ok('Інсульт не підставляє норму Ромберга й інших систем; знахідки шаблону лишаються', o.stBad.length===0 && o.stKeep && o.stSec, r);
   ok('Стать у заголовку огляду: хворої / хворого; інші шаблони й далі ставлять норму', o.pneuNorm && o.male, r); }
+{ const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); switchDoc('ohl'); newPatient();
+    document.getElementById('meta_pib').value='Тест Ординатор';
+    const i=PRESETS.findIndex(p=>p.key==='pneu'); applyPreset(PRESETS[i], HV.cards[i]);
+    const focus=document.activeElement && document.activeElement.id==='vq_ohl';
+    const A=()=>Object.keys(arevGet());
+    const before=A().includes('skarhy');
+    const q=F('skarhy.c').q;
+    if (q){ q.value='каш'; q.dispatchEvent(new Event('input',{bubbles:true})); }
+    const afterSearch=A().includes('skarhy');
+    show(TABS.findIndex(t=>t.id==='dx'));
+    const zak=[...document.querySelectorAll('#panels .chip')].find(b=>b.textContent.trim()==='ЗАК');
+    const tip=!!zak && /загальний аналіз крові/.test(zak.title||'');
+    const help=HELPS.some(b=>b[1].some(x=>/не заповнює|порожніми/.test(x) && !/Решта систем — норма/.test(x)));
+    const keys=document.documentElement.innerHTML.includes('Alt+Shift+1');
+    const c=CALCS.find(x=>x.id==='news');
+    const pt=(id,v)=>{ const e=document.getElementById(id); e.value=v; };
+    pt('pt_rr','18'); pt('pt_spo','90'); pt('pt_sbp','120'); pt('pt_hr','80'); pt('pt_t','36,8');
+    c.sels.avpu.value='0'; const box=c.boxes.find(x=>x[2]==='s2'); box[0].checked=false; update();
+    const s1=c.run(c).score;
+    box[0].checked=true; const s2=c.run(c);
+    return JSON.stringify({focus, before, afterSearch, tip, help, keys, s1, s2:s2.score, line:s2.line}); })()`);
+  const o=JSON.parse(r);
+  ok('Після хвороби курсор у показниках; пошук не знімає «не переглянуто»', o.focus && o.before && o.afterSearch, r);
+  ok('ЗАК має розшифровку; довідка без «решта систем — норма»; є Alt+Shift+1', o.tip && o.help && o.keys, r);
+  ok('NEWS2 шкала 2: SpO2 90% не дає 3 бали шкали 1', o.s1==='3 б.' && o.s2==='0 б.' && /шкала 2/.test(o.line), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

@@ -45,10 +45,22 @@ function tiRemove(f, hit, doc){
   if (c.getAttribute('aria-pressed') === 'true') return false;
   const back = ()=>{ if (c.getAttribute('aria-pressed') === 'true') return; c.click(); if (ord){ c.dataset.ord = ord; try{ update(); }catch(e){} } };
   snack('Прибрано «' + hit.t + '»', 'Скасувати', back, 8000);
+  if (!doc || doc === document) tiNear('Прибрано «' + hit.t + '». Клік по пункту в тексті прибирає його.', back);
   if (doc && doc !== document) tiSnackIn(doc, 'Прибрано «' + hit.t + '»', back);
   return true;
 }
 /* те саме «Скасувати» у вікні на другому моніторі */
+function tiNear(msg, fn){
+  const box = document.getElementById('outBox'); if (!box) return;
+  let s = document.getElementById('tiNear');
+  if (!s){ s = document.createElement('div'); s.id = 'tiNear'; s.className = 'banner'; s.setAttribute('role', 'status'); const ban = document.getElementById('banner'); if (ban && ban.parentElement === box) ban.after(s); else box.prepend(s); }
+  s.textContent = '';
+  const sp = document.createElement('span'); sp.textContent = msg;
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = 'Скасувати';
+  b.onclick = ()=>{ s.hidden = true; fn(); };
+  s.append(sp, b); s.hidden = false;
+  clearTimeout(tiNear.t); tiNear.t = setTimeout(()=>{ s.hidden = true; }, 8000);
+}
 function tiSnackIn(doc, msg, fn){
   let s = doc.getElementById('tiSnack');
   if (!s){ s = doc.createElement('div'); s.id = 'tiSnack'; s.className = 'snack'; s.setAttribute('role', 'status'); doc.body.append(s); }
