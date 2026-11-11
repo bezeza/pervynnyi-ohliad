@@ -2615,12 +2615,34 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 .also-btn{align-self:flex-start;margin-top:6px;font-size:var(--fs-2)}
 .also-box{margin-top:6px;gap:6px}
 .also-box .chip{font-size:var(--fs-2)}
+/* 0.9.3.119 · текст поруч із набором (705-text-near.js) */
+.si-pop{z-index:120}
+.tn-card{display:none}
+@media screen and (min-width:900px){
+  :root.ui-v2 .tn-card{display:block;position:sticky;bottom:8px;z-index:5;margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 4px 16px rgba(0,0,0,.08);padding:10px 14px}
+  :root.ui-v2 .tn-card[hidden]{display:none}
+  .tn-head{display:flex;align-items:center;gap:8px}
+  .tn-t{font-size:var(--fs-1);font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .tn-sp{flex:1}
+  .tn-all,.tn-fold{font:inherit;font-size:var(--fs-2);background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 6px;border-radius:var(--r-xs)}
+  .tn-all:hover,.tn-fold:hover{background:var(--fill,#ECECF0)}
+  .tn-body{margin-top:6px;font-size:var(--fs-3);line-height:1.55;max-height:132px;overflow:auto;white-space:pre-line}
+  .tn-card.fold .tn-body{display:none}
+}
+@media screen and (min-width:900px){
+  /* плаваюче вікно «Текст»: без колонки, перетягується за заголовок, розмір — за кут */
+  :root.ui-v2 body.txt-float #outBox{right:auto;bottom:auto;resize:both;overflow:hidden;min-width:320px;min-height:220px;box-shadow:0 12px 40px rgba(0,0,0,.22);border-radius:var(--r-m)}
+  :root.ui-v2 body.txt-float #outBox>.oh{cursor:move;user-select:none}
+  :root.ui-v2 body.txt-float.v2-txt-open .wrap{margin-right:0}
+  :root.ui-v2 body.txt-float #outBox>.v2grip{display:none}
+  :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.118 від 11.11.2026">v0.9.3.118 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.119 від 11.11.2026">v0.9.3.119 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4809,8 +4831,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.118', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.119', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.119', '11.11.2026', 'текст поруч із набором (ПК): внизу розділу — картка «У тексті огляду» з абзацом саме цього розділу, оновлюється, поки друкуєте; «Увесь текст» відкриває панель, ▾ — згорнути. «Вигляд» → «Текст»: «Колонкою» або «Плаваючим вікном» (перетягується за заголовок, розмір — за правий нижній кут, запам’ятовується). Розумна клавіатура тепер працює й у віконці правки, що відкривається кліком по фразі в тексті'],
   ['0.9.3.118', '11.11.2026', 'об’єктивний огляд: «+ ще» — кілька знахідок в одному полі там, де їх буває кілька: хрипи, дихання, перкусія, ритм, шуми, тони серця, висипання, лімфовузли, вени, болючість живота, сечовипускання, колір сечі. Наприклад, «сухі розсіяні свистячі хрипи, вологі дрібнопухирчасті хрипи в нижніх відділах справа». Основний вибір працює як раніше (бланк 003/о, щоденник, критерії); вибір норми знімає додаткові; збережені пацієнти не зачеплені'],
   ['0.9.3.117', '11.11.2026', 'новий шаблон «За хворобою» (неврологічні): «Вестибулярний нейроніт» (H81.2) — скарги (системне постійне запаморочення, нудота, блювання, хиткість), горизонтальний ністагм, хиткість у позі Ромберга, вибір сторони; схема: короткочасно метоклопрамід і дименгідринат (до 3 днів), рідина при блюванні, рання активізація й вестибулярна гімнастика; варіант із метилпреднізолоном. Підказка HINTS — як не пропустити інсульт'],
   ['0.9.3.116', '10.11.2026', 'менше гортання: розділи огляду тепер показуються по одному (раніше весь огляд — однією сторінкою, ~20 екранів). Унизу — «‹ попередній» і «Далі ›», клавіші Alt+↓ / Alt+↑; бічне меню — як і раніше. Повернути «однією сторінкою» — «Вигляд» → «Розділи» (або «Налаштування» → «Розділи форми»); хто вже обрав це в налаштуваннях, у того без змін'],
@@ -22277,7 +22300,7 @@ function siFieldOf(el){
   return null;
 }
 document.addEventListener('input', e=>{
-  if (!siOn()) return; const el = e.target; if (!el || !el.matches || !el.matches('#panels textarea, #panels input[type="text"]')) return;
+  if (!siOn()) return; const el = e.target; if (!el || !el.matches || !el.matches('#panels textarea, #panels input[type="text"], .qe textarea, .qe input[type="text"]')) return;   /* 0.9.3.119: і у віконці правки з тексту («Бачу — редагую») */
   const hit = (SI.f && SI.f.el === el) ? {sec:SI.sec, f:SI.f} : siFieldOf(el); if (!hit){ siClose(); return; }
   SI.f = hit.f; SI.sec = hit.sec;
   if (e.data === ' ' || e.inputType === 'insertLineBreak') siFormat(el);
@@ -23197,6 +23220,68 @@ ALSO_KEYS.forEach(k=>{ try{
 { const c0 = clearAll; clearAll = function(){ alsoClear(); return c0.apply(this, arguments); }; }
 { const a0 = applyPreset; applyPreset = function(){ alsoClear(); return a0.apply(this, arguments); }; }
 onUpdate('704-sel-also', alsoSync);
+/* ===== 0.9.3.119 · текст поруч із набором (обговорення з лікарем 11.11.2026) =====
+   1) Картка «У тексті огляду» внизу розділу: абзац саме цього розділу, оновлюється під час друку
+      (дії «після» запускаються після паузи — 596). Видно, коли панель «Текст» закрита; «Увесь текст» відкриває панель.
+      Можна згорнути (po.txtnear = '0').
+   2) «Вигляд» → «Текст»: «Колонкою» (як 0.9.3.114) або «Плаваючим вікном» — перетягується за заголовок,
+      розмір — за правий нижній кут; місце й розмір запам’ятовуються (po.txtfloat). Лише ПК (≥ 1280 px для колонки).
+   Розумна клавіатура тепер працює й у віконці правки з тексту (684, .qe). Стилі — кінець styles.css (0.9.3.119). */
+const TN = {on:true, cards:new Map(), float:false, pos:null};
+try{ TN.on = localStorage.getItem('po.txtnear') !== '0'; TN.float = localStorage.getItem('po.txtfloat') === '1';
+  TN.pos = JSON.parse(localStorage.getItem('po.txtpos') || 'null'); }catch(e){}
+function tnCard(t){
+  let c = TN.cards.get(t.id); if (c) return c;
+  const body = h('div', {class:'tn-body', 'aria-live':'off'});
+  const fold = h('button', {type:'button', class:'tn-fold', 'aria-expanded':'true', title:'Згорнути / розгорнути', onclick:()=>{ TN.on = !TN.on; try{ localStorage.setItem('po.txtnear', TN.on ? '1' : '0'); }catch(e){} tnSync(); }});
+  c = h('section', {class:'tn-card', 'aria-label':'У тексті огляду'},
+    h('div', {class:'tn-head'}, h('span', {class:'tn-t'}, 'У тексті огляду'), h('span', {class:'tn-sp'}),
+      h('button', {type:'button', class:'tn-all', onclick:()=>{ const b = document.getElementById('txtBtn'); if (b) b.click(); }}, 'Увесь текст'), fold), body);
+  c.body = body; c.fold = fold; t.panel.append(c); TN.cards.set(t.id, c); return c;
+}
+function tnSync(){
+  const open = document.body.classList.contains('v2-txt-open');
+  TABS.forEach(t=>{
+    if (!t.panel || t.panel.hidden || TOOL_TABS.includes(t.id) || !SECTIONS.some(s=>s.id === t.id)){ const c = TN.cards.get(t.id); if (c) c.hidden = true; return; }
+    const src = document.querySelector('#out [data-sec="' + t.id + '"]'), txt = src ? src.textContent.trim() : '';
+    const c = tnCard(t); c.hidden = open || !txt || !UIV2;
+    if (c.hidden) return;
+    c.classList.toggle('fold', !TN.on); c.fold.setAttribute('aria-expanded', TN.on ? 'true' : 'false'); c.fold.textContent = TN.on ? '▾' : '▸';
+    if (TN.on && c.body.textContent !== txt) c.body.textContent = txt;
+  });
+}
+onUpdate('705-text-near', tnSync);
+/* плаваюче вікно */
+function tnFloatApply(){
+  const box = document.getElementById('outBox'); if (!box) return;
+  document.body.classList.toggle('txt-float', TN.float);
+  if (!TN.float){ ['left', 'top', 'width', 'height'].forEach(k=>box.style.removeProperty(k)); return; }
+  const W = window.innerWidth, H = window.innerHeight, p = TN.pos || {w:480, h:Math.round(H * .55)};
+  const w = Math.max(320, Math.min(p.w, W - 16)), hh = Math.max(220, Math.min(p.h, H - 16));
+  const l = p.l === undefined ? W - w - 16 : Math.max(8, Math.min(p.l, W - w - 8)), tp = p.t === undefined ? H - hh - 64 : Math.max(8, Math.min(p.t, H - hh - 8));
+  Object.assign(box.style, {left:l + 'px', top:tp + 'px', width:w + 'px', height:hh + 'px'});
+}
+function tnFloatSave(){ const box = document.getElementById('outBox'); if (!box || !TN.float) return; const r = box.getBoundingClientRect();
+  TN.pos = {l:Math.round(r.left), t:Math.round(r.top), w:Math.round(r.width), h:Math.round(r.height)}; try{ localStorage.setItem('po.txtpos', JSON.stringify(TN.pos)); }catch(e){} }
+function tnFloatSet(on){ TN.float = !!on; try{ localStorage.setItem('po.txtfloat', on ? '1' : '0'); }catch(e){} tnFloatApply(); try{ renderViewCtl(); }catch(e){} }
+{ const box = document.getElementById('outBox'), head = box && box.querySelector(':scope > .oh');
+  if (head){
+    let d = null;
+    head.addEventListener('pointerdown', e=>{ if (!TN.float || e.target.closest('button, a, input, select')) return; const r = box.getBoundingClientRect(); d = {x:e.clientX - r.left, y:e.clientY - r.top}; head.setPointerCapture(e.pointerId); document.body.classList.add('v2-resizing'); e.preventDefault(); });
+    head.addEventListener('pointermove', e=>{ if (!d) return; box.style.left = Math.max(0, Math.min(e.clientX - d.x, window.innerWidth - 80)) + 'px'; box.style.top = Math.max(0, Math.min(e.clientY - d.y, window.innerHeight - 40)) + 'px'; });
+    const end = ()=>{ if (!d) return; d = null; document.body.classList.remove('v2-resizing'); tnFloatSave(); };
+    head.addEventListener('pointerup', end); head.addEventListener('pointercancel', end);
+  }
+  if (box && typeof ResizeObserver === 'function'){ let t = 0; new ResizeObserver(()=>{ if (!TN.float) return; clearTimeout(t); t = setTimeout(tnFloatSave, 300); }).observe(box); }
+  window.addEventListener('resize', ()=>{ if (TN.float) tnFloatApply(); });
+}
+{ const x0 = viewCtl; viewCtl = function(){
+  const box = x0.apply(this, arguments);
+  try{ box.append(h('div', {class:'vrow'}, h('span', {class:'vl'}, 'Текст'), h('div', {class:'vseg', role:'group', 'aria-label':'Як показувати панель «Текст»'},
+    ...[[false, 'Колонкою', 'Справа, форма звужується'], [true, 'Плаваючим вікном', 'Перетягується за заголовок, розмір — за кут']].map(([on, l, t])=>
+      h('button', {type:'button', 'aria-pressed':TN.float === on ? 'true' : 'false', title:t, onclick:()=>tnFloatSet(on)}, l))))); }catch(e){ poErr(e, 'текст: меню «Вигляд»'); }
+  return box; }; }
+tnFloatApply(); try{ renderViewCtl(); }catch(e){}
 </script>
 
 </body>

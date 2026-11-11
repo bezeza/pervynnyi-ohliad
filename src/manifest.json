@@ -194,6 +194,7 @@
   "702-sticky-dock.js",
   "703-one-section.js",
   "704-sel-also.js",
-  "705-text-near.js"
+  "705-text-near.js",
+  "711-hosp-indicator.js"
  ]
 }

@@ -2637,6 +2637,12 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   :root.ui-v2 body.txt-float #outBox>.v2grip{display:none}
   :root.ui-v2 body.txt-float.v2-txt-open .toast{right:24px}
 }
+/* 0.9.3.120 · індикатор госпіталізації (711-hosp-indicator.js) */
+.hosp-ind{display:block;width:100%;box-sizing:border-box;text-align:left;margin:0 0 8px;padding:8px 12px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;line-height:1.35;border:1px solid #ccc;background:#f5f5f5;color:#424242;cursor:pointer}
+.hosp-ind.bad{background:#ffebee;border-color:#e57373;color:#c62828}
+.hosp-ind.warn{background:#fff8e1;border-color:#ffb300;color:#e65100}
+.hosp-ind.grey{background:#f5f5f5;border-color:#ccc;color:#616161}
+.f.hosp-fold > .chips,.f.hosp-fold > .acts2,.f.hosp-fold > .chips-hint{display:none}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2647,7 +2653,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.119 від 11.11.2026">v0.9.3.119 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.120 від 11.11.2026">v0.9.3.120 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4836,8 +4842,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.119', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.120', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.120', '11.11.2026', 'індикатор госпіталізації: над списком критеріїв один рядок — червоний «Є критерії ургентної госпіталізації (N)», жовтий «Є загальні критерії (N)» або сірий «Критеріїв за введеними даними не знайдено». Клік розгортає критерії. Рекомендацій немає — рішення за лікарем. У текст документа не додає.'],
   ['0.9.3.119', '11.11.2026', 'текст поруч із набором (ПК): внизу розділу — картка «У тексті огляду» з абзацом саме цього розділу, оновлюється, поки друкуєте; «Увесь текст» відкриває панель, ▾ — згорнути. «Вигляд» → «Текст»: «Колонкою» або «Плаваючим вікном» (перетягується за заголовок, розмір — за правий нижній кут, запам’ятовується). Розумна клавіатура тепер працює й у віконці правки, що відкривається кліком по фразі в тексті'],
   ['0.9.3.118', '11.11.2026', 'об’єктивний огляд: «+ ще» — кілька знахідок в одному полі там, де їх буває кілька: хрипи, дихання, перкусія, ритм, шуми, тони серця, висипання, лімфовузли, вени, болючість живота, сечовипускання, колір сечі. Наприклад, «сухі розсіяні свистячі хрипи, вологі дрібнопухирчасті хрипи в нижніх відділах справа». Основний вибір працює як раніше (бланк 003/о, щоденник, критерії); вибір норми знімає додаткові; збережені пацієнти не зачеплені'],
   ['0.9.3.117', '11.11.2026', 'новий шаблон «За хворобою» (неврологічні): «Вестибулярний нейроніт» (H81.2) — скарги (системне постійне запаморочення, нудота, блювання, хиткість), горизонтальний ністагм, хиткість у позі Ромберга, вибір сторони; схема: короткочасно метоклопрамід і дименгідринат (до 3 днів), рідина при блюванні, рання активізація й вестибулярна гімнастика; варіант із метилпреднізолоном. Підказка HINTS — як не пропустити інсульт'],
@@ -23287,6 +23294,53 @@ function tnFloatSet(on){ TN.float = !!on; try{ localStorage.setItem('po.txtfloat
       h('button', {type:'button', 'aria-pressed':TN.float === on ? 'true' : 'false', title:t, onclick:()=>tnFloatSet(on)}, l))))); }catch(e){ poErr(e, 'текст: меню «Вигляд»'); }
   return box; }; }
 tnFloatApply(); try{ renderViewCtl(); }catch(e){}
+/* ===== 0.9.3.120 · індикатор госпіталізації одним рядком (задача 20) =====
+   Над списком критеріїв — один підсумок з результату autoRules().
+   Логіку autoRules не змінює: лише обгортає і читає spec / gen.
+   Клік розгортає або згортає списки критеріїв. У текст документа нічого не додає.
+   Слова «амбулаторно» і рекомендацій тут немає — рішення за лікарем.
+*/
+(function(){
+  const KEY = '711-hosp';
+  function paint(r){
+    const spec = (typeof F === 'function') && F('hosp.spec');
+    const gen = (typeof F === 'function') && F('hosp.gen');
+    if (!spec || !spec.wrapEl || !spec.cbox) return;
+    let b = spec.wrapEl.querySelector('.hosp-ind');
+    if (!b){
+      b = h('button', {type:'button', class:'hosp-ind grey', 'aria-expanded':'false'});
+      b.addEventListener('click', () => {
+        const open = b.getAttribute('aria-expanded') !== 'true';
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        [spec, gen].forEach(f => { if (f && f.wrapEl) f.wrapEl.classList.toggle('hosp-fold', !open); });
+      });
+      spec.cbox.before(b);
+      spec.wrapEl.classList.add('hosp-fold');
+      if (gen && gen.wrapEl) gen.wrapEl.classList.add('hosp-fold');
+    }
+    const specN = r && r.spec && typeof r.spec.size === 'number' ? r.spec.size : 0;
+    const genN = r && r.gen && typeof r.gen.size === 'number' ? r.gen.size : 0;
+    if (specN){
+      b.textContent = 'Є критерії ургентної госпіталізації (' + specN + ')';
+      b.className = 'hosp-ind bad';
+    } else if (genN){
+      b.textContent = 'Є загальні критерії (' + genN + ')';
+      b.className = 'hosp-ind warn';
+    } else {
+      b.textContent = 'Критеріїв за введеними даними не знайдено';
+      b.className = 'hosp-ind grey';
+    }
+  }
+  if (typeof autoRules === 'function'){
+    const orig = autoRules;
+    autoRules = function(){
+      const r = orig.apply(this, arguments);
+      try { paint(r); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
+      return r;
+    };
+    try { autoRules(); } catch(e){ if (typeof poErr === 'function') poErr(e, KEY); }
+  }
+})();
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
