@@ -2564,3 +2564,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   body.v2-resizing,body.v2-resizing *{cursor:ew-resize!important;user-select:none!important}
   body.v2-resizing .wrap{transition:none!important}
 }
+/* 0.9.3.118 · «+ ще» біля полів з одним вибором (704-sel-also.js) */
+.also-btn{align-self:flex-start;margin-top:6px;font-size:var(--fs-2)}
+.also-box{margin-top:6px;gap:6px}
+.also-box .chip{font-size:var(--fs-2)}

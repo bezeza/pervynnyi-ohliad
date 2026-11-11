@@ -2611,6 +2611,10 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
   body.v2-resizing,body.v2-resizing *{cursor:ew-resize!important;user-select:none!important}
   body.v2-resizing .wrap{transition:none!important}
 }
+/* 0.9.3.118 · «+ ще» біля полів з одним вибором (704-sel-also.js) */
+.also-btn{align-self:flex-start;margin-top:6px;font-size:var(--fs-2)}
+.also-box{margin-top:6px;gap:6px}
+.also-box .chip{font-size:var(--fs-2)}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2621,7 +2625,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.117 від 11.11.2026">v0.9.3.117 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.118 від 11.11.2026">v0.9.3.118 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4810,8 +4814,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.117', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.118', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.118', '11.11.2026', 'об’єктивний огляд: «+ ще» — кілька знахідок в одному полі там, де їх буває кілька: хрипи, дихання, перкусія, ритм, шуми, тони серця, висипання, лімфовузли, вени, болючість живота, сечовипускання, колір сечі. Наприклад, «сухі розсіяні свистячі хрипи, вологі дрібнопухирчасті хрипи в нижніх відділах справа». Основний вибір працює як раніше (бланк 003/о, щоденник, критерії); вибір норми знімає додаткові; збережені пацієнти не зачеплені'],
   ['0.9.3.117', '11.11.2026', 'новий шаблон «За хворобою» (неврологічні): «Вестибулярний нейроніт» (H81.2) — скарги (системне постійне запаморочення, нудота, блювання, хиткість), горизонтальний ністагм, хиткість у позі Ромберга, вибір сторони; схема: короткочасно метоклопрамід і дименгідринат (до 3 днів), рідина при блюванні, рання активізація й вестибулярна гімнастика; варіант із метилпреднізолоном. Підказка HINTS — як не пропустити інсульт'],
   ['0.9.3.116', '10.11.2026', 'менше гортання: розділи огляду тепер показуються по одному (раніше весь огляд — однією сторінкою, ~20 екранів). Унизу — «‹ попередній» і «Далі ›», клавіші Alt+↓ / Alt+↑; бічне меню — як і раніше. Повернути «однією сторінкою» — «Вигляд» → «Розділи» (або «Налаштування» → «Розділи форми»); хто вже обрав це в налаштуваннях, у того без змін'],
   ['0.9.3.115', '10.11.2026', 'нові шаблони «За хворобою» (терапевтичні): «Синдром відміни алкоголю» (F10.3) і «Алкогольний делірій» (F10.4) — скарги, огляд, діагноз, план обстеження й стартова схема лікування за Стандартом МОЗ «Психічні та поведінкові розлади внаслідок вживання алкоголю» (наказ від 16.12.2025 № 1897): діазепам за навантажувальною схемою зі зниженням, тіамін до глюкози, рідина, магній; варіант для літніх і при ураженні печінки — лоразепам; підказки CIWA-Ar і коли переводити. Нові скарги: тремтіння рук і тіла, тривога, дратівливість. У «Призначення» → «Набори» (терапія) — «Дезінтоксикаційна терапія» до будь-якої хвороби'],
@@ -23144,6 +23149,59 @@ document.addEventListener('keydown', e=>{
   e.preventDefault(); show(n);
 });
 try{ renderViewCtl(); }catch(e){}
+/* ===== 0.9.3.118 · «+ ще»: кілька знахідок в одному полі об’єктивного огляду (зауваження лікаря 11.11.2026) =====
+   Поле лишається з одним основним вибором (його читають бланк 003/о, щоденник, анестезіолог, критерії, шаблони),
+   а «+ ще» додає другий і далі варіанти. Додаткові — у прихованому полі <id>_x («3,5»): зберігаються й відновлюються
+   звичайним шляхом (170-patients-db), у текст ідуть через val() — «сухі розсіяні хрипи, вологі … справа».
+   Норма в основному виборі («хрипи не вислуховуються») знімає додаткові. Очищення й шаблон хвороби — теж. */
+const ALSO_KEYS = ['dyh.hr', 'dyh.ausk', 'dyh.perk', 'ssc.rytm', 'ssc.shum', 'ssc.tony', 'shk.vys', 'shk.lv', 'shk.vena', 'trav.zhyv', 'sech.sv', 'sech.secha'];
+function alsoGet(f){ return f.alsoInp ? f.alsoInp.value.split(',').filter(x=>x !== '').map(Number).filter(i=>i >= 0 && i < f.opts.length) : []; }
+function alsoSet(f, list){ if (f.alsoInp) f.alsoInp.value = [...new Set(list)].join(','); }
+/* «м’який, болючий у правому підребер’ї» після «м’який, болючий в епігастрії» → «болючий у правому підребер’ї»;
+   «Сеча каламутна» після «Сеча темна» → «каламутна»; з малої літери посеред речення (крім абревіатур) */
+function alsoText(prim, t){
+  const p1 = prim.split(', ')[0], t1 = t.split(', ');
+  if (t1.length > 1 && t1[0].toLowerCase() === p1.toLowerCase()) t = t1.slice(1).join(', ');
+  else { const pw = prim.split(' ')[0], tw = t.split(' '); if (tw.length > 1 && tw[0].toLowerCase() === pw.toLowerCase() && pw.length > 3) t = tw.slice(1).join(' '); }
+  return /^[A-ZА-ЯІЇЄҐ]{2}/.test(t) ? t : t.charAt(0).toLowerCase() + t.slice(1);
+}
+{ const v0 = val; val = function(f, any){
+  const r = v0.apply(this, arguments);
+  if (!f || !f.alsoInp || f.type !== 'sel' || !r || f.el.value === '') return r;
+  const prim = +f.el.value; if (f.norm !== undefined && prim === f.norm) return r;
+  const ex = alsoGet(f).filter(i=>i !== prim && i !== f.norm); if (!ex.length) return r;
+  return [r, ...ex.map(i=>alsoText(r, OT(f, f.opts[i])))].join(', ');
+}; }
+function alsoRender(f){
+  const prim = f.el.value === '' ? -1 : +f.el.value, isNorm = f.norm !== undefined && prim === f.norm;
+  let ex = alsoGet(f);
+  if (isNorm && ex.length){ ex = []; alsoSet(f, ex); }
+  const fx = ex.filter(i=>i !== prim); if (fx.length !== ex.length){ ex = fx; alsoSet(f, ex); }
+  f.alsoBtn.hidden = prim < 0 || isNorm;
+  f.alsoBtn.textContent = ex.length ? '+ ще (' + ex.length + ')' : '+ ще';
+  f.alsoBtn.setAttribute('aria-expanded', f.alsoOpen ? 'true' : 'false');
+  f.alsoBox.hidden = !f.alsoOpen || f.alsoBtn.hidden;
+  if (f.alsoBox.hidden) return;
+  f.alsoBox.textContent = '';
+  f.opts.forEach((o, i)=>{ if (i === prim || i === f.norm) return;
+    const on = ex.includes(i);
+    f.alsoBox.append(h('button', {type:'button', class:'chip', 'aria-pressed':on ? 'true' : 'false', onclick:()=>{
+      const cur = alsoGet(f); alsoSet(f, on ? cur.filter(x=>x !== i) : cur.concat([i])); alsoRender(f); update(); }}, O(o).l)); });
+}
+function alsoSync(){ ALSO_KEYS.forEach(k=>{ try{ const f = F(k); if (f && f.alsoBtn) alsoRender(f); }catch(e){} }); }
+function alsoClear(){ ALSO_KEYS.forEach(k=>{ try{ const f = F(k); if (f && f.alsoInp){ f.alsoInp.value = ''; f.alsoOpen = false; } }catch(e){} }); }
+ALSO_KEYS.forEach(k=>{ try{
+  const f = F(k); if (!f || f.type !== 'sel' || !f.wrapEl || f.alsoInp) return;
+  f.alsoInp = h('input', {type:'hidden', id:f.el.id + '_x', value:''});
+  f.alsoBtn = h('button', {type:'button', class:'more also-btn', title:'Додати ще одну знахідку до цього поля', onclick:()=>{ f.alsoOpen = !f.alsoOpen; alsoRender(f); }}, '+ ще');
+  f.alsoBox = h('div', {class:'chips also-box', role:'group', 'aria-label':f.label + ': ще знахідки'});
+  f.wrapEl.append(f.alsoInp, f.alsoBtn, f.alsoBox);
+  f.el.addEventListener('change', ()=>alsoRender(f));
+  alsoRender(f);
+}catch(e){ poErr(e, '«+ ще»: ' + k); } });
+{ const c0 = clearAll; clearAll = function(){ alsoClear(); return c0.apply(this, arguments); }; }
+{ const a0 = applyPreset; applyPreset = function(){ alsoClear(); return a0.apply(this, arguments); }; }
+onUpdate('704-sel-also', alsoSync);
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
