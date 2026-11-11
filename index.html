@@ -2665,7 +2665,7 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.123 від 11.11.2026">v0.9.3.123 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.124 від 11.11.2026">v0.9.3.124 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4854,8 +4854,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.123', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.124', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.124', '11.11.2026', 'направлення — у вкладці «Пацієнт і лікар», одразу після «Місця роботи», як на титулі карти стаціонарного хворого (п. 9 «Ким направлений»): як госпіталізовано, лікар, заклад, код ЄДРПОУ, № електронного направлення. Раніше ці поля були в «Анамнезі хвороби». У тексті огляду фраза про направлення лишається в анамнезі хвороби, бланки 003/о, 066/о й h24 — без змін; збережені пацієнти не зачеплені'],
   ['0.9.3.123', '11.11.2026', 'NEWS2: якщо в калькуляторі свідомість не вибрано, вона береться з огляду (ясна — 0 балів; оглушення, сопор, кома — 3, як у шкалі), тож бейдж «NEWS2 · N» біля показників тепер рахується одразу, а не показує «—». Ручний вибір у калькуляторі має перевагу. Бейдж — у кольорах теми (і в темних)'],
   ['0.9.3.122', '11.11.2026', '«Мої фрази»: короткі фрази лікаря (назва і текст) вставляються в поточне поле або в курсор тексту з меню «⋯» чи клавішами Alt+Shift+1…9. Зберігаються окремо в цьому браузері, є експорт і імпорт JSON. Дані пацієнта туди не потрапляють.'],
   ['0.9.3.121', '11.11.2026', 'індикатор госпіталізації: над списком критеріїв один рядок — червоний «Є критерії ургентної госпіталізації (N)», жовтий «Є загальні критерії (N)» або сірий «Критеріїв за введеними даними не знайдено». Клік розгортає критерії. Рекомендацій немає — рішення за лікарем. У текст документа не додає.'],
@@ -23312,6 +23313,23 @@ function tnFloatSet(on){ TN.float = !!on; try{ localStorage.setItem('po.txtfloat
       h('button', {type:'button', 'aria-pressed':TN.float === on ? 'true' : 'false', title:t, onclick:()=>tnFloatSet(on)}, l))))); }catch(e){ poErr(e, 'текст: меню «Вигляд»'); }
   return box; }; }
 tnFloatApply(); try{ renderViewCtl(); }catch(e){}
+/* ===== 0.9.3.124 · направлення — у вкладці «Пацієнт і лікар» (лікар 11.11.2026) =====
+   «Як на карті стаціонарного хворого»: на титулі 003/о п. 9 «Ким направлений» іде одразу після п. 8 «Місце роботи».
+   Тому поля «Госпіталізація», «Який лікар направив», «З якого закладу», «Код закладу за ЄДРПОУ», «№ електронного направлення»
+   переносяться з «Анамнезу хвороби» в «Пацієнт і лікар» під «Місце роботи» (лише стаціонар).
+   Це ті самі поля (morbi.*): ідентифікатори, збереження, текст (фраза в «Анамнезі хвороби»), бланки 003/о, 066/о, h24 — без змін. */
+{
+  const KEYS = ['hosp', 'hospd', 'hospz', 'hospe', 'hospn'];
+  const work = document.getElementById('meta_work'), at = work && work.closest('.f');
+  const fs = KEYS.map(k=>F('morbi.' + k)).filter(f=>f && f.wrapEl);
+  if (at && fs.length === KEYS.length){
+    const hd = h('h3', {class:'sub f wide ref-h', 'data-only':'hosp'}, 'Направлення (п. 9 ф. 003/о)');
+    let after = at; [hd, ...fs.map(f=>f.wrapEl)].forEach(el=>{ after.after(el); after = el; });
+    fs.forEach(f=>f.wrapEl.classList.add('ref-f'));
+    onUpdate('706-referral', ()=>{ hd.hidden = MODE !== 'hosp'; });
+    hd.hidden = MODE !== 'hosp';
+  }
+}
 /* ===== 0.9.3.120 · NEWS2 біля показників огляду (задача 19) =====
    Малий бейдж «NEWS2 · N» поруч із рядком «Показники одним рядком»
    (не в картці «У тексті огляду» з 705-text-near.js).

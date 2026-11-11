@@ -1806,6 +1806,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     svid.el.value='2'; update(); const sopor=b().textContent+' '+b().className; c.sels.avpu.value='0'; update(); const manual=b().textContent;
     c.sels.avpu.value=''; clearAll(true); update(); return JSON.stringify([noSvid,clear,sopor,manual]); })()`);
   ok('NEWS2 (0.9.3.123): свідомість з огляду — без вибору «—», ясна 0, сопор +3 (рівень — як у калькуляторі), ручний вибір у калькуляторі має перевагу', r==='["NEWS2 · —","NEWS2 · 0","NEWS2 · 3 news2-badge warn","NEWS2 · 0"]', r); }
+{ const r=w.eval(`(()=>{ const meta=TABS.find(t=>t.id==='meta'), work=document.getElementById('meta_work').closest('.f');
+    const ks=['hosp','hospd','hospz','hospe','hospn'], inMeta=ks.every(k=>meta.panel.contains(F('morbi.'+k).wrapEl));
+    const next=work.nextElementSibling; return JSON.stringify([inMeta, !!next && next.classList.contains('ref-h'), next.nextElementSibling===F('morbi.hosp').wrapEl]); })()`);
+  ok('Направлення у «Пацієнт і лікар» одразу після «Місця роботи» (п. 9 ф. 003/о)', r==='[true,true,true]', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
