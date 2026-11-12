@@ -268,6 +268,14 @@ function generate(){
   RXT.tab.classList.toggle('filled', RX.length > 0);
   SECTIONS.forEach(s=>{ if (!ORD_IDS.includes(s.id)) s.tab.classList.remove('filled'); });
   const parts = (DOC === 'epi' && epi027()) ? epi027Parts() : (DOC === 'epi' && epi003()) ? epi003Parts() : (DOC === 'kons' && F110) ? kons028Parts() : ORD_IDS.map(id=>{ if (id === 'RX'){ const r = rxPart(); if (r) r.sid = 'rxt'; return r; } const s = SECTIONS.find(x=>x.id===id); const p = sectionText(s); s.tab.classList.toggle('filled', !!p); if (p){ p.title = s.title; p.sid = id; } return p; }).filter(Boolean);
+  if (DOC === 'ohl'){
+    const obj = ['zah','shk','dyh','ssc','trav','sech','nevr'];
+    if (!parts.some(p=>p.sid === 'zah')){
+      const first = parts.find(p=>obj.includes(p.sid) && !p.head);
+      const zah = SECTIONS.find(x=>x.id === 'zah');
+      if (first && zah) first.head = (F110 && MODE === 'hosp' && zah.head110) || zah.head || '';
+    }
+  }
   LASTPARTS = parts;
   const M = metaLines();
   let plain = parts.map(p=>(p.head ? p.head + p.sep : '') + p.body).join('\n');

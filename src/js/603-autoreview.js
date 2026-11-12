@@ -43,7 +43,7 @@ const OBJ_OHL = () => SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id) && 
 { const ap = applyPreset; applyPreset = function(p){ const rx0 = RX.length; const r = ap.apply(this, arguments);
     try{ markAuto(['skarhy', 'morbi', 'dx', ...OBJ_OHL()], 'заготовка «' + (p && p.name || '') + '»'); if (RX.length && RX_AUTO && rxSig() === RX_AUTO) markAuto(['rxt'], 'схема хвороби «' + (p && p.name || '') + '»'); }catch(e){}
     return r; }; }
-{ const n = $('#allNorm'), o = n.onclick; n.onclick = function(){ const r = o.apply(this, arguments); try{ markAuto(SECTIONS.filter(s=>s.objective && s.docs.includes(DOC)).map(s=>s.id), DOC === 'shch' ? '«Стабільно»' : '«Норма всюди»'); }catch(e){} return r; }; }
+{ const n = $('#allNorm'), o = n.onclick; n.onclick = function(){ const r = o.apply(this, arguments); try{ markAuto(SECTIONS.filter(s=>(s.objective || s.id === 'vitae') && s.docs.includes(DOC)).map(s=>s.id), DOC === 'shch' ? '«Стабільно»' : '«Норма всюди»'); }catch(e){} return r; }; }
 { const ps = SHELL.presetSection; SHELL.presetSection = function(s){ const r = ps.apply(this, arguments); try{ const p = PRESETS.find(x=>x.key === curKey); markAuto([s.id], 'за шаблоном «' + (p ? p.name : '') + '»'); }catch(e){} return r; }; }
 { const w = (name, src) => { const f0 = eval(name); return function(){ const r = f0.apply(this, arguments); try{ markAuto(DSEC, typeof src === 'function' ? src.apply(null, arguments) : src); }catch(e){} return r; }; };
   diaryFromExam = w('diaryFromExam', k=>'щоденник «' + dtplName(k) + '»' + (examOwn() ? ' з первинного огляду' : ' за шаблоном хвороби'));
@@ -116,7 +116,7 @@ function fillAsk(title, all, keep, run){
       if (protect){ saved.forEach(([s, d])=>secLoad(s, d)); const o = arevGet(); keep.forEach(s=>delete o[s.id]); arevSet(o); drawAuto(); update(); toast('Заповнено порожні розділи; ваші дані лишились: ' + keep.map(s=>s.short || s.title).join(', '), 4000); }
     }); }; }
 { const n = $('#allNorm'), o = n.onclick; n.onclick = function(){
-    const all = SECTIONS.filter(s=>s.objective && s.docs.includes(DOC)), keep = AGATE ? userSecs(all.map(s=>s.id)) : [], self = this, args = arguments;
+    const all = SECTIONS.filter(s=>(s.objective || s.id === 'vitae') && s.docs.includes(DOC)), keep = AGATE ? userSecs(all.map(s=>s.id)) : [], self = this, args = arguments;
     if (!keep.length) return o.apply(self, args);
     fillAsk(DOC === 'shch' ? '«Стабільно» у щоденнику?' : '«Норма всюди»?', all, keep, protect=>{
       const saved = protect ? keep.map(s=>[s, secSave(s)]) : [];

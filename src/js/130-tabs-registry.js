@@ -134,16 +134,14 @@ function anPreset(p){
   if (!tr){
     autoSet(F('morbi.dur'), a && a[0] ? [a[0], a[1]] : null);
     autoSet(F('morbi.onset'), a ? a[2] : -1);
-    autoSet(F('morbi.prych'), a ? a[3] : []);
+    autoSet(F('morbi.prych'), []);
     autoSet(F('morbi.hron'), a ? a[4] : -1);
-    autoSet(F('morbi.likuv'), a ? a[5] : -1);
+    autoSet(F('morbi.likuv'), -1);
     autoSet(F('morbi.ax'), a && a[6] ? a[6] : '');
   }
-  autoSet(F('morbi.hosp'), p.hospHow != null ? p.hospHow : (p.key && ANH_EMD.includes(p.key) ? 2 : p.hosp === 'p' ? 3 : 0));
-  autoSet(F('morbi.zvern'), 0);
+  autoSet(F('morbi.hosp'), -1);
+  autoSet(F('morbi.zvern'), -1);
   if (!(p.skarhy || []).length) autoSet(F('skarhy.none'), 2); else autoSet(F('skarhy.none'), -1);
-  // анамнез життя — типові «не обтяжено», лише в порожні поля
-  SECTIONS.find(x=>x.id === 'vitae').fields.forEach(f=>{ if (f.type === 'sel' && f.norm !== undefined && f.el.value === ''){ f.el.value = f.norm; mark(f.el, f); } });
   { const t = F('vitae.tet'); if (tr && t && t.el.value === '') autoSet(t, 3); }
 }
 /* план: жінкам 15–50 р. з болем у животі — тест на вагітність (і гінеколог при болю внизу живота); консультацію фаху самого лікаря не призначаємо */
@@ -189,17 +187,10 @@ function guardNeuro(p){
   }
   if ((p && p.key === 'tia') || consciousnessImpaired() || positionBlocksNeuro() || postictalComplaints()) clearSelNorms('nevr');
 }
-function nevrShort(p){
-  if (!['hir','fam'].includes(p.group) || Object.keys(p.set || {}).some(k=>k.startsWith('nevr.'))) return;
-  const s = SECTIONS.find(x=>x.id === 'nevr'), b = s.fields.find(f=>f.bo); if (!b) return;
-  s.fields.forEach(f=>{ if (f.type === 'sel' && !f.bo && f.norm !== undefined){ f.el.value = ''; mark(f.el, f); } });
-  const i = b.opts.findIndex(o=>/Вогнищевої/.test(O(o).t)); b.el.value = i >= 0 ? i : 0; mark(b.el, b);
-}
 function applyPreset(p0, btn){
   const p = sidePreset(p0); dxPanel.sel = null; dxPanel.key = undefined;
-  SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id)).forEach(p0.noNorm ? clearExam : applyNorm);   // noNorm — не вписувати норму огляду, якого не було; щоденник не чіпаємо
+  SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id)).forEach(clearExam);   // норму огляду, якого не було, не вписувати; «= Норма =» і «Норма всюди» лишаються
   { const L = SECTIONS.find(x=>x.id === 'loc'); if (L) clearSection(L); }
-  nevrShort(p0);
   pick(F('skarhy.c'), p.skarhy); detPick(F('skarhy.c'), p.det);
   for (const k in p.set){
     const f = F(k);

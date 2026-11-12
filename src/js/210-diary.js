@@ -31,41 +31,61 @@ const dtplName = k => MODE === 'amb' && k === 2 ? 'Одужання, завер�
 function setByText(key, text){ const f = F(key); const i = f.opts.findIndex(o=>O(o).t === text); if (i >= 0){ f.el.value = i; mark(f.el, f); return true; } return false; }
 function diaryReset(){
   DSEC.forEach(id=>SECTIONS.find(x=>x.id===id).fields.forEach(f=>{
-    if (f.type === 'sel'){ f.el.value = f.norm !== undefined ? f.norm : ''; mark(f.el, f); }
+    if (f.type === 'sel'){ f.el.value = ''; mark(f.el, f); }
     if (f.type === 'text') f.el.value = '';
   }));
 }
-/* джерело даних: первинний огляд; чого в ньому немає — з еталонного шаблону хвороби (curKey) */
+/* джерело — лише те, що вписано в первинний огляд; порожнє поле не замінюється нормою */
 function examOwn(){ return ['zah','shk','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')) || !!val(F('skarhy.c'), true); }
 function diaryFromExam(k){
   const P0 = curKey ? PRESETS.find(x=>x.key === curKey) : null, P = P0 ? sidePreset(P0) : null, fromExam = examOwn();
   const pv = key => { if (!P) return ''; if (key === 'skarhy.c') return (P.skarhy || []).join(', '); const v = (P.set || {})[key]; return v === undefined ? '' : Array.isArray(v) ? v.join(', ') : String(v); };
-  const own = key => { const f = F(key); return f.type === 'sel' ? f.el.value !== '' : !!val(f, true); };
-  const T = key => own(key) ? val(F(key), true) : pv(key);
-  const ix = key => { const f = F(key); if (f.el.value !== '') return +f.el.value; const t = pv(key); return t && f.opts ? f.opts.findIndex(o=>O(o).t === t) : -1; };
-  const abn = key => { const f = F(key); if (f.norm === undefined) return false; const i = ix(key); return i >= 0 && i !== f.norm; };
+  const entered = key => { const f = F(key); if (!f) return false; return f.type === 'sel' ? f.el.value !== '' : !!val(f, true); };
+  const known = key => entered(key) || !!pv(key);
+  const T = key => entered(key) ? val(F(key), true) : pv(key);
+  const ix = key => { const f = F(key); if (!f) return -1; if (entered(key) && f.type === 'sel') return +f.el.value; const t = pv(key); return t && f.opts ? f.opts.findIndex(o=>O(o).t === t) : -1; };
+  const abn = key => { const f = F(key); if (!f || f.norm === undefined) return false; const i = ix(key); return i >= 0 && i !== f.norm; };
   diaryReset();
   setByText('d_main.dyn', ['Стан без суттєвої динаміки','Стан з позитивною динамікою','Стан покращився','Стан погіршився'][k]);
-  let st = Math.min(Math.max(ix('zah.stan'), 0), 2);
-  if (k === 1 && st === 2) st = 1; if (k === 2) st = 0; if (k === 3) st = Math.min(st + 1, 2);
-  setByText('d_main.stan', ['задовільний','середньої тяжкості','тяжкий'][st]);
+  if (known('zah.stan') && ix('zah.stan') >= 0){
+    let st = Math.min(ix('zah.stan'), 2);
+    if (k === 1 && st === 2) st = 1; if (k === 2) st = 0; if (k === 3) st = Math.min(st + 1, 2);
+    setByText('d_main.stan', ['задовільний','середньої тяжкості','тяжкий'][st]);
+  }
+  if (known('zah.svid')) setByText('d_main.svid', T('zah.svid'));
   const sk = T('skarhy.c');
-  setByText('d_main.sk', sk ? ['Скарги ті самі','Скарги зменшились','Скарг активно не пред’являє','Скарги посилились'][k] : 'Скарг активно не пред’являє');
-  if (sk && (k === 0 || k === 3)) F('d_main.skx').el.value = 'на ' + sk;
-  if (sk && k === 1) F('d_main.zal').el.value = sk;   // приберіть ті, що минули
-  const kol = T('shk.kol');
-  setByText('d_obj.shk', /іктеричн/.test(kol) && k !== 2 ? 'Шкірні покриви іктеричні' : /ціаноз|ціанотичн/.test(kol) && k !== 2 ? 'Акроціаноз' : /бліді/.test(kol) && k !== 2 ? 'Шкірні покриви бліді' : 'Шкірні покриви звичайного кольору');
-  const hr = T('dyh.hr'), wet = /вологі|крепітація/.test(hr), dry = /сухі/.test(hr);
-  setByText('d_obj.dyh', k === 2 ? 'дихання везикулярне, хрипи не вислуховуються' : wet ? (k === 1 ? 'кількість хрипів зменшилась' : 'дихання ослаблене в нижніх відділах, вологі хрипи')
-    : dry ? (k === 1 ? 'дихання жорстке, хрипів немає' : 'дихання жорстке, поодинокі сухі хрипи') : /жорстке/.test(T('dyh.ausk')) ? 'дихання жорстке, хрипів немає' : 'дихання везикулярне, хрипи не вислуховуються');
-  const af = /неправильний/.test(T('ssc.rytm')) || /аритмічний/.test(T('ssc.psch'));
-  setByText('d_obj.serce', af ? 'приглушені, ритм неправильний' : /приглушені|глухі/.test(T('ssc.tony')) ? 'приглушені, ритм правильний' : 'ясні, ритм правильний');
-  const zh = T('trav.zhyv'), painful = !!zh && !/неболючий/.test(zh);
-  setByText('d_obj.zhyv', !painful || k === 2 ? 'м’який, неболючий' : k === 1 ? 'м’який, болючість зменшилась' : k === 3 ? 'болючість при пальпації посилилась'
-    : /^м’який, болючий в епігастрії/.test(zh) ? 'м’який, помірно болючий в епігастрії' : 'м’який, болючість при пальпації зберігається');
-  setByText('d_obj.nab', !abn('shk.nab') || k === 2 ? 'Набряків немає' : ['Набряки без динаміки','Набряки зменшились','','Набряки наростають'][k]);
+  if (sk){
+    setByText('d_main.sk', ['Скарги ті самі','Скарги зменшились','Скарг активно не пред’являє','Скарги посилились'][k]);
+    if (k === 0 || k === 3) F('d_main.skx').el.value = 'на ' + sk;
+    if (k === 1) F('d_main.zal').el.value = sk;
+  }
+  if (known('shk.kol')){
+    const kol = T('shk.kol');
+    setByText('d_obj.shk', /іктеричн/.test(kol) && k !== 2 ? 'Шкірні покриви іктеричні' : /ціаноз|ціанотичн/.test(kol) && k !== 2 ? 'Акроціаноз' : /бліді/.test(kol) && k !== 2 ? 'Шкірні покриви бліді' : 'Шкірні покриви звичайного кольору');
+  }
+  if (known('dyh.hr') || known('dyh.ausk')){
+    const hr = T('dyh.hr'), wet = /вологі|крепітація/.test(hr), dry = /сухі/.test(hr), ausk = T('dyh.ausk');
+    const lung = k === 2 ? 'дихання везикулярне, хрипи не вислуховуються'
+      : wet ? (k === 1 ? 'кількість хрипів зменшилась' : 'дихання ослаблене в нижніх відділах, вологі хрипи')
+      : dry ? (k === 1 ? 'дихання жорстке, хрипів немає' : 'дихання жорстке, поодинокі сухі хрипи')
+      : /жорстке/.test(ausk) ? 'дихання жорстке, хрипів немає'
+      : /ослаблен/.test(ausk) ? '' : 'дихання везикулярне, хрипи не вислуховуються';
+    if (lung) setByText('d_obj.dyh', lung);
+  }
+  if (known('ssc.rytm') || known('ssc.psch') || known('ssc.tony')){
+    const af = /неправильний/.test(T('ssc.rytm')) || /аритмічний/.test(T('ssc.psch'));
+    const tony = T('ssc.tony');
+    const heart = af ? 'приглушені, ритм неправильний' : /приглушені|глухі/.test(tony) ? 'приглушені, ритм правильний' : tony ? 'ясні, ритм правильний' : '';
+    if (heart) setByText('d_obj.serce', heart);
+  }
+  if (known('trav.zhyv')){
+    const zh = T('trav.zhyv'), painful = !/неболючий/.test(zh);
+    setByText('d_obj.zhyv', !painful || k === 2 ? 'м’який, неболючий' : k === 1 ? 'м’який, болючість зменшилась' : k === 3 ? 'болючість при пальпації посилилась'
+      : /^м’який, болючий в епігастрії/.test(zh) ? 'м’який, помірно болючий в епігастрії' : 'м’який, болючість при пальпації зберігається');
+  }
+  if (known('shk.nab')) setByText('d_obj.nab', !abn('shk.nab') || k === 2 ? 'Набряків немає' : ['Набряки без динаміки','Набряки зменшились','','Набряки наростають'][k]);
   if (['nevr.par','nevr.mova','nevr.obl','nevr.chut'].some(abn)) setByText('d_obj.nevr', ['Неврологічний статус без динаміки','Вогнищева симптоматика регресує','Вогнищева симптоматика регресує','Наростання вогнищевої симптоматики'][k]);
-  if (/Рідкі/.test(T('trav.vyp')) && (k === 0 || k === 3)) setByText('d_obj.fiz', 'Рідкі випорожнення');
+  if (known('trav.vyp') && /Рідкі/.test(T('trav.vyp')) && (k === 0 || k === 3)) setByText('d_obj.fiz', 'Рідкі випорожнення');
   if (MODE === 'amb') setByText('d_lik.plan', k === 2 ? 'Лікування завершено, подальше спостереження сімейного лікаря' : k === 3 ? 'Вирішується питання про госпіталізацію' : 'Повторний огляд через … днів');
   else setByText('d_lik.plan', k === 2 ? 'Планується виписка ….' : k === 3 ? 'Консультація … призначена' : 'Продовжує лікування за планом');
   if (k === 3) F('d_lik.kor').el.value = '…';
