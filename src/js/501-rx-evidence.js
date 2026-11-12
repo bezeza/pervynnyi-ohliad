@@ -160,6 +160,7 @@ Object.assign(RXLVL, {'mening:Фактори ризику Listeria — дода�
 PRESETS.forEach(p=>{ if (RXS[p.key]) p.rx = RXS[p.key]; if (TIPS[p.key]) p.tips = TIPS[p.key]; });
 
 /* ---------- Стаціонарний лист завжди повний: режим, дієта, моніторинг (для решти хвороб — з наявних даних) ---------- */
+
 function rxFull(rows, key){
   if (MODE !== 'hosp' || !rows || !rows.length) return rows;
   const kinds = rows.map(r=>rxKind({drug:r[0]})), out = rows.slice();
