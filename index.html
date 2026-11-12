@@ -15162,16 +15162,8 @@ function drawAuto(){
     const b = on ? autoBar(s.id) : ABARS[s.id];
     if (b){ b.hidden = !on; if (on) b.querySelector('.ab-t').textContent = `Заповнено автоматично (${o[s.id]}) — ви ще не переглянули. Перевірте, змініть те, що інакше, і підтвердьте.`; } });
 }
-/* лікар сам щось змінив у розділі — розділ переглянуто */
-['input', 'change', 'click'].forEach(ev=>document.addEventListener(ev, e=>{
-  if (!e.isTrusted) return; const t = e.target; if (!t.closest) return;
-  if (t.closest('.autobar, .ph, .pencil, .tplsec, .nextbar, .qbox, .cmdk')) return;
-  if (t.closest('input[type="search"]')) return;
-  const p = t.closest('.panel'); if (!p) return;
-  const s = [...SECTIONS, RXT].find(x=>x.panel === p); if (!s) return;
-  if (ev === 'click' && !t.closest('.chip')) return;
-  if (s.id in arevGet()) unmarkAuto(s.id);
-}, true));
+/* Автозаповнення знімається лише явним підтвердженням «✓ Переглянуто».
+   Зміна одного поля або випадковий клік не доводять, що весь розділ перевірено. */
 /* хто заповнює автоматично */
 const OBJ_OHL = () => SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id) && (s.docs || ['ohl']).includes('ohl')).map(s=>s.id);
 { const ap = applyPreset; applyPreset = function(p){ const rx0 = RX.length; const r = ap.apply(this, arguments);
@@ -15188,24 +15180,24 @@ const OBJ_OHL = () => SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id) && 
     try{ const o = arevGet(); autoForDoc().forEach(id=>L.unshift({m:`«${secTitle(id)}» заповнено автоматично (${o[id]}) — не переглянуто`, tab:id})); }catch(e){}
     return L; }; }
 /* перед друком, копіюванням і збереженням у файл — попередження */
-let AGATE_OK = false;
 function vitalsGap(){
   if (DOC !== 'ohl' && DOC !== 'shch') return '';
   const ids = DOC === 'shch' ? [['d_obj_t_0','t°'],['d_obj_chd_0','ЧД'],['d_obj_chd_1','SpO2'],['d_obj_ad_0','АТ'],['d_obj_chss_0','ЧСС']] : [['zah_temp_0','t°'],['dyh_chd_0','ЧД'],['dyh_chd_1','SpO2'],['ssc_ad_0','АТ'],['ssc_chss_0','ЧСС']];
   const miss = ids.filter(([id])=>{ const e = document.getElementById(id); return !e || !String(e.value || '').trim(); }).map(([, n])=>n);
   return miss.length >= 3 ? 'Не вписано показники: ' + miss.join(', ') + '.' : '';
 }
-function autoGate(go){
-  const L = autoForDoc(); if (!AGATE || AGATE_OK || !L.length){ return true; }
+function autoGate(){
+  const L = autoForDoc(); if (!AGATE || !L.length){ return true; }
   const o = arevGet(), gap = vitalsGap();
   const dlg = h('div', {class:'navsheet packsheet agate', role:'dialog', 'aria-modal':'true', 'aria-label':'Непереглянуте автозаповнення'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, `Не переглянуто: ${L.length} ${plural(L.length, ['розділ','розділи','розділів'])}`), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
-      h('p', {}, 'Ці розділи заповнила програма, і ви їх ще не перевіряли. У документ піде текст огляду, якого, можливо, не було:'),
+      h('p', {}, 'Ці розділи заповнила програма. Перед формуванням документа перевірте кожен із них за фактичним оглядом пацієнта.'),
+      h('p', {}, 'У кожному розділі натисніть «✓ Переглянуто» лише після перевірки всіх внесених даних. Зміна одного поля сама по собі не знімає попередження.'),
       gap ? h('p', {class:'chips-hint'}, gap) : '',
       h('ul', {class:'aglist'}, ...L.map(id=>h('li', {}, h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); goTab(id); }}, secTitle(id)), ' — ' + o[id]))),
       h('div', {class:'acts2', style:'margin-top:12px'},
-        h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); goTab(L[0]); }}, 'Переглянути'),
-        h('button', {type:'button', class:'btn', onclick:()=>{ dlg.remove(); const o2 = arevGet(); L.forEach(id=>delete o2[id]); arevSet(o2); drawAuto(); autosave(); logAct && logAct('Підтверджено автозаповнене без перегляду', L.length + ' розділів'); AGATE_OK = true; try{ go(); } finally { AGATE_OK = false; } }}, 'Я перевірив — продовжити'))));
+        h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); goTab(L[0]); }}, 'Переглянути перший розділ'),
+        h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити'))));
   document.body.append(dlg); dlg.querySelector('.btn.primary').focus();
   return false;
 }
@@ -15266,8 +15258,8 @@ function fillAsk(title, all, keep, run){
     }); }; }
 /* налаштування */
 if (SETTINGS_EL){ const c = h('input', {type:'checkbox', id:'set_autogate'}); c.checked = AGATE; c.addEventListener('change', ()=>{ AGATE = c.checked; lsSet('po.autogate', AGATE ? '1' : '0'); });
-  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Безпечне автозаповнення'), h('label', {class:'blk'}, c, ' Попереджати перед друком і копіюванням про непереглянуте та питати перед перезаписом ваших даних'),
-    h('p', {class:'chips-hint'}, 'Розділи, заповнені заготовкою, «Нормою всюди» чи шаблоном щоденника, позначено «не переглянуто», доки ви не зміните щось у розділі або не натиснете «✓ Переглянуто».')); }
+  SETTINGS_EL.append(h('h3', {class:'sub'}, 'Безпечне автозаповнення'), h('label', {class:'blk'}, c, ' Блокувати друк і копіювання до явного підтвердження перевірки автозаповнених розділів; питати перед перезаписом ваших даних'),
+    h('p', {class:'chips-hint'}, 'Розділи, заповнені заготовкою, «Нормою всюди» чи шаблоном щоденника, залишаються позначеними «не переглянуто», доки ви явно не натиснете «✓ Переглянуто» після перевірки всіх даних.')); }
 { const r0 = restore; restore = function(){ const r = r0.apply(this, arguments); try{ drawAuto(); }catch(e){} return r; }; }
 { const ca = clearAll; clearAll = function(){ const r = ca.apply(this, arguments); try{ arevSet({}); drawAuto(); }catch(e){} return r; }; }
 drawAuto();
