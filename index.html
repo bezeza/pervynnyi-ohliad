@@ -2684,7 +2684,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.131 від 11.11.2026">v0.9.3.131 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.132 від 11.11.2026">v0.9.3.132 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4197,9 +4197,12 @@ function h(tag, a = {}, ...kids){
   return e;
 }
 
+const PLAN_ABBR = {'ЗАК':'загальний аналіз крові', 'ЗАС':'загальний аналіз сечі', 'ОВД':'основний варіант стандартної дієти', 'ЛН':'легенева недостатність', 'ЕМД':'екстрена медична допомога'};
+function abbrTitle(t){ const s = String(t || ''), hits = Object.keys(PLAN_ABBR).filter(k=>new RegExp('(?:^|[^А-ЯІЇЄҐA-Z])' + k + '(?:$|[^А-ЯІЇЄҐA-Z])').test(s)); return hits.map(k=>k + ' — ' + PLAN_ABBR[k]).join('. '); }
 function makeChip(f, i){
   const o = f.opts[i];
-  const c = h('button', {type:'button', class:'chip', 'aria-pressed':'false', id:`${f.cid}_${i}`,
+  const tip = abbrTitle(O(o).t || O(o).l);
+  const c = h('button', {type:'button', class:'chip', 'aria-pressed':'false', id:`${f.cid}_${i}`, title: tip || undefined,
     onclick:()=>{ const on = c.getAttribute('aria-pressed') !== 'true';
       c.setAttribute('aria-pressed', on ? 'true' : 'false'); if (on) c.dataset.ord = ++ORD; else delete c.dataset.ord;
       if (c.dataset.auto){ delete c.dataset.auto; if (!on) c.dataset.off = '1'; }
@@ -4209,7 +4212,8 @@ function makeChip(f, i){
 }
 function makeQuick(f, q){
   const t = f.el;
-  const c = h('button', {type:'button', class:'chip q', onclick:()=>{
+  const tip = abbrTitle(q);
+  const c = h('button', {type:'button', class:'chip q', title: tip || undefined, onclick:()=>{
     const ins = g(q), old = t.value.trim();
     const start = old ? old.length + 1 : 0;
     t.value = old ? old + (f.sep || '\n') + ins : ins;
@@ -4892,8 +4896,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.131', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.132', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.132', '11.11.2026', 'після вибору хвороби, якщо ПІБ уже є, курсор стає в «Показники одним рядком». Пошук і випадковий клік більше не знімають позначку «не переглянуто» з усього розділу; перед копіюванням, якщо показників майже немає, це написано в тому самому вікні. Довідка більше не обіцяє «решта систем — норма». Клік по пункту в тексті показує «Скасувати» біля тексту. У клавішах є Alt+Shift+1…9 «Мої фрази». На кнопках плану ЗАК, ЗАС, ОВД, ЛН і ЕМД є розшифровка. NEWS2 має шкалу 2 для ХОЗЛ і гіперкапнії (ціль SpO2 88–92%)'],
   ['0.9.3.131', '11.11.2026', 'перемикання документа не переписує дату огляду на «зараз»: щоденник лишається на даті огляду, доки лікар не натисне «Зараз». У проведеному лікуванні епікризу курс довший за один день бере дати з періоду перебування, а не зрізається в один день. Період підставляє дату надходження з огляду. Короткий анамнез епікризу береться з огляду, як і скарги. У рекомендації не потрапляють режим, моніторинг і профілактичний еноксапарин 40 мг як «тривало». З тексту прибрано підказку «(вкладка «Шкали»)»'],
   ['0.9.3.130', '11.11.2026', 'шаблон хвороби більше не вписує огляд, якого не було: норма систем, Ромберг, «нюх збережений», «діурез адекватний» і рядок «вогнищевої симптоматики не виявлено» з’являються лише після «= Норма =», «Б/о» або «Норма всюди». Анамнез життя (заперечення туберкульозу, алергії, виїздів) — теж лише після «Норма». Не підставляються самолікування, електронне направлення, доставка бригадою ЕМД і «пов’язує з…». Щоденник не дописує легені, серце, сон, апетит і «свідомість ясна», якщо в огляді ці поля порожні. Заголовок «Об’єктивний стан» лишається, навіть якщо описано лише частину систем. Прибрано суперечності шаблонів: COVID і «нюх збережений», подагра і «набряків немає», серцева недостатність і «положення активне» при ортопное'],
   ['0.9.3.129', '11.11.2026', 'умовні призначення не йдуть як уже зроблені: кисень «при SpO2…», дексаметазон «лише при кисні», профілактичний еноксапарин «якщо Падуа», рідина «при неможливості пиття» і аспірин при інсульті до КТ та скринінгу ковтання стоять окремо — «За показаннями (не призначено, доки не підтвердите)». COVID-19 за замовчуванням U07.2 (вірус ще не ідентифікований). Критерій реперфузії при інсульті не вмикається без часу початку або NIHSS. Харчова токсикоінфекція з пероральною регідратацією більше не пише «неможливість прийому рідини понад 6 год». Серцева недостатність: бісопролол і раміприл не в базовому листі декомпенсації, а у варіанті «Уже приймав удома». Кровотеча на старті — K92.2, джерело не встановлено. Синдром відміни: у листі лише навантаження діазепамом першого дня, без «CIWA-Ar …» у діагнозі. Рана кисті не друкує порожній розмір «… × … см». У довідник МКХ додано F10.4, H66.0 і H81.2'],
@@ -5288,7 +5293,12 @@ function applyPreset(p0, btn){
   const noBoth = SIDE === 'b' && p0.sides && !p0.both;
   toast(p.warn ? p.warn : 'Заповнено: ' + p.name + (noBoth ? ' — двобічного варіанта немає, заповнено справа' : ''), p.warn ? 5000 : noBoth ? 3500 : 1600);
   if (!mv('pib')){ show(TABS.indexOf(META)); const pi = document.getElementById('meta_pib'); if (pi){ pi.focus({preventScroll:false}); pi.scrollIntoView({block:'center'}); } toast((p.warn ? p.warn + ' · ' : 'Заповнено: ' + p.name + '. ') + 'Впишіть ПІБ пацієнта', p.warn ? 5000 : 2500); }
-  else show(TABS.indexOf(SECTIONS[0]));
+  else {
+    const host = SECTIONS.find(s=>s.id === 'zah') || SECTIONS[0];
+    show(TABS.indexOf(host));
+    const vq = document.getElementById('vq_ohl');
+    if (vq){ vq.focus({preventScroll:false}); }
+  }
 }
 
 function toast(m, ms){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove('on'), ms||1600); }
@@ -5462,7 +5472,7 @@ const CALCS = [
       line:`PESI ${s} б., клас ${cl}; sPESI ${sp1} б. Ризик ранньої смерті при ТЕЛА (ESC 2019) — ${risk}`};
   }},
 { id:'news', title:'NEWS2 (раннє попередження погіршення)', desc:'Для моніторингу стану у відділенні. Показники беруться з даних пацієнта; свідомість — з огляду, якщо тут не вибрано.',
-  items:[['o2','Отримує кисень',2]],
+  items:[['o2','Отримує кисень',2],['s2','Шкала 2: ХОЗЛ або гіперкапнія, ціль SpO2 88–92%',0]],
   sel:[['avpu','Свідомість',[['Ясна',0],['Нова сплутаність / реагує на голос / на біль / не реагує',3]]]],
   run(c){
     const m = missing(['rr','spo','sbp','hr','t']); if (m.length) return {msg:'Введіть: ' + m.join(', ')};
@@ -5471,9 +5481,10 @@ const CALCS = [
     if (avpu === null){ try{ const v = F('zah.svid').el.value; if (v !== '') avpu = +v === 0 ? 0 : 3; }catch(e){} }
     if (avpu === null) return {msg:'Оберіть рівень свідомості'};
     const rr=pv('rr'), sp=pv('spo'), sb=pv('sbp'), hr=pv('hr'), t=pv('t');
+    const spo2 = c.on('s2') ? (sp<=83?3:sp<=85?2:sp<=87?1:sp<=92?0:sp<=94?1:sp<=96?2:3) : (sp<=91?3:sp<=93?2:sp<=95?1:0);
     const p = [
       rr<=8?3:rr<=11?1:rr<=20?0:rr<=24?2:3,
-      sp<=91?3:sp<=93?2:sp<=95?1:0,
+      spo2,
       sb<=90?3:sb<=100?2:sb<=110?1:sb<=219?0:3,
       hr<=40?3:hr<=50?1:hr<=90?0:hr<=110?1:hr<=130?2:3,
       t<=35?3:t<=36?1:t<=38?0:t<=39?1:2,
@@ -5481,7 +5492,7 @@ const CALCS = [
     const s = p.reduce((a,b)=>a+b,0), three = p.some(x=>x===3);
     return {score:s + ' б.', lvl:s>=7?'bad':s>=5||three?'warn':'ok',
       text:s>=7?'Високий ризик: екстрений огляд, розгляньте переведення у ВАІТ, постійний моніторинг.':s>=5?'Середній ризик: невідкладний огляд лікарем, моніторинг щогодини.':three?'Один параметр 3 бали: невідкладний огляд лікарем.':s>=1?'Низький ризик: моніторинг кожні 4–6 годин.':'Моніторинг кожні 12 годин.',
-      line:`NEWS2 ${s} б.`};
+      line:`NEWS2 ${s} б.` + (c.on('s2') ? ' (шкала 2, ціль SpO2 88–92%)' : '')};
   }},
 { id:'gcs', title:'Шкала коми Глазго', desc:'Оцінка рівня свідомості.',
   sel:[['e','Відкривання очей',[['Спонтанне',4],['На звернення',3],['На біль',2],['Відсутнє',1]]],
@@ -6289,7 +6300,7 @@ const HELPS = [
   'Один раз: «Налаштування» — ПІБ лікаря, посада, відділення, завідувач, заступник з медичної роботи, заклад. Там само — «Папка даних» (на комп’ютері).',
   'Вгорі оберіть режим «Стаціонар» або «Амбулаторно» і стать пацієнта (від неї залежать закінчення: «скаржиться», «госпіталізований/-а»).',
   '«Запис»: ПІБ, дата народження, № карти — пацієнт зберігається автоматично.',
-  '«За хворобою»: натисніть хворобу — заповняться анамнез хвороби й життя, відмітяться типові скарги, зміни при огляді, діагноз з кодом МКХ-10, план обстеження, призначення й критерії госпіталізації. Решта систем — норма.',
+  '«За хворобою»: натисніть хворобу — відмітяться типові скарги, знахідки цієї хвороби, діагноз з кодом МКХ-10, план і призначення. Системи, яких ви не описали, лишаються порожніми, доки не натиснете «= Норма =» або «Норма всюди».',
   'Після вибору хвороби у вкладках «За хворобою» і «Призначення» з’являються «Схеми для …» — натисніть потрібну, і лист призначень заміниться нею (кнопка «↶ Повернути попередній лист» скасовує).',
   'Підправте те, що не збігається з вашим пацієнтом, перевірте текст справа і натисніть «Копіювати», «Word» або «Друк / PDF».']],
  ['Первинний огляд', [
@@ -6309,7 +6320,7 @@ const HELPS = [
  ['Швидка робота', [
   '«↶ Скасувати» (поруч із вибором документа) або Ctrl+Z — повернути стан до останнього вибору хвороби, «Норми», очищення чи заміни схеми призначень (до 10 кроків).',
   'Смужка з ПІБ пацієнта вгорі — список пацієнтів: перемкнутися одним дотиком, знайти, створити нового.',
-  'Пошук будь-чого: Ctrl+K на комп’ютері або «☰ Розділи» → «Пошук» на телефоні. Наберіть «сатур», «пневм», «word» — і перейдіть до поля, хвороби чи дії.',
+  'Пошук будь-чого: Ctrl+K на комп’ютері або «☰ Розділи» → «Пошук» на телефоні. Наберіть «сатур», «пневм», «word» — і перейдіть до поля, хвороби чи дії. «Мої фрази» — Alt+Shift+1…9.',
   'Ctrl+Enter — копіювати текст, Ctrl+P — друк. Внизу кожного розділу — «Далі: …».',
   '«Швидкий огляд» (стаціонар) / «Швидкий прийом» (амбулаторно): показники й стан усіх систем на одному екрані; неописане — «Решта — Б/о» або «Решта — Норма».',
   'Розмір тексту програми — у «Налаштуваннях».']],
@@ -13417,7 +13428,7 @@ function memoHTML(){
   return `<div class="memo"><h1>«Первинний огляд» — пам’ятка</h1><p class="ms">Версія ${esc(VERSION)} ${esc(STAGE || '')}. Працює без інтернету; пацієнти — лише на цьому пристрої.</p>
 <div class="mcols"><section><h2>Порядок роботи</h2><ol><li>Стать → вкладка <b>«За хворобою»</b>: оберіть хворобу (пошук — назва, код, скарга).</li><li>Впишіть ПІБ — пацієнт зберігається сам.</li><li>Пройдіть розділи «Далі ›», змініть те, що відрізняється. «Норма всюди» — решта в норму.</li><li>Діагноз, план обстеження, призначення (схема для хвороби).</li><li>Перевірка перед підписом → <b>Копіювати</b> або <b>Друк</b>.</li></ol>
 <h2>Документи</h2><p>Огляд · щоденник · призначення (ф. 003-4/о) · виписний, етапний, перевідний епікриз · консультація · направлення · довідка · згода · пам’ятка пацієнту.</p></section>
-<section><h2>Клавіші</h2><table><tr><td>Ctrl+K</td><td>пошук будь-чого</td></tr><tr><td>Ctrl+Enter</td><td>копіювати текст</td></tr><tr><td>Ctrl+P</td><td>друк</td></tr><tr><td>Ctrl+Z</td><td>скасувати дію</td></tr><tr><td>Alt+1…9</td><td>перехід до розділу</td></tr><tr><td>← → ↑ ↓</td><td>по кнопках</td></tr><tr><td>Tab</td><td>наступний пропуск «__»</td></tr></table>
+<section><h2>Клавіші</h2><table><tr><td>Ctrl+K</td><td>пошук будь-чого</td></tr><tr><td>Ctrl+Enter</td><td>копіювати текст</td></tr><tr><td>Ctrl+P</td><td>друк</td></tr><tr><td>Ctrl+Z</td><td>скасувати дію</td></tr><tr><td>Alt+1…9</td><td>перехід до розділу</td></tr><tr><td>Alt+Shift+1…9</td><td>«Мої фрази»</td></tr><tr><td>← → ↑ ↓</td><td>по кнопках</td></tr><tr><td>Tab</td><td>наступний пропуск «__»</td></tr></table>
 <h2>Швидкість</h2><p>Крапка + скорочення + пробіл → фраза. Подвійне клацання по «справа / зліва» міняє бік.</p><table>${ab}</table></section></div>
 <h2>Дані</h2><p>Пацієнти — у сховищі браузера. Раз на тиждень: «Запис» → «Експорт усіх у файл» або папка даних (Налаштування). Видалений пацієнт 30 днів у кошику. Перенос між телефоном і ПК — зашифрованим файлом.</p>
 <p class="ms">Програма готує текст; остаточне рішення та підпис — за лікарем.</p></div>`;
@@ -15147,10 +15158,11 @@ function drawAuto(){
 /* лікар сам щось змінив у розділі — розділ переглянуто */
 ['input', 'change', 'click'].forEach(ev=>document.addEventListener(ev, e=>{
   if (!e.isTrusted) return; const t = e.target; if (!t.closest) return;
-  if (t.closest('.autobar, .ph, .pencil, .tplsec, .nextbar')) return;
+  if (t.closest('.autobar, .ph, .pencil, .tplsec, .nextbar, .qbox, .cmdk')) return;
+  if (t.closest('input[type="search"]')) return;
   const p = t.closest('.panel'); if (!p) return;
   const s = [...SECTIONS, RXT].find(x=>x.panel === p); if (!s) return;
-  if (ev === 'click' && !t.closest('button, .chip, input, select, textarea, label')) return;
+  if (ev === 'click' && !t.closest('.chip')) return;
   if (s.id in arevGet()) unmarkAuto(s.id);
 }, true));
 /* хто заповнює автоматично */
@@ -15170,12 +15182,19 @@ const OBJ_OHL = () => SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id) && 
     return L; }; }
 /* перед друком, копіюванням і збереженням у файл — попередження */
 let AGATE_OK = false;
+function vitalsGap(){
+  if (DOC !== 'ohl' && DOC !== 'shch') return '';
+  const ids = DOC === 'shch' ? [['d_obj_t_0','t°'],['d_obj_chd_0','ЧД'],['d_obj_chd_1','SpO2'],['d_obj_ad_0','АТ'],['d_obj_chss_0','ЧСС']] : [['zah_temp_0','t°'],['dyh_chd_0','ЧД'],['dyh_chd_1','SpO2'],['ssc_ad_0','АТ'],['ssc_chss_0','ЧСС']];
+  const miss = ids.filter(([id])=>{ const e = document.getElementById(id); return !e || !String(e.value || '').trim(); }).map(([, n])=>n);
+  return miss.length >= 3 ? 'Не вписано показники: ' + miss.join(', ') + '.' : '';
+}
 function autoGate(go){
   const L = autoForDoc(); if (!AGATE || AGATE_OK || !L.length){ return true; }
-  const o = arevGet();
+  const o = arevGet(), gap = vitalsGap();
   const dlg = h('div', {class:'navsheet packsheet agate', role:'dialog', 'aria-modal':'true', 'aria-label':'Непереглянуте автозаповнення'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, `Не переглянуто: ${L.length} ${plural(L.length, ['розділ','розділи','розділів'])}`), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
       h('p', {}, 'Ці розділи заповнила програма, і ви їх ще не перевіряли. У документ піде текст огляду, якого, можливо, не було:'),
+      gap ? h('p', {class:'chips-hint'}, gap) : '',
       h('ul', {class:'aglist'}, ...L.map(id=>h('li', {}, h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); goTab(id); }}, secTitle(id)), ' — ' + o[id]))),
       h('div', {class:'acts2', style:'margin-top:12px'},
         h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); goTab(L[0]); }}, 'Переглянути'),
@@ -23517,11 +23536,24 @@ function tiRemove(f, hit, doc){
   const ord = c.dataset.ord; c.click();
   if (c.getAttribute('aria-pressed') === 'true') return false;
   const back = ()=>{ if (c.getAttribute('aria-pressed') === 'true') return; c.click(); if (ord){ c.dataset.ord = ord; try{ update(); }catch(e){} } };
-  snack('Прибрано «' + hit.t + '»', 'Скасувати', back, 8000);
-  if (doc && doc !== document) tiSnackIn(doc, 'Прибрано «' + hit.t + '»', back);
+  // одне «Скасувати»: біля тексту огляду (або внизу, якщо тексту не видно); у вікні на другому моніторі — там
+  if (doc && doc !== document){ snack('Прибрано «' + hit.t + '»', 'Скасувати', back, 8000); tiSnackIn(doc, 'Прибрано «' + hit.t + '»', back); }
+  else if (!tiNear('Прибрано «' + hit.t + '»', back)) snack('Прибрано «' + hit.t + '»', 'Скасувати', back, 8000);
   return true;
 }
-/* те саме «Скасувати» у вікні на другому моніторі */
+/* «Скасувати» біля тексту огляду */
+function tiNear(msg, fn){
+  const box = document.getElementById('outBox'); if (!box || !box.offsetParent && !box.getClientRects().length) return false;
+  let s = document.getElementById('tiNear');
+  if (!s){ s = document.createElement('div'); s.id = 'tiNear'; s.className = 'banner'; s.setAttribute('role', 'status'); const ban = document.getElementById('banner'); if (ban && ban.parentElement === box) ban.after(s); else box.prepend(s); }
+  s.textContent = '';
+  const sp = document.createElement('span'); sp.textContent = msg;
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = 'Скасувати';
+  b.onclick = ()=>{ s.hidden = true; fn(); };
+  s.append(sp, b); s.hidden = false;
+  clearTimeout(tiNear.t); tiNear.t = setTimeout(()=>{ s.hidden = true; }, 8000);
+  return true;
+}
 function tiSnackIn(doc, msg, fn){
   let s = doc.getElementById('tiSnack');
   if (!s){ s = doc.createElement('div'); s.id = 'tiSnack'; s.className = 'snack'; s.setAttribute('role', 'status'); doc.body.append(s); }

@@ -222,7 +222,12 @@ function applyPreset(p0, btn){
   const noBoth = SIDE === 'b' && p0.sides && !p0.both;
   toast(p.warn ? p.warn : 'Заповнено: ' + p.name + (noBoth ? ' — двобічного варіанта немає, заповнено справа' : ''), p.warn ? 5000 : noBoth ? 3500 : 1600);
   if (!mv('pib')){ show(TABS.indexOf(META)); const pi = document.getElementById('meta_pib'); if (pi){ pi.focus({preventScroll:false}); pi.scrollIntoView({block:'center'}); } toast((p.warn ? p.warn + ' · ' : 'Заповнено: ' + p.name + '. ') + 'Впишіть ПІБ пацієнта', p.warn ? 5000 : 2500); }
-  else show(TABS.indexOf(SECTIONS[0]));
+  else {
+    const host = SECTIONS.find(s=>s.id === 'zah') || SECTIONS[0];
+    show(TABS.indexOf(host));
+    const vq = document.getElementById('vq_ohl');
+    if (vq){ vq.focus({preventScroll:false}); }
+  }
 }
 
 function toast(m, ms){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove('on'), ms||1600); }

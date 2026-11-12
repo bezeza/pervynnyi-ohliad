@@ -32,10 +32,11 @@ function drawAuto(){
 /* лікар сам щось змінив у розділі — розділ переглянуто */
 ['input', 'change', 'click'].forEach(ev=>document.addEventListener(ev, e=>{
   if (!e.isTrusted) return; const t = e.target; if (!t.closest) return;
-  if (t.closest('.autobar, .ph, .pencil, .tplsec, .nextbar')) return;
+  if (t.closest('.autobar, .ph, .pencil, .tplsec, .nextbar, .qbox, .cmdk')) return;
+  if (t.closest('input[type="search"]')) return;
   const p = t.closest('.panel'); if (!p) return;
   const s = [...SECTIONS, RXT].find(x=>x.panel === p); if (!s) return;
-  if (ev === 'click' && !t.closest('button, .chip, input, select, textarea, label')) return;
+  if (ev === 'click' && !t.closest('.chip')) return;
   if (s.id in arevGet()) unmarkAuto(s.id);
 }, true));
 /* хто заповнює автоматично */
@@ -55,12 +56,19 @@ const OBJ_OHL = () => SECTIONS.filter(s=>s.objective && !DSEC.includes(s.id) && 
     return L; }; }
 /* перед друком, копіюванням і збереженням у файл — попередження */
 let AGATE_OK = false;
+function vitalsGap(){
+  if (DOC !== 'ohl' && DOC !== 'shch') return '';
+  const ids = DOC === 'shch' ? [['d_obj_t_0','t°'],['d_obj_chd_0','ЧД'],['d_obj_chd_1','SpO2'],['d_obj_ad_0','АТ'],['d_obj_chss_0','ЧСС']] : [['zah_temp_0','t°'],['dyh_chd_0','ЧД'],['dyh_chd_1','SpO2'],['ssc_ad_0','АТ'],['ssc_chss_0','ЧСС']];
+  const miss = ids.filter(([id])=>{ const e = document.getElementById(id); return !e || !String(e.value || '').trim(); }).map(([, n])=>n);
+  return miss.length >= 3 ? 'Не вписано показники: ' + miss.join(', ') + '.' : '';
+}
 function autoGate(go){
   const L = autoForDoc(); if (!AGATE || AGATE_OK || !L.length){ return true; }
-  const o = arevGet();
+  const o = arevGet(), gap = vitalsGap();
   const dlg = h('div', {class:'navsheet packsheet agate', role:'dialog', 'aria-modal':'true', 'aria-label':'Непереглянуте автозаповнення'},
     h('div', {class:'nvbox'}, h('div', {class:'nshead'}, h('b', {}, `Не переглянуто: ${L.length} ${plural(L.length, ['розділ','розділи','розділів'])}`), h('button', {type:'button', class:'btn', onclick:()=>dlg.remove()}, 'Закрити ✕')),
       h('p', {}, 'Ці розділи заповнила програма, і ви їх ще не перевіряли. У документ піде текст огляду, якого, можливо, не було:'),
+      gap ? h('p', {class:'chips-hint'}, gap) : '',
       h('ul', {class:'aglist'}, ...L.map(id=>h('li', {}, h('button', {type:'button', class:'more', onclick:()=>{ dlg.remove(); goTab(id); }}, secTitle(id)), ' — ' + o[id]))),
       h('div', {class:'acts2', style:'margin-top:12px'},
         h('button', {type:'button', class:'btn primary', onclick:()=>{ dlg.remove(); goTab(L[0]); }}, 'Переглянути'),
