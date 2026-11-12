@@ -19,7 +19,7 @@ function v2Hint(i){
   if (V2HOFF || PO_BOOT || !UIV2) return;
   const t = TABS[i]; if (!t || !V2HINTS[t.id] || V2HSEEN.includes(t.id)) return;
   V2HSEEN.push(t.id); lsSet('po.hints', JSON.stringify(V2HSEEN));
-  clearTimeout(v2Hint.t); v2Hint.t = setTimeout(()=>{ if (active === i) toast('Підказка · ' + (t.short || t.title) + ': ' + V2HINTS[t.id], 7000); }, 500);
+  clearTimeout(v2Hint.t); v2Hint.t = setTimeout(()=>{ if (active === i) toast('Підказка · ' + (t.short || t.title) + ': ' + V2HINTS[t.id], 3000); }, 500);
 }
 function v2HintsReset(){ V2HSEEN = []; lsSet('po.hints', '[]'); }
 { const s0 = show; show = function(i){ const r = s0.apply(this, arguments); try{ v2Hint(i); }catch(e){} return r; }; }
