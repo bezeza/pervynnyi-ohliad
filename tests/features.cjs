@@ -373,7 +373,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
    ok('Друк з непереглянутим — спершу попередження', !!doc.querySelector('.agate') && pr===0);
    const gateBtns=[...doc.querySelectorAll('.agate button')].map(b=>b.textContent.trim());
    ok('Блокування не має кнопки масового обходу перевірки', !gateBtns.some(x=>/Я перевірив.*продовжити/i.test(x)));
-   A().slice().forEach(id=>{ const sec=w.eval("(id==='rxt'?RXT:SECTIONS.find(s=>s.id==='"+id+"'))"); const ack=sec&&sec.panel&&sec.panel.querySelector('.autobar .ab-ok'); if(ack) ack.click(); });
+   A().slice().forEach(id=>{ const sec=w.eval("('"+id+"'==='rxt'?RXT:SECTIONS.find(s=>s.id==='"+id+"'))"); const ack=sec&&sec.panel&&sec.panel.querySelector('.autobar .ab-ok'); if(ack) ack.click(); });
    $('printBtn').click();
    ok('Після явного підтвердження кожного розділу друк дозволено', pr===1 && A().length===0, pr+' '+A().join(','));
    w.eval("show(TABS.findIndex(t=>t.id==='dyh'))"); w.eval("(()=>{ const f=F('dyh.perk'); f.el.value='2'; mark(f.el,f); update(); })()");
