@@ -14,10 +14,22 @@ const RXGRP = [
   ['Кардіологічна та антигіпертензивна терапія', it=>/прил$|сартан$|амлодипін|бісопролол|метопролол|карведилол|небіволол|торасемід|фуросемід|спіронолактон|еплеренон|урапідил|статин$|ацетилсаліц|клопідогрел|тикагрелор|нітро|моксонідин|індапамід|гідрохлортіазид|дигоксин|аміодарон|дапагліфлозин|емпагліфлозин|сакубітрил/i.test(it.drug)],
   ['Гастропротекція', it=>/празол$|фамотидин/i.test(it.drug)],
   ['Симптоматична та інша терапія', ()=>true]];
+function epiWard(it){
+  const k = typeof rxKind === 'function' ? rxKind(it) : '';
+  if (k && k !== 'drug') return true;
+  return /^еноксапарин$/i.test(String(it.drug || '').trim()) && /^40 мг$/.test(String(it.dose || '').trim());
+}
 function rxCourse(it, d2){
-  const e0 = rxEnd(it), e = e0 && e0 < d2 ? e0 : d2, s = it.start && it.start <= e ? it.start : '';
+  const P = F('e_per.per'), d1 = P && P.d1.value || '';
+  const e0 = rxEnd(it);
+  let e = e0 && d2 && e0 < d2 ? e0 : (d2 || e0 || ''), s = it.start && (!e || it.start <= e) ? it.start : '';
+  if (d1 && d2 && +it.days > 1 && d1 < d2 && (!s || s === d2 || (e && nDays(s, e) === 1))){
+    s = d1;
+    const byDays = addDays(d1, +it.days - 1);
+    e = byDays < d2 ? byDays : d2;
+  }
   const base = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
-  if (!s) return base;
+  if (!s || !e) return base;
   const n = nDays(s, e);
   return base + ` — з ${fmtDM(s)} по ${fmtDM(e)} (${n} ${plural(n, ['день','дні','днів'])})`;
 }
@@ -30,7 +42,7 @@ function epiCourses(){
 /* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
 function contList(){
   const d2 = epiD2();
-  const L = RXF().filter(it=>{ const e = rxEnd(it); return (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXF().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';

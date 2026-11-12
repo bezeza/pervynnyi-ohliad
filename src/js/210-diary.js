@@ -98,7 +98,7 @@ function diaryUntouched(){
 }
 /* у первинному огляді вже є об’єктивні дані */
 function examFilled(){ return !!curKey || ['zah','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')); }
-function diaryDone(msg){ setNow(); dirty = false; $('#banner').hidden = true; update(); toast(msg, 3500); }
+function diaryDone(msg){ if (!mv('dt')) setNow(); dirty = false; $('#banner').hidden = true; update(); toast(msg, 3500); }
 function diaryTplSave(name){
   const v = {};
   DSEC.forEach(id=>SECTIONS.find(x=>x.id===id).fields.forEach(f=>{

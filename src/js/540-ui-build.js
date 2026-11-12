@@ -214,8 +214,14 @@ function switchDoc(nd){
   if (DOC === nd) return;
   CACHE[DOC] = {html: $('#out').innerHTML, dirty};
   DOC = nd;
-  if (!(CACHE[DOC] && CACHE[DOC].dirty)) setNow();
   applyDoc(false);
+  if (DOC === 'epi'){
+    const P = F('e_per.per');
+    if (P && !P.d1.value){
+      const ex = (typeof examDateISO === 'function' ? examDateISO() : '') || String(mv('dt') || '').split('T')[0];
+      if (ex) P.d1.value = ex;
+    }
+  }
   if (CACHE[DOC] && CACHE[DOC].dirty){ $('#out').innerHTML = CACHE[DOC].html; dirty = true; }
   else if (DOC === 'shch' && !DIARIES.length && diaryUntouched() && examFilled()){ diaryFromExam(0); return; }   // перший щоденник — з первинного огляду, а не «норма»
   toast({konc:'Консиліум: склад, мета, висновок і рішення; підписи всіх членів — внизу документа', gosp:'Направлення на госпіталізацію: критерії — на вкладці «Направлення» (рішення)', pam:'Пам’ятка пацієнту: ліки — з листа призначень, поради й тривожні ознаки — за хворобою', zav:'Огляд завідувача', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка: оберіть вид і період', zgoda:'Інформована згода: відмітьте втручання', rx:'Листок призначень', ohl:'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник спостереження', epi:'Виписний епікриз: діагноз і скарги беруться з первинного огляду', kons:'Консультаційний висновок: скарги, діагноз і огляд беруться з первинного огляду'}[DOC]);

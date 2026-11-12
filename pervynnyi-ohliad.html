@@ -2679,7 +2679,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.130 від 11.11.2026">v0.9.3.130 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.131 від 11.11.2026">v0.9.3.131 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3429,7 +3429,7 @@ const SECTIONS = [
       '[доставлений|доставлена] бригадою екстреної медичної допомоги','[госпіталізований|госпіталізована] в плановому порядку','[переведений|переведена] з іншого відділення']},
   {id:'sk', type:'auto', label:'Скарги при надходженні (з вкладки «Скарги» огляду)', tpl:'При надходженні скарги {v}',
     fn:()=>{ const a = val(F('skarhy.c'), true), b = val(F('skarhy.cx'), true); return [a ? 'на ' + a : '', b].filter(Boolean).join(', '); }},
-  {id:'anam', type:'text', label:'Коротко анамнез', tpl:'{v}'}
+  {id:'anam', type:'text', label:'Коротко анамнез (якщо порожньо — з первинного огляду)', tpl:'{v}', fallback:()=>{ const m = SECTIONS.find(x=>x.id === 'morbi'); const t = m && sectionText(m); return t ? t.body : ''; }}
 ]},
 { id:'k_main', docs:['kons'], title:'Консультація', short:'Консультація', head:'', fields:[
   {id:'mety', type:'sel', label:'Мета консультації', tpl:'Мета консультації: {v}', opts:['уточнення діагнозу','корекція лікування','визначення тактики ведення','вирішення питання про госпіталізацію','експертиза працездатності']},
@@ -4887,8 +4887,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.130', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.131', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.131', '11.11.2026', 'перемикання документа не переписує дату огляду на «зараз»: щоденник лишається на даті огляду, доки лікар не натисне «Зараз». У проведеному лікуванні епікризу курс довший за один день бере дати з періоду перебування, а не зрізається в один день. Період підставляє дату надходження з огляду. Короткий анамнез епікризу береться з огляду, як і скарги. У рекомендації не потрапляють режим, моніторинг і профілактичний еноксапарин 40 мг як «тривало». З тексту прибрано підказку «(вкладка «Шкали»)»'],
   ['0.9.3.130', '11.11.2026', 'шаблон хвороби більше не вписує огляд, якого не було: норма систем, Ромберг, «нюх збережений», «діурез адекватний» і рядок «вогнищевої симптоматики не виявлено» з’являються лише після «= Норма =», «Б/о» або «Норма всюди». Анамнез життя (заперечення туберкульозу, алергії, виїздів) — теж лише після «Норма». Не підставляються самолікування, електронне направлення, доставка бригадою ЕМД і «пов’язує з…». Щоденник не дописує легені, серце, сон, апетит і «свідомість ясна», якщо в огляді ці поля порожні. Заголовок «Об’єктивний стан» лишається, навіть якщо описано лише частину систем. Прибрано суперечності шаблонів: COVID і «нюх збережений», подагра і «набряків немає», серцева недостатність і «положення активне» при ортопное'],
   ['0.9.3.129', '11.11.2026', 'умовні призначення не йдуть як уже зроблені: кисень «при SpO2…», дексаметазон «лише при кисні», профілактичний еноксапарин «якщо Падуа», рідина «при неможливості пиття» і аспірин при інсульті до КТ та скринінгу ковтання стоять окремо — «За показаннями (не призначено, доки не підтвердите)». COVID-19 за замовчуванням U07.2 (вірус ще не ідентифікований). Критерій реперфузії при інсульті не вмикається без часу початку або NIHSS. Харчова токсикоінфекція з пероральною регідратацією більше не пише «неможливість прийому рідини понад 6 год». Серцева недостатність: бісопролол і раміприл не в базовому листі декомпенсації, а у варіанті «Уже приймав удома». Кровотеча на старті — K92.2, джерело не встановлено. Синдром відміни: у листі лише навантаження діазепамом першого дня, без «CIWA-Ar …» у діагнозі. Рана кисті не друкує порожній розмір «… × … см». У довідник МКХ додано F10.4, H66.0 і H81.2'],
   ['0.9.3.128', '11.11.2026', 'огляд не стверджує нормальний неврологічний статус (зокрема позу Ромберга, нюх і корнеальні рефлекси), якщо свідомість не ясна, положення вимушене чи пасивне, або в скаргах є післянападова сонливість і сплутаність — тоді не пишеться і «свідомість ясна». Алкогольний делірій: свідомість «оглушення», без норми координації. Епілепсія більше не підставляє самовільну відміну препаратів і нерегулярний прийом. ТІА не заперечує в неврологічному статусі ті самі слабкість і порушення мови, що стоять у скаргах; в анамнезі — що вогнищева симптоматика на момент огляду регресувала. Менінгіт: якщо вік понад 50 років, до цефтріаксону додається ампіцилін 2 г в/в кожні 4 год (Listeria); без віку або до 50 років рядок не з’являється'],
@@ -6536,7 +6537,7 @@ function diaryUntouched(){
 }
 /* у первинному огляді вже є об’єктивні дані */
 function examFilled(){ return !!curKey || ['zah','dyh','ssc','trav'].some(id=>SECTIONS.find(x=>x.id===id).fields.some(f=>f.type === 'sel' && f.el.value !== '')); }
-function diaryDone(msg){ setNow(); dirty = false; $('#banner').hidden = true; update(); toast(msg, 3500); }
+function diaryDone(msg){ if (!mv('dt')) setNow(); dirty = false; $('#banner').hidden = true; update(); toast(msg, 3500); }
 function diaryTplSave(name){
   const v = {};
   DSEC.forEach(id=>SECTIONS.find(x=>x.id===id).fields.forEach(f=>{
@@ -7024,7 +7025,7 @@ function epiAuto(){
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
-    const cont = RXF().filter(it=>!it.stop && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
+    const cont = RXF().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
     if (cont.length) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
       return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
     (DREK[curKey] || []).forEach(x=>L.push(x));
@@ -9057,7 +9058,7 @@ function rxPart(){
    («Налаштування» → «Перевірка клінічного вмісту»). Рядок: [назва, доза, шлях, кратність, днів, примітка]. ===== */
 const R_PAL = ['Режим палатний','','','',0,''], R_LIZH = ['Режим ліжковий','','','',0,'рання мобілізація, щойно дозволить стан'], R_DOM = ['Режим домашній','','','',0,'достатньо рідини'];
 const D_OVD = ['Основний варіант стандартної дієти (ОВД)','','','',0,''];
-const M_VIT = ['Контроль АТ, ЧСС, ЧД, t°, SpO2','','','2 р/д',0,'NEWS2 щодня (вкладка «Шкали»)'];
+const M_VIT = ['Контроль АТ, ЧСС, ЧД, t°, SpO2','','','2 р/д',0,'NEWS2 щодня'];
 const M_VIT_ICU = ['Контроль АТ, ЧСС, ЧД, t°, SpO2','','','щогодини',0,'моніторинг у ВАІТ / палаті інтенсивного спостереження'];
 const O2_IF = ['Оксигенотерапія через назальні канюлі','','','постійно',0,'при SpO2 < 92%; цільова SpO2 94–98%'];
 const O2_COPD = ['Оксигенотерапія через назальні канюлі','','','постійно',0,'контрольована: цільова SpO2 88–92%; гази крові — при SpO2 < 88% або ризику гіперкапнії'];
@@ -10338,8 +10339,14 @@ function switchDoc(nd){
   if (DOC === nd) return;
   CACHE[DOC] = {html: $('#out').innerHTML, dirty};
   DOC = nd;
-  if (!(CACHE[DOC] && CACHE[DOC].dirty)) setNow();
   applyDoc(false);
+  if (DOC === 'epi'){
+    const P = F('e_per.per');
+    if (P && !P.d1.value){
+      const ex = (typeof examDateISO === 'function' ? examDateISO() : '') || String(mv('dt') || '').split('T')[0];
+      if (ex) P.d1.value = ex;
+    }
+  }
   if (CACHE[DOC] && CACHE[DOC].dirty){ $('#out').innerHTML = CACHE[DOC].html; dirty = true; }
   else if (DOC === 'shch' && !DIARIES.length && diaryUntouched() && examFilled()){ diaryFromExam(0); return; }   // перший щоденник — з первинного огляду, а не «норма»
   toast({konc:'Консиліум: склад, мета, висновок і рішення; підписи всіх членів — внизу документа', gosp:'Направлення на госпіталізацію: критерії — на вкладці «Направлення» (рішення)', pam:'Пам’ятка пацієнту: ліки — з листа призначень, поради й тривожні ознаки — за хворобою', zav:'Огляд завідувача', etap:'Етапний епікриз', per:'Переказний епікриз', napr:'Направлення на консультацію', dov:'Довідка: оберіть вид і період', zgoda:'Інформована згода: відмітьте втручання', rx:'Листок призначень', ohl:'Первинний огляд', shch: MODE === 'amb' ? 'Повторний огляд' : 'Щоденник спостереження', epi:'Виписний епікриз: діагноз і скарги беруться з первинного огляду', kons:'Консультаційний висновок: скарги, діагноз і огляд беруться з первинного огляду'}[DOC]);
@@ -16468,10 +16475,22 @@ const RXGRP = [
   ['Кардіологічна та антигіпертензивна терапія', it=>/прил$|сартан$|амлодипін|бісопролол|метопролол|карведилол|небіволол|торасемід|фуросемід|спіронолактон|еплеренон|урапідил|статин$|ацетилсаліц|клопідогрел|тикагрелор|нітро|моксонідин|індапамід|гідрохлортіазид|дигоксин|аміодарон|дапагліфлозин|емпагліфлозин|сакубітрил/i.test(it.drug)],
   ['Гастропротекція', it=>/празол$|фамотидин/i.test(it.drug)],
   ['Симптоматична та інша терапія', ()=>true]];
+function epiWard(it){
+  const k = typeof rxKind === 'function' ? rxKind(it) : '';
+  if (k && k !== 'drug') return true;
+  return /^еноксапарин$/i.test(String(it.drug || '').trim()) && /^40 мг$/.test(String(it.dose || '').trim());
+}
 function rxCourse(it, d2){
-  const e0 = rxEnd(it), e = e0 && e0 < d2 ? e0 : d2, s = it.start && it.start <= e ? it.start : '';
+  const P = F('e_per.per'), d1 = P && P.d1.value || '';
+  const e0 = rxEnd(it);
+  let e = e0 && d2 && e0 < d2 ? e0 : (d2 || e0 || ''), s = it.start && (!e || it.start <= e) ? it.start : '';
+  if (d1 && d2 && +it.days > 1 && d1 < d2 && (!s || s === d2 || (e && nDays(s, e) === 1))){
+    s = d1;
+    const byDays = addDays(d1, +it.days - 1);
+    e = byDays < d2 ? byDays : d2;
+  }
   const base = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
-  if (!s) return base;
+  if (!s || !e) return base;
   const n = nDays(s, e);
   return base + ` — з ${fmtDM(s)} по ${fmtDM(e)} (${n} ${plural(n, ['день','дні','днів'])})`;
 }
@@ -16484,7 +16503,7 @@ function epiCourses(){
 /* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
 function contList(){
   const d2 = epiD2();
-  const L = RXF().filter(it=>{ const e = rxEnd(it); return (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXF().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';

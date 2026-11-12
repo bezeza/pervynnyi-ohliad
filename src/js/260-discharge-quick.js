@@ -52,7 +52,7 @@ function epiAuto(){
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
-    const cont = RXF().filter(it=>!it.stop && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
+    const cont = RXF().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
     if (cont.length) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
       return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
     (DREK[curKey] || []).forEach(x=>L.push(x));
