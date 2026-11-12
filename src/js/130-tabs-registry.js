@@ -104,9 +104,9 @@ function sidePreset(p){
 const ANH = {
   pneu:[5,0,0,['переохолодженням'],0,3], gh:[10,3,-1,['психоемоційним стресом'],3,5], ihd:[3,3,2,['фізичним навантаженням'],1,4], hf:[5,3,2,[],3,5],
   gastr:[5,3,-1,['порушенням дієти'],1,3], copd:[10,3,-1,['переохолодженням'],2,2], dm:[5,3,-1,['порушенням дієти'],3,5], af:[2,3,0,[],1,4],
-  asthma:[10,3,0,['перенесеною ГРВІ'],1,2], pyelo:[3,0,0,['переохолодженням'],0,0], stroke:[1,0,0,['підвищенням АТ'],0,0], tia:[1,0,0,['підвищенням АТ'],0,0],
+  asthma:[10,3,0,['перенесеною ГРВІ'],1,2], pyelo:[3,0,0,['переохолодженням'],0,0], stroke:[1,0,0,['підвищенням АТ'],0,0], tia:[1,0,0,['підвищенням АТ'],0,0,'На момент огляду вогнищева симптоматика регресувала.'],
   de:[3,3,1,[],1,5], rad:[7,0,0,['підйомом важкого'],1,2], dpn:[2,3,1,[],2,4], migr:[1,0,0,['психоемоційним стресом'],1,2], bell:[2,0,0,['переохолодженням'],0,0],
-  epi:[1,0,0,['самовільною відміною препаратів'],1,5], cerv:[7,0,0,['фізичним навантаженням'],1,3], bppv:[3,0,0,[],0,3],
+  epi:[1,0,0,[],1,-1], cerv:[7,0,0,['фізичним навантаженням'],1,3], bppv:[3,0,0,[],0,3],
   app:[1,0,0,[],0,0], chol:[2,0,0,['порушенням дієти'],0,3], panc:[1,0,0,['вживанням алкоголю','порушенням дієти'],0,0], gib:[1,0,0,[],0,0],
   obstr:[2,0,0,[],0,0], hern:[1,0,0,['підйомом важкого'],0,0], dvt:[4,0,1,[],0,0], perf:[1,0,0,[],0,0], colic:[1,0,0,['фізичним навантаженням'],0,3], absc:[5,0,1,[],0,3],
   arvi:[3,0,0,['переохолодженням','контактом з хворим'],0,3], flu:[2,0,0,['контактом з хворим'],0,3], covid:[4,0,0,['контактом з хворим'],0,3],
@@ -160,7 +160,35 @@ function sexPlan(){   // стать змінили вже після вибор�
     if (on && c.getAttribute('aria-pressed') !== 'true'){ c.setAttribute('aria-pressed','true'); c.dataset.ord = ++ORD; }
     if (!on && c.getAttribute('aria-pressed') === 'true'){ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; } });
   refreshChips(f); }
-/* неврологічний статус одним рядком для хірургії та сімейної медицини, якщо заготовка його не описує */
+/* не стверджувати повну «норму» неврології, якої не було: свідомість не ясна, вимушене чи пасивне положення,
+   післянападова сплутаність у скаргах, або ТІА (скарги ще про дефіцит, а діагноз — про регрес) */
+function clearSelNorms(id){
+  const s = SECTIONS.find(x=>x.id === id); if (!s) return;
+  s.fields.forEach(f=>{
+    if (f.type === 'sel' && !f.bo && f.norm !== undefined && f.el && f.el.value !== '' && +f.el.value === f.norm){ f.el.value = ''; mark(f.el, f); }
+  });
+}
+function consciousnessImpaired(){
+  const f = F('zah.svid'); if (!f || !f.el || f.el.value === '' || f.norm === undefined) return false;
+  return +f.el.value !== f.norm;
+}
+function positionBlocksNeuro(){
+  const f = F('zah.pol'); if (!f || !f.el || f.el.value === '' || (f.norm !== undefined && +f.el.value === f.norm)) return false;
+  return /вимушене|пасивне/.test(val(f));
+}
+function postictalComplaints(){
+  const t = val(F('skarhy.c'), true);
+  return /сплутан|сонлив/.test(t);
+}
+function guardNeuro(p){
+  if (postictalComplaints()){
+    const svid = F('zah.svid');
+    if (svid && svid.el && svid.norm !== undefined && svid.el.value !== '' && +svid.el.value === svid.norm){ svid.el.value = ''; mark(svid.el, svid); }
+    const stan = F('zah.stan');
+    if (stan && stan.el && stan.norm !== undefined && stan.el.value !== '' && +stan.el.value === stan.norm){ stan.el.value = ''; mark(stan.el, stan); }
+  }
+  if ((p && p.key === 'tia') || consciousnessImpaired() || positionBlocksNeuro() || postictalComplaints()) clearSelNorms('nevr');
+}
 function nevrShort(p){
   if (!['hir','fam'].includes(p.group) || Object.keys(p.set || {}).some(k=>k.startsWith('nevr.'))) return;
   const s = SECTIONS.find(x=>x.id === 'nevr'), b = s.fields.find(f=>f.bo); if (!b) return;
@@ -183,6 +211,7 @@ function applyPreset(p0, btn){
     f.el.value = i; mark(f.el, f);
   }
   anPreset(p0);
+  guardNeuro(p0);
   F('dx.osn').el.value = p.osn || '';
   F('dx.mkh').el.value = p.mkh || '';
   F('dx.uskl').el.value = p.uskl || '';

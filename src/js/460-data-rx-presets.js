@@ -91,4 +91,21 @@ const RXA = {
   af:[['Бісопролол','5 мг','per os','1 р/д',0,'контроль частоти: ЧСС у спокої < 110/хв'],['Апіксабан','5 мг','per os','2 р/д',0,'при CHA₂DS₂-VA ≥ 2 (≥ 1 — розглянути)']]
 };
 function rxFor(p){ return MODE === 'amb' && p && RXA[p.key] !== undefined ? RXA[p.key] : (p && p.rx) || []; }   /* 501-rx-evidence.js доповнює: режим, дієта, моніторинг */
+/* менінгіт: ампіцилін лише якщо вік уже відомий і понад 50 років (Listeria). Без віку рядок не додається */
+function meningAmpRows(rows, key){
+  if (key !== 'mening' || !rows) return rows;
+  const age = parseInt(mv('age'), 10), rest = rows.filter(r=>r[0] !== 'Ампіцилін');
+  if (!(age > 50)) return rest;
+  const row = ['Ампіцилін','2 г','в/в','кожні 4 год',10,'вік понад 50 років: емпірично Listeria monocytogenes, разом із цефтріаксоном; до 50 років не додавати'];
+  const i = rest.findIndex(r=>/Цефтріаксон/.test(r[0]));
+  return i < 0 ? rest.concat([row]) : rest.slice(0, i + 1).concat([row], rest.slice(i + 1));
+}
+{ const rfAmp = rxFor; rxFor = function(p){ return meningAmpRows(rfAmp.apply(this, arguments), p && p.key); }; }
+function syncMeningAge(){
+  if (curKey !== 'mening' || !(RX_AUTO && rxSig() === RX_AUTO)) return;
+  const p = PRESETS.find(x=>x.key === 'mening'); if (!p) return;
+  RX.length = 0; rxFor(p).forEach(r=>addRx({drug:r[0], dose:r[1], route:r[2], freq:r[3], days:r[4] || '', note:r[5]})); RX_AUTO = rxSig();
+  try{ renderRx(); }catch(e){}
+}
+{ const cAge = calcAge; calcAge = function(){ const r = cAge.apply(this, arguments); try{ syncMeningAge(); }catch(e){} return r; }; }
 
