@@ -3,10 +3,11 @@
   const rxPart0 = rxPart;
   rxPart = function(){
     if (DOC !== 'shch') return rxPart0.apply(this, arguments);
-    if (!RXF().length) return null;
+    const RXA = typeof RXACT === 'function' ? RXACT : RXF;   // умовні «за показаннями» — не в щоденник
+    if (!RXA().length) return null;
     const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
-    const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
-    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
+    const cont = RXA().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXA().filter(it=>it.start === date && act(it)), off = RXA().filter(it=>it.stop === date);
+    const completed = RXA().filter(it=>diaryCourseCompleted(it, date));
     const lines = [];
     if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
     if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');

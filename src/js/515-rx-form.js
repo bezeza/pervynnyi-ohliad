@@ -12,7 +12,7 @@ function rxDayMark(it, d){
   return d <= (real > todayISO() ? real : todayISO()) ? '+' : '';   // без тривалості — «+» до сьогодні, далі лікар відмічає щодня
 }
 function f0034Sheets(start, n){
-  const K = it => rxKind(it), items = [...RXF().filter(it=>K(it) === 'drug'), ...RXF().filter(it=>K(it) === 'man')],
+  const K = it => rxKind(it), items = [...RXACT().filter(it=>K(it) === 'drug'), ...RXACT().filter(it=>K(it) === 'man')],
     reg = RXF().filter(it=>['reg','diet'].includes(K(it))).map(it=>[it.drug, it.note].filter(Boolean).join(', ')).join('; ');
   const first = start || [...RXF().map(it=>it.start).filter(Boolean)].sort()[0] || todayISO();
   const last = RXF().reduce((m, it)=>{ const e = it.stop || rxEnd(it) || todayISO(); return e > m ? e : m; }, first);

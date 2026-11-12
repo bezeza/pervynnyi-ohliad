@@ -200,6 +200,9 @@
   "708-second-screen.js",
   "710-news2-badge.js",
   "711-hosp-indicator.js",
-  "712-my-phrases.js"
+  "712-my-phrases.js",
+  "713-rx-held-ui.js",
+  "714-adm-from-exam.js",
+  "715-docs-place.js"
  ]
 }

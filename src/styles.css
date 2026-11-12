@@ -2627,3 +2627,5 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 
 /* 0.9.3.126 · другий монітор (708-second-screen.js) */
 body.pop-ext .tn-card{display:none!important}
+/* 0.9.3.134 — умовні призначення в листку */
+.rx.rx-held .rxsum{opacity:.75}.rx-held-b{margin-left:8px;font-weight:500}.rxs-held{color:var(--warn-ink, #8a5a00)}.rx-held-row{padding:0 12px 10px}

@@ -9,8 +9,10 @@ function diaryOxygenText(source, method, flow){
   if (device) return 'на кисні' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
   return flow ? 'на кисні ' + flow + ' л/хв' : '';
 }
+/* 0.9.3.134: у щоденнику — коротко (препарат, доза, шлях, кратність); пояснення з примітки лишаються в листку призначень */
+const diaryRxShort = it => [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ') + (it.hours ? ' о ' + it.hours : '');
 function diaryCourseLine(it, date){
-  const total = Number(it.days);
+  const total = Number(it.days), rxLine = diaryRxShort;
   if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
   const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
   return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total

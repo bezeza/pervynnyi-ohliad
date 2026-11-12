@@ -4,7 +4,7 @@
    Вихідний день, відсутність транспорту, очікування планових обстежень підставою для продовження не є. */
 function stayRx(){
   const d = todayISO();
-  return RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= d) && !(rxEnd(it) && rxEnd(it) < d) && !(it.start && it.start > d));
+  return RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= d) && !(rxEnd(it) && rxEnd(it) < d) && !(it.start && it.start > d) && !(typeof rxHeld === 'function' && rxHeld(it)));
 }
 function stayVitals(){
   const N = id => { const e = document.getElementById(id); return e && e.value.trim() ? num(e.value) : NaN; };

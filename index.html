@@ -2674,6 +2674,8 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 
 /* 0.9.3.126 · другий монітор (708-second-screen.js) */
 body.pop-ext .tn-card{display:none!important}
+/* 0.9.3.134 — умовні призначення в листку */
+.rx.rx-held .rxsum{opacity:.75}.rx-held-b{margin-left:8px;font-weight:500}.rxs-held{color:var(--warn-ink, #8a5a00)}.rx-held-row{padding:0 12px 10px}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2684,7 +2686,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.133 від 11.11.2026">v0.9.3.133 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.134 від 12.11.2026">v0.9.3.134 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -3082,8 +3084,8 @@ const SECTIONS = [
     'переохолодженням','перенесеною ГРВІ','психоемоційним стресом','фізичним навантаженням','порушенням дієти',
     'вживанням алкоголю','самовільною відміною препаратів','підвищенням АТ','зміною погоди','підйомом важкого','вживанням неякісної їжі','контактом з хворим']},
   {id:'hron', type:'sel', label:'Тривалість хвороби', tpl:'{v}', opts:[
-    'Захворювання виникло вперше','Хворіє протягом кількох років, загострення 1–2 рази на рік','Хворіє багато років, загострення часті',
-    'Хворіє протягом багатьох років, останнє погіршення протягом тижня']},
+    'Захворювання виникло вперше','Хронічний перебіг, загострення 1–2 рази на рік','Хронічний перебіг, загострення часті',
+    'Хронічний перебіг, останнє погіршення протягом тижня']},   /* 0.9.3.134: не дублює «Вважає себе хворим протягом …» */
   {id:'likuv', type:'sel', label:'Лікування до госпіталізації', tpl:'{v}', opts:[
     '[Не лікувався|Не лікувалася] амбулаторно','[Лікувався|Лікувалася] амбулаторно без ефекту','[Лікувався|Лікувалася] амбулаторно з незначним ефектом',
     '[Займався|Займалася] самолікуванням','Регулярно приймає призначену терапію','Призначену терапію приймає нерегулярно']},
@@ -3392,7 +3394,8 @@ const SECTIONS = [
   {id:'pef', type:'num', dprof:1, label:'Пікфлоуметрія (ПШВ)', parts:[{ph:'350',u:'л/хв',ok:[30,900]}], fmt:v=>v[0]?`ПШВ ${v[0]} л/хв`:''},
   {id:'shk', type:'sel', norm:0, label:'Шкіра', tpl:'{v}', opts:['Шкірні покриви звичайного кольору','Шкірні покриви бліді','Акроціаноз','Шкірні покриви іктеричні','Шкірні покриви гіперемовані']},
   {id:'dyh', type:'sel', norm:0, label:'Легені', tpl:'В легенях {v}', opts:['дихання везикулярне, хрипи не вислуховуються','дихання жорстке, хрипів немає','дихання жорстке, поодинокі сухі хрипи',
-    'дихання ослаблене в нижніх відділах, вологі хрипи','кількість хрипів зменшилась','дихання ослаблене, кількість хрипів без динаміки']},
+    'дихання ослаблене в нижніх відділах, вологі хрипи','кількість хрипів зменшилась','дихання ослаблене, кількість хрипів без динаміки',
+    /* 0.9.3.134 — бік ураження (у кінці, щоб не зсунути збережені значення) */ 'дихання ослаблене в нижніх відділах справа, вологі хрипи','дихання ослаблене в нижніх відділах зліва, вологі хрипи','дихання ослаблене в нижніх відділах з обох боків, вологі хрипи']},
   {id:'serce', type:'sel', norm:0, label:'Серце', tpl:'Тони серця {v}', opts:['ясні, ритм правильний','приглушені, ритм правильний','приглушені, ритм неправильний']},
   {id:'zhyv', type:'sel', norm:0, label:'Живіт', tpl:'Живіт {v}', opts:['м’який, неболючий','м’який, помірно болючий в епігастрії','м’який, болючість зменшилась','здутий, болючий','м’який, болючість при пальпації зберігається','болючість при пальпації посилилась']},
   {id:'nab', type:'sel', norm:0, label:'Набряки', tpl:'{v}', opts:['Набряків немає','Набряки зменшились','Набряки без динаміки','Набряки наростають']},
@@ -3798,7 +3801,7 @@ const PRESETS = [
   set:{'zah.stan':'середньої тяжкості','zah.pol':'вимушене (ортопное)','shk.kol':'бліді, акроціаноз','shk.nab':'Набряки гомілок і стоп','dyh.hr':'вологі дрібнопухирчасті хрипи в нижніх відділах з обох боків',
        'ssc.mezh':'Ліва межа відносної серцевої тупості розширена','ssc.tony':'приглушені','trav.pech':'Печінка виступає з-під краю реберної дуги на 2 см, край заокруглений, неболючий','sech.diur':'Діурез знижений'},
   det:{'задишку при фізичному навантаженні':['(ходьба до 100 м)'],'набряки нижніх кінцівок':['в ділянці гомілок','що з’являються під вечір','симетричні']},
-  osn:'ІХС: атеросклеротичний кардіосклероз', mkh:'I25.1', uskl:'ХСН ІІА стадії зі збереженою ФВ ЛШ, ФК III (NYHA)',
+  osn:'ІХС: атеросклеротичний кардіосклероз', mkh:'I25.1', uskl:'ХСН ІІА стадії, ФК III (NYHA)',
   plan:[...BASE,'біохімічний аналіз крові','ЕхоКГ','рентгенографія ОГК','УЗД ОЧП']},
 { group:'ter', name:'Хронічний гастрит', key:'gastr', hosp:'p',
   skarhy:['біль в епігастрії','печію','відрижку','нудоту','здуття живота','гіркоту в роті'],
@@ -4896,8 +4899,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.133', VDATE = '11.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.134', VDATE = '12.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.134', '12.11.2026', 'умовні призначення («за показаннями») більше не потрапляють у щоденник, епікриз, пам’ятку, бланк 003/о і листок для медсестри, поки лікар не натисне «Призначити» — у листку вони позначені й стоять окремо від «Призначено (N)»; щоденник: «Зберігаються скарги на …», бік ураження в легенях, препарати коротко; в епікризі режим, дієта й контроль показників не йдуть як лікування, а незавершений в/в антибіотик без пероральної форми — зауваження в «Перевірці»; дата надходження береться з огляду; анамнез без «протягом 10 років. Хворіє протягом багатьох років»; ХСН у шаблоні без ФВ до ЕхоКГ; вкладки документів не «застрягають» над формою'],
   ['0.9.3.133', '11.11.2026', '«плюснефаланговий» без повтору «суглоба суглоба»; «рогівкові рефлекси». Параліч Белла: «парезів кінцівок немає», щоб не заперечувати парез обличчя. ТІА в басейні середньої мозкової артерії — G45.1, гострий гнійний отит — H66.0, неатрофічний гастрит — K29.3 (хронічний поверхневий). Перелом у шаблоні — L1 і S32.0, без Th12. ЧСС в рядку ЕКГ — «уд./хв», як в огляді. Форму 027/о не змінювали'],
   ['0.9.3.132', '11.11.2026', 'після вибору хвороби, якщо ПІБ уже є, курсор стає в «Показники одним рядком». Пошук і випадковий клік більше не знімають позначку «не переглянуто» з усього розділу; перед копіюванням, якщо показників майже немає, це написано в тому самому вікні. Довідка більше не обіцяє «решта систем — норма». Клік по пункту в тексті показує «Скасувати» біля тексту. У клавішах є Alt+Shift+1…9 «Мої фрази». На кнопках плану ЗАК, ЗАС, ОВД, ЛН і ЕМД є розшифровка. NEWS2 має шкалу 2 для ХОЗЛ і гіперкапнії (ціль SpO2 88–92%)'],
   ['0.9.3.131', '11.11.2026', 'перемикання документа не переписує дату огляду на «зараз»: щоденник лишається на даті огляду, доки лікар не натисне «Зараз». У проведеному лікуванні епікризу курс довший за один день бере дати з періоду перебування, а не зрізається в один день. Період підставляє дату надходження з огляду. Короткий анамнез епікризу береться з огляду, як і скарги. У рекомендації не потрапляють режим, моніторинг і профілактичний еноксапарин 40 мг як «тривало». З тексту прибрано підказку «(вкладка «Шкали»)»'],
@@ -6511,9 +6515,10 @@ function diaryFromExam(k){
   if (known('zah.svid')) setByText('d_main.svid', T('zah.svid'));
   const sk = T('skarhy.c');
   if (sk){
-    setByText('d_main.sk', ['Скарги ті самі','Скарги зменшились','Скарг активно не пред’являє','Скарги посилились'][k]);
-    if (k === 0 || k === 3) F('d_main.skx').el.value = 'на ' + sk;
-    if (k === 1) F('d_main.zal').el.value = sk;
+    // «без динаміки» — «Зберігаються скарги на …» (не «Скарги ті самі: на …»)
+    if (k !== 0) setByText('d_main.sk', ['','Скарги зменшились','Скарг активно не пред’являє','Скарги посилились'][k]);
+    if (k === 3) F('d_main.skx').el.value = 'на ' + sk;
+    if (k === 0 || k === 1) F('d_main.zal').el.value = sk;
   }
   if (known('shk.kol')){
     const kol = T('shk.kol');
@@ -6522,7 +6527,7 @@ function diaryFromExam(k){
   if (known('dyh.hr') || known('dyh.ausk')){
     const hr = T('dyh.hr'), wet = /вологі|крепітація/.test(hr), dry = /сухі/.test(hr), ausk = T('dyh.ausk');
     const lung = k === 2 ? 'дихання везикулярне, хрипи не вислуховуються'
-      : wet ? (k === 1 ? 'кількість хрипів зменшилась' : 'дихання ослаблене в нижніх відділах, вологі хрипи')
+      : wet ? (k === 1 ? 'кількість хрипів зменшилась' : 'дихання ослаблене в нижніх відділах' + ((/справа|зліва|з обох боків/.exec(ausk + ' ' + hr) || [''])[0].replace(/^./, ' $&')) + ', вологі хрипи')
       : dry ? (k === 1 ? 'дихання жорстке, хрипів немає' : 'дихання жорстке, поодинокі сухі хрипи')
       : /жорстке/.test(ausk) ? 'дихання жорстке, хрипів немає'
       : /ослаблен/.test(ausk) ? '' : 'дихання везикулярне, хрипи не вислуховуються';
@@ -6704,7 +6709,7 @@ function renderDHints(){
    Вихідний день, відсутність транспорту, очікування планових обстежень підставою для продовження не є. */
 function stayRx(){
   const d = todayISO();
-  return RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= d) && !(rxEnd(it) && rxEnd(it) < d) && !(it.start && it.start > d));
+  return RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= d) && !(rxEnd(it) && rxEnd(it) < d) && !(it.start && it.start > d) && !(typeof rxHeld === 'function' && rxHeld(it)));
 }
 function stayVitals(){
   const N = id => { const e = document.getElementById(id); return e && e.value.trim() ? num(e.value) : NaN; };
@@ -6764,7 +6769,7 @@ const ROUTE_P = {'per os':'всередину','сублінгвально':'п�
 const FREQ_P = {'1 р/д':'1 раз на день','2 р/д':'2 рази на день','3 р/д':'3 рази на день','4 р/д':'4 рази на день','5 р/д':'5 разів на день','кожні 4 год':'кожні 4 години','кожні 6 год':'кожні 6 годин','кожні 8 год':'кожні 8 годин','кожні 12 год':'кожні 12 годин','вранці':'вранці','на ніч':'на ніч','перед їжею':'перед їжею','за потреби':'за потреби','одноразово':'одноразово','постійно':'постійно'};
 function pamMeds(){
   const d = todayISO();
-  return RXF().filter(it=>(!it.stop || it.stop >= d) && !/в\/в|в\/м|п\/ш|в\/к|інфуз|епідур/.test(it.route || '') && it.drug !== 'Оксигенотерапія').map((it,k)=>`${k + 1}) ${it.drug} — ` + [it.dose, ROUTE_P[it.route] || it.route, FREQ_P[it.freq] || it.freq].filter(Boolean).join(' ')
+  return RXACT().filter(it=>(!it.stop || it.stop >= d) && !/в\/в|в\/м|п\/ш|в\/к|інфуз|епідур/.test(it.route || '') && it.drug !== 'Оксигенотерапія').map((it,k)=>`${k + 1}) ${it.drug} — ` + [it.dose, ROUTE_P[it.route] || it.route, FREQ_P[it.freq] || it.freq].filter(Boolean).join(' ')
     + (+it.days > 0 ? `, ${it.days} ${plural(+it.days, ['день','дні','днів'])}` : '') + (it.note ? ` (${it.note})` : '') + ';').join('\n').replace(/;$/, '');
 }
 const RED0 = ['різко погіршився загальний стан, з’явилася сплутаність свідомості','сильна задишка, біль у грудях або непритомність'];
@@ -7042,7 +7047,7 @@ function epiAuto(){
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
-    const cont = RXF().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
+    const cont = RXACT().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
     if (cont.length) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
       return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
     (DREK[curKey] || []).forEach(x=>L.push(x));
@@ -7676,7 +7681,7 @@ function bExam(){
   const kons = plan.filter(t=>/^консультація/.test(t)).map(t=>t.replace(/^консультація /, ''));
   const K4 = [['ОКУЛІСТА',/офтальмолог|окуліст/],['ХІРУРГА',/^хірурга$/],['НЕВРОЛОГА',/^невролога$/],['ЛОРа',/ЛОР/]];
   const kRest = kons.filter(k=>!K4.some(([,re])=>re.test(k)));
-  const kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug', rx = RXF().filter(it=>!it.stop || it.stop >= todayISO());
+  const kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug', rx = RXACT().filter(it=>!it.stop || it.stop >= todayISO());
   const reg = rx.filter(it=>kd(it) === 'reg').map(it=>rxLine(it)).join('; '), diet = rx.filter(it=>kd(it) === 'diet').map(it=>rxLine(it)).join('; ');
   const meds = rx.filter(it=>!['reg','diet'].includes(kd(it))).map((it,k)=>`${k+1}. ${rxLine(it)}.`).join('\n');
   const p2 = bPage('bexam2',
@@ -9103,7 +9108,7 @@ const SABA_PRN = ['Сальбутамол','100–200 мкг (1–2 вдихи)'
 
 /* ---------- Негоспітальна пневмонія (ATS/IDSA 2019; ERS/ESICM/ESCMID/ALAT 2023; SCCM 2024 — ГКС) ---------- */
 RXS.pneu = [R_PAL, D_OVD, M_VIT, O2_IF,
-  ['Амоксицилін/клавуланат','1,2 г','в/в крапельно','3 р/д',5,'щойно встановлено діагноз; перегляд через 48–72 год; при стабільності — per os 875/125 мг 2 р/д; разом щонайменше 5 днів'],
+  ['Амоксицилін/клавуланат','1,2 г','в/в крапельно','3 р/д',5,'перегляд через 48–72 год; при стабільності — per os 875/125 мг 2 р/д; разом щонайменше 5 днів'],
   ['Кларитроміцин','500 мг','per os','2 р/д',5,'або азитроміцин 500 мг 1 р/д 3 дні'],
   VTE_P, PCM_, MOB];
 RXA.pneu = [R_DOM,
@@ -9668,7 +9673,7 @@ function rxDayMark(it, d){
   return d <= (real > todayISO() ? real : todayISO()) ? '+' : '';   // без тривалості — «+» до сьогодні, далі лікар відмічає щодня
 }
 function f0034Sheets(start, n){
-  const K = it => rxKind(it), items = [...RXF().filter(it=>K(it) === 'drug'), ...RXF().filter(it=>K(it) === 'man')],
+  const K = it => rxKind(it), items = [...RXACT().filter(it=>K(it) === 'drug'), ...RXACT().filter(it=>K(it) === 'man')],
     reg = RXF().filter(it=>['reg','diet'].includes(K(it))).map(it=>[it.drug, it.note].filter(Boolean).join(', ')).join('; ');
   const first = start || [...RXF().map(it=>it.start).filter(Boolean)].sort()[0] || todayISO();
   const last = RXF().reduce((m, it)=>{ const e = it.stop || rxEnd(it) || todayISO(); return e > m ? e : m; }, first);
@@ -16520,7 +16525,8 @@ function rxCourse(it, d2){
   return base + ` — з ${fmtDM(s)} по ${fmtDM(e)} (${n} ${plural(n, ['день','дні','днів'])})`;
 }
 function epiCourses(){
-  const L = RXF(); if (!L.length) return '';
+  // лише справді призначене; режим, дієта й контроль показників — не лікування
+  const L = RXACT().filter(it=>!['reg','diet'].includes(rxKind(it)) && !/^(Контроль|Моніторинг|Спостереження)/i.test(it.drug)); if (!L.length) return '';
   const d2 = epiD2(), used = new Set(), out = [];
   RXGRP.forEach(([name, test])=>{ const g = L.filter(it=>!used.has(it) && test(it)); g.forEach(it=>used.add(it)); if (g.length) out.push(name + ': ' + g.map(it=>rxCourse(it, d2)).join('; ')); });
   return out.map(x=>end(x)).join('\n');
@@ -16528,7 +16534,7 @@ function epiCourses(){
 /* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
 function contList(){
   const d2 = epiD2();
-  const L = RXF().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';
@@ -16612,6 +16618,9 @@ function epiHospParts(){
     return r; };
   const c0 = checkDoc; checkDoc = function(){ const L = c0.apply(this, arguments);
     if (DOC === 'epi'){ const u = unstableAtDischarge(); if (u) L.push({m:`За останню добу перед випискою є ознаки нестабільності (${u}) — перевірте готовність до виписки`, tab:'e_lik', f:'e_lik.vyp'}); }
+    /* 0.9.3.134: парентеральний антибіотик не завершено на день виписки, а в «Продовжити прийом» його немає — у пневмонії це давало лише макролід */
+    if (DOC === 'epi'){ try{ const d2 = epiD2(); const left = RXACT().filter(it=>isAB(it) && !it.stop && /в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && rxEnd(it) && rxEnd(it) > d2);
+      if (left.length) L.push({m:`Курс ${left.map(it=>it.drug).join(', ')} на день виписки не завершено, а парентеральний препарат у «Продовжити прийом» не йде — додайте пероральну форму в листок або відмініть`, tab:'RX'}); }catch(e){} }
     return L; }; }
 /* «Продовжити прийом» потрібен лише в епікризі; у змісті «Рекомендацій» інших варіантів — окремим блоком після рекомендацій */
 /* фірмовий вигляд епікризу: акцентні заголовки пунктів, більший логотип; «чорно-білий логотип» — і заголовки чорні */
@@ -22906,8 +22915,10 @@ function diaryOxygenText(source, method, flow){
   if (device) return 'на кисні' + device + (flow ? ', потік ' + flow + ' л/хв' : '');
   return flow ? 'на кисні ' + flow + ' л/хв' : '';
 }
+/* 0.9.3.134: у щоденнику — коротко (препарат, доза, шлях, кратність); пояснення з примітки лишаються в листку призначень */
+const diaryRxShort = it => [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ') + (it.hours ? ' о ' + it.hours : '');
 function diaryCourseLine(it, date){
-  const total = Number(it.days);
+  const total = Number(it.days), rxLine = diaryRxShort;
   if (!it.start || !Number.isInteger(total) || total <= 0) return rxLine(it);
   const elapsed = Math.floor((Date.parse(date + 'T00:00:00Z') - Date.parse(it.start + 'T00:00:00Z')) / 864e5) + 1;
   return Number.isFinite(elapsed) && elapsed >= 1 && elapsed <= total
@@ -22948,10 +22959,11 @@ function diaryPrintExtras(el, e){
   const rxPart0 = rxPart;
   rxPart = function(){
     if (DOC !== 'shch') return rxPart0.apply(this, arguments);
-    if (!RXF().length) return null;
+    const RXA = typeof RXACT === 'function' ? RXACT : RXF;   // умовні «за показаннями» — не в щоденник
+    if (!RXA().length) return null;
     const date = todayISO(), act = it => it.start <= date && (!rxEnd(it) || rxEnd(it) >= date);
-    const cont = RXF().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXF().filter(it=>it.start === date && act(it)), off = RXF().filter(it=>it.stop === date);
-    const completed = RXF().filter(it=>diaryCourseCompleted(it, date));
+    const cont = RXA().filter(it=>act(it) && it.start < date && it.stop !== date), nw = RXA().filter(it=>it.start === date && act(it)), off = RXA().filter(it=>it.stop === date);
+    const completed = RXA().filter(it=>diaryCourseCompleted(it, date));
     const lines = [];
     if (cont.length) lines.push('Продовжує отримувати: ' + cont.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
     if (nw.length) lines.push('Призначено: ' + nw.map(it=>diaryCourseLine(it, date)).join('; ') + '.');
@@ -24071,6 +24083,64 @@ document.addEventListener('keydown', e => {
   mpInsert(list[i].text);
 }, true);
 mpMenus();
+/* 0.9.3.134 — умовні призначення («за показаннями») видно в листку: позначка й кнопка «Призначити».
+   Без неї рядок «доки не підтвердите» нічим було підтвердити, а стрічка «Призначено (N)» рахувала кисень і еноксапарин як уже призначені —
+   медсестра бачила їх у списку до виконання. it.hold === false — лікар підтвердив; true — повернув «за показаннями». */
+function rxHeldType(it){ const h0 = it.hold; it.hold = undefined; const r = rxHeld(it); it.hold = h0; return r; }
+{
+  // стрічка «Призначено (N)» — без умовних; умовні окремим рядком
+  renderRxStrip = function(){
+    const b = $('#rxStrip'); if (!b) return; const t = todayISO();
+    const live = RXF().filter(it=>!(it.stop && it.stop <= t) && !(rxEnd(it) && rxEnd(it) < t));
+    const act = live.filter(it=>!rxHeld(it)), held = live.filter(rxHeld);
+    b.hidden = !live.length; if (!live.length) return;
+    const one = it => [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
+    const g = k => act.filter(it=>k.includes(rxKind(it)));
+    b.innerHTML = '';
+    b.append(h('b', {}, `Призначено (${act.length}): `), g(['drug']).map(one).join('; ') || '—',
+      g(['reg','diet']).length ? h('span', {class:'rxs-g'}, ' · Режим, дієта: ' + g(['reg','diet']).map(it=>it.drug).join('; ')) : '',
+      g(['man','phys','loc']).length ? h('span', {class:'rxs-g'}, ' · Процедури: ' + g(['man','phys','loc']).map(it=>it.drug).join('; ')) : '',
+      held.length ? h('span', {class:'rxs-held'}, ' · За показаннями (ще не призначено): ' + held.map(it=>it.drug).join('; ')) : '');
+  };
+  const rr0 = renderRx;
+  renderRx = function(){
+    const r = rr0.apply(this, arguments);
+    RXF().forEach(it=>{
+      if (!rxHeldType(it)) return;
+      const row = document.querySelector(`#rxList .rx[data-id="${it.id}"]`); if (!row) return;
+      const held = rxHeld(it), sum = row.querySelector('.rxsum');
+      row.classList.toggle('rx-held', held);
+      if (sum && held){ const b = h('span', {class:'badge warn rx-held-b'}, 'за показаннями'), nm = sum.querySelector('b, strong'); if (nm) nm.after(b); else sum.prepend(b); }
+      const btn = h('button', {type:'button', class:'btn' + (held ? ' primary' : ''), title:held ? 'Показання є — рядок піде в документ як призначене' : 'Повернути в «за показаннями»',
+        onclick:e=>{ e.stopPropagation(); it.hold = held ? false : true; renderRx(); update(); toast(held ? 'Призначено: ' + it.drug : 'Повернуто «за показаннями»', 1600); }},
+        held ? 'Призначити' : 'Лише за показаннями');
+      const acts = row.querySelector('.acts2'); if (acts) acts.prepend(btn);
+      else if (sum && held) sum.after(h('div', {class:'rx-held-row'}, btn));
+    });
+    return r;
+  };
+}
+/* 0.9.3.134 — дата надходження з первинного огляду: при переході з огляду в щоденник чи епікриз порожня «Дата надходження»
+   береться з дати огляду (раніше — лише після збереження пацієнта або «Заповнити епікриз»; день перебування не рахувався). */
+{
+  const sw0 = switchDoc;
+  switchDoc = function(to){
+    try{
+      if (DOC === 'ohl' && to !== 'ohl' && MODE === 'hosp'){
+        const P = F('e_per.per'), dt = String(mv('dt') || '').split('T')[0];
+        if (P && P.d1 && !P.d1.value && /^\d{4}-\d{2}-\d{2}$/.test(dt) && val(F('dx.osn'), true)) P.d1.value = dt;   // лише коли огляд справді є (діагноз)
+      }
+    }catch(e){}
+    return sw0.apply(this, arguments);
+  };
+}
+/* 0.9.3.134 — вкладки документів у шапці не «застрягають» над формою: після епікризу (ширша шапка) вони переїжджали
+   в рядок над формою й не поверталися — навігація стрибала між документами. Перевіряємо місце після кожного перемикання й зміни розміру. */
+{
+  const again = () => { try{ if (typeof SHELL !== 'undefined' && SHELL.placeDocs) requestAnimationFrame(()=>SHELL.placeDocs()); }catch(e){} };
+  const sw0 = switchDoc; switchDoc = function(){ const r = sw0.apply(this, arguments); again(); return r; };
+  let t = 0; window.addEventListener('resize', ()=>{ clearTimeout(t); t = setTimeout(again, 150); });
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>

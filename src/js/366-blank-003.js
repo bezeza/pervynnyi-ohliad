@@ -158,7 +158,7 @@ function bExam(){
   const kons = plan.filter(t=>/^консультація/.test(t)).map(t=>t.replace(/^консультація /, ''));
   const K4 = [['ОКУЛІСТА',/офтальмолог|окуліст/],['ХІРУРГА',/^хірурга$/],['НЕВРОЛОГА',/^невролога$/],['ЛОРа',/ЛОР/]];
   const kRest = kons.filter(k=>!K4.some(([,re])=>re.test(k)));
-  const kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug', rx = RXF().filter(it=>!it.stop || it.stop >= todayISO());
+  const kd = it => typeof rxKind === 'function' ? rxKind(it) : 'drug', rx = RXACT().filter(it=>!it.stop || it.stop >= todayISO());
   const reg = rx.filter(it=>kd(it) === 'reg').map(it=>rxLine(it)).join('; '), diet = rx.filter(it=>kd(it) === 'diet').map(it=>rxLine(it)).join('; ');
   const meds = rx.filter(it=>!['reg','diet'].includes(kd(it))).map((it,k)=>`${k+1}. ${rxLine(it)}.`).join('\n');
   const p2 = bPage('bexam2',

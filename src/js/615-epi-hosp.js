@@ -34,7 +34,8 @@ function rxCourse(it, d2){
   return base + ` — з ${fmtDM(s)} по ${fmtDM(e)} (${n} ${plural(n, ['день','дні','днів'])})`;
 }
 function epiCourses(){
-  const L = RXF(); if (!L.length) return '';
+  // лише справді призначене; режим, дієта й контроль показників — не лікування
+  const L = RXACT().filter(it=>!['reg','diet'].includes(rxKind(it)) && !/^(Контроль|Моніторинг|Спостереження)/i.test(it.drug)); if (!L.length) return '';
   const d2 = epiD2(), used = new Set(), out = [];
   RXGRP.forEach(([name, test])=>{ const g = L.filter(it=>!used.has(it) && test(it)); g.forEach(it=>used.add(it)); if (g.length) out.push(name + ': ' + g.map(it=>rxCourse(it, d2)).join('; ')); });
   return out.map(x=>end(x)).join('\n');
@@ -42,7 +43,7 @@ function epiCourses(){
 /* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
 function contList(){
   const d2 = epiD2();
-  const L = RXF().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';
@@ -126,6 +127,9 @@ function epiHospParts(){
     return r; };
   const c0 = checkDoc; checkDoc = function(){ const L = c0.apply(this, arguments);
     if (DOC === 'epi'){ const u = unstableAtDischarge(); if (u) L.push({m:`За останню добу перед випискою є ознаки нестабільності (${u}) — перевірте готовність до виписки`, tab:'e_lik', f:'e_lik.vyp'}); }
+    /* 0.9.3.134: парентеральний антибіотик не завершено на день виписки, а в «Продовжити прийом» його немає — у пневмонії це давало лише макролід */
+    if (DOC === 'epi'){ try{ const d2 = epiD2(); const left = RXACT().filter(it=>isAB(it) && !it.stop && /в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && rxEnd(it) && rxEnd(it) > d2);
+      if (left.length) L.push({m:`Курс ${left.map(it=>it.drug).join(', ')} на день виписки не завершено, а парентеральний препарат у «Продовжити прийом» не йде — додайте пероральну форму в листок або відмініть`, tab:'RX'}); }catch(e){} }
     return L; }; }
 /* «Продовжити прийом» потрібен лише в епікризі; у змісті «Рекомендацій» інших варіантів — окремим блоком після рекомендацій */
 /* фірмовий вигляд епікризу: акцентні заголовки пунктів, більший логотип; «чорно-білий логотип» — і заголовки чорні */
