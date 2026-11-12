@@ -2026,6 +2026,25 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('0.9.3.134: умовні призначення не йдуть у щоденник, епікриз і «Призначено (N)», доки не натиснуто «Призначити»', o.shOk && o.epOk && o.stripOk && o.conf && o.sh2, r);
   ok('0.9.3.134: дата надходження з огляду; незавершений в/в антибіотик — у «Перевірці»; анамнез і ХСН без вигаданого', o.adm && o.chk && o.gh && o.hf, r); }
  { const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); const presets=PRESETS.map((p,i)=>({p,i})).filter(x=>x.p.key!=='prof'), bad=[]; for(let i=0;i<presets.length;i++){ clearAll(); switchDoc('ohl'); const {p,index}= {p:presets[i].p,index:presets[i].i}; applyPreset(p, HV.cards[index]); update(); const text=document.getElementById('out').textContent; if(/\\([^()]*\\(/.test(text)) bad.push({key:p.key, match:(text.match(/\\([^()]*\\(/)||[])[0]}); } return JSON.stringify({count:presets.length,bad}); })()`); const o=JSON.parse(r); ok('Задача 23: усі 69 шаблонів без вкладених дужок у тексті огляду', o.count===69 && o.bad.length===0, r); }
+{ // MED-001: зміна одного поля не знімає прапорець; лише явне підтвердження розділу.
+  const r=JSON.parse(w.eval(`(()=>{ const prev=arevGet(), gate=AGATE, doc0=DOC; AGATE=true; switchDoc('ohl');
+    const id=OBJ_OHL()[0]; if(!id) throw new Error('Немає об’єктивних розділів для тесту');
+    arevSet({[id]:'тестова заготовка'}); drawAuto();
+    const blocked=autoGate()===false, dlg=document.querySelector('.agate');
+    const labels=dlg?[...dlg.querySelectorAll('button')].map(b=>b.textContent.trim()):[];
+    const noBypass=!labels.some(x=>/перевірив.*продовжити/i.test(x));
+    const closes=labels.includes('Закрити');
+    if(dlg){ const close=[...dlg.querySelectorAll('button')].find(b=>b.textContent.trim()==='Закрити'); if(close) close.click(); }
+    const stillBlocked=autoGate()===false;
+    const sec=secOf(id), ack=sec&&sec.panel&&sec.panel.querySelector('.autobar .ab-ok');
+    if(ack) ack.click();
+    const cleared=autoForDoc().length===0, allowed=autoGate()===true;
+    arevSet(prev); AGATE=gate; switchDoc(doc0); drawAuto(); update();
+    return JSON.stringify({blocked,noBypass,closes,stillBlocked,hasAck:!!ack,cleared,allowed});
+  })()`));
+  ok('MED-001: автозаповнення блокує експорт, без масового обходу; потрібне явне підтвердження кожного розділу',
+    r.blocked && r.noBypass && r.closes && r.stillBlocked && r.hasAck && r.cleared && r.allowed, JSON.stringify(r));
+}
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
