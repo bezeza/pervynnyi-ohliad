@@ -2025,6 +2025,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const o=JSON.parse(r);
   ok('0.9.3.134: умовні призначення не йдуть у щоденник, епікриз і «Призначено (N)», доки не натиснуто «Призначити»', o.shOk && o.epOk && o.stripOk && o.conf && o.sh2, r);
   ok('0.9.3.134: дата надходження з огляду; незавершений в/в антибіотик — у «Перевірці»; анамнез і ХСН без вигаданого', o.adm && o.chk && o.gh && o.hf, r); }
+ { const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); const presets=PRESETS.slice(), bad=[]; for(let i=0;i<presets.length;i++){ clearAll(); switchDoc('ohl'); const p=presets[i]; applyPreset(p, HV.cards[i]); update(); const text=document.getElementById('out').textContent; if(/\\([^()]*\\(/.test(text)) bad.push({key:p.key, match:(text.match(/\\([^()]*\\(/)||[])[0]}); } return JSON.stringify({count:presets.length,bad}); })()`); const o=JSON.parse(r); ok('Задача 23: усі 69 шаблонів без вкладених дужок у тексті огляду', o.count===69 && o.bad.length===0, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
