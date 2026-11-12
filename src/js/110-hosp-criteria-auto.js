@@ -21,7 +21,11 @@ function autoRules(){
   if (K === 'copd' && spo <= 92) spec.add(KRIT.copd[2]);
   if (K === 'hf' && (spo <= 92 || /з обох боків/.test(T('dyh.hr')) || /ортопное/.test(T('zah.pol')))) spec.add(KRIT.hf[0]);
   if (K === 'gh' && sb >= 180 && (neuro || /вологі|крепітація/.test(T('dyh.hr')) || sk.includes('стискаючий біль'))) spec.add(KRIT.gh[0]);
-  if (K === 'stroke' && neuro){ spec.add(KRIT.stroke[0]); spec.add(NEURO[0]); }
+  if (K === 'stroke' && neuro){
+    spec.add(NEURO[0]);
+    const onset = /NIHSS|час початку|початок симптом|о \d{1,2}[:.]\d{2}|\d{1,2}:\d{2}/.test([T('morbi.ax'), T('skarhy.cx'), T('dx.osn')].join(' '));
+    if (onset) spec.add(KRIT.stroke[0]);
+  }
   if (K === 'tia') spec.add(KRIT.tia[0]);
   if (K === 'bell' && neuro) spec.add(NEURO[0]);
   if ((K === 'dm' || K === 'dpn') && consc) spec.add(DM[0]);
@@ -33,7 +37,6 @@ function autoRules(){
   if (/невправиме/.test(T('trav.hryzha')) || (/дзвінка/.test(T('trav.perist')) && /Затримка/.test(T('trav.vyp'))) || (K === 'app' && /здухвинній/.test(T('trav.zhyv')))) spec.add(ABD[1]);
   if (K === 'chol' && /Ортнера|Мерфі/.test(T('trav.symp')) && t >= 37.5) spec.add(KRIT.chol[0]);
   if (K === 'panc' && sk.includes('багаторазове блювання') && dehydr) spec.add(KRIT.panc[1]);
-  if ((K === 'food' || K === 'gastr') && (sk.includes('рідкі випорожнення') || sk.includes('блювання')) && dehydr) spec.add(VOMIT[1]);
   if (K === 'ery' && t >= 38 && /еритеми/.test(T('shk.vys'))) spec.add(KRIT.ery[0]);
   if (K === 'hep' && consc) spec.add(KRIT.hep[1]);
   const qsofa = (rr >= 22) + (sb <= 100) + consc;
@@ -54,7 +57,8 @@ function autoRules(){
   if (K === 'varic' && (spo <= 92 || /хрипи|крепітація/.test(T('dyh.hr')) && !/не вислуховуються/.test(T('dyh.hr')))) spec.add(KRIT.varic[0]);
   // за скаргами, ускладненнями та листом призначень
   const usk = T('dx.uskl');
-  const rxA = RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= todayISO()));
+  const rxA = RX.filter(it=>String(it.drug || '').trim() && !(it.stop && it.stop <= todayISO()) && !(typeof rxHeld === 'function' && rxHeld(it)));
+  if ((K === 'food' || K === 'gastr') && (sk.includes('рідкі випорожнення') || sk.includes('блювання')) && dehydr && !rxA.some(it=>/регідратац/i.test(it.drug))) spec.add(VOMIT[1]);
   const hasRx = re => rxA.some(it=>re.test(it.drug));
   const parenteral = it => /в\/в|в\/м|п\/ш/.test(it.route || '');
   const ivAB = rxA.some(it=>isAB(it) && /в\/в/.test(it.route || ''));
@@ -113,8 +117,8 @@ function syncLoc(force){
   const L = SECTIONS.find(x=>x.id === 'loc');
   if (L && L.tab){ const hid = !on || !L.docs.includes(DOC) || (quickHide() && !QT.includes('loc')); if (L.tab.hidden !== hid){ L.tab.hidden = hid; layoutTabs(); } }
 }
-const TPLKRIT = {pneu:1, covid:0, hf:0, copd:0, asthma:0, af:0, stroke:0, tia:0, rad:1, cerv:1, migr:1, bell:0, app:1, chol:0, panc:1, gib:1, obstr:1, hern:1, perf:1,
-  dvt:1, colic:0, absc:0, mening:0, food:1, ery:0, tdr:0, thip:0, tank:0, tdisl:0};
+const TPLKRIT = {pneu:1, covid:0, hf:0, copd:0, asthma:0, af:0, tia:0, rad:1, cerv:1, migr:1, bell:0, app:1, chol:0, panc:1, gib:1, obstr:1, hern:1, perf:1,
+  dvt:1, colic:0, absc:0, mening:0, ery:0, tdr:0, thip:0, tank:0, tdisl:0};
 
 function applyAuto(){
   const {spec, gen, tpl} = autoRules();
