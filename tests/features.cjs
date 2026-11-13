@@ -2025,6 +2025,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const o=JSON.parse(r);
   ok('0.9.3.134: умовні призначення не йдуть у щоденник, епікриз і «Призначено (N)», доки не натиснуто «Призначити»', o.shOk && o.epOk && o.stripOk && o.conf && o.sh2, r);
   ok('0.9.3.134: дата надходження з огляду; незавершений в/в антибіотик — у «Перевірці»; анамнез і ХСН без вигаданого', o.adm && o.chk && o.gh && o.hf, r); }
+{ const r=JSON.parse(w.eval(`(()=>{ const hr=F('dyh.hr'), bo=F('dyh.bo'); const oldHr=hr.el.value, oldBo=bo.el.value;
+    hr.el.value='1'; hr.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    const hbox=hr.el.nextElementSibling, hButtons=hbox && hbox.classList.contains('segbtns') ? hbox.children.length : 0;
+    hr.alsoBtn.click(); const extra=[...hr.alsoBox.children].filter(x=>!x.hidden).length;
+    hr.el.value='7'; hr.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    const long=hr.currentLabel && !hr.currentLabel.hidden && hr.currentLabel.textContent===O(hr.opts[7]).l;
+    const bui=bo.wrapEl.querySelector('.resp-bo'), more=bui && bui.querySelector('.resp-bo-more'); if(more) more.click();
+    const alternatives=bui ? [...bui.querySelectorAll('.resp-bo-choices button')].filter(x=>!x.hidden).length : 0;
+    const single=!!(bui && bui.querySelector('.resp-bo-primary') && bui.querySelectorAll('.resp-bo-primary').length===1);
+    hr.el.value=oldHr; hr.el.dispatchEvent(new Event('change',{bubbles:true})); bo.el.value=oldBo; bo.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    return JSON.stringify({hButtons,extra,long,alternatives,single,hrOptions:hr.opts.length,boOptions:bo.opts.length}); })()`));
+  ok('Органи дихання: хрипи мають шість кнопок, чотири інші варіанти в «+ ще», довгий вибір читається повністю', r.hButtons===6 && r.extra===4 && r.long && r.hrOptions===10, JSON.stringify(r));
+  ok('Коротка норма: одне основне формулювання, два альтернативні у «+ ще»; збережені варіанти не втрачені', r.single && r.alternatives===2 && r.boOptions===3, JSON.stringify(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
