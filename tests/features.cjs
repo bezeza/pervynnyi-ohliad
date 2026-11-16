@@ -2053,6 +2053,9 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     return JSON.stringify({l1,l2,vis2}); })()`);
   const o=JSON.parse(r), norm=x=>String(x||'').replace(/[^\p{L}\p{N}]+/gu,'').toLowerCase();
   ok('0.9.3.140: назви кнопок «Текст» і «Лише значки» починаються з видимого напису (WCAG 2.5.3)', /^Текст/.test(o.l1||'') && (!o.l2 || norm(o.l2).includes(norm(o.vis2))), r); }
+{ const r=w.eval(`(()=>{ const a=document.getElementById('docActions'), l=document.getElementById('ptline'); return JSON.stringify({tag:a&&a.tagName, role:a&&a.getAttribute('role'), lrole:l&&l.getAttribute('role'), llab:l&&l.getAttribute('aria-label')}); })()`);
+  const o=JSON.parse(r);
+  ok('0.9.3.135: docActions — не nav з роллю toolbar; рядок пацієнта — region з підписом', o.tag==='DIV' && o.role==='toolbar' && o.lrole==='region' && !!o.llab, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

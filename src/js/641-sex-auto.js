@@ -40,7 +40,9 @@ document.querySelectorAll('#sexSeg button').forEach(b=>b.addEventListener('click
 /* у шапці — лише коли стать невідома */
 const SEX_ASK = h('span', {id:'sexAsk', class:'sexask', hidden:''}, h('span', {}, 'Стать?'),
   ...[['m','Ч','Чоловік'],['f','Ж','Жінка']].map(([v, t, l])=>h('button', {type:'button', title:l, 'aria-label':'Стать: ' + l, onclick:()=>{ const b = document.querySelector(`#sexSeg button[data-sex="${v}"]`); if (b) b.click(); }}, t)));
-{ const line = document.getElementById('ptline'), bar = document.getElementById('ptbar'); if (line && bar) bar.after(SEX_ASK); else if (line) line.append(SEX_ASK); }
+{ const line = document.getElementById('ptline'), bar = document.getElementById('ptbar'); if (line && bar) bar.after(SEX_ASK); else if (line) line.append(SEX_ASK);
+  /* у стилі «Класичний» рядок пацієнта стоїть поза main — без орієнтира текст «Стать?» поза регіонами (axe: region) */
+  if (line && !line.getAttribute('role')){ line.setAttribute('role', 'region'); if (!line.getAttribute('aria-label')) line.setAttribute('aria-label', 'Пацієнт'); } }
 function sexAsk(){ SEX_ASK.hidden = !!sex || !mv('pib'); }
 { onUpdate('641-sex-auto', ()=>{ try{ sexAsk(); }catch(e){} }); }
 try{ sexAuto(); sexAsk(); }catch(e){}
