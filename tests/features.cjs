@@ -2040,6 +2040,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     return JSON.stringify({hButtons,extra,long,alternatives,single,hrOptions:hr.opts.length,boOptions:bo.opts.length}); })()`));
   ok('Органи дихання: хрипи мають шість кнопок, чотири інші варіанти в «+ ще», довгий вибір читається повністю', r.hButtons===6 && r.extra===4 && r.long && r.hrOptions===10, JSON.stringify(r));
   ok('Коротка норма: одне основне формулювання, два альтернативні у «+ ще»; збережені варіанти не втрачені', r.single && r.alternatives===2 && r.boOptions===3, JSON.stringify(r)); }
+{ const r=w.eval(`(()=>{ const v0=v2a11yLabels, roots=[]; v2a11yLabels=function(root){ roots.push(root&&root.nodeType===1?root.id||root.className||root.tagName:'document'); return v0.apply(this,arguments); };
+    try{ renderPatients(); }finally{ v2a11yLabels=v0; } return JSON.stringify({roots}); })()`);
+  const o=JSON.parse(r);
+  ok('0.9.3.135: після renderPatients підписи полів перевіряються лише в блоці пацієнтів, не в усьому документі', o.roots.length===1 && o.roots[0]!=='document', r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

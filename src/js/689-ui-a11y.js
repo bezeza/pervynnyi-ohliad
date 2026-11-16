@@ -7,7 +7,9 @@ function v2a11yLabels(root){
   });
 }
 try{ v2a11yLabels(); }catch(e){}
-{ const rp0 = renderPatients; renderPatients = function(){ const r = rp0.apply(this, arguments); try{ v2a11yLabels(); }catch(e){} return r; }; }
+/* після перемальовування списку пацієнтів підписи потрібні лише в блоці пацієнтів (поле пошуку), а не у всьому документі:
+   повний обхід займав ~1/3 часу відкриття пацієнта при 500 записах (задача 18) */
+{ const rp0 = renderPatients; renderPatients = function(){ const r = rp0.apply(this, arguments); try{ const b = document.getElementById('plist'); v2a11yLabels(b && b.parentNode); }catch(e){} return r; }; }
 /* телефон: нижні смужки (текст розділу + вкладки) закривали низ сторінки — підвал з версією й контактами було не догортати.
    Відступ знизу тепер дорівнює їхній справжній висоті (з урахуванням вирізу екрана). */
 function v2BotPad(){
