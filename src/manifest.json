@@ -203,6 +203,7 @@
   "712-my-phrases.js",
   "713-rx-held-ui.js",
   "714-adm-from-exam.js",
-  "715-docs-place.js"
+  "715-docs-place.js",
+  "717-text-counter-label.js"
  ]
 }
