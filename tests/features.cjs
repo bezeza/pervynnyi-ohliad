@@ -248,8 +248,8 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
  { w.eval("DIARIES=[]; switchDoc('ohl')"); ap('pneu'); w.eval("switchDoc('shch')");
    ok('Перший щоденник — з первинного огляду, а не «норма»', /вологі хрипи/.test(out()) && !/хрипи не вислуховуються/.test(out()), out().slice(0,400));
    w.eval("switchDoc('ohl')");
-   const ex=w.eval("(()=>{ show(TABS.findIndex(t=>t.id==='dyh')); const f=F('dyh.hr'); mark(f.el,f); const n=f.el.nextElementSibling; return [f.el.title, n && n.className, n && n.textContent] })()");
-   ok('Довгий вибраний варіант видно повністю під списком', ex[1]==='selfull' && /вологі дрібнопухирчасті хрипи/.test(ex[2]) && ex[0]===ex[2], JSON.stringify(ex)); }
+   const ex=w.eval("(()=>{ show(TABS.findIndex(t=>t.id==='dyh')); const f=F('dyh.hr'); mark(f.el,f); const n=f.currentLabel && !f.currentLabel.hidden ? f.currentLabel : f.el.nextElementSibling.querySelector('[aria-pressed=true]'); return [f.el.title, n ? 1 : 0, n && n.textContent] })()");   // з 0.9.3.135 варіанти 1–6 хрипів — кнопки (повний текст), 7–10 — у .selfull.resp-current
+   ok('Довгий вибраний варіант видно повністю під списком', !!ex[1] && /вологі дрібнопухирчасті хрипи/.test(ex[2]) && ex[0]===ex[2], JSON.stringify(ex)); }
    { const f=w.eval("F('ssc.shum')"); w.eval("(()=>{ const f=F('ssc.shum'); f.el.value='1'; f.el.dispatchEvent(new Event('change')); })()");
      const m=[...doc.querySelectorAll('#out mark.chg')].map(x=>x.textContent).join('|');
      ok('Змінене в тексті підсвічено саме тими словами, що змінились', /Систолічний шум на верхівці/.test(m) && m.length<60, m);
@@ -678,7 +678,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
      const b=f.el.nextElementSibling; b.children[1].click(); const a=[n, f.el.value, b.children[1].getAttribute('aria-pressed'), b.querySelectorAll('.chip').length];
      b.children[1].click(); a.push(f.el.value); update(); return JSON.stringify(a); })()`));
    ok('Кнопки замість списків — і для 6 варіантів; повторне натискання знімає', r[0]>120 && r[1]==='1' && r[2]==='true' && r[3]===6 && r[4]==='', JSON.stringify(r));
-   ok('Довгий список лишається списком', !w.eval("F('dyh.hr').seg"));
+   ok('Довгий список лишається списком', w.eval("(()=>{ const x=SECTIONS.flatMap(s=>s.fields).find(f=>f.type==='sel'&&f.el&&f.opts.length>8&&f!==F('dyh.hr')); return !!x&&!x.seg; })()"));   // dyh.hr (10) з 0.9.3.135 — шість кнопок
    const ac=w.eval(`(()=>{ const a=SECTIONS.find(s=>s.id==='dyh').panel.querySelector('.ph .acts2'); return [...a.children].filter(x=>x.tagName==='BUTTON'&&!x.hidden&&!x.classList.contains('tplsec')).map(x=>x.textContent).join('|')+'#'+[...a.querySelectorAll('.mmenu button')].map(x=>x.textContent).join('|'); })()`);
    ok('У заголовку вкладки — «Норма», решта під «⋯»', /^Норма#/.test(ac) && /Б\/о — одним рядком/.test(ac) && /Олівець/.test(ac) && w.document.querySelectorAll('#'+'tab-x .more-dd').length===0 && /Очистити вкладку/.test(ac), ac);
    const v=w.eval("vqApply('38,5 24 92 130/80 96').join('|')"); const o=out();
@@ -1199,7 +1199,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('Стиль Apple без шуму: «Перед копіюванням» — у «Перевірці», на полях лише відхилення, «Скасувати» — значком, документи в шапці', r==='[true,true,true,true]', r); }
 { const r=w.eval(`(()=>{ uiStyleSet('ios'); const f=F('dyh.gk'); const box=f.el.nextElementSibling; const list=!!box&&box.classList.contains('seglist')&&f.el.classList.contains('seg-hidden');
     const keep=f.el.value; box.children[1].click(); const set=f.el.value==='1'&&box.children[1].getAttribute('aria-pressed')==='true'; f.el.value=keep; f.el.dispatchEvent(new Event('change',{bubbles:true}));
-    const perk=F('dyh.perk').el.nextElementSibling.classList.contains('seglist'); const big=F('dyh.hr'); const dd=!big.el.classList.contains('seg-hidden');
+    const perk=F('dyh.perk').el.nextElementSibling.classList.contains('seglist'); const big=SECTIONS.flatMap(x=>x.fields).find(x=>x.type==='sel'&&x.el&&x.opts.length>8&&x!==F('dyh.hr')); const dd=!!big&&!big.el.classList.contains('seg-hidden');   /* dyh.hr (10) з 0.9.3.135 має шість кнопок */
     uiStyleSet('classic'); const back=!f.el.classList.contains('seg-hidden')&&!(f.el.nextElementSibling&&f.el.nextElementSibling.classList.contains('seglist'))&&!F('dyh.perk').el.nextElementSibling.classList.contains('seglist');
     uiStyleSet('ios'); const again=f.el.nextElementSibling.classList.contains('seglist'); update();
     return JSON.stringify([list,set,perk,dd,back,again]); })()`);
@@ -2027,6 +2027,19 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   ok('0.9.3.134: дата надходження з огляду; незавершений в/в антибіотик — у «Перевірці»; анамнез і ХСН без вигаданого', o.adm && o.chk && o.gh && o.hf, r); }
 { const r=JSON.parse(w.eval(`(()=>{ v2Count(); return JSON.stringify({hidden:txtCnt.hidden, label:txtBtn.getAttribute('aria-label')}); })()`));
   ok('Кнопка «Текст» не показує кількість символів і має зрозумілу доступну назву', r.hidden && r.label==='Текст документа: відкрити панель дій', JSON.stringify(r)); }
+{ const r=JSON.parse(w.eval(`(()=>{ const hr=F('dyh.hr'), bo=F('dyh.bo'); const oldHr=hr.el.value, oldBo=bo.el.value;
+    hr.el.value='1'; hr.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    const hbox=hr.el.nextElementSibling, hButtons=hbox && hbox.classList.contains('segbtns') ? hbox.children.length : 0;
+    hr.alsoBtn.click(); const extra=[...hr.alsoBox.children].filter(x=>!x.hidden).length;
+    hr.el.value='7'; hr.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    const long=hr.currentLabel && !hr.currentLabel.hidden && hr.currentLabel.textContent===O(hr.opts[7]).l;
+    const bui=bo.wrapEl.querySelector('.resp-bo'), more=bui && bui.querySelector('.resp-bo-more'); if(more) more.click();
+    const alternatives=bui ? [...bui.querySelectorAll('.resp-bo-choices button')].filter(x=>!x.hidden).length : 0;
+    const single=!!(bui && bui.querySelector('.resp-bo-primary') && bui.querySelectorAll('.resp-bo-primary').length===1);
+    hr.el.value=oldHr; hr.el.dispatchEvent(new Event('change',{bubbles:true})); bo.el.value=oldBo; bo.el.dispatchEvent(new Event('change',{bubbles:true})); update();
+    return JSON.stringify({hButtons,extra,long,alternatives,single,hrOptions:hr.opts.length,boOptions:bo.opts.length}); })()`));
+  ok('Органи дихання: хрипи мають шість кнопок, чотири інші варіанти в «+ ще», довгий вибір читається повністю', r.hButtons===6 && r.extra===4 && r.long && r.hrOptions===10, JSON.stringify(r));
+  ok('Коротка норма: одне основне формулювання, два альтернативні у «+ ще»; збережені варіанти не втрачені', r.single && r.alternatives===2 && r.boOptions===3, JSON.stringify(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
