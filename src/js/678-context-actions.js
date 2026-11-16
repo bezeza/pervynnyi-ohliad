@@ -9,7 +9,7 @@ const CTX_DOC_NAMES = {
   rx:'Листок призначень',
   epi:'Виписний епікриз'
 };
-const CTX_BAR = h('nav', {id:'docActions', class:'doc-actions', role:'toolbar', 'aria-orientation':'horizontal', 'aria-label':'Швидкі дії документа'});
+const CTX_BAR = h('div', {id:'docActions', class:'doc-actions', role:'toolbar', 'aria-orientation':'horizontal', 'aria-label':'Швидкі дії документа'});
 const CTX_META = h('div', {class:'da-meta'});
 const CTX_TITLE = h('span', {class:'da-kicker'}, 'Швидкі дії');
 const CTX_DOC = h('span', {class:'da-document'});
