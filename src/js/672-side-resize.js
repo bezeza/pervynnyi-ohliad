@@ -45,6 +45,6 @@ function sideGrip(){
 { const x0 = renderSideFold; renderSideFold = function(){ const r = x0.apply(this, arguments);
   try{ const b = SIDE_FOLD_BUTTON, l = b && b.querySelector('span'), f = document.body.classList.contains('sidefold');
     if (l) l.textContent = f ? '»' : '« Лише значки';
-    if (b){ b.title = f ? 'Розгорнути меню — назви розділів, шаблон і прогрес' : 'Згорнути меню до значків'; b.setAttribute('aria-label', b.title); } sideWApply(); }catch(e){}
+    if (b){ b.title = f ? 'Розгорнути меню — назви розділів, шаблон і прогрес' : 'Згорнути меню до значків'; b.setAttribute('aria-label', f ? b.title : 'Лише значки — ' + b.title.charAt(0).toLowerCase() + b.title.slice(1)); }   /* ім’я містить видимий напис (WCAG 2.5.3) */ sideWApply(); }catch(e){}
   return r; }; }
 try{ sideGrip(); sideIcons(); renderSideFold(); }catch(e){}
