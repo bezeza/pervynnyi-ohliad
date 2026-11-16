@@ -16,6 +16,11 @@ function sideWApply(){
   if (w && !document.body.classList.contains('sidefold')) R.style.setProperty('--sidew', w + 'px'); else R.style.removeProperty('--sidew');
   document.body.classList.toggle('side-sized', !!w);
   const g = document.getElementById('sideGrip'); if (g) g.hidden = !(layoutNow() === 'B' && !isPhoneW());
+  if (g){   /* role=separator у фокусі — це «регулятор»: за ARIA потрібні aria-valuenow/min/max (axe: aria-required-attr) */
+    const col = document.getElementById('sidecol'), now = w || Math.round(col ? col.getBoundingClientRect().width : 0) || SIDE_MIN;
+    g.setAttribute('aria-valuemin', SIDE_MIN); g.setAttribute('aria-valuemax', SIDE_MAX);
+    g.setAttribute('aria-valuenow', Math.max(SIDE_MIN, Math.min(SIDE_MAX, now))); g.setAttribute('aria-valuetext', now + ' px');
+  }
 }
 function sideGrip(){
   const col = document.getElementById('sidecol'), sin = col && col.querySelector(':scope > .sidein'); if (!col || !sin || document.getElementById('sideGrip')) return;

@@ -2044,6 +2044,10 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     try{ renderPatients(); }finally{ v2a11yLabels=v0; } return JSON.stringify({roots}); })()`);
   const o=JSON.parse(r);
   ok('0.9.3.135: після renderPatients підписи полів перевіряються лише в блоці пацієнтів, не в усьому документі', o.roots.length===1 && o.roots[0]!=='document', r); }
+{ const r=w.eval(`(()=>{ const g=document.getElementById('sideGrip'); if(!g) return JSON.stringify({none:1}); VIEW.sideW=250; sideWApply(); const a=g.getAttribute('aria-valuenow'); VIEW.sideW=0; sideWApply();
+    return JSON.stringify({a, min:g.getAttribute('aria-valuemin'), max:g.getAttribute('aria-valuemax'), n2:g.getAttribute('aria-valuenow')}); })()`);
+  const o=JSON.parse(r);
+  ok('0.9.3.135: межа бічного меню має aria-valuenow/min/max і оновлює їх при зміні ширини', o.a==='250' && o.min==='180' && o.max==='380' && /^\d+$/.test(o.n2||''), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
