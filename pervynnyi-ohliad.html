@@ -989,9 +989,9 @@ body.pvopen{overflow:hidden}
 .packsig{border:1px solid var(--line);border-radius:var(--r-s);padding:10px 12px;margin:8px 0;display:flex;flex-direction:column;gap:2px}
 .bprint{display:inline-flex;gap:6px;align-items:center}.bprint select{width:auto}
 /* «Період лікування»: «з [дата]» / «по [дата]» рівними рядками, ліжко-дні під ними */
-.f .nums:has(> input[type=date] + .u){display:grid;grid-template-columns:auto minmax(0,13em);gap:6px 8px;align-items:center;justify-content:start}
+.f .nums:has(> input[type=date] + .u){display:grid;grid-template-columns:minmax(0,auto) minmax(0,13em);gap:6px 8px;align-items:center;justify-content:start}
 .f .nums:has(> input[type=date] + .u) > .u{color:var(--muted);text-align:right}
-.f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important}
+.f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important;min-width:0}
 .f .nums:has(> input[type=date] + .u) > .hint{grid-column:1/-1;margin:0;color:var(--muted)}
 /* ===== Журнал обстежень розділами (0.9.3.12) ===== */
 .ljdlg .nvbox{max-width:1000px;width:100%}
@@ -2692,7 +2692,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.145 від 13.11.2026">v0.9.3.145 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.146 від 13.11.2026">v0.9.3.146 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4905,8 +4905,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.145', VDATE = '13.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.146', VDATE = '13.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.146', '18.11.2026', 'Виписний епікриз: поля «Період перебування» не виходять за край картки на широких екранах; кнопка «Зібрати виписку» одна (у картці «Виписка за хвилину»), без дубля в швидких діях.'],
   ['0.9.3.145', '18.11.2026', 'Римські цифри (клінічна група, стадія ХСН) скрізь латиницею I/II/III, без кириличної «І»; медичний зміст не змінено.'],
   ['0.9.3.144', '18.11.2026', 'ТЕЛА: шаблон без готової категорії ризику й тяжкості, обстеження з тропоніном, BNP і лактатом, варіанти антикоагуляції й підказки за категоріями A–E. Менінгіт: ампіцилін не додається лише за віком — окремий варіант «Фактори ризику Listeria». Інсульт: після тромболізису антиагрегант — після контрольної КТ/МРТ через 24 год'],
   ['0.9.3.143', '18.11.2026', 'примітки призначень у шаблонах переписано без вкладених дужок без зміни медичного змісту; додано регресійний тест усіх 69 шаблонів'],
@@ -22068,10 +22069,6 @@ function ctxPrintRx(){
   if (typeof f0034Print === 'function') f0034Print();
   else toast('Друк листка призначень недоступний');
 }
-function ctxBuildEpi(){
-  goTab('e_per');
-  if (typeof epiAuto === 'function') epiAuto();
-}
 function ctxActionItems(){
   const check = {id:'check', label:'Перевірка', run:ctxOpenCheck};
   if (DOC === 'ohl') return [
@@ -22090,8 +22087,8 @@ function ctxActionItems(){
     check
   ];
   if (DOC === 'epi') return [
-    {id:'epi-build', label:'Зібрати виписку', primary:true, run:ctxBuildEpi},
-    {id:'epi-field', label:'До періоду виписки', run:()=>goTab('e_per', 'e_per.per')},
+    /* «Зібрати виписку» — одна кнопка, у картці «Виписка за хвилину» (540-ui-build.js); тут не дублюємо */
+    {id:'epi-field', label:'До періоду виписки', primary:true, run:()=>goTab('e_per', 'e_per.per')},
     check
   ];
   return [];

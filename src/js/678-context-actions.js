@@ -46,10 +46,6 @@ function ctxPrintRx(){
   if (typeof f0034Print === 'function') f0034Print();
   else toast('Друк листка призначень недоступний');
 }
-function ctxBuildEpi(){
-  goTab('e_per');
-  if (typeof epiAuto === 'function') epiAuto();
-}
 function ctxActionItems(){
   const check = {id:'check', label:'Перевірка', run:ctxOpenCheck};
   if (DOC === 'ohl') return [
@@ -68,8 +64,8 @@ function ctxActionItems(){
     check
   ];
   if (DOC === 'epi') return [
-    {id:'epi-build', label:'Зібрати виписку', primary:true, run:ctxBuildEpi},
-    {id:'epi-field', label:'До періоду виписки', run:()=>goTab('e_per', 'e_per.per')},
+    /* «Зібрати виписку» — одна кнопка, у картці «Виписка за хвилину» (540-ui-build.js); тут не дублюємо */
+    {id:'epi-field', label:'До періоду виписки', primary:true, run:()=>goTab('e_per', 'e_per.per')},
     check
   ];
   return [];

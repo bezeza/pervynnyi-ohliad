@@ -9,7 +9,7 @@ const oldMode = w.eval('MODE'), oldDoc = w.eval('DOC');
   w.eval("switchDoc('rx')");
   ok('Контекстні дії: призначення', !bar.hidden && ids().includes('rx-add') && ids().includes('rx-print'), ids().join(','));
   w.eval("switchDoc('epi')");
-  ok('Контекстні дії: виписний епікриз', !bar.hidden && ids().includes('epi-build') && ids().includes('epi-field'), ids().join(','));
+  ok('Контекстні дії: виписний епікриз (без дубля «Зібрати виписку»)', !bar.hidden && !ids().includes('epi-build') && ids().includes('epi-field') && ![...doc.querySelectorAll('button')].some(x=>/Зібрати виписку/.test(x.textContent) && bar.contains(x)) && [...doc.querySelectorAll('button')].filter(x=>/Зібрати виписку/.test(x.textContent)).length===1, ids().join(','));
   w.eval("uiStyleSet('classic')");
   ok('Контекстна панель не змінює Classic', bar.hidden);
   w.eval("uiStyleSet('ios'); switchDoc('rx')");
