@@ -2056,6 +2056,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
 { const r=w.eval(`(()=>{ const a=document.getElementById('docActions'), l=document.getElementById('ptline'); return JSON.stringify({tag:a&&a.tagName, role:a&&a.getAttribute('role'), lrole:l&&l.getAttribute('role'), llab:l&&l.getAttribute('aria-label')}); })()`);
   const o=JSON.parse(r);
   ok('0.9.3.135: docActions — не nav з роллю toolbar; рядок пацієнта — region з підписом', o.tag==='DIV' && o.role==='toolbar' && o.lrole==='region' && !!o.llab, r); }
+ { const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); const presets=PRESETS.map((p,i)=>({p,i})).filter(x=>x.p.key!=='prof'), bad=[]; for(let i=0;i<presets.length;i++){ clearAll(); switchDoc('ohl'); const {p,index}= {p:presets[i].p,index:presets[i].i}; applyPreset(p, HV.cards[index]); update(); const text=document.getElementById('out').textContent; if(/\\([^()]*\\(/.test(text)) bad.push({key:p.key, match:(text.match(/\\([^()]*\\(/)||[])[0]}); } return JSON.stringify({count:presets.length,bad}); })()`); const o=JSON.parse(r); ok('Задача 23: усі 69 шаблонів без вкладених дужок у тексті огляду', o.count===69 && o.bad.length===0, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
