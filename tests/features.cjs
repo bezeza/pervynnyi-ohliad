@@ -2024,7 +2024,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const conf=o2.hold===false && !rxHeld(o2) && cnt()===n0+1;
     switchDoc('shch'); update(); const sh2=/Оксигенотерапія/.test(T());
     switchDoc('ohl'); ap('gh'); const gh=/Хронічний перебіг/.test(T()) && !/Хворіє протягом/.test(T());
-    ap('hf'); const hf=/ХСН ІІА стадії, ФК III/.test(T()) && !/ФВ ЛШ/.test(T());
+    ap('hf'); const hf=/ХСН IIА стадії, ФК III/.test(T()) && !/ФВ ЛШ/.test(T());
     clearAll(); update(); return JSON.stringify({adm,shOk,epOk,chk,stripOk,conf,sh2,gh,hf,strip:strip.slice(0,300),n0}); })()`);
   const o=JSON.parse(r);
   ok('0.9.3.134: умовні призначення не йдуть у щоденник, епікриз і «Призначено (N)», доки не натиснуто «Призначити»', o.shOk && o.epOk && o.stripOk && o.conf && o.sh2, r);
@@ -2061,6 +2061,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   const o=JSON.parse(r);
   ok('0.9.3.135: docActions — не nav з роллю toolbar; рядок пацієнта — region з підписом', o.tag==='DIV' && o.role==='toolbar' && o.lrole==='region' && !!o.llab, r); }
  { const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); const presets=PRESETS.map((p,i)=>({p,i})).filter(x=>x.p.key!=='prof'), bad=[]; for(let i=0;i<presets.length;i++){ clearAll(); switchDoc('ohl'); const {p,index}= {p:presets[i].p,index:presets[i].i}; applyPreset(p, HV.cards[index]); update(); const text=document.getElementById('out').textContent; if(/\\([^()]*\\(/.test(text)) bad.push({key:p.key, match:(text.match(/\\([^()]*\\(/)||[])[0]}); } return JSON.stringify({count:presets.length,bad}); })()`); const o=JSON.parse(r); ok('Задача 23: усі 69 шаблонів без вкладених дужок у тексті огляду', o.count===69 && o.bad.length===0, r); }
+  { const dir=path.join(__dirname,'..','src','js'), bad=[]; for(const f of fs.readdirSync(dir)){ if(!f.endsWith('.js')) continue; const s=fs.readFileSync(path.join(dir,f),'utf8'); const re=/(^|[^А-Яа-яІіЇїЄєҐґA-Za-z0-9])(І{1,3})(А|Б)?(?= клінічна група| ступеня| стадії|\W|$)(?![А-Яа-яІіЇїЄєҐґ])/g; let m; while((m=re.exec(s))){ const ctx=s.slice(m.index+m[1].length,m.index+m[1].length+22); if(/^І{1,3}(А|Б)? (клінічна група|ступеня|стадії)/.test(ctx)) bad.push(f+': '+ctx); } } ok('Задача 24: римські цифри (ступінь, стадія, група) латинськими I/V/X, не кириличною «І»', bad.length===0, JSON.stringify(bad.slice(0,5))); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
