@@ -2676,12 +2676,23 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 body.pop-ext .tn-card{display:none!important}
 /* 0.9.3.134 — умовні призначення в листку */
 .rx.rx-held .rxsum{opacity:.75}.rx-held-b{margin-left:8px;font-weight:500}.rxs-held{color:var(--warn-ink, #8a5a00)}.rx-held-row{padding:0 12px 10px}
+/* 0.9.3.142 — контраст тексту ≥ 4,5:1 (WCAG AA, axe color-contrast; задача 30). Лише колір тексту, фони не змінено. */
+.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2){color:color-mix(in srgb,var(--flag) 78%,#000)}
+.badge.ok{color:color-mix(in srgb,var(--ok) 80%,#000)}
+.autobar .ab-ok{color:color-mix(in srgb,var(--ok) 88%,#000)}
+/* нічні теми: світліший текст на темних плашках */
+@media (prefers-color-scheme: dark){:root:root:not([data-theme="light"]) :is(.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2)){color:color-mix(in srgb,var(--flag) 68%,#fff)}
+:root:root:not([data-theme="light"]) .badge.ok{color:color-mix(in srgb,var(--ok) 68%,#fff)}}
+:root:root[data-theme="dark"] :is(.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2)){color:color-mix(in srgb,var(--flag) 68%,#fff)}
+:root:root[data-theme="dark"] .badge.ok{color:color-mix(in srgb,var(--ok) 68%,#fff)}
+@media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]) :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}}
+:root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"] :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.141 від 13.11.2026">v0.9.3.141 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.142 від 13.11.2026">v0.9.3.142 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4894,8 +4905,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.141', VDATE = '13.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.142', VDATE = '13.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.142', '18.11.2026', 'доступність: достатній контраст тексту (≥ 4,5:1) для попереджень, позначки «відкрито», кнопки «✓ Переглянуто» і акцентного тексту в нічній темі стилю Apple; змінено лише колір тексту (axe-core color-contrast, задача 30).'],
   ['0.9.3.141', '16.11.2026', 'доступність: панель швидких дій документа — div з роллю toolbar (nav не допускає цієї ролі); рядок пацієнта — орієнтир «Пацієнт» (axe-core: aria-allowed-role, region; задача 18).'],
   ['0.9.3.140', '16.11.2026', 'доступність: назва кнопки «Лише значки» для екранного читача починається з видимого напису (axe-core: label-content-name-mismatch, задача 18); кнопку «Текст» уже виправлено в 0.9.3.136.'],
   ['0.9.3.139', '16.11.2026', 'доступність: межа ширини бічного меню (регулятор) тепер має aria-valuenow/min/max — екранний читач озвучує поточну ширину; порушення axe-core aria-required-attr усунено (задача 18).'],

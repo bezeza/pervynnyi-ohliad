@@ -2629,3 +2629,14 @@ svg.v2ic{width:1.15em;height:1.15em;fill:currentColor;vertical-align:-.2em;margi
 body.pop-ext .tn-card{display:none!important}
 /* 0.9.3.134 — умовні призначення в листку */
 .rx.rx-held .rxsum{opacity:.75}.rx-held-b{margin-left:8px;font-weight:500}.rxs-held{color:var(--warn-ink, #8a5a00)}.rx-held-row{padding:0 12px 10px}
+/* 0.9.3.142 — контраст тексту ≥ 4,5:1 (WCAG AA, axe color-contrast; задача 30). Лише колір тексту, фони не змінено. */
+.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2){color:color-mix(in srgb,var(--flag) 78%,#000)}
+.badge.ok{color:color-mix(in srgb,var(--ok) 80%,#000)}
+.autobar .ab-ok{color:color-mix(in srgb,var(--ok) 88%,#000)}
+/* нічні теми: світліший текст на темних плашках */
+@media (prefers-color-scheme: dark){:root:root:not([data-theme="light"]) :is(.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2)){color:color-mix(in srgb,var(--flag) 68%,#fff)}
+:root:root:not([data-theme="light"]) .badge.ok{color:color-mix(in srgb,var(--ok) 68%,#fff)}}
+:root:root[data-theme="dark"] :is(.bk>span,.usb>span:first-child,.entry-status>span:last-child,#entry_zah_stan>span:nth-child(2)){color:color-mix(in srgb,var(--flag) 68%,#fff)}
+:root:root[data-theme="dark"] .badge.ok{color:color-mix(in srgb,var(--ok) 68%,#fff)}
+@media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]) :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}}
+:root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"] :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}
