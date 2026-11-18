@@ -366,7 +366,12 @@ function clearExam(s){
   for (const f of s.fields){
     if (f.type === 'sel'){ f.el.value = ''; mark(f.el, f); }
     if (f.type === 'multi'){ f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; delete c.dataset.tpl; }); refreshChips(f); }
-    if ((f.type === 'text' || f.type === 'line') && f.el) f.el.value = '';   // «Додатково» (отоскопія, суглоб пальця…) попереднього шаблону не переносимо в наступний
+    if ((f.type === 'text' || f.type === 'line') && f.el && f.el.value){
+      /* «Додатково» попереднього шаблону (отоскопія, суглоб пальця…) не переносимо; текст, дописаний лікарем, лишаємо */
+      const v = f.el.value, key = s.id + '.' + f.id;
+      if (v === f.tplVal || PRESETS.some(x=>x.set && x.set[key] === v)) f.el.value = '';
+      f.tplVal = undefined;
+    }
   }
 }
 

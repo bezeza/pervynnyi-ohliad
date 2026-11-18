@@ -196,7 +196,7 @@ function applyPreset(p0, btn){
     const f = F(k);
     if (!f){ console.warn('Немає поля', k); continue; }
     if (Array.isArray(p.set[k])){ pick(f, p.set[k]); continue; }
-    if (f.type === 'line' || f.type === 'text'){ f.el.value = p.set[k]; continue; }
+    if (f.type === 'line' || f.type === 'text'){ f.el.value = f.tplVal = p.set[k]; continue; }
     const i = f.opts.findIndex(o=>O(o).t === p.set[k]);
     if (i < 0){ console.warn('Немає варіанту', k, p.set[k]); continue; }
     f.el.value = i; mark(f.el, f);

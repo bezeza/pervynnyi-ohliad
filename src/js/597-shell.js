@@ -90,7 +90,7 @@ const SHELL = {};
       if (!k.startsWith(s.id + '.')) continue;
       const f = F(k); if (!f) continue;
       if (Array.isArray(p.set[k])){ pick(f, p.set[k]); continue; }
-      if (f.type === 'line' || f.type === 'text'){ f.el.value = p.set[k]; continue; }
+      if (f.type === 'line' || f.type === 'text'){ f.el.value = f.tplVal = p.set[k]; continue; }
       const i = f.opts.findIndex(o=>O(o).t === p.set[k]); if (i >= 0){ f.el.value = i; mark(f.el, f); }
     }
     if (s.id === 'dx'){ F('dx.osn').el.value = p.osn || ''; F('dx.mkh').el.value = p.mkh || ''; F('dx.uskl').el.value = p.uskl || ''; }

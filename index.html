@@ -4882,7 +4882,12 @@ function clearExam(s){
   for (const f of s.fields){
     if (f.type === 'sel'){ f.el.value = ''; mark(f.el, f); }
     if (f.type === 'multi'){ f.chips.forEach(c=>{ c.setAttribute('aria-pressed','false'); delete c.dataset.ord; delete c.dataset.auto; delete c.dataset.off; delete c.dataset.tpl; }); refreshChips(f); }
-    if ((f.type === 'text' || f.type === 'line') && f.el) f.el.value = '';   // «Додатково» (отоскопія, суглоб пальця…) попереднього шаблону не переносимо в наступний
+    if ((f.type === 'text' || f.type === 'line') && f.el && f.el.value){
+      /* «Додатково» попереднього шаблону (отоскопія, суглоб пальця…) не переносимо; текст, дописаний лікарем, лишаємо */
+      const v = f.el.value, key = s.id + '.' + f.id;
+      if (v === f.tplVal || PRESETS.some(x=>x.set && x.set[key] === v)) f.el.value = '';
+      f.tplVal = undefined;
+    }
   }
 }
 
@@ -5298,7 +5303,7 @@ function applyPreset(p0, btn){
     const f = F(k);
     if (!f){ console.warn('Немає поля', k); continue; }
     if (Array.isArray(p.set[k])){ pick(f, p.set[k]); continue; }
-    if (f.type === 'line' || f.type === 'text'){ f.el.value = p.set[k]; continue; }
+    if (f.type === 'line' || f.type === 'text'){ f.el.value = f.tplVal = p.set[k]; continue; }
     const i = f.opts.findIndex(o=>O(o).t === p.set[k]);
     if (i < 0){ console.warn('Немає варіанту', k, p.set[k]); continue; }
     f.el.value = i; mark(f.el, f);
@@ -14137,7 +14142,7 @@ const SHELL = {};
       if (!k.startsWith(s.id + '.')) continue;
       const f = F(k); if (!f) continue;
       if (Array.isArray(p.set[k])){ pick(f, p.set[k]); continue; }
-      if (f.type === 'line' || f.type === 'text'){ f.el.value = p.set[k]; continue; }
+      if (f.type === 'line' || f.type === 'text'){ f.el.value = f.tplVal = p.set[k]; continue; }
       const i = f.opts.findIndex(o=>O(o).t === p.set[k]); if (i >= 0){ f.el.value = i; mark(f.el, f); }
     }
     if (s.id === 'dx'){ F('dx.osn').el.value = p.osn || ''; F('dx.mkh').el.value = p.mkh || ''; F('dx.uskl').el.value = p.uskl || ''; }
