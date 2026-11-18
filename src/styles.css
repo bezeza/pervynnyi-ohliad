@@ -942,9 +942,9 @@ body.pvopen{overflow:hidden}
 .packsig{border:1px solid var(--line);border-radius:var(--r-s);padding:10px 12px;margin:8px 0;display:flex;flex-direction:column;gap:2px}
 .bprint{display:inline-flex;gap:6px;align-items:center}.bprint select{width:auto}
 /* «Період лікування»: «з [дата]» / «по [дата]» рівними рядками, ліжко-дні під ними */
-.f .nums:has(> input[type=date] + .u){display:grid;grid-template-columns:auto minmax(0,13em);gap:6px 8px;align-items:center;justify-content:start}
+.f .nums:has(> input[type=date] + .u){display:grid;grid-template-columns:minmax(0,auto) minmax(0,13em);gap:6px 8px;align-items:center;justify-content:start}
 .f .nums:has(> input[type=date] + .u) > .u{color:var(--muted);text-align:right}
-.f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important}
+.f .nums:has(> input[type=date] + .u) > input[type=date]{width:100%!important;min-width:0}
 .f .nums:has(> input[type=date] + .u) > .hint{grid-column:1/-1;margin:0;color:var(--muted)}
 /* ===== Журнал обстежень розділами (0.9.3.12) ===== */
 .ljdlg .nvbox{max-width:1000px;width:100%}
