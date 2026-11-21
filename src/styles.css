@@ -2640,3 +2640,7 @@ body.pop-ext .tn-card{display:none!important}
 :root:root[data-theme="dark"] .badge.ok{color:color-mix(in srgb,var(--ok) 68%,#fff)}
 @media (prefers-color-scheme: dark){:root.ui-v2.ui-ios:not([data-tone]):not([data-theme="light"]) :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}}
 :root.ui-v2.ui-ios:not([data-tone])[data-theme="dark"] :is(.stab[aria-pressed="true"],.pava:not(.none),.pcode,.dcard[data-g="ter"] .code,.dcard[data-g="ter"] b,.rxsrc summary){color:var(--accent-ink)}
+
+/* 0.9.3.150 — «Справа: хронологія» */
+.case-t tr.case-today td{background:rgba(29,91,138,.12);font-weight:600}
+.case-t tr.case-we td{opacity:.65}
