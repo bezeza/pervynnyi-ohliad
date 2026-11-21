@@ -2085,6 +2085,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const h=blanksWordHtml(['ter','k028']); o.html=/^<html/.test(h)&&/ПІБ/.test(h)&&/Консультаційний висновок/.test(h); o.und=(h.match(/text-decoration:underline/g)||[]).length>10; o.noflex=!/display:\\s*(inline-)?flex/.test(h); o.sect=(h.match(/class="S\\d"/g)||[]).length; o.empty=blanksWordHtml([])===''; return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Бланки у Word: кнопка в діалозі, файл .doc з пропусками-підкресленнями без flex, по розділу на бланк', o.btn&&o.html&&o.und&&o.noflex&&o.sect===2&&o.empty, r); }
   ok('Кнопка «📄 Бланки» зверху відкриває вибір бланків', (()=>{ const b=$('blanksTop'); if(!b) return false; b.click(); const d=$('fbPick'); const r=!!d; if(d) d.remove(); return r; })());
+  ok('Бланки у Word: назва файлу — назва бланка', w.eval("blankFileName({t:'Щоденник — терапія (2 на аркуш)'})")==='Щоденник — терапія (2 на аркуш).doc' && w.eval("blankFileName({t:'А/Б: в?'})")==='А Б в.doc');
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

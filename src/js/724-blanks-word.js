@@ -17,7 +17,7 @@ function bwStyle(el, cs, extra, noBox){
     const m = bwPx(cs.getPropertyValue('margin-' + s)); if (m > 0) o.push('margin-' + s + ':' + (m * 0.75).toFixed(1) + 'pt');
   });
   const bg = cs.getPropertyValue('background-color'); if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) o.push('background:' + bwHex(bg));
-  if (/^(table|td|th)$/i.test(el.tagName)){ const w = el.getBoundingClientRect().width; if (w) o.push('width:' + (w * 0.75).toFixed(0) + 'pt'); if (/^table$/i.test(el.tagName)) o.push('table-layout:fixed;border-collapse:' + (cs.borderCollapse || 'collapse')); }
+  if (/^(table|td|th)$/i.test(el.tagName)){ const w = el.getBoundingClientRect().width; if (w) o.push('width:' + (w * 0.75).toFixed(0) + 'pt'); if (/^table$/i.test(el.tagName)) o.push('border-collapse:' + (cs.borderCollapse || 'collapse')); }
   if (/^(p|div|section)$/i.test(el.tagName) && !o.some(x=>/^margin-top/.test(x))) o.push('margin-top:0;margin-bottom:0');
   return o.concat(extra || []).join(';');
 }
@@ -25,7 +25,7 @@ function bwStyle(el, cs, extra, noBox){
 function bwGap(el, nb){ const w = el.getBoundingClientRect().width; const n = Math.max(2, Math.round(w / nb)); return '<span style="text-decoration:underline">' + ' '.repeat(n) + '</span>'; }
 function bwPseudo(el, which){ if (/jsdom/i.test(navigator.userAgent)) return ''; try{ const c = getComputedStyle(el, which).content; if (c && c !== 'none' && c !== 'normal') return bwEsc(c.replace(/^["']|["']$/g, '')); }catch(e){} return ''; }
 function bwNode(n, nb){
-  if (n.nodeType === 3) return bwEsc(n.nodeValue);
+  if (n.nodeType === 3) return bwEsc(n.nodeValue).replace(/_{3,}/g, m=>'<span style="text-decoration:underline">' + '\u00a0'.repeat(m.length * 2) + '</span>');
   if (n.nodeType !== 1) return '';
   const tag = n.tagName.toLowerCase(), cs = getComputedStyle(n);
   if (cs.display === 'none' || /^(script|style)$/.test(tag)) return '';
@@ -34,9 +34,8 @@ function bwNode(n, nb){
   { /* ряд окремих клітинок-рамок (коди, дата) — одна таблиця в рядок */
     const ek = [...n.children];
     if (!/^(tr|table|tbody|thead|tfoot)$/.test(tag) && ek.length >= 2 && ek.length === n.childNodes.length && ek.every(e=>{ const c = getComputedStyle(e); return !e.children.length && ['top','right','bottom','left'].every(x=>bwPx(c.getPropertyValue('border-' + x + '-width')) > 0); })){
-      const cell = e=>{ const c = getComputedStyle(e), r = e.getBoundingClientRect();
-        return '<td align="center" width="' + Math.max(11, Math.round(r.width || 18)) + '" style="width:' + Math.max(8, (r.width || 14) * 0.75).toFixed(0) + 'pt;height:' + Math.max(12, (r.height || 16) * 0.75).toFixed(0) + 'pt;border:0.75pt solid ' + bwHex(c.borderTopColor) + ';text-align:center;font-size:' + (bwPx(c.fontSize) * 0.75).toFixed(1) + 'pt">' + (bwEsc(e.textContent) || '&nbsp;') + '</td>'; };
-      return '<table cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr>' + ek.map(cell).join('') + '</tr></table>';
+      /* клітинки-квадрати коду/дати у Word незручні для вписування — замість них один підкреслений пропуск тієї ж ширини */
+      return bwGap({getBoundingClientRect:()=>n.getBoundingClientRect()}, nb);
     }
   }
   let inner = bwPseudo(n, '::before');
@@ -45,6 +44,7 @@ function bwNode(n, nb){
     const [a, b] = kids.filter(k=>k.nodeType === 1);
     return '<table width="100%" style="border-collapse:collapse"><tr><td>' + bwNode(a, nb) + '</td><td style="text-align:right">' + bwNode(b, nb) + '</td></tr></table>';
   }
+  if (/^(td|th)$/.test(tag) && !kids.length) inner += '&nbsp;';
   kids.forEach(k=>{ inner += bwNode(k, nb); if (flex && k.nodeType === 1 && k !== kids[kids.length - 1]) inner += '\u00a0\u00a0\u00a0'; }); inner += bwPseudo(n, '::after');
   let t = tag === 'p' ? 'div' : tag, extra = [];
   const boxed = /^(div|p|section)$/.test(tag) && ['top','right','bottom','left'].some(x=>bwPx(cs.getPropertyValue('border-' + x + '-width')) > 0 && cs.getPropertyValue('border-' + x + '-style') !== 'none');
@@ -89,10 +89,14 @@ function blanksWordHtml(keys){
     '<head><meta charset="utf-8"><title>Порожні бланки</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->' +
     '<style>' + css + 'body{font-family:"Times New Roman",serif}p{margin:0}</style></head><body>' + sect + '</body></html>';
 }
+function blankFileName(b){ return String(b.t || b.k).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90) + '.doc'; }
 async function blanksWord(keys){
-  const html = blanksWordHtml(keys); if (!html){ toast('Позначте хоча б один бланк'); return false; }
-  const bytes = new TextEncoder().encode('﻿' + html);
-  await saveFile(bytes, 'Порожні бланки.doc', 'application/msword', 'Бланки у Word');
+  const L = FBLANKS.filter(b=>(keys || []).includes(b.k)); if (!L.length){ toast('Позначте хоча б один бланк'); return false; }
+  for (let i = 0; i < L.length; i++){   /* кожен бланк — окремий файл з його назвою */
+    const html = blanksWordHtml([L[i].k]); if (!html) continue;
+    await saveFile(new TextEncoder().encode('\ufeff' + html), blankFileName(L[i]), 'application/msword', 'Бланк «' + L[i].t + '»');
+    if (i < L.length - 1) await new Promise(r=>setTimeout(r, 400));
+  }
   return true;
 }
 /* окрема кнопка «📄 Бланки» поруч із «Новий» — щоб не шукати в меню «⋯» */

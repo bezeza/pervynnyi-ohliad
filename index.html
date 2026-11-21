@@ -2715,7 +2715,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.158 від 21.11.2026">v0.9.3.158 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.159 від 21.11.2026">v0.9.3.159 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4934,8 +4934,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.158', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.159', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.159', '21.11.2026', '«Зберегти у Word» для бланків: кожен бланк — окремий файл із власною назвою (наприклад, «Епікриз ….doc»). Квадрати коду МКХ-10 і дати замінено лінією для вписування, порожні клітинки таблиць не злипаються.'],
   ['0.9.3.158', '21.11.2026', 'Кнопка «📄 Бланки» зверху поруч із «Новий»: швидкий доступ до порожніх бланків (друк або Word).'],
   ['0.9.3.157', '21.11.2026', 'Порожні бланки: кнопка «💾 Зберегти у Word» — вибрані бланки файлом .doc для Word, щоб змінити їх або заповнювати вручну.'],
   ['0.9.3.156', '21.11.2026', 'Меню «⋯» → «💊 Лист на сьогодні»: призначення на сьогодні по стаціонарних пацієнтах відділення з їхніх листків призначень (ін’єкції й інфузії зверху; умовні «за показаннями» й скасовані не показано), друк аркушем; графіка вимірювань і NEWS2 немає — це визначає лікар (задача 17).'],
@@ -24685,7 +24686,7 @@ function bwStyle(el, cs, extra, noBox){
     const m = bwPx(cs.getPropertyValue('margin-' + s)); if (m > 0) o.push('margin-' + s + ':' + (m * 0.75).toFixed(1) + 'pt');
   });
   const bg = cs.getPropertyValue('background-color'); if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) o.push('background:' + bwHex(bg));
-  if (/^(table|td|th)$/i.test(el.tagName)){ const w = el.getBoundingClientRect().width; if (w) o.push('width:' + (w * 0.75).toFixed(0) + 'pt'); if (/^table$/i.test(el.tagName)) o.push('table-layout:fixed;border-collapse:' + (cs.borderCollapse || 'collapse')); }
+  if (/^(table|td|th)$/i.test(el.tagName)){ const w = el.getBoundingClientRect().width; if (w) o.push('width:' + (w * 0.75).toFixed(0) + 'pt'); if (/^table$/i.test(el.tagName)) o.push('border-collapse:' + (cs.borderCollapse || 'collapse')); }
   if (/^(p|div|section)$/i.test(el.tagName) && !o.some(x=>/^margin-top/.test(x))) o.push('margin-top:0;margin-bottom:0');
   return o.concat(extra || []).join(';');
 }
@@ -24693,7 +24694,7 @@ function bwStyle(el, cs, extra, noBox){
 function bwGap(el, nb){ const w = el.getBoundingClientRect().width; const n = Math.max(2, Math.round(w / nb)); return '<span style="text-decoration:underline">' + ' '.repeat(n) + '</span>'; }
 function bwPseudo(el, which){ if (/jsdom/i.test(navigator.userAgent)) return ''; try{ const c = getComputedStyle(el, which).content; if (c && c !== 'none' && c !== 'normal') return bwEsc(c.replace(/^["']|["']$/g, '')); }catch(e){} return ''; }
 function bwNode(n, nb){
-  if (n.nodeType === 3) return bwEsc(n.nodeValue);
+  if (n.nodeType === 3) return bwEsc(n.nodeValue).replace(/_{3,}/g, m=>'<span style="text-decoration:underline">' + '\u00a0'.repeat(m.length * 2) + '</span>');
   if (n.nodeType !== 1) return '';
   const tag = n.tagName.toLowerCase(), cs = getComputedStyle(n);
   if (cs.display === 'none' || /^(script|style)$/.test(tag)) return '';
@@ -24702,9 +24703,8 @@ function bwNode(n, nb){
   { /* ряд окремих клітинок-рамок (коди, дата) — одна таблиця в рядок */
     const ek = [...n.children];
     if (!/^(tr|table|tbody|thead|tfoot)$/.test(tag) && ek.length >= 2 && ek.length === n.childNodes.length && ek.every(e=>{ const c = getComputedStyle(e); return !e.children.length && ['top','right','bottom','left'].every(x=>bwPx(c.getPropertyValue('border-' + x + '-width')) > 0); })){
-      const cell = e=>{ const c = getComputedStyle(e), r = e.getBoundingClientRect();
-        return '<td align="center" width="' + Math.max(11, Math.round(r.width || 18)) + '" style="width:' + Math.max(8, (r.width || 14) * 0.75).toFixed(0) + 'pt;height:' + Math.max(12, (r.height || 16) * 0.75).toFixed(0) + 'pt;border:0.75pt solid ' + bwHex(c.borderTopColor) + ';text-align:center;font-size:' + (bwPx(c.fontSize) * 0.75).toFixed(1) + 'pt">' + (bwEsc(e.textContent) || '&nbsp;') + '</td>'; };
-      return '<table cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr>' + ek.map(cell).join('') + '</tr></table>';
+      /* клітинки-квадрати коду/дати у Word незручні для вписування — замість них один підкреслений пропуск тієї ж ширини */
+      return bwGap({getBoundingClientRect:()=>n.getBoundingClientRect()}, nb);
     }
   }
   let inner = bwPseudo(n, '::before');
@@ -24713,6 +24713,7 @@ function bwNode(n, nb){
     const [a, b] = kids.filter(k=>k.nodeType === 1);
     return '<table width="100%" style="border-collapse:collapse"><tr><td>' + bwNode(a, nb) + '</td><td style="text-align:right">' + bwNode(b, nb) + '</td></tr></table>';
   }
+  if (/^(td|th)$/.test(tag) && !kids.length) inner += '&nbsp;';
   kids.forEach(k=>{ inner += bwNode(k, nb); if (flex && k.nodeType === 1 && k !== kids[kids.length - 1]) inner += '\u00a0\u00a0\u00a0'; }); inner += bwPseudo(n, '::after');
   let t = tag === 'p' ? 'div' : tag, extra = [];
   const boxed = /^(div|p|section)$/.test(tag) && ['top','right','bottom','left'].some(x=>bwPx(cs.getPropertyValue('border-' + x + '-width')) > 0 && cs.getPropertyValue('border-' + x + '-style') !== 'none');
@@ -24757,10 +24758,14 @@ function blanksWordHtml(keys){
     '<head><meta charset="utf-8"><title>Порожні бланки</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->' +
     '<style>' + css + 'body{font-family:"Times New Roman",serif}p{margin:0}</style></head><body>' + sect + '</body></html>';
 }
+function blankFileName(b){ return String(b.t || b.k).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90) + '.doc'; }
 async function blanksWord(keys){
-  const html = blanksWordHtml(keys); if (!html){ toast('Позначте хоча б один бланк'); return false; }
-  const bytes = new TextEncoder().encode('﻿' + html);
-  await saveFile(bytes, 'Порожні бланки.doc', 'application/msword', 'Бланки у Word');
+  const L = FBLANKS.filter(b=>(keys || []).includes(b.k)); if (!L.length){ toast('Позначте хоча б один бланк'); return false; }
+  for (let i = 0; i < L.length; i++){   /* кожен бланк — окремий файл з його назвою */
+    const html = blanksWordHtml([L[i].k]); if (!html) continue;
+    await saveFile(new TextEncoder().encode('\ufeff' + html), blankFileName(L[i]), 'application/msword', 'Бланк «' + L[i].t + '»');
+    if (i < L.length - 1) await new Promise(r=>setTimeout(r, 400));
+  }
   return true;
 }
 /* окрема кнопка «📄 Бланки» поруч із «Новий» — щоб не шукати в меню «⋯» */
