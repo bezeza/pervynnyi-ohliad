@@ -205,6 +205,7 @@
   "714-adm-from-exam.js",
   "715-docs-place.js",
   "716-respiratory-buttons.js",
-  "717-text-counter-label.js"
+  "717-text-counter-label.js",
+  "718-case-timeline.js"
  ]
 }
