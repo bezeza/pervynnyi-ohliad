@@ -26,16 +26,21 @@ jobs:
         include:
           - suite: full
             args: ''
-          # features — трьома паралельними частинами (tests/features-part.cjs ділить файл за мітками «── частина N ──»)
+          # features — трьома паралельними частинами (tests/features-part.cjs ділить файл за мітками «── частина N ──»).
+          # Частина 3 росте з кожним новим тестом і тричі впиралася в ліміт 600 с (#189, #191, #192) — для features ліміт 1000 с (job-ліміт 20 хв).
+          # Поділ на 4 частини не вийшов без правки наявних тестів: «69 шаблонів» (Задача 23) неявно залежить від користувацького шаблону, доданого раніше в частині 3.
           - suite: features-part
             args: '1'
             label: features 1/3
+            timeout: 1000
           - suite: features-part
             args: '2'
             label: features 2/3
+            timeout: 1000
           - suite: features-part
             args: '3'
             label: features 3/3
+            timeout: 1000
           - suite: workflow
             args: ''
           # огляд від нового пацієнта до друку — кількість дій (план 0.10, «огляд за 5 хвилин»)
@@ -61,7 +66,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: node build.mjs
       - name: Запустити незмінений набір перевірок
-        run: timeout 600s node tests/${{ matrix.suite }}.cjs ${{ matrix.args }}
+        run: timeout ${{ matrix.timeout || 600 }}s node tests/${{ matrix.suite }}.cjs ${{ matrix.args }}
   test:
     name: test
     needs: [build, checks]
