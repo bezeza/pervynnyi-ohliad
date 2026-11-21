@@ -24686,7 +24686,7 @@ function bwStyle(el, cs, extra, noBox){
   return o.concat(extra || []).join(';');
 }
 /* ширина пропуску (порожній <i class="fb-f">) → підкреслені нерозривні пробіли */
-function bwGap(el, nb){ const w = el.getBoundingClientRect().width; const n = Math.max(2, Math.round(w / nb)); return '<span style="text-decoration:underline">' + ' '.repeat(n) + '</span>'; }
+function bwGap(el, nb){ const w = el.getBoundingClientRect().width; const n = Math.max(2, Math.round(w / nb)); return '<span style="text-decoration:underline">' + (n > 30 ? (' '.repeat(28) + ' ').repeat(Math.floor(n / 29)) : ' '.repeat(n)) + '</span>'; }
 function bwPseudo(el, which){ if (/jsdom/i.test(navigator.userAgent)) return ''; try{ const c = getComputedStyle(el, which).content; if (c && c !== 'none' && c !== 'normal') return bwEsc(c.replace(/^["']|["']$/g, '')); }catch(e){} return ''; }
 function bwNode(n, nb){
   if (n.nodeType === 3) return bwEsc(n.nodeValue).replace(/_{3,}/g, m=>'<span style="text-decoration:underline">' + '\u00a0'.repeat(m.length * 2) + '</span>');
