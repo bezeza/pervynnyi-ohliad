@@ -21,6 +21,7 @@
   "150-patient-doctor-print.js",
   "160-print-tabs.js",
   "170-patients-db.js",
+  "172-plan-migrate.js",
   "180-backup.js",
   "190-data-folder.js",
   "200-help.js",
