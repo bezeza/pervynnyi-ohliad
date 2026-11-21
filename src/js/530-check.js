@@ -21,6 +21,9 @@ function checkDoc(){
     if (!v('skarhy.c') && !v('skarhy.cx') && !v('skarhy.none')) add('Не вказано скарги (або оберіть «Якщо скарг немає»)', 'skarhy', 'skarhy.c');
     if (!['dur','onset','hron','ax'].some(k=>v('morbi.' + k))) add('Не заповнено анамнез захворювання', 'morbi', 'morbi.dur');
     if (MODE === 'hosp' && !sel('morbi.hosp')) add('Не вказано, як госпіталізовано (направлення, самозвернення, ЕМД)', 'morbi', 'morbi.hosp');
+    { const ex = [!sel('zah.stan') && 'загальний стан', !sel('zah.svid') && 'свідомість'].filter(Boolean);
+      if (ex.length) add('Не вказано: ' + ex.join(', ') + ' — обов’язковий елемент огляду (Інструкція до ф. 003/о, п. 41); норму програма за вас не підставляє', 'zah', !sel('zah.stan') ? 'zah.stan' : 'zah.svid'); }
+    { const vs = SECTIONS.find(x=>x.id === 'vitae'); if (vs && !vs.fields.some(f=>f.id !== 'alerg' && f.id !== 'alergx' && f.type !== 'num' && val(f))) add('Не описано анамнез життя (перенесені хвороби, операції, супутні захворювання, звички) — обов’язковий елемент огляду (Інструкція до ф. 003/о, п. 41)', 'vitae', 'vitae.tbh'); }
     if (!sel('vitae.alerg')) add('Не вказано алергологічний анамнез', 'vitae', 'vitae.alerg');
     if (!sel('vitae.strah')) add('Не вказано працездатність / ЕЛН', 'vitae', 'vitae.strah');
     const vit = [['zah_temp_0','t°','zah'],['ssc_ad_0','АТ','ssc'],['ssc_chss_0','ЧСС','ssc'],['dyh_chd_0','ЧД','dyh'],['dyh_chd_1','SpO2','dyh']].filter(([id])=>!document.getElementById(id).value.trim());
