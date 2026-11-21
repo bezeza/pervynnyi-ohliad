@@ -54,11 +54,16 @@ function caseDialog(){
           h('td', {}, r.vitals.map(v=>v[0] + ' ' + v[1]).join(' · ')),
           h('td', {}, r.rx ? String(r.rx) : ''), h('td', {}, r.res ? String(r.res) : ''), h('td', {}, r.ev.join('; '))))))));
   }
+  const sib = caseSiblings(), cand = caseCandidates();
+  const link = h('div', {class:'case-link'});
+  if (CASE.person) link.append(h('p', {class:'chips-hint'}, `Госпіталізація №${CASE.n || 1}` + (sib.length ? '; інші: ' : '.')), ...sib.map(x=>h('button', {type:'button', class:'btn case-sib', onclick:()=>{ close(); openPatient(x.id); }}, `№${x.n}` + (x.d1 ? ' · ' + fmtD(x.d1) : ''))));
+  cand.forEach(x=>link.append(h('p', {class:'chips-hint'}, 'Є запис із таким самим ПІБ і датою народження' + (x.d1 ? ' (надходження ' + fmtD(x.d1) + ')' : '') + '. '), h('button', {type:'button', class:'btn case-cand', onclick:()=>{ if (caseLink(x.id)){ close(); caseDialog(); toast('Записи зв’язано як госпіталізації однієї людини'); } }}, 'Це та сама людина — зв’язати')));
   const box = h('div', {id:'caseBox', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-labelledby':'caseT'},
     h('div', {class:'mcard bf-m'},
       h('div', {class:'ph'}, h('h2', {id:'caseT'}, 'Справа: хронологія'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
-      body,
+      link, body,
       h('div', {class:'acts2'},
+        h('button', {type:'button', class:'btn case-new', onclick:()=>{ if (caseNewAdmission()) close(); }, title:'Новий запис тієї ж людини: переноситься лише ПІБ, дата народження й стать'}, '＋ Нова госпіталізація'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); bfDialog(); }}, '📝 Дописати історію'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); packDialog(); }}, '🖨 Друк історії'))));
   box.addEventListener('click', e=>{ if (e.target === box) close(); });
