@@ -1,4 +1,4 @@
-/* ===== 0.9.3.150 — «📅 Справа»: хронологія госпіталізації по днях (лише читання; задача 17, крок 4) =====
+/* ===== 0.9.3.151 — «📅 Справа»: хронологія госпіталізації по днях (лише читання; задача 17, крок 4) =====
    Рядок = календарний день від надходження до виписки (або до сьогодні). Вихідні позначені, щоденник на них не вимагається.
    Джерела: DIARIES (щоденники й показники), RX (активні призначення), RES (обстеження). Збереження не змінюється.
    Жоден показник не обов’язковий — порожні клітинки дозволені. Нічого не вигадується. Проєкт: docs/task-17-sprava-design.md */
@@ -26,9 +26,16 @@ function caseRows(today){
     const res = RES.filter(r=>r.d === d).length;
     const ev = []; if (d === d1) ev.push('надходження'); if (P.d2.value && d === P.d2.value) ev.push('виписка');
     RX.forEach(it=>{ if (isAB(it) && it.rev === d && !it.stop) ev.push('перегляд АБ: ' + it.drug); });
-    rows.push({d, weekend, wd, diaries:dia.length, vitals:dia.length ? caseVitals(dia[dia.length - 1].data && dia[dia.length - 1].data.f) : [], rx, res, ev, today:d === today});
+    rows.push({d, weekend, wd, diaries:dia.length, diary:dia.length ? dia[dia.length - 1] : null, vitals:dia.length ? caseVitals(dia[dia.length - 1].data && dia[dia.length - 1].data.f) : [], rx, res, ev, today:d === today});
   }
   return {rows, d1, d2, open};
+}
+/* показує збережений щоденник у документі (так само, як «Показати» в журналі щоденників) */
+function caseShowDiary(d){
+  if (!d) return;
+  try{ if (DOC !== 'shch') switchDoc('shch'); }catch(e){}
+  $('#out').innerHTML = d.html; dirty = true; try{ $('#banner').hidden = true; }catch(e){}
+  toast('Показано запис від ' + (fmtDT(d.dt) || '—') + '. Його можна скопіювати або надрукувати');
 }
 function caseDialog(){
   const old = document.getElementById('caseBox'); if (old) old.remove();
@@ -43,7 +50,7 @@ function caseDialog(){
         h('thead', {}, h('tr', {}, ...['Дата', 'Щоденник', 'Показники', 'Призначень', 'Обстежень', 'Події'].map(x=>h('th', {}, x)))),
         h('tbody', {}, ...rows.map(r=>h('tr', {class:(r.today ? 'case-today ' : '') + (r.weekend ? 'case-we' : ''), 'aria-current':r.today ? 'date' : null},
           h('td', {class:'bf-d'}, fmtS(r.d), ' ', h('span', {class:'chips-hint'}, bfWd(r.d))),
-          h('td', {}, r.diaries ? '✓ ' + (r.diaries > 1 ? r.diaries : '') : (r.weekend ? 'вихідний' : (r.d <= caseRealToday() ? '—' : ''))),
+          h('td', {}, r.diaries ? h('button', {type:'button', class:'more case-open', title:'Показати щоденник за цей день', 'aria-label':'Показати щоденник за ' + fmtD(r.d), onclick:()=>{ close(); caseShowDiary(r.diary); }}, '✓ ' + (r.diaries > 1 ? r.diaries + ' ' : '') + 'відкрити') : (r.weekend ? 'вихідний' : (r.d <= caseRealToday() ? '—' : ''))),
           h('td', {}, r.vitals.map(v=>v[0] + ' ' + v[1]).join(' · ')),
           h('td', {}, r.rx ? String(r.rx) : ''), h('td', {}, r.res ? String(r.res) : ''), h('td', {}, r.ev.join('; '))))))));
   }
