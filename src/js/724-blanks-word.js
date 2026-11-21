@@ -3,13 +3,13 @@
    його можна змінити або надрукувати. Макет бланка у програмі — на flex і розтягнутих лініях, яких Word не знає, тому бланк
    спершу виводиться поза екраном, а потім перекладається у прості блоки, таблиці й підкреслені пропуски. */
 const BW_CSS = ['font-family','font-size','font-weight','font-style','color','text-align','line-height','vertical-align','white-space'];
-let BW_LH = 1;
+let BW_LH = 1, BW_FS = 1, BW_MINF = 0;
 function bwPx(v){ const n = parseFloat(v); return isFinite(n) ? n : 0; }
 function bwHex(c){ const m = /rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)/.exec(c || ''); return m ? '#' + [m[1], m[2], m[3]].map(x=>(+x).toString(16).padStart(2, '0')).join('') : (c || '#000000'); }
 function bwEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function bwStyle(el, cs, extra, noBox){
   const o = [];
-  BW_CSS.forEach(p=>{ const v = cs.getPropertyValue(p); if (v && v !== 'normal' && v !== 'start') o.push(p + ':' + (p === 'color' ? bwHex(v) : /px$/.test(v) && /^(font-size|line-height)$/.test(p) ? (bwPx(v) * 0.75 * BW_LH).toFixed(1) + 'pt' : v.replace(/"/g, "'"))); });
+  BW_CSS.forEach(p=>{ const v = cs.getPropertyValue(p); if (v && v !== 'normal' && v !== 'start') o.push(p + ':' + (p === 'color' ? bwHex(v) : /px$/.test(v) && /^(font-size|line-height)$/.test(p) ? Math.max(p === 'font-size' ? BW_MINF : 0, bwPx(v) * 0.75 * (p === 'font-size' ? BW_FS : BW_LH)).toFixed(1) + 'pt' : v.replace(/"/g, "'"))); });
   const td = cs.getPropertyValue('text-decoration-line'); if (td && td !== 'none') o.push('text-decoration:' + td.split(' ')[0]);
   if (!noBox) ['top','right','bottom','left'].forEach(s=>{
     const w = bwPx(cs.getPropertyValue('border-' + s + '-width')), st = cs.getPropertyValue('border-' + s + '-style');
@@ -80,16 +80,17 @@ function blanksWordHtml(keys){
   let sect = '', css = '', i = 0;
   L.forEach(b=>{
     const host = document.createElement('div'); host.className = b.cls;
-    host.style.cssText = 'position:absolute;left:-99999px;top:0;width:' + (/fbk-d|fbk-g/.test(b.cls) ? '196mm' : '184mm') + ';background:#fff';
-    host.innerHTML = b.html; document.body.append(host); BW_LH = /fbk-d/.test(b.cls) ? 0.74 : 1;
+    host.style.cssText = 'position:absolute;left:-99999px;top:0;width:' + (/fbk-d|fbk-g/.test(b.cls) ? '198mm' : '188mm') + ';background:#fff';
+    host.innerHTML = b.html; document.body.append(host); BW_LH = /fbk-ter/.test(b.cls) ? 0.85 : /fbk-d/.test(b.cls) ? 0.6 : 1; BW_FS = /fbk-ter/.test(b.cls) ? 0.95 : /fbk-d/.test(b.cls) ? 0.72 : 1; BW_MINF = /fbk-d/.test(b.cls) ? 0 : 9;
+    { const hn = (typeof mv === 'function' ? [mv('zoz'), mv('vidd')].filter(Boolean).join(' · ') : ''); if (hn && /fbk-d/.test(b.cls)) host.querySelectorAll('.fb-diary').forEach(d=>{ const e = document.createElement('div'); e.style.cssText = 'font-weight:700;text-align:center;border-bottom:1px solid #000;padding-bottom:1mm'; e.textContent = hn; d.prepend(e); }); }
     const nb = (() => { host.append(probe); const w = probe.getBoundingClientRect().width / 20; probe.remove(); return w || 3; })();
     const wide = /fbk-d/.test(b.cls), land = !!host.querySelector('[data-landscape]');
-    const mar = wide ? '5mm 7mm 5mm 7mm' : '10mm 10mm 10mm 15mm';
+    const mar = wide ? '4mm 6mm 3mm 6mm' : '8mm 8mm 8mm 12mm';
     css += '@page S' + i + '{size:' + (land ? '297mm 210mm' : '210mm 297mm') + ';margin:' + mar + ';mso-page-orientation:' + (land ? 'landscape' : 'portrait') + '}div.S' + i + '{page:S' + i + '}\n';
     sect += '<div class="S' + i + '"' + (i ? ' style="page-break-before:always"' : '') + '>' + [...host.childNodes].map(k=>bwNode(k, nb)).join('') + '</div>\n';
     host.remove(); i++;
   });
-  BW_LH = 1;
+  BW_LH = 1; BW_FS = 1;
   return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
     '<head><meta charset="utf-8"><title>Порожні бланки</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->' +
     '<style>' + css + 'body{font-family:"Times New Roman",serif}p{margin:0}</style></head><body>' + sect + '</body></html>';
