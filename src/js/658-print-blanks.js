@@ -18,12 +18,13 @@ function blanksDialog(){
   const close = () => { box.remove(); try{ if (back && back.focus) back.focus(); }catch(e){} };
   const rows = FBLANKS.map(b=>h('label', {for:'fb_' + b.k}, h('input', {type:'checkbox', id:'fb_' + b.k, value:b.k}), b.t));
   const go = () => { const k = [...box.querySelectorAll('input:checked')].map(i=>i.value); if (!k.length){ toast('Позначте хоча б один бланк'); return; } close(); printBlanks(k); };
+  const goW = () => { const k = [...box.querySelectorAll('input:checked')].map(i=>i.value); if (!k.length){ toast('Позначте хоча б один бланк'); return; } close(); blanksWord(k); };
   const box = h('div', {id:'fbPick', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-labelledby':'fbPickT'},
     h('div', {class:'mcard'},
       h('div', {class:'ph'}, h('h2', {id:'fbPickT'}, 'Порожні бланки для друку'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
       h('p', {class:'chips-hint'}, 'Без даних пацієнта — для заповнення ручкою: варіанти підкреслити, значення вписати. Кожен бланк починається з нового аркуша А4. Епікриз 003/о — дві сторінки (друк з двох боків).'),
       h('div', {class:'fbrows'}, ...rows),
-      h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:go}, '🖨 Друкувати вибрані'))));
+      h('div', {class:'acts2'}, h('button', {type:'button', class:'btn primary', onclick:go}, '🖨 Друкувати вибрані'), h('button', {type:'button', class:'btn', onclick:goW, title:'Файл .doc: відкривається у Word, можна змінити й надрукувати'}, '💾 Зберегти у Word'))));
   box.addEventListener('click', e=>{ if (e.target === box) close(); });
   box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
   document.body.append(box); const f = box.querySelector('input'); if (f) f.focus();
