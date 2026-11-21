@@ -32,18 +32,27 @@ function bfDynHint(prev, cur){
 }
 function bfDynPicker(r, prev, onChange){
   const wrap = h('div', {class:'bf-dyn', role:'group', 'aria-label':'Динаміка ' + fmtD(r.d)});
-  let more = false;
+  let more = false, adding = false;
   const draw = () => {
     wrap.innerHTML = '';
-    const use = dynUse(), cust = dynPhrases().map(c=>['c:' + c.id, '★ ' + c.t]);
-    const rest = [...DYN_MORE, ...cust].sort((a, b)=>(use[b[0]] || 0) - (use[a[0]] || 0));
-    const shown = more ? [...DYN_MAIN, ...rest] : [...DYN_MAIN, ...rest.filter(x=>x[0] === String(r.dyn))];
-    shown.forEach(([v, t])=>wrap.append(h('button', {type:'button', class:'chip q bf-dyn-b', 'aria-pressed':String(r.dyn) === v ? 'true' : 'false', onclick:()=>{ r.dyn = v; onChange(v); draw(); }}, t)));
+    if (adding){
+      const t = h('input', {type:'text', class:'bf-dyn-t', placeholder:'Своє формулювання динаміки', 'aria-label':'Власне формулювання динаміки', maxlength:'120'});
+      const k = h('select', {class:'bf-dyn-k', 'aria-label':'На який варіант спирається текст щоденника'}, ...DYN_BASE.map((x, i)=>h('option', {value:String(i)}, 'як «' + x.replace(/^Стан /, '') + '»')));
+      k.value = '1';
+      const save = () => { const v = t.value.trim(); if (!v){ t.focus(); return; } const all = dynPhrases(); const id = Date.now().toString(36); all.push({id, t:v, k:+k.value}); dynSave('po.dynPhrases', all); r.dyn = 'c:' + id; onChange(r.dyn); adding = false; more = true; draw(); };
+      t.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); save(); } if (e.key === 'Escape'){ e.stopPropagation(); adding = false; draw(); } });
+      wrap.append(t, k, h('button', {type:'button', class:'btn bf-dyn-save', onclick:save}, 'Зберегти'), h('button', {type:'button', class:'more bf-dyn-cancel', onclick:()=>{ adding = false; draw(); }}, 'Скасувати'));
+      setTimeout(()=>{ try{ t.focus(); }catch(e){} }, 0); return;
+    }
+    const use = dynUse(), cust = dynPhrases().map(c=>['c:' + c.id, '★ ' + c.t, c.id]);
+    const rest = [...DYN_MORE.map(x=>[x[0], x[1], '']), ...cust].sort((a, b)=>(use[b[0]] || 0) - (use[a[0]] || 0));
+    const shown = more ? [...DYN_MAIN.map(x=>[x[0], x[1], '']), ...rest] : [...DYN_MAIN.map(x=>[x[0], x[1], '']), ...rest.filter(x=>x[0] === String(r.dyn))];
+    shown.forEach(([v, t, cid])=>{
+      wrap.append(h('button', {type:'button', class:'chip q bf-dyn-b', 'aria-pressed':String(r.dyn) === v ? 'true' : 'false', onclick:()=>{ r.dyn = v; onChange(v); draw(); }}, t));
+      if (cid && more) wrap.append(h('button', {type:'button', class:'more bf-dyn-del', title:'Прибрати це формулювання зі списку', 'aria-label':'Прибрати формулювання ' + t, onclick:()=>{ dynSave('po.dynPhrases', dynPhrases().filter(x=>x.id !== cid)); if (String(r.dyn) === v){ r.dyn = '1'; onChange('1'); } draw(); }}, '×'));
+    });
     wrap.append(h('button', {type:'button', class:'more bf-dyn-more', 'aria-expanded':String(more), onclick:()=>{ more = !more; draw(); }}, more ? '‹ менше' : 'ще ›'));
-    if (more) wrap.append(h('button', {type:'button', class:'more bf-dyn-add', onclick:()=>{
-      const t = (prompt('Власне формулювання динаміки (замінить речення динаміки в щоденнику):') || '').trim(); if (!t) return;
-      const k = (prompt('На який з варіантів спирається текст щоденника? 0 — без суттєвої, 1 — позитивна, 2 — покращення, 3 — погіршення', '1') || '').trim(); if (!'0123'.includes(k) || k === '') return;
-      const all = dynPhrases(); all.push({id:Date.now().toString(36), t, k:+k}); dynSave('po.dynPhrases', all); draw(); } }, '+ своє'));
+    if (more) wrap.append(h('button', {type:'button', class:'more bf-dyn-add', onclick:()=>{ adding = true; draw(); }}, '+ своє'));
     const hint = bfDynHint(prev, r);
     if (hint && String(r.dyn) !== hint) wrap.append(h('span', {class:'chips-hint bf-dyn-h'}, 'підказка за показниками: ' + (hint === '1' ? '↑' : '↘')));
   };
