@@ -2644,3 +2644,9 @@ body.pop-ext .tn-card{display:none!important}
 /* 0.9.3.150 — «Справа: хронологія» */
 .case-t tr.case-today td{background:rgba(29,91,138,.12);font-weight:600}
 .case-t tr.case-we td{opacity:.65}
+
+/* 0.9.3.153 — вибір динаміки на день */
+.bf-dyn{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.bf-dyn .bf-dyn-b{white-space:nowrap}
+.bf-dyn .bf-dyn-t{min-width:200px;flex:1 1 200px}
+.bf-dyn .bf-dyn-del{padding:0 6px}

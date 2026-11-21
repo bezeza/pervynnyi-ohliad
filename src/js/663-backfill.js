@@ -42,13 +42,13 @@ function bfGenerate(){
     toast = function(){};
     if (DOC !== 'shch') switchDoc('shch');
     rows.forEach(r=>{
-      diaryFromExam(+r.dyn);
+      diaryFromExam(bfDynK(r.dyn));
       const dt = document.getElementById('meta_dt'); if (dt) dt.value = r.d + 'T09:00';
       const set = (k, i, v) => { try{ const f = F(k); if (f && f.inputs && f.inputs[i]) f.inputs[i].value = String(v || '').trim(); }catch(e){} };
       set('d_obj.t', 0, r.t); set('d_obj.ad', 0, r.ad1); set('d_obj.ad', 1, r.ad2); set('d_obj.chss', 0, r.hr); set('d_obj.chd', 0, r.rr); set('d_obj.chd', 1, r.spo); set('d_obj.o2', 0, r.o2);
       const di = document.getElementById('d_main_den_0'); if (di){ delete di.dataset.user; di.value = ''; }
       update();
-      DIARIES.push({dt:mv('dt'), rec:mv('rec'), html:$('#out').innerHTML, data:diaryFields(), bf:1}); n++;
+      DIARIES.push({dt:mv('dt'), rec:mv('rec'), html:bfDynHtml(r.dyn, $('#out').innerHTML), data:diaryFields(), bf:1}); try{ dynBump(String(r.dyn)); }catch(e){} n++;
     });
     DIARIES.sort((a, b)=>String(a.dt).localeCompare(String(b.dt)));
   } finally { toast = keepToast; }
@@ -83,7 +83,7 @@ function bfDialog(){
     const inp = (r, k, ph, extra) => { const i = h('input', Object.assign({value:r[k] || '', placeholder:ph, inputmode:'decimal', 'aria-label':ph + ' ' + fmtD(r.d), class:'bf-in'}, extra || {})); i.addEventListener('input', ()=>{ r[k] = i.value; }); return i; };
     const tb = h('tbody', {}, ...BF.rows.map(r=>{
       const done = bfHasDiary(r.d);
-      const sel = h('select', {'aria-label':'Динаміка ' + fmtD(r.d)}, ...BF_DYN.map(([v, t])=>h('option', {value:v}, t))); sel.value = r.dyn; sel.addEventListener('change', ()=>{ r.dyn = sel.value; });
+      const sel = bfDynPicker(r, BF.rows[BF.rows.indexOf(r) - 1], ()=>{});
       const rm = h('button', {type:'button', class:'more', title:'Прибрати день з таблиці', 'aria-label':'Прибрати ' + fmtD(r.d), onclick:()=>{ BF.skip.add(r.d); BF.rows = BF.rows.filter(x=>x !== r); draw(); }}, '×');
       return h('tr', {class:done ? 'bf-done' : ''}, h('td', {class:'bf-d'}, fmtS(r.d), ' ', h('span', {class:'chips-hint'}, bfWd(r.d))),
         h('td', {}, inp(r, 't', 't°', {list:'bfTlist'})), h('td', {class:'bf-ad'}, inp(r, 'ad1', 'САТ'), '/', inp(r, 'ad2', 'ДАТ')),

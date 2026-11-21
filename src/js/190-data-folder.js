@@ -51,7 +51,7 @@ async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(na
 const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
 const FS_FILES = (tpl, btn) => [
   ['Мої шаблони.json', 'po-my-templates', 'Свої шаблони хвороб, щоденників, схем лікування й аналізів', tpl, []],
-  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ', btn, ['po.packs', 'po.abbr', 'po.aireq']],
+  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ, «Мої фрази», власні формулювання динаміки', btn, ['po.packs', 'po.abbr', 'po.aireq', 'po.myphrases', 'po.dynPhrases', 'po.dynUse']],
   ['Налаштування.json', 'po-settings', 'Лікар, відділення, заклад, профіль, папір і бланк, вигляд', null, FS_SET_KEYS],
   ['Перевірка вмісту.json', 'po-verify', 'Позначки «перевірено» для шаблонів, схем, критеріїв, норм і шкал', null, ['po.verify', 'po.vwho']]];
 function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
