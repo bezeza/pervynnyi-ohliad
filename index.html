@@ -2701,7 +2701,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.151 від 21.11.2026">v0.9.3.151 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.152 від 21.11.2026">v0.9.3.152 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4920,8 +4920,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.151', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.152', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.152', '21.11.2026', '«Справа: хронологія» → «＋ Нова госпіталізація»: новий запис тієї ж людини (переноситься лише ПІБ, дата народження, стать); госпіталізації однієї людини зв’язуються полями person/case у знімку, зв’язок записів з однаковими ПІБ і датою народження — після підтвердження; старі записи читаються як раніше; номери госпіталізацій — за датою надходження (задача 17).'],
   ['0.9.3.151', '21.11.2026', '«Справа: хронологія»: кнопка «✓ відкрити» в рядку дня показує щоденник за цей день у документі; збереження не змінено (задача 17).'],
   ['0.9.3.150', '21.11.2026', 'Меню «⋯» → «📅 Справа: хронологія»: дні госпіталізації від надходження до виписки — щоденник, показники, кількість призначень і обстежень, події; вихідні позначені, сьогодні підсвічено; лише читання, формат збереження не змінено (задача 17).'],
   ['0.9.3.148', '18.11.2026', 'Зміна шаблону не переносить текст огляду попереднього: «Додатково» (отоскопія з отиту, суглоб пальця при подагрі) тепер очищається разом зі списками огляду.'],
@@ -24404,11 +24405,16 @@ function caseDialog(){
           h('td', {}, r.vitals.map(v=>v[0] + ' ' + v[1]).join(' · ')),
           h('td', {}, r.rx ? String(r.rx) : ''), h('td', {}, r.res ? String(r.res) : ''), h('td', {}, r.ev.join('; '))))))));
   }
+  const sib = caseSiblings(), cand = caseCandidates();
+  const link = h('div', {class:'case-link'});
+  if (CASE.person) link.append(h('p', {class:'chips-hint'}, `Госпіталізація №${CASE.n || 1}` + (sib.length ? '; інші: ' : '.')), ...sib.map(x=>h('button', {type:'button', class:'btn case-sib', onclick:()=>{ close(); openPatient(x.id); }}, `№${x.n}` + (x.d1 ? ' · ' + fmtD(x.d1) : ''))));
+  cand.forEach(x=>link.append(h('p', {class:'chips-hint'}, 'Є запис із таким самим ПІБ і датою народження' + (x.d1 ? ' (надходження ' + fmtD(x.d1) + ')' : '') + '. '), h('button', {type:'button', class:'btn case-cand', onclick:()=>{ if (caseLink(x.id)){ close(); caseDialog(); toast('Записи зв’язано як госпіталізації однієї людини'); } }}, 'Це та сама людина — зв’язати')));
   const box = h('div', {id:'caseBox', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-labelledby':'caseT'},
     h('div', {class:'mcard bf-m'},
       h('div', {class:'ph'}, h('h2', {id:'caseT'}, 'Справа: хронологія'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')),
-      body,
+      link, body,
       h('div', {class:'acts2'},
+        h('button', {type:'button', class:'btn case-new', onclick:()=>{ if (caseNewAdmission()) close(); }, title:'Новий запис тієї ж людини: переноситься лише ПІБ, дата народження й стать'}, '＋ Нова госпіталізація'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); bfDialog(); }}, '📝 Дописати історію'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); packDialog(); }}, '🖨 Друк історії'))));
   box.addEventListener('click', e=>{ if (e.target === box) close(); });
@@ -24422,6 +24428,63 @@ try{
     bf.before(h('button', {type:'button', class:'more casebtn', role:'menuitem', title:'Хронологія госпіталізації по днях: щоденники, показники, призначення, обстеження', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; caseDialog(); }}, '📅 Справа: хронологія'));
   });
 }catch(e){}
+/* ===== 0.9.3.152 — зв’язок госпіталізацій однієї людини: `person` і `case` у знімку пацієнта (задача 17, крок 3) =====
+   Запис пацієнта лишається як був (одна госпіталізація). Два необов’язкові поля в `snap` — `person` (спільний ключ людини) і `case`
+   (номер госпіталізації) — зберігаються й читаються разом зі знімком, тож копії, експорт, PIN і папка даних працюють без змін.
+   Записи без `person` — як раніше. «Нова госпіталізація» копіює лише ПІБ, дату народження й стать; огляд порожній.
+   Зв’язування записів із однаковими ПІБ і датою народження — лише після підтвердження лікаря. Проєкт: docs/task-17-sprava-design.md */
+const CASE = {person:'', n:0};
+{ const s0 = snap; snap = function(){ const r = s0.apply(this, arguments); if (CASE.person){ r.person = CASE.person; r.case = CASE.n || 1; } return r; }; }
+{ const r0 = restore; restore = function(S){ const r = r0.apply(this, arguments); CASE.person = (S && S.person) || ''; CASE.n = (S && S.case) || 0; return r; }; }
+{ const n0 = newPatient; newPatient = function(){ const r = n0.apply(this, arguments); CASE.person = ''; CASE.n = 0; return r; }; }
+const caseNorm = s => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+/* інші госпіталізації цієї людини: [{id, n, name, d1, d2}] */
+function caseSiblings(){
+  if (!CASE.person) return [];
+  const st = loadStore(), out = [];
+  for (const id in st){ const s = st[id].snap || {}; if (id !== PID && s.person === CASE.person){ const f = s.f || {}; out.push({id, n:s.case || 1, name:st[id].name, d1:f.e_per_per_1 || '', d2:f.e_per_per_2 || ''}); } }
+  return out.sort((a, b)=>a.n - b.n);
+}
+/* записи з тим самим ПІБ і датою народження, ще не зв’язані з цією людиною */
+function caseCandidates(){
+  const name = caseNorm(patientName()), dob = mv('dob'); if (!name || !dob) return [];
+  const st = loadStore(), out = [];
+  for (const id in st){ if (id === PID) continue; const p = st[id], s = p.snap || {};
+    if (caseNorm(p.name) === name && p.dob === dob && !(CASE.person && s.person === CASE.person)){ const f = s.f || {}; out.push({id, d1:f.e_per_per_1 || '', d2:f.e_per_per_2 || ''}); } }
+  return out;
+}
+function caseEnsurePerson(){ if (!CASE.person){ CASE.person = 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); CASE.n = 1; } }
+function caseLink(id){
+  if (!PID) savePatient(true); if (!PID){ toast('Спершу вкажіть ПІБ пацієнта'); return false; }
+  caseEnsurePerson(); savePatient(true);
+  const st = loadStore(), p = st[id]; if (!p || !p.snap) return false;
+  const max = [CASE.n, ...caseSiblings().map(x=>x.n)].reduce((a, b)=>Math.max(a, b), 0);
+  p.snap.person = CASE.person; p.snap.case = max + 1; p.updated = Date.now(); saveStore(st); caseRenumber(CASE.person); renderPatients();
+  return true;
+}
+/* номери госпіталізацій однієї людини — за датою надходження (без дати — після датованих; рівні — за попереднім номером) */
+function caseRenumber(person){
+  const st = loadStore(), ids = Object.keys(st).filter(id=>(st[id].snap || {}).person === person);
+  ids.sort((a, b)=>{ const sa = st[a].snap, sb = st[b].snap, da = (sa.f || {}).e_per_per_1 || '9999', db = (sb.f || {}).e_per_per_1 || '9999';
+    return da < db ? -1 : da > db ? 1 : (sa.case || 0) - (sb.case || 0); });
+  let ch = false; ids.forEach((id, i)=>{ if (st[id].snap.case !== i + 1){ st[id].snap.case = i + 1; st[id].updated = Date.now(); ch = true; } if (id === PID) CASE.n = i + 1; });
+  if (ch) saveStore(st); return ch;
+}
+function caseNewAdmission(){
+  if (!PID && !patientName()){ toast('Спершу вкажіть ПІБ пацієнта'); return false; }
+  const name = patientName(), dob = mv('dob'), sx = sex;
+  caseEnsurePerson(); savePatient(true);
+  const max = [CASE.n, ...caseSiblings().map(x=>x.n)].reduce((a, b)=>Math.max(a, b), 0), person = CASE.person;
+  PID = null; DIARIES = []; clearAll(); renderDiaries();
+  CASE.person = person; CASE.n = max + 1;
+  const set = (id, v) => { const e = document.getElementById(id); if (e && v){ e.value = v; e.dispatchEvent(new Event('input', {bubbles:true})); } };
+  set('meta_pib', name); set('meta_dob', dob);
+  sex = sx; document.querySelectorAll('#sexSeg button').forEach(x=>x.setAttribute('aria-pressed', x.dataset.sex === sex ? 'true' : 'false'));
+  try{ refreshLabels(); calcAge(); }catch(e){}
+  update(); savePatient(true); renderPatients();
+  toast(`Нова госпіталізація №${CASE.n}: ${name}. Перенесено лише ПІБ, дату народження й стать`, 5000);
+  return true;
+}
 </script>
 
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
