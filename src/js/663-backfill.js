@@ -107,7 +107,7 @@ function bfDialog(){
         extraD, h('button', {type:'button', class:'btn', onclick:()=>{ const d = extraD.value; if (!d) return; if (!P.d1.value || !P.d2.value || d < P.d1.value || d > P.d2.value){ toast('Дата має бути в межах перебування'); return; } BF.skip.delete(d); if (!BF.rows.some(r=>r.d === d)){ BF.rows.push({d, t:'', ad1:'', ad2:'', hr:'', rr:'', spo:'', o2:'', dyn:'1', extra:true}); } draw(); }}, '+ день (вихідний для тяжкого хворого)')),
       info,
       h('div', {class:'acts2'}, gen,
-        h('button', {type:'button', class:'btn', onclick:()=>{ close(); if (DOC !== 'epi') switchDoc('epi'); toast('Епікриз складається з картки, призначень, журналу обстежень і останнього щоденника. Перевірте й допишіть'); }}, 'Епікриз →'),
+        h('button', {type:'button', class:'btn', onclick:()=>{ close(); caseEpicrisis(); }}, 'Епікриз →'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); packDialog(); }}, '🖨 Друк історії'))));
   box.addEventListener('click', e=>{ if (e.target === box) close(); });
   box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });

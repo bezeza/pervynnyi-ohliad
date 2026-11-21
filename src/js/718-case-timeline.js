@@ -37,6 +37,18 @@ function caseShowDiary(d){
   $('#out').innerHTML = d.html; dirty = true; try{ $('#banner').hidden = true; }catch(e){}
   toast('Показано запис від ' + (fmtDT(d.dt) || '—') + '. Його можна скопіювати або надрукувати');
 }
+/* «Епікриз зі справи»: перехід до епікриза + «Зібрати виписку» (epiAuto заповнює лише порожні поля) + попередження про робочі дні без щоденника */
+function caseMissingDiaries(today){
+  today = today || caseRealToday();
+  return caseRows(today).rows.filter(r=>!r.weekend && !r.diaries && r.d <= today).map(r=>r.d);
+}
+function caseEpicrisis(){
+  const miss = caseMissingDiaries();
+  const keep = toast;
+  try{ toast = function(){}; if (DOC !== 'epi') switchDoc('epi'); epiAuto(); } finally { toast = keep; }
+  toast('Епікриз зібрано зі справи: заповнено порожні поля (дати, анамнез, динаміка, результати, рекомендації). Перевірте текст і внесіть «…».' + (miss.length ? ` Увага: немає щоденників за ${miss.length} ${plural(miss.length, ['робочий день','робочі дні','робочих днів'])} (${miss.slice(0, 4).map(fmtS).join(', ')}${miss.length > 4 ? '…' : ''}) — «Дописати історію».` : ''), 7000);
+  return miss.length;
+}
 function caseDialog(){
   const old = document.getElementById('caseBox'); if (old) old.remove();
   const back = document.activeElement, close = () => { box.remove(); try{ if (back && back.focus) back.focus(); }catch(e){} };
@@ -65,6 +77,7 @@ function caseDialog(){
       h('div', {class:'acts2'},
         h('button', {type:'button', class:'btn case-new', onclick:()=>{ if (caseNewAdmission()) close(); }, title:'Новий запис тієї ж людини: переноситься лише ПІБ, дата народження й стать'}, '＋ Нова госпіталізація'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); bfDialog(); }}, '📝 Дописати історію'),
+        h('button', {type:'button', class:'btn case-epi', onclick:()=>{ close(); caseEpicrisis(); }, title:'Перейти до епікриза й заповнити порожні поля зі справи'}, '📄 Епікриз зі справи'),
         h('button', {type:'button', class:'btn', onclick:()=>{ close(); packDialog(); }}, '🖨 Друк історії'))));
   box.addEventListener('click', e=>{ if (e.target === box) close(); });
   box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });

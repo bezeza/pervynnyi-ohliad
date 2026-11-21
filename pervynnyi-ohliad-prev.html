@@ -2691,12 +2691,18 @@ body.pop-ext .tn-card{display:none!important}
 /* 0.9.3.150 — «Справа: хронологія» */
 .case-t tr.case-today td{background:rgba(29,91,138,.12);font-weight:600}
 .case-t tr.case-we td{opacity:.65}
+
+/* 0.9.3.153 — вибір динаміки на день */
+.bf-dyn{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.bf-dyn .bf-dyn-b{white-space:nowrap}
+.bf-dyn .bf-dyn-t{min-width:200px;flex:1 1 200px}
+.bf-dyn .bf-dyn-del{padding:0 6px}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.152 від 21.11.2026">v0.9.3.152 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.153 від 21.11.2026">v0.9.3.153 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4915,8 +4921,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.152', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.153', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.153', '21.11.2026', '«Дописати історію»: динаміка на кожен день кнопками — три основні (↑ з позитивною, = без суттєвої, ↘ з негативною), «ще ›» («перед випискою», власні формулювання ★, «+ своє» — вбудована форма, «×» прибирає), частіше вжиті вище; «Мої фрази» і власні формулювання динаміки тепер пишуться в папку даних («Мої кнопки і фрази.json») і повертаються з неї; підказка за показниками (порівняння з попереднім днем, без порогів), вибір — за лікарем (задача 17).'],
   ['0.9.3.152', '21.11.2026', '«Справа: хронологія» → «＋ Нова госпіталізація»: новий запис тієї ж людини (переноситься лише ПІБ, дата народження, стать); госпіталізації однієї людини зв’язуються полями person/case у знімку, зв’язок записів з однаковими ПІБ і датою народження — після підтвердження; старі записи читаються як раніше; номери госпіталізацій — за датою надходження (задача 17).'],
   ['0.9.3.151', '21.11.2026', '«Справа: хронологія»: кнопка «✓ відкрити» в рядку дня показує щоденник за цей день у документі; збереження не змінено (задача 17).'],
   ['0.9.3.150', '21.11.2026', 'Меню «⋯» → «📅 Справа: хронологія»: дні госпіталізації від надходження до виписки — щоденник, показники, кількість призначень і обстежень, події; вихідні позначені, сьогодні підсвічено; лише читання, формат збереження не змінено (задача 17).'],
@@ -6207,7 +6214,7 @@ async function fsReadJSON(dir, name){ try{ const fh = await dir.getFileHandle(na
 const FS_BTN_KEYS = ['btns', 'opts', 'ovr', 'hid'];
 const FS_FILES = (tpl, btn) => [
   ['Мої шаблони.json', 'po-my-templates', 'Свої шаблони хвороб, щоденників, схем лікування й аналізів', tpl, []],
-  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ', btn, ['po.packs', 'po.abbr', 'po.aireq']],
+  ['Мої кнопки і фрази.json', 'po-my-buttons', 'Свої кнопки, додані й змінені формулювання (✎), сховані варіанти, пакети фраз, скорочення, вимоги до ШІ, «Мої фрази», власні формулювання динаміки', btn, ['po.packs', 'po.abbr', 'po.aireq', 'po.myphrases', 'po.dynPhrases', 'po.dynUse']],
   ['Налаштування.json', 'po-settings', 'Лікар, відділення, заклад, профіль, папір і бланк, вигляд', null, FS_SET_KEYS],
   ['Перевірка вмісту.json', 'po-verify', 'Позначки «перевірено» для шаблонів, схем, критеріїв, норм і шкал', null, ['po.verify', 'po.vwho']]];
 function fsCustom(){ try{ return JSON.parse(localStorage.getItem('po.custom') || '{}') || {}; }catch(e){ return {}; } }
@@ -20536,13 +20543,13 @@ function bfGenerate(){
     toast = function(){};
     if (DOC !== 'shch') switchDoc('shch');
     rows.forEach(r=>{
-      diaryFromExam(+r.dyn);
+      diaryFromExam(bfDynK(r.dyn));
       const dt = document.getElementById('meta_dt'); if (dt) dt.value = r.d + 'T09:00';
       const set = (k, i, v) => { try{ const f = F(k); if (f && f.inputs && f.inputs[i]) f.inputs[i].value = String(v || '').trim(); }catch(e){} };
       set('d_obj.t', 0, r.t); set('d_obj.ad', 0, r.ad1); set('d_obj.ad', 1, r.ad2); set('d_obj.chss', 0, r.hr); set('d_obj.chd', 0, r.rr); set('d_obj.chd', 1, r.spo); set('d_obj.o2', 0, r.o2);
       const di = document.getElementById('d_main_den_0'); if (di){ delete di.dataset.user; di.value = ''; }
       update();
-      DIARIES.push({dt:mv('dt'), rec:mv('rec'), html:$('#out').innerHTML, data:diaryFields(), bf:1}); n++;
+      DIARIES.push({dt:mv('dt'), rec:mv('rec'), html:bfDynHtml(r.dyn, $('#out').innerHTML), data:diaryFields(), bf:1}); try{ dynBump(String(r.dyn)); }catch(e){} n++;
     });
     DIARIES.sort((a, b)=>String(a.dt).localeCompare(String(b.dt)));
   } finally { toast = keepToast; }
@@ -20577,7 +20584,7 @@ function bfDialog(){
     const inp = (r, k, ph, extra) => { const i = h('input', Object.assign({value:r[k] || '', placeholder:ph, inputmode:'decimal', 'aria-label':ph + ' ' + fmtD(r.d), class:'bf-in'}, extra || {})); i.addEventListener('input', ()=>{ r[k] = i.value; }); return i; };
     const tb = h('tbody', {}, ...BF.rows.map(r=>{
       const done = bfHasDiary(r.d);
-      const sel = h('select', {'aria-label':'Динаміка ' + fmtD(r.d)}, ...BF_DYN.map(([v, t])=>h('option', {value:v}, t))); sel.value = r.dyn; sel.addEventListener('change', ()=>{ r.dyn = sel.value; });
+      const sel = bfDynPicker(r, BF.rows[BF.rows.indexOf(r) - 1], ()=>{});
       const rm = h('button', {type:'button', class:'more', title:'Прибрати день з таблиці', 'aria-label':'Прибрати ' + fmtD(r.d), onclick:()=>{ BF.skip.add(r.d); BF.rows = BF.rows.filter(x=>x !== r); draw(); }}, '×');
       return h('tr', {class:done ? 'bf-done' : ''}, h('td', {class:'bf-d'}, fmtS(r.d), ' ', h('span', {class:'chips-hint'}, bfWd(r.d))),
         h('td', {}, inp(r, 't', 't°', {list:'bfTlist'})), h('td', {class:'bf-ad'}, inp(r, 'ad1', 'САТ'), '/', inp(r, 'ad2', 'ДАТ')),
@@ -24479,6 +24486,66 @@ function caseNewAdmission(){
   update(); savePatient(true); renderPatients();
   toast(`Нова госпіталізація №${CASE.n}: ${name}. Перенесено лише ПІБ, дату народження й стать`, 5000);
   return true;
+}
+/* ===== 0.9.3.153 — вибір динаміки на кожен день у «Дописати історію» (задача 17, п. 4 рішень лікаря) =====
+   Видно три основні: «↑ з позитивною», «= без суттєвої», «↘ з негативною»; далі власні формулювання лікаря (★, «+ своє»),
+   решта («перед випискою») — під «ще ›»; частіше вжиті піднімаються. Програма лише підказує варіант за показниками дня
+   (порівняння з попереднім днем, без порогів) — вибір завжди за лікарем. Власне формулювання підміняє речення динаміки в
+   записаному щоденнику; медична логіка diaryFromExam не змінюється (власна фраза спирається на один з чотирьох базових варіантів).
+   Зберігання: localStorage (try/catch), ключі po.dynPhrases і po.dynUse; дані пацієнтів туди не потрапляють. */
+const DYN_BASE = ['Стан без суттєвої динаміки', 'Стан з позитивною динамікою', 'Стан покращився', 'Стан погіршився'];
+const DYN_MAIN = [['1', '↑ з позитивною динамікою'], ['0', '= без суттєвої динаміки'], ['3', '↘ з негативною динамікою']];
+const DYN_MORE = [['2', 'перед випискою (покращення)']];
+function dynLoad(k, d){ try{ const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? d : v; }catch(e){ return d; } }
+function dynSave(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+const dynPhrases = () => dynLoad('po.dynPhrases', []).filter(x=>x && x.id && x.t && '0123'.includes(String(x.k)));
+const dynUse = () => dynLoad('po.dynUse', {});
+function dynBump(v){ const u = dynUse(); u[v] = (u[v] || 0) + 1; dynSave('po.dynUse', u); }
+/* базовий варіант 0–3 для значення вибору (число або власна фраза 'c:<id>') */
+function bfDynK(v){ v = String(v); if (v.startsWith('c:')){ const c = dynPhrases().find(x=>'c:' + x.id === v); return c ? +c.k : 1; } return +v; }
+/* текст записаного щоденника: речення динаміки замінюється власним формулюванням */
+function bfDynHtml(v, html){
+  v = String(v); if (!v.startsWith('c:')) return html;
+  const c = dynPhrases().find(x=>'c:' + x.id === v); if (!c) return html;
+  const base = DYN_BASE[+c.k], esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return html.replace(esc(base), esc(c.t));
+}
+/* підказка: показники кращі / гірші за попередній день (t° нижча, SpO₂ вища — «кращі»); суперечливі або неповні — без підказки */
+function bfDynHint(prev, cur){
+  if (!prev || !cur) return '';
+  const n = x => { const v = parseFloat(String(x || '').replace(',', '.')); return isNaN(v) ? null : v; };
+  let up = 0, down = 0;
+  const t0 = n(prev.t), t1 = n(cur.t); if (t0 != null && t1 != null){ if (t1 < t0) up++; else if (t1 > t0) down++; }
+  const s0 = n(prev.spo), s1 = n(cur.spo); if (s0 != null && s1 != null){ if (s1 > s0) up++; else if (s1 < s0) down++; }
+  return up && !down ? '1' : down && !up ? '3' : '';
+}
+function bfDynPicker(r, prev, onChange){
+  const wrap = h('div', {class:'bf-dyn', role:'group', 'aria-label':'Динаміка ' + fmtD(r.d)});
+  let more = false, adding = false;
+  const draw = () => {
+    wrap.innerHTML = '';
+    if (adding){
+      const t = h('input', {type:'text', class:'bf-dyn-t', placeholder:'Своє формулювання динаміки', 'aria-label':'Власне формулювання динаміки', maxlength:'120'});
+      const k = h('select', {class:'bf-dyn-k', 'aria-label':'На який варіант спирається текст щоденника'}, ...DYN_BASE.map((x, i)=>h('option', {value:String(i)}, 'як «' + x.replace(/^Стан /, '') + '»')));
+      k.value = '1';
+      const save = () => { const v = t.value.trim(); if (!v){ t.focus(); return; } const all = dynPhrases(); const id = Date.now().toString(36); all.push({id, t:v, k:+k.value}); dynSave('po.dynPhrases', all); r.dyn = 'c:' + id; onChange(r.dyn); adding = false; more = true; draw(); };
+      t.addEventListener('keydown', e=>{ if (e.key === 'Enter'){ e.preventDefault(); save(); } if (e.key === 'Escape'){ e.stopPropagation(); adding = false; draw(); } });
+      wrap.append(t, k, h('button', {type:'button', class:'btn bf-dyn-save', onclick:save}, 'Зберегти'), h('button', {type:'button', class:'more bf-dyn-cancel', onclick:()=>{ adding = false; draw(); }}, 'Скасувати'));
+      setTimeout(()=>{ try{ t.focus(); }catch(e){} }, 0); return;
+    }
+    const use = dynUse(), cust = dynPhrases().map(c=>['c:' + c.id, '★ ' + c.t, c.id]);
+    const rest = [...DYN_MORE.map(x=>[x[0], x[1], '']), ...cust].sort((a, b)=>(use[b[0]] || 0) - (use[a[0]] || 0));
+    const shown = more ? [...DYN_MAIN.map(x=>[x[0], x[1], '']), ...rest] : [...DYN_MAIN.map(x=>[x[0], x[1], '']), ...rest.filter(x=>x[0] === String(r.dyn))];
+    shown.forEach(([v, t, cid])=>{
+      wrap.append(h('button', {type:'button', class:'chip q bf-dyn-b', 'aria-pressed':String(r.dyn) === v ? 'true' : 'false', onclick:()=>{ r.dyn = v; onChange(v); draw(); }}, t));
+      if (cid && more) wrap.append(h('button', {type:'button', class:'more bf-dyn-del', title:'Прибрати це формулювання зі списку', 'aria-label':'Прибрати формулювання ' + t, onclick:()=>{ dynSave('po.dynPhrases', dynPhrases().filter(x=>x.id !== cid)); if (String(r.dyn) === v){ r.dyn = '1'; onChange('1'); } draw(); }}, '×'));
+    });
+    wrap.append(h('button', {type:'button', class:'more bf-dyn-more', 'aria-expanded':String(more), onclick:()=>{ more = !more; draw(); }}, more ? '‹ менше' : 'ще ›'));
+    if (more) wrap.append(h('button', {type:'button', class:'more bf-dyn-add', onclick:()=>{ adding = true; draw(); }}, '+ своє'));
+    const hint = bfDynHint(prev, r);
+    if (hint && String(r.dyn) !== hint) wrap.append(h('span', {class:'chips-hint bf-dyn-h'}, 'підказка за показниками: ' + (hint === '1' ? '↑' : '↘')));
+  };
+  draw(); return wrap;
 }
 </script>
 
