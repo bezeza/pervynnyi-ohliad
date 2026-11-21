@@ -208,6 +208,7 @@
   "717-text-counter-label.js",
   "718-case-timeline.js",
   "719-case-link.js",
-  "720-dyn-picker.js"
+  "720-dyn-picker.js",
+  "721-dept-overview.js"
  ]
 }
