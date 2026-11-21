@@ -2701,6 +2701,10 @@ body.pop-ext .tn-card{display:none!important}
 /* 0.9.3.155 — «Відділення сьогодні» */
 .dept-t tr.dept-out td{background:rgba(29,91,138,.10)}
 .dept-t .tflags{display:flex;flex-wrap:wrap;gap:4px}
+
+/* 0.9.3.156 — «Лист на сьогодні» */
+.nurse-l{margin:4px 0 8px 18px;padding:0}
+.nurse-l li.nurse-inj{font-weight:600}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D5B8A">
@@ -2711,7 +2715,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.155 від 21.11.2026">v0.9.3.155 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.156 від 21.11.2026">v0.9.3.156 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4930,8 +4934,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.155', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.156', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.156', '21.11.2026', 'Меню «⋯» → «💊 Лист на сьогодні»: призначення на сьогодні по стаціонарних пацієнтах відділення з їхніх листків призначень (ін’єкції й інфузії зверху; умовні «за показаннями» й скасовані не показано), друк аркушем; графіка вимірювань і NEWS2 немає — це визначає лікар (задача 17).'],
   ['0.9.3.155', '21.11.2026', 'Меню «⋯» → «🏥 Відділення сьогодні»: огляд для завідувача — хто лікується, діагноз, день, виписка (сьогодні / дата), останній щоденник, що потребує уваги (ті самі прапорці, що в «Сьогодні»); лише читання (задача 17).'],
   ['0.9.3.154', '21.11.2026', '«📄 Епікриз зі справи» у вікні «Справа: хронологія» і кнопка «Епікриз →» в «Дописати історію»: переходить до епікриза, заповнює порожні поля («Зібрати виписку») і попереджає про робочі дні без щоденника; заповнене вручну не змінюється (задача 17).'],
   ['0.9.3.153', '21.11.2026', '«Дописати історію»: динаміка на кожен день кнопками — три основні (↑ з позитивною, = без суттєвої, ↘ з негативною), «ще ›» («перед випискою», власні формулювання ★, «+ своє» — вбудована форма, «×» прибирає), частіше вжиті вище; «Мої фрази» і власні формулювання динаміки тепер пишуться в папку даних («Мої кнопки і фрази.json») і повертаються з неї; підказка за показниками (порівняння з попереднім днем, без порогів), вибір — за лікарем (задача 17).'],
@@ -24608,6 +24613,54 @@ try{
   document.querySelectorAll('.more-dd .mmenu').forEach(menu=>{
     const cb = menu.querySelector('.casebtn'); if (!cb || menu.querySelector('.deptbtn')) return;
     cb.after(h('button', {type:'button', class:'more deptbtn', role:'menuitem', title:'Хто лікується, який день, кому виписка, що потребує уваги', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; deptDialog(); }}, '🏥 Відділення сьогодні'));
+  });
+}catch(e){}
+/* ===== 0.9.3.156 — «💊 Лист на сьогодні»: призначення на сьогодні по пацієнтах відділення (для медсестри; задача 17) =====
+   Лише дані листка призначень: що, доза, шлях, кратність, час, дні — для кожного стаціонарного пацієнта (ті самі, що в «Відділення сьогодні»).
+   Показується те, що активне сьогодні: початок ≤ сьогодні ≤ кінець, не скасоване, не «за показаннями» (rxHeld). Нічого не вигадується:
+   графіка вимірювань і NEWS2 тут немає — це медичні правила, їх визначає лікар. Лише читання; друк — окремим аркушем. */
+function nurseRows(){
+  const st = loadStore(), week = Date.now() - 30 * 864e5, today = todayISO(), rows = [];
+  for (const id in st){
+    const p = st[id]; if (!(p.updated > week)) continue;
+    const f = todayFlags(p); if (!f || f.amb) continue;
+    const act = ((p.snap || {}).rx || []).filter(it=>String(it.drug || '').trim() && !it.stop && !rxHeld(it) && it.start && it.start <= today && (!rxEnd(it) || rxEnd(it) >= today));
+    if (!act.length) continue;
+    const inj = it => /в\/в|в\/м|п\/ш/.test(it.route || '');
+    act.sort((a, b)=>inj(b) - inj(a) || String(a.hours || '').localeCompare(String(b.hours || '')));
+    rows.push({id, name:p.name, day:f.day, items:act.map(it=>({inj:inj(it), t:rxLine(it, false)}))});
+  }
+  rows.sort((a, b)=>String(a.name).localeCompare(String(b.name), 'uk'));
+  return rows;
+}
+function nursePrint(rows){
+  if (printBlocked()) return;
+  const P = $('#print'); P.innerHTML = '';
+  const H = formHeader();
+  P.append(h('div', {class:'pr-top'}, h('div', {}, ...H.left.slice(0, 2).flatMap((l, k)=>k ? [h('br'), l] : [l])), h('div', {class:'r'}, fmtD(todayISO()))),
+    h('h2', {class:'pr-title'}, 'Лист призначень на ' + fmtD(todayISO())),
+    h('div', {class:'pr-free'}, ...rows.flatMap(r=>[h('p', {}, h('b', {}, r.name + (r.day ? ' — ' + r.day + '-й день' : ''))), h('ul', {}, ...r.items.map(i=>h('li', {}, i.t)))])));
+  window.print();
+}
+function nurseDialog(){
+  const old = document.getElementById('nurseBox'); if (old) old.remove();
+  const back = document.activeElement, close = () => { box.remove(); try{ if (back && back.focus) back.focus(); }catch(e){} };
+  const rows = nurseRows(), n = rows.reduce((a, r)=>a + r.items.length, 0);
+  const body = !rows.length ? h('p', {class:'chips-hint'}, 'Немає активних призначень на сьогодні у стаціонарних пацієнтів (збережених за останні 30 днів).')
+    : h('div', {}, h('p', {class:'chips-hint'}, `Пацієнтів: ${rows.length}; призначень на сьогодні: ${n}. Умовні («за показаннями») та скасовані не показано. Графіка вимірювань тут немає — призначає лікар.`),
+      ...rows.map(r=>h('div', {class:'pt nurse-p'}, h('h3', {}, r.name, r.day ? h('span', {class:'chips-hint'}, ' · ' + r.day + '-й день') : ''),
+        h('ul', {class:'nurse-l'}, ...r.items.map(i=>h('li', {class:i.inj ? 'nurse-inj' : ''}, i.t))))));
+  const box = h('div', {id:'nurseBox', class:'modal', role:'dialog', 'aria-modal':'true', 'aria-labelledby':'nurseT'},
+    h('div', {class:'mcard bf-m'}, h('div', {class:'ph'}, h('h2', {id:'nurseT'}, 'Лист на сьогодні'), h('button', {type:'button', class:'btn', onclick:close}, 'Закрити ✕')), body,
+      rows.length ? h('div', {class:'acts2'}, h('button', {type:'button', class:'btn nurse-print', onclick:()=>nursePrint(rows)}, '🖨 Друк')) : ''));
+  box.addEventListener('click', e=>{ if (e.target === box) close(); });
+  box.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ e.stopPropagation(); close(); } });
+  document.body.append(box); const c = box.querySelector('button'); if (c) c.focus();
+}
+try{
+  document.querySelectorAll('.more-dd .mmenu').forEach(menu=>{
+    const db = menu.querySelector('.deptbtn'); if (!db || menu.querySelector('.nursebtn')) return;
+    db.after(h('button', {type:'button', class:'more nursebtn', role:'menuitem', title:'Призначення на сьогодні по пацієнтах відділення — з листків призначень', onclick:()=>{ const dd = menu.closest('details'); if (dd) dd.open = false; nurseDialog(); }}, '💊 Лист на сьогодні'));
   });
 }catch(e){}
 </script>
