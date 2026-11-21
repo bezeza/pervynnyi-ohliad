@@ -23,11 +23,7 @@ function rxCourse(it, d2){
   const P = F('e_per.per'), d1 = P && P.d1.value || '';
   const e0 = rxEnd(it);
   let e = e0 && d2 && e0 < d2 ? e0 : (d2 || e0 || ''), s = it.start && (!e || it.start <= e) ? it.start : '';
-  if (d1 && d2 && +it.days > 1 && d1 < d2 && (!s || s === d2 || (e && nDays(s, e) === 1))){
-    s = d1;
-    const byDays = addDays(d1, +it.days - 1);
-    e = byDays < d2 ? byDays : d2;
-  }
+  /* початок курсу не переносимо на дату надходження: показуємо фактичні дати з листка призначень */
   const base = [it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ');
   if (!s || !e) return base;
   const n = nDays(s, e);
@@ -131,6 +127,9 @@ function epiHospParts(){
     /* 0.9.3.134: парентеральний антибіотик не завершено на день виписки, а в «Продовжити прийом» його немає — у пневмонії це давало лише макролід */
     if (DOC === 'epi'){ try{ const d2 = epiD2(); const left = RXACT().filter(it=>isAB(it) && !it.stop && /в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && rxEnd(it) && rxEnd(it) > d2);
       if (left.length) L.push({m:`Курс ${left.map(it=>it.drug).join(', ')} на день виписки не завершено, а парентеральний препарат у «Продовжити прийом» не йде — додайте пероральну форму в листок або відмініть`, tab:'RX'}); }catch(e){} }
+    /* курс почато в день виписки (початок = виписка при курсі > 1 дня) — розбіжність з листком: дату в епікризі не «виправляємо» */
+    if (DOC === 'epi'){ try{ const d2 = epiD2(); if (d2){ const late = RXACT().filter(it=>!it.stop && it.start && it.start === d2 && +it.days > 1 && !['reg','diet'].includes(rxKind(it)));
+      if (late.length) L.push({m:`${late.map(it=>it.drug).join(', ')}: курс почато в день виписки (${fmtD(d2)}) при тривалості понад 1 день — перевірте дату початку в листку призначень`, tab:'RX'}); } }catch(e){} }
     return L; }; }
 /* «Продовжити прийом» потрібен лише в епікризі; у змісті «Рекомендацій» інших варіантів — окремим блоком після рекомендацій */
 /* фірмовий вигляд епікризу: акцентні заголовки пунктів, більший логотип; «чорно-білий логотип» — і заголовки чорні */

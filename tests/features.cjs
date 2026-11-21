@@ -1959,13 +1959,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     addRx({drug:'Еноксапарин',dose:'40 мг',route:'п/ш',freq:'1 р/д',start:'2026-11-03',note:'профілактика ВТЕ'});
     addRx({drug:'Бісопролол',dose:'5 мг',route:'per os',freq:'1 р/д',start:'2026-11-03'});
     update(); const t=document.getElementById('out').textContent;
-    const course=/Амоксицилін\\/клавуланат[\\s\\S]{0,120}з 03\\.11 по 09\\.11/.test(t) && !/з 10\\.11 по 10\\.11 \\(1 день\\)/.test(t);
+    const course=/Амоксицилін\\/клавуланат[\\s\\S]{0,120}з 10\\.11/.test(t) && !/Амоксицилін\\/клавуланат[^;]{0,60}з 03\\.11/.test(t);   /* 0.9.3.162: фактичний початок, не дата надходження */
     const rec=!/Режим палатний — тривало/.test(t) && !/Контроль АТ[\\s\\S]{0,40}тривало/.test(t) && !/Еноксапарин 40 мг[\\s\\S]{0,40}тривало/.test(t) && /Бісопролол 5 мг[\\s\\S]{0,40}тривало/.test(t);
     return JSON.stringify({dateOk, anOk, course, rec, dt, d1, t:t.slice(0,500)}); })()`);
   const o=JSON.parse(r);
   ok('Дата огляду не стрибає на «зараз», коли відкрито щоденник', o.dateOk, r);
   ok('Епікриз: дата надходження з огляду, анамнез з огляду, без підказки «Шкали»', o.anOk, r);
-  ok('Курс лікування — з періоду перебування; режим, моніторинг і профілактичний еноксапарин не «тривало»', o.course && o.rec, r); }
+  ok('Курс лікування — фактичний початок з листка (не дата надходження); режим, моніторинг і профілактичний еноксапарин не «тривало»', o.course && o.rec, r); }
 { const r=w.eval(`(()=>{ MODE='hosp'; applyMode(); switchDoc('ohl'); newPatient();
     document.getElementById('meta_pib').value='Тест Ординатор';
     const i=PRESETS.findIndex(p=>p.key==='pneu'); applyPreset(PRESETS[i], HV.cards[i]);
@@ -2096,6 +2096,12 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     ok('Епікриз: стан і динаміка — з щоденника (задовільний, покращився), без зайвого запиту', o.askedOk===0&&o.zad&&o.dyn2==='0', r); }
   { const r=w.eval(`(()=>{ switchDoc('epi'); F('e_per.vyg').el.value='3'; F('e_rek.rek').el.value='Спостереження сімейного лікаря.\\nПродовжити прийом: аторвастатин 20 мг.'; F('e_rek.prod').el.value='1. Аторвастатин 20 мг.'; update(); const t=itext($('#out')); const n=(t.match(/Продовжити прийом/g)||[]).length; F('e_per.vyg').el.value='0'; return n; })()`);
     ok('Епікриз «як у лікарні»: «Продовжити прийом» без дубля', r===1, String(r)); }
+  { const r=w.eval(`(()=>{ const keep=RX.slice(); RX.length=0; switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-11-02'; P.d2.value='2026-11-07'; F('e_per.vyg').el.value='3';
+    addRx({drug:'Амоксицилін', dose:'500 мг', route:'per os', freq:'3 р/д', start:'2026-11-07', days:5}); update();
+    const t=generate().plain; const o={shows:/з 07\\.11/.test(t), noD1:!/з 02\\.11/.test(t.split('Амоксицилін')[1]||''), warn:checkDoc().some(x=>/почато в день виписки/.test(x.m))};
+    addRx({drug:'Лозартан', dose:'50 мг', route:'per os', freq:'1 р/д', start:'2026-11-03', days:5}); update(); o.okStart=/Лозартан[^\\n]*з 03\\.11/.test(generate().plain);
+    RX.length=0; keep.forEach(x=>RX.push(x)); F('e_per.vyg').el.value='0'; P.d1.value=''; P.d2.value=''; return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Епікриз: фактичний початок курсу (07.11), не дата надходження; почато в день виписки — попередження', o.shows&&o.noD1&&o.warn&&o.okStart, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
