@@ -207,6 +207,7 @@
   "716-respiratory-buttons.js",
   "717-text-counter-label.js",
   "718-case-timeline.js",
-  "719-case-link.js"
+  "719-case-link.js",
+  "720-dyn-picker.js"
  ]
 }
