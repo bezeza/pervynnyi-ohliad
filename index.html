@@ -2715,7 +2715,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.160 від 21.11.2026">v0.9.3.160 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.161 від 21.11.2026">v0.9.3.161 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4934,8 +4934,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.160', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.161', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.161', '22.11.2026', 'Епікриз не вигадує: «Зібрати виписку» більше не пише «загальний стан задовільний», не ставить результат «з покращенням» і дату виписки «сьогодні»; стан і динаміка — з останнього щоденника, при погіршенні/тяжкому стані/SpO₂ < 92 — запит підтвердження; прибрано дубль «Продовжити прийом».'],
   ['0.9.3.160', '21.11.2026', 'Бланки у Word: шапка закладу (назва й відділення з «Налаштувань») на щоденниках і амбулаторному бланку, крупніший шрифт у обстеженнях епікризів, менші поля сторінки.'],
   ['0.9.3.159', '21.11.2026', '«Зберегти у Word» для бланків: кожен бланк — окремий файл із власною назвою (наприклад, «Епікриз ….doc»). Квадрати коду МКХ-10 і дати замінено лінією для вписування, порожні клітинки таблиць не злипаються.'],
   ['0.9.3.158', '21.11.2026', 'Кнопка «📄 Бланки» зверху поруч із «Новий»: швидкий доступ до порожніх бланків (друк або Word).'],
@@ -7088,27 +7089,39 @@ const DREK = {
 function sectionBody(doc, id){ const keep = DOC; DOC = doc; const p = sectionText(SECTIONS.find(x=>x.id === id)); DOC = keep; return p ? g(p.body) : ''; }
 /* дата первинного огляду (поле «Дата огляду» або дата створення запису) */
 function examDateISO(){ try{ const sn = (typeof PID !== 'undefined' && PID && loadStore()[PID] || {}).snap; const v = DOC === 'ohl' ? mv('dt') : (sn && sn.f && sn.f.meta_dt) || ''; return String(v || '').split('T')[0]; }catch(e){ return ''; } }
+const STAN_OPTS = ['задовільний', 'середньої тяжкості', 'тяжкий'];
+/* ознаки, при яких виписку «автоматом» не збираємо без підтвердження лікаря */
+function epiRisk(){
+  const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {}, r = [];
+  if (lf.d_main_dyn === '3') r.push('в останньому щоденнику «стан погіршився»');
+  if (lf.d_main_stan === '2') r.push('в останньому щоденнику загальний стан тяжкий');
+  try{ const S = diarySeries(); const L = S[S.length - 1]; if (L && L.sp != null && L.sp < 92) r.push('SpO₂ ' + L.sp + ' %'); }catch(e){}
+  return r;
+}
 function epiAuto(){
+  { const risk = epiRisk(); if (risk.length && !window.confirm('Увага: ' + risk.join('; ') + '. Зібрати виписку автоматично?')) return; }
   const done = [], P = F('e_per.per'), today = todayISO();
   if (!P.d1.value){ const ex = examDateISO(), ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).concat(ex ? [ex] : []).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push(ex && ds[0] === ex ? 'дата надходження — з дати первинного огляду, перевірте' : 'дата надходження — з першого щоденника, перевірте'); } }
-  if (!P.d2.value){ const lastD = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort().pop(); P.d2.value = lastD && lastD > today ? lastD : today; done.push(lastD && lastD > today ? 'дата виписки — за останнім щоденником, перевірте' : 'дата виписки'); }
+  /* дату виписки не підставляємо: «сьогодні» — це припущення, її вносить лікар */
+  if (!P.d2.value) done.push('дату виписки внесіть самі');
   const an = F('e_per.anam'); if (!an.el.value.trim()){ const t = sectionBody('ohl', 'morbi'); if (t){ an.el.value = t; done.push('анамнез'); } }
   const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {};
   const ldyn = lf.d_main_dyn, lsk = lf.d_main_sk;
-  const dy = F('e_lik.dyn'); if (dy.el.value === ''){ dy.el.value = lsk === '0' ? 0 : ldyn === '0' || ldyn === '3' ? 2 : 1; mark(dy.el, dy); done.push('динаміка'); }
+  /* динаміка — лише з останнього щоденника; «погіршився» в списку немає, тож лишаємо порожньо */
+  const dy = F('e_lik.dyn'); if (dy.el.value === '' && last && (ldyn === '1' || ldyn === '2' || ldyn === '0')){ dy.el.value = ldyn === '0' ? 2 : lsk === '0' ? 0 : 1; mark(dy.el, dy); done.push('динаміка'); }
   const vp = F('e_lik.vyp');
   if (!vp.el.value.trim()){
     let obj = '';
     if (last){ const tmp = document.createElement('div'); tmp.innerHTML = last.html; const l = [...tmp.children].map(x=>itext(x)).find(x=>/^Об’єктивно:/.test(x)); if (l) obj = l.replace(/^Об’єктивно:\s*/, ''); }
     const zal = (lf.d_main_zal || '').trim();
-    vp.el.value = [zal ? 'Зберігаються скарги на ' + zal.replace(/\.$/, '') + '.' : lsk === '0' || !last ? 'Скарг не пред’являє.' : '', 'Загальний стан задовільний.', obj].filter(Boolean).join(' '); done.push('стан при виписці');
+    vp.el.value = [zal ? 'Зберігаються скарги на ' + zal.replace(/\.$/, '') + '.' : lsk === '0' && last ? 'Скарг не пред’являє.' : '', 'Загальний стан ' + (STAN_OPTS[+lf.d_main_stan] || '…') + '.', obj].filter(Boolean).join(' '); done.push('стан при виписці');
   }
-  const rz = F('e_lik.rez'); if (rz.el.value === ''){ rz.el.value = 1; mark(rz.el, rz); }
+  /* результат лікування не ставимо за замовчуванням — «з покращенням» має обрати лікар */
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
     const cont = RXACT().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
-    if (cont.length) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
+    if (cont.length && !(typeof epiHosp === 'function' && epiHosp())) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
       return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
     (DREK[curKey] || []).forEach(x=>L.push(x));
     L.push('При погіршенні стану — негайно звернутися по медичну допомогу або викликати ЕМД (103).');
@@ -16703,6 +16716,7 @@ function epiHospParts(){
   const rek = V('e_rek.rek'), eln = V('e_lik.eln');
   const rekL = rek.split('\n').map(x=>x.trim()).filter(Boolean); if (eln) rekL.push(end(cap(eln)));
   const prod = V('e_rek.prod');
+  if (prod) for (let i = rekL.length - 1; i >= 0; i--) if (/^\d*\.?\s*Продовжити прийом/i.test(rekL[i])) rekL.splice(i, 1);   /* без дубля: список — окремим пунктом нижче */
   const items = [];
   const kudy = V('e_per.kudy'); if (kudy) items.push(['У', kudy]);
   items.push(['1. Прізвище, ім’я, по батькові хворого:', mv('pib') || '______________________________'],

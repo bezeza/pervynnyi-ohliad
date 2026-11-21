@@ -102,6 +102,7 @@ function epiHospParts(){
   const rek = V('e_rek.rek'), eln = V('e_lik.eln');
   const rekL = rek.split('\n').map(x=>x.trim()).filter(Boolean); if (eln) rekL.push(end(cap(eln)));
   const prod = V('e_rek.prod');
+  if (prod) for (let i = rekL.length - 1; i >= 0; i--) if (/^\d*\.?\s*Продовжити прийом/i.test(rekL[i])) rekL.splice(i, 1);   /* без дубля: список — окремим пунктом нижче */
   const items = [];
   const kudy = V('e_per.kudy'); if (kudy) items.push(['У', kudy]);
   items.push(['1. Прізвище, ім’я, по батькові хворого:', mv('pib') || '______________________________'],
