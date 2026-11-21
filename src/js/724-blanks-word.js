@@ -95,3 +95,11 @@ async function blanksWord(keys){
   await saveFile(bytes, 'Порожні бланки.doc', 'application/msword', 'Бланки у Word');
   return true;
 }
+/* окрема кнопка «📄 Бланки» поруч із «Новий» — щоб не шукати в меню «⋯» */
+try{
+  const nw = document.getElementById('clearAll');
+  if (nw && !document.getElementById('blanksTop')){
+    const b = h('button', {type:'button', class:'btn', id:'blanksTop', title:'Порожні бланки: друк або збереження у Word для заповнення вручну', onclick:()=>blanksDialog()}, '📄 Бланки');
+    nw.after(b);
+  }
+}catch(e){}
