@@ -59,6 +59,7 @@
   "490-data-rx-variants.js",
   "500-data-rx-sources.js",
   "501-rx-evidence.js",
+  "502-stopbang-caprini.js",
   "505-rx-kinds.js",
   "510-rx-sets.js",
   "512-presets-alcohol.js",
