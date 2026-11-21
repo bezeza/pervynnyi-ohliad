@@ -29,8 +29,16 @@ function caseLink(id){
   caseEnsurePerson(); savePatient(true);
   const st = loadStore(), p = st[id]; if (!p || !p.snap) return false;
   const max = [CASE.n, ...caseSiblings().map(x=>x.n)].reduce((a, b)=>Math.max(a, b), 0);
-  p.snap.person = CASE.person; p.snap.case = max + 1; p.updated = Date.now(); saveStore(st); renderPatients();
+  p.snap.person = CASE.person; p.snap.case = max + 1; p.updated = Date.now(); saveStore(st); caseRenumber(CASE.person); renderPatients();
   return true;
+}
+/* номери госпіталізацій однієї людини — за датою надходження (без дати — після датованих; рівні — за попереднім номером) */
+function caseRenumber(person){
+  const st = loadStore(), ids = Object.keys(st).filter(id=>(st[id].snap || {}).person === person);
+  ids.sort((a, b)=>{ const sa = st[a].snap, sb = st[b].snap, da = (sa.f || {}).e_per_per_1 || '9999', db = (sb.f || {}).e_per_per_1 || '9999';
+    return da < db ? -1 : da > db ? 1 : (sa.case || 0) - (sb.case || 0); });
+  let ch = false; ids.forEach((id, i)=>{ if (st[id].snap.case !== i + 1){ st[id].snap.case = i + 1; st[id].updated = Date.now(); ch = true; } if (id === PID) CASE.n = i + 1; });
+  if (ch) saveStore(st); return ch;
 }
 function caseNewAdmission(){
   if (!PID && !patientName()){ toast('Спершу вкажіть ПІБ пацієнта'); return false; }

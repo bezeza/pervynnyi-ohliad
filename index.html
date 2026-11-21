@@ -4922,7 +4922,7 @@ function clearAll(forRestore){
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
 const VERSION = '0.9.3.152', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
-  ['0.9.3.152', '21.11.2026', '«Справа: хронологія» → «＋ Нова госпіталізація»: новий запис тієї ж людини (переноситься лише ПІБ, дата народження, стать); госпіталізації однієї людини зв’язуються полями person/case у знімку, зв’язок записів з однаковими ПІБ і датою народження — після підтвердження; старі записи читаються як раніше (задача 17).'],
+  ['0.9.3.152', '21.11.2026', '«Справа: хронологія» → «＋ Нова госпіталізація»: новий запис тієї ж людини (переноситься лише ПІБ, дата народження, стать); госпіталізації однієї людини зв’язуються полями person/case у знімку, зв’язок записів з однаковими ПІБ і датою народження — після підтвердження; старі записи читаються як раніше; номери госпіталізацій — за датою надходження (задача 17).'],
   ['0.9.3.151', '21.11.2026', '«Справа: хронологія»: кнопка «✓ відкрити» в рядку дня показує щоденник за цей день у документі; збереження не змінено (задача 17).'],
   ['0.9.3.150', '21.11.2026', 'Меню «⋯» → «📅 Справа: хронологія»: дні госпіталізації від надходження до виписки — щоденник, показники, кількість призначень і обстежень, події; вихідні позначені, сьогодні підсвічено; лише читання, формат збереження не змінено (задача 17).'],
   ['0.9.3.148', '18.11.2026', 'Зміна шаблону не переносить текст огляду попереднього: «Додатково» (отоскопія з отиту, суглоб пальця при подагрі) тепер очищається разом зі списками огляду.'],
@@ -24459,8 +24459,16 @@ function caseLink(id){
   caseEnsurePerson(); savePatient(true);
   const st = loadStore(), p = st[id]; if (!p || !p.snap) return false;
   const max = [CASE.n, ...caseSiblings().map(x=>x.n)].reduce((a, b)=>Math.max(a, b), 0);
-  p.snap.person = CASE.person; p.snap.case = max + 1; p.updated = Date.now(); saveStore(st); renderPatients();
+  p.snap.person = CASE.person; p.snap.case = max + 1; p.updated = Date.now(); saveStore(st); caseRenumber(CASE.person); renderPatients();
   return true;
+}
+/* номери госпіталізацій однієї людини — за датою надходження (без дати — після датованих; рівні — за попереднім номером) */
+function caseRenumber(person){
+  const st = loadStore(), ids = Object.keys(st).filter(id=>(st[id].snap || {}).person === person);
+  ids.sort((a, b)=>{ const sa = st[a].snap, sb = st[b].snap, da = (sa.f || {}).e_per_per_1 || '9999', db = (sb.f || {}).e_per_per_1 || '9999';
+    return da < db ? -1 : da > db ? 1 : (sa.case || 0) - (sb.case || 0); });
+  let ch = false; ids.forEach((id, i)=>{ if (st[id].snap.case !== i + 1){ st[id].snap.case = i + 1; st[id].updated = Date.now(); ch = true; } if (id === PID) CASE.n = i + 1; });
+  if (ch) saveStore(st); return ch;
 }
 function caseNewAdmission(){
   if (!PID && !patientName()){ toast('Спершу вкажіть ПІБ пацієнта'); return false; }
