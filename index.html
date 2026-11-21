@@ -24766,6 +24766,7 @@ async function blanksWord(keys){
     await saveFile(new TextEncoder().encode('\ufeff' + html), blankFileName(L[i]), 'application/msword', 'Бланк «' + L[i].t + '»');
     if (i < L.length - 1) await new Promise(r=>setTimeout(r, 400));
   }
+  toast('Готово. У Word: клікніть на лінію і пишіть; варіант — виділіть і натисніть Ctrl+B або Ctrl+U', 7000);
   return true;
 }
 /* окрема кнопка «📄 Бланки» поруч із «Новий» — щоб не шукати в меню «⋯» */
