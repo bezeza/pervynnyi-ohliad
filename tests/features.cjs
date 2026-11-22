@@ -2192,6 +2192,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм неправильний (фібриляція передсердь)'}); ok('Задача 28: щоденник — ясні тони й неправильний ритм не стають «приглушеними»', r.serce==='ясні, ритм неправильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм правильний'}); ok('Задача 28: щоденник — ритм правильний, коли його оцінено', r.serce==='ясні, ритм правильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'тахікардія'}); ok('Задача 28: щоденник — при тахікардії «ритм правильний» не пишеться', r.serce==='ясні', r.serce); w.eval("clearAll(true)"); }
+  { const r=w.eval(`(()=>{ const o={}; const c0=window.confirm; window.confirm=()=>true; const run=(k, rx)=>{ clearAll(true); switchDoc('epi'); const i=PRESETS.findIndex(p=>p.key===k); applyPreset(PRESETS[i], HV.cards[i]); RX.length=0; rx.forEach(r=>addRx(Object.assign({start:'2026-11-02',days:'',stop:''}, r))); const P=F('e_per.per'); P.d1.value='2026-11-02'; P.d2.value='2026-11-09'; DIARIES.length=0; DIARIES.push({dt:'2026-11-08T09:00',rec:'',html:'',data:{f:{d_main_dyn:'1',d_main_stan:'0',d_main_sk:'0',d_obj_chd_1:'97'},c:{}}}); F('e_rek.rek').el.value=''; F('e_rek.prod').el.value=''; epiAuto(); update(); return document.getElementById('out').textContent; };
+    let t=run('pe',[{drug:'Еноксапарин',dose:'1 мг/кг',route:'п/ш',freq:'2 р/д'},{drug:'Бісопролол',dose:'5 мг',route:'per os',freq:'1 р/д'}]);
+    o.peOnce=(t.match(/Продовжити прийом/g)||[]).length===1; o.peNoPs=!/Продовжити прийом[^]*Еноксапарин[^]*п\\/ш/.test(t.slice(t.indexOf('Продовжити прийом'))); o.peWarn=checkDoc().some(x=>/оберіть пероральну схему/.test(x.m));
+    t=run('pneu',[{drug:'Амоксицилін/клавуланат',dose:'1,2 г',route:'в/в',freq:'3 р/д'},{drug:'Кларитроміцин',dose:'500 мг',route:'per os',freq:'2 р/д'}]);
+    o.pnOnce=(t.match(/Продовжити прийом/g)||[]).length===1; o.pnAmox=/Амоксицилін\\/клавуланат 875\\/125 мг per os 2 р\\/д/.test(t); o.pnNoIv=!/Продовжити прийом[^]*Амоксицилін\\/клавуланат 1,2 г в\\/в/.test(t.slice(t.indexOf('Продовжити прийом')));
+    window.confirm=c0; clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Виписка 027/о: «Продовжити прийом» — один блок, без п/ш; в/в амоксицилін/клавуланат → per os 875/125; антикоагулянт парентерально — попередження', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

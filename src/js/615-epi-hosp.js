@@ -36,14 +36,18 @@ function epiCourses(){
   RXGRP.forEach(([name, test])=>{ const g = L.filter(it=>!used.has(it) && test(it)); g.forEach(it=>used.add(it)); if (g.length) out.push(name + ': ' + g.map(it=>rxCourse(it, d2)).join('; ')); });
   return out.map(x=>end(x)).join('\n');
 }
-/* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
+/* «Продовжити прийом»: не відмінено на день виписки; парентеральне (в/в, в/м, п/ш) не йде додому — єдине правило */
+const PARENTERAL_RE = /в\/в|в\/м|п\/ш|інфуз|крапел/i;
+const STEPDOWN = [{re:/^Амоксицилін\/клавуланат/i, dose:'875/125 мг', freq:'2 р/д'}];
 function contList(){
   const d2 = epiD2();
-  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !PARENTERAL_RE.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  /* в/в антибіотик з пероральним еквівалентом: на виписку — таблетована форма (дані — STEPDOWN) */
+  RXACT().filter(it=>(!it.start || it.start <= d2) && PARENTERAL_RE.test(it.route || '') && !epiWard(it)).forEach(it=>{ const sd = STEPDOWN.find(x=>x.re.test(it.drug)); if (sd && !L.some(x=>sd.re.test(x.drug))) L.push({drug:it.drug, dose:sd.dose, route:'per os', freq:sd.freq, _step:1}); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : (/за потреби/i.test(it.freq || '') ? '' : ' — тривало');   /* «за потреби — тривало» суперечить собі */
-    return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${how}.`; }).join('\n');
+    return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${it._step ? ' — до завершення курсу (тривалість уточнити)' : how}.`; }).join('\n');
 }
 /* показники зі щоденників */
 const dnum = (D, id) => { const v = String((D.data && D.data.f || {})[id] || '').trim().replace(',', '.'); const x = parseFloat(v); return isNaN(x) ? null : x; };
@@ -123,6 +127,7 @@ function epiHospParts(){
       if (vidd) r.head.push({t:vidd.toUpperCase(), b:false, c:true}); }
     return r; };
   const c0 = checkDoc; checkDoc = function(){ const L = c0.apply(this, arguments);
+    try{ if (DOC === 'epi' && RXACT().some(it=>/п\/ш|в\/в/i.test(it.route || '') && /Еноксапарин|Надропарин|Дальтепарин|Фондапаринукс|Гепарин/i.test(it.drug) && !epiWard(it))) L.push({m:'Антикоагулянт парентерально (п/ш, в/в) не йде в «Продовжити прийом»: оберіть пероральну схему на виписку (апіксабан, ривароксабан тощо)', tab:'rx'}); }catch(x){}
     if (DOC === 'epi'){ const u = unstableAtDischarge(); if (u) L.push({m:`За останню добу перед випискою є ознаки нестабільності (${u}) — перевірте готовність до виписки`, tab:'e_lik', f:'e_lik.vyp'}); }
     /* 0.9.3.134: парентеральний антибіотик не завершено на день виписки, а в «Продовжити прийом» його немає — у пневмонії це давало лише макролід */
     if (DOC === 'epi'){ try{ const d2 = epiD2(); const left = RXACT().filter(it=>isAB(it) && !it.stop && /в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && rxEnd(it) && rxEnd(it) > d2);
