@@ -67,6 +67,7 @@
   "515-rx-form.js",
   "520-my-templates.js",
   "530-check.js",
+  "531-hosp-nocrit.js",
   "540-ui-build.js",
   "545-undo.js",
   "546-welcome.js",

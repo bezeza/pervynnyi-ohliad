@@ -1839,7 +1839,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const absent=['Діурез адекватний','корнеальні рефлекси','Черевні рефлекси','Ромберг','Язик сухий','Язик вологий','хрипи не вислуховуються','Грудна клітка правильної форми','неякісної їжі','самолікуванням','сімейного лікаря','з’їденою їжею','багаторазове'];
     const foodClean=absent.filter(s=>food.includes(s));
     const foodKeep=/Харчова токсикоінфекція/.test(food) && /рідкі випорожнення/i.test(food) && /навколопупков/.test(food) && !/неможливість прийому рідини/.test(food) && /За показаннями/.test(food) && /неможливості пиття/.test(food) && /Об’єктивний стан хворої:/.test(food) && /Тургор знижений/.test(food);
-    ap('pneu');
+    ap('pneu'); { const sp=document.getElementById('dyh_chd_1'); sp.value='88'; sp.dispatchEvent(new Event('input',{bubbles:true})); }   /* 0.9.3.165: критерій IV.2.3 — лише за SpO2 */
     const sf=F('hosp.spec'), crit='негоспітальна пневмонія з дихальною недостатністю або ускладненнями (п. IV.2.3)';
     const chip=sf.chips[sf.opts.findIndex(o=>O(o).t===crit)];
     const wasOn=!!chip && chip.getAttribute('aria-pressed')==='true';
@@ -2124,6 +2124,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     o.d=!/Не описано анамнез життя/.test(g()); o.e=!/Не описано: [^|]*Загальн/.test(g()) || true;
     clearAll(true); return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Перевірка: без загального стану, свідомості й анамнезу життя — нагадування; після внесення зникають', o.a&&o.b&&o.c&&o.d, r); }
+  { const r=w.eval(`(()=>{ clearAll(true); switchDoc('ohl'); MODE='hosp'; const o={};
+    const dd=F('zah.dod').el; dd.value='тест'; dd.dispatchEvent(new Event('input',{bubbles:true}));
+    const vy=F('hosp.vyd').el; vy.value='0'; vy.dispatchEvent(new Event('change',{bubbles:true}));
+    o.noCrit=!/Показана екстрена госпіталізація/.test(document.getElementById('out').textContent||''); o.warn=checkDoc().some(x=>/Немає підстави госпіталізації/.test(x.m));
+    const f=F('hosp.gen'); const c=f.chips[0]; c.click();
+    o.withCrit=/Показана екстрена госпіталізація/.test(document.getElementById('out').textContent||'');
+    o.hf=!/кисневої підтримки/.test(JSON.stringify(KRIT.hf));
+    clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Госпіталізація: «Показана …» без критерію не виводиться, з критерієм — є; ХСН без «кисневої підтримки»', o.noCrit&&o.warn&&o.withCrit&&o.hf, r); }
+  { ap('pneu'); w.eval("switchDoc('ohl')"); const r=w.eval(`(()=>{ const sp=document.getElementById('dyh_chd_1'); const crit='негоспітальна пневмонія з дихальною недостатністю або ускладненнями (п. IV.2.3)'; const o={}; sp.value=''; sp.dispatchEvent(new Event('input',{bubbles:true}));
+    o.noSpo=!autoRules().spec.has(crit); sp.value='88'; sp.dispatchEvent(new Event('input',{bubbles:true})); o.spo88=autoRules().spec.has(crit); sp.value=''; return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Пневмонія «ЛН I ступеня» без SpO2 не вмикає критерій IV.2.3; з SpO2 88% — вмикає', o.noSpo&&o.spo88, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

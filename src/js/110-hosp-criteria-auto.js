@@ -64,7 +64,7 @@ function autoRules(){
   const ivAB = rxA.some(it=>isAB(it) && /в\/в/.test(it.route || ''));
   const neb = rxA.some(it=>/небулайзер/.test(it.route || '')), sGCS = hasRx(/Преднізолон|Дексаметазон|Метилпреднізолон/);
   const pain810 = /інтенсивністю (8|9|10)\/10/.test(sk);
-  if ((K === 'pneu' || K === 'covid') && /ЛН|плеврит|абсцес|сепсис|емпієм/i.test(usk)) spec.add(KRIT.pneu[1]);
+  if ((K === 'pneu' || K === 'covid') && (/плеврит|абсцес|сепсис|емпієм/i.test(usk) || /ЛН/i.test(usk) && spo > 0 && spo <= 92)) spec.add(KRIT.pneu[1]);
   if (K === 'copd' && neb && sGCS) spec.add(KRIT.copd[0]);
   if (K === 'asthma' && neb && sGCS) spec.add(KRIT.asthma[0]);
   if (K === 'chol' && ivAB) spec.add(KRIT.chol[0]);
@@ -89,7 +89,7 @@ function autoRules(){
   // типовий критерій заготовки — лише коли за даними нічого не знайдено; позначається «з шаблону — перевірте»
   const tpl = new Set(), P0 = PRESETS.find(x=>x.key === K);
   const emerg = MODE === 'hosp' ? F('hosp.vyd').el.value === '0' : F('hosp.vyda').el.value === '1';
-  if (P0 && !P0.custom && emerg && !spec.size){
+  if (P0 && !P0.custom && emerg && !spec.size && !((K === 'pneu' || K === 'covid') && !(spo > 0))){   /* критерій дихальної недостатності без SpO2 не вмикаємо */
     const c = TPLKRIT[K] !== undefined && KRIT[K] ? KRIT[K][TPLKRIT[K]] : TPLURG[K];
     if (c){ spec.add(c); tpl.add(c); }
   }
