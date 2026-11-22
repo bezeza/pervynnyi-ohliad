@@ -2168,6 +2168,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const o=JSON.parse(r); ok('Дрібні правки аудиту: IIA, COVID SpO2, вагітність лише жінкам, ДАПТ за показаннями, вивих, дієти МОЗ № 931, умовні без «з …»', Object.values(o).every(Boolean), r); }
   { const r=w.eval(`(()=>{ clearAll(true); switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-11-08'; P.d2.value='2026-11-14'; RX.length=0; addRx({drug:'Парацетамол',dose:'500 мг',route:'per os',freq:'за потреби',start:'2026-11-08',days:'',stop:''}); const t=contList(); RX.length=0; clearAll(true); return t; })()`);
     ok('Виписка: «за потреби» не супроводжується «— тривало»', /Парацетамол/.test(r) && !/тривало/.test(r), r); }
+  { const r=w.eval(`(()=>{ const o={}, T=()=>document.getElementById('out').textContent; clearAll(true); switchDoc('ohl'); MODE='hosp'; RES.length=0;
+    const i=PRESETS.findIndex(p=>p.key==='pe'); applyPreset(PRESETS[i], HV.cards[i]); const e=F('dx.vyd').el; F('hosp.gen').chips[0].click(); update();   /* без критерію речення про госпіталізацію не виводиться (0.9.3.165) */
+    o.a=/Попередній діагноз:/.test(T())&&/потребує підтвердження: КТ-ангіопульмонографія\./.test(T())&&/з метою верифікації діагнозу та лікування/.test(T());
+    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест'});
+    o.b=(update(), /Клінічний діагноз:/.test(T()))&&!/потребує підтвердження/.test(T());
+    e.value='0'; e.dispatchEvent(new Event('change',{bubbles:true})); update(); o.c=/Попередній діагноз:/.test(T());
+    const S=snap(); o.d=S.vm===1; clearAll(true); restore(S); o.e=e.dataset.man==='1';
+    RES.length=0; e.dataset.man=''; delete e.dataset.man; e.value='1'; e.dispatchEvent(new Event('change',{bubbles:true})); update(); o.f=/Клінічний діагноз:/.test(T())&&!/потребує підтвердження/.test(T());
+    delete e.dataset.man; switchDoc('epi'); update(); o.g=/потребує підтвердження: КТ-ангіопульмонографія/.test(T())&&checkDoc().some(x=>/Діагноз лишається попереднім/.test(x.m));
+    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест'}); update(); o.h=!/потребує підтвердження/.test(T())&&!checkDoc().some(x=>/Діагноз лишається попереднім/.test(x.m));
+    RES.length=0; clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Попередній діагноз: ТЕЛА без КТ-АПГ — «Попередній … потребує підтвердження», з результатом — «Клінічний», ручний вибір сильніший, епікриз — попередження', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

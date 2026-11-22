@@ -213,6 +213,7 @@
   "720-dyn-picker.js",
   "721-dept-overview.js",
   "722-nurse-sheet.js",
-  "724-blanks-word.js"
+  "724-blanks-word.js",
+  "726-prelim-dx.js"
  ]
 }
