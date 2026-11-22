@@ -2715,7 +2715,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.171 від 21.11.2026">v0.9.3.171 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.172 від 21.11.2026">v0.9.3.172 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4938,8 +4938,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.171', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.172', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.172', '22.11.2026', 'Виписка 027/о: «Продовжити прийом» — один блок (не дублюється в рекомендаціях), парентеральне (в/в, в/м, п/ш) не йде додому, в/в амоксицилін/клавуланат переходить у per os 875/125 мг; для парентерального антикоагулянта — попередження «оберіть пероральну схему».'],
   ['0.9.3.171', '19.11.2026', 'Щоденник з огляду не вигадує: колір шкіри (гіперемія, землисто-сірий, ціаноз), «дихання ослаблене» лише якщо воно в огляді, крепітація не стає «вологими хрипами», «ритм правильний» лише якщо ритм оцінено.'],
   ['0.9.3.169', '22.11.2026', '«Попередній діагноз» до підтвердження: для ТЕЛА, інсульту, ШКК, менінгіту, пневмонії шаблон знає підтверджуюче обстеження — поки результату немає, «Попередній діагноз: … — потребує підтвердження: …», після внесення результату автоматично «Клінічний діагноз». Ручний вибір лікаря сильніший; в епікризі без підтвердження лишається «Попередній» із зауваженням у «Перевірці».'],
   ['0.9.3.169', '22.11.2026', 'Дрібні правки аудиту: у виписці без «за потреби — тривало»; стадії ХСН латиницею (IIA, IIB); вивих — без кеторолаку й ібупрофену в один день; ТІА — подвійна антиагрегантна «за показаннями»; COVID — одна цільова SpO2 92–96%; «вагітність» у ТЕЛА лише для жінок; умовні призначення в листку без дати «з …»; дієти лише стандартні (наказ МОЗ № 931).'],
@@ -7239,9 +7240,7 @@ function epiAuto(){
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
-    const cont = RXACT().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
-    if (cont.length && !(typeof epiHosp === 'function' && epiHosp())) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
-      return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
+    /* «Продовжити прийом» — один блок: поле prod (contList); тут його не дублюємо */
     (DREK[curKey] || []).forEach(x=>L.push(x));
     L.push('При погіршенні стану — негайно звернутися по медичну допомогу або викликати ЕМД (103).');
     rk.el.value = L.join('\n'); done.push('рекомендації');
@@ -16787,14 +16786,18 @@ function epiCourses(){
   RXGRP.forEach(([name, test])=>{ const g = L.filter(it=>!used.has(it) && test(it)); g.forEach(it=>used.add(it)); if (g.length) out.push(name + ': ' + g.map(it=>rxCourse(it, d2)).join('; ')); });
   return out.map(x=>end(x)).join('\n');
 }
-/* «Продовжити прийом»: не відмінено на день виписки, не парентерально */
+/* «Продовжити прийом»: не відмінено на день виписки; парентеральне (в/в, в/м, п/ш) не йде додому — єдине правило */
+const PARENTERAL_RE = /в\/в|в\/м|п\/ш|інфуз|крапел/i;
+const STEPDOWN = [{re:/^Амоксицилін\/клавуланат/i, dose:'875/125 мг', freq:'2 р/д'}];
 function contList(){
   const d2 = epiD2();
-  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !PARENTERAL_RE.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
+  /* в/в антибіотик з пероральним еквівалентом: на виписку — таблетована форма (дані — STEPDOWN) */
+  RXACT().filter(it=>(!it.start || it.start <= d2) && PARENTERAL_RE.test(it.route || '') && !epiWard(it)).forEach(it=>{ const sd = STEPDOWN.find(x=>x.re.test(it.drug)); if (sd && !L.some(x=>sd.re.test(x.drug))) L.push({drug:it.drug, dose:sd.dose, route:'per os', freq:sd.freq, _step:1}); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
     const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : (/за потреби/i.test(it.freq || '') ? '' : ' — тривало');   /* «за потреби — тривало» суперечить собі */
-    return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${how}.`; }).join('\n');
+    return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${it._step ? ' — до завершення курсу (тривалість уточнити)' : how}.`; }).join('\n');
 }
 /* показники зі щоденників */
 const dnum = (D, id) => { const v = String((D.data && D.data.f || {})[id] || '').trim().replace(',', '.'); const x = parseFloat(v); return isNaN(x) ? null : x; };
@@ -16874,6 +16877,7 @@ function epiHospParts(){
       if (vidd) r.head.push({t:vidd.toUpperCase(), b:false, c:true}); }
     return r; };
   const c0 = checkDoc; checkDoc = function(){ const L = c0.apply(this, arguments);
+    try{ if (DOC === 'epi' && RXACT().some(it=>/п\/ш|в\/в/i.test(it.route || '') && /Еноксапарин|Надропарин|Дальтепарин|Фондапаринукс|Гепарин/i.test(it.drug) && !epiWard(it))) L.push({m:'Антикоагулянт парентерально (п/ш, в/в) не йде в «Продовжити прийом»: оберіть пероральну схему на виписку (апіксабан, ривароксабан тощо)', tab:'rx'}); }catch(x){}
     if (DOC === 'epi'){ const u = unstableAtDischarge(); if (u) L.push({m:`За останню добу перед випискою є ознаки нестабільності (${u}) — перевірте готовність до виписки`, tab:'e_lik', f:'e_lik.vyp'}); }
     /* 0.9.3.134: парентеральний антибіотик не завершено на день виписки, а в «Продовжити прийом» його немає — у пневмонії це давало лише макролід */
     if (DOC === 'epi'){ try{ const d2 = epiD2(); const left = RXACT().filter(it=>isAB(it) && !it.stop && /в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && rxEnd(it) && rxEnd(it) > d2);
