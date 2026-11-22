@@ -2086,6 +2086,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const o=JSON.parse(r); ok('Бланки у Word: кнопка в діалозі, файл .doc з пропусками-підкресленнями без flex, по розділу на бланк', o.btn&&o.html&&o.und&&o.noflex&&o.sect===2&&o.empty, r); }
   ok('Кнопка «📄 Бланки» зверху відкриває вибір бланків', (()=>{ const b=$('blanksTop'); if(!b) return false; b.click(); const d=$('fbPick'); const r=!!d; if(d) d.remove(); return r; })());
   ok('Бланки у Word: назва файлу — назва бланка', w.eval("blankFileName({t:'Щоденник — терапія (2 на аркуш)'})")==='Щоденник — терапія (2 на аркуш).doc' && w.eval("blankFileName({t:'А/Б: в?'})")==='А Б в.doc');
+  { const r=w.eval(`(()=>{ clearAll(); const o={}; const mk=(f)=>{ DIARIES.length=0; DIARIES.push({dt:'2026-11-05T09:00',rec:'',html:'<p>Об’єктивно: стан тяжкий.</p>',data:{f:Object.assign({d_obj_chd_1:'86'},f),c:{}}}); const P=F('e_per.per'); P.d1.value='2026-11-02'; P.d2.value=''; F('e_lik.rez').el.value=''; F('e_lik.dyn').el.value=''; F('e_lik.vyp').el.value=''; F('e_rek.rek').el.value=''; };
+    switchDoc('epi'); const c0=window.confirm; let asked=0, ans=false; window.confirm=()=>{ asked++; return ans; };
+    mk({d_main_dyn:'3', d_main_stan:'2'}); epiAuto(); o.askedBad=asked; o.blocked=F('e_lik.vyp').el.value===''&&F('e_lik.rez').el.value==='';
+    ans=true; epiAuto(); const vp=F('e_lik.vyp').el.value; o.noZad=!/задовільний/.test(vp); o.tyazh=/тяжкий/.test(vp); o.rez=F('e_lik.rez').el.value; o.dyn=F('e_lik.dyn').el.value; o.d2=F('e_per.per').d2.value;
+    asked=0; mk({d_main_dyn:'2', d_main_stan:'0', d_main_sk:'0', d_obj_chd_1:'97'}); epiAuto(); o.askedOk=asked; o.zad=/Загальний стан задовільний/.test(F('e_lik.vyp').el.value); o.dyn2=F('e_lik.dyn').el.value;
+    window.confirm=c0; return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Епікриз не вигадує: тяжкий/погіршення/SpO2 86 — запит, без «задовільний», «з покращенням», дати «сьогодні»', o.askedBad===1&&o.blocked&&o.noZad&&o.tyazh&&o.rez===''&&o.dyn===''&&o.d2==='', r);
+    ok('Епікриз: стан і динаміка — з щоденника (задовільний, покращився), без зайвого запиту', o.askedOk===0&&o.zad&&o.dyn2==='0', r); }
+  { const r=w.eval(`(()=>{ switchDoc('epi'); F('e_per.vyg').el.value='3'; F('e_rek.rek').el.value='Спостереження сімейного лікаря.\\nПродовжити прийом: аторвастатин 20 мг.'; F('e_rek.prod').el.value='1. Аторвастатин 20 мг.'; update(); const t=itext($('#out')); const n=(t.match(/Продовжити прийом/g)||[]).length; F('e_per.vyg').el.value='0'; return n; })()`);
+    ok('Епікриз «як у лікарні»: «Продовжити прийом» без дубля', r===1, String(r)); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);

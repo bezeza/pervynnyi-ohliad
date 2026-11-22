@@ -33,27 +33,39 @@ const DREK = {
 function sectionBody(doc, id){ const keep = DOC; DOC = doc; const p = sectionText(SECTIONS.find(x=>x.id === id)); DOC = keep; return p ? g(p.body) : ''; }
 /* дата первинного огляду (поле «Дата огляду» або дата створення запису) */
 function examDateISO(){ try{ const sn = (typeof PID !== 'undefined' && PID && loadStore()[PID] || {}).snap; const v = DOC === 'ohl' ? mv('dt') : (sn && sn.f && sn.f.meta_dt) || ''; return String(v || '').split('T')[0]; }catch(e){ return ''; } }
+const STAN_OPTS = ['задовільний', 'середньої тяжкості', 'тяжкий'];
+/* ознаки, при яких виписку «автоматом» не збираємо без підтвердження лікаря */
+function epiRisk(){
+  const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {}, r = [];
+  if (lf.d_main_dyn === '3') r.push('в останньому щоденнику «стан погіршився»');
+  if (lf.d_main_stan === '2') r.push('в останньому щоденнику загальний стан тяжкий');
+  try{ const S = diarySeries(); const L = S[S.length - 1]; if (L && L.sp != null && L.sp < 92) r.push('SpO₂ ' + L.sp + ' %'); }catch(e){}
+  return r;
+}
 function epiAuto(){
+  { const risk = epiRisk(); if (risk.length && !window.confirm('Увага: ' + risk.join('; ') + '. Зібрати виписку автоматично?')) return; }
   const done = [], P = F('e_per.per'), today = todayISO();
   if (!P.d1.value){ const ex = examDateISO(), ds = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).concat(ex ? [ex] : []).sort(); if (ds[0]){ P.d1.value = ds[0]; done.push(ex && ds[0] === ex ? 'дата надходження — з дати первинного огляду, перевірте' : 'дата надходження — з першого щоденника, перевірте'); } }
-  if (!P.d2.value){ const lastD = DIARIES.map(d=>String(d.dt || '').split('T')[0]).filter(Boolean).sort().pop(); P.d2.value = lastD && lastD > today ? lastD : today; done.push(lastD && lastD > today ? 'дата виписки — за останнім щоденником, перевірте' : 'дата виписки'); }
+  /* дату виписки не підставляємо: «сьогодні» — це припущення, її вносить лікар */
+  if (!P.d2.value) done.push('дату виписки внесіть самі');
   const an = F('e_per.anam'); if (!an.el.value.trim()){ const t = sectionBody('ohl', 'morbi'); if (t){ an.el.value = t; done.push('анамнез'); } }
   const last = DIARIES[DIARIES.length - 1], lf = last && last.data ? last.data.f : {};
   const ldyn = lf.d_main_dyn, lsk = lf.d_main_sk;
-  const dy = F('e_lik.dyn'); if (dy.el.value === ''){ dy.el.value = lsk === '0' ? 0 : ldyn === '0' || ldyn === '3' ? 2 : 1; mark(dy.el, dy); done.push('динаміка'); }
+  /* динаміка — лише з останнього щоденника; «погіршився» в списку немає, тож лишаємо порожньо */
+  const dy = F('e_lik.dyn'); if (dy.el.value === '' && last && (ldyn === '1' || ldyn === '2' || ldyn === '0')){ dy.el.value = ldyn === '0' ? 2 : lsk === '0' ? 0 : 1; mark(dy.el, dy); done.push('динаміка'); }
   const vp = F('e_lik.vyp');
   if (!vp.el.value.trim()){
     let obj = '';
     if (last){ const tmp = document.createElement('div'); tmp.innerHTML = last.html; const l = [...tmp.children].map(x=>itext(x)).find(x=>/^Об’єктивно:/.test(x)); if (l) obj = l.replace(/^Об’єктивно:\s*/, ''); }
     const zal = (lf.d_main_zal || '').trim();
-    vp.el.value = [zal ? 'Зберігаються скарги на ' + zal.replace(/\.$/, '') + '.' : lsk === '0' || !last ? 'Скарг не пред’являє.' : '', 'Загальний стан задовільний.', obj].filter(Boolean).join(' '); done.push('стан при виписці');
+    vp.el.value = [zal ? 'Зберігаються скарги на ' + zal.replace(/\.$/, '') + '.' : lsk === '0' && last ? 'Скарг не пред’являє.' : '', 'Загальний стан ' + (STAN_OPTS[+lf.d_main_stan] || '…') + '.', obj].filter(Boolean).join(' '); done.push('стан при виписці');
   }
-  const rz = F('e_lik.rez'); if (rz.el.value === ''){ rz.el.value = 1; mark(rz.el, rz); }
+  /* результат лікування не ставимо за замовчуванням — «з покращенням» має обрати лікар */
   const rk = F('e_rek.rek');
   if (!rk.el.value.trim()){
     const L = ['Спостереження сімейного лікаря за місцем проживання.'];
     const cont = RXACT().filter(it=>!it.stop && !(typeof epiWard === 'function' && epiWard(it)) && !/в\/в|в\/м|п\/ш/.test(it.route || '') && it.freq !== 'за потреби' && it.drug !== 'Оксигенотерапія' && (!rxEnd(it) || rxEnd(it) > today));
-    if (cont.length) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
+    if (cont.length && !(typeof epiHosp === 'function' && epiHosp())) L.push('Продовжити прийом: ' + cont.map(it=>{ const e = rxEnd(it), left = e ? Math.round((new Date(e + 'T00:00') - new Date(today + 'T00:00')) / 864e5) : 0;
       return [it.drug, it.dose, it.freq].filter(Boolean).join(' ') + (left > 0 ? ` ще ${left} ${plural(left, ['день','дні','днів'])}` : ''); }).join('; ') + '.');
     (DREK[curKey] || []).forEach(x=>L.push(x));
     L.push('При погіршенні стану — негайно звернутися по медичну допомогу або викликати ЕМД (103).');
