@@ -35,7 +35,7 @@ function checkDoc(){
     if (MODE === 'hosp' && !v('dx.plan')) add('Не складено план обстеження', 'dx', 'dx.plan');
     if (MODE === 'hosp'){
       if (!sel('hosp.vyd')) add('Не вказано вид госпіталізації', 'hosp', 'hosp.vyd');
-      else if (!['spec','gen','auto','vid'].some(k=>v('hosp.' + k))) add('Немає обґрунтування госпіталізації (наказ МОЗ № 1044)', 'hosp', 'hosp.spec');
+      else if (!['spec','gen','auto','vid'].some(k=>v('hosp.' + k))) add('Немає підстави госпіталізації (наказ МОЗ № 1044): речення «Показана … госпіталізація» не виведено — оберіть критерій або змініть рішення', 'hosp', 'hosp.spec');
     } else if (!sel('hosp.vyda')) add('Не вказано рішення щодо госпіталізації', 'hosp', 'hosp.vyda');
     abCheck(); renal(); rxIncomplete();
     rxWarnings().filter(w=>w.c === 'bad').forEach(w=>add(w.t, 'rxt'));
