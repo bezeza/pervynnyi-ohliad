@@ -2169,7 +2169,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   { const r=w.eval(`(()=>{ clearAll(true); switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-11-08'; P.d2.value='2026-11-14'; RX.length=0; addRx({drug:'Парацетамол',dose:'500 мг',route:'per os',freq:'за потреби',start:'2026-11-08',days:'',stop:''}); const t=contList(); RX.length=0; clearAll(true); return t; })()`);
     ok('Виписка: «за потреби» не супроводжується «— тривало»', /Парацетамол/.test(r) && !/тривало/.test(r), r); }
   { const r=w.eval(`(()=>{ const o={}, T=()=>document.getElementById('out').textContent; clearAll(true); switchDoc('ohl'); MODE='hosp'; RES.length=0;
-    const i=PRESETS.findIndex(p=>p.key==='pe'); applyPreset(PRESETS[i], HV.cards[i]); const e=F('dx.vyd').el;
+    const i=PRESETS.findIndex(p=>p.key==='pe'); applyPreset(PRESETS[i], HV.cards[i]); const e=F('dx.vyd').el; F('hosp.gen').chips[0].click(); update();   /* без критерію речення про госпіталізацію не виводиться (0.9.3.165) */
     o.a=/Попередній діагноз:/.test(T())&&/потребує підтвердження: КТ-ангіопульмонографія\./.test(T())&&/з метою верифікації діагнозу та лікування/.test(T());
     RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест'});
     o.b=(update(), /Клінічний діагноз:/.test(T()))&&!/потребує підтвердження/.test(T());
