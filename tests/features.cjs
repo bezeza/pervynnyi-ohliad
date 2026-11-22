@@ -2146,6 +2146,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     dobEl.value='1990-05-05'; dobEl.dispatchEvent(new Event('input',{bubbles:true})); dobEl.dispatchEvent(new Event('change',{bubbles:true})); o.amp40=!rxWarnings().some(x=>/ампіцилін/.test(x.t));
     clearAll(true); return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Гострі шаблони: делірій, менінгіт, інсульт, ШКК, перфорація — режим, моніторинг, дієта, діазепам, ампіцилін >60', Object.values(o).every(Boolean), r); }
+  { const r=w.eval(`(()=>{ clearAll(); const P=F('e_per.per'); P.d1.value='2026-11-02'; P.d2.value='2026-11-10'; const o={};
+    const run=(f)=>{ DIARIES.length=0; DIARIES.push({dt:'2026-11-03T09:00',rec:'',html:'',data:{f,c:{}}}); const c=caseRows('2026-11-20'); return c.rows.find(x=>x.d==='2026-11-07').weekend; };
+    o.sev=run({d_main_stan:'2'})===false; o.wors=run({d_main_dyn:'3'})===false; o.spo=run({d_obj_chd_1:'88'})===false; o.ok=run({d_main_stan:'0',d_main_dyn:'1',d_obj_chd_1:'96'})===true; DIARIES.length=0;
+    const keep=document.getElementById('meta_dt').value; const st=Object.assign({}, loadStore());
+    const mk=(name,w,upd)=>({name, card:'', dob:'', updated:upd, snap:{f:Object.assign({e_per_per_1:'2026-11-08',e_per_per_2:'2099-01-01',dx_osn:'Т',vitae_alerg:'1',vitae_alergx:'пеніцилін'}, w?{zah_hw_1:w}:{}), c:{}, mode:'hosp', diaries:[], rx:[{id:1,drug:'Гентаміцин',dose:'5 мг/кг',route:'в/в',freq:'1 раз на добу',start:'2026-11-08',days:'',stop:''}], res:[]}});
+    st.nz1=mk('Тест Маса А','80',Date.now()); st.nz2=mk('Тест Маса Б','',Date.now()-100*864e5); const st0=Object.keys(loadStore()); saveStore(Object.assign(loadStore(), {nz1:st.nz1, nz2:st.nz2}));
+    const rows=nurseRows(); const a=rows.find(r=>r.name==='Тест Маса А'), b=rows.find(r=>r.name==='Тест Маса Б');
+    o.w=!!a&&a.w===80&&/400/.test(a.items[0].t)&&/Пеніцилін|пеніцилін/.test(a.al); o.nom=!!b&&/уточнити масу/.test(b.items[0].t)&&b.w===0; o.old=!!b;
+    const s2=loadStore(); delete s2.nz1; delete s2.nz2; saveStore(s2); clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Справа/лист медсестри: вихідні при тяжкому стані потребують щоденника; маса, алергія, мг/кг з розрахунком, не виписані без обмеження 30 днів', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
