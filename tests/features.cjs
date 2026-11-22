@@ -1902,7 +1902,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     age('2000-01-01'); const young=!/Ампіцилін/.test(drugs()) && /Цефтріаксон/.test(drugs());
     age(''); const noAge=!/Ампіцилін/.test(drugs());
     age('1990-01-01'); ap('awd'); const aw=T();
-    const awdOk=/оглушення/.test(aw) && !/свідомість ясна/.test(aw) && !/Ромберг/.test(aw) && /делірієм/.test(aw);
+    const awdOk=!/оглушення/.test(aw) && !/свідомість ясна/.test(aw) && !/Ромберг/.test(aw) && /делірієм/.test(aw);
     ap('epi'); const ep=T();
     const epiOk=!/самовільною відміною/.test(ep) && !/нерегулярно/.test(ep) && !/свідомість ясна/.test(ep) && !/Ромберг/.test(ep) && /сплутаністю/.test(ep);
     ap('tia'); const ti=T();
@@ -1911,7 +1911,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     return JSON.stringify({meningBaseNoAmp, explicitListeria, young, noAge, awdOk, epiOk, tiaOk, pn, aw:aw.slice(0,180), ep:ep.slice(0,220)}); })()`);
   const o = JSON.parse(r);
   ok('Менінгіт: вік не додає ампіцилін автоматично; окремий варіант враховує Listeria-ризики', o.meningBaseNoAmp && o.explicitListeria && o.young && o.noAge, r);
-  ok('Делірій: свідомість порушена, без норми координації', o.awdOk, r);
+  ok('Делірій: без «оглушення» й без «свідомість ясна» (свідомість обирає лікар), без норми координації', o.awdOk, r);
   ok('Епілепсія: немає «свідомість ясна» проти сплутаності і немає відміни препаратів', o.epiOk, r);
   ok('ТІА: неврологія не заперечує скарги на дефіцит; в анамнезі регрес', o.tiaOk, r);
   ok('Пневмонія без «Норми» не вписує неврологію, якої не було', o.pn, r); }
@@ -2136,6 +2136,16 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   { ap('pneu'); w.eval("switchDoc('ohl')"); const r=w.eval(`(()=>{ const sp=document.getElementById('dyh_chd_1'); const crit='негоспітальна пневмонія з дихальною недостатністю або ускладненнями (п. IV.2.3)'; const o={}; sp.value=''; sp.dispatchEvent(new Event('input',{bubbles:true}));
     o.noSpo=!autoRules().spec.has(crit); sp.value='88'; sp.dispatchEvent(new Event('input',{bubbles:true})); o.spo88=autoRules().spec.has(crit); sp.value=''; return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Пневмонія «ЛН I ступеня» без SpO2 не вмикає критерій IV.2.3; з SpO2 88% — вмикає', o.noSpo&&o.spo88, r); }
+  { const r=w.eval(`(()=>{ const o={}, rx=()=>RXF().filter(it=>!it.stop||true); const nm=()=>RX.map(it=>it.drug);
+    const chk=(k)=>{ clearAll(true); switchDoc('ohl'); MODE='hosp'; const i=PRESETS.findIndex(p=>p.key===k); applyPreset(PRESETS[i], HV.cards[i]); return rxFor(PRESETS[i]).map(r=>({d:r[0],r:r[2],f:r[3]})); };
+    let a=chk('awd'); o.awdSvid=F('zah.svid').el.value!==String(F('zah.svid').opts.indexOf('оглушення')); o.awdDz=a.filter(x=>/Діазепам/.test(x.d)).length===1&&!a.some(x=>/Діазепам/.test(x.d)&&/per os/.test(x.r)); o.awdDiet=!a.some(x=>/^Основний варіант/.test(x.d))&&a.some(x=>/^Голод/.test(x.d));
+    for (const k of ['mening','stroke','gib','perf']){ a=chk(k); o[k+'Reg']=a.some(x=>/^Режим ліжковий/.test(x.d)); o[k+'Mon']=a.some(x=>/^Контроль АТ/.test(x.d)&&x.f==='щогодини'); o[k+'Diet']=!a.some(x=>/^Основний варіант/.test(x.d)); }
+    a=chk('mening'); o.menGcs=a.some(x=>/GCS/.test(x.d)); o.menIso=a.some(x=>/^Ізоляція крапельна/.test(x.d));
+    a=chk('stroke'); o.strokeStat=a.filter(x=>/Аторвастатин/.test(x.d)).every(x=>/скринінгу ковтання/.test(x.r));
+    chk('mening'); addRx({drug:'Цефтріаксон'}); const dobEl=document.getElementById('meta_dob'); dobEl.value='1955-05-05'; dobEl.dispatchEvent(new Event('input',{bubbles:true})); dobEl.dispatchEvent(new Event('change',{bubbles:true})); o.amp70=rxWarnings().some(x=>/ампіцилін/.test(x.t));
+    dobEl.value='1990-05-05'; dobEl.dispatchEvent(new Event('input',{bubbles:true})); dobEl.dispatchEvent(new Event('change',{bubbles:true})); o.amp40=!rxWarnings().some(x=>/ампіцилін/.test(x.t));
+    clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Гострі шаблони: делірій, менінгіт, інсульт, ШКК, перфорація — режим, моніторинг, дієта, діазепам, ампіцилін >60', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
