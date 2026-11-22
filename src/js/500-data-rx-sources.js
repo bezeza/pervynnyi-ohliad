@@ -95,7 +95,7 @@ function rxLine(it, dates){
   if (it.days) t += `, ${it.days} ${plural(+it.days, ['день','дні','днів'])}`;
   if (it.hours) t += ` о ${it.hours}`;
   if (it.note) t += ` (${it.note})`;
-  if (dates){ const e = rxEnd(it); t += ` — з ${fmtS(it.start)}` + (e ? ` по ${fmtS(e)}` : ''); }
+  if (dates && !rxHeld(it)){ const e = rxEnd(it); t += ` — з ${fmtS(it.start)}` + (e ? ` по ${fmtS(e)}` : ''); }
   return t;
 }
 function abLines(){
@@ -118,6 +118,7 @@ function rxHeld(it){
   const d = String(it.drug || ''), n = String(it.note || '');
   if (/^Оксигенотерапія/.test(d) && /(?:^|лише )при SpO2\s*[<≤]/.test(n)) return true;
   if (/^Дексаметазон/.test(d) && /при потребі в кисні/.test(n)) return true;
+  if (/^Клопідогрель/.test(d) && /^за показаннями/.test(n)) return true;
   if (/^Еноксапарин/.test(d) && /40 мг/.test(String(it.dose || '')) && /Падуа|за шкалою|за оцінкою ризику/.test(n)) return true;
   if (/^Положення на животі/.test(d) && /при потребі/.test(n)) return true;
   if (/натрію хлорид/i.test(d) && /неможливості пиття/.test(n)) return true;

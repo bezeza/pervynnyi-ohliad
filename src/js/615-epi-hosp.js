@@ -42,7 +42,7 @@ function contList(){
   const L = RXACT().filter(it=>{ const e = rxEnd(it); return !epiWard(it) && (!it.start || it.start <= d2) && (!e || e > d2) && !/в\/в|в\/м|інфуз|крапел/i.test(it.route || '') && !/кисн|оксиген|розчин|рінгер/i.test(it.drug); });
   return L.map((it, i)=>{ const e = rxEnd(it), left = e ? nDays(d2, e) - 1 : 0;
     const when = it.hours ? ' о ' + it.hours : '';
-    const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : ' — тривало';
+    const how = e ? (left > 0 ? ` — ще ${left} ${plural(left, ['день','дні','днів'])} (до ${fmtD(e)} включно)` : '') : (/за потреби/i.test(it.freq || '') ? '' : ' — тривало');   /* «за потреби — тривало» суперечить собі */
     return `${i + 1}. ${[it.drug, it.dose, it.route, it.freq].filter(Boolean).join(' ')}${when}${how}.`; }).join('\n');
 }
 /* показники зі щоденників */
