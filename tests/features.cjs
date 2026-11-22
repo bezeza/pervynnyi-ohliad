@@ -2024,7 +2024,7 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const conf=o2.hold===false && !rxHeld(o2) && cnt()===n0+1;
     switchDoc('shch'); update(); const sh2=/Оксигенотерапія/.test(T());
     switchDoc('ohl'); ap('gh'); const gh=/Хронічний перебіг/.test(T()) && !/Хворіє протягом/.test(T());
-    ap('hf'); const hf=/ХСН IIА стадії, ФК III/.test(T()) && !/ФВ ЛШ/.test(T());
+    ap('hf'); const hf=/ХСН IIA стадії, ФК III/.test(T()) && !/ФВ ЛШ/.test(T());
     clearAll(); update(); return JSON.stringify({adm,shOk,epOk,chk,stripOk,conf,sh2,gh,hf,strip:strip.slice(0,300),n0}); })()`);
   const o=JSON.parse(r);
   ok('0.9.3.134: умовні призначення не йдуть у щоденник, епікриз і «Призначено (N)», доки не натиснуто «Призначити»', o.shOk && o.epOk && o.stripOk && o.conf && o.sh2, r);
@@ -2156,6 +2156,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     o.w=!!a&&a.w===80&&/400/.test(a.items[0].t)&&/Пеніцилін|пеніцилін/.test(a.al); o.nom=!!b&&/уточнити масу/.test(b.items[0].t)&&b.w===0; o.old=!!b;
     const s2=loadStore(); delete s2.nz1; delete s2.nz2; saveStore(s2); clearAll(true); return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Справа/лист медсестри: вихідні при тяжкому стані потребують щоденника; маса, алергія, мг/кг з розрахунком, не виписані без обмеження 30 днів', Object.values(o).every(Boolean), r); }
+  { const r=w.eval(`(()=>{ clearAll(true); switchDoc('ohl'); MODE='hosp'; const o={}; const mk=k=>{ const i=PRESETS.findIndex(p=>p.key===k); applyPreset(PRESETS[i], HV.cards[i]); return rxFor(PRESETS[i]); };
+    o.hf=/IIA/.test(JSON.stringify(SN))&&!/IIА/.test(JSON.stringify(SN));
+    o.covid=(()=>{ const r=mk('covid'); return r.filter(x=>/^Оксигенотерапія/.test(x[0])).length===1&&!/94–98/.test(JSON.stringify(r)); })();
+    sex='m'; o.peM=!/вагітн/.test(JSON.stringify(mk('pe'))); sex='f'; o.peF=/виключити вагітність/.test(JSON.stringify(mk('pe'))); sex='';
+    const tia=mk('tia').find(x=>x[0]==='Клопідогрель'); o.tia=!!tia&&rxHeld({drug:tia[0],note:tia[5]});
+    const dl=mk('tdisl'); o.disl=!dl.some(x=>x[0]==='Ібупрофен');
+    o.diets=!DIETS.some(d=>/^Стіл/.test(d))&&!Object.values(DIET_FOR).some(d=>/^Стіл/.test(d));
+    o.sheet=!/ — з /.test(rxLine({drug:'Дексаметазон',dose:'6 мг',route:'per os',freq:'1 р/д',start:'2026-11-08',note:'лише при потребі в кисні'}, true));
+    clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Дрібні правки аудиту: IIA, COVID SpO2, вагітність лише жінкам, ДАПТ за показаннями, вивих, дієти МОЗ № 931, умовні без «з …»', Object.values(o).every(Boolean), r); }
+  { const r=w.eval(`(()=>{ clearAll(true); switchDoc('epi'); const P=F('e_per.per'); P.d1.value='2026-11-08'; P.d2.value='2026-11-14'; RX.length=0; addRx({drug:'Парацетамол',dose:'500 мг',route:'per os',freq:'за потреби',start:'2026-11-08',days:'',stop:''}); const t=contList(); RX.length=0; clearAll(true); return t; })()`);
+    ok('Виписка: «за потреби» не супроводжується «— тривало»', /Парацетамол/.test(r) && !/тривало/.test(r), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
