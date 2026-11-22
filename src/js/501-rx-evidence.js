@@ -161,14 +161,17 @@ RXSRC.mening = ['NICE NG240 (2024): антибіотики, фактори ри�
 Object.assign(RXLVL, {'mening:Фактори ризику Listeria — додати ампіцилін':'високий'});
 PRESETS.forEach(p=>{ if (RXS[p.key]) p.rx = RXS[p.key]; if (TIPS[p.key]) p.tips = TIPS[p.key]; });
 
+const ACUTE_KEYS = ['mening', 'stroke', 'gib', 'perf'], DIET_NOTE = {mening:'до оцінки свідомості та безпечного ковтання', stroke:'до скринінгу ковтання; далі — дієта за його результатом'};
+const M_VIT_MEN = ['Контроль АТ, ЧСС, ЧД, t°, SpO2, свідомості (шкала Глазго, GCS)','','','щогодини',0,'моніторинг у ВАІТ / палаті інтенсивного спостереження'];
 /* ---------- Стаціонарний лист завжди повний: режим, дієта, моніторинг (для решти хвороб — з наявних даних) ---------- */
 function rxFull(rows, key){
   if (MODE !== 'hosp' || !rows || !rows.length) return rows;
   const kinds = rows.map(r=>rxKind({drug:r[0]})), out = rows.slice();
   const pre = [];
-  if (!kinds.includes('reg')) pre.push(R_PAL);
-  if (!kinds.includes('diet')) pre.push([DIET_FOR[key] || D_OVD[0], '', '', '', 0, '']);
-  if (!rows.some(r=>/^контроль ат/i.test(r[0]))) pre.push(M_VIT);
+  const acute = ACUTE_KEYS.includes(key);   /* гострі стани: ліжковий режим, щогодинний моніторинг, не ОВД */
+  if (!kinds.includes('reg')) pre.push(acute ? R_LIZH : R_PAL);
+  if (!kinds.includes('diet')) pre.push([DIET_FOR[key] || D_OVD[0], '', '', '', 0, DIET_NOTE[key] || '']);
+  if (!rows.some(r=>/^контроль ат/i.test(r[0]))) pre.push(key === 'mening' ? M_VIT_MEN : acute ? M_VIT_ICU : M_VIT);
   const hasO2 = rows.some(r=>/^оксигенотерапія/i.test(r[0])), names = new Set(rows.map(r=>r[0].toLowerCase()));
   (PROC_FOR[key] || []).forEach(n=>{ const pr = PROC_MAP[n.toLowerCase()]; if (!pr || pr[1] !== 'man' || names.has(n.toLowerCase())) return;
     if (/^(контроль ат і чсс|пульсоксиметрія)$/i.test(n) || (/^оксигенотерапія/i.test(n) && hasO2)) return;
