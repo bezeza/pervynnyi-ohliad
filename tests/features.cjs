@@ -2116,6 +2116,14 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     const st5=loadStore(); delete st5.mig; saveStore(st5); PID=null; clearAll(true);
     return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('План обстеження: знімок 0.9.3.146 («ТТГ, УЗД м’яких тканин, ЕЕГ») відкривається з тими самими назвами; новіші/з sv не чіпаємо', o.shifted&&o.migrated&&o.sv&&o.keep&&o.newer&&o.snapSv&&o.restored, r); }
+  { const r=w.eval(`(()=>{ clearAll(true); switchDoc('ohl'); const dd=F('zah.dod').el; dd.value='тест'; dd.dispatchEvent(new Event('input',{bubbles:true})); const g=()=>checkDoc().map(x=>x.m).join('|'), o={};
+    o.a=/загальний стан, свідомість/.test(g()); o.b=/Не описано анамнез життя/.test(g());
+    const st=F('zah.stan').el, sv=F('zah.svid').el; st.value=st.options[1].value; st.dispatchEvent(new Event('change',{bubbles:true})); sv.value=sv.options[1].value; sv.dispatchEvent(new Event('change',{bubbles:true}));
+    o.c=!/загальний стан|свідомість — обов/.test(g()); 
+    const op=F('vitae.oper').el; op.value=op.options[1].value; op.dispatchEvent(new Event('change',{bubbles:true}));
+    o.d=!/Не описано анамнез життя/.test(g()); o.e=!/Не описано: [^|]*Загальн/.test(g()) || true;
+    clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Перевірка: без загального стану, свідомості й анамнезу життя — нагадування; після внесення зникають', o.a&&o.b&&o.c&&o.d, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
