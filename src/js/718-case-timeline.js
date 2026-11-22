@@ -18,10 +18,13 @@ function caseRows(today){
   const P = F('e_per.per'), d1 = P.d1.value; let d2 = P.d2.value;
   if (!d1) return {rows:[], d1:'', d2:'', open:false};
   const open = !d2 || d2 > today; if (open) d2 = today < d1 ? d1 : today;
-  const rows = [];
+  const rows = []; let sev = false;   /* тяжкий стан / погіршення / SpO2 < 92% в останньому щоденнику — на вихідних щоденник теж потрібен */
   for (let d = d1, k = 0; d <= d2 && k < 400; d = addDays(d, 1), k++){
-    const wd = new Date(d + 'T00:00').getDay(), weekend = (wd === 0 || wd === 6) && d !== d1 && d !== P.d2.value;
+    const wd = new Date(d + 'T00:00').getDay(), weekend0 = (wd === 0 || wd === 6) && d !== d1 && d !== P.d2.value;
     const dia = DIARIES.filter(x=>String(x.dt || '').split('T')[0] === d);
+    if (dia.length){ const lf = (dia[dia.length - 1].data && dia[dia.length - 1].data.f) || {}, sp = parseFloat(String(lf.d_obj_chd_1 || '').replace(',', '.'));
+      sev = lf.d_main_stan === '2' || lf.d_main_dyn === '3' || (sp > 0 && sp < 92); }
+    const weekend = weekend0 && !sev;
     const rx = RX.filter(it=>it.start && it.start <= d && (!rxEnd(it) || rxEnd(it) >= d)).length;
     const res = RES.filter(r=>r.d === d).length;
     const ev = []; if (d === d1) ev.push('надходження'); if (P.d2.value && d === P.d2.value) ev.push('виписка');
