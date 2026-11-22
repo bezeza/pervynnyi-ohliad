@@ -2102,6 +2102,20 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     addRx({drug:'Лозартан', dose:'50 мг', route:'per os', freq:'1 р/д', start:'2026-11-03', days:5}); update(); o.okStart=/Лозартан[^\\n]*з 03\\.11/.test(generate().plain);
     RX.length=0; keep.forEach(x=>RX.push(x)); F('e_per.vyg').el.value='0'; P.d1.value=''; P.d2.value=''; return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Епікриз: фактичний початок курсу (07.11), не дата надходження; почато в день виписки — попередження', o.shows&&o.noD1&&o.warn&&o.okStart, r); }
+  { const r=w.eval(`(()=>{ const f=F('dx.plan'), names=f.opts.map(o=>String(O(o).l||O(o).t||o)); const want=['ТТГ','УЗД м’яких тканин','ЕЕГ']; const o={};
+    const mkSnap=(ids)=>{ const c={}; ids.forEach((i,k)=>{ c[f.cid+'_'+i]={p:1,o:k+1,a:0,off:0}; }); return {v:1,f:{},c,sex:'',curKey:null,doc:'ohl',mode:MODE,cache:{},diaries:[],rx:[],res:[],auto:{}}; };
+    const old=want.map(x=>PLAN_OPTS_V2.indexOf(x)); o.oldIdx=old.join(); o.shifted=old.some((i,k)=>names[i]!==want[k]);
+    const rec=(upd,sn)=>({name:'Міграція Тест',card:'',dob:'',updated:upd,snap:sn});
+    const st={m1:rec(Date.parse('2026-11-15T10:00:00Z'),mkSnap(old))}; planMigrateStore(st);
+    const lab=Object.keys(st.m1.snap.c).map(id=>names[+id.slice(f.cid.length+1)]).sort().join('|'); o.migrated=lab===want.slice().sort().join('|'); o.sv=st.m1.snap.sv===PLAN_SV;
+    const cur=mkSnap(want.map(x=>names.indexOf(x))); cur.sv=PLAN_SV; const st2={m2:rec(Date.parse('2026-11-15T10:00:00Z'),cur)}; const before=JSON.stringify(cur.c); planMigrateStore(st2); o.keep=JSON.stringify(st2.m2.snap.c)===before;
+    const nw=mkSnap(want.map(x=>names.indexOf(x))); const st3={m3:rec(Date.parse('2026-11-20T10:00:00Z'),nw)}; const b3=JSON.stringify(nw.c); planMigrateStore(st3); o.newer=JSON.stringify(st3.m3.snap.c)===b3&&st3.m3.snap.sv===PLAN_SV;
+    const s2=snap(); o.snapSv=s2.sv===PLAN_SV;
+    const st4=loadStore(); st4.mig={ name:'Міграція Тест 2', card:'', dob:'', updated:Date.parse('2026-11-12T10:00:00Z'), snap:mkSnap(old) }; saveStore(st4); PID='mig'; restore(loadStore().mig.snap);
+    o.restored=[...document.querySelectorAll('#panels .chip[aria-pressed="true"]')].filter(b=>b.id.startsWith(f.cid+'_')).map(b=>b.textContent).sort().join('|')===want.slice().sort().join('|');
+    const st5=loadStore(); delete st5.mig; saveStore(st5); PID=null; clearAll(true);
+    return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('План обстеження: знімок 0.9.3.146 («ТТГ, УЗД м’яких тканин, ЕЕГ») відкривається з тими самими назвами; новіші/з sv не чіпаємо', o.shifted&&o.migrated&&o.sv&&o.keep&&o.newer&&o.snapSv&&o.restored, r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
