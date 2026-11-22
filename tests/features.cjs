@@ -2192,6 +2192,11 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм неправильний (фібриляція передсердь)'}); ok('Задача 28: щоденник — ясні тони й неправильний ритм не стають «приглушеними»', r.serce==='ясні, ритм неправильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм правильний'}); ok('Задача 28: щоденник — ритм правильний, коли його оцінено', r.serce==='ясні, ритм правильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'тахікардія'}); ok('Задача 28: щоденник — при тахікардії «ритм правильний» не пишеться', r.serce==='ясні', r.serce); w.eval("clearAll(true)"); }
+  { const r=w.eval(`(()=>{ const o={}; const fs=h=>[...h.matchAll(/font-size:([\\d.]+)pt/g)].map(m=>+m[1]); const lh=h=>[...h.matchAll(/font-size:([\\d.]+)pt;[^"]*?line-height:([\\d.]+)pt/g)].map(m=>+m[2]/+m[1]);
+    const gcs0=window.getComputedStyle; window.getComputedStyle=function(el,ps){ const r=gcs0.call(window,el,ps); return {getPropertyValue:p=>p==='font-size'?'8px':p==='line-height'?'8px':r.getPropertyValue(p), get breakBefore(){return r.breakBefore}, get breakInside(){return r.breakInside}, get height(){return r.height}, get display(){return r.display}, get flexDirection(){return r.flexDirection}, get position(){return r.position}, get cssFloat(){return r.cssFloat}}; };
+    try{ for (const k of ['ter','pulm','nevr','khir','amb']){ const h=blanksWordHtml([k]); const a=fs(h), l=lh(h); o[k]=a.length>20&&Math.min(...a)>=7.5&&(l.length>0&&Math.min(...l)>=1.09)&&(h.match(/page-break-inside:avoid/g)||[]).length>=2; }
+    }finally{ window.getComputedStyle=gcs0; } o.reset = BW_FS===1&&BW_LH===1&&BW_MINF===0&&(typeof BW_MINLH==='undefined'||BW_MINLH===0); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Word-бланки: щоденники (терапія, пульмо, невро, хірургія, амб.) — шрифт ≥ 7,5 пт, інтервал ≥ 1,1, 2 на аркуш; налаштування скидаються', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
