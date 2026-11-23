@@ -13,14 +13,16 @@ const DXCONFIRM = {
   pneu:   [{n:'рентгенографія ОГК', re:/рентген.*ОГК|ОГК.*рентген|КТ ОГК/i}]
 };
 try{ PRESETS.forEach(p=>{ if (!p.dxConfirm && DXCONFIRM[p.key]) p.dxConfirm = DXCONFIRM[p.key]; }); }catch(e){}
-let VYD_AUTO = false;
+let VYD_AUTO = false, DX_RESTORING = false;
 function vydEl(){ try{ return F('dx.vyd').el; }catch(e){ return null; } }
 function dxPending(){
   const p = (typeof PRESETS !== 'undefined' && curKey) ? PRESETS.find(x=>x.key === curKey) : null, c = p && p.dxConfirm;
   if (!c || !c.length) return null;
-  const done = RES.some(r=>c.some(i=>i.re.test(String(r.t || ''))));
-  return {done, names:c.map(i=>i.n)};
+  /* «підтверджено» — лише коли лікар позначив результат «Підтверджує діагноз»; сам факт внесення результату (навіть негативного) діагноз не змінює */
+  const hit = RES.filter(r=>c.some(i=>i.re.test(String(r.t || ''))));
+  return {done:hit.some(r=>r.c === 'y'), negative:hit.some(r=>r.c === 'n'), unmarked:hit.some(r=>!r.c), names:c.map(i=>i.n)};
 }
+function dxMatches(t){ const p = (typeof PRESETS !== 'undefined' && curKey) ? PRESETS.find(x=>x.key === curKey) : null; return !!(p && p.dxConfirm && p.dxConfirm.some(i=>i.re.test(String(t || '')))); }
 function vydManual(){ const e = vydEl(); return !!(e && e.dataset.man === '1'); }
 /* вид діагнозу: 0 — попередній, 1 — клінічний; ручний вибір сильніший за автоматику */
 function dxPrelim(){
@@ -30,7 +32,7 @@ function dxPrelim(){
 }
 function dxNote(){ const pd = dxPending(); return pd && !pd.done ? ' — потребує підтвердження: ' + pd.names.join(', ') : ''; }
 function vydSync(){
-  const e = vydEl(), pd = dxPending(); if (!e || !pd || vydManual()) return;
+  const e = vydEl(), pd = dxPending(); if (!e || !pd || vydManual() || DX_RESTORING) return;
   const want = pd.done ? '1' : '0'; if (e.value !== want){ VYD_AUTO = true; e.value = want; VYD_AUTO = false; }
 }
 document.addEventListener('change', ev=>{ try{ const e = vydEl(); if (e && ev.target === e && !VYD_AUTO) e.dataset.man = '1'; }catch(x){} }, true);
@@ -51,11 +53,14 @@ document.addEventListener('change', ev=>{ try{ const e = vydEl(); if (e && ev.ta
     return r; }; }
 { const cd = checkDoc; checkDoc = function(){ const L = cd.apply(this, arguments);
     try{ const pd = dxPending();
+      if (pd && pd.negative && !pd.done) L.unshift({m:'Обстеження не підтвердило діагноз (' + pd.names.join(', ') + ') — діагноз лишається попереднім: перегляньте діагноз', tab:'dx', f:'dx.osn'});
+      else if (pd && pd.unmarked && !pd.done) L.push({m:'Результат обстеження внесено, але не позначено «Підтверджує / Не підтверджує діагноз» — діагноз лишається попереднім', tab:'dx', f:'dx.osn'});
       if (DOC === 'epi' && pd && !pd.done && !(vydManual() && vydEl().value !== '0')) L.unshift({m:'Діагноз лишається попереднім: не внесено підтверджуючого обстеження (' + pd.names.join(', ') + '). Внесіть результат у «Результати» або змініть вид діагнозу в первинному огляді', tab:'dx'});
       if (DOC === 'ohl' && pd && !pd.done && dxPrelim()) L.push({m:'Попередній діагноз — потребує підтвердження: ' + pd.names.join(', '), tab:'dx', f:'dx.osn'});
     }catch(x){}
     return L; }; }
 { const s0 = snap; snap = function(){ const r = s0.apply(this, arguments); try{ if (r && typeof r === 'object' && vydManual()) r.vm = 1; }catch(x){} return r; }; }
-{ const r0 = restore; restore = function(S){ const r = r0.apply(this, arguments); try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} return r; }; }
+/* ручний вибір відновлюємо ДО відновлення полів і не синхронізуємо автоматично під час відновлення (раніше «Клінічний» підставлявся до того, як вертався ручний вибір) */
+{ const r0 = restore; restore = function(S){ let r; try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} DX_RESTORING = true; try{ r = r0.apply(this, arguments); } finally { DX_RESTORING = false; } try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} return r; }; }
 { const a0 = applyPreset; applyPreset = function(){ const e = vydEl(); if (e) delete e.dataset.man; return a0.apply(this, arguments); }; }
 { const c0 = clearAll; clearAll = function(){ const e = vydEl(); if (e) delete e.dataset.man; return c0.apply(this, arguments); }; }

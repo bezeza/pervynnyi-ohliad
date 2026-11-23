@@ -2710,7 +2710,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.171 від 21.11.2026">v0.9.3.171 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.174 від 23.11.2026">v0.9.3.174 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4933,8 +4933,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.171', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.174', VDATE = '23.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.174', '23.11.2026', 'Попередній діагноз: сам факт внесення результату (навіть негативного) діагноз не змінює — у журналі обстежень з’явився висновок «Підтверджує / Не підтверджує діагноз» (за замовчуванням не позначено); негативний результат лишає «Попередній» + попередження в «Перевірці»; ручний вибір «Попередній/Клінічний» більше не губиться після повторного відкриття.'],
   ['0.9.3.171', '19.11.2026', 'Щоденник з огляду не вигадує: колір шкіри (гіперемія, землисто-сірий, ціаноз), «дихання ослаблене» лише якщо воно в огляді, крепітація не стає «вологими хрипами», «ритм правильний» лише якщо ритм оцінено.'],
   ['0.9.3.169', '22.11.2026', '«Попередній діагноз» до підтвердження: для ТЕЛА, інсульту, ШКК, менінгіту, пневмонії шаблон знає підтверджуюче обстеження — поки результату немає, «Попередній діагноз: … — потребує підтвердження: …», після внесення результату автоматично «Клінічний діагноз». Ручний вибір лікаря сильніший; в епікризі без підтвердження лишається «Попередній» із зауваженням у «Перевірці».'],
   ['0.9.3.169', '22.11.2026', 'Дрібні правки аудиту: у виписці без «за потреби — тривало»; стадії ХСН латиницею (IIA, IIB); вивих — без кеторолаку й ібупрофену в один день; ТІА — подвійна антиагрегантна «за показаннями»; COVID — одна цільова SpO2 92–96%; «вагітність» у ТЕЛА лише для жінок; умовні призначення в листку без дати «з …»; дієти лише стандартні (наказ МОЗ № 931).'],
@@ -8323,10 +8324,13 @@ function resBlock(){
   const test = h('select', {class:'res-t', 'aria-label':'Обстеження'}, h('option', {value:''}, '— оберіть обстеження —'), ...resTests().map(x=>h('option', {value:x}, x)));
   const txt = h('textarea', {class:'res-v', rows:2, placeholder:'Результат (після вибору обстеження з’явиться шаблон)', 'aria-label':'Результат'});
   const lg = h('div', {class:'labgrid', hidden:''});
+  /* висновок щодо діагнозу — лише для обстеження, яким діагноз підтверджується (див. 726-prelim-dx.js); за замовчуванням не позначено */
+  const cs = h('select', {class:'res-c', hidden:'', 'aria-label':'Висновок щодо діагнозу'}, h('option', {value:''}, '— висновок щодо діагнозу не позначено —'), h('option', {value:'y'}, 'Підтверджує діагноз'), h('option', {value:'n'}, 'Не підтверджує діагноз'));
+  const csShow = ()=>{ let on = false; try{ on = !!(test.value && typeof dxMatches === 'function' && dxMatches(test.value)); }catch(e){} cs.hidden = !on; if (!on) cs.value = ''; };
   let labIns = [];
   const compose = ()=>{ txt.value = labCompose(test.value, labIns.map(x=>x.value.trim() === '' ? NaN : num(x.value))); };
   test.addEventListener('change', ()=>{
-    lg.innerHTML = ''; labIns = [];
+    csShow(); lg.innerHTML = ''; labIns = [];
     if (!test.value){ lg.hidden = true; return; }
     if (LABS[test.value]){
       lg.hidden = false;
@@ -8341,7 +8345,8 @@ function resBlock(){
     const v = txt.value.trim(); if (!v){ toast('Впишіть результат'); return; }
     const dd = date.value || todayISO();
     if (LABS[test.value] && labIns.length) labApply(test.value, labIns.map(x=>x.value.trim() === '' ? NaN : num(x.value)), dd);
-    RES.push({id:++RESN, d:dd, t:test.value || 'обстеження', v});
+    RES.push(Object.assign({id:++RESN, d:dd, t:test.value || 'обстеження', v}, cs.value ? {c:cs.value} : {}));
+    cs.value = ''; cs.hidden = true;
     lg.hidden = true; lg.innerHTML = ''; labIns = [];
     RES.sort((a,b)=>a.d < b.d ? -1 : a.d > b.d ? 1 : a.id - b.id);
     test.value = ''; txt.value = ''; renderRes(); savePatient(true); update(); toast('Результат додано в журнал обстежень');
@@ -8349,7 +8354,7 @@ function resBlock(){
   const box = h('div', {class:'pt resbox'},
     h('h3', {}, 'Журнал обстежень за час лікування'),
     h('p', {class:'chips-hint'}, 'Вносьте результати, щойно вони надходять. Для аналізів крові досить ввести числа — програма сама запише рядок і позначить відхилення ↑↓, а креатинін піде в розрахунок кліренсу. У щоденник підставляються нові результати, в епікризи — усі.'),
-    h('div', {class:'res-form'}, date, test), lg, txt,
+    h('div', {class:'res-form'}, date, test), lg, txt, cs,
     h('div', {class:'acts2', style:'margin-top:6px'}, add),
     h('div', {class:'plist reslist'}));
   date.addEventListener('change', ()=>{ date.dataset.user = '1'; });
@@ -8364,7 +8369,7 @@ function renderRes(){
       const del = h('button', {type:'button', class:'more'}, 'Видалити');
       del.addEventListener('click', ()=>{ if (!del.dataset.arm){ del.dataset.arm = '1'; del.textContent = 'Точно?'; setTimeout(()=>{ delete del.dataset.arm; del.textContent = 'Видалити'; }, 3000); return; }
         RES = RES.filter(x=>x !== r); renderRes(); savePatient(true); update(); });
-      box.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, fmtS(r.d) + ' · ' + cap(r.t)), h('span', {}, r.v)), del));
+      box.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, fmtS(r.d) + ' · ' + cap(r.t) + (r.c === 'y' ? ' · підтверджує діагноз' : r.c === 'n' ? ' · не підтверджує діагноз' : '')), h('span', {}, r.v)), del));
     });
   });
 }
@@ -24962,14 +24967,16 @@ const DXCONFIRM = {
   pneu:   [{n:'рентгенографія ОГК', re:/рентген.*ОГК|ОГК.*рентген|КТ ОГК/i}]
 };
 try{ PRESETS.forEach(p=>{ if (!p.dxConfirm && DXCONFIRM[p.key]) p.dxConfirm = DXCONFIRM[p.key]; }); }catch(e){}
-let VYD_AUTO = false;
+let VYD_AUTO = false, DX_RESTORING = false;
 function vydEl(){ try{ return F('dx.vyd').el; }catch(e){ return null; } }
 function dxPending(){
   const p = (typeof PRESETS !== 'undefined' && curKey) ? PRESETS.find(x=>x.key === curKey) : null, c = p && p.dxConfirm;
   if (!c || !c.length) return null;
-  const done = RES.some(r=>c.some(i=>i.re.test(String(r.t || ''))));
-  return {done, names:c.map(i=>i.n)};
+  /* «підтверджено» — лише коли лікар позначив результат «Підтверджує діагноз»; сам факт внесення результату (навіть негативного) діагноз не змінює */
+  const hit = RES.filter(r=>c.some(i=>i.re.test(String(r.t || ''))));
+  return {done:hit.some(r=>r.c === 'y'), negative:hit.some(r=>r.c === 'n'), unmarked:hit.some(r=>!r.c), names:c.map(i=>i.n)};
 }
+function dxMatches(t){ const p = (typeof PRESETS !== 'undefined' && curKey) ? PRESETS.find(x=>x.key === curKey) : null; return !!(p && p.dxConfirm && p.dxConfirm.some(i=>i.re.test(String(t || '')))); }
 function vydManual(){ const e = vydEl(); return !!(e && e.dataset.man === '1'); }
 /* вид діагнозу: 0 — попередній, 1 — клінічний; ручний вибір сильніший за автоматику */
 function dxPrelim(){
@@ -24979,7 +24986,7 @@ function dxPrelim(){
 }
 function dxNote(){ const pd = dxPending(); return pd && !pd.done ? ' — потребує підтвердження: ' + pd.names.join(', ') : ''; }
 function vydSync(){
-  const e = vydEl(), pd = dxPending(); if (!e || !pd || vydManual()) return;
+  const e = vydEl(), pd = dxPending(); if (!e || !pd || vydManual() || DX_RESTORING) return;
   const want = pd.done ? '1' : '0'; if (e.value !== want){ VYD_AUTO = true; e.value = want; VYD_AUTO = false; }
 }
 document.addEventListener('change', ev=>{ try{ const e = vydEl(); if (e && ev.target === e && !VYD_AUTO) e.dataset.man = '1'; }catch(x){} }, true);
@@ -25000,12 +25007,15 @@ document.addEventListener('change', ev=>{ try{ const e = vydEl(); if (e && ev.ta
     return r; }; }
 { const cd = checkDoc; checkDoc = function(){ const L = cd.apply(this, arguments);
     try{ const pd = dxPending();
+      if (pd && pd.negative && !pd.done) L.unshift({m:'Обстеження не підтвердило діагноз (' + pd.names.join(', ') + ') — діагноз лишається попереднім: перегляньте діагноз', tab:'dx', f:'dx.osn'});
+      else if (pd && pd.unmarked && !pd.done) L.push({m:'Результат обстеження внесено, але не позначено «Підтверджує / Не підтверджує діагноз» — діагноз лишається попереднім', tab:'dx', f:'dx.osn'});
       if (DOC === 'epi' && pd && !pd.done && !(vydManual() && vydEl().value !== '0')) L.unshift({m:'Діагноз лишається попереднім: не внесено підтверджуючого обстеження (' + pd.names.join(', ') + '). Внесіть результат у «Результати» або змініть вид діагнозу в первинному огляді', tab:'dx'});
       if (DOC === 'ohl' && pd && !pd.done && dxPrelim()) L.push({m:'Попередній діагноз — потребує підтвердження: ' + pd.names.join(', '), tab:'dx', f:'dx.osn'});
     }catch(x){}
     return L; }; }
 { const s0 = snap; snap = function(){ const r = s0.apply(this, arguments); try{ if (r && typeof r === 'object' && vydManual()) r.vm = 1; }catch(x){} return r; }; }
-{ const r0 = restore; restore = function(S){ const r = r0.apply(this, arguments); try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} return r; }; }
+/* ручний вибір відновлюємо ДО відновлення полів і не синхронізуємо автоматично під час відновлення (раніше «Клінічний» підставлявся до того, як вертався ручний вибір) */
+{ const r0 = restore; restore = function(S){ let r; try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} DX_RESTORING = true; try{ r = r0.apply(this, arguments); } finally { DX_RESTORING = false; } try{ const e = vydEl(); if (e){ if (S && S.vm) e.dataset.man = '1'; else delete e.dataset.man; } }catch(x){} return r; }; }
 { const a0 = applyPreset; applyPreset = function(){ const e = vydEl(); if (e) delete e.dataset.man; return a0.apply(this, arguments); }; }
 { const c0 = clearAll; clearAll = function(){ const e = vydEl(); if (e) delete e.dataset.man; return c0.apply(this, arguments); }; }
 </script>
