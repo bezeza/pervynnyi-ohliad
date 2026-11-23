@@ -2710,7 +2710,7 @@ body.pop-ext .tn-card{display:none!important}
 <body>
 
 <header class="top">
-  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.171 від 21.11.2026">v0.9.3.171 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
+  <h1 class="brand"><img class="logo" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%231D5B8A%22/%3E%3Cg id=%22art%22%3E%3Crect x=%2264%22 y=%22104%22 width=%22384%22 height=%22262%22 rx=%2226%22 fill=%22%23fff%22/%3E%3Cpath d=%22M196 410 H316 M256 366 V410%22 stroke=%22%23E2ECF5%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M102 190 c12 -40 26 40 38 0 s26 40 38 0 s26 40 38 0%22 fill=%22none%22 stroke=%22%238FA6B8%22 stroke-width=%2216%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M246 190 H272%22 stroke=%22%238FA6B8%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M284 172 l20 18 l-20 18%22 fill=%22none%22 stroke=%22%23B3261E%22 stroke-width=%2214%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M102 258 H352 M102 314 H292%22 stroke=%22%231D5B8A%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cg transform=%22translate(312 316) rotate(-50)%22%3E%3Cpath d=%22M0 0 L24 -18 H138 V18 H24 Z%22 fill=%22%23F2B544%22/%3E%3Crect x=%22138%22 y=%22-18%22 width=%2232%22 height=%2236%22 rx=%228%22 fill=%22%23B3261E%22/%3E%3Cpath d=%22M0 0 L24 -18 V18 Z%22 fill=%22%2315212C%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="" width="40" height="40"><span class="bt"><span class="bn">Первинний огляд <span class="vbadge" id="vBadge" title="Версія 0.9.3.172 від 22.11.2026">v0.9.3.172 бета</span></span><small class="author">від <a href="https://github.com/bezeza" target="_blank" rel="noopener">bezeza</a></small><small id="subT" class="hide-m">Стаціонар · генератор тексту огляду, шкали, критерії госпіталізації</small></span></h1>
   <div class="seg" id="modeSeg" role="group" aria-label="Напрям">
     <button type="button" data-mode="hosp" aria-pressed="true">Стаціонар</button>
     <button type="button" data-mode="amb" aria-pressed="false">Амбулаторно</button>
@@ -4933,8 +4933,9 @@ function clearAll(forRestore){
 
 /* 0.10, етап 6: під час побудови update() лише позначає, що оновлення потрібне (див. 101-boot.js) */
 { const u0 = update; update = function(){ if (PO_BOOT){ PO_BOOT_UPD = true; return; } return u0.apply(this, arguments); }; }
-const VERSION = '0.9.3.171', VDATE = '21.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
+const VERSION = '0.9.3.172', VDATE = '22.11.2026', STAGE = 'бета', AUTHOR = 'bezeza';
 const CHANGELOG = [
+  ['0.9.3.172', '22.11.2026', 'Бланки у Word: щоденники знову по 2 на аркуш (терапія теж), шрифт щоденників не менше 7,5 пт, інтервал не менше 1,1 від шрифту; налаштування експорту скидаються після кожного експорту.'],
   ['0.9.3.171', '19.11.2026', 'Щоденник з огляду не вигадує: колір шкіри (гіперемія, землисто-сірий, ціаноз), «дихання ослаблене» лише якщо воно в огляді, крепітація не стає «вологими хрипами», «ритм правильний» лише якщо ритм оцінено.'],
   ['0.9.3.169', '22.11.2026', '«Попередній діагноз» до підтвердження: для ТЕЛА, інсульту, ШКК, менінгіту, пневмонії шаблон знає підтверджуюче обстеження — поки результату немає, «Попередній діагноз: … — потребує підтвердження: …», після внесення результату автоматично «Клінічний діагноз». Ручний вибір лікаря сильніший; в епікризі без підтвердження лишається «Попередній» із зауваженням у «Перевірці».'],
   ['0.9.3.169', '22.11.2026', 'Дрібні правки аудиту: у виписці без «за потреби — тривало»; стадії ХСН латиницею (IIA, IIB); вивих — без кеторолаку й ібупрофену в один день; ТІА — подвійна антиагрегантна «за показаннями»; COVID — одна цільова SpO2 92–96%; «вагітність» у ТЕЛА лише для жінок; умовні призначення в листку без дати «з …»; дієти лише стандартні (наказ МОЗ № 931).'],
@@ -24836,13 +24837,13 @@ try{
    його можна змінити або надрукувати. Макет бланка у програмі — на flex і розтягнутих лініях, яких Word не знає, тому бланк
    спершу виводиться поза екраном, а потім перекладається у прості блоки, таблиці й підкреслені пропуски. */
 const BW_CSS = ['font-family','font-size','font-weight','font-style','color','text-align','line-height','vertical-align','white-space'];
-let BW_LH = 1, BW_FS = 1, BW_MINF = 0;
+let BW_LH = 1, BW_FS = 1, BW_MINF = 0, BW_MINLH = 0, BW_MAXH = 26, BW_PAD = 1, BW_PAD1 = 0;   /* мінімальний шрифт, pt; мінімальний інтервал — частка шрифту */
 function bwPx(v){ const n = parseFloat(v); return isFinite(n) ? n : 0; }
 function bwHex(c){ const m = /rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)/.exec(c || ''); return m ? '#' + [m[1], m[2], m[3]].map(x=>(+x).toString(16).padStart(2, '0')).join('') : (c || '#000000'); }
 function bwEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function bwStyle(el, cs, extra, noBox){
   const o = [];
-  BW_CSS.forEach(p=>{ const v = cs.getPropertyValue(p); if (v && v !== 'normal' && v !== 'start') o.push(p + ':' + (p === 'color' ? bwHex(v) : /px$/.test(v) && /^(font-size|line-height)$/.test(p) ? Math.max(p === 'font-size' ? BW_MINF : 0, bwPx(v) * 0.75 * (p === 'font-size' ? BW_FS : BW_LH)).toFixed(1) + 'pt' : v.replace(/"/g, "'"))); });
+  BW_CSS.forEach(p=>{ const v = cs.getPropertyValue(p); if (v && v !== 'normal' && v !== 'start') o.push(p + ':' + (p === 'color' ? bwHex(v) : /px$/.test(v) && /^(font-size|line-height)$/.test(p) ? (p === 'font-size' ? Math.max(BW_MINF, bwPx(v) * 0.75 * BW_FS) : Math.max(bwPx(v) * 0.75 * BW_LH, BW_MINLH * Math.max(BW_MINF, bwPx(cs.getPropertyValue('font-size')) * 0.75 * BW_FS))).toFixed(1) + 'pt' : v.replace(/"/g, "'"))); });
   const td = cs.getPropertyValue('text-decoration-line'); if (td && td !== 'none') o.push('text-decoration:' + td.split(' ')[0]);
   if (!noBox) ['top','right','bottom','left'].forEach(s=>{
     const w = bwPx(cs.getPropertyValue('border-' + s + '-width')), st = cs.getPropertyValue('border-' + s + '-style');
@@ -24886,7 +24887,7 @@ function bwNode(n, nb){
   const boxed = /^(div|p|section)$/.test(tag) && ['top','right','bottom','left'].some(x=>bwPx(cs.getPropertyValue('border-' + x + '-width')) > 0 && cs.getPropertyValue('border-' + x + '-style') !== 'none');
   if (flex){ t = /^(div|li|td|th)$/.test(tag) ? tag : 'div'; const g = bwPx(cs.columnGap); if (g) extra.push('word-spacing:' + (g * 0.375).toFixed(1) + 'pt'); }
   if (tag === 'section') t = 'div';
-  if (!kids.length && !n.textContent && /^(div|p)$/.test(t) && bwPx(cs.height) > 0) extra.push('height:' + Math.min(26, bwPx(cs.height) * 0.75).toFixed(1) + 'pt');
+  if (!kids.length && !n.textContent && /^(div|p)$/.test(t) && bwPx(cs.height) > 0) extra.push('height:' + Math.min(BW_MAXH, bwPx(cs.height) * 0.75).toFixed(1) + 'pt');
   if (cs.breakBefore === 'page') extra.push('page-break-before:always');
   if (cs.breakInside === 'avoid') extra.push('page-break-inside:avoid');
   const at = /^(td|th)$/.test(tag) ? [' width="' + Math.round(n.getBoundingClientRect().width) + '"', n.colSpan > 1 ? ' colspan="' + n.colSpan + '"' : '', n.rowSpan > 1 ? ' rowspan="' + n.rowSpan + '"' : ''].join('') : '';
@@ -24897,12 +24898,12 @@ function bwNode(n, nb){
     ['top','right','bottom','left'].forEach(x=>{
       const w = bwPx(cs.getPropertyValue('border-' + x + '-width')), st = cs.getPropertyValue('border-' + x + '-style');
       if (w > 0 && st !== 'none') bd.push('border-' + x + ':' + Math.max(0.5, w * 0.75).toFixed(1) + 'pt solid ' + bwHex(cs.getPropertyValue('border-' + x + '-color')));
-      const p = bwPx(cs.getPropertyValue('padding-' + x)); if (p) pd.push('padding-' + x + ':' + (p * 0.75).toFixed(1) + 'pt');
+      const p = bwPx(cs.getPropertyValue('padding-' + x)); if (p) pd.push('padding-' + x + ':' + (p * 0.75 * BW_PAD).toFixed(1) + 'pt');
     });
     const hh = !kids.length && !n.textContent && bwPx(cs.height) > 0 ? 'height:' + Math.min(26, bwPx(cs.height) * 0.75).toFixed(1) + 'pt;' : '';
     const av = n.classList.contains('fb-diary') ? 'page-break-inside:avoid;' : '';
     const full = ['top','right','bottom','left'].every(x=>bwPx(cs.getPropertyValue('border-' + x + '-width')) > 0);
-    const sp = full && !av ? '<div style="margin:0;font-size:3pt;line-height:3pt">&nbsp;</div>' : '';
+    const sp = full && !av && !BW_PAD1 ? '<div style="margin:0;font-size:3pt;line-height:3pt">&nbsp;</div>' : '';
     return '<table width="100%" cellspacing="0" cellpadding="0" style="' + av + 'border-collapse:collapse;width:100%;margin:0"><tr style="' + av + '"><td style="' + bd.join(';') + ';' + pd.join(';') + ';' + hh + bwStyle(n, cs, extra, true) + '">' + (inner || '&nbsp;') + '</td></tr></table>' + sp;
   }
   return '<' + t + at + tb + ' style="' + bwStyle(n, cs, extra) + '">' + inner + '</' + t + '>';
@@ -24914,16 +24915,16 @@ function blanksWordHtml(keys){
   L.forEach(b=>{
     const host = document.createElement('div'); host.className = b.cls;
     host.style.cssText = 'position:absolute;left:-99999px;top:0;width:' + (/fbk-d|fbk-g/.test(b.cls) ? '198mm' : '188mm') + ';background:#fff';
-    host.innerHTML = b.html; document.body.append(host); BW_LH = /fbk-ter/.test(b.cls) ? 0.85 : /fbk-d/.test(b.cls) ? 0.6 : 1; BW_FS = /fbk-ter/.test(b.cls) ? 0.95 : /fbk-d/.test(b.cls) ? 0.72 : 1; BW_MINF = /fbk-d/.test(b.cls) ? 0 : 9;
+    host.innerHTML = b.html; document.body.append(host); BW_LH = /fbk-d/.test(b.cls) ? 0.6 : 1; BW_FS = /fbk-d/.test(b.cls) ? 0.72 : 1; BW_MINF = /fbk-d/.test(b.cls) ? 7.5 : 9; BW_MINLH = /fbk-d/.test(b.cls) ? 1.1 : 0; BW_MAXH = /fbk-d/.test(b.cls) ? 9 : 26; BW_PAD = /fbk-d/.test(b.cls) ? 0.25 : 1; BW_PAD1 = /fbk-d/.test(b.cls) ? 1 : 0;
     { const hn = (typeof mv === 'function' ? [mv('zoz'), mv('vidd')].filter(Boolean).join(' · ') : ''); if (hn && /fbk-d/.test(b.cls)) host.querySelectorAll('.fb-diary').forEach(d=>{ const e = document.createElement('div'); e.style.cssText = 'font-weight:700;text-align:center;border-bottom:1px solid #000;padding-bottom:1mm'; e.textContent = hn; d.prepend(e); }); }
     const nb = (() => { host.append(probe); const w = probe.getBoundingClientRect().width / 20; probe.remove(); return w || 3; })();
     const wide = /fbk-d/.test(b.cls), land = !!host.querySelector('[data-landscape]');
-    const mar = wide ? '4mm 6mm 3mm 6mm' : '8mm 8mm 8mm 12mm';
+    const mar = wide ? '3mm 6mm 2mm 6mm' : '8mm 8mm 8mm 12mm';
     css += '@page S' + i + '{size:' + (land ? '297mm 210mm' : '210mm 297mm') + ';margin:' + mar + ';mso-page-orientation:' + (land ? 'landscape' : 'portrait') + '}div.S' + i + '{page:S' + i + '}\n';
     sect += '<div class="S' + i + '"' + (i ? ' style="page-break-before:always"' : '') + '>' + [...host.childNodes].map(k=>bwNode(k, nb)).join('') + '</div>\n';
     host.remove(); i++;
   });
-  BW_LH = 1; BW_FS = 1;
+  BW_LH = 1; BW_FS = 1; BW_MINF = 0; BW_MINLH = 0; BW_MAXH = 26; BW_PAD = 1; BW_PAD1 = 0;
   return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
     '<head><meta charset="utf-8"><title>Порожні бланки</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->' +
     '<style>' + css + 'body{font-family:"Times New Roman",serif}p{margin:0}</style></head><body>' + sect + '</body></html>';
