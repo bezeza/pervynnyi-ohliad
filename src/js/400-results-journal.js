@@ -17,10 +17,13 @@ function resBlock(){
   const test = h('select', {class:'res-t', 'aria-label':'Обстеження'}, h('option', {value:''}, '— оберіть обстеження —'), ...resTests().map(x=>h('option', {value:x}, x)));
   const txt = h('textarea', {class:'res-v', rows:2, placeholder:'Результат (після вибору обстеження з’явиться шаблон)', 'aria-label':'Результат'});
   const lg = h('div', {class:'labgrid', hidden:''});
+  /* висновок щодо діагнозу — лише для обстеження, яким діагноз підтверджується (див. 726-prelim-dx.js); за замовчуванням не позначено */
+  const cs = h('select', {class:'res-c', hidden:'', 'aria-label':'Висновок щодо діагнозу'}, h('option', {value:''}, '— висновок щодо діагнозу не позначено —'), h('option', {value:'y'}, 'Підтверджує діагноз'), h('option', {value:'n'}, 'Не підтверджує діагноз'));
+  const csShow = ()=>{ let on = false; try{ on = !!(test.value && typeof dxMatches === 'function' && dxMatches(test.value)); }catch(e){} cs.hidden = !on; if (!on) cs.value = ''; };
   let labIns = [];
   const compose = ()=>{ txt.value = labCompose(test.value, labIns.map(x=>x.value.trim() === '' ? NaN : num(x.value))); };
   test.addEventListener('change', ()=>{
-    lg.innerHTML = ''; labIns = [];
+    csShow(); lg.innerHTML = ''; labIns = [];
     if (!test.value){ lg.hidden = true; return; }
     if (LABS[test.value]){
       lg.hidden = false;
@@ -35,7 +38,8 @@ function resBlock(){
     const v = txt.value.trim(); if (!v){ toast('Впишіть результат'); return; }
     const dd = date.value || todayISO();
     if (LABS[test.value] && labIns.length) labApply(test.value, labIns.map(x=>x.value.trim() === '' ? NaN : num(x.value)), dd);
-    RES.push({id:++RESN, d:dd, t:test.value || 'обстеження', v});
+    RES.push(Object.assign({id:++RESN, d:dd, t:test.value || 'обстеження', v}, cs.value ? {c:cs.value} : {}));
+    cs.value = ''; cs.hidden = true;
     lg.hidden = true; lg.innerHTML = ''; labIns = [];
     RES.sort((a,b)=>a.d < b.d ? -1 : a.d > b.d ? 1 : a.id - b.id);
     test.value = ''; txt.value = ''; renderRes(); savePatient(true); update(); toast('Результат додано в журнал обстежень');
@@ -43,7 +47,7 @@ function resBlock(){
   const box = h('div', {class:'pt resbox'},
     h('h3', {}, 'Журнал обстежень за час лікування'),
     h('p', {class:'chips-hint'}, 'Вносьте результати, щойно вони надходять. Для аналізів крові досить ввести числа — програма сама запише рядок і позначить відхилення ↑↓, а креатинін піде в розрахунок кліренсу. У щоденник підставляються нові результати, в епікризи — усі.'),
-    h('div', {class:'res-form'}, date, test), lg, txt,
+    h('div', {class:'res-form'}, date, test), lg, txt, cs,
     h('div', {class:'acts2', style:'margin-top:6px'}, add),
     h('div', {class:'plist reslist'}));
   date.addEventListener('change', ()=>{ date.dataset.user = '1'; });
@@ -58,7 +62,7 @@ function renderRes(){
       const del = h('button', {type:'button', class:'more'}, 'Видалити');
       del.addEventListener('click', ()=>{ if (!del.dataset.arm){ del.dataset.arm = '1'; del.textContent = 'Точно?'; setTimeout(()=>{ delete del.dataset.arm; del.textContent = 'Видалити'; }, 3000); return; }
         RES = RES.filter(x=>x !== r); renderRes(); savePatient(true); update(); });
-      box.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, fmtS(r.d) + ' · ' + cap(r.t)), h('span', {}, r.v)), del));
+      box.append(h('div', {class:'prow'}, h('div', {class:'pn'}, h('b', {}, fmtS(r.d) + ' · ' + cap(r.t) + (r.c === 'y' ? ' · підтверджує діагноз' : r.c === 'n' ? ' · не підтверджує діагноз' : '')), h('span', {}, r.v)), del));
     });
   });
 }

@@ -2171,13 +2171,13 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
   { const r=w.eval(`(()=>{ const o={}, T=()=>document.getElementById('out').textContent; clearAll(true); switchDoc('ohl'); MODE='hosp'; RES.length=0;
     const i=PRESETS.findIndex(p=>p.key==='pe'); applyPreset(PRESETS[i], HV.cards[i]); const e=F('dx.vyd').el; F('hosp.gen').chips[0].click(); update();   /* без критерію речення про госпіталізацію не виводиться (0.9.3.165) */
     o.a=/Попередній діагноз:/.test(T())&&/потребує підтвердження: КТ-ангіопульмонографія\./.test(T())&&/з метою верифікації діагнозу та лікування/.test(T());
-    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест'});
+    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест',c:'y'});
     o.b=(update(), /Клінічний діагноз:/.test(T()))&&!/потребує підтвердження/.test(T());
     e.value='0'; e.dispatchEvent(new Event('change',{bubbles:true})); update(); o.c=/Попередній діагноз:/.test(T());
     const S=snap(); o.d=S.vm===1; clearAll(true); restore(S); o.e=e.dataset.man==='1';
     RES.length=0; e.dataset.man=''; delete e.dataset.man; e.value='1'; e.dispatchEvent(new Event('change',{bubbles:true})); update(); o.f=/Клінічний діагноз:/.test(T())&&!/потребує підтвердження/.test(T());
     delete e.dataset.man; switchDoc('epi'); update(); o.g=/потребує підтвердження: КТ-ангіопульмонографія/.test(T())&&checkDoc().some(x=>/Діагноз лишається попереднім/.test(x.m));
-    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест'}); update(); o.h=!/потребує підтвердження/.test(T())&&!checkDoc().some(x=>/Діагноз лишається попереднім/.test(x.m));
+    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'тест',c:'y'}); update(); o.h=!/потребує підтвердження/.test(T())&&!checkDoc().some(x=>/Діагноз лишається попереднім/.test(x.m));
     RES.length=0; clearAll(true); return JSON.stringify(o); })()`);
     const o=JSON.parse(r); ok('Попередній діагноз: ТЕЛА без КТ-АПГ — «Попередній … потребує підтвердження», з результатом — «Клінічний», ручний вибір сильніший, епікриз — попередження', Object.values(o).every(Boolean), r); }
   { const dr=(set,k)=>{ w.eval("clearAll(true)"); for (const key in set) w.eval(`setByText(${JSON.stringify(key)}, ${JSON.stringify(set[key])})`); w.eval(`diaryFromExam(${k||0})`); return { shk:w.eval("F('d_obj.shk').el.value===''?'':O(F('d_obj.shk').opts[+F('d_obj.shk').el.value]).t"), dyh:w.eval("F('d_obj.dyh').el.value===''?'':O(F('d_obj.dyh').opts[+F('d_obj.dyh').el.value]).t"), serce:w.eval("F('d_obj.serce').el.value===''?'':O(F('d_obj.serce').opts[+F('d_obj.serce').el.value]).t") }; };
@@ -2192,6 +2192,18 @@ const rx=()=>w.eval("RX.map(i=>i.drug).join(', ')");
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм неправильний (фібриляція передсердь)'}); ok('Задача 28: щоденник — ясні тони й неправильний ритм не стають «приглушеними»', r.serce==='ясні, ритм неправильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'ритм правильний'}); ok('Задача 28: щоденник — ритм правильний, коли його оцінено', r.serce==='ясні, ритм правильний', r.serce);
     r = dr({'ssc.tony':'ясні','ssc.rytm':'тахікардія'}); ok('Задача 28: щоденник — при тахікардії «ритм правильний» не пишеться', r.serce==='ясні', r.serce); w.eval("clearAll(true)"); }
+  { const r=w.eval(`(()=>{ const o={}, T=()=>document.getElementById('out').textContent; clearAll(true); switchDoc('ohl'); MODE='hosp'; RES.length=0;
+    const i=PRESETS.findIndex(p=>p.key==='pe'); applyPreset(PRESETS[i], HV.cards[i]); const e=F('dx.vyd').el;
+    RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'ТЕЛА не виявлено',c:'n'}); update();
+    o.negPrelim=/Попередній діагноз:/.test(T())&&!/Клінічний діагноз:/.test(T()); o.negWarn=checkDoc().some(x=>/не підтвердило діагноз/.test(x.m));
+    RES.length=0; RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'без позначки'}); update();
+    o.unmarkedPrelim=/Попередній діагноз:/.test(T())&&checkDoc().some(x=>/не позначено/.test(x.m));
+    RES.length=0; RES.push({id:++RESN,d:todayISO(),t:'КТ-ангіопульмонографія',v:'ТЕЛА',c:'y'}); update(); o.yesClin=/Клінічний діагноз:/.test(T());
+    e.value='0'; e.dispatchEvent(new Event('change',{bubbles:true})); update(); o.manPrelim=/Попередній діагноз:/.test(T());
+    const S=snap(); clearAll(true); restore(S); update(); o.reopenMan=e.dataset.man==='1'&&e.value==='0'; o.reopenText=/Попередній діагноз:/.test(T());
+    const S2=JSON.parse(JSON.stringify(S)); clearAll(true); restore(S2); update(); o.reopenAgain=e.value==='0';
+    RES.length=0; clearAll(true); return JSON.stringify(o); })()`);
+    const o=JSON.parse(r); ok('Попередній діагноз: негативний результат (ТЕЛА не виявлено) не перемикає на «Клінічний» + попередження; ручний «Попередній» переживає повторне відкриття', Object.values(o).every(Boolean), r); }
 ok('Без помилок JavaScript', errs.length===0, errs.join(' | '));
  console.log(R.join('\n')); console.log('\nРазом: '+R.filter(x=>x[0]==='✅').length+' з '+R.length);
  process.exit(R.some(x=>x[0]==='❌')?1:0);
